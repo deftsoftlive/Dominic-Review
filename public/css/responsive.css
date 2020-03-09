@@ -1,0 +1,508 @@
+@media(max-width: 1300px){
+.activity-slider {
+    padding: 0 30px;
+}
+.activity-slider .owl-prev {
+    left: -25px;
+}
+.activity-slider .owl-next {
+    right: -25px;
+}
+.banner-content {
+    padding: 0 40px;
+}
+.demo-slider {
+    padding: 0 30px;
+}
+.demo-slider .owl-prev {
+    left: -25px;
+}
+.demo-slider .owl-next {
+    right: -25px;
+}
+}
+@media(max-width: 1199px){
+.main-header .navbar-light .navbar-nav li {
+    padding: 0 11px;
+}
+.testimonial-card {
+    padding: 55px 20px 2px;
+}
+
+.activity-caption p {
+    margin-bottom: 5px;
+}
+.demo-slider {
+    padding: 0 30px;
+}
+.demo-slider .owl-prev {
+    left: -28px;
+}
+.demo-slider .owl-next {
+    right: -28px;
+}
+.account-menu-tabs .menu-tab-link {
+    padding: 11px 15px;
+}
+.select-player-goal-form .form-row .form-group {
+    flex-wrap: wrap;
+}
+.player-report-table .report-table-wrap table {
+    table-layout: auto;
+    }
+    .select-player-report-form .form-row .form-group {
+    flex-wrap: wrap;
+}
+
+.login-sec button.cstm-btn.login {
+    margin-right: 13px;
+}
+.cstm-btn {
+    
+    padding: 10px 14px;}
+}
+  ul.ui-menu.ui-corner-bottom.ui-widget.ui-widget-content {
+    width: 269px;}
+@media(max-width: 991px){
+     ul.ui-menu.ui-corner-bottom.ui-widget.ui-widget-content {
+    width: 219px;}
+
+.serch-login-signup .search-icon{
+    display: none;
+}
+.responsive-search-icon .search-field {
+    display: block;
+}
+.menu-title-wrap {
+    display: block;
+    font-size: 16px;
+    text-transform: uppercase;
+    padding: 0;
+    position: relative;
+    border-bottom: 1px solid transparent;
+    text-align: center;
+    padding: 10px;
+    display: none;
+}
+div#navbarSupportedContent {
+    position: fixed;
+    right: -240px;
+    top: 0;
+    background-color: #fff;
+    padding: 0;
+    margin: 0;
+    width: 240px;
+    bottom: 0;
+    transition: all linear 0.3s;
+    height: 100%;
+    z-index: 999;
+    display: block;
+        overflow-y: auto;
+           padding: 15px;
+}
+#main.show {
+    position: fixed;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    transform: translateX(-240px);
+    transition: 0.4s ease;
+}
+.menu-title-wrap a {
+    color: #666666;
+    display: block;
+    border-bottom: 1px solid #000;
+    text-decoration: none;
+}
+.show .navbar .navbar-toggler span.icon-bar.rotate_cross {
+    height: 22px;
+    width: 2px;
+    background: #7f7f7f;
+    display: block;
+    transform: rotate(-45deg);
+    position: relative;
+    top: 10px;
+    transition: all linear 0.4s;
+    border-radius: 1px;
+}
+.show .navbar .navbar-toggler span.icon-bar.rotate_cross_2 {
+    height: 22px;
+    width: 2px;
+    background: #7f7f7f;
+    display: block;
+    transform: rotate(45deg);
+    position: relative;
+    top: -12px;
+    transition: all linear 0.4s;
+    border-radius: 1px;
+}
+.show .navbar .navbar-toggler span.navbar-toggler-icon {
+    display: none;
+}
+
+.navbar-light .navbar-toggler {
+    outline: none;
+    border: 0;
+    padding: 0;
+}
+.main-header .navbar-light .navbar-nav .nav-link {
+    display: inline-block;
+}
+
+.header-right .header-top {
+    display: none;
+}
+.header-top.mobile {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px;
+    flex-wrap: wrap;
+    display: none;
+}
+
+#navbarSupportedContent .main-header .navbar-light .navbar-nav {
+    align-items: flex-start;
+}
+.main-header .navbar-light .navbar-nav li:first-child {
+    padding-left: 15px;
+}
+.main-header .navbar-light .navbar-nav li {
+    padding: 8px 15px;
+    border-right: 0;
+}
+.main-header .navbar-light .navbar-nav .nav-link::after {
+    bottom: -10px;
+}
+.demo-slider .item {
+    padding: 30px;
+}
+.demo-slider .owl-prev {
+    left: -7px;
+}
+.demo-slider .owl-next {
+    right: -7px;
+}
+.Countdown-timer-content .Countdown-timer {
+    padding: 11px 15px;
+}
+    .account-menu-tabs .menu-tab-link {
+    padding: 11px 8px;
+    font-size: 14px;
+}
+.banner-content .banner-heading {
+    font-size: 75px;
+}
+.banner-content .banner-sub-heading {
+    font-size: 75px;
+}
+.banner-content p {
+    font-size: 18px;
+}
+.football-services-sec .activity-card {
+    margin-bottom: 70px;
+}
+.player-report-table .report-table-wrap th:nth-child(3) {
+    min-width: 230px;
+}
+#navbarSupportedContent .serch-login-signup {
+    flex-wrap: wrap;
+    margin-bottom:130px;
+   
+}
+.serch-login-signup li:first-child {
+    width: 100%;
+}
+.serch-login-signup .responsive-search-icon {
+    padding: 0 0 15px 15px;
+    display: block;
+}
+.serch-login-signup li:nth-child(2) {
+    padding-left: 15px;
+}
+
+}
+@media(max-width: 767px){
+     ul.ui-menu.ui-corner-bottom.ui-widget.ui-widget-content {
+    width:219px;
+    
+}
+   .activity-slider .owl-dots {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+}
+.activity-slider .owl-dots .owl-dot {
+    height: 12px;
+    width: 12px;
+    background: transparent;
+    border-radius: 50%;
+    border: 2px solid #95948f;
+    margin-right: 8px;
+}
+.activity-slider .owl-dots .owl-dot:last-child{
+    margin-right: 0;
+}
+.activity-slider .owl-dots .owl-dot.active {
+    border: 2px solid #be298d;
+    background: #be298d;
+}
+.activity-slider .owl-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.activity-slider .owl-prev {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.activity-slider {
+    padding-bottom: 63px;
+}
+.about-us-left {
+    margin-bottom: 25px;
+}
+.demo-form {
+    margin-top: 20px;
+}
+.account-menu-tabs .menu-tab-link {
+    font-size: 14px;
+    padding: 11px 6px;
+    margin-bottom: 5px;
+    width: 32%;
+   
+}
+.nav-tabs {
+    border-bottom: none;
+}
+.leader-board-table th:first-child {
+    width: 45px;
+}
+.select-player-report-form .form-row .form-group {
+    margin-bottom: 20px;
+}
+.select-player-goal-form .form-row .form-group {
+    margin-bottom: 20px;
+}
+.school-card {
+    margin-bottom: 20px;
+}
+.school-details {
+    margin-bottom: 15px;
+}
+.banner-slider .item {
+    background-position: 65% 50%;
+}
+
+}
+@media(max-width: 575px){
+.sec-heading {
+    font-size: 50px;
+    padding: 5px 40px;
+}
+.section-heading::after {
+    border-top: 45px solid #bea029;
+    border-left: 40px solid transparent;
+        left: -39px;
+}
+.sec-heading::after {
+    border-top: 45px solid #bea029;
+    border-right: 40px solid transparent;
+        right: -39px;
+}
+.section-heading::before {
+    border-bottom: 45px solid #bea029;
+    border-left: 40px solid transparent;
+        left: -39px;
+}
+.sec-heading::before {
+    border-bottom: 45px solid #bea029;
+    border-right: 40px solid transparent;
+        right: -39px;
+}
+.banner-content .banner-heading {
+    font-size: 80px;
+}
+    .banner-content .banner-sub-heading {
+    font-size: 80px;
+}
+.banner-content p {
+    font-size: 18px;
+    }
+.services-sec {
+    padding: 60px 0;
+    margin-bottom: -100px;
+}
+.testimonial-sec {
+    padding: 20px 0;
+}
+.events-sec .event-card-form .form-group label {
+    width: 35%;
+}
+.banner-content {
+    padding: 0;
+}
+.banner-content .banner-sub-heading {
+    font-size: 60px;
+        line-height: 70px;
+}
+.banner-content .banner-heading {
+    font-size: 60px;
+        line-height: 70px;
+}
+.banner-content {
+    padding: 0 25px;
+}
+
+}
+@media(max-width: 480px){
+    ul.ui-menu.ui-corner-bottom.ui-widget.ui-widget-content {
+    width: 302px;
+    
+}
+    .sec-heading {
+    font-size: 32px;
+    padding: 5px 20px;
+}
+.section-heading::after {
+    border-top: 25px solid #bea029;
+    border-left: 20px solid transparent;
+        left: -19px;
+}
+.sec-heading::after {
+    border-top: 22px solid #bea029;
+    border-right: 20px solid transparent;
+        right: -19px;
+}
+.section-heading::before {
+    border-bottom: 22px solid #bea029;
+    border-left: 20px solid transparent;
+        left: -19px;
+}
+.sec-heading::before {
+    border-bottom: 22px solid #bea029;
+    border-right: 20px solid transparent;
+        right: -19px;
+}
+.header-top.mobile {
+    display: none;
+}
+.banner-slider .item {
+    padding: 200px 0 150px;
+}
+.about-us-sec {
+    padding: 35px 0;
+}
+.drh-activity-sec {
+    padding: 100px 0;
+}
+
+.banner-content p {
+    font-size: 15px;
+}
+.activity-caption p {
+    margin-bottom: 4px;
+}
+.activity-caption h2 {
+    font-size: 16px;
+ }
+ .activity-caption p {
+    margin-bottom: 0;
+    font-size: 14px;
+}
+.testimonial-sec {
+    padding: 20px 0;
+}
+.click-here-sec {
+    padding-top: 25px;
+}
+.testimonial-slider .owl-dots .owl-dot {
+    margin-right: 4px;
+}
+.event-card-form .form-group {
+    flex-wrap: wrap;
+}
+.events-sec .event-card-form .form-group label {
+    width: 100%;
+}
+.demo-slider .item {
+    padding: 20px;
+}
+.football-course-content .f-course-heading {
+    font-size: 40px;
+    }
+    .demo-slider .owl-prev {
+    left: -7px;
+    height: 40px;
+    width: 40px;
+}
+.demo-slider .owl-next {
+    right: -7px;
+    height: 40px;
+    width: 40px;
+}
+.event-sec-heading h1 {
+    font-size: 35px;
+    }
+    .Countdown-timer li {
+    font-size: 14px;
+    padding: 0 4px;
+}
+.Countdown-timer span{
+    font-size: 18px;
+}
+.Countdown-timer li::after{
+    font-size: 17px;
+    right: -3px;
+}
+.football-course-sec {
+    padding: 180px 0 110px;
+}
+.account-sec-content .account-sec-heading {
+    font-size: 40px;
+}
+.account-menu-tabs .menu-tab-link {
+    width: 49%;
+}
+.player-goal-heading h1 {
+    font-size: 23px;
+}
+.player-goal-card legend {
+    font-size: 23px;
+    line-height: 24px;
+}
+.account-sec {
+    padding: 150px 0 110px;
+}
+.account-menu-sec {
+    padding: 80px 0 40px;
+}
+.leader-board-table table {
+    width: 100%;
+    table-layout: auto;
+}
+/*.login-sec button.cstm-btn.login {
+    margin-right: 15px;
+}
+*/.cstm-btn {
+    font-size: 13px;
+   
+}
+.register-sec .form-group {
+    width: 100%;
+    margin: 0;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.login-sec .card-body{
+    padding: 0 7px 20px;
+}
+}
+@media(max-width:360px){
+    ul.ui-menu.ui-corner-bottom.ui-widget.ui-widget-content {
+    width: 288px;
+    
+}

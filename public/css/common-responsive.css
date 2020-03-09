@@ -1,0 +1,254 @@
+/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
+
+@media (min-width: 1400px){
+.countdown-timer-container .count-down-timer li{
+       width: 100px;
+       margin-right: 20px;
+       font-size: 18px;
+   }
+   .countdown-timer-container .count-down-timer li span{
+    font-size: 40px;
+   }
+}
+@media (max-width: 1199px){
+.first-user-form .button-grp-wrap .cstm-btn {
+    padding: 9px 10px;
+}
+}
+@media (max-width: 991px){
+  .custom-left-content {
+      margin-bottom: 20px;
+  }
+  .first-user-form {
+    padding: 20px;
+   }
+   #firstUserModal .about-event-img {
+    height: 300px;
+}
+.cart-col-wrap .cart-table .price-row th, tr.price-row td{
+  font-size: 14px;
+}
+
+.card-media-object-container{
+  width: 30%;
+}
+.card-media-body{
+   width: 70%;
+}
+.card-media-body-top .subtle {
+    width: calc(100% - 205px);
+}
+.selected-categories-list li{
+  width: 50%;
+}
+}
+
+@media (max-width: 767px){
+  form .form-group {
+    margin-bottom: 30px;
+    position: relative;
+}
+  .form-img-cont h2{
+    font-size: 24px;
+  }
+  #firstUserModal .form-img-cont p {
+    font-size: 16px;
+   }
+   .coming-evet-des{
+    width: 100%;
+   }
+   .card-media-object-container{
+      width: 100%;
+      min-height: 200px;
+   }
+     .card-media-object-container .card-media-object{
+        height: 200px;
+   }
+   .card-media-body{
+    width: 100%;
+    height: auto;
+   }
+   .card-media-body-heading{
+    margin-bottom: 20px;
+   }
+   .card-media-body-top .subtle{
+    width: 100%;
+    margin-bottom: 15px;
+   }
+   .card-media-body-supporting-bottom{
+    position: static;
+    padding: 0px;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+   }
+   .order-status-row article{
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+   }
+   .order-status-row .media-right{
+    margin-left: 0px;
+   }
+   .main-header__intro-wrapper{
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+   }
+   .card-media{
+    height: auto;
+   }
+   .cart-totals .cart-table th{
+    width: 50%;
+   }
+   .mobile-hide{
+    display: none !important;
+   }
+   .dsk-hide{
+    display: block !important;
+   }
+   .complete-card .mini-btn-wrap {
+    text-align: left !important;
+    margin-top: 10px !important;
+}
+.complete-card .checkout-billing-address{
+   padding: 0px !important;
+}
+.event-planning-navigation ul{
+      margin: 165px auto;
+}
+.event-planning-navigation {
+    min-height: auto;
+  }
+  .amt-list-wrap{
+    height: auto;
+  }
+  .cstm-card-head .card-title{
+    font-size: 17px;
+  }
+.rec-heading{
+  font-size: 18px;
+}
+.card .card-footer{
+  padding: 10px 0px;
+}
+.card .animated{
+  margin-bottom: 0px;
+}
+.my-order-detail-card .cart-col-wrap{
+  height: auto;
+}
+.content-main-wrap .nav-tabs{
+  margin-top: 10px;
+}
+.content-main-wrap .nav-tabs .nav-link{
+  padding: 10px 18px;
+}
+.pkg-pop-head{
+  font-size: 22px;
+}
+.cart-modal .about-event-img{
+      height: 310px;
+}
+.cart-modal .form-img-cont p{
+    -webkit-line-clamp: 4;
+}
+.cart-pop-inn{
+  min-height: unset;
+}
+.cstm-pkg-heading{
+	font-size: 14px;
+}
+.chatBox-frame .content .messages .cstm-pkg-inn-detail ul li{
+	font-size: 14px;
+}
+.faq-accordion .btn{
+  padding-right: 10px;
+}
+.faq-accordion .acrdn-action-btns {
+    position: static;
+    margin-bottom: 0px;
+    margin-top: 10px;
+    transform: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+.acrdn-header h3 {
+  padding-left: 32px;
+}
+.faq-accordion .fa-stack{
+  font-size: 12px;
+}
+.dd3-content{
+  height: 100px;
+  font-size: 12px;
+}
+.dd3-content .action-btn-wrap{
+    position: static;
+    transform: none;
+    margin-left: 10px;
+}
+.dd-handle {
+    height: 101px !important;
+}
+.selected-categories-list li{
+  width: 100%;
+}
+}
+@media (max-width: 480px){
+  #firstUserModal .about-event-img{
+    height: 200px;
+  }
+  .content-main-wrap{
+      padding: 14px 8px;
+  }
+  .content-main-wrap .nav-tabs .nav-link {
+    margin-right: 1px;
+    font-size: 10px;
+    padding: 6px 4px;
+}
+.event-planning-navigation ul{
+      margin: 100px auto;
+}
+.form-img-cont h2 {
+    font-size: 16px;
+    font-weight: 600;
+}
+.cart-price-line .demo-app{
+  margin-left: 0px;
+}
+.hasToggle{
+  display: block;
+  margin-left: 0px;
+}
+.toggle-info-dropdown{
+  left: 0;
+  right: auto;
+}
+.cart-price-line>p{
+  width: 100%;
+}
+.cstm-pkg-inn-detail .cstmpkg-price {
+    font-size: 16px;
+    }
+    .cst-planing{
+      flex-direction: column;
+    }
+    .main-planning-list .Planning-content{
+      width: 100%;
+      margin-left:0px;
+    }
+    .main-planning-list .cstm_plan_text{
+      justify-content: center;
+    }
+    .Planning-content .create-list{
+      justify-content: center;
+    }
+}
