@@ -1,0 +1,17 @@
+homepage
+1 image banner
+2 product   name,des.,price
+3 5.categories
+4 brand models
+5 blog
+6 follow on instagram
+7 footer
+
+
+color- black and red 
+
+login 
+
+cart
+
+search

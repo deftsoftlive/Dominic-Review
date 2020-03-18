@@ -2,11 +2,17 @@ $base_url = $("#base_url").val();
 
 $(document).ready(function (){
 
-    $.validator.addMethod("customemail", 
-    function(value, element) {
-         return /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(value);
-        
-    },'Please enter a valid email.');
+  // letters only 
+  $.validator.addMethod("lettersonly", function(value, element) {
+    return this.optional(element) || /^[a-z ]+$/i.test(value);
+  }, "Please enter alphabets only");
+
+  // Custom Email
+  $.validator.addMethod("customemail", 
+  function(value, element) {
+       return /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(value);
+      
+  },'Please enter a valid email.');
 
  $.validator.addMethod("checkstrongpassword",function(value, element) {
     
@@ -34,12 +40,12 @@ $(document).ready(function (){
 
       first_name: {
           required: true,
-          maxlength:255,
+          maxlength:25,
           lettersonly:true
       },
       last_name: {
           required: true,
-          maxlength:255,
+          maxlength:25,
           lettersonly:true
       },
       gender: {
@@ -68,8 +74,7 @@ $(document).ready(function (){
       },
       country: {
         required: true,
-        maxlength: 30,
-        lettersonly:true
+        maxlength: 30
       },
       phone_number: {
           required: true,
@@ -146,7 +151,7 @@ $(document).ready(function (){
           if (placement) {
             $(placement).append(error)
           }else if(placement1=="gender"){
-              error.insertAfter("#gender");
+              error.insertAfter("#select_gender");
           }else {
             error.insertAfter(element);
           }
@@ -241,6 +246,100 @@ $(document).ready(function (){
         },
       submitHandler: function(form) {        
         $("#disable_reset_password_btnn").attr("disabled", true);
+        form.submit();
+      }
+
+  });
+
+
+    /*validation for the contact form*/
+     $('#contact_form').validate({
+
+      rules: {
+
+      participant_name: {
+          required: true,
+          maxlength:25,
+          lettersonly:true,
+      },
+      participant_dob: {
+          required: true,
+      },
+      participant_gender: {
+          required: true,
+      },
+      parent_name: {
+          required: true,
+          maxlength:25,
+          lettersonly:true,
+      },
+      parent_email: { 
+          required: true,
+          customemail:true,
+      },
+      parent_telephone: {
+          required: true,
+          digits: true,
+          minlength: 7,
+          maxlength: 15,
+      },
+      class: {
+        required: true,
+        maxlength: 30
+      },
+      },
+
+    messages:{
+      parent_telephone:{maxlength:"Maximum character limit reached."},
+      parent_telephone:{minlength:"Required, Minimum 7 characters"},
+      participant_name:{required:"This field is required."},
+      parent_name:{required:"This field is required."},
+
+      parent_email:{required:"This field is required.",email:"Please enter a valid email address."},
+  
+    },
+
+    highlight: function (element, errorClass, validClass) {
+
+      if(element.type =='text'||element.type =='password'||element.type =='email'||element.type =='select-one'||element.type == 'tel') {
+          $(element).siblings("label").addClass("error");
+          $(element).addClass('input--error').removeClass(validClass+' input--success');
+          $(element).closest('.myForm').removeClass('has-success has-feedback').addClass('has-error has-feedback');
+        // this.findByName(element.name).removeClass('has-success has-feedback').addClass('has-error has-feedback');
+        $(element).closest('.myForm').find('i.fa').remove();
+        $(element).closest('.myForm').append('<i class="fa fa-exclamation fa-lg form-control-feedback"></i>');
+      }else if(element.type == 'checkbox'){
+          $("input#checkbox1").after('<span class="checkmark"></span>');
+      }
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      if (element.type === "text"||element.type =='password' ||element.type =='email'||element.type =='select-one'||element.type == 'tel') {
+          $(element).siblings("label").removeClass("error");
+          $('.errorMsg').addClass('displaynone');
+          $(element).closest('.myForm').removeClass('has-error has-feedback').addClass('has-success has-feedback');
+          $(element).removeClass('input--error').addClass(validClass+' input--success');
+          $(element).closest('.myForm').find('i.fa').remove();
+          $(element).closest('.myForm').append('<i class="fa fa-check fa-lg form-control-feedback"></i>');
+      } 
+    },
+
+      errorElement : 'div',
+      errorPlacement: function(error, element) {
+       // $(element).next().remove();
+          var placement = $(element).data('error');
+          var placement1 = element.attr('name');
+
+          if (placement) {
+            $(placement).append(error)
+          }else if(placement1=="participant_gender"){
+              error.insertAfter("#gender");
+          }else {
+            error.insertAfter(element);
+          }
+        },
+
+      submitHandler: function(form) {        
+        $("#disable_contact_us_btnn").attr("disabled", true);
         form.submit();
       }
 

@@ -1,0 +1,269 @@
+/************************************************/
+/*Responsive Starts Here*/
+/************************************************/
+
+
+@media(max-width:1199px) {
+    .cust-review .grid-item {
+        width: 290px;
+        margin: 10px;
+    }
+    .cust-faq .owl-nav{
+        top: 35%;
+    }
+.e-commerce-platforms-wrap h4, .overview-heading h4, .overview-text h4, .quality-content h4 {
+    font-size: 20px;
+    line-height: 26px;
+    margin-bottom: 10px;
+}
+.e-commerce-platforms-wrap p, .overview-heading p, .overview-text p, .quality-content p {
+    font-size: 16px;
+    line-height: 22px;
+}
+.quality-heading h2 {
+    font-size: 30px;
+}
+}
+
+@media(max-width:991px) {
+    .cust-review .grid-item {
+        width: 220px;
+        margin: 10px;
+    }
+    /*Contact-page*/
+    .social ul li a {
+        margin: 20px 15px;
+    }
+    /*Faq Page*/
+    .cust-faq .inner-box1 ul li,
+    .sm-12-cust ul li, 
+    .sm-6-cust ul li{
+        padding: 4px 0;
+    }
+    .cust-faq .faq-text ul li a{
+        line-height: 25px;
+    }
+    /*Customer Page*/
+    ul.bus-printgenie li figure img{
+        width: 150px;
+    }
+    .latest-order ul li h3{
+        font-size: 19px;
+    }
+    .latest-order ul li h2 {
+        font-size: 16px;
+    }
+   .custm-facility .heading{
+        margin-bottom: 30px
+    }
+    .custm-quality li.flex-active-slide,
+    .custm-facility li.flex-active-slide {
+        min-height: 420px;
+        max-height: 420px;
+    }
+    /*Quality Page*/
+    .printgenie-production ul.icon-list li,
+    .custm-print-on ul li{
+        width:25%
+    }
+}
+
+@media(max-width:767px) {
+    .cust-review .grid-item {
+        width: 330px;
+        margin: 10px;
+    }
+
+    /*Contact Page*/
+    .cus-support .inner-box {
+        margin-bottom: 30px
+    }
+
+    .form-group.cust-select .form-control {
+        background-size: 2%;
+    }
+
+    .fullfilment h2 {
+        margin-bottom: 30px
+    }
+
+    .pro-feature figure {
+        text-align: center
+    }
+
+    .pro-feature .row:first-child {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-flex-wrap: wrap-reverse;
+        -ms-flex-wrap: wrap-reverse;
+        flex-wrap: wrap-reverse;
+    }
+    
+    .contact-form,
+    .social,
+    .cust-faq,
+    .cust-icon,
+    .Customer-Success,
+    .entrepreneurs,
+    .business,
+    .latest-order,
+    .review-blog,
+    .about-video,
+    .humble-begin,
+    .office-address.about-team,
+    .support,
+    .custm-facility,
+    .printgenie-production,
+    .custm-quality,
+    .custm-print-on,
+    .review-blog,
+    .branding{
+        padding: 60px 0;
+    }
+    .pro-feature{
+        padding: 60px 0 0
+    }
+    .map{
+        padding-top: 60px
+    }
+    /*FAQ Page Starts here*/
+    .cust-faq .inner-box1 .video{
+        margin-bottom: 30px
+    }
+    .cust-faq ul.cust-brands-icons{
+        margin-top: 30px
+    }
+    /*Customer Page Starts here*/
+    .cust-icon .icon-box {
+        margin-bottom: 30px;
+    }
+    .about-video .abt-vdo-content{
+        margin-bottom: 30px
+    }
+    /*Quality Page*/
+    .printgenie-production figure{
+        margin-bottom: 30px
+    }
+}
+
+@media(max-width:640px) {
+    .cust-review .grid-item {
+        width: 280px;
+        margin: 10px;
+    }
+}
+@media(max-width: 600px) {
+.e-commerce-platforms-wrap h4, .overview-heading h4, .overview-text h4, .quality-content h4 {
+    font-size: 17px;
+    line-height: 24px;
+}	
+}
+
+@media(max-width:568px) {
+    .cust-review .grid-item {
+        width: 100%;
+        margin: 0px;
+    }
+
+
+    .office-address {
+        padding-bottom: 60px;
+    }
+
+    .support ul {
+        width: 100%;
+        padding: 0;
+    }
+
+    .support ul:first-child {
+        padding-top: 30px;
+    }
+}
+
+@media(max-width:480px) {
+
+    section.cust-review .col-md-4.co-sm-4.col-xs-6,
+    .office-address .col-md-4.col-sm-6.col-xs-6 {
+        width: 100%
+    }
+
+    .review-blog ul li {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .review-blog ul {
+        display: inherit;
+    }
+    /*Faq*/
+    .Search-faqdetailview .col-md-4.col-sm-4.col-xs-6{
+        width:100%
+    }
+    .Search-faqdetailview .faqs-video img{
+        width:100%
+    }
+    .custom-printed .btn-search{
+            padding: 6px 15px;
+    }
+    .cust-faq .video iframe,
+    .about-video .video iframe{
+        height: 200px;
+    }
+    section.Customer-Success .col-md-4.col-sm-4.col-xs-6 {
+        width: 100%;
+    }
+    .business ul.bus-printgenie li{
+            width: 50%;
+    }
+    .latest-order ul li{
+        width: 100%;
+        margin-bottom: 20px
+    }
+    .support .heading{
+        margin-bottom:30px
+    }
+    .custm-quality .flexslider .slides img,
+    .custm-facility .flexslider .slides img{
+        height: auto
+    }
+    .custm-quality li.flex-active-slide, 
+    .custm-facility li.flex-active-slide{
+        min-height: auto;
+        max-height: auto;    
+    }
+    .custm-quality ol.flex-control-nav.flex-control-thumbs li, 
+    .custm-facility ol.flex-control-nav.flex-control-thumbs li{
+        width: 20%;
+    }
+    .support.custm-print ul{
+        width: 100%;
+        margin-left: 0px;
+    }
+    .custm-quality .flexslider, .custm-facility .flexslider{
+        max-width: 100%
+    }
+    .custm-print-on .accordion-container .accordion{
+        padding:0;
+    }
+    .custm-print-on .accordion-container .acc-head{
+        margin-left: 14px;
+        width: 44%;
+    }
+    .pro-feature h3{
+            font-size: 34px; 
+    }
+	.e-commerce-platforms-wrap img, .quality-content img,
+	.quality-content.content-reversed img	{
+		float: none;
+		max-width: 100%;
+		padding: 0;
+	}
+	.e-commerce-platforms-wrap, .overview-wrap, .quality-content {
+		padding: 15px;
+	}
+	.quality-heading h2 {
+		font-size: 22px;
+	}
+}

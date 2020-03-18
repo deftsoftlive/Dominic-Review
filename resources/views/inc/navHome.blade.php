@@ -1,28 +1,28 @@
-Nav menu start here -->
+<!-- Nav menu start here -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
               <div class="navbar-header">
                 <a class="navbar-brand" href="{{url('/')}}">
-                  <img src="{{ URL::asset('public/images/header-logo.png')}}">
+                  <img src="{{ URL::asset('uploads')}}/{{ getAllValueWithMeta('website_logo', 'general-setting') }}">
                 </a>
               </div>  
               <div class="header-right">
                 <ul class="header-top">
                   <li>
-                   <a href="javascript:void(0);" class="top-nav-link"><span><i class="fas fa-envelope"></i></span>info@drhsports.co.uk</a>
+                   <a href="javascript:void(0);" class="top-nav-link"><span><i class="fas fa-envelope"></i></span>{{ getAllValueWithMeta('website_email', 'general-setting') }}</a>
                   </li>
                   <li>
-                    <a href="javascript:void(0);" class="top-nav-link"><span><i class="fas fa-mobile-alt"></i></span>07929 341226</a>
+                    <a href="javascript:void(0);" class="top-nav-link"><span><i class="fas fa-mobile-alt"></i></span>{{ getAllValueWithMeta('website_phone_number', 'general-setting') }}</a>
                   </li>
                   <li>
                     <ul class="social-meadia-icons">
                       <li>
-                        <a href="javascript:void(0);" class="social-icon-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="{{ getAllValueWithMeta('facebook_link', 'general-setting') }}" class="social-icon-link"><i class="fab fa-facebook-f"></i></a>
                       </li>
                       <li>
-                        <a href="javascript:void(0);" class="social-icon-link"><i class="fab fa-instagram"></i></a>
+                        <a href="{{ getAllValueWithMeta('instagram_link', 'general-setting') }}" class="social-icon-link"><i class="fab fa-instagram"></i></a>
                       </li>
                       <li>
-                        <a href="javascript:void(0);" class="social-icon-link"><i class="fab fa-google-plus"></i></a>
+                        <a href="{{ getAllValueWithMeta('google_link', 'general-setting') }}" class="social-icon-link"><i class="fab fa-google-plus"></i></a>
                       </li>
                     </ul>
                   </li>
@@ -33,13 +33,13 @@ Nav menu start here -->
                     <a href="javascript:void(0);">menu</a>
                   </div>
                   <ul class="navbar-nav mr-auto">
-                    <li><a href="{{url('/')}}" class="nav-link active">Home</a></li>
+                    <li><a href="{{url('/')}}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a></li>
                     <li><a href="javascript:void(0);" class="nav-link">About Us</a></li>
                     <li><a href="javascript:void(0);" class="nav-link"> Shop</a></li>
-                    <li><a href="javascript:void(0);" class="nav-link">Courses</a></li>
+                    <li><a href="{{route('listing')}}" class="nav-link {{ request()->is('course-listing') ? 'active' : '' }}">Courses</a></li>
                     <li><a href="javascript:void(0);" class="nav-link">Camps</a></li>
                     <li><a href="javascript:void(0);" class="nav-link">FAQs</a></li>
-                    <li><a href="javascript:void(0);" class="nav-link">Contact Us</a></li>
+                    <li><a href="{{route('contact-us')}}" class="nav-link {{ request()->is('contact') ? 'active' : '' }}">Contact Us</a></li>
                   </ul>
                   <ul class="serch-login-signup">
                     <li>
@@ -54,8 +54,8 @@ Nav menu start here -->
                     <li>
                         <a href="{{route('login')}}" class="cstm-btn">Login</a>
                     </li>
-                    <!-- Signup Dropdown - Header Menu -->
-                    <div class="dropdown show">
+                    <li>
+                      <div class="dropdown show">
                         <a class="cstm-btn signup dropdown-toggle" href="{{route('register')}}" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Sign UP
                         </a>
@@ -64,8 +64,8 @@ Nav menu start here -->
                           <a class="dropdown-item" href="{{route('register')}}">Signup As Parent/Adult</a>
                           <a class="dropdown-item" href="{{route('register-as-coach')}}">Signup As Coach</a>
                         </div>
-                    </div>
-                    
+                      </div>
+                    </li>
                   </ul>
                 </div><!-- /.navbar-collapse -->
               </div>
@@ -80,4 +80,4 @@ Nav menu start here -->
         </div>
     </div>
 </header>
-<!-- Nav menu end here
+<!-- Nav menu end here -->

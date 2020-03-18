@@ -38,13 +38,16 @@
                             <label for="email" class="col-md-12 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-12">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Please enter your email address" required autocomplete="email" autofocus>
+                               <!--  <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Please enter your email address" required autocomplete="email" autofocus> -->
 
-                                @error('email')
+                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required placeholder="Enter your Email">
+
+                                @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{ $errors->first('email') }}</strong>
                                     </span>
-                                @enderror
+                                @endif
+                                
                             </div>
                         </div>
 

@@ -1,0 +1,304 @@
+.Eshop-navigation .nav-item{
+    padding: 0px 0px;
+}
+
+.f-product-detail h4 {
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    min-height: 40px;
+}
+.custom-checkbox .custom-control-input:indeterminate~.custom-control-label::before{
+	background-color: transparent;
+}
+.product-details p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    min-height: 43px;
+    max-height: 43px;
+}
+.product-tumb{
+    height: 230px;
+}
+.ctm-type-colors {
+    display:flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+.ctm-type-colors li {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+}
+ul.ctm-type-colors li .color-btn input {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    opacity: 0;
+}
+
+
+.ctm-type-colors li label.color{
+	margin: 0;
+	position: relative;
+}
+.ctm-type-colors li input:checked + label.color:after {
+    content: "";
+    left: calc(50% - 5px);
+    top: 50%;
+    width: 7px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg) translate(-50%, -50%);
+    position: absolute;
+}
+.size-btn label {
+    padding: 3px 10px;
+    background: #fff;
+    border: 2px solid #bab7b7;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #000e34;
+    font-weight: 500;
+    margin-bottom: 0px;
+    cursor: pointer;
+}
+.ctm-type-sizes .size-btn {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+}
+.ctm-type-sizes li:last-child .size-btn{
+   margin-right: 0px;
+}
+.size-btn>input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+}
+.size-btn>input:checked + label{
+	border-color: #000e34; 
+}
+.ctm-type-sizes {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+}
+.product-detail-sec .color {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    height: 29px;
+    width: 33px;
+    border-radius: 2px;
+}
+.price-rating-wrap {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.price-rating-wrap .price {
+    margin-right: 30px;
+}
+.price .product-price {
+    font-size: 29px;
+    color: #0c0c0c;
+    }
+.ctm-type-colors .color-btn {
+    margin-bottom: 6px;
+    display: inline-block;
+}
+.product-detail-sec .product-description{
+      text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 25px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+.action.btn-wrap {
+    display: flex;
+    align-items: center;
+}
+.action.btn-wrap .cstm-wishlist-btn {
+    font-size: 25px;
+    padding: 0px;
+    background: #f39f1b;
+    border: 2px solid #f39f1b;
+    color: #fff;
+    width: 54px;
+    height: 54px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.cstm-wishlist-btn:hover{
+	background:transparent;
+	color: #f39f1b;
+}
+.product-catagory{
+     text-overflow: ellipsis;
+        overflow: hidden;
+        line-height: 25px;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        max-height: 22px;
+}
+.prioduct-img{
+    width: 100%;
+}
+.sub-category-list li a {
+    font-size: 15px;
+}
+.sub-category-list li a:hover, .sub-category-list li a:focus{
+    color: #eda208;
+    padding-left: 5px;
+}
+.mini-btn-wrap .cstm-btn{
+    padding: 5px 14px;
+    font-size: 12px;
+}
+.filters-sidebar .card{
+  border-bottom: 1px solid #e5e5e5;
+  padding: 5px 0px;
+}
+#filter-sub-accordion .card{
+    border: 0px;
+}
+.product-details h4 a {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    min-height: 43px;
+    max-height: 43px;
+}
+.filters-sidebar .card-header a{
+    text-transform: uppercase;
+    font-size: 15px;
+}
+.sub-category-list li {
+    padding: 4px 0px;
+    display: block;
+}
+.product-checkbox-list .custom-control-label{
+        font-size: 15px;
+    color: #333333;
+    font-weight: 400;
+}
+.navbar-expand-lg .Eshop-navigation .navbar-nav .nav-link{
+    text-transform: uppercase;
+        padding: 20px 15px;
+        font-size: 14px;
+}
+.cart-table__body .cart-table__column h4 {
+    font-size: 13px;
+    margin-top: 5px;
+    color: #333;
+}
+b.bText {
+   color: #eda108;
+}
+.Status-checked label {
+    border-color: #000e34;
+}
+.status-disabled {
+    opacity: 0.8;
+    cursor: not-allowed !important;
+    color: #bab7b7;
+    position: relative;
+}
+.status-disabled:after {
+    position: absolute;
+    content: "";
+    height: 2px;
+    width: 90%;
+    background: #bab7b7;
+    left: 1px;
+    top: 14px;
+    transform: rotate(0deg);
+}
+.size-btn .status-disabled{
+   color: #bab7b7; 
+}
+.f-product-img img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+.size-btn {
+    position: relative;
+}
+.OutOfStock {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #ffffff9c;
+    cursor: not-allowed;
+    z-index: 11;
+}
+.OutOfStock img{
+    width: 100%;
+    padding: 10% 0;
+}
+.product-details a {
+    flex-wrap: wrap;
+}
+.product-details h4 {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin-bottom: 9px;
+}
+
+.loaderModal{
+    position: absolute;
+}
+
+
+
+a.wishlist.active {
+    color: #fbb72c !important;
+}
+
+
+
+
+/*responsive css*/
+@media(max-width: 1199px){
+.navbar-expand-lg .Eshop-navigation .navbar-nav .nav-link {
+    padding: 20px 5px;
+    font-size: 13px;
+}
+.Eshop-navigation .nav-item {
+    padding: 0px 5px;
+}
+}

@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/user';
 
     /**
      * Create a new controller instance.
@@ -69,21 +69,24 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'role_id' => $data['role_id'],
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'gender' => $data['gender'],
-            'date_of_birth' => $data['date_of_birth'],
-            'address' => $data['address'],
-            'town' => $data['town'],
-            'postcode' => $data['postcode'],
-            'county' => $data['county'],
-            'country' => $data['country'],
-            'phone_number' => $data['phone_number'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $user               =    new User;
+        $user->role_id      =    $data['role_id'];
+        $user->name         =    $data['first_name'].' '.$data['last_name'];
+        $user->first_name   =    $data['first_name'];
+        $user->last_name    =    $data['last_name'];
+        $user->gender       =    $data['gender'];
+        $user->date_of_birth=    $data['date_of_birth'];
+        $user->address      =    $data['address'];
+        $user->town         =    $data['town'];
+        $user->postcode     =    $data['postcode'];
+        $user->county       =    $data['county'];
+        $user->country      =    $data['country'];
+        $user->phone_number =    $data['phone_number'];
+        $user->email        =    $data['email'];
+        $user->password     =    Hash::make($data['password']);
+        $user->save(); 
+      
+        return $user;
     }
 
     /**********************************
@@ -93,4 +96,22 @@ class RegisterController extends Controller
         return view('coach.register-coach');
     }
 
+    public function userStore(array $data)
+    {
+       return  $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
+    }
+
+    public function vendorStore(array $data)
+    {
+       return $user = User::create([
+            'name' => $data['first_name'].' '.$data['last_name'],
+            'email' => $data['email'],
+            'role' => 'vendor',
+            'password' => Hash::make($data['password']),
+        ]);
+    }
 }

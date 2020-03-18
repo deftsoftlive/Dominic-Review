@@ -22,6 +22,17 @@
 }
 }
 @media(max-width: 1199px){
+    .contact-gender label {
+   
+    margin: 0 30px 0 7px;
+   
+}
+.cst_course_form .contact-gender label {
+    margin: 0 5px 0 7px;
+}
+.cst_course_form .contact-gender .text-md-right {
+    margin-right: 13px;
+}
 .main-header .navbar-light .navbar-nav li {
     padding: 0 11px;
 }
@@ -60,10 +71,43 @@
 .cstm-btn {
     
     padding: 10px 14px;}
-}
+
   ul.ui-menu.ui-corner-bottom.ui-widget.ui-widget-content {
-    width: 269px;}
+    width: 269px;
+}
+
+    .services-description li h2 {
+    font-size: 28px;    
+    }
+    .services-description li p {       
+        font-size: 16px;
+    }
+    .cst_course_form .contact-gender label:first-child
+{
+    margin-left: 0;
+}
+ul.day-list li {
+    width: 16.6666%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+}
 @media(max-width: 991px){
+   /* a.cstm-btn.days-btn {
+    padding: 10px 4px;
+    font-size: 13px;
+}*/
+    .cst_course_form .contact-gender .text-md-right {
+    margin-right: 20px;
+}
+.cst_course_form .contact-gender label {
+    margin: 0 30px 0 7px;
+}
+
+    .demo-form {   
+    margin-bottom: 40px;
+    }
+    
      ul.ui-menu.ui-corner-bottom.ui-widget.ui-widget-content {
     width: 219px;}
 
@@ -223,9 +267,37 @@ div#navbarSupportedContent {
 
 }
 @media(max-width: 767px){
+    ul.day-list li {
+    width: 25%;
+   
+}
+.event-outer-wrap {
+    display: flex;
+  
+    flex-direction: column;
+}
+.event-info-dt {
+    
+    width: 100%;
+   }
+   .event-info-dt {
+   
+    border-bottom: 1px solid #d7d7d7!important;
+
+    border-left: none;
+    border-right: none;
+}
+.event-outer-wrap .event-info-dt:last-child {
+    border-bottom:none!important;
+}
      ul.ui-menu.ui-corner-bottom.ui-widget.ui-widget-content {
     width:219px;
     
+}
+.contact-gender .text-md-right {
+
+    margin-right: 20px;
+   
 }
    .activity-slider .owl-dots {
     position: absolute;
@@ -356,8 +428,59 @@ div#navbarSupportedContent {
     padding: 0 25px;
 }
 
+
 }
 @media(max-width: 480px){
+    ul.day-list li {
+    width: 33%;
+    
+}
+    .contact-gender .text-md-right {
+
+    margin-right:0;
+   
+}
+.event-info {
+    padding: 20px 5px;
+    
+} 
+.event-info p
+{
+    font-size: 14px;
+}
+.course-list-detail .event-card-form .form-group label {
+    width: 100%;
+    margin-bottom: 8px;
+}
+.event-text {
+
+    max-width: 100%;
+   }
+    .services-description li h2 {
+    font-size: 22px;
+}
+    form.cstm-cont-page .form-group {
+
+    width: 100%;
+}
+.contact-gender .text-md-right {
+   
+    margin-right: 0;
+    width: 25%;
+ 
+}
+
+.det-gender-opt .error {
+    top: 16px;
+}
+.demo-form {
+    
+    padding: 20px;
+   
+}
+.contact-gender label {
+    margin: 1px 10px 0 10px;
+}
     ul.ui-menu.ui-corner-bottom.ui-widget.ui-widget-content {
     width: 302px;
     
@@ -459,6 +582,7 @@ div#navbarSupportedContent {
 }
 .football-course-sec {
     padding: 180px 0 110px;
+    
 }
 .account-sec-content .account-sec-heading {
     font-size: 40px;

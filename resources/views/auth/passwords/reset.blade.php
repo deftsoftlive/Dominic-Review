@@ -34,13 +34,15 @@
                             <label for="email" class="col-md-12 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-12">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" placeholder="Please enter email" required autocomplete="email" autofocus>
+                                <!-- <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" placeholder="Please enter email" required autocomplete="email" autofocus> -->
 
-                                @error('email')
+                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ $email ?? old('email') }}" required placeholder="Enter your Email">
+
+                                @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{ $errors->first('email') }}</strong>
                                     </span>
-                                @enderror
+                                @endif
                             </div>
                         </div>
 
@@ -48,13 +50,13 @@
                             <label for="password" class="col-md-12 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-12">
-                                <input id="password" type="password" placeholder="Please enter new password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="password" type="password" placeholder="Please enter new password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required autocomplete="new-password">
 
-                                @error('password')
+                                @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{ $errors->first('password') }}</strong>
                                     </span>
-                                @enderror
+                                @endif
                             </div>
                         </div>
 
@@ -62,7 +64,8 @@
                             <label for="password-confirm" class="col-md-12 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-12">
-                                <input id="password-confirm" type="password" placeholder="Please enter confirm password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <!-- <input id="password-confirm" type="password" placeholder="Please enter confirm password" class="form-control" name="password_confirmation" required autocomplete="new-password"> -->
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required placeholder="Confirm Password">
                             </div>
                         </div>
 

@@ -1,0 +1,25 @@
+Ricky
+# QA done on Ricky Document Date 27,28 and 18 . Bugs reported  (11) 0n Excel sheet.
+ 
+1.Sir i am not able to perform testing on  Project Name- ENVISIUN, because code is not updated yet.
+2.Testing devices have been submitted to Paramjeet Sir except for ipad, iphone and android which are being used by Shubham from the design team.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Harry url
+https://jetpayjetpay.mybigcommerce.com/manage/dashboard

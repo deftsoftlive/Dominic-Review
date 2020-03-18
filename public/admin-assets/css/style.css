@@ -195,10 +195,14 @@ p.text-muted {
   transition: all 0.5s ease-in-out;
 }
 .card .card-header {
-  background-color: transparent;
-  border-bottom: 1px solid #f1f1f1;
-  padding: 20px 25px;
-  position: relative;
+    background-color: transparent;
+    border-bottom: 1px solid #f1f1f1;
+    padding: 20px 25px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 .card .card-header h5 {
   margin-bottom: 0;
@@ -5645,10 +5649,83 @@ body.layout-8 .card:hover {
   position: relative;
   z-index: 5;
 }
+  
+
+/*dashboard css starts here*/
+
+table.table.table-hover th {
+    background: #3f4d67;
+    color: #fff;
+}
+table.table.table-hover th,
+table.table.table-hover tbody td:first-child 
+{
+  text-transform: capitalize;
+  vertical-align: middle;
+}
+table.table.table-hover tbody td
+{  vertical-align: middle;
+  
+}
+.page-item.active .page-link {
+    color: #fff;
+    background-color: #3f4d67;
+    border-color: #3f4d67;
+}
+.page-link:hover,
+.page-link {   
+    color: #3f4d67;    
+}
+.page-link:focus {
+    
+    box-shadow:none;
+}
+.pagination
+{
+  justify-content: center;
+}
+table.table.table-hover
+{
+  margin-top: 20px;
+  table-layout: fixed;
+}
+.btn-group.show .dropdown-menu {
+    padding: 10px 0;
+}
+.table-responsive {
+    
+   overflow: inherit;
+}
+.card .cst-admin-filter {
+    display: flex;
+    justify-content: flex-end;
+}
+.card .cst-admin-filter a
+{
+  margin-bottom: 0;
+}
+.card .cst-admin-filter a:last-child {
+    margin-right: 0;
+}
+.form-group.label-floating.is-focused input:focus,
+.form-control:focus  {
+    box-shadow: none;
+    border-color: #ced4da;
+    background: #fff!important;
+}
+ span.cst-upper-star {
+    color: red;
+}
+
+/*dashboard css ends here*/
 @media screen and (max-width: 1199px) {
   .assets-value .bg-img {
     background: none;
   }
+  .table-responsive
+  {
+  overflow-x:auto;
+}
 }
 
 .chat-sanders .card-header {
@@ -6901,9 +6978,14 @@ pre[class*=language-]:after, pre[class*=language-]:before {
 /**  =====================
       Form Componant css start
 ==========================  **/
-.custom-select,
-.form-control {
+.custom-select {
   background: #f4f7fa;
+  padding: 10px 20px;
+  font-size: 14px;
+  -webkit-appearance: none;
+}
+.form-control {
+  background: #fff;
   padding: 10px 20px;
   font-size: 14px;
   -webkit-appearance: none;
@@ -7283,7 +7365,7 @@ select.form-control-lg:not([size]):not([multiple]) {
 .table td,
 .table th {
   border-top: 1px solid #eaeaea;
-  white-space: nowrap;
+  /*white-space: nowrap;*/
   padding: 1.05rem 0.75rem;
 }
 .table thead th {
@@ -10960,8 +11042,9 @@ table.dataTable thead th {
 /*label{
   color: #333;
 }*/
-.control-label{
-  color: #333;
+.control-label {
+    color: #333;
+    font-weight: 600;
 }
 .cstm-admin-table tr th {
     background: #3f4c67;
@@ -10994,6 +11077,9 @@ table.dataTable thead th {
 .product_status_wrapper .card .card-block, .product_status_wrapper .card .card-body {
     padding: 20px 15px;
 }
+i.gender_icon {
+    font-size: 20px;
+}
 
    /*responsive css*/
    @media(max-width:767px){
@@ -11002,3 +11088,5 @@ table.dataTable thead th {
 }
 }
    /******************/
+
+

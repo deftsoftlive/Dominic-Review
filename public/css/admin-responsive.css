@@ -1,0 +1,368 @@
+.brand-link img {
+    max-width: 100%;
+}
+.card-header>.card-tools {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.card-header {
+	padding: 10px;
+}
+.sidebar-mini.sidebar-collapse .content-wrapper, .sidebar-mini.sidebar-collapse .main-footer, .sidebar-mini.sidebar-collapse .main-header {
+	margin-left: 0!important;
+}
+.main-header .navbar-nav .nav-link {
+    color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.main-header .navbar-nav .nav-link:hover,
+.main-header .navbar-nav .nav-link:focus {
+	color: #fff;
+}
+.main-header .nav-link[data-widget="pushmenu"] {
+	display: none;
+}
+.main-sidebar {
+	transition: 0.4s ease;
+}
+.sidebar-collapse aside {
+    margin-left: 0!important;
+}
+.dataTables_wrapper {
+	overflow: auto;
+	padding: 10px 5px;
+}
+.dataTables_wrapper > table {
+	min-width: 1000px;
+}
+.dataTables_wrapper .paginate_button {
+    padding: 0 5px!important;
+}
+.dd3-content .dropdown a {
+    line-height: 1;
+	font-size: 14px;
+}
+#custom-email > h4 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+#custom-email > .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.product-box {
+	display: flex;
+    flex-wrap: wrap;
+    text-align: left;	
+}
+.product-box .pro-image {
+	max-width: 80px;
+}
+.product-box .pro-image img {
+	width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-height: 80px;
+    margin-top: 5px;
+	max-width: 100%;
+}
+.product-box .prod-detail {
+	width: calc(100% - 80px);
+    flex: 0 0 calc(100% - 80px);
+    max-width: calc(100% - 80px);
+    padding-left: 15px;
+    padding-right: 0!important;
+}
+.product-box .prod-detail h6 {
+	margin-top: 10px;
+    color: #666;
+    font-weight: 500!important;
+    font-size: 13px!important;
+	padding: 0;
+}
+.product-box .prod-detail h5 {
+	font-size: 13px;
+    font-weight: 500;
+    color: #000;
+}
+.product-box ul.availableColors {
+    list-style: none;
+    margin-bottom: 1rem;
+    padding: 0px;
+}
+.product-detail-printfile .mockupitem {
+    margin: 0 8px;
+    width: 90px;
+    vertical-align: top;
+    margin-bottom: 10px;
+}
+.product-detail-printfile .mockup-items {
+    position: relative;
+    background: url(/images/trasnparent-pattern.png) repeat center center;
+}
+.product-detail-printfile .mockup-items img {
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    width: 90px;
+    height: 110px;
+    object-fit: contain;
+    max-width: 100%;
+}
+.product-detail-printfile .mockup-items .olay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.4);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms- transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+}
+.product-detail-printfile .mockupitem:hover .olay {
+    opacity: 1;
+}
+.product-detail-printfile .mockup-items .olay > a {
+    background-color: #da2b3a!important;
+    border-color: #da2b3a!important;
+    max-width: 70px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px;
+    color: #fff!important;
+    padding: 0 8px;
+	display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+	border-radius: 5px;
+}
+.product-detail-printfile .mockup-items .olay > a + a {
+    margin-left: 5px;
+}
+.product-detail-printfile .mockupitem span {
+    width: 100%;
+    display: block;
+    font-size: 10px;
+    padding: 4px 5px;
+    border: 1px solid #ddd;
+    border-top: none;
+	text-align: center;
+}
+a.btn.btn-sm.btn-danger {
+    background-color: #da2b3a!important;
+    border-color: #da2b3a!important;
+}
+.prod-detail ul.availableSizess {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+}
+.prod-detail ul.availableSizess li {
+    font-weight: 600;
+    border: 1px solid #1d1d1d;
+    width: 34px;
+    height: 34px;
+    border-radius: 100px;
+    color: #1d1d1d;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+/* responsive css starts here */
+
+@media(max-width: 1199px) {
+.direct-chat .card-body {
+	padding: 10px;
+}
+.todo-list>li .text {
+	font-weight: normal;
+	font-size: 14px;
+}
+a.brand-link {
+	height: initial;
+}
+ol.progtrckr[data-progtrckr-steps="5"] li {
+    font-size: 11px!important;
+	line-height: normal;
+	min-height: 34px;
+}
+ol.progtrckr li:before {
+    bottom: -8px;
+    transform: translateY(50%);
+}
+ol.progtrckr li.progtrckr-todo:before {
+	bottom: -8px;
+}
+ol.progtrckr {
+	min-height: 70px;
+}
+.btn,button, input, optgroup, select, textarea {
+	font-size: 14px;
+}
+.orderSection {
+	padding-bottom: 10px;
+}
+.card-body {
+	padding: 10px;
+}
+.orderSection {
+    overflow: auto;
+}
+.orderSection.row.width-50 {
+	width: 100%;
+}
+table.cart-table {
+    min-width: 1000px;
+}
+}
+@media(max-width: 991px) {
+.main-header .navbar-nav .nav-item {
+    display: flex!important;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.portlet-body .dd {
+    width: 100%;
+}
+ol.progtrckr {
+    min-height: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+	margin: 20px 0;
+}
+ol.progtrckr li:before,
+ol.progtrckr li.progtrckr-todo:before {
+    bottom: -23px;
+	transform: translate(-50%, 50%);
+}
+select#Shipping_option {
+    width: 100%;
+    margin-bottom: 5px;
+}
+.orderSection table th {
+	font-size: 14px;
+	min-width: 140px;
+}
+.orderSection table td {
+	font-size: 12px;
+}
+}
+@media(max-width: 767px) {
+.main-header .nav-link[data-widget="pushmenu"] {
+	display: flex!important;
+}	
+.inner-container {
+	padding: 10px!important;
+}
+.sidebar-close .main-sidebar {
+	position: absolute;
+    top: 50px;
+    left: -230px;
+}
+.sidebar-open .main-sidebar {
+    left: 0;
+}
+.dataTables_wrapper > table td,
+.dataTables_wrapper *,
+.dataTables_wrapper > table * {
+    font-size: 12px;
+}
+.dataTables_wrapper > table th {
+	font-size: 14px;
+}
+.card-body {
+	padding: 5px;
+}
+}
+@media(max-width: 480px) {
+.h4, 
+h4,
+.h3,
+h3 {
+    font-size: 18px;
+}
+.content-header h1 {
+    font-size: 20px;
+}
+.breadcrumb a {
+    font-size: 14px;
+}
+.colorBox {
+    width: 20px;
+    height: 20px;
+}
+.dd-list .dd-list {
+    padding-left: 10px;
+}
+.dd3-handle:before {
+	font-size: 18px;
+}
+.dd3-handle {
+	width: 20px;
+}
+.dd3-content {
+    padding: 5px 5px 5px 25px;
+	font-size: 12px;
+}
+.portlet .btn {
+    padding: 0 5px;
+}
+.portlet .fa-cogs {
+    font-size: 14px;
+}
+.parentDiv > *:not(:first-child),
+.subparentDiv *:not(:first-child) {
+    margin-left: 10px;
+    max-width: calc(600px - 10px);
+}
+.parentDiv h4,
+.alert-success, .alert-success a, .bg-success, .bg-success a, .label-success, .label-success a,
+.bg-danger a,
+.bg-info a,
+.bg-warning a {
+	font-size: 12px;
+} 
+form label {
+    font-size: 12px;
+	margin-bottom: 0;
+}
+ol.progtrckr[data-progtrckr-steps="5"] li {
+	width: 100%;
+}
+ol.progtrckr[data-progtrckr-steps="5"] li {
+    min-height: 40px;
+    margin-bottom: 30px;
+}
+ol.progtrckr li:before, ol.progtrckr li.progtrckr-todo:before {
+    bottom: -14px;
+}
+select#Shipping_option ~ a {
+    margin-bottom: 5px;
+    width: 49%;
+}
+}

@@ -1,0 +1,134 @@
+@media(max-width: 1199px) {
+.head-top-filters li.search-li {
+    width: auto;
+}
+}
+
+@media(max-width: 991px) {
+    #filters-sidebar {
+    position: fixed;
+    height: 100vh;
+    width: 280px;
+    z-index: 111;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    padding: 25px 0px;
+    background: #fff;
+    transform: translateX(-100%);
+    transition: all 0.3s ease;
+}
+#filters-sidebar.active{
+   transform: translateX(0);
+}
+#CloseFilterCategory {
+    display: block;
+}
+#FilterCategoryToggle{
+    display: block;
+}
+ .main-banner{
+ 	height: auto;
+ }
+.navbar-toggler {
+    color: #fff;
+    font-size: 38px;
+    padding: 0;
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.navbar-toggler:hover, .navbar-toggler:focus{
+	color: #fff;
+}
+.navbar-toggler-icon{
+	width: auto;
+	height: auto;
+}
+#navbarSupportedContent {
+    position: fixed;
+    width: 280px;
+    background: #f4f4f4;
+    height: 100vh;
+    left: 0;
+    z-index: 111;
+    top: 0;
+    overflow-y: auto;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+    transform: translateX(-100%);
+    transition: all 0.3s ease;
+}
+#navbarSupportedContent.show{
+	transform: translateX(0);
+}
+
+.Eshop-navigation .navbar-nav {
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.navbar-expand-lg .Eshop-navigation .navbar-nav .nav-link {
+    padding: 20px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #000e34;
+    border-bottom: 1px solid #000e3433;
+}
+.Eshop-navigation .nav-item{
+	padding: 0px;
+	width: 100%;
+}
+.mega-dropdown{
+ border-top: 3px solid #eea220;
+}
+}
+@media(max-width:767px){
+	.mob-hide{
+		display: none !important;
+	}
+	.sec-heading h2{
+		padding: 0px;
+		font-size: 26px;
+	}
+	.sec-heading h2:after, .sec-heading h2:before{
+		display: none;
+	}
+	.featured-product-sec, .products-sec, .trending-product-sec {
+    padding: 40px 0px;
+   }
+   .banner-text h1 {
+    font-size: 25px;
+}
+.owl-carousel .owl-nav button{
+	font-size: 14px !important;
+	width: 30px;
+	height: 30px;
+  }
+  .owl-carousel .owl-nav button.owl-next {
+    right: -10px;
+}
+  .owl-carousel .owl-nav button.owl-prev {
+    left: -10px;
+}
+.head-top-filters li p{
+	display: none;
+}
+}
+@media(max-width:480px){
+	.trend-product-details h2 {
+	    font-size: 18px;
+	}
+	.Eshop-header .brand-name {
+    width: 50px;
+}
+.navbar-toggler{
+	font-size: 24px;
+}
+.product-slider-wrap #slider li img {
+    height: 200px;
+    }
+    .product-detail-sec .card{
+        padding: 10px;
+    }
+}

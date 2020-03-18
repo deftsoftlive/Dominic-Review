@@ -1,0 +1,899 @@
+@media(min-width:1200px) {
+    .slider-banner .banner {
+        height: 740px
+    }
+}
+
+
+@media(max-width: 1199px) {
+    .fun-dating figure:before {
+        width: 217px;
+        height: 217px;
+    }
+
+    .upcoming-events .event-txt {
+        padding: 30px 20px;
+    }
+
+    .upcoming-events .event-txt h3 {
+        font-size: 15px;
+        margin-bottom: 10px
+    }
+
+    .upcoming-events .event-txt h4 {
+        font-size: 14px;
+    }
+
+    span.men {
+        margin-left: 7px;
+    }
+
+    /*Upcoming Page*/
+    .slider-banner.event-banner .banner {
+        height: 372px;
+    }
+
+    .events-page .event-txt h4 span.men {
+        margin-left: 0;
+        float: right
+    }
+
+    .event-banner .banner .banner-text {
+        padding-top: 0;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 57%;
+        transform: translateY(-50%);
+    }
+
+    section.upcoming-events.events-page .event-txt {
+        padding: 20px 15px;
+    }
+    .custm-foot ul li{
+        padding: 0px 16px;
+    }
+    .event-banner:before{
+        bottom: -36px;
+    }
+    /*24May2019*/
+    .inner-section .form-group{
+        width: 46%;
+    }
+    .login-btn-sec .custm-btn{
+        font-size:14px
+    }
+    .custm-btn.new-btn1{
+        max-width: 218px;
+        padding-left: 0!important;
+        padding-right: 0!important;
+    }
+    .inner-section.contact-us-page .form-group{
+        width:98%!important
+    }
+    /*14June2019*/
+    .thanku-text{
+        width: 60%;
+    }
+    /*17June2019*/
+    .fun-dating figure > img{
+        width: 217px;
+        height: 217px
+    }
+    h3.head-title {
+        left: 31%;
+        top: 26px;
+        font-size: 14px;
+    }
+    .custm-verify-msg .thanku-text{
+            width: 63%;
+    }
+    .user-details .details-box .details h3, 
+    .user-details .biography h3, 
+    .box-msg h3{
+        font-size: 18px;
+    }
+    /*1july2019*/
+    .myevnts-custm h3,
+    .myevnts-custm h2{
+        font-size: 24px;
+    }
+    .match-btn{
+        font-size: 13px;
+        width: 105px;
+    }
+    .custm-block p{
+        font-size: 14px;
+    }
+    ul.headcontacts li i{
+       margin-top: -8px;
+      font-size: 22px;
+      margin-right: 5px;
+    }
+    .custm-book-details span.men{
+        margin-left: 15%;
+    }
+    .parrs-school-img img{
+        width: 48%;
+    }
+    .parrs-school-img img:last-child{
+        margin-right: 0
+    }
+    .user-details .details-box figure {
+        width: 36%;
+    }
+    .user-details .details-box .details{
+        width: calc(100% - 42%);
+        margin-left: 20px;
+    }
+    form#user-profile-edit .form-group.custm-gender .form-control{
+        border-radius: 100%
+    }
+    #message-frame .content .message-input .wrap input{
+        border-radius: 0!important
+    }
+    .custm-foot ul.contacts i.fa.fa-envelope {
+        vertical-align: top;
+        margin-top: -5px;
+    }
+    .custm-foot ul.contacts li:last-child i{
+            font-size: 23px;
+    }
+    form#user-profile-edit .custm-btn {
+            padding: 14px 24px !important;
+    }
+    .event-btn-cust{
+        margin-bottom: 10px
+    }
+}
+@media(max-width:1024px) and (min-width: 768px){
+.caret{
+    margin-top: -0px;
+}
+}
+@media(max-width:1024px){
+    a.forget-paswrd {
+    float: left;
+    }
+    .card.custm-card {
+    padding-bottom: 41px;   
+    }
+    .custm-foot ul.contacts li i {
+    vertical-align: bottom;
+    }
+    h3.head-title {
+
+    left: 28%;
+    top: 18px;
+    font-size: 14px;
+    }
+    ul.headcontacts li::before {
+    
+    top: -2px;
+    }
+    i.fa.fa-envelope {
+        font-size: 21px;
+    }
+    .right-nav {
+    width: calc(100% - 275px);
+    }
+    .custm-book-details span.men {
+    margin-left: 0 !important;
+    display: block;
+    margin-top: 7px;
+}
+}
+
+@media(max-width: 991px) {
+    .cust-width-btn{
+        line-height: 36px;
+    }
+
+    .inner-section {
+        padding: 100px 0;
+    }
+    .inner-section.verifecation-msg {
+        padding: 140px 0;
+    }
+    .fun-dating figure {
+        display: inline-block;
+    }
+
+    .fun-dating figure:before {
+        width: 242px;
+        height: 242px;
+    }
+
+    .fun-dating .fun-date1 {
+        text-align: center
+    }
+
+    .custm-foot ul.contacts li {
+        padding-top: 4px;
+    }
+
+    ul.headcontacts {
+        width: auto;
+    }
+
+    .heading h4 {
+        font-size: 30px;
+    }
+
+    .heading h3 {
+        font-size: 56px;
+    }
+
+    .custm-foot ul li {
+        margin-bottom: 10px;
+    }
+
+    .events-page .event-txt span {
+        display: inline-block;
+        width: auto
+    }
+
+    .events-page .event-txt h4 span.men {
+        float: right
+    }
+
+        .custm-foot ul {
+        text-align: left
+    }
+
+    .custm-foot ul li {
+        width: 49%
+    }
+
+    .custm-foot ul li:before {
+        display: none
+    }
+
+    .custm-foot ul.contacts li {
+        width: 100%
+    }
+     .custm-foot ul li{
+        padding: 0
+    }
+    .custm-foot ul.contacts li{
+        padding: 0
+    }
+    .upcoming-events .event-box img{
+        width:auto
+    }
+    /*24May2019*/
+    a.custm-btn.reg-custm-btn {
+        margin: 0 6px;
+    }
+    .custm-btn.new-btn {
+        width: 103px;
+    }
+     a.forget-paswrd {
+    float:right;
+    }
+    .custm-foot ul.contacts li:last-child i {
+    margin-right: 18px;
+    }
+    /*12June*/
+    .custm-book-details .details-text span.time{
+
+    font-size: 15px;
+    }
+    .custm-book-details .details-text .event-txt h3 a{
+        margin-bottom: 5px;
+        font-size: 19px;
+    }
+    .custm-book-details .details-text .event-txt h4{
+        font-size: 15px;
+        margin-bottom: 4px;
+    }
+    /*14June2019*/
+    .thanku-text{
+        width: 80%;
+    }
+    /*17June2019*/
+    .nav > li{
+        font-size: 14px;
+    }
+    .fun-dating figure > img{
+        height: 242px;
+        width: 242px!important
+    }
+    .game-dating .fun-date1 img{
+        height: 200px
+    }
+    .our-activities p{
+        width: calc(100% - 26%);
+    }
+    p.block-p{
+        width: 100%!important
+    }
+     h3.head-title {
+        display: none
+    }
+    .custm-verify-msg .thanku-text{
+            width: 80%;
+    }
+    .user-details .details-box figure{
+        text-align: center;
+        width: 100%;
+        display: block;
+    }
+    .user-details .details-box .details{
+        width: 100%;
+        padding:15px;
+    }
+    .user-details .biography{
+        padding:15px;
+    }
+    .user-details textarea.form-control{
+        height: 90px
+    }
+    /*1july2019*/
+    /*1july2019*/
+    .myevnts-custm h3,
+    .myevnts-custm h2{
+        font-size: 22px;
+    }
+    .custm-book-details figure.details-image img{
+        object-fit: contain
+    }
+    .user-details .details-box .details{
+        margin-left: 0
+    }
+    form#user-profile-edit .custm-btn{
+        width: 100%;
+        max-width: 180px;
+        margin: 10px 0;
+    }
+    ul.headcontacts li::before {
+        top: -2px;
+    }
+    header li.dropdown:last-child {
+        margin-right: 0;
+    }
+    .nav > li{
+        margin: 0 7px;
+    }
+    .nav > li:after{
+        right: -5px;
+    }
+    li.log,
+    li.join{
+        margin-right: 0;
+        margin-left: 0
+    }
+    .navbar-right .dropdown-menu{
+        left: -29px;
+    }
+    .expct-cstmm .innr-expect p.expect-text{
+        margin-bottom:30px;
+    }
+    span.cookie-consent__message {
+        display: block;
+       margin-bottom:10px;
+    }
+    .js-cookie-consent.cookie-consent{
+        line-height: 25px;
+        font-size: 16px;
+    }
+}
+@media(max-width:991px) and (min-width: 767px){
+   .custm-book-details figure.details-image{
+        width: 100%;
+        border-bottom: 2px dashed #01af9e;
+        border-right: 0
+    }
+    .custm-book-details figure.details-image img{
+        width: 100%;
+        height: 100%
+    }
+    .custm-book-details figure.details-image{
+        padding: 0;
+        display: flex;
+    }
+    .custm-book-details .details-text{
+        width: 100%
+    }
+}
+@media(max-width: 767px) {
+
+    .navbar-default .navbar-toggle:focus,
+    .navbar-default .navbar-toggle:hover {
+        background: transparent;
+    }
+
+    li.dropdown {
+        max-width: 125px;
+    }
+
+    ul.headcontacts li:first-child {
+        display: none
+    }
+
+    ul.headcontacts li:nth-child(2) {
+        display: none
+    }
+
+    ul.headcontacts {
+        position: absolute;
+        top: 16px;
+        right: 80px;
+    }
+
+    .navbar-brand {
+        padding: 10px 0;
+        margin-top: 0
+    }
+
+    .slider-banner .banner .banner-text {
+        width: 89%;
+    }
+
+    .navbar-default .navbar-toggle {
+        border-color: #fff;
+    }
+
+    .navbar-default .navbar-toggle .icon-bar {
+        background-color: #fff;
+    }
+
+    .navbar-toggle {
+        margin-top: 25px;
+        margin-right: 0;
+    }
+
+    .nav > li > a:hover:before,
+    .nav > li.active > a:before {
+        transform: scale(0)
+    }
+
+    .nav > li:after {
+        display: none
+    }
+
+    li.join,
+    li.log {
+        margin: 0;
+        padding-top: 8px;
+        padding-bottom: 0px;
+        width: 100%;
+        max-width: 150px;
+        margin-bottom: 30px;
+        display: inline-block;
+    }
+
+    .fun-dating {
+        padding: 0px 0 100px;
+    }
+
+    .custm-foot ul.contacts i.fa.fa-envelope {
+        margin-top: -8px;
+    }
+
+    .upcoming-events .event-box figure img {
+        width: 100%
+    }
+    .event-banner:before{
+        bottom: -36px;
+    }
+    
+    .card.custm-card{
+        width: 100%
+    }
+    /*24May2019*/
+    .inner-section.contact-us-page{
+        width: 100%
+    }
+    /*28May2019*/
+    .dash-wrapper .ham{
+    display: block;
+    position: absolute;
+    top: 100px;
+    z-index: 1;
+    left: 20px;
+
+    }
+    .dash-wrapper .side-nav{
+        left: -273px;
+        position: absolute;
+        -webkit-transition: all 0.3s ease-in-out;
+         -moz-transition: all 0.3s ease-in-out;
+        -ms- transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        height: calc(100% - 90px);
+    }
+     .dash-wrapper .right-nav{
+        width: 100%;
+        padding:20px;
+            margin-top: 130px;
+    }
+    section.dash-wrapper.custm-side-slide .side-nav{
+        left: 0
+    }
+    .dash-wrapper aside.side-nav i.fa.fa-times-circle {
+        display: block;
+    }
+    .dash-wrapper .side-nav {
+        margin-top:150px;
+    }
+    section.dash-wrapper > .container{
+        width: 100%
+    }
+    .dash-wrapper .side-nav {
+    margin-top: 150px;
+    height: calc(100% - 150px);
+        z-index: 1;
+    }
+    /*060619*/
+    .fun-date1 figure img {
+    width: 100%;
+    }
+     .nav > li{
+        padding-top:10px;
+        padding-bottom: 10px
+    }
+    /*12June2019*/
+    .custm-book-details .details-text{
+        padding:15px 20px;
+    }
+    /*14June2019*/
+    .thanku-text{
+        width: 90%;
+    }
+    .custm-verify-msg .thanku-text{
+            width: 90%;
+    }
+    .user-details .details-box figure img{
+        width: 100%;
+        max-width:100%
+    }
+    /*1July2019*/
+    
+    .custm-block figure.match_user_fig{
+        text-align: center;
+    }
+    .parrs-school-img img{
+        width:46%;
+    }
+    li.dropdown .caret {
+    margin-top: -6px;
+}
+.slider-banner .owl-dots{
+    z-index: auto
+}
+h1.site-title{
+    font-size: 30px;
+}
+.page-title{
+    font-size: 28px;
+}
+p.body-text{
+    font-size: 17px;
+}
+ .event-btn-cust{
+        margin-bottom: 0px
+    }
+    span.cookie-consent__message{
+    padding: 0 5px;
+}
+}
+@media(max-width:667px){
+
+.custm-foot ul.contacts i.fa.fa-envelope {
+    margin-top:-1px;
+}
+li.dropdown .caret {
+    margin-top: -5px;
+}
+/*.user-details .details-box figure {
+    display: inline-block;
+    vertical-align: middle;
+    width: 40%;
+}*/
+.user-details .details-box .details {
+    width:100%;
+    
+}
+.user-details .details-box figure img {
+    width: 100%;
+    display: grid;
+}
+.user-details .details-box .details {
+    margin-left: 15px;
+    
+}
+.user-details .details-box .details h3 span {
+   
+    margin-left: 0 !important;
+    
+}
+.custm-foot ul.contacts li:last-child i {
+    
+    margin-left: 4px!important;
+}
+
+}
+
+@media(max-width:570px){
+    .inner-section .form-group {
+       width: 100%;
+       margin-left: 0
+    }
+    form#user-profile-edit{
+        width: 100%
+    }
+    .custm-book-details figure.details-image{
+            display: block;
+            width: 100%;
+            margin: auto;
+            border-bottom: 2px dashed #01af9e;
+        padding: 0px;
+        border-right: none;
+        display: flex;
+    }
+    .custm-book-details .details-text{
+        width:100%
+    }
+    .custm-book-details .details-text .event-txt h3 a {
+        margin-bottom: 10px;
+    } 
+    .custm-book-details .details-text .event-txt h4{
+            margin-bottom: 7px;
+    }  
+    .custom-bookk-form .custm-btn{
+            max-width: 225px;
+    }
+
+form#edit_profile_pic_form input[type=file] {
+    display: inline-block;
+    width: 80%;
+}
+form#edit_profile_pic_form .modal-footer{
+    padding-top: 35px
+}
+.user-details .details-box figure img{
+    max-width: 100%;
+}
+.expct-cstmm .innr-expect p.expect-img,
+.expct-cstmm .innr-expect p.expect-text{
+    width: 100%;
+    padding-left: 0
+}
+}
+@media(max-width: 480px) {
+    .event-banner:before {
+        bottom: -39px;
+    }
+
+    .slider-banner .banner .banner-text {
+        width: 100%;
+    }
+
+    .slider-banner .banner .banner-text h3 {
+        font-size: 30px;
+        padding:0 10px;
+    }
+
+    .slider-banner .banner .banner-text p {
+        font-size: 18px;
+    }
+
+    .heading h3 {
+        font-size: 33px;
+    }
+
+    .heading h4 {
+        font-size: 21px;
+        margin-bottom: 15px;
+    }
+
+    .fun-dating .heading p {
+        padding: 0 0%;
+    }
+
+    .fun-dating .col-md-3.col-sm-6.col-xs-6,
+    .find-match .col-md-4.col-sm-4.col-xs-6 {
+        width: 100%
+    }
+
+    .heading p {
+        padding: 0
+    }
+
+    .upcoming-events .event-box {
+        padding: 0 20px
+    }
+
+    .upcoming-events .owl-dots {
+        display: none !important
+    }
+
+    .upcoming-events button.owl-next {
+        right: 0;
+        position: absolute;
+    }
+
+    .upcoming-events button.owl-prev:hover,
+    .upcoming-events button.owl-next:hover {
+        color: #df2015
+    }
+
+    .upcoming-events .owl-nav {
+        display: block !important;
+        transform: translateY(-50%);
+        top: 49%;
+        position: absolute;
+        width: 100%;
+        font-weight: 200;
+        font-size: 56px;
+        color: #01af9d
+    }
+
+    .custm-foot ul {
+        padding: 20px 0
+    }
+
+    .custm-foot ul li {
+        width: 100%;
+        padding: 5px 0px;
+        vertical-align: top;
+    }
+
+    section.upcoming-events.events-page .col-md-4.col-sm-6.col-xs-6 {
+        width: 100%
+    }
+    section.find-match .col-md-4.col-sm-4.col-xs-4{
+        width: 100%
+    }
+    /*24May2019*/
+    .inner-section .card{
+        padding:15px;
+    }
+    .login-btn-sec{
+        text-align:center;
+    }
+    a.forget-paswrd{
+        float: none;
+        display: block;
+    }
+    .custm-btn.new-btn1 {
+        margin-bottom: 15px;
+    }
+    .inner-section.contact-us-page form{
+        padding:0 15px
+    }
+    .dash-wrapper .right-nav{
+        padding-left: 0;
+        padding-right: 0
+    }
+    /*060619*/
+    section.our-activities p {
+    text-align: justify;
+    }
+    li.dropdown .caret{
+   
+    margin-top:-7px;
+    margin-left:4px;
+    }
+   
+   .custm-foot ul.contacts li i {
+        vertical-align: middle;
+    }
+    .custm-foot ul.contacts i.fa.fa-envelope {
+       margin-top: -5px;
+    }
+    .custm-foot ul.contacts i.fa.fa-mobile{
+        font-size: 30px!important;
+        margin-top: -4px!important;
+    }
+    /*14June*/
+    .thanku-text{
+        padding: 30px 10px;
+    }
+    .thanku-text img {
+        width: 34%;
+    }
+    .thanku-text p{
+    font-size: 25px;
+    margin: 30px 0 0;
+    }
+    /*17June2019*/
+    .our-activities figure.new-fig{
+        width: 100%;
+        margin-bottom: 20px
+    }
+    .our-activities p{
+        width: 100%;
+        padding-left: 0
+    }
+    .user-details .details-box .details h3 span{
+        display: block;
+        margin-left: 0
+    }
+    .user-details .details-box .details h3,
+    .user-details .biography h3, 
+    .box-msg h3{
+        margin-bottom: 10px
+    }
+    .myevnts-custm h3, 
+    .myevnts-custm h2 {
+       font-size: 20px;
+    }
+    .col-md-3.col-sm-6.col-xs-6.boxx-wrap {
+        width: 100%;
+        float: none;
+        margin-bottom: 30px;
+    }
+    #message-frame .content{
+        width: 100%
+    }
+    .parrs-school-img img{
+        width:100%
+    }
+    .custm-btn{
+        padding: 6px 16px !important
+    }
+    .slider-banner .banner{
+        height: 637px;
+    }
+    .dash-wrapper .ham{
+        top: 98px;
+    }
+#gender {
+    border-radius: 50%;
+}
+.user-details .details-box .details
+{
+    margin: 20px 0;
+}
+.user-details .details-box .details h3{
+    font-size: 14px;
+}
+
+
+.custm-btn {
+    padding: 4px !important;
+    font-size: 12px;
+    margin: 5px 0;
+}
+/*.user-details .details-box figure img {
+    max-width: 100%;
+    width: 100%;
+}*/
+.user-details .details-box figure {
+   
+    margin-right: 10px;
+}
+.cust-width-btn{
+    line-height: 30px;
+}
+.parrs-school-img img{
+    margin-right: 0
+}
+.reg-btn.custm-btn {
+    margin: 20px auto;
+    display: block;
+    padding: 8px 20px !important;
+        font-size: 14px;
+}
+.custm-book-details figure.details-image img{
+    width: 100%;
+    height: 100%
+
+}
+ul.dropdown-menu li .custm-btn{
+    margin: 0
+}
+#message-frame .content .messages{
+    min-height: calc(100% - 45px);
+}
+a.btn.custm-btn.width-custm1 {
+    padding: 6px 16px !important;
+}
+
+}
+
+

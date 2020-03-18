@@ -5,7 +5,6 @@
 
 @section('content')
 
-<!-- List of Countries -->
 @php $country_code = DB::table('country_code')->get(); @endphp
 
 <section class="account-sec">
@@ -37,13 +36,15 @@
                             <label for="first_name" class="col-md-12 col-form-label text-md-right">{{ __('First Name') }}</label>
 
                             <div class="col-md-12">
-                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" placeholder="Please enter first name" required autocomplete="first_name" autofocus>
 
-                                @error('first_name')
+                                <input id="first_name" type="text" class="form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" name="first_name" value="{{ old('first_name') }}" required autofocus placeholder="Please enter first name">
+
+                                @if ($errors->has('first_name'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{ $errors->first('first_name') }}</strong>
                                     </span>
-                                @enderror
+                                @endif
+                               
                             </div>
                         </div>
 
@@ -52,33 +53,34 @@
                             <label for="last_name" class="col-md-12 col-form-label text-md-right">{{ __('Last Name') }}</label>
 
                             <div class="col-md-12">
-                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" placeholder="Please enter last name" required autocomplete="last_name" autofocus>
 
-                                @error('last_name')
+                                <input id="last_name" type="text" class="form-control{{ $errors->has('last_name') ? ' is-invalid' : '' }}" name="last_name" value="{{ old('last_name') }}" required autofocus placeholder="Please enter last name">
+                                
+                                @if ($errors->has('last_name'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{ $errors->first('last_name') }}</strong>
                                     </span>
-                                @enderror
+                                @endif
                             </div>
                         </div>
 
                         <!-- Gender -->
-                        <div class="form-group row gender-opt">
-                            <label for="gender" class="col-md-12 col-form-label text-md-right">{{ __('Gender') }}</label>
+                        <div class="form-group row gender-opt signup-gender-op">
+                            <label for="gender" class="col-md-12 col-form-label text-md-right ">{{ __('Gender') }}</label>
 
                             <div class="col-md-12 det-gender-opt">
-                                <!-- <input id="gender" type="text" class="form-control @error('gender') is-invalid @enderror" name="gender" value="{{ old('gender') }}" required autocomplete="gender" autofocus> -->
 
                                 <input type="radio" id="male" name="gender" value="male">
                                 <label for="male">Male</label><br>
                                 <input type="radio" id="female" name="gender" value="female">
                                 <label for="female">Female</label><br>
 
-                                @error('gender')
+                                <div id="select_gender"></div>
+                                @if ($errors->has('gender'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{ $errors->first('gender') }}</strong>
                                     </span>
-                                @enderror
+                                @endif
                             </div>
                         </div>
 
@@ -87,13 +89,14 @@
                             <label for="date_of_birth" class="col-md-12 col-form-label text-md-right">{{ __('Date Of Birth') }}</label>
 
                             <div class="col-md-12">
-                                <input id="date_of_birth" type="date" class="form-control @error('date_of_birth') is-invalid @enderror" name="date_of_birth" value="{{ old('date_of_birth') }}" required autocomplete="date_of_birth" autofocus>
 
-                                @error('date_of_birth')
+                                <input id="date_of_birth" type="date" class="form-control{{ $errors->has('date_of_birth') ? ' is-invalid' : '' }}" name="date_of_birth" value="{{ old('date_of_birth') }}" required autofocus placeholder="Please enter date of birth">
+
+                                @if ($errors->has('date_of_birth'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{ $errors->first('date_of_birth') }}</strong>
                                     </span>
-                                @enderror
+                                @endif
                             </div>
                         </div>
 
@@ -102,13 +105,14 @@
                             <label for="address" class="col-md-12 col-form-label text-md-right">{{ __('Address (Number & Street)') }}</label>
 
                             <div class="col-md-12">
-                                <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" placeholder="Please enter address" required autocomplete="address" autofocus>
 
-                                @error('address')
+                                <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}" required autofocus placeholder="Please enter address">
+
+                                @if ($errors->has('address'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{ $errors->first('address') }}</strong>
                                     </span>
-                                @enderror
+                                @endif
                             </div>
                         </div>
 
@@ -117,13 +121,15 @@
                             <label for="town" class="col-md-12 col-form-label text-md-right">{{ __('Town') }}</label>
 
                             <div class="col-md-12">
-                                <input id="town" type="text" placeholder="Please enter town" class="form-control @error('town') is-invalid @enderror" name="town" value="{{ old('town') }}" required autocomplete="town" autofocus>
 
-                                @error('town')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="town" type="text" class="form-control{{ $errors->has('town') ? ' is-invalid' : '' }}" name="town" value="{{ old('town') }}" required autofocus placeholder="Please enter town">
+
+                                
+                                @if ($errors->has('town'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('town') }}</strong>
+                                        </span>
+                                    @endif
                             </div>
                         </div>
 
@@ -132,13 +138,15 @@
                             <label for="postcode" class="col-md-12 col-form-label text-md-right">{{ __('Postcode') }}</label>
 
                             <div class="col-md-12">
-                                <input id="postcode" type="text" placeholder="Please enter postcode" class="form-control @error('postcode') is-invalid @enderror" name="postcode" value="{{ old('postcode') }}" required autocomplete="postcode" autofocus>
 
-                                @error('postcode')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="postcode" type="text" class="form-control{{ $errors->has('postcode') ? ' is-invalid' : '' }}" name="postcode" value="{{ old('postcode') }}" required autofocus placeholder="Please enter postcode">
+
+                                 @if ($errors->has('postcode'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('postcode') }}</strong>
+                                        </span>
+                                    @endif
+
                             </div>
                         </div>
 
@@ -147,24 +155,25 @@
                             <label for="county" class="col-md-12 col-form-label text-md-right">{{ __('County') }}</label>
 
                             <div class="col-md-12">
-                                <input id="county" type="text" class="form-control @error('county') is-invalid @enderror" name="county" value="{{ old('county') }}" placeholder="Please enter county" required autocomplete="county" autofocus>
 
-                                @error('county')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="county" type="text" class="form-control{{ $errors->has('county') ? ' is-invalid' : '' }}" name="county" value="{{ old('county') }}" required autofocus placeholder="Please enter county">
+
+                                 @if ($errors->has('county'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('county') }}</strong>
+                                        </span>
+                                    @endif
                             </div>
                         </div>
 
-                        <!-- Country Listing-->
+                        <!-- Country -->
                         <div class="form-group row">
                             <label for="country" class="col-md-12 col-form-label text-md-right">{{ __('Country') }}</label>
 
                             <div class="col-md-12">
-                            <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+                             <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-                                <select id="country" name="country" class="form-control cstm-select-list nw_cstm_select">
+                                <select id="country" name="country" class="form-control cstm-select-list">
 
                                     @foreach($country_code as $name)
                                         <option value="{{$name->countryname}}">{{$name->countryname}}</option>
@@ -186,13 +195,14 @@
                             <label for="country" class="col-md-12 col-form-label text-md-right">{{ __('Phone Number') }}</label>
 
                             <div class="col-md-12">
-                                <input id="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') }}" placeholder="Please enter phone number" required autocomplete="phone_number" autofocus>
 
-                                @error('phone_number')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="phone_number" type="text" class="form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" name="phone_number" value="{{ old('phone_number') }}" required autofocus placeholder="Please enter phone number">
+
+                                 @if ($errors->has('phone_number'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('phone_number') }}</strong>
+                                        </span>
+                                    @endif
                             </div>
                         </div>
 
@@ -201,13 +211,14 @@
                             <label for="email" class="col-md-12 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-12">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Please enter email address" required autocomplete="email">
+ 
+                                <input id="email" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus placeholder="Please enter email">
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                 @if ($errors->has('email'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                    @endif
                             </div>
                         </div>
 
@@ -216,13 +227,14 @@
                             <label for="password" class="col-md-12 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-12">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Please enter password" required autocomplete="new-password">
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" value="{{ old('password') }}" required autofocus placeholder="Please enter password">
+
+                                 @if ($errors->has('password'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
+                                    @endif
                             </div>
                         </div>
 
@@ -231,7 +243,8 @@
                             <label for="password-confirm" class="col-md-12 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-12">
-                                <input id="password-confirm" placeholder="Please enter confirm password" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+
+                                <input id="password_confirmation" type="password" class="form-control{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" name="password_confirmation" value="{{ old('password_confirmation') }}" required autofocus placeholder="Please enter password confirmation">
                             </div>
                         </div>
 
