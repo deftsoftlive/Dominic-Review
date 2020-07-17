@@ -91,6 +91,8 @@ public function postAddress(Request $request)
 	         'country_short_code' =>$request->country_short_code,
 	         'tax'=> $tax['val']
          ];
+
+      
          Session::put('billingAddress',json_encode($arr));
          $url = $this->nextStepRoute('checkout.orderSummary');
          return response()->json(['status' => 1,'errors' => 'Billing Address is saved', 'redirectLink' => $url]);

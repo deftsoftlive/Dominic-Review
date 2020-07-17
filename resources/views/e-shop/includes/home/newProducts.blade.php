@@ -1,9 +1,9 @@
-   <section class="products-sec">
+   <section class="products-sec section-padding">
         <div class="container">
-            <div class="sec-heading text-center wow bounceInRight" data-wow-delay=".35s">
-                <h2>PRODUCTS</h2>
+            <div class="pink-heading">
+                <h2>OUR DRH PRODUCTS</h2>
             </div>
-            <div class="product-wrapper wow bounceInUp" data-wow-delay=".40s">
+            <div class="product-wrapper">
                 <div class="row">
 
 
@@ -11,7 +11,7 @@
 
 
 <?php
-   $newProducts = \App\Models\Products\Product::NewProducts();
+  $newProducts = \App\Models\Products\Product::NewProducts();
 ?>
 @foreach($newProducts as $pro)
 
@@ -21,7 +21,7 @@
         $RS =   $product->subProducts != null && $product->subProducts->count() > 0 ? $product->subProducts->first() : $product;
         $complete2 = $product->product_type == 0 && $product->price > 0 ? 1 : 0;
         $complete = $product->product_type == 0 ? $complete2 : $complete1;
-        $saleImage = $RS->sale_price > 0 ? 'On Sale' : 'Hot';
+        $saleImage = $RS->sale_price > 0 ? 'On Sale' : 'Latest';
         $type = $complete == 0 ? 'Comming Soon' : $saleImage;
         $url = $complete == 1 ? url(route('shop.product.detail.page',$RS->slug)) : 'javascript:void(0)';
         $stock = $pro->parent > 0 ? $pro->checkStock() : $product->checkStock();
@@ -46,15 +46,15 @@
                                 <p>{{$product->short_description}}</p>
                               </a>
                                 <div class="product-bottom-details">
-                                  <h5>Price Start From</h5>
+                                  <h5>Price</h5>
                                   @php $price = $RS->productPrice(); @endphp
                                        {!!$price['html']!!}
                                    <div class="product-links">
-                                                            <a href="javascript:void(0)" 
+                                                            <!--<a href="javascript:void(0)" 
                                                                 class="wishlist {{$product->hasInWishlist()}}"
                                                                data-url="{{url(route('shop.wishlist.create',$product->id))}}"
                                                                ><i class="fa fa-heart"></i>
-                                                             </a>
+                                                             </a>-->
                                         <a href="{{$url}}"><i class="fa fa-shopping-cart"></i></a>
                                     </div>
                                 </div>

@@ -7,7 +7,7 @@ class Season extends Model
     use Sluggable;
     
     protected $fillable = [
-        'name', 'description', 'status'
+        'title', 'description', 'status'
     ];
     /**
      * Return the sluggable configuration array for this model.
@@ -18,7 +18,7 @@ class Season extends Model
     {
         return [
             'slug' => [
-                'source' => 'name'
+                'source' => 'title'
             ]
         ];
     }

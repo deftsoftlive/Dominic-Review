@@ -217,7 +217,7 @@
     padding-left: 12px
 }
 
-.cart-table__options li:before {
+/*.cart-table__options li:before {
     content: "";
     display: block;
     position: absolute;
@@ -227,7 +227,7 @@
     border-radius: 2px;
     background: currentColor;
     left: 1px
-}
+}*/
 
 @media (min-width:768px) {
     .cart-table__column {

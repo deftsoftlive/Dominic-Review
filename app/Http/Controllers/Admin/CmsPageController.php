@@ -9,7 +9,8 @@ use App\Models\Admin\CmsPage;
 class CmsPageController extends Controller
 {
     public function index() {
-    	return view('admin.cms-pages.index')->with(['title'=> 'Pages', 'addLink' => 'admin.cms-pages.showCreate']);
+    	$cms_pages = CmsPage::orderBy('id','asc')->paginate(10);
+    	return view('admin.cms-pages.index',compact('cms_pages'))->with(['title'=> 'Pages', 'addLink' => 'admin.cms-pages.showCreate']);
     }
 
     public function ajaxData() {

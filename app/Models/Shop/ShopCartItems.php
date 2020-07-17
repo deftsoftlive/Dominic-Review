@@ -79,14 +79,18 @@ class ShopCartItems extends Model
                         ->get();
           $status = 1;
           foreach ($items as $item) {
-                    $product = $item->variant_id > 0 ? $item->VariantProduct : $item->product;
+              $product = $item->variant_id > 0 ? $item->VariantProduct : $item->product;
+
+                  if(isset($product))
+                  {  
                     $stock = $product->checkStock(); 
                     if($stock != null){
                           $total = $stock->stock >= $item->quantity ? ($stock->stock - $item->quantity) : 0;
                           if($total <= 0){
                               $status = 0;
                           }
-                    }                    
+                    }
+                  }                   
           }
           return $status;
     }

@@ -19,7 +19,7 @@
                                                          <tr>
                                                             <th style="font-family: Verdana, 'Times New Roman', Arial; vertical-align: top; font-size: 14px; padding-top:4px; padding-bottom: 4px; color: #606060;">Cart Subtotal</th>
                                                             <td style="font-family: Verdana, 'Times New Roman', Arial;padding-top:4px; padding-bottom: 4px; vertical-align: top; font-size: 14px; font-weight: bold color: #000;">
-                                                               <strong>${{custom_format($orders->sum('total'),2)}}</strong>
+                                                               <strong>£{{custom_format($orders->sum('total'),2)}}</strong>
                                                             </td>
                                                          </tr>
                                                       
@@ -36,7 +36,7 @@
                                                          <tr>
                                                             <th style="font-family: Verdana, 'Times New Roman', Arial; vertical-align: top; font-size: 14px; padding-top:4px; padding-bottom: 15px; color: #606060;">Service Fee</th>
                                                             <td style="font-family: Verdana, 'Times New Roman', Arial;padding-top:4px; padding-bottom: 15px; vertical-align: top; font-size: 14px; font-weight: bold color: #000;">
-                                                               <strong> - ${{$extra['service']}}</strong>
+                                                               <strong> - £{{$extra['service']}}</strong>
                                                             </td>
                                                          </tr>
 
@@ -44,7 +44,7 @@
                                                            <tr>
                                                             <th style="font-family: Verdana, 'Times New Roman', Arial; vertical-align: top; font-size: 14px; padding-top:4px; padding-bottom: 15px; color: #606060;">Application Fee</th>
                                                             <td style="font-family: Verdana, 'Times New Roman', Arial;padding-top:4px; padding-bottom: 15px; vertical-align: top; font-size: 14px; font-weight: bold color: #000;">
-                                                               <strong> - ${{$extra['commission']}}</strong>
+                                                               <strong> - £{{$extra['commission']}}</strong>
                                                             </td>
                                                          </tr>
 
@@ -56,7 +56,7 @@
                                                          <tr>
                                                             <th style="font-family: Verdana, 'Times New Roman', Arial; vertical-align: top; font-size: 18px; padding-top:4px; padding-bottom: 4px; color: #606060; border-top: 1px solid #d1d1d1;">Order Total</th>
                                                             <td style="font-family: Verdana, 'Times New Roman', Arial; border-top: 1px solid #d1d1d1;padding-top:4px; padding-bottom: 4px; vertical-align: top; font-size: 18px; font-weight: bold color: #000;">
-                                                               <strong>${{custom_format( $total,2)}}</strong>
+                                                               <strong>£{{custom_format( $total,2)}}</strong>
                                                             </td>
                                                          </tr>
 

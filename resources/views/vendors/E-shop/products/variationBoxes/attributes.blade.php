@@ -1,10 +1,11 @@
-<h4 class="head text-center">Product Attributes</h4>
  
-<?php  $allTypAlreadySaved = $product->variationAttributes->pluck('type')->toArray(); ?>
+<h3>Product Attributes</h3>
+ 
+<?php $allTypAlreadySaved = $product->variationAttributes->pluck('type')->toArray(); ?>
 
 <div class="row">
-     <div class="col-sm-7">
-                <select name="variation" class="v-cstm-select" id="loadAllVariationOfProduct">
+     <div class="col-sm-6">
+                <select name="variation" class="v-cstm-select form-control" id="loadAllVariationOfProduct">
                	                   <option value="">choose</option>  
                                   @foreach($product->subcategory->ProductVariations as $v)
 	                                  <option 
@@ -16,10 +17,12 @@
 	                                  </option>  
 	                              @endforeach
 		        </select>
+		    </div>
+		    <div class="col-sm-4">
                 <button class="btn btn-primary" type="button" id="loadAllVariationOfProductBTN" data-route="{{url(route('vendor.shop.variation.types',$product->id))}}">Add</button>
-
+			</div>
      </div>
-</div>
+
 
 
 <form class="row" id="saveAttributeProducts" data-action="{{url(route('vendor.shop.variation.attributes',$product->id))}}">
@@ -30,3 +33,4 @@
 	 	<button class="btn btn-primary">Save Attributes</button>
 	 </div>
 </form>
+

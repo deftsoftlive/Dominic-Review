@@ -12,7 +12,7 @@
             <div class="b-bg">
                <img src="/frontend/images/logo.svg">
             </div>
-            <span class="b-title">Envisiun Vendor</span>
+            <span class="b-title">DRH Sports</span>
          </a>
          <a class="mobile-menu" id="mobile-collapse" href="javascript:"><span></span></a>
       </div>

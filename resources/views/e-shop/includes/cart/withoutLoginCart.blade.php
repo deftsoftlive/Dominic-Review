@@ -19,7 +19,7 @@
                                 </td>
                                 <td class="cart-table__column cart-table__column--product">
                                     <a href="" class="cart-table__product-name">{{$item->name}}</a>
-                                    <h4>Product Type: {{$product->product_type == 1 ? 'Variable' : 'Simple'}}</h4>
+                                    <!-- <h4>Product Type: {{$product->product_type == 1 ? 'Variable' : 'Simple'}}</h4> -->
                                    
                                   @if($product->product_type == 1)
                                     <ul class="cart-table__options">
@@ -33,19 +33,19 @@
                                  
 
                                  @if($stock != null)
-                                          <p class="vote"><strong>Stock : </strong> {{$availableStock == 0 ? 'Out Of Stock' : 'In Stock'}} 
+                                        <!--   <p class="vote"><strong>Stock : </strong> {{$availableStock == 0 ? 'Out Of Stock' : 'In Stock'}} 
                                                {!!$stock->lowInStock >= $availableStock ? '<strong>('.$availableStock.' items)</strong>' :''!!}
-                                          </p>
+                                          </p> -->
                                   @endif
 
                                 </td>
                                 <td class="cart-table__column cart-table__column--price" data-title="Price">
-                                   ${{custom_format($item->price,2)}}    
+                                   £{{custom_format($item->price,2)}}    
 
                                 </td>
                                 <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
                                     <div class="input-number">
-                                        <input class="form-control input-number__input" 
+                                        <input disabled="" class="form-control input-number__input" 
                                         type="number" min="1" value="{{$item->quantity}}">
                                         <a 
                                         class="input-number__sub cartItemQty {{$item->quantity == 1 ? 'disabled-type' : ''}}"
@@ -66,7 +66,7 @@
                                     </div>
                                 </td>
                                 <td class="cart-table__column cart-table__column--total" data-title="Total">
-                                        ${{custom_format($item->getPriceSum(),2)}} 
+                                        £{{custom_format($item->getPriceSum(),2)}} 
                                 </td>
                                 <td class="cart-table__column cart-table__column--remove">
                                     <a href="javascript" class="btn btn-light btn-sm btn-svg-icon cartItemQty"

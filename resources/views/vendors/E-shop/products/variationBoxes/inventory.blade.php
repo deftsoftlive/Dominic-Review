@@ -1,9 +1,9 @@
-<h4 class="head text-center">Inventory Management</h4>
+<h3>Inventory Management</h3>
 
 <form id="inventoryFormSubmit" data-action="{{url(route('vendor.shop.variations.inventoryCreate',$product->id))}}">
 <div class="form-group">
    <div class="row">
-    <label class="col-lg-4 col-form-label text-right">SKU <small>(stock keeping unit)</small></label>
+    <label class="col-lg-2 col-form-label text-right">SKU <small>(stock keeping unit)</small></label>
     <div class="col-sm-7">
       <input 
       type="text" 
@@ -23,7 +23,7 @@
 
 <div class="form-group">
 <div class="row">
-    <label class="col-sm-4 col-form-label text-right">Manage stock ?</label>
+    <label class="col-lg-2 col-form-label text-right">Manage stock ?</label>
     <div class="col-sm-7">
       <div class="form-check">
 		  <input 
@@ -47,7 +47,7 @@
  
 <div class="form-group hasStock">
  <div class="row ">
-    <label class="col-lg-4 col-form-label text-right">Product Quantity <small>(In Stock)</small><span class="q-mark"><i class="fas fa-question-circle"></i></span></label>
+    <label class="col-lg-2 col-form-label text-right">Product Quantity <small>(In Stock)</small><span class="q-mark"><i class="fas fa-question-circle"></i></span></label>
     <div class="col-sm-7">
       <input 
       type="number" 
@@ -62,7 +62,7 @@
 
 <div class="form-group hasStock">
  <div class="row ">
-    <label class="col-lg-4 col-form-label text-right">Low stock threshold <span class="q-mark"><i class="fas fa-question-circle"></i></span></label>
+    <label class="col-lg-2 col-form-label text-right">Low stock threshold <span class="q-mark"><i class="fas fa-question-circle"></i></span></label>
     <div class="col-sm-7">
       <input 
       type="number" 
@@ -78,7 +78,7 @@
 
 <div class="form-group">
  <div class="row ">
-    <label class="col-lg-11 text-right">
+    <label class="col-lg-9 text-right">
        <button class="btn btn-primary">Create Inventory</button>
     </div>
   </div>

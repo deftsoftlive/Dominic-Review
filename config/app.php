@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', env('APP_NAME')),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', env('APP_ENV')),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', env('APP_DEBUG')),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,9 +52,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', env('APP_URL')),
 
-    'asset_url' => env('ASSET_URL', null),
+    'asset_url' => env('ASSET_URL', env('APP_URL').'public'),
 
     /*
     |--------------------------------------------------------------------------
@@ -161,6 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        
 
         /*
          * Package Service Providers...
@@ -171,9 +172,17 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        Unisharp\Ckeditor\ServiceProvider::class,
+        Chencha\Share\ShareServiceProvider::class,
+        Darryldecode\Cart\CartServiceProvider::class,
+        Ptondereau\LaravelUpsApi\UpsApiServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -191,7 +200,6 @@ return [
     'aliases' => [
 
         'App' => Illuminate\Support\Facades\App::class,
-        'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
         'Blade' => Illuminate\Support\Facades\Blade::class,
@@ -221,11 +229,25 @@ return [
         'Schema' => Illuminate\Support\Facades\Schema::class,
         'Session' => Illuminate\Support\Facades\Session::class,
         'Storage' => Illuminate\Support\Facades\Storage::class,
-        'Str' => Illuminate\Support\Str::class,
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Share' => Chencha\Share\ShareFacade::class,
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
 
+        'UpsAddressValidator' => Ptondereau\LaravelUpsApi\Facades\UpsAddressValidator::class,
+        'UpsLocator' => Ptondereau\LaravelUpsApi\Facades\UpsLocator::class,
+        'UpsQuantumView' => Ptondereau\LaravelUpsApi\Facades\UpsQuantumView::class,
+        'UpsRate' => Ptondereau\LaravelUpsApi\Facades\UpsRate::class,
+        'UpsTimeInTransit' => Ptondereau\LaravelUpsApi\Facades\UpsTimeInTransit::class,
+        'UpsTracking' => Ptondereau\LaravelUpsApi\Facades\UpsTracking::class,
+        'UpsTradeability' => Ptondereau\LaravelUpsApi\Facades\UpsTradeability::class,
+        'UpsShipping' => Ptondereau\LaravelUpsApi\Facades\UpsShipping::class,
+        'UpsRateInTransit' => Ptondereau\LaravelUpsApi\Facades\UpsRateInTransit::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

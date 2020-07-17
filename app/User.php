@@ -16,7 +16,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'role_id','first_name', 'last_name', 'gender', 'date_of_birth', 'address', 'town', 'postcode', 'county', 'country', 'phone_number', 'email', 'password', 'created_at', 'updated_at'
+        'role_id','first_name', 'last_name', 'gender', 'date_of_birth', 'address', 'town', 'postcode', 'county', 'country', 'phone_number', 'email', 'password', 'parent_id', 'type', 'relation', 'book_person', 'enable_inovice', 'created_at', 'updated_at'
     ];
 
     /**
@@ -186,22 +186,164 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
     public function getShopCartTotal()
-    {
+    { 
           $items = ShopCartItems::where('user_id',$this->id)->whereIn('type',['cart'])->get();
 
           foreach ($items as $key => $im) {
-                   
-                    $product = $im->product;
+
+                $dis_code = isset($im->discount_code) ? $im->discount_code : 0; 
+
+                if(!empty($dis_code))
+                {
+                    $coupon = Coupon::where('coupon_code',$dis_code)->first();
+                    $voucher = ShopCartItems::where('voucher_code',$dis_code)->first();
+
+                    // dd($coupon,$voucher);
+
+                    if(!empty($coupon))
+                    {
+                        $dis_type = $coupon->discount_type;
+                    }
+                    elseif(!empty($voucher))
+                    {
+                        $voucher = Vouchure::where('id',$voucher->voucher_id)->first(); 
+                        $dis_type = $voucher->discount_type;
+                    }
+                }
+
+                    // dd($dis_type);
+
+                    $dis_price = isset($im->discount_price) ? $im->discount_price : 0;
+                    $product = $im->product;  
                     $variation = \App\Models\Products\ProductAssignedVariation::find($im->variant_id);
-                      $price = $product->final_price;
-                      if($product->product_type == 1){
-                        $price = $variation->final_price;
+
+
+
+                    if(!empty($product->final_price))
+                    {
+                      if(!empty($dis_type))
+                      {
+                        if($dis_type == '0')
+                        {
+                          $price = ($product->final_price)-($dis_price);
+                        }else{
+                          $price = ($product->final_price) - (($product->final_price) * ($dis_price / 100));
+                        }
+                      }else{
+                        $price = ($product->final_price)-($dis_price);
                       }
-                     $im->vendor_id = $product->user_id;
-                     $im->shop_id = $product->shop_id;
+                    }else{
+                      if($im->shop_type == 'course')
+                      {
+                        $course_id = $im->product_id;
+                        $course = Course::where('id',$course_id)->first();
+
+                        if($course->type == '156')
+                        {
+                          $early_bird_enable = getAllValueWithMeta('check_tennis_percentage', 'early-bird');
+                          $early_bird_dis = getAllValueWithMeta('tennis_percentage', 'early-bird');
+                        }
+                        elseif($course->type == '191')
+                        {
+                          $early_bird_enable = getAllValueWithMeta('check_school_percentage', 'early-bird');
+                          $early_bird_dis = getAllValueWithMeta('school_percentage', 'early-bird');
+                        }
+                        elseif($course->type == '157')
+                        {
+                          $early_bird_enable = getAllValueWithMeta('check_football_percentage', 'early-bird');
+                          $early_bird_dis = getAllValueWithMeta('football_percentage', 'early-bird');
+                        }
+
+                        $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
+                        $early_bird_time = getAllValueWithMeta('early_bird_time', 'early-bird');
+
+                        $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).' 23:59:00');
+                        $currntD = strtotime(date('Y-m-d H:i:s'));
+                        $diff = $endDate - $currntD;
+
+                        $years = floor($diff / (365*60*60*24));  
+                        $months = floor(($diff - $years * 365*60*60*24) 
+                                           / (30*60*60*24));  
+                        $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24)); 
+                        $hours = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24) / (60*60)); 
+                        $minutes = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60)/ 60);
+                        $seconds = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60 - $minutes*60)); 
+
+                        if($currntD >= $endDate)
+                        {
+                          if(!empty($dis_type))
+                          {
+                            if($dis_type == '0')
+                            {
+                              $price =($course['price']) - ($dis_price);
+                            }else{
+                              $price = $course['price'] - (($course['price']) * ($dis_price / 100));
+                            }
+                          }else{
+                            $price =($course['price'] - $dis_price);
+                          }
+
+                        }else{
+                          if($early_bird_enable == '1')
+                          {
+                            $cour_price = $course['price'];
+                            $earlybird_dis_price = $cour_price - (($cour_price) * ($early_bird_dis/100));
+                          }else{
+                            $earlybird_dis_price = $course['price'];
+                          }
+                          
+
+                          if(!empty($dis_type))
+                          {
+                            if($dis_type == '0')
+                            {
+                              $price =($earlybird_dis_price) - ($dis_price);
+                            }else{
+                              $price = $earlybird_dis_price - (($earlybird_dis_price) * ($dis_price / 100));
+                            }
+                          }else{
+                            $price =($earlybird_dis_price - $dis_price);
+                          }
+
+                        }
+                        
+
+                      }elseif($im->shop_type == 'camp')
+                      {
+                        $camp_price = $im->camp_price;  
+
+                        if(!empty($dis_price))
+                        {
+                          if($dis_type == '0'){
+                            $price = ($camp_price) - ($dis_price);
+                          }else{
+                            $price = $camp_price - (($camp_price) * ($dis_price/100));
+                          }
+                        }else{
+                          $price =($camp_price) - ($dis_price);
+                        }
+                        
+                      }
+                    }
+
+                    // dd($price);
+
+                    if(!empty($variation))
+                    {
+                      if(!empty($product->final_price))
+                      {
+                        if($product->product_type == 1){
+                          $price = ($variation->final_price)-($dis_price);;
+                        }
+                      }
+                    }
+                     // $im->vendor_id = $product->user_id;
+                     // $im->shop_id = $product->shop_id;
                      $im->price = $price;
                      $im->total = ($price * $im->quantity);
+
                      $im->save();
+            
             
           }
     }
@@ -230,6 +372,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function minusFromStock($items)
     {
+      if($items->shop_type == 'product')
+      {
         if($items->variant_id > 0){
 
              if($items->choosedVariation->count() > 0 && $items->choosedVariation->stock_managable == 1){
@@ -238,13 +382,15 @@ class User extends Authenticatable implements MustVerifyEmail
                 $v->save();
              }
 
-        }else{
-          $HasInventory = $items->product->HasInventory;
-          if($HasInventory != null && $HasInventory->count() > 0){
-                  $HasInventor->stock = ($HasInventor->stock - $items->quantity);
-                  $HasInventor->save();
-          }
         }
+        // else{
+        //   $HasInventory = $items->product->HasInventory; 
+        //   if($HasInventory != null && $HasInventory->count() > 0){
+        //           $HasInventor->stock = ($HasInventor->stock - $items->quantity);
+        //           $HasInventor->save();
+        //   }
+        // }
+      }
     }
 
 #==========================================================================================

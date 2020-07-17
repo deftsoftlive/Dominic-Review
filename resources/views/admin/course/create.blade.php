@@ -17,7 +17,7 @@
     </div>
 </div>
 
-       <section class="content">
+      <section class="content">
       <div class="row">
         <div class="col-12">
           <div class="card">
@@ -33,21 +33,30 @@
   <form role="form" method="post" id="venueForm" enctype="multipart/form-data">
                 
             @csrf
+
+                @php
+                  $count=1;  
+                @endphp
                   
                   {{textbox($errors,'Title*','title')}}
                   {{textbox($errors,'Term*','term')}}
                   {{textarea($errors,'Description*','description')}}
 
-                 <!--  <div class="form-group">
+                  <div class="form-group">
                     <label class="label-file control-label">Type</label>
 
-                    <select name="type" class="form-control">
-                      <option value="Tennis">Tennis</option>
-                      <option value="Football">Football</option>
-                      <option value="School">School</option>
+                    <select name="season" class="select-player">
+                      @php 
+                        $season = DB::table('seasons')->where('status',1)->get();
+                      @endphp
+                      @if(!empty($season))
+                        @foreach($season as $se)
+                          <option value="{{$se->id}}">{{$se->title}}</option>
+                        @endforeach
+                      @endif
                     </select>
                     
-                  </div> -->
+                  </div>
 
                   <div class="form-group"> 
                       {{select3($errors,'Parent','parent','label','0',$category)}}
@@ -57,28 +66,73 @@
                   </div>
 
                   <div class="form-group">
-                    <label class="label-file control-label">Age Group</label>
-
-                    <select name="age_group" class="form-control">
-                      <option value="8-11">8-11</option>
-                      <option value="3-10">3-10</option>
-                      <option value="9-17">9-17</option>
-                      <option value="4-8">4-8</option>
-                      <option value="3-7">3-7</option>
+                    <label class="label-file control-label">Level</label>
+                    <select name="level" class="select-player">
+                      <option value="Beginner">Beginner</option>
+                      <option value="Intermediate">Intermediate</option>
+                      <option value="Advanced">Advanced</option>
                     </select>
-                    
                   </div>
+
+                  {{textbox($errors,'Age Group (i.e. 3-7)*','age_group')}}
                   
-                  {{textbox($errors,'Age*','age')}}
-                  {{textbox($errors,'Session Date*','session_date')}}
+                  <!-- {{textbox($errors,'Age*','age')}}-->
+                  {{textbox($errors,'Course dates*','session_date')}}
                   {{textbox($errors,'Location*','location')}}
                   {{textbox($errors,'Day Time*','day_time')}}
                   {{textbox($errors,'Booking Slot*','booking_slot')}}
                   {{textarea($errors,'More Info*','more_info')}}
                   {{textbox($errors,'Price*','price')}}
-                  {{textbox($errors,'Early Birth Price*','early_birth_price')}}
+                  {{textarea($errors,'Bottom Section*','bottom_section')}}
+                  <!-- {{textbox($errors,'Early Birth Price*','early_birth_price')}} -->
 
-                <div class="card-footer">
+                  <div class="form-group">
+                    <label class="label-file control-label">Linked Coach</label>
+                    <select name="linked_coach" class="select-player">
+                      <option selected="" disabled="">Select Coach</option>
+                      @php 
+                        $coach = DB::table('users')->where('role_id',3)->get();
+                      @endphp
+                      @foreach($coach as $co)
+                      <option value="{{$co->id}}">{{$co->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+
+                  <table class="add_on_services">
+                    <thead>
+                      <tr>
+                          <th>Date</th>
+                          <th class="course_content_center">Display</th>
+                          <th><a onclick="addnewsection();" href="javascript:void(0);"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                       
+
+                      <div class="form-group">
+                        <label class="control-label" for="timelsots">Dates of course</label>
+
+                          <!-- ******************************
+                          |     Courses Dates
+                          | ********************************* -->
+                        
+                            <input type="hidden" id="noOfQuetion" value="{{$count}}">
+                            <div class="mainQuestions" id="mainQuestions">
+
+                            <tr class="timeslots slots{{$count}}" value={{$count}}>
+                              <td><input type="date" name="course_date[{{$count}}]" class="form-control" required></td>
+                              <td><input class="course_content_center" type="checkbox" name="display_course[{{$count}}]" value="1"></td>
+                              <td><a onclick="removeSection({{$count}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></td>
+                                  
+                              </tr>
+                            </div>
+                            </tbody>
+                        </table>
+                      </div>
+
+                <div class="card-footer pl-0">
                   <button type="submit" id="btnVanue" class="btn btn-primary">Submit</button>
                 </div>
  </form>
@@ -102,6 +156,44 @@
 @endsection
 
 @section('scripts')
+<script src="{{ asset('/admin-assets/js/validations/faqValidation.js') }}"></script>
+<script src="{{ asset('js/cke_config.js') }}"></script>
+
+<script type="text/javascript">
+   CKEDITOR.replace('description', options);
+   CKEDITOR.replace('more_info', options);
+   CKEDITOR.replace('bottom_section', options);
+</script>
+
+<!-- Course Dates Management -->
+<script type="text/javascript">
+
+        function addnewsection(){
+            //noOfattribute
+            var number = parseInt($("#noOfQuetion").val());  
+            var newnumber =number+1;                        
+            $("#noOfQuetion").val(newnumber);
+
+            var mainHtml='<tr class="timeslots slots'+newnumber+'" value="'+newnumber+'"><td><input type="date" name="course_date['+newnumber+']" class="form-control" required></td>';
+
+            mainHtml+='<td><input type="checkbox" class="course_content_center" name="display_course['+newnumber+']" value="1"></td>';
+
+            mainHtml+='<td><a href="javascript:void(0);" onclick="removeSection('+newnumber+');"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></td></tr>';
+
+
+            $(".add_on_services").append(mainHtml);
+        }
+
+
+        function removeSection(counter){
+            //noOfattribute
+            var number = parseInt($("#noOfQuetion").val());  
+            $(".slots"+ counter).remove();
+        }
+
+</script>
+
+
 <script type="text/javascript">
 
   function fetch() {

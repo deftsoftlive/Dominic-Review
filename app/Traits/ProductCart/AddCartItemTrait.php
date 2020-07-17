@@ -23,14 +23,13 @@ use Wishlist;
 
 	public function addToCart(Request $request,$product_id)
 	{
-
 		
-       $product = Product::with([
+       	$product = Product::with([
           'ProductAssignedVariations',
           'ProductAssignedVariations.hasVariationAttributes'
-       ])->where('id',$product_id)->first();
+       	])->where('id',$product_id)->first();
 
-       $status = $this->checkAvailbility($request,$product);
+       $status = $this->checkAvailbility($request,$product);	
 
        return response()->json($status);
 	}
@@ -68,7 +67,7 @@ public function checkAvailbility($request,$product)
 public function checkVariationOfProduct($request,$product)
 {
 
-       $variant_id = $this->variationTypeAssignedToProduct($request,$product);
+       $variant_id = $this->variationTypeAssignedToProduct($request,$product);	
         
 
 	 switch ($variant_id) {
@@ -109,11 +108,14 @@ public function addCartItem($request,$product,$variant_id=0)
 {
 	 if(Auth::check() && Auth::user()->role == "user"){
               $status = $this->SaveToShopUserCartItemTable($request,$product,$variant_id);
+              redirect('/shop/cart')->send();
               return ['status' => $status,
               'url' => url(route('shop.cart')),
               'messages' => 'Product is added to cart successfully!'];
+              
 	 }else{
            $status = $this->SaveToSessionCart($request,$product,$variant_id);
+           redirect('/shop/cart')->send();
            return ['status' => $status,
             'url' => url(route('shop.cart')),
            'messages' => 'Product is added to cart successfully!'];
@@ -135,6 +137,13 @@ public function SaveToShopUserCartItemTable($request,$product,$variant_id)
          $product_id = $product->id;
          $price = $variant_id > 0 ? $variant->final_price : $product->final_price;
          $quantity = $ShopCartItems->count() > 0 ? ($ShopCartItems->first()->quantity + 1) : 1;
+
+         $check_voucher = Product::where('id',$product_id)->first();
+         if($check_voucher->vou_prod_type = 'voucher')
+         {
+         	$voucher_id = $check_voucher->voucher;
+         	$voucher_code = '#DRH'.strtotime(date('y-m-d h:i:s'));
+         }
  
 		 $s= $ShopCartItems->count() > 0 ? $ShopCartItems->first() : new ShopCartItems;
 		 $s->product_id = $product_id;
@@ -143,6 +152,15 @@ public function SaveToShopUserCartItemTable($request,$product,$variant_id)
 		 $s->shop_id = $product->shop_id;
 		 $s->price = $price;
 		 $s->quantity = $quantity;
+
+		 if($check_voucher->vou_prod_type = 'voucher'){
+		 	$s->voucher_id = $voucher_id;
+		 	$s->voucher_code = $voucher_code;
+		 }else{
+		 	$s->voucher_id = '';
+		 	$s->voucher_code = '';
+		 }
+
 		 $s->total = ($quantity * $price);
 		 $s->type="cart";
 		 $s->user_id = Auth::user()->id;

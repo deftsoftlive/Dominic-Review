@@ -59,37 +59,10 @@
              {{textbox($errors,'Banner Title <span class="cst-upper-star">*</span>','page_title',$page_title)}}
 
              <div class="form-group">
-              <label class="label-file">Banner Image <span class="cst-upper-star">*</span></label>
+              <label class="label-file control-label">Banner Image  (1920 X 350)<span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'banner_image_src')" class="form-control" name="banner_image">
              </div>
              <img id="banner_image_src" src="{{ URL::asset('/uploads').'/'.$banner_image }}" style="width: 100px;" />
-          </div>
-        </div>
-
-        <!-- Section - 1 -->
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title"><u>SECTION - 1</h5>
-             {{textbox($errors,'Heading <span class="cst-upper-star">*</span>','heading1',$heading1)}}
-             {{textarea($errors,'Description <span class="cst-upper-star">*</span>','description1',$description1)}}
-          </div>
-        </div>
-
-        <!-- Section - 2 -->
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title"><u>SECTION - 2</u></h5>
-             {{textbox($errors,'Heading <span class="cst-upper-star">*</span>','heading2',$heading2)}}
-             {{textarea($errors,'Description <span class="cst-upper-star">*</span>','description2',$description2)}}
-          </div>
-        </div>
-
-        <!-- Section - 3 -->
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title"><u>SECTION - 3</u></h5>
-             {{textbox($errors,'Heading <span class="cst-upper-star">*</span>','heading3',$heading3)}}
-             {{textarea($errors,'Description <span class="cst-upper-star">*</span>','description3',$description3)}}
           </div>
         </div>
 
@@ -103,31 +76,11 @@
           </div>
         </div>
 
-        <!-- PDF -->
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title"><u>UPLOAD PDF</u></h5>
-             <div class="form-group">
-              <label class="label-file">PDF <span class="cst-upper-star">*</span></label>
-              <input type="file" accept="pdf/*" onchange="ValidateSingleInput(this, 'pdf_upload_src')" class="form-control" name="pdf_upload">
-             </div>
-             <!-- <img id="pdf_upload_src" src="{{ URL::asset('/uploads').'/'.$pdf_upload }}" style="width: 100px;" /> -->
-
-             @php 
-                $pdf = getAllValueWithMeta('pdf_upload', 'course-listing');
-             @endphp
-
-            @if(!empty($pdf))
-              <a target="_blank" href="{{URL::asset('/uploads')}}/{{ getAllValueWithMeta('pdf_upload', 'course-listing') }}" class="btn">View PDF</a>
-            @endif
-
-          </div>
-        </div>
-
         <!-- /.card-body -->
         <div class="card-footer">
           <button type="submit" id="homePageFormBtn" class="btn btn-primary">Submit</button>
         </div>
+        
       </form>
 
 

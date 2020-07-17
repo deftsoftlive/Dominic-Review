@@ -17,8 +17,7 @@ class ShopCheckoutCheck
     {
         
         if(\Auth::check() && \Auth::user()->role =="user"){
-
-
+   
           if( \Auth::check() && \Auth::User()->role =="user" && \Auth::user()->status == 1 && \Auth::user()->ShopProductCartItems->count() > 0){      
                 $new = new ShopCartItems;
   
@@ -33,6 +32,7 @@ class ShopCheckoutCheck
 
 
             }else{
+         
                 return redirect()->route('shop.cart')->with('errors','you have not any item in your cart.');
             }
        }elseif(\Auth::check() && \Auth::user()->role !="user"){

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Products\ProductCategory;
 use App\Traits\ProductCart\UserCartTrait;
+use App\Product;
+
 class ShopController extends Controller
 {
     use UserCartTrait;
@@ -14,11 +16,36 @@ class ShopController extends Controller
     public $include = 'e-shop.includes.';
 
 
-    public function index()
+    public function index(Request $request)
     {
-      
+        if(!empty(request()->get('selected_cat')) && !empty(request()->get('selected_sub_cat')))
+        {
+          $sel_cat = request()->get('selected_cat');
+          $sel_sub_cat = request()->get('selected_sub_cat');
+
+          $product = \DB::table('products')
+                     ->where('category_id', '=', $sel_cat)
+                     ->where('subcategory_id', '=', $sel_sub_cat)
+                     ->where('status',1)
+                     ->orderBy('id','asc')->get();
+
+            // get slug of category
+            $cat = \DB::table('product_categories')->where('id',$sel_cat)->first(); 
+            $cat_slug = $cat->slug;
+
+            // get slug of sub-cat   
+            $sub_cat = \DB::table('product_categories')->where('id',$sel_sub_cat)->first();
+            $sub_cat_slug = $sub_cat->slug;
+
+          return redirect('/shop/products/'.$cat_slug.'/'.$sub_cat_slug);      
+
+        }else{
+
+          return view($this->filePath.'index');
+        }
+
     	//return $this->featuredCategory();
-    	return view($this->filePath.'index');
+    	
     }
 
 #---------------------------------------------------------------------------------------------------------

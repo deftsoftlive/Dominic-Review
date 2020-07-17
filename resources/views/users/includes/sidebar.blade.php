@@ -133,18 +133,18 @@
                     <a href="{{ route('user.inviting.users') }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-inbox"></i></span><span class="pcoded-mtext">Invite Users</span></a>
                 </li> -->
 
-                @if(\Auth::user()->email_verified_at == '')
+                @if(\Auth::user()->role_id == '2')
 
                 @else
 
                  <li class="nav-item pcoded-menu-caption">
-                    <label>E-Shop</label>
+                    <label>Profile Management</label>
                 </li>
 
               
 
-                  <li class="nav-item {{ ActiveMenu(['users.shop.orders'], 'active') }}">
-                    <a href="{{ route('users.shop.orders') }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-inbox"></i></span><span class="pcoded-mtext">Orders</span></a>
+                  <li class="nav-item {{ ActiveMenu(['coach.profile.listing'], 'active') }}">
+                    <a href="{{ route('coach.profile.listing') }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-inbox"></i></span><span class="pcoded-mtext">Profile Listing</span></a>
                 </li>
 
                 @endif

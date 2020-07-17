@@ -20,7 +20,7 @@ class TestimonialController extends Controller
     |   Listing of testimonials
     |----------------------------------------*/ 
     public function testimonial_index() {
-        $testimonial = Testimonial::select(['id','title', 'description','status','slug'])->paginate(10);
+        $testimonial = Testimonial::select(['id','title','page_title','description','status','slug'])->paginate(10);
     	return view('admin.testimonial.index',compact('testimonial'))
     	->with(['title' => 'Testimonial Management', 'addLink' => 'admin.testimonial.showCreate']);
     }
@@ -36,7 +36,7 @@ class TestimonialController extends Controller
     	$validatedData = $request->validate([
             'title' => ['required', 'string', 'max:20'],
             'description' => ['required', 'string'],
-            'image' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048']
+            // 'image' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048']
         ]);
 
     	if ($request->hasFile('image')) {
@@ -48,8 +48,9 @@ class TestimonialController extends Controller
 
     	Testimonial::create([
     		'title' => $request['title'],
+            'page_title' => $request['page_title'],
     		'description' => $request['description'],
-    		'image' => $filename,
+    		'image' => isset($filename) ? $filename : '',
     	]);
     	return redirect()->route('admin.testimonial.list')->with('flash_message', 'Testimonial has been created successfully!');
     }
@@ -70,7 +71,7 @@ class TestimonialController extends Controller
     	$validatedData = $request->validate([
             'title' => ['required', 'string', 'max:20'],
             'description' => ['required', 'string'],
-            'image' => ['image','mimes:jpeg,png,jpg,gif,svg','max:2048']
+            // 'image' => ['image','mimes:jpeg,png,jpg,gif,svg','max:2048']
         ]);
 
     	$venue = Testimonial::FindBySlugOrFail($slug);
@@ -87,10 +88,20 @@ class TestimonialController extends Controller
     	}
     	$venue->update([
     		'title' => $request['title'],
+            'page_title' => $request['page_title'],
     		'description' => $request['description'],
-    		'image' => $filename,
+    		'image' => isset($filename) ? $filename : '',
     	]);
     	return redirect()->route('admin.testimonial.list')->with('flash_message', 'Testimonial has been updated successfully!');
+    }
+
+    /*----------------------------------------
+    |   Delete User Record
+    |----------------------------------------*/
+    public function delete_testimonial($id) {
+        $user = Testimonial::find($id);
+        $user->delete();
+        return \Redirect::back()->with('flash_message',' Testimonial has been deleted successfully!');
     }
 
     /*----------------------------------------

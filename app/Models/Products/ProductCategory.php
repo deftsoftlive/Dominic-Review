@@ -35,9 +35,8 @@ class ProductCategory extends Model
 
     public function categorySubparent()
     {
-       return $this->belongsTo($this,'subparent');
+       return $this->belongsTo($this,'parent');
     }
-
 
 
 

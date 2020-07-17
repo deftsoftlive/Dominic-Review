@@ -3253,3 +3253,23 @@ form#AddNewTasks .form-group label {
 .cstm_task_layer-content h3 {
     margin-bottom: 6px;
 }
+span.cst_active, span.cst_in-active {
+	width: 24px; 
+	display: inline-block;
+	text-align: left;
+}
+/*camp page-tabs*/
+#homePageForm #myTabContent {
+   border: 1px solid #ddd;
+   background-color: #f8f8f8;
+}
+
+#homePageForm #myTab .nav-link.active {
+   box-shadow: none;
+   border: 1px solid #ddd;
+   border-bottom: 0;
+   background-color: #f8f8f8;
+}
+textarea {
+	resize: none;
+}

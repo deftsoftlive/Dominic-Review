@@ -735,10 +735,11 @@
                 '{drag}\n' +
                 '<div class="clearfix"></div>';
             //noinspection HtmlUnknownAttribute
-            tActionDelete = '<button type="button" class="kv-file-remove {removeClass}" ' +
+            tActionDelete = '<button type="button" class="fa fa-trash-alt kv-file-remove {removeClass}" ' +
                 'title="{removeTitle}" {dataUrl}{dataKey}>{removeIcon}</button>\n';
-            tActionUpload = '<button type="button" class="kv-file-upload {uploadClass}" title="{uploadTitle}">' +
-                '{uploadIcon}</button>';
+            // tActionUpload = '<button type="button" class="fa fa-upload kv-file-upload {uploadClass}" title="{uploadTitle}">' +
+            //     '{uploadIcon}</button>';
+            tActionUpload = '';
             tActionDownload = '<a class="kv-file-download {downloadClass}" title="{downloadTitle}" ' +
                 'href="{downloadUrl}" download="{caption}" target="_blank">{downloadIcon}</a>';
             tActionZoom = '<button type="button" class="kv-file-zoom {zoomClass}" ' +

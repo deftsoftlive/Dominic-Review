@@ -239,7 +239,8 @@ public function getPayableAmount($deal,$package,$type=1)
 
 public function StripePay($request,$amount,$deal,$package)
 {
-          
+    dd($request->all(), $amount, $deal, $package);
+
      $error = '';
 
      if(empty($request->stripeToken)):

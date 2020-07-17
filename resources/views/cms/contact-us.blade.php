@@ -1,4 +1,4 @@
-Header section -->
+<!-- Header section -->
 @extends('inc.homelayout')
 
 @section('title', 'DRH|Listing')
@@ -23,13 +23,14 @@ Header section -->
           
            <div class="col-lg-9 col-md-12">
                   <div class="demo-form">   
-                    <h1 class="demo-form-heading">Book a Free Taster Class</h1>
+                    <h1 class="demo-form-heading">Send Us An Email</h1>
                     <form action="{{route('save-contact-us')}}" id="contact_form" method="POST" class="cstm-cont-page">
                       @csrf
-                      <div class="form-group">
+                      <input type="hidden" name="type" value="contact">
+                      <div class="form-group upper-input-row">
                           <input type="text" class="form-control" name="participant_name" placeholder="Enter Participant Name">
                       </div>
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                           <input type="date" class="form-control" name="participant_dob" placeholder="Enter Participant DOB">
                       </div>
 
@@ -53,20 +54,26 @@ Header section -->
                       </div>
 
                           
-                      </div>
-                      <div class="form-group">
+                      </div> -->
+                      <!-- <div class="form-group">
                           <input type="text" class="form-control" name="parent_name" placeholder="Enter Parent Name">
+                      </div> -->
+                      <div class="form-group upper-input-row">
+                         <input type="email" class="form-control" name="parent_email" placeholder="Enter Email">
                       </div>
-                      <div class="form-group">
-                         <input type="email" class="form-control" name="parent_email" placeholder="Enter Parent Email">
-                      </div>
-                      <div class="form-group cst-telephone-row">
+                      <div class="form-group upper-input-row">
                           <input type="text" class="form-control" name="parent_telephone" placeholder="Enter Telephone">
                       </div>
                       <div class="form-group cont-feedback">
-                        <textarea class="form-control demo-textarea" name="message" rows="3" placeholder="Class you’d like to try "></textarea>
+                        <input type="text" class="form-control" name="subject" placeholder="Enter Subject">
                       </div>
-                      <button type="submit" id="disable_contact_us_btnn" class="cstm-btn">Request Demo</button>
+                      <div class="form-group cont-feedback">
+                        <textarea class="form-control demo-textarea" name="message" rows="3" placeholder="Enter Message"></textarea>
+                      </div>
+                      <!-- <div class="form-group cont-feedback">
+                        <textarea class="form-control demo-textarea" name="message" rows="3" placeholder="Class you’d like to try "></textarea>
+                      </div> -->
+                      <button type="submit" id="disable_contact_us_btnn" class="cstm-btn">Send Message</button>
                     </form>
                   </div>
                 </div>
@@ -171,4 +178,4 @@ Header section -->
     </section>
 
 @endsection
-<!-- Footer Section
+<!-- Footer Section -->

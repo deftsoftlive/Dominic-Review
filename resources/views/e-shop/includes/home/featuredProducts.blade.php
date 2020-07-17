@@ -3,13 +3,13 @@
 $featuredProducts = \App\Models\Products\Product::featuredProducts();
 ?>
 @if($featuredProducts->count() > 0)
- <section class="featured-product-sec">
+ <section class="featured-product-sec section-padding">
          <div class="container">
-             <div class="sec-heading text-center wow bounceInRight" data-wow-delay=".35s">
+             <div class="pink-heading">
                 <h2>FEATURED PRODUCTS</h2>
             </div>
-            <div class="featured-product-wrap wow bounceInUp" data-wow-delay=".40s">
-                    <div class="{{$featuredProducts->count() > 4 ? 'owl-carousel owl-theme featured-product-slider' : ''}} ">
+            <div class="featured-product-wrap">
+                    <div class="row">
                        
                      
  
@@ -51,11 +51,11 @@ $featuredProducts = \App\Models\Products\Product::featuredProducts();
                           @php $price = $RS->productPrice(); @endphp
                                {!!$price['html']!!}
                            <div class="product-links">
-                                                    <a href="javascript:void(0)" 
+                                                    <!--<a href="javascript:void(0)" 
                                                         class="wishlist {{$product->hasInWishlist()}}"
                                                        data-url="{{url(route('shop.wishlist.create',$product->id))}}"
                                                        ><i class="fa fa-heart"></i>
-                                                     </a>
+                                                     </a>-->
                                 <a href="{{$url}}"><i class="fa fa-shopping-cart"></i></a>
                             </div>
                         </div>

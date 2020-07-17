@@ -38,7 +38,7 @@ public function index(Request $request)
 # Billing Address
 #---------------------------------------------------------------------------------
 public function billingAddress()
-{
+{	
 	    $number = 3;
 	    $arr = $this->checkStep($number);
 	    if($arr['status'] == 1){
@@ -58,6 +58,7 @@ public function billingAddress()
 
 public function postAddress(Request $request)
 {
+	// dd($request->all());
         $rules = [
 	         'name' => 'required',
 	         'email' => 'required',
@@ -76,14 +77,9 @@ public function postAddress(Request $request)
      ]);
 
      $tax = ratesForLocation($request->zipcode, $request->city, $request->country_short_code);
-     if($v->fails()){
-     	 return response()->json(['status' => 0,'errors' => $v->errors()]);
-     }elseif($tax['status'] == 0 || $tax['val'] == 0){
-         $errors = (object)['tax' => $tax['messages']];
-         return response()->json(['status' => 0,'errors' => $errors]);
-     }else{
+// dd($request->zipcode, $request->city, $request->country_short_code);
 
-        $arr = [
+     $arr = [
 	         'name' => $request->name,
 	         'email' => $request->email,
 	         'phone_number' => $request->phone_number,
@@ -104,8 +100,37 @@ public function postAddress(Request $request)
          	'errors' => 'Shipping Address is saved',
          	'redirectLink' => $url
          ]);
+
+     // if($v->fails()){
+     // 	 return response()->json(['status' => 0,'errors' => $v->errors()]);
+     // }elseif($tax['status'] == 0 || $tax['val'] == 0){
+     //     $errors = (object)['tax' => $tax['messages']];
+     //     return response()->json(['status' => 0,'errors' => $errors]);
+     // }else{
+
+     //    $arr = [
+	    //      'name' => $request->name,
+	    //      'email' => $request->email,
+	    //      'phone_number' => $request->phone_number,
+	    //      'address' => $request->address,
+	    //      'country' => $request->country,
+	    //      'state' => $request->state,
+	    //      'city' => $request->city,
+	    //      'zipcode' => $request->zipcode,
+	    //      'latitude' => $request->latitude,
+	    //      'longitude' =>$request->longitude,
+	    //      'country_short_code' =>$request->country_short_code,
+	    //      'tax'=> $tax['val']
+     //     ];
+     //     Session::put('shippingAddress',json_encode($arr));
+     //     $url =  url(route('shop.checkout.reviewCart'));
+     //     return response()->json([
+     //     	'status' => 1,
+     //     	'errors' => 'Shipping Address is saved',
+     //     	'redirectLink' => $url
+     //     ]);
  
-     }
+     // }
 }
 #---------------------------------------------------------------------------------
 # Billing Address
@@ -113,6 +138,8 @@ public function postAddress(Request $request)
 
 public function postBillingAddress(Request $request)
 {
+	
+
         $rules = [
 	         'name' => 'required',
 	         'email' => 'required',
@@ -130,12 +157,8 @@ public function postBillingAddress(Request $request)
              'latitude.required' => 'Please choose address from dropdown'
      ]);
 
-      
-     if($v->fails()){
-     	 return response()->json(['status' => 0,'errors' => $v->errors()]);
-     }else{
 
-        $arr = [
+      $arr = [
 	         'name' => $request->name,
 	         'email' => $request->email,
 	         'phone_number' => $request->phone_number,
@@ -156,8 +179,35 @@ public function postBillingAddress(Request $request)
          	'errors' => 'Billing Address is saved',
          	'redirectLink' => $url
          ]);
+
+      
+     // if($v->fails()){
+     // 	 return response()->json(['status' => 0,'errors' => $v->errors()]);
+     // }else{
+
+     //    $arr = [
+	    //      'name' => $request->name,
+	    //      'email' => $request->email,
+	    //      'phone_number' => $request->phone_number,
+	    //      'address' => $request->address,
+	    //      'country' => $request->country,
+	    //      'state' => $request->state,
+	    //      'city' => $request->city,
+	    //      'zipcode' => $request->zipcode,
+	    //      'latitude' => $request->latitude,
+	    //      'longitude' =>$request->longitude,
+	    //      'country_short_code' =>$request->country_short_code
+	          
+     //     ];
+     //     Session::put('shopBillingAddress',json_encode($arr));
+     //     $url =  url(route('shop.checkout.payment'));
+     //     return response()->json([
+     //     	'status' => 1,
+     //     	'errors' => 'Billing Address is saved',
+     //     	'redirectLink' => $url
+     //     ]);
  
-     }
+     // }
 }
 
 #---------------------------------------------------------------------------------
@@ -220,15 +270,19 @@ public function checkStep($number)
       $url='';
     
 	 
-	if(!Session::has('shippingAddress') && $number > 1){
-		$url = redirect()->route('shop.checkout.index')->with('messages','Please complete the billing step first');
-	}
+	// if(!Session::has('shippingAddress') && $number > 1){
+	// 	$url = redirect()->route('shop.checkout.index')->with('messages','Please complete the billing step first');
+	// }
 
-	if(!Session::has('reviewOrderCart') && $number > 2){
+	if(!Session::has('reviewOrderCart') && $number > 1){
 		$url = redirect()->route('shop.checkout.index')->with('messages','Please complete the Order Review step first');
 	}
 
-   if(!Session::has('shopBillingAddress') && $number > 3){
+	if(!Session::has('shippingAddress') && $number > 2){
+		$url = redirect()->route('shop.checkout.index')->with('messages','Please complete the billing step first');
+	}
+
+    if(!Session::has('shopBillingAddress') && $number > 3){
 		$url = redirect()->route('shop.checkout.index')->with('messages','Please complete the Billing Address step first');
 	}
 

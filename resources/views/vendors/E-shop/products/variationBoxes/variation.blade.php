@@ -1,6 +1,6 @@
 
 
-<h4 class="head text-center">Product Variations</h4>
+<h3>Product Variations</h3>
 
  <div class="row">
     @include('vendors.E-shop.products.variationBoxes.variation.list')	

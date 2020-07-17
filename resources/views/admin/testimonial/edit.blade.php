@@ -33,6 +33,21 @@
   <form role="form" method="post" id="venueForm" enctype="multipart/form-data">
                 
                    @csrf
+
+                   <label class="control-label">Page Title<span class="cst-upper-star">*</span></label>
+                    <select class="select-player" name="page_title">
+                        <option value="home-page" {{ $venue->page_title == 'home-page' ?  'selected' : '' }}>Home Page</option>
+                        <option value="course-listing" {{ $venue->page_title == 'course-listing' ?  'selected' : '' }}>Courses Page</option>
+                        <option value="course-listing/football" {{ $venue->page_title == 'course-listing/football' ?  'selected' : '' }}>Football Courses Page</option>
+                        <option value="course-listing/tennis" {{ $venue->page_title == 'course-listing/tennis' ?  'selected' : '' }}>Tennis Courses Page</option>
+                        <option value="course-listing/school" {{ $venue->page_title == 'course-listing/school' ?  'selected' : '' }}>School Courses Page</option>
+                        <option value="camp-listing" {{ $venue->page_title == 'camp-listing' ?  'selected' : '' }}>Camp Page</option>
+                        <option value="camp-detail" {{ $venue->page_title == 'camp-detail' ?  'selected' : '' }}>Camp Detail</option>
+                        <option value="football-landing" {{ $venue->page_title == 'football-landing' ?  'selected' : '' }}>Football Coaching</option>
+                        <option value="tennis-landing" {{ $venue->page_title == 'tennis-landing' ?  'selected' : '' }}>Tennis Coaching</option>
+                        <option value="school-landing" {{ $venue->page_title == 'school-landing' ?  'selected' : '' }}>School Clubs</option>
+                        <option value="badges" {{ $venue->page_title == 'badges' ?  'selected' : '' }}>Badges Page</option>
+                    </select><br/>
                   
                    {{textbox($errors,'Title<span class="cst-upper-star">*</span>','title', $venue->title)}}
                    {{textarea($errors,'Description<span class="cst-upper-star">*</span>','description', $venue->description)}}
@@ -45,11 +60,14 @@
                     @endif
                   </div>
 
-                  <img id="image_src" style="width: 100px; height: 100px;" src="{{ URL::asset('/uploads').'/'.$venue->image }}" />
-                  
+                  @if($venue->image)
+                    <img id="image_src" style="width: 100px; height: 100px;" src="{{ URL::asset('/uploads').'/'.$venue->image }}" />
+                  @else
+                    <img id="image_src" style="width: 100px; height: 100px;" src="{{ URL::asset('/images').'/default.jpg' }}" />
+                  @endif
                 
 
-                <div class="card-footer">
+                <div class="card-footer pl-0">
                   <button type="submit" id="btnVanue" class="btn btn-primary">Submit</button>
                 </div>
  </form>

@@ -37,7 +37,7 @@
          {{textbox($errors, 'Question*', 'question')}}
          {{textarea($errors, 'Answer*', 'answer')}}
 
-      <div class="card-footer">
+      <div class="card-footer pl-0">
         <button type="submit" id="faqFormBtn" class="btn btn-primary">Create</button>
       </div>
  </form>

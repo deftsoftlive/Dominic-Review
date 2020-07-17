@@ -1,5 +1,17 @@
+@extends('inc.homelayout')
 @extends('e-shop.layouts.checkout')
 @section('checkContent')
+
+<style>
+header.Eshop-header {
+    display: none;
+}
+</style>
+
+@php 
+  $user_id = Auth::user()->id;
+  $user = DB::table('users')->where('id',$user_id)->first();
+@endphp
       <!-- fieldsets -->
                     <fieldset class="step-content" style="">
                         <form 
@@ -19,8 +31,11 @@
                                    <!-- {{textbox($errors,'Name','name',$address->name)}} -->
 
                                 <div class="form-group">
-                                  <input type="text" id="name" class="form-control" name="name" 
+                                 <!--  <input type="text" id="name" class="form-control" name="name" 
                                   value="{{$address->name}}" 
+                                  placeholder="Enter your Name"> -->
+                                   <input type="text" id="name" class="form-control" name="name" 
+                                  value="{{isset($user->name) ? $user->name : ''}}" 
                                   placeholder="Enter your Name">
                                   <span class="input-icon"><i class="fas fa-user"></i></span>
                                </div>
@@ -30,8 +45,7 @@
                             <div class="col-md-6">
                                    <!-- {{textbox($errors,'Email','email',$address->email)}} -->
                                 <div class="form-group">
-                                  <input type="email" id="email" class="form-control" name="email" 
-                                  value="{{$address->email}}" 
+                                  <input type="email" id="email" class="form-control" name="email" value="{{isset($user->email) ? $user->email : ''}}" 
                                   placeholder="Enter your Email">
                                   <span class="input-icon"><i class="fas fa-envelope"></i></span>
                                </div>
@@ -41,7 +55,7 @@
                                    <!-- {{textbox($errors,'Phone Number','phone_number',$address->phone_number)}} -->
                                    <div class="form-group">
                                   <input type="text" id="phone_number" class="form-control" name="phone_number" 
-                                  value="{{$address->phone_number}}" 
+                                  value="{{isset($user->phone_number) ? $user->phone_number : ''}}" 
                                   placeholder="Enter your Phone Number">
                                   <span class="input-icon"><i class="fas fa-phone-alt"></i></span>
                                </div>
@@ -50,7 +64,7 @@
                                    <!-- {{textbox($errors,'Address','address',$address->address)}} -->
                                    <div class="form-group">
                                   <input type="text" id="address" class="form-control" name="address" autocomplete="false" 
-                                  value="{{$address->address}}" 
+                                  value="{{isset($user->address) ? $user->address : ''}}" 
                                   placeholder="Enter your Address">
                                   <span class="input-icon"><i class="fas fa-search-location"></i></span>
                                </div>
@@ -59,7 +73,7 @@
                                    <!-- {{textbox($errors,'Country','country',$address->country)}} -->
                                    <div class="form-group">
                                   <input type="text" id="country" class="form-control" name="country" 
-                                  value="{{$address->country}}" 
+                                  value="{{isset($user->country) ? $user->country : ''}}" 
                                   placeholder="Enter your Country">
                                   <span class="input-icon"><i class="fas fa-flag"></i></span>
                                </div>
@@ -68,7 +82,7 @@
                                    <!-- {{textbox($errors,'State','state',$address->state)}} -->
                                    <div class="form-group">
                                   <input type="text" id="state" class="form-control" name="state" 
-                                  value="{{$address->state}}" 
+                                  value="{{isset($user->town) ? $user->town : ''}}" 
                                   placeholder="Enter your State">
                                   <span class="input-icon"><i class="fas fa-map-marker-alt"></i></span>
                                </div>
@@ -77,7 +91,7 @@
                                    <!-- {{textbox($errors,'City','city',$address->city)}} -->
                                    <div class="form-group">
                                   <input type="text" id="city" class="form-control" name="city" 
-                                  value="{{$address->city}}" 
+                                  value="{{isset($user->county) ? $user->county : ''}}" 
                                   placeholder="Enter your City">
                                   <span class="input-icon"><i class="fas fa-city"></i></span>
                                </div>
@@ -86,7 +100,7 @@
                                    <!-- {{textbox($errors,'Zipcode','zipcode',$address->zipcode)}} -->
                                    <div class="form-group">
                                   <input type="text" id="zipcode" class="form-control" name="zipcode" 
-                                  value="{{$address->zipcode}}" 
+                                  value="{{isset($user->town) ? $user->town : ''}}" 
                                   placeholder="Enter Your Zipcode">
                                   <span class="input-icon"><i class="fas fa-mail-bulk"></i></span>
                                </div>
@@ -131,9 +145,9 @@
 
 
  @section('jscript')
-<script src="{{url('/admin-assets/js/validations/customValidation.js')}}"></script>
+<script src="{{URL::asset('/admin-assets/js/validations/customValidation.js')}}"></script>
 <script src="https://yauzer.com/js/validate.min.js"></script>
-<script type="text/javascript" src="{{url('e-shop/js/checkout/ajax.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('e-shop/js/checkout/ajax.js')}}"></script>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDULjv0UAVmj_zgc9GjBhJNh9fNuEj87LQ&libraries=places"></script>
 

@@ -1,5 +1,6 @@
-@extends('vendors.E-shop.steps.layouts')
-@section('innerContent')
+@extends('layouts.admin')
+ 
+@section('content')
 
  <form method="post" id="shopCreate" action="{{url(route('shop.ajax.firstStep',1))}}"> 
 <div class="panel" id="step-shop-1" data-step="1">
@@ -97,7 +98,7 @@
 
 @section('scripts')
 <script src="{{url('/js/validations/imageShow.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/vendors/shop.js')}}"></script>
+<script type="text/javascript" src="{{url('/admin-assets/js/shop.js')}}"></script>
  
 
 

@@ -107,6 +107,14 @@
           </div>
         </div>
 
+        <!-- Google Analytics -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>GOOGLE ANALYTICS</u></h5>
+             {{textbox($errors,'Google Analytics Code <span class="cst-upper-star">*</span>','copyright_section',$copyright_section)}}
+          </div>
+        </div>
+
         <!-- /.card-body -->
         <div class="card-footer">
           <button type="submit" id="homePageFormBtn" class="btn btn-primary">Submit</button>

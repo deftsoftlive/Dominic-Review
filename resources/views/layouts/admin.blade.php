@@ -11,6 +11,7 @@
     <![endif]-->
     <!-- Meta -->
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="Free Datta Able Admin Template come up with latest Bootstrap 4 framework with basic components, form elements and lots of pre-made layout options" />
@@ -34,13 +35,20 @@
     <link rel="stylesheet" href="{{URL::asset('/css/common-responsive.css')}}">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
 
 <script src="{{URL::asset('/AdminFILE/plugins/jquery/jquery.min.js')}}"></script>
  
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="{{URL::asset('/bootstrap-fileinput-master/js/fileinput.js')}}" type="text/javascript"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/i18n/af.min.js"></script> -->
 
+<!-- <script>
+    $(function () {
+      $("#inputPlayer").select2();
+    });
+</script> -->
 </head>
 
 <body>
@@ -79,6 +87,7 @@
 <script src="//cdn.ckeditor.com/4.6.2/full/ckeditor.js"></script>
 <script src="{{URL::asset('/vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
 <script src="{{URL::asset('/admin-assets/js/validations/customValidation.js')}}"></script>
+<script src="{{URL::asset('/admin-assets/js/admin_custom.js')}}" type="text/javascript"></script>
 
 <!-- delete data js -->
 <script src="{{ asset('js/deleteData.js') }}"></script>

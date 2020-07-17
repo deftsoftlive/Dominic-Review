@@ -1,5 +1,76 @@
 <?php 
 
+/*-------------------------------------
+| User name using category ID 
+|-------------------------------------*/
+function getUsername($id){
+  $user = App\User::where('id',$id)->first();
+  return $user['name'];
+}
+
+/*-------------------------------------
+| Camp Category name using category ID 
+|-------------------------------------*/
+function getCatname($id){
+  $category = App\CampCategory::where('id',$id)->first();
+  return $category['title'];
+}
+
+/*-------------------------------------
+| Course name using category ID 
+|-------------------------------------*/
+function getCourseName($id){
+  $course = App\Course::where('id',$id)->first();
+  return $course['title'];
+}
+
+/*-------------------------------------
+| Season name using category ID 
+|-------------------------------------*/
+function getSeasonname($id){
+  $season = App\Season::where('id',$id)->first();
+  return $season['title'];
+}
+
+/*-------------------------------------
+| Test Catergry name using category ID 
+|-------------------------------------*/
+function getTestCatname($id){
+  $testcat = App\TestCategory::where('id',$id)->first();
+  return $testcat['title'];
+}
+
+/*-------------------------------------
+| Test name using category ID 
+|-------------------------------------*/
+function getTestname($id){
+  $test = App\Test::where('id',$id)->first();
+  return $test['title'];
+}
+
+/*-------------------------------------
+| Product Category name using category ID 
+|-------------------------------------*/
+function getProductCatname($id){
+  $category = \DB::table('product_categories')->where('id',$id)->first();
+  return $category->label;
+}
+
+/*-------------------------------------
+| Report Category Name
+|-------------------------------------*/
+function getReportCategoryName($id){
+  $cat = \DB::table('report_questions')->where('id',$id)->first();
+  return $cat->title;
+}
+
+/*-------------------------------------
+| Report Category Options
+|-------------------------------------*/
+function getReportOptionName($id){
+  $cat_opt = \DB::table('report_question_options')->where('id',$id)->first();
+  return $cat_opt->option_title;
+}
 
 function upsArray()
 {
@@ -107,7 +178,7 @@ function putTheFilterItem2($product,$pro,$producthasVariant,$type,$item)
             $text  ='<li>';
             $text .='<a href="'.$url.'" class="size-btn Status-'.$checked.'">';
             if($checked == 'checked'){
-                  $text .='<input type="hidden" value="'.$item->id.'" name="'.$type.'">';
+                  $text .='<input id="sel-variation" type="hidden" value="'.$item->id.'" name="'.$type.'">';
             }
             $text .='<label>'.$item->name.'</label>';
             $text .='</a>';
@@ -504,12 +575,12 @@ function getOrderExtraFees($arr,$package_id = 0)
  
 function getOrderExtraFeess($item)
 {
+
    $data = json_decode($item->paymentDetails);
    $tax = 0;
    $service =0;
    $commission =0;
    $payable =0;
-
 
   foreach ($data as $key => $value) {
   if($key == $item->vendor_id){
@@ -792,9 +863,8 @@ function getPackageGames($package)
 
 
 
- function stepbarCheck($step,$deal=0)
+function stepbarCheck($step,$deal=0)
 {
-
       $step1 = ($step >= 1) ? "active": "";
       $step2 = ($step >= 2) ? "active": "";
       $step3 = ($step >= 3) ? "active": "";

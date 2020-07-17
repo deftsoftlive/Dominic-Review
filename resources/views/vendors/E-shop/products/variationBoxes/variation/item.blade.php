@@ -1,7 +1,7 @@
   
  
 
-  <div class="card">
+  <div class="card cst_card_design">
   	  <form action="" 
   	    data-action="{{url(route('vendor.shop.variations.createNewVariationWithAttributeAndStockManagable',$product->id))}}"
   	    class="saveVariationStockForm" 

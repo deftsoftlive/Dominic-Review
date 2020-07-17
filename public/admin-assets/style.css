@@ -1870,6 +1870,7 @@ p.text-muted {
   line-height: 1.4;
   overflow: hidden;
 }
+
 .pcoded-header .dropdown .notification .noti-head {
   border-bottom: 1px solid #f1f1f1;
   padding: 15px 20px;
@@ -3894,6 +3895,17 @@ p.text-muted {
   color: #3f4d67;
 }
 
+
+.table-layout .table th,
+.table-layout .table td
+{
+  text-align: center;
+}
+.table-layout .table a
+
+{
+  color: #000;
+}
 /* ====== [ Menu icon end ] ======== */
 /* ====== [ Header color start ] ======== */
 .theme-horizontal ~ .pcoded-header {

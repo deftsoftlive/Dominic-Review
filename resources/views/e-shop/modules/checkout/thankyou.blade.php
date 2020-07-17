@@ -42,7 +42,7 @@
                    </tr>
                    <tr>
                      <th>Total</th>
-                     <td>${{custom_format($order->amount,2)}}</td>
+                     <td>&pound;{{custom_format($order->amount,2)}}</td>
                    </tr>
                    <tr>
                      <th>Payment Method</th>

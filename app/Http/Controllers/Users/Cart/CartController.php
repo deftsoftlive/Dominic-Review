@@ -220,13 +220,13 @@ public function wishlistDelete($id)
 
 public function addToCart(Request $request)
 {
-     
-       $package_id = $request->package_id; 
-         $loginStatus = $this->loginOrNot();
-      $package = VendorPackage::find($package_id);
+  // dd($request->all());
+    $package_id = $request->package_id; 
+    $loginStatus = $this->loginOrNot();
+    $package = VendorPackage::find($package_id);
 
 
-     $message =[];
+    $message =[];
 
     if($loginStatus == 1){
 

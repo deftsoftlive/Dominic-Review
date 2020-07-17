@@ -131,7 +131,7 @@
                                       </div>                                 
                                  
       <!-- /.card-body -->
-            <div class="card-footer">
+            <div class="card-footer pl-0">
               <button type="submit" id="categoryFormSbt" class="btn btn-primary">Submit</button>
             </div>
          </form>

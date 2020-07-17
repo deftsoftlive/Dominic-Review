@@ -27,8 +27,6 @@ class ProductFilterController extends Controller
 public function index(Request $request,$category_id)
 {
 
- 
-
      $simpleIds =$this->getSimpleProductId($request,$category_id);
      $ids = $this->getProductIDWIthFilters($request,$category_id);
      $compineIDS = array_merge($simpleIds,$ids);
@@ -37,26 +35,36 @@ public function index(Request $request,$category_id)
        'filterArr' => $compineIDS
      ];
  
+      if(!empty($category_id))
+      {
+        $Product = Product::where('subcategory_id',$category_id)
+                            ->where('create_status',1)
+                            ->where('status',1)
+                            ->get(); 
+      }else{
+        $Product = Product::where('create_status',1)
+                            ->where('status',1)
+                            ->get(); 
+      }
+  
+  
 
-   
- 
-
-   $Product = Product::has('eshop') 
-                      ->where('childcategory_id',$category_id)
-                      ->where('create_status',1)
-                      ->where('approved_status',1)
-                      ->where('status',1)
-                        ->where(function($t) use($filterArray){
-                              if($filterArray['filters'] > 0){
-                                 $t->whereIn('id',$filterArray['filterArr']);
-                               }
-                        })->where(function($t) use($request){
+   // $Product = Product::has('eshop') 
+   //                    ->where('childcategory_id',$category_id)
+   //                    ->where('create_status',1)
+   //                    ->where('approved_status',1)
+   //                    ->where('status',1)
+   //                      ->where(function($t) use($filterArray){
+   //                            if($filterArray['filters'] > 0){
+   //                               $t->whereIn('id',$filterArray['filterArr']);
+   //                             }
+   //                      })->where(function($t) use($request){
                                
-                              if(!empty($request->price)){
-                                $price = explode('&', $request->price);
-                                $t->whereBetween('products.final_price',[$price[0],$price[1]]);
-                              }
-                        })->paginate(20);
+   //                            if(!empty($request->price)){
+   //                              $price = explode('&', $request->price);
+   //                              $t->whereBetween('products.final_price',[$price[0],$price[1]]);
+   //                            }
+   //                      })->paginate(20);
  
            $vv = view($this->include.'list')
                ->with('products',$Product);

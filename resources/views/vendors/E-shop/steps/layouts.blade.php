@@ -1,5 +1,6 @@
-@extends('layouts.vendor')
-@section('vendorContents')
+@extends('layouts.admin')
+ 
+@section('content')
 
              
 
@@ -125,7 +126,7 @@
 
 
 <script src="{{url('/js/validations/imageShow.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/vendors/shop.js')}}"></script>
+<script type="text/javascript" src="{{url('/admin-assets/js/shop.js')}}"></script>
 @yield('jscripts')
 
 @endsection

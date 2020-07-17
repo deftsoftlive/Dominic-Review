@@ -1,4 +1,5 @@
 <!-- Nav menu start here -->
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
               <div class="navbar-header">
                 <a class="navbar-brand" href="{{url('/')}}">
@@ -35,9 +36,28 @@
                   <ul class="navbar-nav mr-auto">
                     <li><a href="{{url('/')}}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a></li>
                     <li><a href="javascript:void(0);" class="nav-link">About Us</a></li>
-                    <li><a href="javascript:void(0);" class="nav-link"> Shop</a></li>
-                    <li><a href="{{route('listing')}}" class="nav-link {{ request()->is('course-listing') ? 'active' : '' }}">Courses</a></li>
-                    <li><a href="javascript:void(0);" class="nav-link">Camps</a></li>
+                    <li><a href="{{url('/shop')}}" class="nav-link"> Shop</a></li>
+                    <!-- <li><a href="{{route('listing')}}" id="course_listing" class="nav-link {{ request()->is('course-listing') ? 'active' : '' }}">Courses</a></li> -->
+
+                    
+
+                      <!-- <a class="nav-link dropdown-toggle" href="{{route('listing')}}" >
+                       Courses
+                      </a> -->
+                      <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="javascript:void(0);"id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                       Our Services <span ><i class="fas fa-caret-down"></i></span> </a>
+                      
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{url('tennis-landing')}}">Tennis Coaching</a>
+                        <a class="dropdown-item" href="{{url('football-landing')}}">Football Coaching</a>
+                        <a class="dropdown-item" href="{{url('school-landing')}}">School Clubs</a>
+                        <a class="dropdown-item" href="{{route('camp-listing')}}">Holiday Camps</a>
+                        <a class="dropdown-item" href="{{url('tennis-pro')}}">DRH Tennis Pro</a>
+
+                      </div>
+                    </li>
+
                     <li><a href="javascript:void(0);" class="nav-link">FAQs</a></li>
                     <li><a href="{{route('contact-us')}}" class="nav-link {{ request()->is('contact') ? 'active' : '' }}">Contact Us</a></li>
                   </ul>
@@ -51,6 +71,165 @@
                 <input type="text" class="form-control search-field" placeholder="Search">
               </div>
                     </li>
+                    
+                    @if( Auth::user() && Auth::user()->role_id == '1')
+                    <li>
+                        <a href="{{url('admin')}}" class="cstm-btn">Account</a>
+                    </li>
+
+
+                    <li class="cst_cart_dropdown">
+                       <div class="dropdown ">
+                       <a href="javascript:void(0);" class="cart_icon_design cart-btn dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           <span class="top-filter-icon">
+                               <i class="fas fa-cart-plus"></i>
+                                   <span class="notification-icon">{{ShopCartCount()}}</span>
+                           </span><p></p> 
+                         </a>
+                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <div class="title_link">
+                              <h3>SHOPPING CART</h3>
+                              <a href="{{url('/shop/cart')}}">View Cart</a>
+                            </div>
+
+
+                        @foreach(Cart::getContent() as $item)
+                          <?php
+
+                              $Product_id = $item->attributes->product_id;
+                             
+                              $variation = \App\Models\Products\ProductAssignedVariation::find($item->attributes->variant_id);
+                              $product = $item->attributes->variant_id > 0 ? App\Models\Products\Product::where('variant_id',$item->attributes->variant_id)->first() : \App\Models\Products\Product::find($Product_id);
+                              $stock = $product->checkStock(); 
+                              $TotalStock = $stock != null ? $stock->stock : 1;
+                              $availableStock = $TotalStock > 0 ? ($TotalStock > $item->quantity ? ($TotalStock - $item->quantity) : 0) : 0;
+
+
+                           ?>
+                            <div class="cart_cs_details">
+                              <a href="javascript:void(0);">{{$item->name}}</a>
+                              @if($product->product_type == 1)
+                                  <ul class="cart-table__options">
+                                      @foreach($variation->hasVariationAttributes as $v)
+                                      <li>{{$v->parentVariation->variations->name}}: <b class="bText">{{$v->parentVariation->name}}</b></li>
+                                      @endforeach
+
+                                  </ul>
+                              @endif
+                              <div class="basic_cart_details">
+                                <p class="price cart_quantity">Quantity : {{$item->quantity}}</p>
+                                <p class="price">£{{custom_format($item->price,2)}} </p>
+                              </div>
+                              <div class="price_btn cart_price">
+                                <p class="price">£{{custom_format($item->getPriceSum(),2)}} </p>
+                              </div>
+                            </div>
+                            
+                            @endforeach
+                            <div class="price_btn total_cart_price">
+                              <a href="{{url('/shop/cart')}}" class="cstm-btn">View cart</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    
+                    
+                    @elseif (Auth::user())
+                    <li>
+                        <a href="{{url('user')}}" class="cstm-btn">Account</a>
+                    </li>
+
+                    <li class="cst_cart_dropdown">
+                       <div class="dropdown ">
+                       <a href="javascript:void(0);" class="cart_icon_design cart-btn dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           <span class="top-filter-icon">
+                               <i class="fas fa-cart-plus"></i>
+                                   <span class="notification-icon">{{ShopCartCount()}}</span>
+                           </span><p></p> 
+                         </a>
+                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <div class="title_link">
+                              <h3>SHOPPING CART</h3>
+                              <a href="{{url('/shop/cart')}}">View Cart</a>
+                            </div>
+
+                        @php 
+                          $cart = DB::table('shop_cart_items')->where('user_id',Auth::user()->id)->where('orderID', '=', NULL)->get();
+                        @endphp
+
+                      @if(!empty($cart))
+                        @foreach($cart as $item)
+                          @php
+                            $product = DB::table('products')->where('id',$item->product_id)->first();
+                          @endphp
+                        
+                            <div class="cart_cs_details">
+                              @if($item->shop_type == 'product')
+                                <a href="javascript:void(0);">{{$product->name}}</a>
+                              @elseif($item->shop_type == 'course')
+                              @php 
+                                $course = DB::table('courses')->where('id',$item->product_id)->first();
+                                $child = DB::table('users')->where('id',$item->child_id)->first();
+                              @endphp
+                                <a href="javascript:void(0);">{{$child->name}} : {{$course->title}}</a>
+                              @elseif($item->shop_type == 'camp')
+                              @php 
+                                $camp = DB::table('camps')->where('id',$item->product_id)->first();
+                                $child = DB::table('users')->where('id',$item->child_id)->first();
+                                $week = json_decode($item->week);
+                              @endphp
+                                <a href="javascript:void(0);">{{isset($child->name) ? $child->name : 'No Child'}} : {{$camp->title}}</a>
+                                <p>
+                                @if(!empty($week))
+                                	@foreach($week as $number=>$number_array)
+
+									@foreach($number_array as $data=>$user_data)
+
+										@foreach($user_data as $data1=>$user_data1)
+											@php 
+												$split = explode('-',$user_data1);
+												$get_session = $split[2];
+											@endphp
+											@if($get_session == 'early')
+												{{$number}} - {{$data1}} - Early Drop Off<br/>
+											@elseif($get_session == 'mor')
+												{{$number}} - {{$data1}} - Morning<br/>
+											@elseif($get_session == 'noon')
+												{{$number}} - {{$data1}} - Afternoon<br/>
+											@elseif($get_session == 'lunch')
+												{{$number}} - {{$data1}} - Lunch Club<br/>
+											@elseif($get_session == 'late')
+												{{$number}} - {{$data1}} - Late Pickup<br/>
+											@elseif($get_session == 'full')
+												{{$number}} - {{$data1}} - Full Day<br/>
+											@endif
+										@endforeach
+									
+								    @endforeach
+
+								@endforeach
+                                @endif
+                            </p>
+                              @endif
+                             
+                              <div class="basic_cart_details">
+                                <p class="price cart_quantity">Quantity : {{$item->quantity}}</p>
+                                <p class="price">£{{$item->price}} </p>
+                              </div>
+                              <div class="price_btn cart_price">
+                                <p class="price">£{{$item->total}} </p>
+                              </div>
+                            </div>
+                        @endforeach
+                      @endif
+                            <div class="price_btn total_cart_price">
+                              <a href="{{url('/shop/cart')}}" class="cstm-btn">View cart</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    
+                    @else
                     <li>
                         <a href="{{route('login')}}" class="cstm-btn">Login</a>
                     </li>
@@ -66,6 +245,64 @@
                         </div>
                       </div>
                     </li>
+
+                    <!-- <li class="cst_cart_dropdown">
+                       <div class="dropdown ">
+                       <a href="javascript:void(0);" class="cart_icon_design cart-btn dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           <span class="top-filter-icon">
+                               <i class="fas fa-cart-plus"></i>
+                                   <span class="notification-icon">{{ShopCartCount()}}</span>
+                           </span><p></p> 
+                         </a>
+                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <div class="title_link">
+                              <h3>SHOPPING CART</h3>
+                              <a href="{{url('/shop/cart')}}">View Cart</a>
+                            </div>
+
+
+                        @foreach(Cart::getContent() as $item)
+                          <?php
+
+                              $Product_id = $item->attributes->product_id;
+                             
+                              $variation = \App\Models\Products\ProductAssignedVariation::find($item->attributes->variant_id);
+                              $product = $item->attributes->variant_id > 0 ? App\Models\Products\Product::where('variant_id',$item->attributes->variant_id)->first() : \App\Models\Products\Product::find($Product_id);
+                              $stock = $product->checkStock(); 
+                              $TotalStock = $stock != null ? $stock->stock : 1;
+                              $availableStock = $TotalStock > 0 ? ($TotalStock > $item->quantity ? ($TotalStock - $item->quantity) : 0) : 0;
+
+
+                           ?>
+                            <div class="cart_cs_details">
+                              <a href="javascript:void(0);">{{$item->name}}</a>
+                              @if($product->product_type == 1)
+                                  <ul class="cart-table__options">
+                                      @foreach($variation->hasVariationAttributes as $v)
+                                      <li>{{$v->parentVariation->variations->name}}: <b class="bText">{{$v->parentVariation->name}}</b></li>
+                                      @endforeach
+
+                                  </ul>
+                              @endif
+                              <div class="basic_cart_details">
+                                <p class="price cart_quantity">Quantity : {{$item->quantity}}</p>
+                                <p class="price">£{{custom_format($item->price,2)}} </p>
+                              </div>
+                              <div class="price_btn cart_price">
+                                <p class="price">£{{custom_format($item->getPriceSum(),2)}} </p>
+                              </div>
+                            </div>
+                            
+                            @endforeach
+                            <div class="price_btn total_cart_price">
+                              <a href="{{url('/shop/cart')}}" class="cstm-btn">View cart</a>
+                            </div>
+                        </div>
+                    </li> -->
+                    
+                    @endif
+
+                    
                   </ul>
                 </div><!-- /.navbar-collapse -->
               </div>
@@ -80,4 +317,4 @@
         </div>
     </div>
 </header>
-<!-- Nav menu end here -->
+<!-- Nav menu end here-->

@@ -28,7 +28,7 @@
               <form role="form" method="post" id="BrandEditForm" enctype="multipart/form-data">
               @csrf
               {{textbox($errors, 'Name*', 'name',$brands->name)}}         
-                <div class="card-footer">
+                <div class="card-footer pl-0">
                   <button type="submit" id="BrandEditFormBtn" class="btn btn-primary">Update</button>
                 </div>
               </form>

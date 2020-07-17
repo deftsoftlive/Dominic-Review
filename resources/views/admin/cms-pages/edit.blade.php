@@ -48,7 +48,7 @@
 
                 
 
-                <div class="card-footer">
+                <div class="card-footer pl-0">
                   <button type="submit" id="CmsPageFormBtn" class="btn btn-primary">Update</button>
                 </div>
  </form>

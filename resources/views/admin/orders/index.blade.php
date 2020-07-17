@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 
- 
- 
 @section('content')
 <div class="page-header">
     <div class="page-block">
@@ -37,18 +35,64 @@
                                                 <table id="example2" class="table table-hover">
                                                     <thead>
                                                     <tr>
-                                                        
-                                                        @php $i=1; @endphp
                                                         <th>Order ID</th>
-                                                        <th>Amount</th>
-                                                        <th>Payment_by</th>
-                                                        <th width="120">Action</th>
+                                                        <th>Customer Info</th>
+                                                        <th>Order Date</th>
+                                                        <th>Amount Paid</th>
+                                                        <th>Payment Method</th>
+                                                        <!-- <th>Order Type</th> -->
+                                                        <th>Status</th>
+                                                        <th width="145px;">Action</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    
+                                                        @foreach($orders as $ord)
+
+                                                        @php 
+                                                          $orderId = $ord->orderID;
+                                                          $user_id = $ord->user_id; 
+                                                          $user_detail = DB::table('users')->where('id',$user_id)->first(); 
+
+                                                          $cart_items = DB::table('shop_cart_items')->where('orderID', $orderId)->get(); 
+                                                        @endphp
+
+                                                        <tr>
+                                                            <td>{{$ord->orderID}}</td>
+                                                            <td>
+                                                              @if(!empty($user_detail))
+                                                                <h5>{{$user_detail->name}}</h5>
+                                                                <p>{{$user_detail->email}} | {{$user_detail->phone_number}}</p>
+                                                              @else
+                                                                -
+                                                              @endif
+                                                            </td>
+                                                            <td>{{$ord->created_at}}</td>
+                                                            <td>&pound; {{$ord->amount}}</td>
+                                                            <td>{{$ord->payment_by}}</td>
+                                                            <!-- <td>Shop</td> -->
+                                                            <td>
+                                                            @if($ord->status == 1)    
+                                                            Completed
+                                                            @elseif($ord->status == 2)
+                                                            Cancelled
+                                                            @endif</td>
+                                                            <td>
+                                                            <div class="btn-group">
+                                                                <button type="button" class="btn btn-primary">Action</button>
+                                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span>
+                                                                </button>
+
+                                                                <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                    <a href="{{url('admin/orders/detail')}}/{{$ord->id}}" class="dropdown-item">Details</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        </tr>
+                                                        @endforeach
+
                                                     </tbody>
                                                 </table>
+                                                {{ $orders->render() }}
                                             </div>
                                         </div>
                                     </div>
@@ -58,29 +102,4 @@
                         </div>
                     </div>
 
-@endsection
-
-@section('scripts')
-<script type="text/javascript">
- 
- 
-$(function() { 
-        var i=1;
-    $('#example2').DataTable({
-         
-        processing: true,
-        serverSide: true,
-        ajax: '<?= url(route('admin.ajaxOrders')) ?>',
-        columns: [
-             { data: 'orderID', name: 'orderID' },
-             { data: 'amount', name: 'amount' },            
-             { data: 'payment_by', name: 'payment_by' },
-             { data: 'action', name: 'action' },
-        ]
-       
-    });
-});
- 
-</script>
-     
 @endsection

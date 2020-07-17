@@ -34,7 +34,7 @@ public function payWithStripe(Request $request)
                            $AccountWithPayment= $this->CommissionFeeServiceAccordingVendor('STRIPE',1);
 
 
-                            $OrderID = '#ENV'.strtotime(date('y-m-d h:i:s'));
+                            $OrderID = '#DRH'.strtotime(date('y-m-d h:i:s'));
                             $token = $request->stripeToken;
                             $application_fee =$this->getCommissionFee();
                             $total = $this->getTotalOrderCurrent();
@@ -126,7 +126,6 @@ public function CreateOrder($charge,$OrderID,$type)
 
 public function updateToOrderItemToOrder($type,$charge,$paymentDetails,$o,$order)
 {
-   
    foreach ($order->get() as $or) {
           $or->payment_type = $type;
           $or->payment_status = 1;

@@ -38,13 +38,13 @@
                   {{textbox($errors,'Last Name<span class="cst-upper-star">*</span>','last_name')}}
 
                   <label class="control-label">Role<span class="cst-upper-star">*</span></label>
-                  <select class="form-control" name="role_id">
+                  <select class="select-player" name="role_id">
                         <option value="2">Parent</option>
                         <option value="3">Coach</option>
                   </select><br/>
                   
                   <label class="control-label">Gender<span class="cst-upper-star">*</span></label>
-                  <select class="form-control" name="gender">
+                  <select class="select-player" name="gender">
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                   </select><br/>
@@ -61,7 +61,7 @@
                   {{textbox($errors,'County<span class="cst-upper-star">*</span>','county')}}
 
                   <label class="control-label">Country<span class="cst-upper-star">*</span></label>
-                  <select class="form-control" name="country">
+                  <select class="select-player" name="country">
                     @php $country_code = DB::table('country_code')->get(); @endphp
                     @foreach($country_code as $name)
                         <option value="{{$name->countryname}}">{{$name->countryname}}</option>
@@ -69,9 +69,9 @@
                   </select><br/>
 
                   <label class="control-label">Status<span class="cst-upper-star">*</span></label>
-                  <select class="form-control" name="updated_status">
-                        <option value="1">Verified</option>
+                  <select class="select-player" name="updated_status">
                         <option value="0">Not Verified</option>
+                        <option value="1">Verified</option>
                   </select><br/>
              
                   <div class="card-footer">

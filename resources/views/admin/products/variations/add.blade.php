@@ -39,7 +39,7 @@
          {{textbox($errors, 'Name*', 'name')}}
          
          {!!$textboxs!!}
-      <div class="card-footer">
+      <div class="card-footer pl-0">
         <button type="submit" id="faqFormBtn" class="btn btn-primary">Create</button>
       </div>
  </form>

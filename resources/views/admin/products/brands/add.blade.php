@@ -28,7 +28,7 @@
               <form role="form" method="post" id="BrandForm" enctype="multipart/form-data">
                 @csrf
                   {{textbox($errors, 'Name*', 'name')}}                          
-                  <div class="card-footer">
+                  <div class="card-footer pl-0">
                     <button type="submit" id="BrandFormBtn" class="btn btn-primary">Create</button>
                   </div>
              </form>

@@ -44,6 +44,7 @@ public function index(Request $request)
 
 public function cartOperations(Request $request)
 {
+
 	$type = $request->type;
 	 switch ($type) {
 	 	case 'add':
@@ -69,8 +70,9 @@ public function cartOperations(Request $request)
 #====================================================================================================
 
 public function addQty($request,$val)
-{
-       $rowId = $request->id;
+{	
+    $rowId = $request->id; 
+
 	 if(Auth::check() && Auth::user()->role == "user"){
 
 	 	$userCart = ShopCartItems::where('user_id',Auth::user()->id)->where('id',$rowId);
@@ -117,10 +119,10 @@ public function listItemOfcart()
    $view = Auth::check() && Auth::user()->role == "user" ? 'withLogin' : 'withoutLoginCart';
 
    $userCart = ShopCartItems::where('user_id',$user_id)->where('type','cart');
-
- 
+   
    $vv = view($this->include.$view)->with('userCartContent',$userCart);
    $v = view($this->include.'totals')->with('userCartContent',$userCart);
+
 
    return [
         'status' => 1,

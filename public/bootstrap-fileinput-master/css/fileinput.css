@@ -146,7 +146,12 @@
     left: 8px;
 }
 
+.progress-bar.bg-danger.progress-bar-danger {
+    display: none;
+}
+
 .file-error-message {
+    display: none!important;
     color: #a94442;
     background-color: #f2dede;
     margin: 5px;

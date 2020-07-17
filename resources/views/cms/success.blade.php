@@ -1,4 +1,4 @@
- Header section -->
+<!-- Header section -->
 @extends('inc.homelayout')
 
 @section('title', 'DRH|Listing')
@@ -35,4 +35,4 @@
 </section>
 
 @endsection
-<!-- Footer Section
+<!-- Footer Section -->

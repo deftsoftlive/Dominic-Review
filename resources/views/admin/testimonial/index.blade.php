@@ -44,7 +44,8 @@
                                                 <thead>
                                                 <tr> 
                                                     <th>Name</th>
-                                                    <th>Description</th> 
+                                                    <!-- <th>Description</th> -->
+                                                    <th>Page Title</th> 
                                                     <th>Status</th>
                                                     <th>Action</th>
 
@@ -54,12 +55,13 @@
                                                 @foreach($testimonial as $test)
                                                     <tr>
                                                         <td>{{$test->title}}</td>
-                                                        <td>{{$test->description}}</td> 
+                                                        <!-- <td>{{$test->description}}</td>  -->
+                                                        <td>{{$test->page_title}}</td>
                                                         <td>
                                                         @if($test->status == '1')
-                                                            Active
+                                                            <span class="cst_active"><i class="fas fa-check-circle"></i></span>
                                                         @else
-                                                            In-active
+                                                            <span class="cst_in-active"><i class="fas fa-times-circle"></i></span>
                                                         @endif
                                                         </td>
                                                         <td>
@@ -78,6 +80,8 @@
                                                                             Active
                                                                         @endif
                                                                     </a>
+
+                                                                    <a onclick="return confirm('Are you sure you want to delete this testimonial?')" href="{{url('admin/testimonial/delete')}}/{{$test->id}}" class="dropdown-item">Delete</a>
                                                                 </div>
                                                             </div>
                                                         </td>

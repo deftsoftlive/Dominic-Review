@@ -44,12 +44,12 @@ $("body").find('#productCategories').validate({
 		          required: true,
 		          maxlength: 150
 		      },
-		      "subcategory_id":{
-		        required: true
-		      },
-		      "childcategory_id":{
-		        required: true
-		      },
+		      // "subcategory_id":{
+		      //   required: true
+		      // },
+		      // "childcategory_id":{
+		      //   required: true
+		      // },
 		      valueToBeTested: {
 		          required: true,
               }
@@ -97,7 +97,7 @@ function ajaxCustomCategories($url,parent,subparent,$divID) {
                  'X-CSRF-TOKEN': $('input[name=_token]').val()
                },
                success: function (result) {
-		          $divID.html(result);
+		            $divID.html(result);
                } 
 
       });
@@ -110,7 +110,7 @@ function ajaxCustomCategories($url,parent,subparent,$divID) {
 //##################################################################################################################
 $("body").on('submit','#productCategories',function(e){
    e.preventDefault();
-   var $this = $( this );
+   var $this = $( this ); alert
     $.ajax({
                url : $this.attr('action'),
                data : $this.serialize(),

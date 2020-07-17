@@ -400,12 +400,4 @@ public function productChangeStatus($productSlug,$status)
 
 
 
-
-
-
-
-
-
-
-
 }

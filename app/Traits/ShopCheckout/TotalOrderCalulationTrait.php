@@ -22,24 +22,23 @@ trait TotalOrderCalulationTrait {
 
 public function CommissionFeeServiceAccordingVendor($type="STRIPE",$account_status=0)
 {
-	  
-	 $orders = Auth::user()->ShopProductCartItemOfVendors;
+	   $orders = Auth::user()->ShopProductCartItemOfVendors; 
      $arr =[];
      $account =[];
 
 	 foreach ($orders as $key => $value) {
 
 	  
-	 	$amount = trim($value->getOrderOfSingleVendor->sum('total'));  
+	 	$amount = trim($value->getOrderOfSingleVendor->sum('total')); 
 
-        $account_id = $type == "STRIPE" ? $value->vendor->shop->stripe_account_id : $value->vendor->shop->paypal_email;
+        // $account_id = $type == "STRIPE" ? $value->vendor->shop->stripe_account_id : $value->vendor->shop->paypal_email;
         $service_fee = $this->getServiceFee($amount);
         $commission_fee = $this->getCommissionFee($amount);
 
 
         $payable_amount = round($amount - ($service_fee + $commission_fee));
 
-        $stripeAccountParams= (array)["amount" => $payable_amount,"stripe_account" => $account_id];
+        $stripeAccountParams= (array)["amount" => $payable_amount];
 
         array_push($account, $stripeAccountParams);
 
@@ -51,7 +50,7 @@ public function CommissionFeeServiceAccordingVendor($type="STRIPE",$account_stat
            'commission_fee' => $commission_fee,
            'service_fee' => $service_fee,
            'payable_amount' => $payable_amount,
-           'account_id' => $account_id,
+           'account_id' => 0,
            'stripeAccountParams' => $stripeAccountParams
 	 	];
 

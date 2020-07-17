@@ -13,7 +13,7 @@ class Testimonial extends Model
     
 
     protected $fillable = [
-        'slug', 'title', 'description', 'image', 'status'
+        'slug', 'page_title', 'title', 'description', 'image', 'status'
     ];
 
      public function sluggable() {

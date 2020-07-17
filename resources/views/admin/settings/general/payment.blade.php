@@ -53,17 +53,17 @@
         <div class="card-header tab-card-header">
          @include('admin.error_message')
           <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true">Paypal</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="Two" aria-selected="false">Stripe</a>
-            </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link " id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true">Paypal</a>
+            </li> -->
+          <!--   <li class="nav-item">
+                <a class="nav-link active" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="Two" aria-selected="false">Stripe</a>
+            </li> -->
           </ul>
         </div>
 
         <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active p-3" id="one" role="tabpanel" aria-labelledby="one-tab">
+          <div class="tab-pane fade  p-3" id="one" role="tabpanel" aria-labelledby="one-tab">
             <h5 class="card-title">Paypal Settings</h5>
               
               <form method="POST" id="paypalCreadentialsForm">
@@ -119,7 +119,7 @@
  </form>
 
           </div>
-          <div class="tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
+          <div class="tab-pane fade show active p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
             <h5 class="card-title">Stripe Settings</h5>
                 
               <form method="POST" id="stripeCreadentialsForm">

@@ -45,9 +45,9 @@ class Product extends Model
 
            $text  = '<div class="product-price">';
         if($sale > 0){
-           $text .='<small>$'.custom_format($arr['price'],2).'</small>';
+           $text .='<small>£'.custom_format($arr['price'],2).'</small>';
         }
-           $text .='$'.custom_format($arr['sale_price'],2).'</div>';
+           $text .='£'.custom_format($arr['sale_price'],2).'</div>';
            $arr['html'] = $text;
 
         return $arr;
@@ -336,13 +336,20 @@ public function checkStock()
 
 public static function NewProducts()
 {
-     return $product = self::has('eshop')->withCount('subProducts')
-                                               ->where('create_status',1)
-                                               ->where('approved_status',1)
-                                               ->orderBy('id','DESC')
-                                               ->where('parent',0)
-                                               ->where('status',1)
-                                               ->paginate(12);
+     // return $product = self::has('eshop')->withCount('subProducts')
+     //                                           // ->where('create_status',1)
+     //                                           // ->where('approved_status',1)
+     //                                           ->orderBy('id','DESC')
+     //                                           ->where('parent',0)
+     //                                           ->where('status',1)
+     //                                           ->paginate(12);
+
+    return $product = Product::where('shop_id',0)
+                      ->where('user_id',1)
+                      ->where('parent',0)
+                      ->where('status',1)
+                      ->orderBy('sort','asc')
+                      ->paginate(12);
 }
 
 #=======================================================================================

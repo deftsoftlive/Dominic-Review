@@ -1,632 +1,2203 @@
-@media(max-width: 1300px){
-.activity-slider {
-    padding: 0 30px;
-}
-.activity-slider .owl-prev {
-    left: -25px;
-}
-.activity-slider .owl-next {
-    right: -25px;
-}
-.banner-content {
-    padding: 0 40px;
-}
-.demo-slider {
-    padding: 0 30px;
-}
-.demo-slider .owl-prev {
-    left: -25px;
-}
-.demo-slider .owl-next {
-    right: -25px;
-}
-}
-@media(max-width: 1199px){
-    .contact-gender label {
-   
-    margin: 0 30px 0 7px;
-   
-}
-.cst_course_form .contact-gender label {
-    margin: 0 5px 0 7px;
-}
-.cst_course_form .contact-gender .text-md-right {
-    margin-right: 13px;
-}
-.main-header .navbar-light .navbar-nav li {
-    padding: 0 11px;
-}
-.testimonial-card {
-    padding: 55px 20px 2px;
-}
-
-.activity-caption p {
-    margin-bottom: 5px;
-}
-.demo-slider {
-    padding: 0 30px;
-}
-.demo-slider .owl-prev {
-    left: -28px;
-}
-.demo-slider .owl-next {
-    right: -28px;
-}
-.account-menu-tabs .menu-tab-link {
-    padding: 11px 15px;
-}
-.select-player-goal-form .form-row .form-group {
-    flex-wrap: wrap;
-}
-.player-report-table .report-table-wrap table {
-    table-layout: auto;
+@media(max-width: 1300px) {
+    .activity-slider {
+        padding: 0 30px;
     }
+
+    .product-listing-wrap .product-card:hover .quick-button-wrap {
+        display: none;
+    }
+
+    .activity-slider .owl-prev {
+        left: -25px;
+    }
+
+    .activity-slider .owl-next {
+        right: -25px;
+    }
+
+    .invoice_apd {
+        padding: 0;
+    }
+
+    .banner-content {
+        padding: 0 40px;
+    }
+
+    .demo-slider {
+        padding: 0 30px;
+    }
+
+    .demo-slider .owl-prev {
+        left: -25px;
+    }
+
+    .demo-slider .owl-next {
+        right: -25px;
+    }
+
+
+}
+
+@media(max-width: 1199px) {
+    .contact-gender label {
+        margin: 0 30px 0 7px;
+    }
+
+    .request-actions .cstm-btn {
+        font-size: 12px;
+    }
+
+    .account-menu nav a {
+
+        padding: 5px;
+    }
+
+    form.reject_req {
+        margin-top: 0;
+    }
+    .child-voc
+    {
+        padding-right:0!important;
+    }
+
+    form.register-form .option_row .form-group.row .form-radios {
+        width: 74%;
+    }
+
+    .radio-wrap {
+
+        width: 25%;
+        margin-right: 3px;
+    }
+
+    .leadertable-wrap {
+        overflow-x: auto;
+    }
+
+    .leader-board-table table {
+        width: 100%;
+        table-layout: fixed;
+        border-radius: 20px;
+        border-collapse: separate;
+        border-spacing: 0;
+        border: 1px solid #d9dada;
+        overflow: hidden;
+        table-layout: auto;
+    }
+
+    .child-voc .modal-dialog {
+
+        max-width: 70%;
+    }
+
+    .events-sec::after {
+        display: none;
+    }
+
+
+    .player-info figure#badges-form {
+        width: 40%;
+    }
+
+    .checkout-step-sec.check_out_none table.cart__table.cart-table tr.cart-table__row th.cart-table__column.cart-table__column--product {
+        width: 24%;
+    }
+
+    .inner-event-section::after {
+        display: none;
+    }
+
+    .cst_course_form .contact-gender label {
+        margin: 0 5px 0 7px;
+    }
+
+    .cst_course_form .contact-gender .text-md-right {
+        margin-right: 13px;
+    }
+
+    .main-header .navbar-light .navbar-nav li {
+        padding: 0 11px;
+    }
+
+    .testimonial-card {
+        padding: 55px 20px 2px;
+    }
+
+    .activity-caption p {
+        margin-bottom: 5px;
+    }
+
+    .demo-slider {
+        padding: 0 30px;
+    }
+
+    .demo-slider .owl-prev {
+        left: -28px;
+    }
+
+    .demo-slider .owl-next {
+        right: -28px;
+    }
+
+    .account-menu-tabs .menu-tab-link {
+        padding: 11px 20px;
+    }
+
+    .select-player-goal-form .form-group label {
+
+        width: 50%;
+
+    }
+
+    .invoice_apd {
+        padding: 0 15px;
+    }
+
+    .player-report-table .report-table-wrap table {
+        table-layout: auto;
+    }
+
     .select-player-report-form .form-row .form-group {
-    flex-wrap: wrap;
-}
+        flex-wrap: wrap;
+    }
 
-.login-sec button.cstm-btn.login {
-    margin-right: 13px;
-}
-.cstm-btn {
-    
-    padding: 10px 14px;}
+    .login-sec button.cstm-btn.login {
+        margin-right: 13px;
+    }
 
-  ul.ui-menu.ui-corner-bottom.ui-widget.ui-widget-content {
-    width: 269px;
-}
+    .cstm-btn {
+
+        padding: 10px 14px;
+    }
+
+    ul.ui-menu.ui-corner-bottom.ui-widget.ui-widget-content {
+        width: 269px;
+    }
 
     .services-description li h2 {
-    font-size: 28px;    
+        font-size: 28px;
     }
-    .services-description li p {       
+
+    .services-description li p {
         font-size: 16px;
     }
-    .cst_course_form .contact-gender label:first-child
-{
-    margin-left: 0;
+
+    .cst_course_form .contact-gender label:first-child {
+        margin-left: 0;
+    }
+
+    ul.day-list li {
+        width: 16.6666%;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .login-sec form .form-control,
+    .register-sec form .form-control,
+    .login-sec form label,
+    .register-sec form label {
+        font-size: 14px;
+    }
+
+    .error {
+        padding-right: 10px;
+    }
+
+    div#people_chosen {
+        width: 100% !important;
+    }
+
+    .event-card .event-booking .event-booking-price {
+        font-size: 20px;
+    }
+
+    .event-card .event-booking .event-booking-price span {
+        font-size: 18px;
+    }
+
+    .event-card-heading,
+    .b-c-heading {
+        padding: 10px 15px;
+    }
+
+    .event-card-heading h3,
+    .b-c-heading h3 {
+        font-size: 20px;
+    }
+
+    .multi-sec .inner-content {
+        width: calc(32.95% - 10px);
+        margin-right: 20px;
+        margin-bottom: 20px;
+    }
+
+    .multi-sec .inner-wrap .inner-content:nth-child(3n) {
+        margin-right: 0;
+    }
+
+    #nav-badges .multi-sec.events-sec {
+        margin-top: -70px;
+    }
+
+    /*240420*/
+    .products-sec .product-wrapper .product-card .product-details .product-bottom-details {
+        min-height: 107px;
+    }
+
+    div#profile-detail .modal-dialog {
+        max-width: 90%;
+    }
+
+    div#reject-detail .modal-dialog {
+        max-width: 70%;
+    }
+
+    .step-form-content .step-content-title {
+        font-size: 22px;
+    }
+
+    table.cart__table.cart-table tr.cart-table__row th.cart-table__column.cart-table__column--product {
+        width: 32%;
+
+    }
+
+    table.cart__table.cart-table tr.cart-table__row th.cart-table__column.cart-table__column--confrom {
+        width: 14%;
+    }
+
+    .checkout-step-sec.check_out_none table.cart__table.cart-table .checkmark {
+        right: 15px;
+    }
+
+    .select-button a,
+    .select-button button {
+        padding: 10px 30px;
+    }
 }
-ul.day-list li {
-    width: 16.6666%;
-    text-align: center;
-    margin-bottom: 20px;
+
+@media(min-width: 991px) {
+
+    .leader-board-table th:first-child(2) div#filters-sidebar .filters-sidebar>a,
+    main.products-layout-wrap .product-listing-wrap .products-head {
+        display: none;
+    }
+
+    div#filters-sidebar .filters-sidebar {
+        margin-top: 15px;
+    }
 }
-}
-@media(max-width: 991px){
-   /* a.cstm-btn.days-btn {
+
+@media(max-width: 991px) {
+
+    /* a.cstm-btn.days-btn {
     padding: 10px 4px;
     font-size: 13px;
-}*/
-    .cst_course_form .contact-gender .text-md-right {
-    margin-right: 20px;
-}
-.cst_course_form .contact-gender label {
-    margin: 0 30px 0 7px;
-}
-
-    .demo-form {   
-    margin-bottom: 40px;
+    }*/
+    .event-info p.detail-cont {
+        min-height: 72px;
     }
-    
-     ul.ui-menu.ui-corner-bottom.ui-widget.ui-widget-content {
-    width: 219px;}
 
-.serch-login-signup .search-icon{
-    display: none;
-}
-.responsive-search-icon .search-field {
-    display: block;
-}
-.menu-title-wrap {
-    display: block;
-    font-size: 16px;
-    text-transform: uppercase;
-    padding: 0;
-    position: relative;
-    border-bottom: 1px solid transparent;
-    text-align: center;
-    padding: 10px;
-    display: none;
-}
-div#navbarSupportedContent {
-    position: fixed;
-    right: -240px;
-    top: 0;
-    background-color: #fff;
-    padding: 0;
-    margin: 0;
-    width: 240px;
-    bottom: 0;
-    transition: all linear 0.3s;
-    height: 100%;
-    z-index: 999;
-    display: block;
+
+    form.register-form .option_row .form-group.row .form-radios {
+        width: 100%;
+    }
+
+    form.register-form .consent-option-row .form-group.row .form-radios {
+        width: 75%;
+
+    }
+
+    .radio-wrap {
+
+        width: 24%;
+    }
+
+    .profile--img.pt-20 {
+
+        height: 140px;
+        min-width: 140px;
+    }
+
+    .child-voc .modal-dialog {
+
+        max-width: 90%;
+    }
+
+    .acc_sub_menu .menu-title {
+        margin-bottom: 0;
+    }
+
+    .request-actions .cstm-btn {
+        font-size: 14px;
+    }
+
+    .player-info .player-name-points h2 {
+        font-size: 16px;
+
+    }
+
+    .player-achie-disable-list {
+
+        padding: 15px;
+    }
+
+    .upper-form.report-tab-sec a.cstm-btn {
+        margin-right: 0px;
+    }
+
+    .report-tab-sec button.cstm-btn {
+        margin-top: 25px;
+        padding: 10px 7px;
+    }
+
+    .badges-select-bar {
+        flex-wrap: wrap;
+    }
+
+    .select-player-goal-form .badges-select-bar .select-button {
+        margin-top: 20px !important;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    .player-info input#update_tennis_club {
+
+        max-width: 45%;
+
+    }
+
+    .player-info .player-img-wrap {
+        margin-right: 19px;
+        /* height: 100px; */
+        width: 150px;
+    }
+
+    .select-player-goal-form .form-group label {
+        width: 58%;
+    }
+
+    .acc_sub_menu nav li+li {
+        margin-left: 2px !important;
+    }
+
+    .acc_sub_menu nav a {
+        font-size: 13px !important;
+    }
+
+    .header-right ul.navbar-nav .dropdown-menu {
+
+        left: 15px;
+    }
+
+    ul.serch-login-signup .dropdown-menu {
+        left: -70px;
+
+    }
+
+    .cart-table__column {
+        padding: 15px 7px;
+        border-top: 1px solid #ebebeb;
+    }
+
+    .main-header .navbar-light .navbar-nav .nav-link::before {
+        bottom: -13px;
+    }
+
+
+
+    div#people_chosen {
+        width: 100% !important;
+    }
+
+    .form-row.course_search_form {
+        justify-content: center;
+    }
+
+    .events-sec .form-control,
+    .course-list-detail .form-control,
+    .events-sec .chosen-container-single .chosen-single span {
+
+        font-size: 14px;
+
+    }
+
+    .Countdown-pfd-wrap {
+        padding: 40px 0 0;
+    }
+
+    .cst_course_form .contact-gender .text-md-right {
+        margin-right: 20px;
+    }
+
+    .cst_course_form .contact-gender label {
+        margin: 0 30px 0 7px;
+    }
+
+    .demo-form {
+        margin-bottom: 40px;
+        margin-top: 30px;
+    }
+
+    ul.ui-menu.ui-corner-bottom.ui-widget.ui-widget-content {
+        width: 219px;
+    }
+
+    .serch-login-signup .search-icon {
+        display: none;
+    }
+
+    .responsive-search-icon .search-field {
+        display: block;
+    }
+
+    .menu-title-wrap {
+        display: block;
+        font-size: 16px;
+        text-transform: uppercase;
+        padding: 0;
+        position: relative;
+        border-bottom: 1px solid transparent;
+        text-align: center;
+        padding: 10px;
+        display: none;
+    }
+
+    div#navbarSupportedContent {
+        position: fixed;
+        right: -240px;
+        top: 0;
+        background-color: #fff;
+        padding: 0;
+        margin: 0;
+        width: 240px;
+        bottom: 0;
+        transition: all linear 0.3s;
+        height: 100%;
+        z-index: 999;
+        display: block;
         overflow-y: auto;
-           padding: 15px;
-}
-#main.show {
-    position: fixed;
-    overflow: hidden;
-    width: 100vw;
-    height: 100vh;
-    transform: translateX(-240px);
-    transition: 0.4s ease;
-}
-.menu-title-wrap a {
-    color: #666666;
-    display: block;
-    border-bottom: 1px solid #000;
-    text-decoration: none;
-}
-.show .navbar .navbar-toggler span.icon-bar.rotate_cross {
-    height: 22px;
-    width: 2px;
-    background: #7f7f7f;
-    display: block;
-    transform: rotate(-45deg);
-    position: relative;
-    top: 10px;
-    transition: all linear 0.4s;
-    border-radius: 1px;
-}
-.show .navbar .navbar-toggler span.icon-bar.rotate_cross_2 {
-    height: 22px;
-    width: 2px;
-    background: #7f7f7f;
-    display: block;
-    transform: rotate(45deg);
-    position: relative;
-    top: -12px;
-    transition: all linear 0.4s;
-    border-radius: 1px;
-}
-.show .navbar .navbar-toggler span.navbar-toggler-icon {
-    display: none;
-}
+        padding: 15px;
+    }
 
-.navbar-light .navbar-toggler {
-    outline: none;
-    border: 0;
-    padding: 0;
-}
-.main-header .navbar-light .navbar-nav .nav-link {
-    display: inline-block;
-}
+    #main.show {
+        position: fixed;
+        overflow: hidden;
+        width: 100vw;
+        height: 100vh;
+        transform: translateX(-240px);
+        transition: 0.4s ease;
+    }
 
-.header-right .header-top {
-    display: none;
-}
-.header-top.mobile {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 10px;
-    flex-wrap: wrap;
-    display: none;
-}
+    .menu-title-wrap a {
+        color: #666666;
+        display: block;
+        border-bottom: 1px solid #000;
+        text-decoration: none;
+    }
 
-#navbarSupportedContent .main-header .navbar-light .navbar-nav {
-    align-items: flex-start;
-}
-.main-header .navbar-light .navbar-nav li:first-child {
-    padding-left: 15px;
-}
-.main-header .navbar-light .navbar-nav li {
-    padding: 8px 15px;
-    border-right: 0;
-}
-.main-header .navbar-light .navbar-nav .nav-link::after {
-    bottom: -10px;
-}
-.demo-slider .item {
-    padding: 30px;
-}
-.demo-slider .owl-prev {
-    left: -7px;
-}
-.demo-slider .owl-next {
-    right: -7px;
-}
-.Countdown-timer-content .Countdown-timer {
-    padding: 11px 15px;
-}
+    .show .navbar .navbar-toggler span.icon-bar.rotate_cross {
+        height: 22px;
+        width: 2px;
+        background: #7f7f7f;
+        display: block;
+        transform: rotate(-45deg);
+        position: relative;
+        top: 10px;
+        transition: all linear 0.4s;
+        border-radius: 1px;
+    }
+
+    .show .navbar .navbar-toggler span.icon-bar.rotate_cross_2 {
+        height: 22px;
+        width: 2px;
+        background: #7f7f7f;
+        display: block;
+        transform: rotate(45deg);
+        position: relative;
+        top: -12px;
+        transition: all linear 0.4s;
+        border-radius: 1px;
+    }
+
+    .show .navbar .navbar-toggler span.navbar-toggler-icon {
+        display: none;
+    }
+
+    .navbar-light .navbar-toggler {
+        outline: none;
+        border: 0;
+        padding: 0;
+    }
+
+    .main-header .navbar-light .navbar-nav .nav-link {
+        display: inline-block;
+    }
+
+    .header-right .header-top {
+        display: none;
+    }
+
+    .header-top.mobile {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 10px;
+        flex-wrap: wrap;
+        display: none;
+    }
+
+    #navbarSupportedContent .main-header .navbar-light .navbar-nav {
+        align-items: flex-start;
+    }
+
+    .main-header .navbar-light .navbar-nav li:first-child {
+        padding-left: 15px;
+    }
+
+    .main-header .navbar-light .navbar-nav li {
+        padding: 8px 15px;
+        border-right: 0;
+    }
+
+    .main-header .navbar-light .navbar-nav .nav-link::after {
+        bottom: -10px;
+    }
+
+    .demo-slider .item {
+        padding: 30px;
+    }
+
+    .demo-slider .owl-prev {
+        left: -7px;
+    }
+
+    .demo-slider .owl-next {
+        right: -7px;
+    }
+
+    .Countdown-timer-content .Countdown-timer {
+        padding: 11px 15px;
+    }
+
     .account-menu-tabs .menu-tab-link {
-    padding: 11px 8px;
-    font-size: 14px;
+        padding: 11px 12px;
+        font-size: 14px;
+    }
+
+    .banner-content .banner-heading {
+        font-size: 75px;
+    }
+
+    .banner-content .banner-sub-heading {
+        font-size: 75px;
+    }
+
+    .banner-content p {
+        font-size: 18px;
+    }
+
+    .football-services-sec .activity-card {
+        margin-bottom: 70px;
+    }
+
+    .player-report-table .report-table-wrap th:nth-child(3) {
+        min-width: 230px;
+    }
+
+    #navbarSupportedContent .serch-login-signup {
+        flex-wrap: wrap;
+        margin-bottom: 130px;
+
+    }
+
+    .serch-login-signup li:first-child {
+        width: 100%;
+    }
+
+    .serch-login-signup .responsive-search-icon {
+        padding: 0 0 15px 15px;
+        display: block;
+    }
+
+    .serch-login-signup li:nth-child(2) {
+        padding-left: 15px;
+    }
+
+    .all-members .col-md-3 {
+        width: 25%;
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+
+    .member>.container>.row>.col-md-8 {
+        width: 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .member>.container>.row>.col-md-2 {
+        width: 25%;
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+
+    .event-sec-heading h1,
+    .sec-heading {
+        font-size: 40px;
+    }
+
+    .Countdown-timer li::after {
+        font-size: 20px;
+    }
+
+    .section-heading::after {
+        border-top: 40px solid #bea029;
+        border-left: 50px solid transparent;
+        left: -40px;
+    }
+
+    .sec-heading::after {
+        border-top: 40px solid #bea029;
+        border-right: 50px solid transparent;
+        right: -40px;
+    }
+
+    .section-heading::before {
+        left: -40px;
+        border-bottom: 40px solid #bea029;
+        border-left: 50px solid transparent;
+    }
+
+    .sec-heading::before {
+        border-bottom: 40px solid #bea029;
+        border-right: 50px solid transparent;
+        right: -40px;
+    }
+
+    .activitiy-info-content h4 {
+        font-size: 20px;
+    }
+
+    .t-p-text h2 {
+        font-size: 24px;
+    }
+
+    .multi-sec .inner-content {
+        margin-right: 18px;
+        margin-bottom: 18px;
+    }
+
+    .we-run-container {
+        max-height: 110px;
+    }
+
+    .camp-down-sec .left-side-content h4,
+    .camp-down-sec .right-side-content h4 {
+        font-size: 20px;
+    }
+
+    .o-i-accordion h2 {
+        font-size: 24px;
+    }
+
+    .camp-logo-section h2 {
+        font-size: 30px;
+    }
+
+    .camp-logo-section p {
+        font-size: 18px;
+    }
+
+    #b-c-table-accordion .cstm-check label::before {
+        width: 18px;
+        height: 18px;
+    }
+
+    #b-c-table-accordion .cstm-check label::after {
+        height: 10px;
+        width: 5px;
+        left: -16px;
+    }
+
+    #b-c-table-accordion .cstm-check input {
+        width: 18px;
+        height: 18px;
+    }
+
+    .menu-title {
+        margin-bottom: 10px;
+    }
+
+    .account-menu nav li+li {
+        margin-left: 5px;
+    }
+
+    .account-menu nav a {
+        font-size: 15px;
+    }
+
+    .login-sec,
+    .register-sec {
+        padding: 80px 0 50px
+    }
+
+    /*240420*/
+    .products-sec .product-wrapper .product-card .product-details .product-bottom-details {
+        min-height: 81px;
+    }
+
+    #upload_doc .col-sm-3 {
+        width: 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    section.member.section-padding.c-d-book-now .all-members>div {
+        min-width: 160px;
+    }
+
+    .header-right ul.navbar-nav .dropdown-menu {
+        padding: 6px 0;
+        top: 42px;
+    }
+
+    /*250420*/
+    header.main-header li.cst_cart_dropdown .dropdown-menu {
+        position: absolute;
+        right: -15px !important;
+        margin-bottom: 60px;
+        padding: 15px 10px !important;
+        width: 210px !important;
+    }
+
+    .main-header .navbar-light .navbar-nav li,
+    .serch-login-signup .responsive-search-icon,
+    .serch-login-signup li:nth-child(2) {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    header.main-header li.cst_cart_dropdown {
+        margin-left: auto;
+        padding-right: 15px;
+    }
+
+    .header-right ul.navbar-nav .dropdown-menu {
+        left: 0;
+    }
+
+    /*270420*/
+    .product-description-sec.cst_product_des .product-des-container .description-content .specification-head {
+        padding-top: 15px;
+    }
+
+    /*280420*/
+    div#filters-sidebar {
+        height: calc(100vh - 90px);
+        top: 90px !important;
+        padding: 0;
+        position: fixed !important;
+        background-color: #f6f6f6 !important
+    }
+
+    #FilterCategoryToggle:hover {
+        color: #be298d !important;
+    }
+
+    div#filters-sidebar .filters-sidebar>a {
+        color: #fff;
+        background: #7b7b7b;
+        width: 22px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 24px;
+        overflow: hidden;
+        float: right;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+
+    div#filters-sidebar .filters-sidebar {
+        padding: 22px 10px 10px 10px;
+    }
+
+    main.products-layout-wrap div#filters-sidebar .filters-sidebar {
+        border: none !important;
+        box-shadow: none;
+    }
+
+    /*290420*/
+    main.products-layout-wrap .product-listing-wrap .products-head {
+        border: 2px solid #d9edf7 !important;
+        box-shadow: 0 2px 7px #dfdfdf;
+    }
+
+    div#navbarSupportedContent {
+        left: unset !important;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
+    .navbar-light .navbar-toggler {
+        display: inline-block !important;
+    }
+
+    .header-right ul.navbar-nav .dropdown-menu {
+        left: 0;
+        right: unset;
+        z-index: 999;
+    }
+
+    /*040520*/
+    .serch-login-signup .responsive-search-icon {
+        padding-top: 10px;
+    }
+
+    section.product-detail-sec.featured-product-sec.section-padding .card>div>.row>div:nth-of-type(1) {
+        padding-right: 0px;
+    }
+
+    section.product-detail-sec.featured-product-sec.section-padding .card>div>.row>div:nth-of-type(2) {
+        padding-left: 15px;
+    }
+
+    /*120520*/
+    div#filters-sidebar .filters-sidebar>a i {
+        font-size: 28px;
+    }
+
+    div#reject-detail .modal-dialog {
+        max-width: 85%;
+    }
+
+    .step-form-content .step-content-title {
+        font-size: 16px;
+    }
+
+    .checkout-step-sec.check_out_none table.cart__table.cart-table tr.cart-table__row td.cart-table__column.cart-table__column--product p,
+    .checkout-step-sec.check_out_none table.cart__table.cart-table tr.cart-table__row td.cart-table__column.cart-table__column--quantity p {
+        font-size: 14px;
+
+    }
+
+    .checkout-step-sec.check_out_none .cart-table__body .cart-table__row:last-child .cart-table__column:first-child,
+    .checkout-step-sec.check_out_none table.cart__table.cart-table .container_lable,
+    .checkout-step-sec.check_out_none table.cart__table.cart-table a.checkout_update {
+
+        font-size: 14px;
+    }
+
+    .cart-table__body .cart-table__row:last-child .cart-table__column {
+        border-bottom: 1px solid #ebebeb;
+        /* padding-left: 0;*/
+    }
+
+    .checkout-step-sec.check_out_none table.cart__table.cart-table tr.cart-table__row th.cart-table__column.cart-table__column--product {
+        width: 33%;
+    }
+
+    .checkout-step-sec.check_out_none table.cart__table.cart-table .checkmark {
+        top: 2px;
+        right: 15px;
+        height: 15px;
+        width: 15px;
+    }
+
 }
-.banner-content .banner-heading {
-    font-size: 75px;
-}
-.banner-content .banner-sub-heading {
-    font-size: 75px;
-}
-.banner-content p {
+
+@media(max-width: 767px) {
+    .about-us-sec>.container>.row>div.col-md-6:nth-of-type(odd) {
+        order: 1;
+    }
+
+    .acc_sub_menu .dropdown-menu.show {
+        position: relative !important;
+        top: 8px !important;
+        left: 0 !important;
+        float: unset !important;
+        transform: unset !important;
+    }
+
+    .leader-board-table th {
+
+        padding: 8px 19px;
+        font-size: 16px;
+        text-align: center;
+
+    }
+
+
+    .register-acc p.main_head {
+        font-size: 18px;
+        margin: 0 !important;
+
+    }
+
+    .coach_option .cstm-radio {
+        margin: 0 28px 0 0;
+    }
+
+    form.register-form .option_row .form-group.row .form-radios {
+        width: 70%;
+    }
+
+    .radio-wrap {
+        width: 24%;
+    }
+
+    .form-inner-wrap .error {
+
+
+        top: 130px;
+    }
+
+    /*.register-acc .cstm-radio.main-radio label {
     font-size: 18px;
-}
-.football-services-sec .activity-card {
-    margin-bottom: 70px;
-}
-.player-report-table .report-table-wrap th:nth-child(3) {
-    min-width: 230px;
-}
-#navbarSupportedContent .serch-login-signup {
-    flex-wrap: wrap;
-    margin-bottom:130px;
-   
-}
-.serch-login-signup li:first-child {
-    width: 100%;
-}
-.serch-login-signup .responsive-search-icon {
-    padding: 0 0 15px 15px;
-    display: block;
-}
-.serch-login-signup li:nth-child(2) {
-    padding-left: 15px;
-}
+    }
 
-}
-@media(max-width: 767px){
-    ul.day-list li {
-    width: 25%;
-   
-}
-.event-outer-wrap {
-    display: flex;
-  
-    flex-direction: column;
-}
-.event-info-dt {
-    
-    width: 100%;
-   }
-   .event-info-dt {
-   
-    border-bottom: 1px solid #d7d7d7!important;
-
-    border-left: none;
-    border-right: none;
-}
-.event-outer-wrap .event-info-dt:last-child {
-    border-bottom:none!important;
-}
-     ul.ui-menu.ui-corner-bottom.ui-widget.ui-widget-content {
-    width:219px;
-    
-}
-.contact-gender .text-md-right {
-
-    margin-right: 20px;
-   
-}
-   .activity-slider .owl-dots {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 0;
-}
-.activity-slider .owl-dots .owl-dot {
-    height: 12px;
-    width: 12px;
-    background: transparent;
-    border-radius: 50%;
-    border: 2px solid #95948f;
-    margin-right: 8px;
-}
-.activity-slider .owl-dots .owl-dot:last-child{
+.main-radio {
     margin-right: 0;
 }
-.activity-slider .owl-dots .owl-dot.active {
-    border: 2px solid #be298d;
-    background: #be298d;
-}
-.activity-slider .owl-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
-.activity-slider .owl-prev {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
-.activity-slider {
-    padding-bottom: 63px;
-}
-.about-us-left {
-    margin-bottom: 25px;
-}
-.demo-form {
-    margin-top: 20px;
-}
-.account-menu-tabs .menu-tab-link {
-    font-size: 14px;
-    padding: 11px 6px;
-    margin-bottom: 5px;
-    width: 32%;
-   
-}
-.nav-tabs {
-    border-bottom: none;
-}
-.leader-board-table th:first-child {
-    width: 45px;
-}
-.select-player-report-form .form-row .form-group {
-    margin-bottom: 20px;
-}
-.select-player-goal-form .form-row .form-group {
-    margin-bottom: 20px;
-}
-.school-card {
-    margin-bottom: 20px;
-}
-.school-details {
-    margin-bottom: 15px;
-}
-.banner-slider .item {
-    background-position: 65% 50%;
+
+.main-radio label::before {
+    left: 51px;
+    top: 2px;
+    width: 18px;
+    height: 18px;
 }
 
+.main-radio label::after {
+
+    left: 57px;
+    top: 5px;
+    width: 6px;
+    height: 11px;
+
 }
-@media(max-width: 575px){
-.sec-heading {
-    font-size: 50px;
-    padding: 5px 40px;
+
+.main-radio input {
+    right: -2px;
 }
-.section-heading::after {
-    border-top: 45px solid #bea029;
-    border-left: 40px solid transparent;
-        left: -39px;
-}
-.sec-heading::after {
-    border-top: 45px solid #bea029;
-    border-right: 40px solid transparent;
-        right: -39px;
-}
-.section-heading::before {
-    border-bottom: 45px solid #bea029;
-    border-left: 40px solid transparent;
-        left: -39px;
-}
-.sec-heading::before {
-    border-bottom: 45px solid #bea029;
-    border-right: 40px solid transparent;
-        right: -39px;
-}
-.banner-content .banner-heading {
-    font-size: 80px;
-}
-    .banner-content .banner-sub-heading {
-    font-size: 80px;
-}
-.banner-content p {
-    font-size: 18px;
+
+*/
+
+    .register-acc .cstm-radio.main-radio label {
+        font-size: 18px;
     }
-.services-sec {
-    padding: 60px 0;
-    margin-bottom: -100px;
-}
-.testimonial-sec {
-    padding: 20px 0;
-}
-.events-sec .event-card-form .form-group label {
-    width: 35%;
-}
-.banner-content {
-    padding: 0;
-}
-.banner-content .banner-sub-heading {
-    font-size: 60px;
-        line-height: 70px;
-}
-.banner-content .banner-heading {
-    font-size: 60px;
-        line-height: 70px;
-}
-.banner-content {
-    padding: 0 25px;
-}
 
+    .main-radio label::before {
+        content: "";
+        position: absolute;
+        left: 53px;
+        top: 5px;
+        width: 18px;
+        height: 18px;
+        border: 2px solid #be298d;
+    }
 
-}
-@media(max-width: 480px){
+    .main-radio label::after {
+        content: "";
+        position: absolute;
+        left: 60px;
+        top: 8px;
+        width: 5px;
+        height: 11px;
+        border-right: 2px solid #be298d;
+        border-bottom: 2px solid #be298d;
+        transform: rotate(45deg);
+        opacity: 0;
+    }
+
+    .child-voc .modal-body p {
+        font-size: 16px;
+
+    }
+
+    .child-voc ul {
+
+        padding-left: 25px;
+
+    }
+
+    .child-voc form.pick-option p.child_cont,
+    .child-voc .form-inner-wrap {
+
+        padding-left: 10px;
+    }
+
+    .child-voc .pink-heading h2 {
+        margin: 30px 0 10px !important;
+    }
+
+    .child-voc .pink-heading h2 {
+        font-size: 26px;
+    }
+
+    .child-voc form.pick-option .form-check {
+        width: 100%;
+    }
+
+    .player-info {
+        margin-bottom: 30px;
+    }
+
+    .player-info figure#badges-form {
+        width: 30%;
+    }
+
+    .upload_opt {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .player-info input#update_tennis_club {
+
+        max-width: 40%;
+    }
+
+    .select-player-goal-form .badges-select-bar .form-group {
+        flex-wrap: wrap;
+    }
+
+    .badges-select-bar .selt_opt,
+    .label-row {
+        padding: 0;
+        margin-bottom: 15px;
+    }
+
+    .select-player-goal-form .badges-select-bar .select-button {
+        margin-top: 5px !important;
+        text-align: center;
+    }
+
+    .upload_opt a {
+        margin-right: 15px !important;
+        margin-bottom: 15px;
+    }
+
+    .about-us-sec>.container>.row>div.col-md-6:nth-of-type(even) {
+        order: 2;
+        margin-top: 20px;
+    }
+
+    .camp_list_title.camp-logo-section h2 span {
+        font-size: 60px !important;
+    }
+
+    p#med_beha {
+        display: block;
+    }
+
+    /*.select-player-goal-form .form-group label {
+    width: 32%;
+}*/
+    .acc_sub_menu .outer-wrap {
+        display: unset;
+    }
+
     ul.day-list li {
-    width: 33%;
-    
-}
+        width: 25%;
+
+    }
+
+    .event-booking {
+        display: flex;
+    }
+
+    .course-list-detail .event-card-form .form-group label {
+        width: 28%;
+    }
+
+    .course-list-detail .form-control {
+        width: 70%;
+    }
+
+    .event-card-form .form-group {
+        flex-wrap: wrap;
+
+    }
+
+    .course-list-detail .event-card-form .form-group label.cst-fees,
+    .course-list-detail .event-card-form .form-group a.cstm-btn.event-booking-btn {
+        display: none;
+    }
+
+    form.register-form .option_row .form-group.row .form-radios p {
+        margin-right: 0 !important;
+        font-size: 14px;
+    }
+
+    .contact-one p {
+        font-size: 14px;
+    }
+
+    /*.error {
+    padding-right: 30px;
+    }*/
+    .event-outer-wrap {
+        display: flex;
+
+        flex-direction: column;
+    }
+
+    .event-info-dt {
+
+        width: 100%;
+    }
+
+    .event-info-dt {
+
+        border-bottom: 1px solid #d7d7d7 !important;
+
+        border-left: none;
+        border-right: none;
+    }
+
+    .event-outer-wrap .event-info-dt:last-child {
+        border-bottom: none !important;
+    }
+
+    ul.ui-menu.ui-corner-bottom.ui-widget.ui-widget-content {
+        width: 219px;
+
+    }
+
     .contact-gender .text-md-right {
 
-    margin-right:0;
-   
-}
-.event-info {
-    padding: 20px 5px;
-    
-} 
-.event-info p
-{
-    font-size: 14px;
-}
-.course-list-detail .event-card-form .form-group label {
-    width: 100%;
-    margin-bottom: 8px;
-}
-.event-text {
+        margin-right: 20px;
 
-    max-width: 100%;
-   }
-    .services-description li h2 {
-    font-size: 22px;
+    }
+
+    .activity-slider .owl-dots {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
+    }
+
+    .activity-slider .owl-dots .owl-dot {
+        height: 12px;
+        width: 12px;
+        background: transparent;
+        border-radius: 50%;
+        border: 2px solid #95948f;
+        margin-right: 8px;
+    }
+
+    .activity-slider .owl-dots .owl-dot:last-child {
+        margin-right: 0;
+    }
+
+    .activity-slider .owl-dots .owl-dot.active {
+        border: 2px solid #be298d;
+        background: #be298d;
+    }
+
+    .activity-slider .owl-next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .activity-slider .owl-prev {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .activity-slider {
+        padding-bottom: 63px;
+    }
+
+    .about-us-left {
+        margin-bottom: 25px;
+    }
+
+    .demo-form {
+        margin-top: 20px;
+    }
+
+    .account-menu-tabs .menu-tab-link {
+        font-size: 14px;
+        padding: 11px 6px;
+        width: 32%;
+
+    }
+
+    .nav-tabs {
+        border-bottom: none;
+    }
+
+    .leader-board-table th:first-child {
+        width: 45px;
+    }
+
+    .select-player-report-form .form-row .form-group {
+        margin-bottom: 20px;
+    }
+
+    /* .select-player-goal-form .form-row .form-group {
+        margin-bottom: 20px;
+    }
+*/
+    .school-card {
+        margin-bottom: 20px;
+    }
+
+    .school-details {
+        margin-bottom: 15px;
+    }
+
+    .banner-slider .item {
+        background-position: 65% 50%;
+    }
+
+    .football-course-content .f-course-heading,
+    .inner-banner-heading {
+        font-size: 50px;
+    }
+
+    .camp_list_title.camp-logo-section h2 {
+        font-size: 20px;
+    }
+
+    .account-menu-tabs .menu-tab-link {
+        width: 24%;
+    }
+
+    .camp-staff .outer-wrap,
+    .tab-points-container {
+        padding: 15px;
+    }
+
+    .tab-points-container .col-sm-7,
+    .tab-points-container .col-sm-5 {
+        width: 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .tab-points-container>.row,
+    .inverted .tab-points-container>.row {
+        flex-direction: column-reverse;
+    }
+
+    .t-p-text {
+        margin-top: 15px;
+    }
+
+    .t-p-img {
+        max-height: initial;
+    }
+
+    .camp-down-sec .left-side-content ul,
+    .camp-down-sec .right-side-content ul {
+        padding: 10px;
+    }
+
+    .multi-sec .inner-wrap .inner-content:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .multi-sec .inner-wrap .inner-content:nth-child(3n) {
+        margin-right: 18px;
+    }
+
+    .multi-sec .inner-content {
+        width: calc(50% - 10px);
+    }
+
+    .camp-down-sec .left-side-content ul li a,
+    .camp-down-sec .right-side-content ul li a {
+        font-size: 16px;
+    }
+
+    .we-run-container {
+        max-height: 80px;
+    }
+
+    .o-i-tab>.row>div {
+        width: 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .o-i-accordion {
+        margin-bottom: 30px;
+    }
+
+    .camp-logo-section h2 {
+        font-size: 20px;
+    }
+
+    .camp-logo-section p {
+        font-size: 14px;
+    }
+
+    .book-camp-accordion-table .col-sm-6 {
+        width: 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .book-camp-accordion-table .col-sm-6+.col-sm-6 {
+        margin-top: 20px;
+    }
+
+    /* toggle header nav */
+    .account-menu .container {
+        display: block;
+    }
+
+    .account-menu nav ul {
+        display: block;
+        margin-top: 10px;
+    }
+
+    .account-menu nav {
+        display: none;
+        -webkit-transition: all ease 0.3s;
+        -o-transition: all ease 0.3s;
+        transition: all ease 0.3s;
+    }
+
+    .menu-title {
+        margin-bottom: 0;
+    }
+
+    .menu-title {
+        position: relative;
+    }
+
+    .menu-title:after {
+        position: absolute;
+        content: "\f0d7";
+        font-weight: 900;
+        font-family: 'Font Awesome 5 Free';
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    nav.coach_dash {
+        display: block;
+        -webkit-transition: all ease 0.3s;
+        -o-transition: all ease 0.3s;
+        transition: all ease 0.3s;
+    }
+
+    .menu-title.icon_dash:after {
+        transform: translateY(-50%)rotate(180deg);
+    }
+
+    .account-menu nav li+li {
+        margin-left: 0;
+        margin: 10px 0;
+    }
+
+    .content.c-qualification.cstm-qual .f-g-upload>a {
+        right: 15px !important;
+        top: 43px;
+    }
+
+    #upload_doc input[type="file"]+a {
+        right: 5px;
+    }
+
+    section.content.c-qualification.cstm-qual #upload_doc .col-sm-3 {
+        width: 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .my-players.section-padding.cst-plyer .all-members .col-md-3 {
+        margin: 20px 0;
+        width: 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    /*240420*/
+    section.c-d-slider.section-padding+section.c-d-book-now .c-d-book-now-wrap {
+        flex-direction: column;
+        padding-right: 10px;
+    }
+
+    section.c-d-slider.section-padding+section.c-d-book-now .c-d-book-now-wrap .c-d-book-now-date {
+        flex: unset;
+        height: 74px;
+        align-items: flex-start;
+        max-width: calc(100% - 100px) !important;
+        padding-left: 0px;
+        padding-right: 10px;
+    }
+
+    section.c-d-slider.section-padding+section.c-d-book-now .c-d-book-now-wrap .c-d-book-now-date span {
+        text-align: left;
+    }
+
+    section.c-d-slider.section-padding+section.c-d-book-now .c-d-book-now-wrap .c-d-book-now-text a {
+        top: 12px;
+        transform: unset;
+    }
+
+    section.c-d-slider.section-padding+section.c-d-book-now .c-d-book-now-wrap .c-d-book-now-text {
+        width: 100%;
+        flex: 0 0 100%;
+        padding-right: 0px;
+        padding-left: 0px;
+        max-width: 100%;
+        border: none !important;
+    }
+
+    section.drh-activity-sec .activity-slider .owl-dots .owl-dot,
+    section.testimonial-sec .testimonial-slider .owl-dots .owl-dot {
+        border: none !important;
+        background: transparent !important;
+    }
+
+    /*280420*/
+    section.shopping-cart-sec table.cart__table.cart-table .cart-table__column--price,
+    section.shopping-cart-sec table.cart__table.cart-table .cart-table__column--quantity,
+    section.shopping-cart-sec table.cart__table.cart-table .cart-table__column--total,
+    .checkout-step-sec table.cart__table.cart-table .cart-table__column--total,
+    .checkout-step-sec table.cart__table.cart-table .cart-table__column--quantity {
+        justify-content: center;
+    }
+
+    section.shopping-cart-sec table.cart__table.cart-table .cart-table__column--price:before,
+    section.shopping-cart-sec table.cart__table.cart-table .cart-table__column--quantity:before,
+    section.shopping-cart-sec table.cart__table.cart-table .cart-table__column--total:before,
+    .checkout-step-sec table.cart__table.cart-table .cart-table__column--quantity:before,
+    .checkout-step-sec table.cart__table.cart-table .cart-table__column--total:before {
+        width: auto;
+        padding-right: 10px;
+    }
+
+    .checkout-step-sec .multi_step_form #msform #progressbar li {
+        font-size: 15px;
+    }
+
+    .checkout-step-sec .multi_step_form .card.cart-total-card table.cart__totals tfoot.cart__totals-footer * {
+        font-size: 23px;
+    }
+
+    /*050520*/
+    section.coach_detail .card.coach_profile {
+        padding: 15px;
+    }
+
+    section.coach_detail .card.coach_profile .coach.details ul li>strong,
+    section.coach_detail .card.coach_profile .coach.details ul li>span {
+        width: 100%;
+    }
+
+    section.coach_detail .card.coach_profile .coach.details ul li>strong>span {
+        margin-left: 5px;
+    }
+
+    /*130520*/
+    #navbarSupportedContent .serch-login-signup {
+        margin-bottom: 350px;
+    }
+
+    .checkout-step-sec.check_out_none table.cart__table.cart-table td.cart-table__column.cart-table__column--quantity {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .checkout-step-sec.check_out_none table.cart__table.cart-table td.cart-table__column {
+
+        border-bottom: 1px solid #ebebeb;
+        padding: 20px 18px;
+    }
+
+    .checkout-step-sec.check_out_none table.cart__table.cart-table td.cart-table__column form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        max-width: 30%;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .checkout-step-sec.check_out_none table.cart__table.cart-table .checkmark {
+
+        right: -8px;
+
+    }
+
+    .checkout-step-sec.check_out_none .form-check {
+        margin-bottom: 0;
+    }
+
+    .step-form-content .step-content-title {
+        font-size: 18px;
+    }
+
+    .checkout-step-sec.check_out_none .cart-table__body .cart-table__row:last-child .cart-table__column:first-child,
+    .checkout-step-sec.check_out_none table.cart__table.cart-table .container_lable,
+    .checkout-step-sec.check_out_none table.cart__table.cart-table a.checkout_update {
+
+        font-size: 16px;
+    }
+
+    .checkout-step-sec.check_out_none table.cart__table.cart-table .checkmark {
+
+        top: 0px;
+        right: 22px;
+        height: 20px;
+        width: 20px;
+
+    }
+
+    /*030620*/
+    section.account-menu-sec.player-badge-sec .account-menu-tabs .menu-tab-link {
+        width: 100%;
+        border-radius: 0px;
+        border-width: 0 0 2px 0 !important;
+        margin-bottom: 0;
+    }
+
+    section.account-menu-sec.player-badge-sec .leader-board-table th:first-child {
+        width: 77px;
+    }
+
 }
+
+@media(max-width: 575px) {
+    .cst_course_form .contact-gender label {
+        margin: 0 15px 0 7px;
+    }
+
+    .sec-heading {
+        padding: 5px 40px;
+    }
+
+    .click-sec-content .click-sec-tagline {
+        font-size: 28px;
+    }
+
+    .banner-content .banner-heading {
+        font-size: 80px;
+    }
+
+    .banner-content .banner-sub-heading {
+        font-size: 80px;
+    }
+
+    .banner-content p {
+        font-size: 18px;
+    }
+
+    .services-sec {
+        padding: 60px 0;
+        margin-bottom: -100px;
+    }
+
+    .testimonial-sec {
+        padding: 20px 0;
+    }
+
+    .events-sec .event-card-form .form-group label {
+        width: 35%;
+    }
+
+    .banner-content {
+        padding: 0;
+    }
+
+    .banner-content .banner-sub-heading {
+        font-size: 60px;
+        line-height: 70px;
+    }
+
+    .banner-content .banner-heading {
+        font-size: 60px;
+        line-height: 70px;
+    }
+
+    .banner-content {
+        padding: 0 25px;
+    }
+
+    .account-menu-tabs .menu-tab-link {
+        font-size: 13px;
+        padding: 11px 4px;
+    }
+
+    .camp_list_title {
+        margin-top: 20px;
+    }
+
+    .we-run-wrap>div {
+        width: 50%;
+    }
+
+    .camp-logo-section div[class*="col-"] {
+        width: 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .camp-logo-section .inner-logo {
+        margin: 0 auto;
+        margin-bottom: 20px;
+    }
+
+    .register-sec .card-header,
+    .change-password .box-primary h3,
+    .f-g-upload>label {
+        font-size: 25px;
+    }
+
+    .my-players.section-padding.cst-plyer .all-members>.row {
+        margin: 0
+    }
+
+    /*270420*/
+    .product-description-sec.cst_product_des .product-des-container .nav-tabs a.nav-link {
+        padding: 15px;
+        font-size: 16px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+}
+
+@media(max-width: 480px) {
+    ul.day-list li {
+        width: 33%;
+
+    }
+
+    .click-sec-content .click-sec-tagline {
+        font-size: 24px;
+    }
+
+    .event-info p.detail-cont {
+        min-height: 48px;
+    }
+
+    .player-info figure#badges-form {
+        width: 55%;
+    }
+
+
+
+    .upload_opt {
+        margin-bottom: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+
+
+    .radio-outer-wrap {
+        position: relative;
+        left: -26px;
+    }
+
+    .main-radio input {
+        right: -75px;
+    }
+
+    .cstm-radio input {
+
+        top: 4px;
+
+    }
+
+    .form-radios.rgtr-radio {
+
+        margin-bottom: 0 !important;
+    }
+
+    .main-radio {
+        margin-right: 10px;
+    }
+
+    .upload_opt .cstm-btn {
+
+        width: 100%;
+        margin-bottom: 15px;
+        font-size: 13px;
+        text-align: center;
+        margin-right: 0 !important;
+    }
+
+    .contact-gender .text-md-right {
+
+        margin-right: 0;
+
+    }
+
+    .request-actions .cstm-btn {
+
+
+        margin-bottom: 15px;
+        font-size: 10px;
+        text-align: center;
+    }
+
+    .coach_profile .modal-dialog {
+        max-width: 100%;
+    }
+
+    .child-voc .modal-dialog {
+
+        padding: 0 !important;
+        max-width: 95%;
+    }
+
+    .event-info p {
+        font-size: 14px;
+    }
+
+    .select-player-goal-form .form-group label {
+        width: 65%;
+    }
+
+    .course-list-detail .event-card-form .form-group label {
+        width: 100%;
+        margin-bottom: 8px;
+
+        text-align: left;
+    }
+
+        {
+        display: none;
+    }
+
+    .event-text {
+
+        max-width: 100%;
+        padding-top: 0;
+    }
+
+    .services-description li h2 {
+        font-size: 22px;
+    }
+
+    .event-text h4 {
+        font-size: 18px;
+    }
+
     form.cstm-cont-page .form-group {
 
-    width: 100%;
-}
-.contact-gender .text-md-right {
-   
-    margin-right: 0;
-    width: 25%;
- 
-}
+        width: 100%;
+    }
 
-.det-gender-opt .error {
-    top: 16px;
-}
-.demo-form {
-    
-    padding: 20px;
-   
-}
-.contact-gender label {
-    margin: 1px 10px 0 10px;
-}
+    .contact-gender .text-md-right {
+
+        margin-right: 0;
+        width: 25%;
+
+    }
+
+    .det-gender-opt .error {
+        top: 16px;
+    }
+
+    .demo-form {
+
+        padding: 20px;
+
+    }
+
+    .contact-gender label {
+        margin: 1px 10px 0 10px;
+    }
+
     ul.ui-menu.ui-corner-bottom.ui-widget.ui-widget-content {
-    width: 302px;
-    
-}
+        width: 302px;
+
+    }
+
     .sec-heading {
-    font-size: 32px;
-    padding: 5px 20px;
-}
-.section-heading::after {
-    border-top: 25px solid #bea029;
-    border-left: 20px solid transparent;
-        left: -19px;
-}
-.sec-heading::after {
-    border-top: 22px solid #bea029;
-    border-right: 20px solid transparent;
-        right: -19px;
-}
-.section-heading::before {
-    border-bottom: 22px solid #bea029;
-    border-left: 20px solid transparent;
-        left: -19px;
-}
-.sec-heading::before {
-    border-bottom: 22px solid #bea029;
-    border-right: 20px solid transparent;
-        right: -19px;
-}
-.header-top.mobile {
-    display: none;
-}
-.banner-slider .item {
-    padding: 200px 0 150px;
-}
-.about-us-sec {
-    padding: 35px 0;
-}
-.drh-activity-sec {
-    padding: 100px 0;
-}
-
-.banner-content p {
-    font-size: 15px;
-}
-.activity-caption p {
-    margin-bottom: 4px;
-}
-.activity-caption h2 {
-    font-size: 16px;
- }
- .activity-caption p {
-    margin-bottom: 0;
-    font-size: 14px;
-}
-.testimonial-sec {
-    padding: 20px 0;
-}
-.click-here-sec {
-    padding-top: 25px;
-}
-.testimonial-slider .owl-dots .owl-dot {
-    margin-right: 4px;
-}
-.event-card-form .form-group {
-    flex-wrap: wrap;
-}
-.events-sec .event-card-form .form-group label {
-    width: 100%;
-}
-.demo-slider .item {
-    padding: 20px;
-}
-.football-course-content .f-course-heading {
-    font-size: 40px;
+        font-size: 32px;
+        padding: 5px 20px;
     }
+
+    .section-heading::after {
+        border-top: 25px solid #bea029;
+        border-left: 20px solid transparent;
+        left: -19px;
+    }
+
+    .sec-heading::after {
+        border-top: 22px solid #bea029;
+        border-right: 20px solid transparent;
+        right: -19px;
+    }
+
+    .section-heading::before {
+        border-bottom: 22px solid #bea029;
+        border-left: 20px solid transparent;
+        left: -19px;
+    }
+
+    .sec-heading::before {
+        border-bottom: 22px solid #bea029;
+        border-right: 20px solid transparent;
+        right: -19px;
+    }
+
+    .header-top.mobile {
+        display: none;
+    }
+
+    .banner-slider .item {
+        padding: 200px 0 150px;
+    }
+
+    .about-us-sec {
+        padding: 35px 0;
+    }
+
+    .drh-activity-sec {
+        padding: 100px 0;
+    }
+
+    .banner-content p {
+        font-size: 15px;
+    }
+
+    .activity-caption p {
+        margin-bottom: 4px;
+    }
+
+    .activity-caption h2 {
+        font-size: 16px;
+    }
+
+    .activity-caption p {
+        margin-bottom: 0;
+        font-size: 14px;
+    }
+
+    .testimonial-sec {
+        padding: 20px 0;
+    }
+
+    .click-here-sec {
+        padding-top: 25px;
+    }
+
+    .testimonial-slider .owl-dots .owl-dot {
+        margin-right: 4px;
+    }
+
+    .events-sec .event-card-form .form-group label {
+        width: 100%;
+    }
+
+    .demo-slider .item {
+        padding: 20px;
+    }
+
+    .football-course-content .f-course-heading {
+        font-size: 40px;
+    }
+
     .demo-slider .owl-prev {
-    left: -7px;
-    height: 40px;
-    width: 40px;
-}
-.demo-slider .owl-next {
-    right: -7px;
-    height: 40px;
-    width: 40px;
-}
-.event-sec-heading h1 {
-    font-size: 35px;
+        left: -7px;
+        height: 40px;
+        width: 40px;
     }
+
+    .demo-slider .owl-next {
+        right: -7px;
+        height: 40px;
+        width: 40px;
+    }
+
+    .event-sec-heading h1 {
+        font-size: 35px;
+    }
+
     .Countdown-timer li {
-    font-size: 14px;
-    padding: 0 4px;
-}
-.Countdown-timer span{
-    font-size: 18px;
-}
-.Countdown-timer li::after{
-    font-size: 17px;
-    right: -3px;
-}
-.football-course-sec {
-    padding: 180px 0 110px;
-    
-}
-.account-sec-content .account-sec-heading {
-    font-size: 40px;
-}
-.account-menu-tabs .menu-tab-link {
-    width: 49%;
-}
-.player-goal-heading h1 {
-    font-size: 23px;
-}
-.player-goal-card legend {
-    font-size: 23px;
-    line-height: 24px;
-}
-.account-sec {
-    padding: 150px 0 110px;
-}
-.account-menu-sec {
-    padding: 80px 0 40px;
-}
-.leader-board-table table {
-    width: 100%;
-    table-layout: auto;
-}
-/*.login-sec button.cstm-btn.login {
-    margin-right: 15px;
-}
-*/.cstm-btn {
-    font-size: 13px;
-   
-}
-.register-sec .form-group {
-    width: 100%;
-    margin: 0;
-    display: inline-block;
-    margin-bottom: 15px;
+        font-size: 14px;
+        padding: 0 4px;
+    }
+
+    .Countdown-timer span {
+        font-size: 18px;
+    }
+
+    .Countdown-timer li::after {
+        font-size: 17px;
+        right: -3px;
+    }
+
+    .football-course-sec {
+        padding: 180px 0 110px;
+    }
+
+    .account-sec-content .account-sec-heading {
+        font-size: 40px;
+    }
+
+    .account-menu-tabs .menu-tab-link {
+        width: 49%;
+    }
+
+    .player-goal-heading h1 {
+        font-size: 23px;
+    }
+
+    .player-goal-card legend {
+        font-size: 23px;
+        line-height: 24px;
+    }
+
+    .account-sec {
+        padding: 150px 0 110px;
+    }
+
+    .account-menu-sec {
+        padding: 80px 0 40px;
+    }
+
+    .leader-board-table table {
+        width: 100%;
+        table-layout: auto;
+    }
+
+    /*.login-sec button.cstm-btn.login {
+        margin-right: 15px;
+    }
+    */
+
+
+    .register-sec .form-group {
+        width: 100%;
+        margin: 0;
+        display: inline-block;
+        margin-bottom: 15px;
+    }
+
+    .login-sec .card-body {
+        padding: 0 7px 20px;
+    }
+
+    .course-list-detail .form-control {
+
+        width: 100%;
+    }
+
+    .event-card p.weekly-fees {
+
+        max-width: 100%;
+
+    }
+
+    .account-menu-tabs .menu-tab-link {
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .activitiy-info-content h4 {
+        font-size: 16px;
+    }
+
+    .camp-down-sec .left-side-content,
+    .camp-down-sec .right-side-content {
+        width: 100%;
+    }
+
+    .camp-down-sec .right-side-content {
+        margin-top: 30px;
+    }
+
+    .camp-down-sec .inner-wrap {
+        flex-direction: column;
+    }
+
+    .multi-sec .inner-content {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .total-container {
+        margin-right: 15px;
+        font-size: 16px;
+    }
+
+    section.content.c-qualification.cstm-qual #upload_doc .col-sm-3 {
+        width: 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .register-sec.cstm-reg-sec .card-body {
+        padding: 0
+    }
+
+    .register-sec.cstm-reg-sec .card.coach_profile {
+        padding: 20px
+    }
+
+    .register-sec .card-header,
+    .change-password .box-primary h3,
+    .f-g-upload>label {
+        font-size: 25px;
+        line-height: 31px;
+    }
+
+    section.my-players.section-padding.cst-plyer .all-members .col-md-3 {
+        margin: 20px 0;
+        width: 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    /*280420*/
+    .checkout-step-sec .multi_step_form {
+        padding: 20px 15px;
+    }
+
+    .checkout-step-sec .multi_step_form #msform #progressbar li:before {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 20px;
+        position: relative;
+        top: 3px;
+    }
+
+    .checkout-step-sec .step-form-content {
+        padding: 30px 15px;
+    }
+
+    div#profile-detail .modal-dialog {
+        max-width: 100%;
+    }
+
+    div#profile-detail .modal-body {
+
+        padding: 0;
+    }
+
+    div#profile-detail img.coach-img {
+        position: absolute;
+        right: 50%;
+        top: -17px;
+        transform: translateX(50%);
+        height: 125px;
+        width: 125px;
+        margin-right: 10px;
+        object-fit: contain;
+    }
+
+    div#profile-detail .coach_detail .card.coach_profile,
+    div#reject-detail .card.coach_profile {
+
+        padding: 15px;
+
+    }
+
+    div#profile-detail {
+        padding-right: 0 !important;
+    }
+
+    div#reject-detail .modal-dialog {
+        max-width: 100%;
+    }
+
+    div#reject-detail .modal-body {
+
+        padding: 30px;
+    }
+
+    .checkout-step-sec.check_out_none table.cart__table.cart-table td.cart-table__column form {
+        max-width: 40%;
+    }
+
+    .step-form-content .step-content-title {
+        font-size: 15px;
+    }
+
+    .multi_step_form #msform #progressbar li:nth-child(3) {
+        word-break: break-all;
+        padding-left: 10px;
+    }
+
+    .checkout-step-sec.check_out_none table.cart__table.cart-table .checkmark {
+
+        right: 15px;
+
+
+    }
+
+    .rejection_box {
+        padding-left: 0;
+    }
+
+    img#profile_image_src {
+        margin-left: 15px;
+    }
+
+    .form-btn button.cstm-btn {
+        margin-bottom: 15px;
+    }
+
+    form.register-form .option_row .form-group.row .form-radios {
+        width: 100%;
+    }
+
+    form.register-form .option_row .form-group.row .form-radios p {
+        margin-bottom: 0;
+
+    }
+
+    .term-report-modal .card.coach_profile {
+        padding: 15px;
+    }
 }
 
-.login-sec .card-body{
-    padding: 0 7px 20px;
+@media(max-width:375px) {
+    .select-player-goal-form .form-group label {
+        width: 60%;
+    }
 }
-}
-@media(max-width:360px){
+
+@media(max-width:360px) {
     ul.ui-menu.ui-corner-bottom.ui-widget.ui-widget-content {
-    width: 288px;
-    
+        width: 288px;
+
+    }
+
+    .checkout-step-sec.check_out_none table.cart__table.cart-table .checkmark {
+
+        right: 10px;
+
+
+    }
+
+    .login-sec button.cstm-btn.login {
+        margin-right: 11px;
+    }
+
+    .cstm-btn {
+        padding: 10px 11px;
+    }
+
+    .select-player-goal-form .form-group label {
+        width: 65%;
+    }
+
 }

@@ -13,7 +13,7 @@ class Course extends Model
     
 
     protected $fillable = [
-        'slug', 'title', 'term', 'description', 'type', 'subtype', 'age', 'session_date', 'location', 'day_time', 'more_info', 'player', 'price', 'early_birth_price', 'status', 'booking_slot', 'age_group'
+        'slug', 'title', 'term', 'description', 'season', 'type', 'subtype', 'level',  'age', 'session_date', 'location', 'day_time', 'more_info', 'player', 'price', 'early_birth_price', 'status', 'booking_slot', 'age_group', 'bottom_section', 'linked_coach', 'badges', 'sort'
     ];
 
      public function sluggable() {

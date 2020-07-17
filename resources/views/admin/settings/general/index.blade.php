@@ -71,12 +71,192 @@
                                 </tbody>
 
                                 <tbody>
+                                    <!-- Football Landing Page -->
+                                    <td>Football Landing Page</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+                                            <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/settings/general/edit/football-landing')}}" class="dropdown-item">Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tbody>
+
+                                <tbody>
+                                    <!-- Football Courses Page -->
+                                    <td>Football Courses Page</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+                                            <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/settings/general/edit/football-course-listing')}}" class="dropdown-item">Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tbody>
+
+                                <tbody>
+                                    <!-- Tennis Landing Page -->
+                                    <td>Tennis Landing Page</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+                                            <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/settings/general/edit/tennis-landing')}}" class="dropdown-item">Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tbody>
+
+                                <tbody>
+                                    <!-- Tennis Courses Page -->
+                                    <td>Tennis Courses Page</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+                                            <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/settings/general/edit/tennis-course-listing')}}" class="dropdown-item">Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tbody>
+
+                                <tbody>
+                                    <!-- School Landing Page -->
+                                    <td>School Landing Page</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+                                            <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/settings/general/edit/school-landing')}}" class="dropdown-item">Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tbody>
+
+                                <tbody>
+                                    <!-- School Courses Page -->
+                                    <td>School Courses Page</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+                                            <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/settings/general/edit/school-course-listing')}}" class="dropdown-item">Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tbody>
+
+                                <tbody>
+                                    <!-- Tennis Pro Page -->
+                                    <td>Tennis Pro Page</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+                                            <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/settings/general/edit/tennis-pro')}}" class="dropdown-item">Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tbody>
+
+                                <tbody>
+                                    <!-- Camp Listing -->
+                                    <td>Camp Listing Page</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+                                            <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/settings/general/edit/camp-listing')}}" class="dropdown-item">Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tbody>
+
+                                <tbody>
+                                    <!-- Camp Detail -->
+                                    <td>Camp Detail Page</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+                                            <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/settings/general/edit/camp-detail')}}" class="dropdown-item">Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tbody>
+
+                                <tbody>
+                                    <!-- Book-a-camp Page -->
+                                    <td>Book A Camp Page</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+                                            <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/settings/general/edit/book-a-camp')}}" class="dropdown-item">Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tbody>
+
+                                <tbody>
+                                    <!-- Coach Listing -->
+                                    <td>Coach Listing Page</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+                                            <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/settings/general/edit/coach-listing')}}" class="dropdown-item">Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tbody>
+
+                                <tbody>
+                                    <!-- Book-a-camp Page -->
+                                    <td>Coach -  My Profile Page</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+                                            <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/settings/general/edit/my-profile')}}" class="dropdown-item">Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tbody>
+
+                                <tbody>
+                                    <!-- Contact Us Page -->
+                                    <td>Badges Page</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+                                            <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/settings/general/edit/badges')}}" class="dropdown-item">Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tbody>
+
+                                <tbody>
                                     <!-- Contact Us Page -->
                                     <td>Contact Us Page</td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
                                             <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/settings/general/edit/contact-us')}}" class="dropdown-item">Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tbody>
+
+                                <tbody>
+                                    <!-- Report Page -->
+                                    <td>Report Page</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+                                            <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/settings/general/edit/report')}}" class="dropdown-item">Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tbody>
+
+                                <tbody>
+                                    <!-- Contact Us Page -->
+                                    <td>Childcare Popup</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+                                            <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/settings/general/edit/child-care-popup')}}" class="dropdown-item">Edit</a>
                                             </div>
                                         </div>
                                     </td>

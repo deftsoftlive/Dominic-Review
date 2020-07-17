@@ -67,7 +67,7 @@ $("body").on('submit','#shippingForm',function(e){
 
 
 
-function submitShippingAddress($this) {
+function submitShippingAddress($this) { 
 	$.ajax({
           headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
           url: $this.attr('action'),

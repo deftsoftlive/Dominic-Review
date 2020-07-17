@@ -15,8 +15,6 @@ class Checkout
      */
     public function handle($request, Closure $next)
     {
-         
-
         if( \Auth::check() && \Auth::User()->role =="user" && Auth::user()->status == 1 && Auth::user()->CartItems->count() > 0){                       
                 return $next($request);
         }else{

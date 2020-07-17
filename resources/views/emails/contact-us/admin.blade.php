@@ -34,14 +34,13 @@
                                 <p>Hello Admin,</p>
                                 <p>DRH Sports!</p>
                                 <br/>
-                                <p>"<strong>{{$participant_name}}</strong>" is requested for taster class with following information:</p>
-                                <p>Participant Name - {{$participant_name}}</p>
-                                <p>Participant DOB - {{$participant_dob}}</p>
-                                <p>Participant Gender - {{$participant_gender}}</p>
-                                <p>Parent Name - {{$parent_name}}</p>
-                                <p>Parent Email - {{$parent_email}}</p>
-                                <p>Parent Telephone - {{$parent_telephone}}</p>
-                                <p>Class - {{$class}}</p>
+                                <p>"<strong>{{$participant_name}}</strong>" is requested to contact DRH Sports:</p>
+                                <p>Name - {{$participant_name}}</p>
+                                <p>Email - {{$parent_email}}</p>
+                                <p>Telephone - {{$parent_telephone}}</p>
+                                <p>Subject - {{$subject}}</p>
+                                <p>Message - {{$message}}</p>
+                                
                              </td>
                           </tr>
                           <tr>

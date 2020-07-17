@@ -5,7 +5,7 @@
     </div>
     <!-- [ Pre-loader ] End -->
     <!-- [ navigation menu ] start -->
-    <nav class="pcoded-navbar">
+    <nav class="pcoded-navbar d-print-none {{ \Request::route()->getName() === 'camp_reg_temp' ? 'navbar-collapsed' : '' }}">
         <div class="navbar-wrapper">
             <div class="navbar-brand header-logo">
                 <a href="{{url(route('admin_dashboard'))}}" class="b-brand">

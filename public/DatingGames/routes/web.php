@@ -48,8 +48,6 @@ Route::post('message-store', 'User\MessageController@store')->name('message-stor
 Route::get('block-user/{slug}', 'User\MatchController@block')->name('block');
 Route::get('unblock-user/{slug}', 'User\MatchController@unblock')->name('unblock');
 });
-    
-	
 	
 Route::group(['prefix' => 'backend', 'middleware' => ['backend', 'verified']], function() {
     // admin profile Management

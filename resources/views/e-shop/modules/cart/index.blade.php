@@ -1,20 +1,37 @@
+@extends('inc.homelayout')
 @extends('e-shop.layouts.layout')
 @section('styleSheet')
-<link rel="stylesheet" type="text/css" href="{{url('/e-shop/css/cart-style.css')}}">
-@endsection
-@section('content')
 
 
+<link rel="stylesheet" type="text/css" href="{{URL::asset('/e-shop/css/cart-style.css')}}">
+<style>
+header.Eshop-header {
+    display: none;
+}
+
+.football-course-content {
+    display: none;
+}
+
+footer.site-footerss {
+    display: none;
+}
+</style>
 
 
-    <!-- banner section starts here here -->
-    <section class="inner-main-banner" style="background-image:url({{url('/e-shop/images/product-listing-banner-bg.png')}});">
-        <div class="container">
-            <div class="inner-banner-content text-center">
-                <h1>Shopping Cart</h1>
+<!-- banner section starts here here -->
+<section class="football-course-sec" style="background: url(http://49.249.236.30:8654/dominic-new/public/uploads/1584684865tennis_course_banner_image.png);">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="football-course-content-data">
+                    <h2 class="f-course-heading">SHOPING CART</h2>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
    <!--Shopping cart sec starts here -->
    <section class="shopping-cart-sec">
      <div class="container">
@@ -63,11 +80,11 @@
 
 
                    
-                     <div class="d-f justify-content-center w-100">
-                         <img class="mr-2" src="http://49.249.236.30:8654/images/american-express.png" alt="visa">
-                         <img class="mr-2" src="http://49.249.236.30:8654/images/discover.png" alt="master card">
-                         <img src="http://49.249.236.30:8654/images/master-card.png" alt="cash on delivery">
-                         <img src="http://49.249.236.30:8654/images/visa.png" alt="cash on delivery">
+                     <div class="d-f justify-content-center w-100 cards_icons">
+                         <img class="mr-2" src="{{URL::asset('/images/cards')}}/visa_card.jpg" alt="visa">
+                         <img class="mr-2" src="{{URL::asset('/images/cards')}}/master_card.jpg" alt="master card">
+                         <img src="{{URL::asset('/images/cards')}}/discover.jpg" alt="cash on delivery">
+                         <img src="{{URL::asset('/images/cards')}}/american_express.jpg" alt="cash on delivery">
                      </div>
                </div>
                             </div>

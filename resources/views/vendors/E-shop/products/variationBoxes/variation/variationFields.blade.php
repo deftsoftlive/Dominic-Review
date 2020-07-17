@@ -38,7 +38,7 @@ $thumbnailValidation = !empty($variant) && $thumbnail != null ? '' : 'required';
 
   <div class="col-md-6">
   	  <div class="form-group">
-  	  	  <label>Price($) <small>(According to Variation)</small></label>
+  	  	  <label>Price(£) <small>(According to Variation)</small></label>
   	  	  <input type="number" min="0" name="price" value="{{$price}}" class="form-control" id="Reqularprice">
   	  </div>
   </div>
@@ -46,7 +46,7 @@ $thumbnailValidation = !empty($variant) && $thumbnail != null ? '' : 'required';
 <!-- field start -->
   <div class="col-md-6">
   	  <div class="form-group">
-  	  	  <label>Sale Price($) <small>(According to Variation)</small></label>
+  	  	  <label>Sale discount amount(£) <small>(According to Variation)</small></label>
   	  	  <input type="number" min="0" name="sale_price" class="form-control" value="{{$sale_price}}">
   	  </div>
   </div>

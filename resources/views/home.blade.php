@@ -191,7 +191,11 @@
                       </div>
                       <h3>{{$test->title}}</h3>
                       <span>
-                        <img src="{{ URL::asset('uploads')}}/{{$test->image}}">
+                        @if($test->image)
+                          <img src="{{ URL::asset('uploads')}}/{{$test->image}}">
+                        @else
+                          <img src="{{ URL::asset('images/default.jpg')}}">
+                        @endif
                       </span>   
                     </div>
                   </figcaption>

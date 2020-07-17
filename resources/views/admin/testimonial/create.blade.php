@@ -33,13 +33,28 @@
   <form role="form" method="post" id="venueForm" enctype="multipart/form-data">
                 
                    @csrf
+
+                   <label class="control-label">Page Title<span class="cst-upper-star">*</span></label>
+                    <select class="select-player" name="page_title">
+                      <option value="home-page">Home Page</option>
+                          <option value="course-listing">Courses Page</option>
+                          <option value="course-listing/football">Football Courses Page</option>
+                          <option value="course-listing/tennis">Tennis Courses Page</option>
+                          <option value="course-listing/school">School Courses Page</option>
+                          <option value="camp-listing">Camp Page</option>
+                          <option value="camp-detail">Camp Detail</option>
+                          <option value="football-landing">Football Coaching</option>
+                          <option value="tennis-landing">Tennis Coaching</option>
+                          <option value="school-landing">School Clubs</option>
+                          <option value="badges">Badges Page</option>
+                    </select><br/>
                   
                    {{textbox($errors,'Title*','title')}}
                    {{textarea($errors,'Description*','description')}}
 
                   <div class="form-group">
                     <label>Image</label>
-                    <input type="file" required accept="image/*" onchange="ValidateSingleInput(this, 'image_src')" name="image" id="selImage">
+                    <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'image_src')" name="image" id="selImage">
                     @if ($errors->has('image'))
                         <div class="error">{{ $errors->first('image') }}</div>
                     @endif
@@ -48,7 +63,7 @@
                   
                 
 
-                <div class="card-footer">
+                <div class="card-footer pl-0">
                   <button type="submit" id="btnVanue" class="btn btn-primary">Submit</button>
                 </div>
  </form>

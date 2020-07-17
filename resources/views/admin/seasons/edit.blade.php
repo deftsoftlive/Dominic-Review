@@ -1,7 +1,7 @@
 @extends('layouts.admin')
  
 @section('content')
-<div class="page-header">
+ <div class="page-header">
     <div class="page-block">
         <div class="row align-items-center">
             <div class="col-md-12">
@@ -30,34 +30,22 @@
 
 <div class="col-md-12">
 
-  <form role="form" method="post" id="eventForm" action="{{url(route('update_seasons',$seasons->slug))}}" enctype="multipart/form-data">
-               
-
-
+  <form role="form" method="post" id="venueForm" enctype="multipart/form-data">
+                
                    @csrf
                   
-                   {{textbox($errors,'Season Name*','name',$seasons->name)}}
-                   {{textarea($errors,'Description*','description',$seasons->description)}}
-                    
-               
-                <!-- /.card-body -->
+                   {{textbox($errors,'Title<span class="cst-upper-star">*</span>','title', $venue->title)}}
+                   {{textarea($errors,'Description<span class="cst-upper-star">*</span>','description', $venue->description)}}
 
-                <div class="card-footer">
-                  <button type="submit" id="eventFormSbt" class="btn btn-primary">Submit</button>
+              
+                <div class="card-footer pl-0">
+                  <button type="submit" id="btnVanue" class="btn btn-primary">Submit</button>
                 </div>
  </form>
 
 
 </div>
 
-
-
-
-
-
-
-
-              
             </div>
             <!-- /.card-body -->
           </div>
@@ -73,9 +61,47 @@
      
 @endsection
 
-
-
-
 @section('scripts')
-<script src="{{url('/admin-assets/js/validations/eventValidation.js')}}"></script>
+<script src="{{url('/admin-assets/js/validations/valueValidation.js')}}"></script>
+<script src="{{url('/js/validations/imageShow.js')}}"></script>
+<!-- <script type="text/javascript">
+  $(document).ready(function(){
+   // Add Department Form
+  $('#venueForm').validate({
+    onfocusout: function (valueToBeTested) {
+      $(valueToBeTested).valid();
+    },
+  
+    highlight: function(element) {
+      $('element').removeClass("error");
+    },
+  
+    rules: {
+      "title": { 
+          required: true,          
+      },
+      "description": { 
+          required: true,          
+      },
+      valueToBeTested: {
+          required: true,
+      }
+    },
+    });   
+  
+    // Add Department Submitting Form 
+    $('#btnVanue').click(function()
+    {
+      if($('#venueForm').valid())
+      {
+        $('#btnVanue').prop('disabled', true);
+        $('#venueForm').submit();
+      } else {
+        return false;
+      }
+    });
+    
+});
+
+</script> -->
 @endsection

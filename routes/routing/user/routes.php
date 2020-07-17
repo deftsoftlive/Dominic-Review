@@ -8,6 +8,47 @@
          Route::post('/profile', 'Users\DashboardController@updateProfile')->name('user_profile'); 
 
          #-----------------------------------------------------------------------------------
+         #  Coach Profile  ------------------------------------------------------------------
+         #-----------------------------------------------------------------------------------
+         Route::any('coach-reports', 'HomeController@coach_report')->name('coach_report');
+         Route::any('coach-save-simple-reports', 'HomeController@save_simple_report')->name('save_simple_report');
+         Route::any('coach-save-complex-reports', 'HomeController@save_complex_report')->name('save_complex_report');
+         Route::any('get_player_from_course/{course_id}', 'HomeController@get_player_from_course')->name('get_player_from_course');
+         Route::any('get_course_from_season/{season_id}', 'HomeController@get_course_from_season')->name('get_course_from_season');
+
+         Route::any('report_popup', 'HomeController@report_popup')->name('report_popup');
+         Route::any('sim_report_popup', 'HomeController@sim_report_popup')->name('sim_report_popup');
+
+         Route::any('coach-qualifications', 'HomeController@qualifications')->name('qualifications');
+         Route::any('save-qualifications', 'HomeController@save_qualifications')->name('save-qualifications');
+         Route::any('coach-profile', 'HomeController@coach_profile')->name('coach_profile');
+         Route::any('update-coach-profile', 'HomeController@update_coach_profile')->name('update_coach_profile');
+         Route::any('delete/coach/document/{id}', 'HomeController@delete_coach_document')->name('delete_coach_document');
+         Route::any('coach/player', 'HomeController@coach_player')->name('coach_player');
+
+         // Upload Invoice PDF - By Coach
+         Route::any('upload-invoice', 'HomeController@upload_inv_index')->name('upload_invoice');
+         Route::any('upload-invoice/accept', 'HomeController@upload_inv_accept')->name('inv_accept');
+         Route::any('upload-invoice/not-approved', 'HomeController@upload_inv_not_approve')->name('inv_not_approve');
+         Route::any('upload-invoice/pending', 'HomeController@upload_inv_pending')->name('inv_pending');
+         Route::any('upload-invoice/add', 'HomeController@upload_inv_add')->name('add_upload_invoice');
+         Route::any('upload-invoice/save', 'HomeController@upload_inv_save')->name('save_upload_invoice');
+         Route::any('upload-invoice/edit/{id}', 'HomeController@upload_inv_edit')->name('edit_upload_invoice');
+
+         Route::any('badges','HomeController@badges')->name('badges');
+         Route::get('selectedSeason','HomeController@selectedSeason')->name('selectedSeason');
+         Route::any('update_user_profile','HomeController@update_user_profile')->name('update_user_profile');
+         Route::any('update_tennis_club/{tennis_club}/{user_id}/{shop_id}','HomeController@update_tennis_club')->name('update_tennis_club');
+
+         Route::any('request-by-parent', 'HomeController@request_by_parent')->name('request_by_parent');
+         Route::any('my-coaches', 'HomeController@linked_coaches')->name('linked_coaches');
+         Route::any('reject_request', 'HomeController@reject_request')->name('reject_request');
+         Route::any('undo_reject_request', 'HomeController@undo_reject_request')->name('undo_reject_request');
+         Route::any('parent-coach', 'HomeController@parent_coach')->name('parent_coach');
+         Route::post('updatePassword', 'HomeController@updatePassword')->name('coach.updatePassword');
+         Route::any('notifications', 'HomeController@parent_notifications')->name('parent_notifications');
+
+         #-----------------------------------------------------------------------------------
          #  Event Management ----------------------------------------------------------------
          #-----------------------------------------------------------------------------------
 

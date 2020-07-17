@@ -22,12 +22,12 @@ public function payment()
     	return $arr['url'];
     }
 
-    Auth::user()->getShopCartTotal();
+  //  Auth::user()->getShopCartTotal();
    
 	return view($this->filePath.'payment')
 		  ->with('number',$number)
 		  ->with('obj',$this)
-	      ->with('backward',url(route('shop.checkout.billingAddress')));	 
+	      ->with('backward',url(route('shop.checkout.billingAddress'))); 
 }
 
 
@@ -57,7 +57,19 @@ public function paymentEvalueAteToVendor()
 public function getTotalOrder()
 {
 	return Auth::user()->ShopProductCartItems->sum('total'); 
+	// $coupon = \DB::table('shop_cart_items')->where('user_id',Auth::user()->id)->where('orderID', '=', NULL)->where('discount_code','!=',NULL)->get();
 
+	// $extra = getAllValueWithMeta('service_fee_amount', 'global-settings'); 
+
+	// $total = array();
+	// foreach($coupon as $co){
+	// 	$total[] = $co->total;
+	// }
+
+	// $total_price = array_sum($total);
+
+	// return $total_price;
+	
 }
 
 
@@ -90,6 +102,7 @@ public function getCommissionFee($total=null)
 
 public function getGrandTotal()
 {
+	
 	return ($this->getServiceFee() + $this->getTax() + $this->getTotalOrder());
 }
 
@@ -106,37 +119,79 @@ public function getGrandTotal()
 public function getTotalWithTr()
 {
 
+	$coupon = \DB::table('shop_cart_items')->where('user_id',Auth::user()->id)->where('orderID', '=', NULL)->get();
 
+	// Check coupon is applied or not
+	$check_coupon = \DB::table('shop_cart_items')->where('user_id',Auth::user()->id)->where('orderID', '=', NULL)->where('discount_code','!=',NULL)->get();
+
+	$extra = getAllValueWithMeta('service_fee_amount', 'global-settings'); 
+
+	//dd($coupon);
+
+	// Price without discount
+	$total1 = array();
+	foreach($coupon as $co){
+		if($co->discount_price)
+		{
+			$total1[] = $co->total * $co->discount_price;
+		}else{
+			$total1[] = $co->total;
+		}
+	}
+	$total_price1 = array_sum($total1);
+	$grand_total1 = $total_price1+$extra;
+
+	// Price with discount
+	$total = array();
+	foreach($coupon as $co){
+		$total[] = $co->total;
+	}
+	$total_price = array_sum($total);
+	$grand_total = $total_price+$extra;
+	$gr_total = number_format($grand_total,2);
 
 $text ='<table class="cart__totals">';
 $text .='<thead class="cart__totals-header">';
 $text .='<tr>';
 $text .='<th>Subtotal</th>';
-$text .='<td>$'.custom_format(Auth::user()->ShopProductCartItems->sum('total'),2).'</td>';
+$text .='<td id="totakl">£'.$gr_total.'</td>';
 $text .='</tr>';
 $text .='</thead>';
 $text .='<tbody class="cart__totals-body">';
-$text .='<tr>';
-$text .='<th>Service Fee</th>';
-$text .='<td><strong><span class="plus-sign">+</span>$'.custom_format($this->getServiceFee(),2).'</strong></td>';
-$text .='</tr>	'; 
+// $text .='<tr>';
+// $text .='<th>Service Fee</th>';
+// $text .='<td><strong><span class="plus-sign">+</span>£'.$extra.'</strong></td>';
+// $text .='</tr>	'; 
 
 if(Session::has('shippingAddress')){
+
 		$text .='<tr>';
-		$text .='<th>Tax</th>';
-		$text .='<td><strong><span class="plus-sign">+</span>  $'.custom_format($this->getTax(),2).'</strong></td></tr>';
+		// $text .='<th>Tax</th>';
+		// $text .='<td><strong><span class="plus-sign">+</span>  £'.$total_price.'</strong></td></tr>';
+}
+
+if(count($check_coupon)>0)
+{
+	foreach($check_coupon as $co)
+	{
+		if(!empty($co->discount_price))
+		{
+		$text .='<tr>';
+		$text .='<th><p>Coupon applied on '.$co->shop_type.'</p></th>';
+		$text .='<td> <p>- '.$co->discount_price.'%</p></td>';
+		$text .='</tr>';
+		}
+	}
 }
  
 $text .='</tbody>';
 $text .='<tfoot class="cart__totals-footer">';
 $text .='<tr>';
 $text .='<th>Grand Total</th>';
-$text .='<td> $'.custom_format($this->getGrandTotal(),2).'</td>';
+$text .='<td> £'.$gr_total.'</td>';
 $text .='</tr>';
 $text .='</tfoot>';
 $text .='</table>';
-
- 
 	 
  return $text;
 }

@@ -1,5 +1,5 @@
 <!-- [ Header ] start -->
-    <header class="navbar pcoded-header navbar-expand-lg navbar-light">
+    <header class="navbar pcoded-header navbar-expand-lg navbar-light d-print-none">
         <div class="m-header">
             <a class="mobile-menu" id="mobile-collapse1" href="javascript:"><span></span></a>
             <a href="index.html" class="b-brand">
@@ -92,9 +92,20 @@
                 </li> -->
                 <li>
                     <div class="dropdown drp-user">
+                        @php
+                            $req = DB::table('coach_upload_pdfs')->orderBy('id','ASC')->where('status',2)->paginate(10);
+                            $req_count = count($req);
+                        @endphp
+                        <a href="{{route('new_uploaded_invoice')}}">
+                            <i class="fas fa-bell"></i> 
+                            <span class="notification-icon"> {{$req_count}}</span>
+                        </a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+
                         <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="icon feather icon-settings"></i>
                         </a>
+                        &nbsp;&nbsp;
                         <div class="dropdown-menu dropdown-menu-right profile-notification">
                             <div class="pro-head">
                                 <img src="{{ userProfileImage(Auth::user()->id) }}" class="img-radius" alt="User-Profile-Image">

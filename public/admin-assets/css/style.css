@@ -237,6 +237,42 @@ p.text-muted {
   padding: 0;
   position: absolute;
 }
+tr.child-row {
+    display: none;
+    background-color: #3f4d67;
+}
+.table-hover tr.child-row.expanded:hover {
+	background-color: #3f4d67;
+}
+tr.child-row.expanded {
+    display: table-row;
+}
+.btn.b-child i {
+	margin-right: 0;
+}
+.btn.b-child.minus i::before {
+	content: "\f068";
+}
+.child-container {
+    padding-left: 60px;
+	padding-right: 20px;
+}
+
+.child-container table th {
+    background-color: transparent!important;
+    color: #fff!important;
+    border-top: 0;
+}
+.child-container table td {
+	color: #fff;
+}
+.child-container table {
+    width: 100%;
+    table-layout: fixed;
+}
+.table-hover .child-container tr:hover {
+    background-color: transparent;
+}
 @media only screen and (max-width: 575px) {
   .card .card-header .card-header-right {
     display: none;
@@ -270,9 +306,12 @@ p.text-muted {
 .card .card-footer {
   border-top: 1px solid #f1f1f1;
   background: transparent;
-  padding: 25px 0px;
+  padding: 25px;
   display: block;
   width: 100%;
+}
+#userEditForm .card-footer {
+    padding: 25px 0;
 }
 .card .card-block,
 .card .card-body {
@@ -381,6 +420,56 @@ p.text-muted {
 .dropdown-menu > li.active > a, .dropdown-menu > li:active > a, .dropdown-menu > li:focus > a, .dropdown-menu > li:hover > a {
   background: transparent;
 }
+
+table.add_on_services
+{
+    width: 100%;
+    table-layout: fixed;
+}
+/*table.add_on_services th.course_content_center,
+table.add_on_services td.course_content_center {
+    text-align: center;
+}*/
+table.add_on_services th,
+table.add_on_services td {
+    padding-right: 20px;
+}
+span.cst_in-active i {
+    color: red;
+}
+span.cst_active i {
+    color:green;
+}
+span.cst_active,
+span.cst_in-active {
+    text-align: center;
+    width: 35%;
+    display: block;
+}
+
+
+form.cst-selection select.select_player
+{
+  display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+     background-image: url(../images/select.svg)!important;
+    background-size: 10px;
+    background-repeat: no-repeat;
+    background-position: top 50% right 12px;
+    z-index: 9;
+    -moz-appearance: none;
+-webkit-appearance: none;
+}
+
 
 /* ================================    Dropdown End  ===================== */
 @media (min-width: 1600px) {
@@ -2833,6 +2922,267 @@ p.text-muted {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
+.table-layout
+{
+  margin: 15px 0;
+}
+.table-layout .table th, .table-layout .table td {
+    text-align: center;
+    vertical-align: inherit;
+}
+.cst-reports p {
+    margin-bottom: 0;
+}
+
+.report-tab-one .inner-form-box {
+    padding: 0 15px;
+    border: 2px solid #be298d;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
+    margin: 20px 0;
+}
+.report-tab-sec p.top-heading {
+    position: absolute;
+    top: -18px;
+    font-size: 22px;
+    font-family: 'Bangers', cursive;
+    color: #bea029;
+    background: #fff;
+    padding: 0 15px;
+}
+.report-tab-sec .form-wrap {
+    padding-left: 15px;
+    padding: 25px 15px;
+}
+.form-check {
+    position: relative;
+    display: block;
+    padding-left: 1.25rem;
+}
+.report-tab-sec label.form-check-label {
+    color: #666666;
+    font-weight: 400;
+}
+.report-tab-sec label {
+    font-weight: 500;
+    color: #000;
+    text-transform: capitalize;
+}
+.upper-form.report-tab-sec.report-tab-one {
+    padding: 0 25px 30px;
+}
+div#report_detail_cont {
+    border: 3px solid #be298d;
+    padding: 20px;
+}
+.report-tab-sec button.cstm-btn {
+    margin-top: 25px;
+}
+.cstm-btn:hover {
+    background: #ffffff;
+    color: #be298d;
+    text-decoration: none;
+}.cstm-btn {
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: 500;
+    background: #be298d;
+    padding: 10px 18px;
+    border: 2px solid #be298d;
+    text-transform: uppercase;
+    display: inline-block;
+    text-decoration: none;
+    transition: all linear 0.3s;
+    border-radius: 4px;
+}
+.cstm-btn:hover {
+    background: #ffffff;
+    color: #be298d;
+    text-decoration: none;
+
+}
+@media print
+{
+  table.table.table-bordered{
+       page-break-inside: avoid!important;
+    } 
+
+}
+select.select-player{  
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    font-size:14px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    background-image: url(../images/select.svg)!important;
+    background-size: 10px;
+    background-repeat: no-repeat;
+    background-position: top 50% right 12px;
+    z-index: 9;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+
+/*table css starts here*/
+.course-detail-table
+{
+  overflow: auto;
+}
+.course-detail-table table th,
+.course-detail-table table td
+{
+  white-space: nowrap;
+  padding: 0 3px;
+}
+.course-detail-table table td,
+.course-detail-table table th a
+{
+  font-weight: 600;
+  font-size: 14px;
+}
+.course-detail-table table .odd-name-row
+{
+  background-color: #ced5ff; 
+}
+.course-detail-table table .even-name-row
+{
+      background-color: #ffcef1;
+} 
+
+.course-detail-table .inner-cont h2 {
+    font-weight: 700;
+    font-size: 32px;
+    margin: 25px 0;
+}
+
+.course-detail-table .inner-cont h4 {
+    font-weight: 700;
+    font-size: 24px;
+    margin:0 0 25px 0;
+}
+.course-detail-table .inner-cont p {
+    margin-bottom: 0;
+    font-size: 17px;
+    color: #000;
+    font-weight: 400;
+}
+
+.course-detail-table .medical-info-table tr
+{
+  border-bottom: 1px solid #eaeaea;
+}
+.course-detail-table .medical-info-table td,.course-detail-table .medical-info-table th,
+.course-detail-table .medical-info-table
+{
+  border: none
+
+}
+
+.course-detail-table .medical-info p {
+    margin-bottom: 0;
+    font-size: 18px;
+    color: #000;
+    font-weight: 400;
+    margin: 10px 0 ;
+}
+.course-detail-table .medical-info-table td,
+.course-detail-table .medical-info-table th
+{
+  padding: 8px 1px 0;
+   font-weight: 600;
+  font-size: 14px;
+}
+.course-detail-table .medical-info-table td
+{
+  font-weight: 400!important;
+  color: #000;
+}
+.course-detail-table .medical-info-table th
+{
+   color: #000;
+}
+
+
+.course-detail-table .medical-info table.week-dtl td {
+    padding: 0 22px;
+    border-top: 1px solid #ddd;
+}
+.course-detail-table .medical-info table.week-dtl td:first-child {
+    padding-left:  0
+}
+
+.course-detail-table table.week-dtl {
+    margin: 20px 0;
+}
+.camp-detail-table .camp-table th
+{
+background: #a4c3e3;
+}
+.camp-detail-table .camp-table th,
+.camp-detail-table .camp-table td
+{
+  border-color: #000;
+}
+.camp-detail-table .camp-table{
+  border:none;
+}
+.camp-detail-table .camp-table th.camp-date
+{
+  font-size:11px!important; 
+}
+.camp-detail-table .inner-cont ul li p {
+    font-weight: 600;
+}
+.camp-detail-table .inner-cont ul li p span {
+    font-weight: 400;
+}
+table.table.table-bordered.person-detail {
+    width: 100%;
+    max-width: 25%;
+    border: none;
+}
+table.table.table-bordered.person-detail td,
+table.table.table-bordered.person-detail th {
+   
+    border: none;
+    font-size: 16px;
+}
+table.table.table-bordered.person-detail th {
+    font-weight: 700;
+}
+table.table.table-bordered.person-detail td {
+    font-weight: 500;
+}
+
+.outer-wrap.camp-person-detail {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.outer-wrap.camp-person-detail figure {
+    width: 100%;
+    margin-right: 70px;
+    max-width: 190px;
+}
+.outer-wrap.camp-person-detail figure img
+{
+  width: 100%;
+}
+
+
+
+
+
+
 
 /* main content end*/
 /* ==========================    Rsponsive Menu  start   ====================== */
@@ -11090,3 +11440,201 @@ i.gender_icon {
    /******************/
 
 
+.cst_tabs ul.sideUl {
+    display: flex;
+    margin-top: 20px; 
+    text-decoration: none; 
+    border: 1px solid #ccc;
+    background: #fafafa;
+    background: -webkit-linear-gradient(top, #fafafa 0%, #eee 100%);
+    background: -moz-linear-gradient(top, #fafafa 0%, #eee 100%);
+    background: linear-gradient(top, #fafafa 0%, #eee 100%);
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+}
+.cst_tabs ul.sideUl li a{
+    margin-bottom: 0;
+    color: #000;
+    background: transparent;
+    border-color: transparent;
+    padding: 5px 15px!important
+}
+.cst_tabs ul.sideUl li a.active{
+    color: #fff;
+    background-color: #04a9f5;
+    border-color: #04a9f5
+}
+.cst_card_design{
+  margin-bottom: 20px!important;
+}
+.cst_card_design .card-header{
+      border: none;
+    padding: 8px 30px;
+    line-height: 1;
+    background: #3f4d67;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 14px;
+    height: 40px;
+    display: inline-flex;
+}
+.cst_card_design .card-header a[data-toggle="collapse"]{
+  color: #fff;
+}
+
+/*200423
+/***********/
+
+.card.productItemParentDiv .card-header {
+	display: block;
+}
+
+.variableBox .loadAllVariationOfProduct {
+    margin-top: 25px;
+}
+
+.card.productItemParentDiv .text-right a {
+	margin: 0px 3px;
+}
+
+.cst_card_design .saveVariationStockForm .card-header {
+	display: block;
+	height: unset;
+}
+
+.cst_card_design .saveVariationStockForm .card-header .form-group {
+	margin: 0;
+}
+
+.cst_card_design .saveVariationStockForm .card-header .variation-header-wraper {
+	align-items: center;
+}
+/*240420*/
+.table-responsive.cst_table_width table {
+    table-layout: auto;
+}
+.cst_heading h3{
+  background: #3f4d67;
+    color: #fff;
+    font-size: 17px;
+    padding: 13px 0;
+}
+form.manage_coupon .selectator_element.multiple {
+    padding: 7px 20px 10px 15px!important;
+    min-height: unset!important;
+    margin-bottom: 16px;
+    width: 100%!important;
+}
+/*150520*/
+.file-drop-zone .file-preview-thumbnails {
+    display: inline-block;
+    width: 100%;
+}
+.file-drop-zone .krajee-default .file-thumb-progress{
+	top: 29px;
+}
+.file-drop-zone  .fa.fa-upload.kv-file-upload i.glyphicon.glyphicon-upload{
+	display: none;
+}
+/*220520*/
+.input-group.file-caption-main .file-caption.form-control.kv-fileinput-caption.icon-visible.is-invalid{
+  border-color: #ced4da!important;
+}
+.badges_list +div{
+  min-height: auto  !important;
+  padding-top: 1px!important;
+  width: 100%!important;
+}
+
+/*toggle js*/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+span.notification-icon {
+    font-size: 10px;
+    height: 13px;
+    line-height: 10px;
+    display: inline-block;
+    background: #3f4d67;
+    color: #ffffff;
+    padding: 2px 4px;
+    border-radius: 11px;
+}
+.test_print_btn {
+    text-align: right;
+}
+.test_print_btn a
+{
+  margin:0;
+}
+
+/*media query*/
+
+@media print { 
+  .pcoded-main-container
+  {
+   
+    margin-left: 0!important;
+  }
+}

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\UserEvent;
 use App\FavouriteVendor;
+use App\CoachDocument;
 use Hash;
 
 class DashboardController extends Controller {
@@ -25,7 +26,14 @@ public function index($status='upcoming') {
         })
         ->OrderBy('start_date','ASC')
         ->paginate(10);
-	return view('users.dashboard.dashboard')->with('events', $events);
+
+        if(\Auth::user()->role_id == 2){
+          return redirect('user/my-family');
+        }elseif(\Auth::user()->role_id == 3){
+          return redirect('user/coach-profile');
+        }else{
+	        return view('users.dashboard.dashboard')->with('events', $events);
+        }
 }
 
 public function profile() {
@@ -84,5 +92,4 @@ public function updateProfile(Request $request) {
 	        return redirect()->back()->with('flash_message', 'Your favourite vendor has been deleted successfully');
         }
     }
-
 }

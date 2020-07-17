@@ -20,13 +20,15 @@ Route::get('/status/change','Vendor\Shop\ShopController@changeStatus')->name('ve
 #  Create Products
 #=============================================================================================================
 
-Route::get('/products','Vendor\Shop\ProductController@index')->name('vendor.shop.products.index');
+Route::any('/products','Vendor\Shop\ProductController@index')->name('vendor.shop.products.index');
 Route::get('/products/create','Vendor\Shop\ProductController@create')->name('vendor.shop.products.create');
 Route::get('/products/edit/{id}','Vendor\Shop\ProductController@edit')->name('vendor.shop.products.edit');
 Route::post('/products/edit/{id}','Vendor\Shop\ProductController@update')->name('vendor.shop.products.edit');
 Route::post('/products/save/category/{id}','Vendor\Shop\ProductController@saveCategory')->name('vendor.shop.products.saveCategory');
 Route::get('/product/{id}/change/status','Vendor\Shop\ProductController@status')->name('vendor.shop.products.status');
-
+Route::get('/products/delete/{id}','Vendor\Shop\ProductController@delete_product')->name('delete.shop');
+Route::get('/products/duplicate/{id}','Vendor\Shop\ProductController@duplicate_product')->name('duplicate.shop');
+Route::get('/products/update_product_sort/{sort_no}/{product_id}','Vendor\Shop\ProductController@update_product_sort')->name('update.sort.shop');
 
 #=============================================================================================================
 #  Create Products
@@ -36,11 +38,11 @@ Route::get('/products/ajax/category','Vendor\Shop\ProductController@ajaxCategory
 
 
 
-Route::post('/products/ajax/update/generalSetting/{id}','Vendor\Shop\ProductController@createGeneralSetting')->name('vendor.shop.products.ajax.createGeneralSetting');
+Route::any('/products/ajax/update/generalSetting/{id}','Vendor\Shop\ProductController@createGeneralSetting')->name('vendor.shop.products.ajax.createGeneralSetting');
 
 
 
-Route::post('/products/ajax/multiple-image-uploading/{id}','Vendor\Shop\ProductController@imageUploading')->name('vendor.shop.products.ajax.imageUploading');
+Route::any('/products/ajax/multiple-image-uploading/{id}','Vendor\Shop\ProductController@imageUploading')->name('vendor.shop.products.ajax.imageUploading');
 
 Route::post('/products/ajax/multiple-image-delete/{product_id}/{id}','Vendor\Shop\ProductController@imageDelete')->name('vendor.shop.products.ajax.DeleteImageUploading');
 
@@ -67,7 +69,7 @@ Route::post('/products/ajax/save/Inventory/product/{id}',
 
 
 Route::get('/products/ajax/load/steps/{id}',
-	       'Vendor\Shop\VariationController@loadSteps')->name('vendor.shop.variations.loadSteps');
+	       'Vendor\Shop\VariationController@loadSteps')->name('shop.variations.loadSteps');
 
 Route::get('/products/ajax/remove/product-vaariation-with-type/{id}',
 				       'Vendor\Shop\VariationController@removeProductVariationWithType')
@@ -78,7 +80,7 @@ Route::get('/products/ajax/remove/product-vaariation-with-type/{id}',
 
 
 
-Route::post('/products/ajax/create/variation-with-stock/{id}',
+Route::any('/products/ajax/create/variation-with-stock/{id}',
 				       'Vendor\Shop\VariationController@createNewVariationWithAttributeAndStockManagable')
 			           ->name('vendor.shop.variations.createNewVariationWithAttributeAndStockManagable');
 

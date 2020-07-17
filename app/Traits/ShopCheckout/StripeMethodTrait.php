@@ -35,7 +35,7 @@ public function postPaymentStripe(Request $request)
                  try {
     
                              $AccountWithPayment= $this->CommissionFeeServiceAccordingVendor('STRIPE',1);
-                             $OrderID = '#ENVSHOP'.strtotime(date('y-m-d h:i:s'));
+                             $OrderID = '#DRHSHOP'.strtotime(date('y-m-d h:i:s'));
                              $token = $request->stripeToken;
                              $application_fee = $this->getCommissionFee();
 

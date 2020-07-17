@@ -21,7 +21,7 @@ $("body").on('submit','#ADDToCART',function(e){
 
 function addToCartFunction() {
 	 var $this = $("body").find('form#ADDToCART');
-     var $url = $this.attr('data-action');
+     var $url = $this.attr('data-action');  alert
      var $divPath = $("body").find('#loadProducts');
 	 $.ajax({
                url : $url,

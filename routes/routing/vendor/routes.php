@@ -1,6 +1,9 @@
 <?php
 
-Route::group(['middleware' => ['VendorAuth'],'prefix' => 'vendors'], function(){
+Route::get('/admin/login', 'Admin\AdminController@index')->name('admin_login');
+Route::post('/admin/login', 'Admin\AdminController@check')->name('post_admin_login');
+
+Route::group(['middleware' => ['AdminAuth'],'prefix' => 'admins'], function(){
 
 require __DIR__.'/ajax.php';
 require __DIR__.'/shop.php';

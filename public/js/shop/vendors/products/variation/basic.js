@@ -88,6 +88,10 @@ function loadContentAccordingToSelectOption($this) {
    var $url = $("body").find('#loadAllstepWhenClieckOnTab').val();
    var $divID = $("body").find($type);
 
+   console.log($type);
+   console.log($url);
+   console.log($divID);
+
    switch($type){
 
        case '#generalBox':
@@ -117,6 +121,7 @@ function loadContentAccordingToSelectOption($this) {
 function getContentWithType($type,$url,$step,$divID) {
 	     var $variationType = $("body").find('#variationType').val();
 	      var $loader = $("body").find('.loader3');
+
 	     $.ajax({
                url : $url,
                data : {
@@ -365,7 +370,7 @@ $("body").find('#inventoryFormSubmit').validate({
 
 
 $("body").on('submit','.saveVariationStockForm',function(e){
-  
+
    var $this = $(this);
    validationRuleOfAttributes($this);
    var $loader = $("body").find('.loader3');
@@ -415,6 +420,7 @@ function submitShopForm($this) {
      var $loader = $("body").find('.loader3');
      var $div =$("body").find('.loadAllVariationOfProduct');
  
+
        $.ajax({
 
            url:url,
@@ -531,22 +537,22 @@ function VariationGeneralSettingValidation($this) {
                 	   return $val;
                 }
               },
-              "height": {
-                number:true,
-                required:true,
-              },
-		      "width": {
-                number:true,
-                required:true,
-              },
-		      "length": {
-                number:true,
-                required:true,
-              },
-		      "weight": {
-                number:true,
-                required:true,
-              },
+        //       "height": {
+        //         number:true,
+        //         required:true,
+        //       },
+		      // "width": {
+        //         number:true,
+        //         required:true,
+        //       },
+		      // "length": {
+        //         number:true,
+        //         required:true,
+        //       },
+		      // "weight": {
+        //         number:true,
+        //         required:true,
+        //       },
 		      
 		      valueToBeTested: {
 		          required: true,

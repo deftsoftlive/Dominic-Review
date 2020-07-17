@@ -12,11 +12,38 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet">
     <link href="{{ URL::asset('/css/owl.carousel.min.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css" />
+	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="{{ URL::asset('/css/style.css')}}">
     <link rel="stylesheet" href="{{ URL::asset('/css/responsive.css')}}">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.7.0/flexslider.min.css">
+    <link href="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css" rel="stylesheet">
+    <script src="{{URL::asset('/js/timeCounter.js')}}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
   </head>
+  <style>
+    input#crop {
+        padding: 5px 25px 5px 25px;
+        background: lightseagreen;
+        border: #485c61 1px solid;
+        color: #FFF;
+        visibility: hidden;
+    }
+
+    #cropped_img {
+        margin-top: 40px;
+    }
+  </style>
+
   <body id="main">
+    <div class="design-loader">
+      <div class="outer-loader">
+          <div class="loader123">
+            <span class="loader-inner"></span>
+          </div>
+        </div>
+    </div>
     <header class="main-header">
       <div class="container">
         <div class="row">
@@ -42,6 +69,7 @@
                 </ul>
               </li>
             </ul>
+
             <!-- Nav menu section -->
            <!-- /.container-->
 

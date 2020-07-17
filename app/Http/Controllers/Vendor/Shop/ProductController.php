@@ -24,20 +24,59 @@ public $path = 'images/products/';
 
 public function index($value='')
 {
-         
-	   
-	    $product = Product::with(
-                    	    	'ProductAssignedVariations',
-                    	    	'ProductAssignedVariations.inventoryWithVariation',
-                    	    	'subcategory.ProductVariations',
-                    	    	'subcategory.ProductVariations.variationTypes',
-                    	    	'variationAttributes'
-                    	    )
-                          ->where('create_status',1)
-                    	    ->where('parent',0)
-                    	    ->where('user_id',Auth::user()->id)
-                    	    ->orderBy('id','DESC')
-                          ->paginate(20);
+  $type = request()->get('type');
+  $subtype = request()->get('subtype');
+
+  if(!empty(request()->get('type')) && !empty(request()->get('subtype')))
+        {
+          $product = Product::with(
+                            'ProductAssignedVariations',
+                            'ProductAssignedVariations.inventoryWithVariation',
+                            'subcategory.ProductVariations',
+                            'subcategory.ProductVariations.variationTypes',
+                            'variationAttributes'
+                          )
+                        ->where('create_status',1)
+                        ->where('parent',0)
+                        ->where('shop_id',0)
+                        ->where('category_id',$type)
+                        ->where('subcategory_id',$subtype)
+                        // ->where('user_id',Auth::user()->id)
+                        ->orderBy('sort','ASC')
+                        ->paginate(10);
+
+        }else if(!empty(request()->get('type'))){
+            $product = Product::with(
+                            'ProductAssignedVariations',
+                            'ProductAssignedVariations.inventoryWithVariation',
+                            'subcategory.ProductVariations',
+                            'subcategory.ProductVariations.variationTypes',
+                            'variationAttributes'
+                          )
+                        ->where('category_id',$type)
+                        ->where('create_status',1)
+                        ->where('parent',0)
+                        ->where('shop_id',0)
+                        // ->where('user_id',Auth::user()->id)
+                        ->orderBy('sort','ASC')
+                        ->paginate(10);
+        }else{
+          $product = Product::with(
+                            'ProductAssignedVariations',
+                            'ProductAssignedVariations.inventoryWithVariation',
+                            'subcategory.ProductVariations',
+                            'subcategory.ProductVariations.variationTypes',
+                            'variationAttributes'
+                          )
+                        ->where('create_status',1)
+                        ->where('parent',0)
+                        ->where('shop_id',0)
+                        // ->where('user_id',Auth::user()->id)
+                        ->orderBy('sort','ASC')
+                        ->paginate(10);
+        }
+
+	    
       return view($this->filePath.'index')->with('products',$product);
 }
 
@@ -60,10 +99,10 @@ public function create($value='')
 #=====================================================================================
 
 public function edit($id)
-{    
-
+{   
+    $product_cat = ProductCategory::where('type','Product')->where('parent','0')->get(); 
     $shop = Auth::user()->shop;
-    $ShopCategory = new ShopCategory;
+    $ShopCategory = new ShopCategory; 
     $product = Product::with(
     	'ProductAssignedVariations',
     	'ProductAssignedVariations.inventoryWithVariation',
@@ -76,10 +115,11 @@ public function edit($id)
     	return redirect()->route('vendor.shop.products.create');
     }
 
-    $category = $ShopCategory->parentCategory($shop->id,0);
+    // $category = $ShopCategory->parentCategory($shop->id,0);	
+    // $category = 0;
          return view($this->filePath.'add')
               ->with('shop',$shop)
-              ->with('category',$category)
+              ->with('category',$product_cat)
               ->with('ShopCategory',$ShopCategory)
               ->with('product',$product->first());
 }
@@ -93,8 +133,8 @@ public function edit($id)
 
 public function update(Request $request,$product_id)
 {
-
-	$shop_id = Auth::user()->shop->id;
+  
+	// $shop_id = Auth::user()->shop->id;
 	 $this->validate($request,[
          'name' => 'required',
          'description' => 'required',
@@ -109,6 +149,9 @@ public function update(Request $request,$product_id)
 	 $product->name = trim($request->name);
 	 $product->description = trim($request->description);
 	 $product->short_description = trim($request->short_description);
+   $product->vou_prod_type = isset($request->vou_prod_type) ? $request->vou_prod_type : 'normal';
+   $product->voucher = isset($request->voucher) ? $request->voucher : '';
+   $product->tag = $request->tag;
 	  $product->create_status = 1;
 
 	 $product->thumbnail = $request->hasFile('thumbnail') ? uploadFileWithAjax($this->path, $request->thumbnail) : $product->thumbnail;
@@ -126,14 +169,14 @@ public function update(Request $request,$product_id)
 
 public function createNewOne()
 {
-	$product = Product::where('user_id',Auth::user()->id)->where('create_status',0)
-	->where('shop_id',Auth::user()->shop->id);
+	$product = Product::where('user_id',Auth::user()->id)->where('create_status',0);
+	// ->where('shop_id',Auth::user()->shop->id);
    if($product->count() > 0){
 		$product_id = $product->first()->id;
 	}else{
 		$p = new Product;
 		$p->user_id = Auth::user()->id;
-		$p->shop_id =Auth::user()->shop->id;
+		// $p->shop_id =Auth::user()->shop->id;
 		$p->save();
     $product_id = $p->id;
 	}
@@ -151,21 +194,22 @@ public function createNewOne()
 
 public function saveCategory(Request $request,$id)
 {
+
    $v = \Validator::make($request->all(),[
           'category_id' => 'required',
           'subcategory_id' => 'required',
-          'childcategory_id' => 'required',
+          // 'childcategory_id' => 'required',
    ]);
 
    $product = Product::where('user_id',Auth::user()->id)
-                     ->where('id',$id)
-                     ->where('shop_id',Auth::user()->shop->id);
+                     ->where('id',$id);
+                     // ->where('shop_id',Auth::user()->shop->id);
  
    if($product->count() > 0){
 	    $p = $product->first();
 	    $p->category_id =$request->category_id;
 	    $p->subcategory_id =$request->subcategory_id;
-	    $p->childcategory_id =$request->childcategory_id;
+	    // $p->childcategory_id =$request->childcategory_id;
 	    $p->save();
 
    return response()->json(['status' => 1]);
@@ -215,7 +259,6 @@ public function ajaxCategory(Request $request)
 public function createGeneralSetting(Request $request,$product_id)
 {
 	 $product = Product::find($product_id);
-
 
 	 if($product->id == Auth::user()->id){
 	 	$status = ['status' => 0, 'messages' => 'Unautherized to do this operation!'];
@@ -403,6 +446,47 @@ public function productChangeStatus($productSlug,$status)
    }
    return 1;
 
+}
+
+/*----------------------------------------
+|   Delete Product Record
+|----------------------------------------*/
+public function delete_product($id) {
+    $product = Product::find($id);
+    $product->delete();
+    return \Redirect::back()->with('flash_message',' Product details has been deleted successfully!');
+}
+
+
+/*----------------------------------------
+|   Create duplicate record functionality
+|----------------------------------------*/
+public function duplicate_product($id) {
+    $product = Product::find($id);
+    $newproduct = $product->replicate();
+    $newproduct->name = $product->name.'(copy)';
+    $newproduct->variant_id = '0';
+    $newproduct->status = '0';
+    $newproduct->save();
+
+    $new_pro_id = $newproduct->id;
+    return redirect('admins/shop/products/edit/'.$new_pro_id)->with('flash_message',' Product details has been replicated successfully!');
+}
+
+/*----------------------------------------
+|   Update product sorting number 
+|-----------------------------------------*/
+public function update_product_sort($sort_no,$product_id) 
+{   
+    $product = Product::find($product_id);
+    $product->sort = $sort_no;
+    $product->save();
+
+    $data = array(
+        'sort_no'   => $product,
+    );
+
+    echo json_encode($data);
 }
 
 #----------------------------------------------------------------------------------------------

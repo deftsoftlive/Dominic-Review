@@ -35,28 +35,28 @@
       <input type="hidden" name="type" value="global-settings">
 
       <!-- google api key -->
-      <div class="card">
+   <!--    <div class="card">
         <div class="card-body">
           <h5 class="card-title">Google Api Key</h5>
            {{textbox($errors,'Google Api Key*', 'google_api_key', getAllValueWithMeta('google_api_key', 'global-settings'))}}
         </div>
-      </div>
+      </div> -->
 
-<!-- weather api key -->
-       <div class="card">
+    <!-- weather api key -->
+      <!--  <div class="card">
         <div class="card-body">
           <h5 class="card-title">Weather Api Key</h5>
            {{textbox($errors,'Weather Api Key*', 'weather_api_key', getAllValueWithMeta('weather_api_key', 'global-settings'))}}
         </div>
-      </div>
+      </div> -->
 
       <!-- Taxjar api key -->
-       <div class="card">
+      <!--  <div class="card">
         <div class="card-body">
           <h5 class="card-title">Taxjar Api Key</h5>
            {{textbox($errors,'Taxjar Api Key*', 'taxjar_api_key', getAllValueWithMeta('taxjar_api_key', 'global-settings'))}}
         </div>
-      </div>
+      </div> -->
 
 
 <!-- Fee -->
@@ -65,7 +65,7 @@
           <h5 class="card-title">Fee</h5>
            	
 <div class="row">
-  <div class="col-md-6">
+<!--   <div class="col-md-6">
    <div class="card">
         <div class="card-body">
           <h5 class="card-title">Commission Fee</h5>
@@ -85,22 +85,22 @@
 
         </div>
       </div>
-    </div>
+    </div> -->
 
       <div class="col-md-6">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Service Fee</h5>
-          	<label>Service Fee Type</label>
-	            <div class="custom-control custom-radio mb-1">
+          	<!-- <label>Service Fee Type</label> -->
+	           <!--  <div class="custom-control custom-radio mb-1">
 			        <input type="radio" id="PriceType1s" name="service_fee_type" value="0" class="custom-control-input" {{ getAllValueWithMeta('service_fee_type', 'global-settings') === '0' || getAllValueWithMeta('service_fee_type', 'global-settings') !== '1' ? 'checked' : '' }} />
 			        <label class="custom-control-label" for="PriceType1s">Percent</label>
-			    </div>
+			    </div> -->
 
-		       <div class="custom-control custom-radio">
+		      <!--  <div class="custom-control custom-radio">
 		        <input type="radio" id="PriceTypes" name="service_fee_type" value="1" class="custom-control-input" {{ getAllValueWithMeta('service_fee_type', 'global-settings') === '1' ? 'checked' : '' }} />
 		        <label class="custom-control-label" for="PriceTypes">Direct</label>
-		      </div>
+		      </div> -->
 
 		       {{textbox($errors, 'Service Fee Amount*', 'service_fee_amount', getAllValueWithMeta('service_fee_amount', 'global-settings'))}}
 

@@ -1,14 +1,24 @@
+@extends('inc.homelayout')
 @extends('e-shop.layouts.layout')
-@section('content')
 
-<!-- banner section starts here here -->
-    <section class="inner-main-banner" style="background-image:url({{url('/e-shop/images/product-listing-banner-bg.png')}});">
-        <div class="container">
-            <div class="inner-banner-content text-center">
-                <h1>Products</h1>
+<style>
+header.Eshop-header,footer.site-footerss {display:none;}
+</style>
+
+ <!-- banner section starts here here -->
+    <section class="football-course-sec" style="background: url(http://49.249.236.30:8654/dominic-new/public/uploads/1584684865tennis_course_banner_image.png);">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="football-course-content">
+              <h2 class="f-course-heading">DRH SHOP</h2>
             </div>
+          </div>
         </div>
+      </div>
     </section>
+    <!-- banner section starts Ends here -->
+
     <main class="products-layout-wrap">
         <div class="container">
             <div class="row">
@@ -20,12 +30,14 @@
                         <ul class="serch-filter-wrap">
                           <li><a href="javascript:void(0);" id="FilterCategoryToggle"><i class="fas fa-filter"></i></a></li>
                           <li><div class="mini-field-wrap">
-                              <select class="form-control" id="">
+                             <!--  <select class="form-control" id="">
                                 <option>Sort By</option>
                                 <option>low to high</option>
                                 <option>high to low</option>
                                 <option>Popularity</option>
-                              </select>
+                              </select> -->
+
+                             
                           </div></li>
 <!--                           <li><a href="javascript:void(0);"><i class="fas fa-list"></i></a></li>
                           <li><a href="javascript:void(0);"><i class="fas fa-th"></i></a></li> -->
@@ -126,12 +138,10 @@
 
 
 
-  @endsection
-
 
 
 @section('jscript')
-<script type="text/javascript" src="{{url('/e-shop/js/products/filters.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('/e-shop/js/products/filters.js')}}"></script>
 <script type="text/javascript">
   
 
