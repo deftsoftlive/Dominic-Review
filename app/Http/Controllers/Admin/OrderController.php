@@ -13,7 +13,7 @@ class OrderController extends Controller
     
     public function index(Request $request)
     {
-        $orders = Shoporder::orderBy('id','asc')->paginate(10);
+        $orders = Shoporder::orderBy('id','desc')->paginate(10);
     	return view('admin.orders.index',compact('orders'));
     }
 
@@ -151,13 +151,36 @@ class OrderController extends Controller
                             </td>
                         </tr>
                         <tr>
-                            <td>
-                                <p style="padding: 0 10px;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Provider Name : </strong>'.$provider_name.' </p>
-                            </td>
-                            <td>
-                                <p style="padding: 0 10px;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"></p>
-                            </td>
-                        </tr>
+                        <td>';
+                           
+                        if(!empty($provider_name))   
+                        {
+                            $output .= '<p style="padding: 0 10px;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Provider Name : </strong>'.$provider_name.' </p>';  
+                        } 
+
+                        if(!empty($orders->transaction_details))
+                        {
+                            $transaction_details = explode(',',$orders->transaction_details); 
+                            $tr_data = [];
+
+                            foreach($transaction_details as $tr)
+                            {
+                                $tr1 = explode('- ',$tr); 
+                                $tr0 = $tr1[0];
+                                $tr1 = '&pound;'.$tr1[1];   
+                                 $tr_data[] = $tr0.'- '.$tr1;
+                            }
+                            $payment_details = implode(',', $tr_data); 
+
+                            $output .= '<p style="padding: 0 10px;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Payment Details : </strong>'.$payment_details.' </p>';
+                        }
+                        
+                        $output .= '</td>
+                                    <td>
+                                    <p style="padding: 0 10px;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"></p>
+                                </td>
+
+                            </tr>
                     </tbody>
 
                 </table>
@@ -259,7 +282,7 @@ class OrderController extends Controller
                                     foreach($variation->hasVariationAttributes as $v)
                                     {
                                         $output .= $v->parentVariation->variations->name.': 
-                                              <b class="bText">'.$v->parentVariation->name.'</b>';
+                                              <b class="bText">'.$v->parentVariation->name.'</b><br/>';
                                     }
                                 }
 

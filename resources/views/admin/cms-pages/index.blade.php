@@ -44,7 +44,7 @@
                                                 <thead>
                                                 <tr> 
                                                     <th>Page Name</th> 
-                                                    <th>Slug</th>
+                                                    <th width="45%">Page URL</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
 
@@ -54,8 +54,7 @@
                                                 @foreach($cms_pages as $test)
                                                     <tr>
                                                         <td>{{$test->title}}</td>
-                                                        <!-- <td>{{$test->description}}</td>  -->
-                                                        <td>{{$test->slug}}</td>
+                                                        <td><a target="_blank" href="{{url('/page')}}/{{$test->slug}}">{{url('/page')}}/{{$test->slug}}</a></td>
                                                         <td>
                                                         @if($test->status == '1')
                                                             <span class="cst_active"><i class="fas fa-check-circle"></i></span>

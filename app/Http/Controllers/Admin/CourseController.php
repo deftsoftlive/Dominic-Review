@@ -32,7 +32,7 @@ class CourseController extends Controller
     |----------------------------------------*/ 
     public function course_index() {
 
-          $type = request()->get('type');
+          $type = request()->get('course_name');    
           $subtype = request()->get('subtype');
           $level = request()->get('level');
 
@@ -107,7 +107,7 @@ class CourseController extends Controller
                      ->where('status',1)
                      ->orderBy('sort','asc')->paginate(10);
         }else{
-          $course = Course::select(['id','title','term','type','season','description','status','slug','price','booking_slot','sort'])->where('status',1)->paginate(10);
+          $course = Course::select(['id','title','type','season','description','status','slug','price','booking_slot','sort'])->where('status',1)->paginate(10);
         }
         
         $course_cat = ProductCategory::where('parent','0')->where('subparent','0')->get();
@@ -141,7 +141,7 @@ class CourseController extends Controller
                      ->where('status', '=', '0')
                      ->orderBy('sort','asc')->paginate(10);
         }else{
-          $course = Course::select(['id','title','term','type','season','description','status','slug','price','booking_slot','sort'])->where('status', '=', '0')->paginate(10);
+          $course = Course::select(['id','title','type','season','description','status','slug','price','booking_slot','sort'])->where('status', '=', '0')->paginate(10);
         }
 
         $course_cat = ProductCategory::where('parent','0')->where('subparent','0')->get();
@@ -167,7 +167,6 @@ class CourseController extends Controller
 
     	$validatedData = $request->validate([
             'title' => ['required', 'string'],
-            'term' => ['required', 'string'],
             'description' => ['required', 'string'],
             // 'type' => ['required'],
             // 'subtype' => ['required'],
@@ -183,7 +182,6 @@ class CourseController extends Controller
 
     	$course = Course::create([
     		'title' => $request['title'],
-            'term' => $request['term'],
     		'description' => $request['description'],
             'season' => $request['season'],
             'type' => $request['type'],
@@ -198,6 +196,7 @@ class CourseController extends Controller
             'booking_slot' => $request['booking_slot'],
             'price' => $request['price'],
             'linked_coach' => $request['linked_coach'],
+            'coach_cost' => $request['coach_cost'],
             'early_birth_price' => isset($request['early_birth_price']) ? $request['early_birth_price'] : '',
             'bottom_section' => isset($request['bottom_section']) ? $request['bottom_section'] : '',
     	]);
@@ -258,7 +257,6 @@ class CourseController extends Controller
 
     	$validatedData = $request->validate([
             'title' => ['required', 'string'],
-            'term' => ['required', 'string'],
             'description' => ['required', 'string'],
             // 'type' => ['required'],
             // 'subtype' => ['required'],
@@ -275,7 +273,6 @@ class CourseController extends Controller
     	$venue = Course::FindBySlugOrFail($slug);
     	$venue->update([
     		'title' => $request['title'],
-            'term' => $request['term'],
     		'description' => $request['description'],
             'season' => $request['season'],
             'type' => $request['type'],
@@ -290,6 +287,7 @@ class CourseController extends Controller
             'booking_slot' => $request['booking_slot'],
             'price' => $request['price'],
             'linked_coach' => $request['linked_coach'],
+            'coach_cost' => $request['coach_cost'],
             'early_birth_price' => isset($request['early_birth_price']) ? $request['early_birth_price'] : '',
             'bottom_section' => isset($request['bottom_section']) ? $request['bottom_section'] : '',
     	]);

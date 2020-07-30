@@ -59,6 +59,32 @@ $(document).ready(function() {
     });
 
 /*****************************
+| Menu Sort Number Update
+|*****************************/
+    function fetch_menu_sort_data(sort_no = '', menu_id = '')
+    {
+        $base_url = "http://49.249.236.30:8654/dominic-new";
+
+        $.ajax({
+            url:$base_url+"/admin/update_menu_sort/"+sort_no+"/"+menu_id,
+            method:'GET',
+            data:{sort_no:sort_no, menu_id:menu_id},
+            dataType:'json',
+            success:function(data)
+            {   
+                
+            },      
+        })
+    }
+
+    $(document).on('keyup', '#update_menu_sort',function(){
+        var sort_no = $(this).val(); 
+        var menu_id = $(this).attr("data-id");
+
+        fetch_menu_sort_data(sort_no,menu_id);
+    });
+
+/*****************************
 | Season Course Linking
 |****************************/
 $(document).ready(function(){

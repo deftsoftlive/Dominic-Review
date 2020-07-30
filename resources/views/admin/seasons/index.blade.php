@@ -18,7 +18,6 @@
                         </div>
                     </div>
 
-
                     <!-- [ breadcrumb ] end -->
                     <div class="main-body">
                         <div class="page-wrapper">

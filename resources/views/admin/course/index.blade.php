@@ -90,7 +90,6 @@
                                                 <tr> 
                                                     <th>Sort</th>
                                                     <th>Name</th>
-                                                    <th>Term</th>
                                                     <th>Season</th>
                                                     <th>Price</th>
                                                     <th>Bookings</th>
@@ -114,8 +113,7 @@
                                                             {{$test->title}}
                                                         </td>
 
-                                                        <!-- <td>{{$test->type}}</td> -->
-                                                        <td>{{$test->term}}</td>
+                                                        
                                                         <td>@php echo getSeasonname($test->season); @endphp</td>
                                                         <td>£ <input type="text" id="update_course_price" data-id="{{$test->id}}" value="{{$test->price}}" style="width:
                                                         50px"></td> 
@@ -156,9 +154,9 @@
 
                                                                     @endif
 
-                                                                    <a href="#" class="dropdown-item">View Register</a>
+                                                                    <!-- <a href="#" class="dropdown-item">View Register</a> -->
 
-                                                                    <!-- <a href="{{url('admin/register-template/course')}}/{{$test->id}}" class="dropdown-item">View Register</a> -->
+                                                                    <a href="{{url('admin/register-template/course')}}/{{$test->id}}" class="dropdown-item">View Register</a>
 
                                                                     <a href="#" class="dropdown-item">Manage Course</a>
                                                                 </div>

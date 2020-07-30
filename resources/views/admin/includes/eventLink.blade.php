@@ -25,11 +25,28 @@
 
                 <!-- ****************************
                 |
+                |       WALLET MANAGEMENT
+                |
+                |********************************* -->
+                <li class="nav-item {{ \Request::route()->getName() === 'admin.wallet' ? 'nav-item active' : 'nav-item' }}">
+                <a href="{{url(route('admin.wallet'))}}" class="nav-link "><span class="pcoded-micon"><i class="fas fa-envelope-open"></i></span><span class="pcoded-mtext">Wallet Management</span></a>
+                </li>
+
+
+                <!-- ****************************
+                |
                 |       REVENUE MANAGEMENT
                 |
                 |********************************* -->
-                <li class="nav-item {{ \Request::route()->getName() === 'admin.revenue' ? 'nav-item active' : 'nav-item' }}">
-                <a href="{{url(route('admin.revenue'))}}" class="nav-link "><span class="pcoded-micon"><i class="fas fa-adjust"></i></span><span class="pcoded-mtext">Revenue Management</span></a>
+                <li class="nav-item pcoded-hasmenu <?= ActiveMenu(['admin.revenue', 'admin.revenue.courses', 'admin.revenue.camps','admin.revenue.products'],'pcoded-trigger') ?>" >
+                     <a href="javascript:" class="nav-link "><span class="pcoded-micon">
+                           <i class="fas fa-adjust"></i></span><span class="pcoded-mtext">Revenue Management</span>
+                     </a>
+                <ul class="pcoded-submenu" style="display: <?= ActiveMenu(['admin.revenue', 'admin.revenue.courses', 'admin.revenue.camps','admin.revenue.products'], 'block') ?>;">
+                    <li class="<?= ActiveMenu(['admin.revenue.courses'],'active') ?>"><a href="{{ route('admin.revenue.courses') }}" class="">Courses Revenue</a></li>
+                    <li class="<?= ActiveMenu(['admin.revenue.camps'],'active') ?>"><a href="{{ route('admin.revenue.camps') }}" class="">Camps Revenue</a></li>
+                    <li class="<?= ActiveMenu(['admin.revenue.products'],'active') ?>"><a href="{{ route('admin.revenue.products') }}" class="">Products Revenue</a></li>
+                </ul>
                 </li>
 
 
@@ -47,7 +64,6 @@
                     </li>
                 </ul>
                 </li>
-
 
                 <!-- ****************************
                 |
@@ -206,15 +222,6 @@
 
                 <!-- ****************************
                 |
-                |       CMS PAGES 
-                |
-                |********************************* -->
-                <li class="nav-item <?= ActiveMenu(['admin.cms-pages.list', 'admin.cms-pages.showCreate', 'admin.cms-pages.edit'],'active') ?>">
-                    <a href="{{url(route('admin.cms-pages.list'))}}" class="nav-link "><span class="pcoded-micon"><i class="fas fa-file"></i></span><span class="pcoded-mtext">Cms Pages</span></a>
-                </li>
-
-                <!-- ****************************
-                |
                 |   Invoices Uploaded - By coach
                 |
                 |********************************* -->
@@ -233,6 +240,32 @@
                     <ul class="pcoded-submenu" style="display: <?= ActiveMenu(['admin.emails.index'], 'block') ?>;">
                         <li class="<?= ActiveMenu(['admin.emails.index'],'active') ?>"><a href="{{ route('admin.emails.index') }}" class="">Business Emails</a></li>
                     </ul>
+                </li>
+
+
+                <!-- ****************************
+                |
+                |       CMS PAGES 
+                |
+                |********************************* -->
+                <li class="nav-item <?= ActiveMenu(['admin.cms-pages.list', 'admin.cms-pages.showCreate', 'admin.cms-pages.edit'],'active') ?>">
+                    <a href="{{url(route('admin.cms-pages.list'))}}" class="nav-link "><span class="pcoded-micon"><i class="fas fa-file"></i></span><span class="pcoded-mtext">Cms Pages</span></a>
+                </li>
+
+
+                <!-- ****************************
+                |
+                |       MENU MANAGEMENT
+                |
+                |********************************* -->
+                <li  class="nav-item pcoded-hasmenu <?= ActiveMenu(['admin.Menu.list', 'admin.Menu.footer-list', 'admin.Menu.showCreate', 'admin.Menu.showEdit'],'pcoded-trigger') ?>" >
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon">
+                        <i class="fas fa-bars"></i></span><span class="pcoded-mtext">Menu Management</span>
+                    </a>
+                <ul class="pcoded-submenu" style="display: <?= ActiveMenu(['admin.Menu.list', 'admin.Menu.footer-list', 'admin.Menu.showCreate', 'admin.Menu.showEdit'], 'block') ?>;">
+                    <li class="<?= ActiveMenu(['admin.Menu.list', 'admin.Menu.showCreate', 'admin.Menu.showEdit'],'active') ?>"><a href="{{ route('admin.Menu.list') }}" class="">Header Menu</a></li>
+                    <li class="<?= ActiveMenu(['admin.Menu.footer-list', 'admin.Menu.showCreate', 'admin.Menu.showEdit'],'active') ?>"><a href="{{ route('admin.Menu.footer-list') }}" class="">Footer Menu</a></li>
+                </ul>
                 </li>
 
 

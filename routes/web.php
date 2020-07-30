@@ -25,6 +25,7 @@ Route::any('selectedCat','HomeController@selectedCat')->name('selectedCat');
 Route::get('image-crop', 'HomeController@imageCrop');
 Route::post('image-crop', 'HomeController@imageCropPost');
 
+
 error_reporting(E_ALL);
 
 #===============================================
@@ -57,8 +58,12 @@ Route::any('parent-register','HomeController@parent_register')->name('parent-reg
 Route::any('book-a-camp/{slug}','HomeController@book_a_camp')->name('book-a-camp');
 Route::any('submit-book-a-camp','HomeController@submit_book_a_camp')->name('submit-book-a-camp');
 
+// Coach Section
 Route::any('coach-listing','HomeController@coach_listing')->name('coach-listing');
 Route::any('coach/detail/{id}','HomeController@coach_detail')->name('coach-detail');
+
+// Newsletter
+Route::any('newsletter','HomeController@newsletter_integration')->name('newsletter');
 
 // My Family Section
 Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function() 
@@ -93,6 +98,7 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
 
     // Childcare voucher
     Route::any('save_childcare_voucher','HomeController@save_childcare_voucher')->name('save_childcare_voucher');
+    Route::any('save_wallet','HomeController@save_wallet')->name('save_wallet');
 });
 
 // Coupon code

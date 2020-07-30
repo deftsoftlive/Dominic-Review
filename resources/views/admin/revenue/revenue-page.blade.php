@@ -10,8 +10,7 @@
                     <h5 class="m-b-10">Revenue Management</h5>
                 </div>
 
-                <div style="text-align: right;" class="cst-admin-filter">
-                    <a href="{{ route('admin.revenue') }}" class="btn btn-primary">All Revenues</a>
+                <div style="text-align: right;" class="cst-admin-filter d-print-none">
                     <a href="{{ route('admin.revenue.courses') }}" class="btn btn-primary">Courses Revenue</a>
                     <a href="{{ route('admin.revenue.camps') }}" class="btn btn-primary">Camps Revenue</a>
                     <a href="{{ route('admin.revenue.products') }}" class="btn btn-primary">Products Revenue</a>
@@ -34,7 +33,7 @@
                     <div class="card-header">
 
                         <h5>Courses</h5>
-
+                        <button class="btn btn-primary d-print-none" onclick="window.print();" >Print</button>
                     </div>
                     
                 </div>
@@ -159,7 +158,7 @@
                     <div class="card-header">
 
                         <h5>Products</h5>
-                       
+                        
                     </div>
                     
                 </div>

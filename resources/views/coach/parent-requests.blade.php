@@ -23,6 +23,14 @@
   top: 70%;
 }
 
+.parent-req-close {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 20px;
+    font-weight: 600
+}
+
 @-webkit-keyframes rotate {
   /* 100% keyframe for  clockwise. 
      use 0% instead for anticlockwise */
@@ -38,21 +46,7 @@
     </div>
     <nav>
       <ul>
-        <li><a href="{{ route('coach_profile') }}" class="{{ \Request::route()->getName() === 'coach_profile' ? 'active' : '' }}">My Profile</a></li>
-        <li><a href="{{ route('coach_report') }}" class="{{ \Request::route()->getName() === 'coach_report' ? 'active' : '' }}">Reports</a></li>
-        <!-- <li><a href="{{ route('qualifications') }}" class="{{ \Request::route()->getName() === 'qualifications' ? 'active' : '' }}">Qualifications</a></li> -->
-        
-        @if(!empty($user))
-        @if($user->enable_inovice == 1)
-            <li><a href="{{ route('upload_invoice') }}" class="{{ \Request::route()->getName() === 'upload_invoice' ? 'active' : '' || \Request::route()->getName() === 'add_upload_invoice' ? 'active' : '' }}">Invoices</a></li>
-        @endif
-        @endif
-       
-        <li><a href="{{ route('coach_player') }}" class="{{ \Request::route()->getName() === 'coach_player' ? 'active' : '' }}">My Players</a></li>
-        <li><a href="{{ route('my-bookings') }}" class="{{ \Request::route()->getName() === 'my-bookings' ? 'active' : '' }}">My Bookings</a></li>
-        <li><a href="{{ route('request_by_parent') }}" class="{{ \Request::route()->getName() === 'request_by_parent' ? 'active' : '' }}">Notifications <span class="notification-icon">({{$notification}})</span></a></li>
-        <li><a href="{{ route('account_settings') }}" class="{{ \Request::route()->getName() === 'account_settings' ? 'active' : '' }}">Settings</a></li>
-        <li><a href="{{ route('logout') }}" class="{{ \Request::route()->getName() === 'logout' ? 'active' : '' }}">Logout</a></li>
+        @include('inc.coach-menu')
       </ul>
     </nav>
   </div>
@@ -70,7 +64,7 @@
          <h2>Notifications</h2>
       </div>
       @php 
-      	$requests = DB::table('parent_coach_reqs')->where('coach_id',Auth::user()->id)->get();
+      	$requests = DB::table('parent_coach_reqs')->where('coach_id',Auth::user()->id)->where('dismiss_by_coach',NULL)->get();  
       @endphp
 
       <h5>Player Link Requests</h5>
@@ -79,7 +73,7 @@
       <div class="all-members">
          <div class="row">
          	@foreach($requests as $req)
-         	@php
+         	@php 
          		$child_id = $req->child_id; 
             $parent_id = $req->parent_id;
             $par_details = DB::table('users')->where('id',$parent_id)->first();
@@ -94,7 +88,13 @@
                          <img id="image_src" style="width: 100px; height: 100px;" src="{{ URL::asset('/images').'/default.jpg' }}" />
                      @endif
                   </figure>
+
                   <figcaption class="activity-caption">
+                    <form method="POST" action="{{route('dismiss-request-coach')}}">
+                      @csrf
+                      <input type="hidden" name="id" value="{{$req->id}}">
+                      <span class="parent-req-close"><button type="submit">x</button></span>
+                    </form>
                      <p>Child Name: <span class="request-name">{{$details->name}}</span></p>
                      <p>Parent Name: <span class="request-name">{{$par_details->name}}</span></p>
                      <p>Date: <span class="request-name">@php echo date("d/m/Y (H:i)",strtotime($req->updated_at)); @endphp</span></p>

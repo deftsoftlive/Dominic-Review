@@ -470,6 +470,14 @@ form.cst-selection select.select_player
 -webkit-appearance: none;
 }
 
+@media print
+{
+  table.table.table-hover th {
+    background: #3f4d67!important;
+    color: #fff;
+}
+
+}
 
 /* ================================    Dropdown End  ===================== */
 @media (min-width: 1600px) {
@@ -3177,11 +3185,27 @@ table.table.table-bordered.person-detail td {
 {
   width: 100%;
 }
+.report-tab-one .inner-form-box .form-check {
+    display: flex;
+    flex-direction:row;
+    flex-wrap: nowrap;
+    padding-left: 0;
+  
+}
+.cst_in-active,
+.cst_active{
+       padding-right: 10px;
+}
 
 
+.wallet-action {
+    display: flex;
+    flex-wrap: nowrap;
+}
 
-
-
+.wallet-action a.btn.btn-primary {
+    margin-bottom: 0;
+}
 
 
 /* main content end*/
@@ -6010,7 +6034,7 @@ table.table.table-hover th {
 table.table.table-hover th,
 table.table.table-hover tbody td:first-child 
 {
-  text-transform: capitalize;
+  /*text-transform: capitalize;*/
   vertical-align: middle;
 }
 table.table.table-hover tbody td
@@ -11431,6 +11455,8 @@ i.gender_icon {
     font-size: 20px;
 }
 
+
+
    /*responsive css*/
    @media(max-width:767px){
    .card .card-block, .card .card-body {
@@ -11637,4 +11663,14 @@ span.notification-icon {
    
     margin-left: 0!important;
   }
+
+}
+
+.print_data, .print_logo{
+    display: none!important;
+}
+@media print {
+    .print_logo  {
+        display: block!important;
+    }
 }

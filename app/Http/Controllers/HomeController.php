@@ -35,10 +35,17 @@ use App\CampPrice;
 use App\Vouchure;
 use App\PlayerReport;
 use Hash;
+use Mail;
+use Newsletter;
+use App\TestScore;
+use App\Wallet;
+use App\WalletHistory;
 use App\Models\Shop\ShopCartItems;
 use App\Models\Products\ProductCategory;
 use App\Traits\ProductCart\UserCartTrait;
 use App\Traits\EmailTraits\EmailNotificationTrait;
+use Notification;
+use App\Notifications\MyFirstNotification;
 
 class HomeController extends Controller
 {
@@ -1194,6 +1201,26 @@ public function request_by_parent() {
   return view('coach.parent-requests');
 }
 
+/* Dismiss notification request by coach */
+public function dismiss_req_by_coach(Request $request) 
+{
+    $req = ParentCoachReq::find($request->id); 
+    $req->dismiss_by_coach = '0';
+    $req->save();
+
+    return \Redirect::back()->with('success','Notification has been dismissed successfully');
+} 
+
+/* Dismiss notification request by parent */
+public function dismiss_req_by_parent(Request $request) 
+{
+    $req = ParentCoachReq::find($request->id); 
+    $req->dismiss_by_parent = '0';
+    $req->save();
+
+    return \Redirect::back()->with('success','Notification has been dismissed successfully');
+}
+
 /* Coach-Parent Linking */
 public function parent_coach(Request $request){
 
@@ -1286,6 +1313,78 @@ public function qualifications()
 }
 
 /*--------------------------------
+|   Add money to wallet
+|---------------------------------*/
+public function add_money_to_wallet()
+{
+    return view('wallet.add-money-to-wallet');
+}
+
+public function stripe_wallet(Request $request) 
+{
+    $stripe = SripeAccount();
+    $pk = $stripe['pk'];
+    $amount = $request->wallet_amount*100;
+    $output = '
+    <p>You have to pay the amount to admin to add the amount in wallet.</p>
+    <script
+         src="https://checkout.stripe.com/checkout.js" class="stripe-button new-main-button"
+         data-key="'.$pk.'"
+         data-amount="'.$amount.'"
+         data-name="DRH Panel"
+         data-class="DRH Panel"
+         data-description="Shopping"
+         data-email="{{Auth::user()->email}}"   
+         data-currency="gbp"                           
+         data-locale="auto">
+    </script>';
+
+    $data = array(
+        'output' => $output,
+    );
+
+    echo json_encode($data); 
+}
+
+public function add_wallet_amt(Request $request) 
+{   
+    $user_id = $request->user_id;
+    $check_wallet = Wallet::where('user_id',$user_id)->first();
+
+    $walletHistory = WalletHistory::create($request->all()); 
+    $walletHistory->type = 'credit';
+    $walletHistory->save();
+
+    if(!empty($check_wallet))
+    {
+        $creditWalletHistory = WalletHistory::where('type','credit')->where('user_id',$user_id)->get();
+        $debitWalletHistory = WalletHistory::where('user_id',$user_id)->where('type','debit')->get();
+
+        $wallet_amt1 = [];
+        foreach($creditWalletHistory as $wh){
+            $wallet_amt1[] = $wh->money_amount;
+        }
+
+        $wallet_amt2 = [];
+        foreach($debitWalletHistory as $wh){
+            $wallet_amt2[] = $wh->money_amount;
+        }
+
+        $total_credit_amt = array_sum($wallet_amt1);
+        $total_debit_amt = array_sum($wallet_amt2);
+
+        $wallet_amt = $total_credit_amt - $total_debit_amt;
+        Wallet::where('user_id',$user_id)->update(array('money_amount' => $wallet_amt));
+
+    }else{
+        $wallet = Wallet::create($request->all()); 
+        $wallet->save(); 
+    } 
+
+    return \Redirect::back()->with('success',' Amount has been added successfully in wallet!');
+}   
+
+/*--------------------------------
 |   Coach Reports
 |---------------------------------*/
 public function coach_report() 
@@ -1296,7 +1395,7 @@ public function coach_report()
     $course_id = request()->get('course_id');
     $user_id = request()->get('player_id');
 
-   // dd($player_id,$season_id,$course_id,$user_id);
+    // dd($player_id,$season_id,$course_id,$user_id);
 
     // Filter for complex report
     if(!empty($player_id))
@@ -1314,7 +1413,9 @@ public function coach_report()
         $player_report = '';
     }
 
-    return view('coach.report',compact('player_rep','player_report'));
+
+
+    return view('coach.report',compact('player_rep','player_report','season_id','course_id','user_id'));
 }
 
 /*---------------------------------
@@ -1322,40 +1423,47 @@ public function coach_report()
 |---------------------------------*/
 public function save_simple_report(Request $request)
 {
-    //dd($request->all());
-    $date = Carbon::now();
+    $check_report = PlayerReport::where('type','simple')->where('season_id',$request->season_id)->where('player_id',$request->player_id)->where('course_id',$request->course_id)->get();
 
-    if(!empty($request->sim_report_id))
+    if(count($check_report)>0)
     {
-        $report = PlayerReport::find($request->sim_report_id); 
-        $report->coach_id = \Auth::user()->id;
-        $report->season_id = $request->season_id;
-        $report->player_id = $request->player_id;
-        $report->course_id = $request->course_id;
-        $report->type = $request->type;
-        $report->date = $date;
-        $report->term = isset($request->term) ? $request->term : '';
-        $report->test_score_data = isset($request->test_score_data) ? $request->test_score_data : '';
-        $report->feedback = isset($request->feedback) ? $request->feedback : '';
-        $report->selected_options = isset($request->selected_options) ? json_encode($request->selected_options) : '';
-        $report->save();
-
-    return redirect('/user/coach-reports')->with('success','Report updated successfully for '.getUsername($request->player_id).' under '.getCourseName($request->course_id).' course'); 
+        return \Redirect::back()->with('error','This report has already been submitted to the player. If you submit again, previous save report data will be overridden.'); 
+        
+        // return \Redirect::back()->with('error','This report has already been submitted to the player. If you submit again, previous save report data will be overridden.<a href="'.url()->previous().'"> <b> <u>OVERRIDE</u></b></a>'); 
     }else{
-        $report = new PlayerReport; 
-        $report->coach_id = \Auth::user()->id;
-        $report->season_id = $request->season_id;
-        $report->player_id = $request->player_id;
-        $report->course_id = $request->course_id;
-        $report->type = $request->type;
-        $report->date = $date;
-        $report->term = isset($request->term) ? $request->term : '';
-        $report->test_score_data = isset($request->test_score_data) ? $request->test_score_data : '';
-        $report->feedback = isset($request->feedback) ? $request->feedback : '';
-        $report->selected_options = isset($request->selected_options) ? json_encode($request->selected_options) : '';
-        $report->save();
 
-    return redirect('/user/coach-reports')->with('success','Report generated successfully for '.getUsername($request->player_id).' under '.getCourseName($request->course_id).' course'); 
+        $date = Carbon::now();
+
+        if(!empty($request->sim_report_id))
+        {
+            $report = PlayerReport::find($request->sim_report_id); 
+            $report->coach_id = \Auth::user()->id;
+            $report->season_id = $request->season_id;
+            $report->player_id = $request->player_id;
+            $report->course_id = $request->course_id;
+            $report->type = $request->type;
+            $report->date = $date;
+            $report->term = isset($request->term) ? $request->term : '';
+            $report->feedback = isset($request->feedback) ? $request->feedback : '';
+            $report->selected_options = isset($request->selected_options) ? json_encode($request->selected_options) : '';
+            $report->save();
+
+        return redirect('/user/coach-reports')->with('success','Report updated successfully for '.getUsername($request->player_id).' under '.getCourseName($request->course_id).' course'); 
+        }else{
+            $report = new PlayerReport; 
+            $report->coach_id = \Auth::user()->id;
+            $report->season_id = $request->season_id;
+            $report->player_id = $request->player_id;
+            $report->course_id = $request->course_id;
+            $report->type = $request->type;
+            $report->date = $date;
+            $report->term = isset($request->term) ? $request->term : '';
+            $report->feedback = isset($request->feedback) ? $request->feedback : '';
+            $report->selected_options = isset($request->selected_options) ? json_encode($request->selected_options) : '';
+            $report->save();
+
+        return redirect('/user/coach-reports')->with('success','Report generated successfully for '.getUsername($request->player_id).' under '.getCourseName($request->course_id).' course'); 
+        }
     }
 } 
 
@@ -1647,6 +1755,7 @@ public function delete_family_member($id) {
 
 /* My Family Page */
 public function my_family() {
+
     $logined_user = \Auth::user()->id;
     $user = User::where('id',$logined_user)->first(); 
     $children = User::where('role_id',4)->where('parent_id', '=', $logined_user)->get(); 
@@ -1921,7 +2030,7 @@ public function update_family_member(Request $request)
 
 /* Parent Notifications */
 public function parent_notifications(){
-  $req = ParentCoachReq::where('parent_id',Auth::user()->id)->get();
+  $req = ParentCoachReq::where('parent_id',Auth::user()->id)->where('dismiss_by_parent',NULL)->get();
   return view('cms.my-family.notifications',compact('req'));
 } 
 
@@ -2000,7 +2109,7 @@ public function parent_req_status(Request $request)
 /* My Bookings Page */
 public function my_bookings(){
   $logined_user_id = \Auth::user()->id; 
-  $shop = \DB::table('shop_orders')->where('user_id',$logined_user_id)->orderBy('id','asc')->get();
+  $shop = \DB::table('shop_orders')->where('user_id',$logined_user_id)->orderBy('id','desc')->get();
   return view('cms.my-family.my-booking',compact('shop'));
 } 
 
@@ -2113,9 +2222,29 @@ function convert_order_data_to_html($order_id)
                             </td>
                         </tr>
                         <tr>
-                            <td>
-                                <p style="padding: 0 10px;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Provider Name : </strong>'.$provider_name.' </p>
-                            </td>
+                            <td>';
+                        if(!empty($provider_name)){
+                            $output .= '<p style="padding: 0 10px;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Provider Name : </strong>'.$provider_name.' </p>';
+                        }
+
+                        if(!empty($orders->transaction_details))
+                        {
+                            $transaction_details = explode(',',$orders->transaction_details); 
+                            $tr_data = [];
+
+                            foreach($transaction_details as $tr)
+                            {
+                                $tr1 = explode('- ',$tr); 
+                                $tr0 = $tr1[0];
+                                $tr1 = '&pound;'.$tr1[1];   
+                                 $tr_data[] = $tr0.'- '.$tr1;
+                            }
+                            $payment_details = implode(',', $tr_data); 
+
+                            $output .= '<p style="padding: 0 10px;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Payment Details : </strong>'.$payment_details.' </p>';
+                        }
+
+                        $output .= '</td>
                             <td>
                                 <p style="padding: 0 10px;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"></p>
                             </td>
@@ -2220,7 +2349,7 @@ function convert_order_data_to_html($order_id)
                                     foreach($variation->hasVariationAttributes as $v)
                                     {
                                         $output .= $v->parentVariation->variations->name.': 
-                                              <b class="bText">'.$v->parentVariation->name.'</b>';
+                                              <b class="bText">'.$v->parentVariation->name.'</b><br/>';
                                     }
                                 }
 
@@ -2798,8 +2927,155 @@ public function save_childcare_voucher(Request $request)
                     //$this->AdminOrderSuccessOrderSuccess($o->id);
 
                 }
+        }
+    }
+
+}
+
+/*--------------------------------
+|   Wallet
+|---------------------------------*/ 
+public function save_wallet(Request $request)
+{
+    $wallet = Wallet::where('user_id',Auth::user()->id)->first(); 
+    $wallet_amount = $wallet->money_amount; 
+
+    $billing_address = $request->session()->get('shopBillingAddress');
+    $shipping_address = $request->session()->get('shopBillingAddress');
+
+    $shop_cart_items = ShopCartItems::where('user_id',\Auth::user()->id)->where('type','cart')->where('orderID',NULL)->get(); 
+
+    $amount = array();
+    foreach($shop_cart_items as $co)
+    {
+        $amount[] = $co->total; 
+    }
+    $total_amount = array_sum($amount);
+
+    if($total_amount <= $wallet_amount)
+    {
+        foreach($shop_cart_items as $item)
+        {
+            $sci = ShopCartItems::find($item->id);
+            $sci->type = 'order';
+            $sci->orderID = '#DRHSHOP'.strtotime(date('y-m-d h:i:s'));  
+            $sci->save();
+
+            $so = new ShopOrder;
+            $so->user_id = \Auth::user()->id;
+            $so->payment_by = 'Wallet';
+            $so->amount = $total_amount;
+            $so->billing_address = $billing_address;
+            $so->shipping_address = $shipping_address;
+            $so->orderID = $sci->orderID;
+            $so->status = 1;
+
+            if($so->save()){
+
+                $remaining_wallet_money = $wallet_amount - $total_amount;
+                Wallet::where('user_id',Auth::user()->id)->update(array('money_amount' => $remaining_wallet_money));
+
+                $walletHistory = WalletHistory::create($request->all()); 
+                $walletHistory->user_id = \Auth::user()->id; 
+                $walletHistory->type = 'debit';
+                $walletHistory->money_amount = $total_amount;
+                $walletHistory->save();
+
+                ShopCartItems::where('orderID', $so->orderID)->update(array('orderID' => $so->orderID));
+
+                  if(Auth::user()->createOrderFromCart($so))
+                    {
+                        \Session::forget('shippingAddress');
+                        \Session::forget('shopBillingAddress');
+
+                        return redirect()->route('shop.checkout.thankyou', ['order_id' => $so->id]);  
+
+                        $this->ShopProductOrderPlacedForVendorSuccess($so->id);
+                        $this->ShopProductOrderPlacedSuccess($so->id);
+                        //$this->AdminOrderSuccessOrderSuccess($o->id);
+
+                    }
             }
         }
+    }elseif($total_amount > $wallet_amount){
+        $remaining_wallet_money = $total_amount - $wallet_amount;
 
+        $transaction_details = 'Wallet- '.$wallet_amount.', Stripe - '.$remaining_wallet_money;
+
+        foreach($shop_cart_items as $item)
+        {
+            $sci = ShopCartItems::find($item->id);
+            $sci->type = 'order';
+            $sci->orderID = '#DRHSHOP'.strtotime(date('y-m-d h:i:s'));  
+            $sci->save();
+
+            $so = new ShopOrder;
+            $so->user_id = \Auth::user()->id;
+            $so->payment_by = 'Wallet & Stripe';
+            $so->transaction_details = $transaction_details;
+            $so->amount = $total_amount;
+            $so->billing_address = $billing_address;
+            $so->shipping_address = $shipping_address;
+            $so->orderID = $sci->orderID;
+            $so->status = 1;
+
+            if($so->save()){
+
+                $remaining_wallet_money = $wallet_amount - $total_amount;
+                Wallet::where('user_id',Auth::user()->id)->update(array('money_amount' => $remaining_wallet_money));
+
+                $walletHistory = WalletHistory::create($request->all()); 
+                $walletHistory->user_id = \Auth::user()->id; 
+                $walletHistory->type = 'debit';
+                $walletHistory->money_amount = $total_amount;
+                $walletHistory->save();
+
+                ShopCartItems::where('orderID', $so->orderID)->update(array('orderID' => $so->orderID));
+
+                  if(Auth::user()->createOrderFromCart($so))
+                    {
+                        \Session::forget('shippingAddress');
+                        \Session::forget('shopBillingAddress');
+
+                        return redirect()->route('shop.checkout.thankyou', ['order_id' => $so->id]);  
+
+                        $this->ShopProductOrderPlacedForVendorSuccess($so->id);
+                        $this->ShopProductOrderPlacedSuccess($so->id);
+                        //$this->AdminOrderSuccessOrderSuccess($o->id);
+
+                    }
+            }
+        }
     }
+
+}
+
+/*---------------------------------
+|   Newsletter
+|----------------------------------*/
+public function newsletter_integration(Request $request)
+{
+    $isSubscribed = Newsletter::isSubscribed(trim($request->email));  
+
+    try {
+        Newsletter::subscribe($request->email);
+    } catch (ModelNotFoundException $exception) {
+        return back()->withError('User not found by ID ' . $request->email)->withInput();
+    }
+
+    Newsletter::subscribe($request->email);
+
+    $email = $request->email;
+
+    // Mail::send('mails.newsletter_email', ['email'=>$email] , function($message) use($email)
+    // {
+    //     $message->to($email);
+    //     // $message->to('phplead5@gmail.com');
+    //     $message->subject('Newsletter Email');
+    // });
+
+        return view('newsletter_success')->with('isSubscribed',$isSubscribed);
+}
+
+
 }

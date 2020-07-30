@@ -74,6 +74,8 @@
 
                   <img id="image_src" style="width: 100px; height: 100px;" src="{{ URL::asset('/uploads').'/'.$venue->image }}" />
 
+                  {{textbox($errors,'Coach Cost<span class="cst-upper-star">*</span>','coach_cost', $venue->coach_cost)}}
+
 
                   <!-- ***********************************************
                   |

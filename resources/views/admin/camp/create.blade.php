@@ -74,6 +74,8 @@
                   <img src="" id="image_src" style="width: 100px; height: 100px; display: none"/>
                   <br/><br/>
 
+                  {{textbox($errors,'Coach Cost*','coach_cost')}}
+
                   <!-- ***********************************************
                   |
                   |       CAMP PRICING MANAGEMENT - Start Here 

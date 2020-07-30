@@ -923,6 +923,10 @@
         float: unset !important;
         transform: unset !important;
     }
+    .report-tab-sec .form-wrap {
+    
+    padding: 15px 0;
+}
 
     .leader-board-table th {
 
@@ -931,7 +935,14 @@
         text-align: center;
 
     }
-
+    .child-voc .form-check.child_check_wrap
+    {
+        padding-left:10px;
+    }
+    .child-voc label#accept-error
+    {
+        left: 10px;
+    }
 
     .register-acc p.main_head {
         font-size: 18px;
@@ -954,7 +965,7 @@
     .form-inner-wrap .error {
 
 
-        top: 130px;
+        top: 160px;
     }
 
     /*.register-acc .cstm-radio.main-radio label {

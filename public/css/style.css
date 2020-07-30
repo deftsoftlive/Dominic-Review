@@ -7942,11 +7942,16 @@ form#complex_report_filter .error {
 
 .child-voc .pink-heading h2 {
     margin: 15px 0 10px;
+    color: #fff;
 }
 
 .child-voc .modal-dialog {
     width: 100%;
     max-width: 55%;
+}
+.child-voc button.close span {
+    color: #fff;
+    opacity: 1;
 }
 
 .child-voc .modal-body p {
@@ -7978,6 +7983,7 @@ form#complex_report_filter .error {
     display: flex;
     flex-wrap: wrap;
     padding-left: 30px;
+    margin-bottom: 10px;
 }
 
 .child-voc form.pick-option p:first-child {
@@ -7987,13 +7993,17 @@ form#complex_report_filter .error {
 .child-voc form.pick-option button#submit-childcare {
     margin-top: 15px;
 }
-
 .child-voc form.pick-option p.child_cont {
     font-size: 16px;
     line-height: normal;
-    margin: 10px 0;
+    margin: 10px 0 14px;
     font-weight: 500;
     padding-left: 30px;
+}
+
+.child-voc .modal-content
+{
+    box-shadow: 6px 6px 25px -4px rgba(0, 0, 0, 0.2)
 }
 
 .child-voc .form-check.button-check {
@@ -8021,6 +8031,7 @@ form#complex_report_filter .error {
     padding: 0;
     text-align: center;
     display: flex;
+    background:  #be298d;
     justify-content: center;
 }
 
@@ -8534,5 +8545,175 @@ div#submit_rep a a:focus {
     left: 0;
     line-height: 18px;
     padding-right: 30px;
-    top: 76px;
+    top: 80px;
 }
+
+.cms-pages {
+    padding: 142px 0 50px;
+}
+.cms-pages h1.display-4 {
+    margin-bottom: 20px;
+}
+
+.report-tab-one .inner-form-box .form-check {
+    display: flex;
+    flex-direction:row;
+    flex-wrap: nowrap;
+
+  
+}
+.player_rp_detail .inner-form-box .form-check
+{
+    padding-left: 0;
+}
+.cst_in-active,
+.cst_active{
+       padding-right: 10px;
+}
+.cst_in-active
+{
+    opacity: .4;
+}
+.rp_test_score th {
+    background: #00afef;
+    color: #fff;
+    border-bottom: 0!important;
+    border-right: 0!important;
+
+}
+.rp_test_score
+{
+    width: 100%;
+    /* table-layout: fixed; */
+    border-radius: 20px;
+    border-collapse: separate;
+    border-spacing: 0;
+  
+    overflow: hidden;
+
+}
+.rp_test_score th.rp_player_name {
+    /*background: #be298d;*/
+    vertical-align: inherit;
+    text-align: center;
+}
+
+/* Wallet */
+div#add_money_btn {
+    margin-top: 20px;
+} 
+div#add_money_btn {
+    text-align: right;
+    
+}
+div#add_money_btn a.cstm-btn {
+    color: #fff;
+}
+div#add_money_btn a.cstm-btn:hover {
+    color: #be298d;
+}
+.wallet_amt {
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #00afef;
+    color: #fff;
+    border-radius:20px;
+    box-shadow: 6px 6px 25px -4px rgba(0, 0, 0, 0.2);
+}
+form#wallet .form-group {
+    width: 100%;
+    margin-bottom: 0;
+}
+form#wallet .form-group label  {
+   padding-left: 0;
+} 
+
+form#wallet .wallet_form {
+    display: flex;
+    align-items: flex-end;
+}
+.report-table-wrap span.vou_prod_type {
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+.memberddd {
+    padding-bottom: 55px;
+}
+.memberddd ul.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.memberddd .page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #be298d;
+ border-color:  #be298d;
+}
+.memberddd .page-link:hover {
+     border-color: #be298d;
+     background: #fff;
+}
+.memberddd .page-link
+{
+    color: #be298d;
+}
+.memberddd .page-link:focus,
+.memberddd .page-link a:focus
+{
+    outline: none;
+    box-shadow: none;
+}
+.memberddd .player-report-table.tbl_shadow
+{
+    overflow: auto;
+}
+
+.coach_listing span.parent-req-close button {
+    background: #fff;
+    /*border: 2px solid #be298d;*/
+    border: 0px solid transparent;
+    color: #be298d;
+    padding: 0 5px;
+    line-height: normal;
+    font-size: 30px;
+    border-radius: 5px;
+}
+.coach_listing span.parent-req-close button::focus,
+.coach_listing span.parent-req-close::focus
+{
+    outline: none;
+    box-shadow: none;
+}
+.coach_listing .parent-req-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    font-weight: 600;   
+}
+.child-voc .modal-footer {
+    border-top: 2px solid #be298d;
+}
+.child-voc .form-check.child_check_wrap {
+    padding-left: 30px;
+    padding: 10px 0 10px 30px;
+}
+.child-voc label#accept-error {
+    left: 30px;
+    top: 33px;
+}
+.child-voc  .pink-heading h2
+{
+font-family: 'Roboto', sans-serif;
+}
+
+.print_data, .print_logo{
+    display: none!important;
+}
+/*@media print {
+    .print_logo  {
+        display: block!important;
+    }
+}*/

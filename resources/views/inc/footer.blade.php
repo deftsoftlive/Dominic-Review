@@ -28,36 +28,25 @@
                 <h2 class="footer-heading">USEFUL LINKS</h2>
                 <div class="ftr-link-wrap">
                   <ul>
-                    <li>
-                      <a href="{{url('/')}}" class="ftr-link">Home</a>
-                    </li>
-                    <li>
-                      <a href="javascript:void(0);" class="ftr-link">About Us</a>
-                    </li>
-                    <li>
-                      <a href="javascript:void(0);" class="ftr-link">Shop</a>
-                    </li>
-                    <li>
-                      <a href="{{route('listing')}}" class="ftr-link">Courses</a>
-                    </li>
-                    <li>
-                      <a href="{{route('camp-listing')}}" class="ftr-link">Camps</a>
-                    </li>
-                    <li>
-                      <a href="javascript:void(0);" class="ftr-link">FAQs</a>
-                    </li>
-                    <li>
-                      <a href="{{route('contact-us')}}" class="ftr-link">Contact Us</a>
-                    </li>
+                    @php 
+                      $left_menus = DB::table('menus')->where('sub_menu',NULL)->where('type','footer')->where('sort','<=',6)->orderBy('sort','asc')->get();  
+                      $right_menus = DB::table('menus')->where('sub_menu',NULL)->where('type','footer')->where('sort','>',6)->orderBy('sort','asc')->get(); 
+                    @endphp
+
+                    @foreach($left_menus as $me)
+                      <li>
+                        <a href="{{$me->url}}" class="ftr-link">{{$me->title}}</a>
+                      </li>
+                    @endforeach
                   </ul>
                   <ul>
                     
+                    @foreach($right_menus as $me)
                     <li>
-                      <a href="javascript:void(0);" class="ftr-link">Privacy Policy</a>
-                   </li>
-                    <li>
-                      <a href="javascript:void(0);" class="ftr-link">Terms and Conditions</a>
+                      <a href="{{$me->url}}" class="ftr-link">{{$me->title}}</a>
                     </li>
+                    @endforeach
+
                   </ul>
                 </div>
               </div>
@@ -66,14 +55,17 @@
               <div class="footer-links help">
                 <h2 class="footer-heading">Newsletter</h2>
                 <p>{{ getAllValueWithMeta('newsletter_content', 'general-setting') }}</p>
-                <form>
+
+                <form id="newsletter" action="{{route('newsletter')}}" method="POST">
+                  @csrf
                   <div class="form-group">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Your Email Address">
+                    <input type="text" placeholder="Your Email Address" name="email" class="form-control">
                   </div>
                   <div class="ftr-submit-btn">
-                    <a href="javascript:void(0);" class="cstm-btn">Submit</a>
+                    <button class="cstm-btn" id="disable_submit_btn" type="submit">Submit</button>
                   </div>
                 </form>
+
               </div>
             </div>
           </div>
@@ -145,6 +137,24 @@ $(document).ready(function($){
     });
 });
 
+
+$("#money_amount").change(function(){
+
+  var amt = $('#money_amount').val();
+  $base_url = "http://49.249.236.30:8654/dominic-new/user";
+
+  $.ajax({
+      url:$base_url+"/stripe-wallet",
+      method:'GET',
+      data:{wallet_amount:amt},
+      dataType:'json',
+      success:function(data)
+      {   
+        $('#add_money_btn').css('display','none');
+        $('.add_stripe_btn').append(data.output);
+      },      
+  });
+});
 
 // $(document).ready(function($){
 

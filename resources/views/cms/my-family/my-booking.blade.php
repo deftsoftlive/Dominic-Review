@@ -21,14 +21,7 @@
       @endphp
 
       @if($user_id == '2')
-  	    <li><a href="{{ route('my-family') }}" class="{{ \Request::route()->getName() === 'my-family' ? 'active' : '' || \Request::route()->getName() === 'add-family-member' ? 'active' : '' || \Request::route()->getName() === 'edit-family-member' ? 'active' : '' }}">My family</a></li>
-        <!-- <li><a href="{{ route('player_report_listing') }}" class="{{ \Request::route()->getName() === 'player_report_listing' ? 'active' : '' }}">Reports</a></li> -->
-        <li><a href="{{ route('my-bookings') }}" class="{{ \Request::route()->getName() === 'my-bookings' ? 'active' : '' }}">My Bookings</a></li>
-        <li><a href="{{ route('badges') }}" class="{{ \Request::route()->getName() === 'my-bookings' ? 'active' : '' }}"> DRH Tennis Pro</a></li>
-        <li><a href="{{ route('linked_coaches') }}" class="{{ \Request::route()->getName() === 'linked_coaches' ? 'active' : '' }}">My Coaches</a></li>
-        <li><a href="{{ route('parent_notifications') }}" class="{{ \Request::route()->getName() === 'parent_notifications' ? 'active' : '' }}">Notifications <span class="notification-icon"></span></a></li>
-        <li><a href="" class="">Settings</a></li>
-        <li><a href="{{ route('logout') }}" class="{{ \Request::route()->getName() === 'logout' ? 'active' : '' }}">Logout</a></li>
+  	    @include('inc.parent-menu')
       @elseif($user_id == 3)
         <li><a href="{{ route('coach_profile') }}" class="{{ \Request::route()->getName() === 'coach_profile' ? 'active' : '' }}">My Profile</a></li>
         <li><a href="{{ route('coach_report') }}" class="{{ \Request::route()->getName() === 'coach_report' ? 'active' : '' }}">Reports</a></li>
@@ -57,7 +50,7 @@
     <h2>My Bookings</h2>
   </div>
 
-         <div class="col-md-12">
+    <div class="col-md-12">
 
         @if(count($shop)> 0)
         <div class="player-report-table tbl_shadow">
@@ -66,7 +59,7 @@
 
 					  <div class="m-b-table">
 
-					  <table>
+					       <table>
                         <thead>
                           <tr>
                             <th>Booking Date</th>

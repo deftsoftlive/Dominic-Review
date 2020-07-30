@@ -35,7 +35,6 @@
           @csrf
                   
                   {{textbox($errors,'Title<span class="cst-upper-star">*</span>','title', $venue->title)}}
-                  {{textbox($errors,'Term<span class="cst-upper-star">*</span>','term', $venue->term)}}
                   {!! textarea($errors,'Description<span class="cst-upper-star">*</span>','description', $venue->description) !!}
 
 
@@ -93,6 +92,8 @@
                         @endforeach
                       </select>
                   </div>
+
+                  {{textbox($errors,'Coach Cost','coach_cost', $venue->coach_cost)}}
 
                   <div class="form-group">
                         <label class="control-label" for="timelsots">Dates of course</label>

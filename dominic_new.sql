@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 20, 2020 at 05:38 PM
--- Server version: 5.7.29-0ubuntu0.16.04.1
--- PHP Version: 7.2.28-3+ubuntu16.04.1+deb.sury.org+1
+-- Generation Time: Jul 30, 2020 at 12:20 PM
+-- Server version: 5.7.31-0ubuntu0.16.04.1
+-- PHP Version: 7.2.31-1+ubuntu16.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -31,10 +31,10 @@ CREATE TABLE `accordians` (
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `page_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pdf` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
+  `sort` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -43,11 +43,59 @@ CREATE TABLE `accordians` (
 -- Dumping data for table `accordians`
 --
 
-INSERT INTO `accordians` (`id`, `slug`, `page_title`, `title`, `description`, `pdf`, `color`, `status`, `created_at`, `updated_at`) VALUES
-(2, 'football-coaching-with-drh', 'course-listing/football', 'FOOTBALL COACHING WITH DRH', 'DRH Sports has teamed up with the MK City Colts FC to offer not just fantastic junior football coaching, but to provide a seamless link into teams and competition', '1584699280.pdf', NULL, 1, '2020-03-20 04:44:40', '2020-03-20 04:44:40'),
-(3, 'tennis-coaching-with-drh', 'course-listing/tennis', 'TENNIS COACHING WITH DRH', 'DRH Sports has teamed up with the MK City Colts FC to offer not just fantastic junior football coaching, but to provide a seamless link into teams and competition', '1584700286.pdf', NULL, 1, '2020-03-20 05:01:26', '2020-03-20 06:36:43'),
-(4, 'coaching-with-drh', 'course-listing', 'Coaching with DRH', 'DRH Sports has teamed up with the MK City Colts FC to offer not just fantastic junior football coaching, but to provide a seamless link into teams and competition.', '1584704789.pdf', NULL, 1, '2020-03-20 06:16:29', '2020-03-20 06:36:09'),
-(5, 'how-our-courses-run', 'course-listing/tennis', 'How our courses run', 'bla bla', '1584705058.pdf', NULL, 1, '2020-03-20 06:20:58', '2020-03-20 06:20:58');
+INSERT INTO `accordians` (`id`, `slug`, `page_title`, `title`, `description`, `color`, `status`, `sort`, `created_at`, `updated_at`) VALUES
+(2, 'football-coaching-with-drh', 'book-a-camp', 'DRH Website', '<p>www.drhsports.co.uk</p>', '#00afef', 1, 1, '2020-03-20 04:44:40', '2020-04-25 08:42:59'),
+(4, 'coaching-with-drh', 'book-a-camp', 'How to make a booking', '<p>DRH Sports has teamed up with the MK City Colts FC to offer not just fantastic junior football coaching, but to provide a seamless link into teams and competition.</p>', '#be298d', 1, 1, '2020-03-20 06:16:29', '2020-04-25 08:38:42'),
+(5, 'how-our-courses-run', 'camp-detail/multi-sports', 'How our courses run', '<p>test</p>', '#bea029', 1, 7, '2020-03-20 06:20:58', '2020-04-14 08:27:20'),
+(22, 'this-is-a-new-accordion-on-camp-page', 'tennis-landing-download', 'This is a new accordion on camp page', '<p>HEY HEY</p>', '#00afef', 1, 3, '2020-03-30 13:09:45', '2020-05-27 03:09:51'),
+(27, 'new-accordion', 'book-a-camp', 'New Accordion', '<p>Hello</p>', '#00afef', 1, 2, '2020-04-01 04:37:37', '2020-04-25 08:43:15'),
+(30, 'mehak', 'course-listing/tennis', 'MEHAK', NULL, '#00afef', 1, 2, '2020-04-06 05:55:04', '2020-04-15 06:04:49'),
+(32, 'heloo', 'camp-listing', 'HELOO', '<p>Oh hi there!</p>', '#00afef', 1, 12, '2020-04-06 06:00:46', '2020-04-14 08:41:52'),
+(44, 'test', 'camp-detail/multi-sports', 'Look at this accordion', '<p>www.drhsports.co.uk</p>', '#00afef', 1, NULL, '2020-04-13 10:32:07', '2020-04-14 08:26:59'),
+(46, 'aaaaaaa', 'tennis-landing', 'Abababab', '<p>aaaLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambledspecimen book. hjej jhf f fbfmmsbmbfafjBFhfkHFKJHAkjf hLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambledspecimen book. hjej jhf f fbfmmsbmbfafjBFhfkHFKJHAkjf h</p>', '#be298d', 1, NULL, '2020-04-14 09:20:13', '2020-05-27 02:46:26'),
+(47, 'drh-website', 'course-listing/tennis', 'DRH Website(copy)', '<p>www.drhsports.co.uk</p>', '#bea029', 1, 1, '2020-04-20 15:01:37', '2020-04-20 15:02:03'),
+(48, 'new-accordion-1', 'book-a-camp', 'New Accordion(copy)', '<p>Hello</p>', '#be298d', 1, 3, '2020-04-20 15:02:29', '2020-04-25 08:38:33'),
+(50, 'a', 'course-listing/tennis', 'a', '<p>sfsdfsdfsdfsdfsdfsd</p>', '#be298d', 1, NULL, '2020-04-30 00:14:18', '2020-04-30 00:14:18'),
+(51, 'testingggg', 'football-landing', 'Testingggg', '<p><meta charset="utf-8" /><b id="docs-internal-guid-d6ba9f4b-7fff-b873-9e25-251541e44e3d">This will be the first page that users arrive to when selecting tennis coaching from the homepage or the menu. </b></p>\r\n\r\n<p><meta charset="utf-8" /><b id="docs-internal-guid-d6ba9f4b-7fff-b873-9e25-251541e44e3d">This will be the first page that users arrive to when selecting tennis coaching from the homepage or the menu. </b></p>', '#bea029', 1, NULL, '2020-05-27 05:22:52', '2020-05-27 05:29:24');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `accordian_pdfs`
+--
+
+CREATE TABLE `accordian_pdfs` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `accordian_id` int(11) NOT NULL,
+  `accordian_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pdf` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `accordian_pdfs`
+--
+
+INSERT INTO `accordian_pdfs` (`id`, `accordian_id`, `accordian_title`, `pdf`, `created_at`, `updated_at`) VALUES
+(7, 3, 'pdf-test.pdf', '1585377916.pdf', '2020-03-28 01:15:16', '2020-03-28 01:15:16'),
+(10, 21, 'DRH Health Dec 20180719.pdf', '1585593113.pdf', '2020-03-30 13:01:53', '2020-03-30 13:01:53'),
+(11, 22, 'DRH Health Dec 20180719.pdf', '1585593585.pdf', '2020-03-30 13:09:45', '2020-03-30 13:09:45'),
+(12, 23, 'dummy.pdf', '1585643630.pdf', '2020-03-31 03:03:50', '2020-03-31 03:03:50'),
+(13, 26, 'dummy.pdf', '1585666146.pdf', '2020-03-31 09:19:06', '2020-03-31 09:19:06'),
+(14, 27, 'Camp GO! Handbook.pdf', '1585735657.pdf', '2020-04-01 04:37:37', '2020-04-01 04:37:37'),
+(15, 30, 'HR_-__New_Home_Page_Layout_01-04-20 (3).pptx', '1586172304.pptx', '2020-04-06 05:55:04', '2020-04-06 05:55:04'),
+(16, 31, 'HR_-__New_Home_Page_Layout_01-04-20 (3).pptx', '1586172456.pptx', '2020-04-06 05:57:36', '2020-04-06 05:57:36'),
+(17, 32, 'Contact_us_page_design_01-04-20 (2).pptx', '1586172646.pptx', '2020-04-06 06:00:46', '2020-04-06 06:00:46'),
+(31, 43, 'sss', '1586787555arwqX.pdf', '2020-04-13 08:49:15', '2020-04-13 08:49:15'),
+(32, 43, 'aaa', '15867875553r70G.pdf', '2020-04-13 08:49:15', '2020-04-13 08:49:15'),
+(37, 45, 'DRH Logo', '1586809543J1GdQ.pdf', '2020-04-13 14:55:43', '2020-04-13 14:55:43'),
+(39, 44, 'test', '1586841936JIuMR.pdf', '2020-04-13 23:55:36', '2020-04-13 23:55:36'),
+(40, 5, 'sssss', '15868454399rhva.pdf', '2020-04-14 00:53:59', '2020-04-14 00:53:59'),
+(41, 2, 'Test PDF', '1586847146QfLiY.pdf', '2020-04-14 01:22:26', '2020-04-14 01:22:26'),
+(43, 49, '2313123', '15882252811Z6t3.pptx', '2020-04-30 00:11:21', '2020-04-30 00:11:21'),
+(44, 50, 'dfsdfsdfsdfsdfsdf', '1588225458xgScZ.pptx', '2020-04-30 00:14:18', '2020-04-30 00:14:18'),
+(45, 51, 'Testing', '1590576773Whz2e.pdf', '2020-05-27 05:22:53', '2020-05-27 05:22:53');
 
 -- --------------------------------------------------------
 
@@ -88,6 +136,42 @@ INSERT INTO `amenities` (`id`, `name`, `description`, `slug`, `image`, `type`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `badges`
+--
+
+CREATE TABLE `badges` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `end_date` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `points` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sort` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `badges`
+--
+
+INSERT INTO `badges` (`id`, `name`, `slug`, `description`, `image`, `end_date`, `points`, `status`, `sort`, `created_at`, `updated_at`) VALUES
+(1, 'Rally 5', 'rally-5', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text', '1591168416.png', '2020-07-12', '5', '1', 1, '2020-06-03 00:52:23', '2020-07-10 03:23:27'),
+(2, 'Lesson 5', 'lesson-5', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text', '1591168473.png', '2020-07-02', '50', '1', 7, '2020-06-03 01:44:33', '2020-06-17 18:03:31'),
+(3, 'Summer Camp 2020', 'camp', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text', '1591168534.png', '2020-06-30', '10', '1', 2, '2020-06-03 01:45:34', '2020-06-17 18:01:44'),
+(4, 'Match Play 1', 'comp', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text', '1591168576.png', '2020-06-25', '10', '1', 6, '2020-06-03 01:46:16', '2020-06-17 18:03:13'),
+(5, 'Tap - Downs 5', 't-downs', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text', '1591168637.png', '2020-06-25', '5', '1', 5, '2020-06-03 01:47:17', '2020-06-17 18:02:32'),
+(6, 'T - Ups', 't-ups', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text', '1591169201.png', '2020-06-16', '5', '1', 3, '2020-06-03 01:56:41', '2020-06-17 18:01:56'),
+(7, 'Twisties 5', 'twisties', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text', '1591169267.png', '2020-06-30', '5', '1', 4, '2020-06-03 01:57:47', '2020-06-17 18:02:08'),
+(13, 'ygu gkjhjk', 'ygu-gkjhjk', 'j g uhkj hkjhj khkjh', '1594371240.jpg', '2020-07-12', '22', '1', NULL, '2020-07-10 03:24:00', '2020-07-10 03:24:17'),
+(14, 'mbmnj @1213', 'mbmnj-at1213', 'kjhk huihiuhiu', '1594371402.jpg', '2020-07-18', '22', '1', NULL, '2020-07-10 03:26:42', '2020-07-10 03:26:52'),
+(16, 'about', 'about', 'Subscribe to Our Newsletter to get Important News, Amazing Offers & Inside Scoops:', '1594636972.png', '2222-02-02', '11', '1', NULL, '2020-07-13 05:12:52', '2020-07-13 05:13:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `brands`
 --
 
@@ -108,7 +192,128 @@ INSERT INTO `brands` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
 (2, 'Samsung', 1, '2020-01-31 02:28:13', '2020-01-31 03:36:36'),
 (3, 'Mi', 0, '2020-01-31 03:04:28', '2020-01-31 03:36:48'),
 (4, 'Vivo', 1, '2020-01-31 03:04:39', '2020-01-31 04:28:53'),
-(5, 'Oppo', 1, '2020-01-31 03:04:43', '2020-01-31 03:37:11');
+(5, 'Oppo', 1, '2020-01-31 03:04:43', '2020-01-31 03:37:11'),
+(6, 'Babolat', 1, '2020-04-25 05:34:06', '2020-04-25 05:34:06'),
+(7, 'Wilson', 1, '2020-04-25 05:34:11', '2020-04-25 05:34:11'),
+(8, 'Head', 1, '2020-04-25 05:34:14', '2020-04-25 05:34:14');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `camps`
+--
+
+CREATE TABLE `camps` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `logo` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `location` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `term` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `category` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `usefull_info` longtext COLLATE utf8mb4_unicode_ci,
+  `image` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `coach_cost` bigint(20) DEFAULT NULL,
+  `camp_date` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `popup_title` mediumtext COLLATE utf8mb4_unicode_ci,
+  `popup_subtitle` mediumtext COLLATE utf8mb4_unicode_ci,
+  `popup_enable` int(11) DEFAULT NULL,
+  `products` longtext COLLATE utf8mb4_unicode_ci,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `camps`
+--
+
+INSERT INTO `camps` (`id`, `logo`, `title`, `location`, `term`, `category`, `slug`, `description`, `usefull_info`, `image`, `coach_cost`, `camp_date`, `price`, `popup_title`, `popup_subtitle`, `popup_enable`, `products`, `status`, `created_at`, `updated_at`) VALUES
+(2, '1585642818.png', 'Camp GO! Multi-Sports - Summer Camp 2020', 'Oakgrove Leisure Centre', 'Summer Camp - 2020', '2', 'camp-go-multi-sports-at-olc-summer-camp-2020', '<p>We take our responsibilities for the care of each child at our camps very seriously.&nbsp;We take our responsibilities for the care of each child at our camps very seriouslyy. fffffffffffffffffffffffffffffffffffff</p>', '<h4 style="text-align: center;"><span style="font-family:Comic Sans MS,cursive;"><span style="font-size:28px;"><u><strong>USEFULL INFO</strong></u></span></span><br />\r\n&nbsp;</h4>\r\n\r\n<p style="text-align: center;">We take our responsibilities for the care of each child at our camps very seriously. This page is designed to provide all necessary and useful information for parents; from the timings of a typical day to our booking terms and conditionss.</p>', '1585210460.png', 30, 'Jul 23rd - Sep 31st', '23', 'Your booking has been added to the cart', 'Would you like to add any of the following items?', 1, '45,49,54,62,75', '1', '2020-03-26 02:44:20', '2020-07-23 04:55:25'),
+(3, '1586260293.png', 'New Camp', NULL, NULL, '2', 'new-camp', '<p>We take our responsibilities for the care of each child at our camps very seriously.&nbsp;We take our responsibilities for the care of each child at our camps very seriously.&nbsp;</p>', '<h4>USEFULL INFORMATION</h4>\r\n\r\n<p>We take our responsibilities for the care of each child at our camps very seriously. This page is designed to provide all necessary and useful information for parents; from the timings of a typical day to our booking terms and conditions.</p>', '1586260293.png', 10, 'July 13th - August 31st', '50', NULL, NULL, 1, '', '0', '2020-04-07 06:21:33', '2020-07-23 04:55:34'),
+(5, '1586523284.png', 'dddd', 'gg', 'gg', '1', 'dddd-1', '<p>ggg</p>', NULL, '1586523284.png', NULL, NULL, '66', NULL, NULL, NULL, NULL, '', '2020-04-10 07:24:44', '2020-04-10 07:24:44');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `camp_categories`
+--
+
+CREATE TABLE `camp_categories` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description_more` longtext COLLATE utf8mb4_unicode_ci,
+  `image` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slider_image1` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slider_image2` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slider_image3` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slider_image4` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `camp_categories`
+--
+
+INSERT INTO `camp_categories` (`id`, `title`, `slug`, `description`, `description_more`, `image`, `slider_image1`, `slider_image2`, `slider_image3`, `slider_image4`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Tennis', 'tennis', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>\r\n\r\n<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>', 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.', '1585308880.jpg', '1585564861.jpg', '1585556601.png', '1585564861.jpg', '1585564861.jpg', '1', '2020-03-26 01:05:24', '2020-03-30 10:58:55'),
+(2, 'Multi-Sports', 'multi-sports', '<h3><strong>Lorem ipsum dolor sit</strong></h3>\r\n\r\n<p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.&nbsp;Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.&nbsp;Food truck quinoa nesciunt laborum eiusmod.&nbsp;Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.&nbsp;</p>', 'Food truck quinoa nesciunt laborum eiusmod. Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. ', '1585308911.jpg', '1585554979.jpg', '1585563980.jpg', '1585556175.jpg', '1585563980.jpg', '1', '2020-03-26 01:14:35', '2020-03-30 10:59:18'),
+(3, 'Football', 'football', '<p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.&nbsp;Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.&nbsp;</p>', 'Food truck quinoa nesciunt laborum eiusmod. Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. ', '1585308935.jpg', '1585565097.jpg', '1585565097.jpg', '1585565097.jpg', '1585565097.jpg', '1', '2020-03-26 01:20:17', '2020-04-06 06:17:31'),
+(4, 'Quality Test', 'quality-test', '<p>In our Tots sessions we give the players an introduction to tennis through fun games and exercises designed to develop co-ordination and athletic abilityIn our Tots sessions we give the players an introduction to tennis through fun games and exercises designed to develop co-ordination and athletic abilityIn our Tots sessions we give the players an introduction to tennis through fun games and exercises designed to develop co-ordination and athletic ability.</p>', 'In our Tots sessions we give the players an introduction to tennis through fun games and exercises designed to develop co-ordination and athletic abilityIn our Tots sessions we give the players an introduction to tennis through fun games and exercises designed to develop co-ordination and athletic abilityIn our Tots sessions we give the players an introduction to tennis through fun games and exercises designed to develop co-ordination and athletic ability.', '1586173648.jpeg', '1586173648.jpg', '1586173648.jpeg', '1586173648.jpeg', '1586173648.jpg', '0', '2020-04-06 06:17:28', '2020-04-14 07:34:22'),
+(6, 'test', 'test', '<p>test</p>', NULL, '1586875762.png', '1586875762.png', '1586875762.png', '1586875762.png', '1586875762.jpg', '1', '2020-04-14 09:19:22', '2020-04-14 09:19:33'),
+(7, 'Tennis', 'tennis-1', '<p>3465</p>', '546', '1588172416.png', '1588172416.png', '1588172416.png', '1588172416.png', '1588172416.png', '0', '2020-04-29 09:30:16', '2020-04-29 09:32:58'),
+(8, 'Testing@123', 'testingat123', '<p>11111ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosams1111 111</p>', '22 2222ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosams222 2 222.', '1589361436.jpg', '1589277972.jpg', '1589361436.jpg', '1589361436.jpg', '1589354326.jpg', '1', '2020-05-01 06:20:48', '2020-05-13 03:47:16');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `camp_prices`
+--
+
+CREATE TABLE `camp_prices` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `camp_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `week` longtext COLLATE utf8mb4_unicode_ci,
+  `selected_session` longtext COLLATE utf8mb4_unicode_ci,
+  `early_price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `early_time` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `early_percent` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lunch_price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lunch_time` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lunch_percent` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fullday_price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fullday_time` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fullday_percent` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `latepickup_price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `latepickup_time` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `latepickup_percent` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `morning_price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `morning_time` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `morning_seats` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `morning_percent` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `afternoon_price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `afternoon_time` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `afternoon_seats` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `afternoon_percent` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `camp_prices`
+--
+
+INSERT INTO `camp_prices` (`id`, `camp_id`, `week`, `selected_session`, `early_price`, `early_time`, `early_percent`, `lunch_price`, `lunch_time`, `lunch_percent`, `fullday_price`, `fullday_time`, `fullday_percent`, `latepickup_price`, `latepickup_time`, `latepickup_percent`, `morning_price`, `morning_time`, `morning_seats`, `morning_percent`, `afternoon_price`, `afternoon_time`, `afternoon_seats`, `afternoon_percent`, `created_at`, `updated_at`) VALUES
+(2, '5', '[{"Monday":"","Tuesday":"1","Wednesday":"1","Thursday":"","Friday":"","Fullweek":"1"},{"Monday":"","Tuesday":"","Wednesday":"1","Thursday":"1","Friday":"1","Fullweek":""},{"Monday":"","Tuesday":"","Wednesday":"","Thursday":"","Friday":"","Fullweek":"1"},{"Monday":"","Tuesday":"","Wednesday":"","Thursday":"","Friday":"","Fullweek":"1"},{"Monday":"","Tuesday":"","Wednesday":"","Thursday":"","Friday":"","Fullweek":"1"},{"Monday":"","Tuesday":"","Wednesday":"","Thursday":"","Friday":"","Fullweek":"1"}]', NULL, '2', NULL, '22', '4', NULL, '44', '6', NULL, '66', '1', NULL, '11', '111', NULL, '11', '111', '22', NULL, '22', '222', '2020-04-10 07:24:45', '2020-04-16 07:00:11'),
+(3, '2', '[{"StartDate":"12 June","EndDate":"19 June","Monday":"1","Tuesday":"1","Selected":"1"},{"StartDate":"19 June","EndDate":"26 June","Tuesday":"1","Wednesday":"1","Thursday":"1","Selected":"1"}]', '{"early_drop":"1","morning":"1","lunch":"1","afernoon":"1","fullday":"1","late_pickup":"1"}', '4', '8 - 9am', '0', '4', '12 - 1pm', '0', '26', '9am - 4pm', '66', '10', '5 - 6.30pm', '0', '14', '9am - 12pm', '2', '0', '14', '1 - 4pm', '2', '0', '2020-04-10 07:24:45', '2020-06-05 00:09:12'),
+(4, '3', '[{"Monday":"1","Tuesday":"1","Wednesday":"1","Thursday":"1","Friday":"1","Fullweek":"1"},{"Monday":"1","Tuesday":"1","Wednesday":"1","Thursday":"1","Friday":"1","Fullweek":"1"},{"Monday":"1","Tuesday":"1","Wednesday":"1","Thursday":"1","Friday":"1","Fullweek":"1"},{"Monday":"1","Tuesday":"1","Wednesday":"1","Thursday":"1","Friday":"1","Fullweek":"1"},{"Monday":"1","Tuesday":"1","Wednesday":"1","Thursday":"1","Friday":"1","Fullweek":"1"},{"Monday":"1","Tuesday":"1","Wednesday":"1","Thursday":"1","Friday":"1","Fullweek":"1"}]', 'null', '2', NULL, '22', '4', NULL, '44', '6', NULL, '66', '1', NULL, '11', '111', NULL, '11', '111', '22', NULL, '22', '222', '2020-04-10 07:24:45', '2020-04-24 23:50:32'),
+(6, '7', '[{"Monday":"1","Tuesday":"1","Wednesday":"1","Thursday":"1","Friday":"1","Fullweek":"1","Selected":"1"},{"Monday":"1","Tuesday":"1","Wednesday":"1","Thursday":"1","Friday":"1","Fullweek":"1","Selected":"1"},{"Monday":"1","Tuesday":"1","Wednesday":"1","Thursday":"1","Friday":"1","Fullweek":"1","Selected":"1"},{"Monday":"1","Tuesday":"1","Wednesday":"1","Thursday":"1","Friday":"1","Fullweek":"1","Selected":"1"},{"Monday":"1","Tuesday":"1","Wednesday":"1","Thursday":"1","Friday":"1","Fullweek":"1"},{"Monday":"1","Tuesday":"1","Wednesday":"1","Thursday":"1","Friday":"1","Fullweek":"1"}]', 'null', '1', NULL, '11', '2', NULL, '22', '3', NULL, '33', '4', NULL, '44', '5', NULL, '55', '555', '6', NULL, '66', '666', '2020-04-16 00:40:28', '2020-04-17 07:35:00');
 
 -- --------------------------------------------------------
 
@@ -500,6 +705,178 @@ INSERT INTO `check_lists` (`id`, `parent`, `task`, `task_id`, `event_id`, `user_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `childcare_vouchers`
+--
+
+CREATE TABLE `childcare_vouchers` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `provider_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `provider_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `childcare_vouchers`
+--
+
+INSERT INTO `childcare_vouchers` (`id`, `slug`, `provider_name`, `provider_code`, `status`, `created_at`, `updated_at`) VALUES
+(2, 'computer-share', 'Computer Share', '#weew5667', '1', '2020-03-28 09:09:25', '2020-07-09 03:01:38'),
+(3, 'sodexo', 'sodexo', '#as12a', '1', '2020-07-09 03:02:29', '2020-07-09 03:04:03'),
+(4, 'eden-red', 'Eden Red', '#123ds', '1', '2020-07-09 03:02:54', '2020-07-16 01:14:12'),
+(5, 'care-4', 'Care 4', '#care4', '1', '2020-07-09 03:03:14', '2020-07-16 01:14:14'),
+(6, 'busy-bees', 'Busy Bees', '#bbees', '1', '2020-07-09 03:03:42', '2020-07-16 01:14:17'),
+(7, 'tax-free-childcare', 'Tax-Free Childcare', 'Bla bla bla', '1', '2020-07-27 05:59:42', '2020-07-27 07:04:36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `children_details`
+--
+
+CREATE TABLE `children_details` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `parent_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `child_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `core_lang` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `primary_language` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `school` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `preferences` longtext COLLATE utf8mb4_unicode_ci,
+  `beh_need` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `beh_info` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `em_first_name` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `em_last_name` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `em_phone` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `em_email` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `correct_info` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `med_cond` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `med_cond_info` longtext COLLATE utf8mb4_unicode_ci,
+  `con_first_name` longtext COLLATE utf8mb4_unicode_ci,
+  `con_last_name` longtext COLLATE utf8mb4_unicode_ci,
+  `con_phone` longtext COLLATE utf8mb4_unicode_ci,
+  `con_email` longtext COLLATE utf8mb4_unicode_ci,
+  `con_relation` longtext COLLATE utf8mb4_unicode_ci,
+  `con_if_other` longtext COLLATE utf8mb4_unicode_ci,
+  `allergies` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `allergies_info` longtext COLLATE utf8mb4_unicode_ci,
+  `pres_med` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pres_med_info` longtext COLLATE utf8mb4_unicode_ci,
+  `med_req` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `med_req_info` longtext COLLATE utf8mb4_unicode_ci,
+  `toilet` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `special_needs` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `special_needs_info` longtext COLLATE utf8mb4_unicode_ci,
+  `situation` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `media` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `confirm` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `children_details`
+--
+
+INSERT INTO `children_details` (`id`, `parent_id`, `child_id`, `core_lang`, `primary_language`, `school`, `preferences`, `beh_need`, `beh_info`, `em_first_name`, `em_last_name`, `em_phone`, `em_email`, `correct_info`, `med_cond`, `med_cond_info`, `con_first_name`, `con_last_name`, `con_phone`, `con_email`, `con_relation`, `con_if_other`, `allergies`, `allergies_info`, `pres_med`, `pres_med_info`, `med_req`, `med_req_info`, `toilet`, `special_needs`, `special_needs_info`, `situation`, `media`, `confirm`, `created_at`, `updated_at`) VALUES
+(71, '278', '279', '', '', '', '', 'illness-or-injury-yes', '', 'io', 'hj', '11111111111', 'hj@hj.hj', 'confirm_accurate_yes', 'confirm_accurate_no', NULL, 'aa', 'aa', '2222222222', 'aa@aa.aa', 'Father', 'aa', 'confirm_accurate_no', NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_no', 'aaaa', 'confirm_accurate_yes', 'confirm_accurate_no', NULL, 'ssss', NULL, NULL, '2020-04-11 06:07:33', '2020-04-13 12:14:03'),
+(72, '278', '280', 'p-l-english-no', '', '', '', '', '', '', '', '', '', '', 'confirm_accurate_yes', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_yes', 'confirm_accurate_no', NULL, NULL, NULL, NULL, '2020-04-13 07:10:50', '2020-04-13 12:41:51'),
+(73, '278', '281', 'p-l-english-yes', '', '', '', '', '', '', '', '', '', '', 'confirm_accurate_no', NULL, 'contact 1', 'contact 1', '080808', 'hsfs@skdg.com', NULL, NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_yes', 'confirm_accurate_no', NULL, NULL, NULL, NULL, '2020-04-13 07:31:05', '2020-04-13 12:26:15'),
+(74, '278', '285', '', '', '', '', 'illness-or-injury-yes', '', 'aa', 'aa', '11111111', 'aa@aa.aa', 'confirm_accurate_yes', 'confirm_accurate_no', NULL, 'ss', 'ss', '44444444444444', 'dd@dd.dd', 'Guardian', 'ff', 'confirm_accurate_no', NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_no', 'aa', 'confirm_accurate_yes', 'confirm_accurate_no', NULL, 'aa', NULL, NULL, '2020-04-13 12:30:33', '2020-04-13 12:31:11'),
+(75, '278', '286', '', '', '', '', 'illness-or-injury-yes', '', 'aa', 'aa', '11111111111', 'dd@dddd.gg', 'confirm_accurate_yes', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-13 12:44:19', '2020-04-13 12:46:34'),
+(76, '278', '287', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-13 15:15:03', '2020-04-13 15:15:03'),
+(77, '278', '288', 'p-l-english-yes', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-13 15:15:13', '2020-04-13 15:15:13'),
+(78, '278', '289', NULL, NULL, NULL, NULL, 'illness-or-injury-yes', NULL, 'aa', 'aa', 'aa', 'aa@aa.aa', 'confirm_accurate_yes', 'confirm_accurate_no', NULL, 'aa', 'aa', 'aa', 'aa@ss.ss', NULL, NULL, 'confirm_accurate_no', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-14 02:34:52', '2020-04-14 02:35:19'),
+(79, '278', '290', '', '', '', '', 'illness-or-injury-no', '', 'harvinder', 'sharma', '11111111111', 'jangra@yopmail.com', 'confirm_accurate_yes', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-14 05:38:28', '2020-04-16 04:08:24'),
+(80, '278', '291', '', '', '', '', 'illness-or-injury-no', '', '', '', '', '', 'confirm_accurate_yes', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-14 06:11:22', '2020-04-15 02:42:09'),
+(81, '278', '292', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 01:34:57', '2020-04-15 01:34:57'),
+(82, '278', '293', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 01:35:51', '2020-04-15 01:35:51'),
+(83, '278', '294', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 01:36:57', '2020-04-15 01:36:57'),
+(84, '278', '295', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 01:43:19', '2020-04-15 01:43:19'),
+(85, '278', '296', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 01:54:25', '2020-04-15 01:54:25'),
+(86, '278', '297', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 01:59:40', '2020-04-15 01:59:40'),
+(87, '278', '298', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 01:59:47', '2020-04-15 01:59:48'),
+(88, '278', '299', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 02:09:05', '2020-04-15 02:09:05'),
+(89, '278', '300', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 02:11:28', '2020-04-15 02:11:28'),
+(90, '278', '301', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 02:12:41', '2020-04-15 02:12:41'),
+(91, '278', '302', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 02:17:28', '2020-04-15 02:17:28'),
+(92, '278', '303', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 02:19:34', '2020-04-15 02:19:34'),
+(93, '278', '304', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 02:23:26', '2020-04-15 02:23:26'),
+(94, '278', '305', '', '', '', '', 'illness-or-injury-no', '', 'ewr', 'er', 'wer', 'arti@yopmail.com', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 02:27:37', '2020-04-16 04:10:52'),
+(95, '278', '306', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 04:50:11', '2020-04-15 04:50:11'),
+(96, '278', '307', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 04:51:48', '2020-04-15 04:51:48'),
+(97, '278', '308', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 08:33:12', '2020-04-15 08:33:12'),
+(98, '278', '309', 'p-l-english-yes', '', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 10:56:59', '2020-04-29 23:34:24'),
+(99, '278', '310', 'p-l-english-yes', '', '', '', '', '', '', '', '', '', '', 'confirm_accurate_no', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_no', 'confirm_accurate_no', NULL, NULL, NULL, NULL, '2020-04-15 11:00:57', '2020-04-27 09:18:00'),
+(100, '278', '311', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-15 23:25:27', '2020-04-15 23:25:27'),
+(101, '313', '314', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-16 00:54:18', '2020-04-16 00:54:18'),
+(102, '313', '315', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-16 01:10:39', '2020-04-16 01:10:39'),
+(103, '313', '316', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-16 01:12:26', '2020-04-16 01:12:26'),
+(104, '313', '317', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-16 01:24:52', '2020-04-16 01:24:52'),
+(105, '313', '318', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-16 01:25:27', '2020-04-16 01:25:27'),
+(106, '313', '319', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-16 01:43:01', '2020-04-16 01:43:01'),
+(107, '313', '320', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-16 01:44:41', '2020-04-16 01:44:41'),
+(108, '313', '321', NULL, NULL, NULL, NULL, 'illness-or-injury-no', NULL, NULL, NULL, NULL, NULL, NULL, 'confirm_accurate_no', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'confirm_accurate_no', NULL, NULL, NULL, NULL, NULL, NULL, 'confirm_accurate_no', NULL, NULL, NULL, NULL, '2020-04-16 01:45:35', '2020-04-16 01:46:29'),
+(109, '313', '322', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-16 01:47:05', '2020-04-16 01:47:05'),
+(110, '278', '327', NULL, NULL, NULL, NULL, 'illness-or-injury-no', 'qq', 'dd', 'dd', '11111111', 'dd@ddd.dd', 'confirm_accurate_yes', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-16 03:33:55', '2020-04-16 03:33:55'),
+(111, '278', '328', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-16 03:34:14', '2020-04-16 03:34:14'),
+(112, '278', '329', NULL, NULL, NULL, NULL, 'illness-or-injury-yes', NULL, 'aa', 'aa', '111111', 'aa@aa.a', 'confirm_accurate_yes', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-16 03:40:12', '2020-04-16 03:40:12'),
+(113, '278', '330', NULL, NULL, NULL, NULL, NULL, NULL, 'aaaaaaaaaaaaaaaa', 'aaaaaaaaaaaa', '1111111111111111', 'aa@aa.ff', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-16 03:45:45', '2020-04-16 03:45:45'),
+(114, '331', '332', NULL, NULL, NULL, NULL, 'illness-or-injury-no', 'ok', 'seeta', 'sharma', '123123123123', 'jangra@yopmail.com', 'confirm_accurate_yes', 'confirm_accurate_no', NULL, 'Rahul', 'jangra', '123456778', 'rahul@yopmail.com', 'Father', 'no', 'confirm_accurate_no', NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_yes', NULL, NULL, 'ui', NULL, NULL, '2020-04-16 04:57:54', '2020-04-16 05:00:39'),
+(115, '331', '333', 'p-l-english-yes', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'confirm_accurate_no', NULL, 'asd', 'safds', '32423', 'er@gmail.com', 'Mother', 'gdfg', 'confirm_accurate_no', NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_yes', 'confirm_accurate_yes', 'et', 'tert', NULL, NULL, '2020-04-16 05:02:45', '2020-04-16 05:04:39'),
+(116, '278', '335', 'p-l-english-yes', '', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-17 09:08:02', '2020-04-30 09:12:23'),
+(117, '278', '336', 'p-l-english-yes', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-17 09:08:05', '2020-04-17 09:08:05'),
+(118, '339', '340', '', '', '', '', 'illness-or-injury-yes', '', 'a', 'b', '12312313', 'm@yopmail.com', 'confirm_accurate_yes', 'confirm_accurate_no', NULL, 'mehak', 'jangra', '1234567890', 'qa2.deftsoft@gmail.com', 'Mother', 'no', 'confirm_accurate_no', NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_no', 'no', 'confirm_accurate_yes', 'confirm_accurate_no', NULL, 'no', NULL, NULL, '2020-04-29 07:26:47', '2020-04-29 07:31:49'),
+(119, '339', '341', 'p-l-english-yes', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'confirm_accurate_no', NULL, 'dfgd', 'fgdf', 'gfdgd', 'dfg@gmail.com', 'Spouse', 'fdg', 'confirm_accurate_no', NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_yes', 'confirm_accurate_no', NULL, NULL, NULL, NULL, '2020-04-29 07:33:55', '2020-04-29 07:34:50'),
+(120, '344', '345', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'EQW', 'DAS', '213123123', 'S@YOPMAIL.COM', 'Mother', 'FD', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-29 23:38:39', '2020-04-29 23:39:07'),
+(121, '347', '348', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-30 01:16:58', '2020-04-30 01:16:58'),
+(122, '349', '350', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-30 03:19:02', '2020-04-30 03:19:02'),
+(123, '349', '351', '', '', '', '', 'illness-or-injury-yes', '', 'test', 'team', '1234567890', 'test@yopmail.com', 'confirm_accurate_no', 'confirm_accurate_yes', 'Mild Asthma', 'test1', 'team1', '111111111111', 'test1@yopmail.com', 'Father', 'tt', 'confirm_accurate_no', NULL, 'confirm_accurate_no', NULL, 'confirm_accurate_no', 'test medical', NULL, NULL, NULL, 'test behaviour', 'consent-yes', 'yes', '2020-04-30 03:32:41', '2020-06-04 00:08:55'),
+(124, '356', '358', 'p-l-english-no', '', '', '', '', '', '', '', '', '', '', 'confirm_accurate_yes', 'Intolerance to nuts and seeds.', 'Mum', '1', '08080', 'fasfsda@fasdfs.com', NULL, NULL, 'confirm_accurate_yes', 'alergy 1', 'confirm_accurate_yes', 'prescribed medication', NULL, 'aditional requirements', NULL, 'confirm_accurate_yes', 'bad behaviour', 'strategies', NULL, NULL, '2020-05-01 06:49:25', '2020-07-06 14:01:49'),
+(125, '359', '360', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-05-01 07:08:29', '2020-05-01 07:08:29'),
+(126, '362', '363', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-05-01 07:48:53', '2020-05-01 07:48:53'),
+(127, '362', '364', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-05-01 07:49:29', '2020-05-01 07:49:29'),
+(128, '366', '367', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-06-16 03:13:37', '2020-06-16 03:13:37'),
+(129, '366', '368', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-06-16 03:18:00', '2020-06-16 03:18:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `child_activities`
+--
+
+CREATE TABLE `child_activities` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `ac_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `child_activities`
+--
+
+INSERT INTO `child_activities` (`id`, `ac_title`, `created_at`, `updated_at`) VALUES
+(1, 'Football', '2020-04-07 02:16:27', '2020-04-07 02:16:27'),
+(2, 'Tennis', '2020-04-07 02:16:27', '2020-04-07 02:16:27'),
+(3, 'Basketball', '2020-04-07 02:16:27', '2020-04-07 02:16:27'),
+(4, 'Netball', '2020-04-07 02:16:27', '2020-04-07 02:16:27'),
+(5, 'Athletics', '2020-04-07 02:16:27', '2020-04-07 02:16:27'),
+(6, 'Dodgeball', '2020-04-07 02:16:27', '2020-04-07 02:16:27'),
+(7, 'Archery', '2020-04-07 02:16:27', '2020-04-07 02:16:27'),
+(8, 'Cricket', '2020-04-07 02:16:27', '2020-04-07 02:16:27'),
+(9, 'Hockey', '2020-04-07 02:16:27', '2020-04-07 02:16:27'),
+(10, 'Gymnastics', '2020-04-07 02:16:27', '2020-04-07 02:16:27'),
+(11, 'Kids Yoga', '2020-04-07 02:16:27', '2020-04-07 02:16:27'),
+(12, 'Arts & Crafts', '2020-04-07 02:16:27', '2020-04-07 02:16:27'),
+(13, 'Movies', '2020-04-07 02:16:27', '2020-04-07 02:16:27'),
+(14, 'Computer Games', '2020-04-07 02:16:27', '2020-04-07 02:16:27'),
+(15, 'Reading', '2020-04-07 02:16:27', '2020-04-07 02:16:27');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `cms_pages`
 --
 
@@ -521,9 +898,118 @@ CREATE TABLE `cms_pages` (
 --
 
 INSERT INTO `cms_pages` (`id`, `slug`, `meta_title`, `meta_description`, `meta_keywords`, `title`, `body`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'about-us', 'About Us', 'About Us Description', 'About Us keywords', 'About Us', '<div class="bg-light">\r\n<div class="container py-5">\r\n<div class="row h-100 align-items-center py-5">\r\n<div class="col-lg-6">\r\n<h1 class="display-4">About us page</h1>\r\n\r\n<p class="lead text-muted mb-0">\r\n\r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id sem fringilla, sollicitudin nisl aliquam, sodales neque. Pellentesque ac ultricies felis. Nam et iaculis quam, et pharetra felis. Proin vulputate tincidunt velit id euismod..</p>\r\n\r\n</div>\r\n\r\n<div class="col-lg-6 d-none d-lg-block"><img alt="" class="img-fluid" src="https://res.cloudinary.com/mhmd/image/upload/v1556834136/illus_kftyh4.png" /></div>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class="bg-white py-5">\r\n<div class="container py-5">\r\n<div class="row align-items-center mb-5">\r\n<div class="col-lg-6 order-2 order-lg-1">\r\n<h2 class="font-weight-light">Lorem ipsum dolor sit amet</h2>\r\n\r\n<p class="font-italic text-muted mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n<a class="btn btn-light px-5 rounded-pill shadow-sm" href="#">Learn More</a></div>\r\n\r\n<div class="col-lg-5 px-5 mx-auto order-1 order-lg-2"><img alt="" class="img-fluid mb-4 mb-lg-0" src="https://res.cloudinary.com/mhmd/image/upload/v1556834139/img-1_e25nvh.jpg" /></div>\r\n</div>\r\n\r\n<div class="row align-items-center">\r\n<div class="col-lg-5 px-5 mx-auto"><img alt="" class="img-fluid mb-4 mb-lg-0" src="https://res.cloudinary.com/mhmd/image/upload/v1556834136/img-2_vdgqgn.jpg" /></div>\r\n\r\n<div class="col-lg-6">\r\n<h2 class="font-weight-light">Lorem ipsum dolor sit amet</h2>\r\n\r\n<p class="font-italic text-muted mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n<a class="btn btn-light px-5 rounded-pill shadow-sm" href="#">Learn More</a></div>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class="bg-light py-5">\r\n<div class="container py-5">\r\n<div class="row mb-4">\r\n<div class="col-lg-5">\r\n<h2 class="display-4 font-weight-light">Our team</h2>\r\n\r\n<p class="font-italic text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>\r\n</div>\r\n</div>\r\n\r\n<div class="row text-center"><!-- Team item-->\r\n<div class="col-xl-3 col-sm-6 mb-5">\r\n<div class="bg-white rounded shadow-sm py-5 px-4"><img alt="" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm" src="https://res.cloudinary.com/mhmd/image/upload/v1556834132/avatar-4_ozhrib.png" width="100" />\r\n<h5 class="mb-0">Manuella Nevoresky</h5>\r\n<span class="small text-uppercase text-muted">CEO - Founder</span>\r\n\r\n<ul class="social mb-0 list-inline mt-3">\r\n	<li class="list-inline-item">&nbsp;</li>\r\n	<li class="list-inline-item">&nbsp;</li>\r\n	<li class="list-inline-item">&nbsp;</li>\r\n	<li class="list-inline-item">&nbsp;</li>\r\n</ul>\r\n</div>\r\n</div>\r\n<!-- End--><!-- Team item-->\r\n\r\n<div class="col-xl-3 col-sm-6 mb-5">\r\n<div class="bg-white rounded shadow-sm py-5 px-4"><img alt="" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm" src="https://res.cloudinary.com/mhmd/image/upload/v1556834130/avatar-3_hzlize.png" width="100" />\r\n<h5 class="mb-0">Samuel Hardy</h5>\r\n<span class="small text-uppercase text-muted">CEO - Founder</span>\r\n\r\n<ul class="social mb-0 list-inline mt-3">\r\n	<li class="list-inline-item">&nbsp;</li>\r\n	<li class="list-inline-item">&nbsp;</li>\r\n	<li class="list-inline-item">&nbsp;</li>\r\n	<li class="list-inline-item">&nbsp;</li>\r\n</ul>\r\n</div>\r\n</div>\r\n<!-- End--><!-- Team item-->\r\n\r\n<div class="col-xl-3 col-sm-6 mb-5">\r\n<div class="bg-white rounded shadow-sm py-5 px-4"><img alt="" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm" src="https://res.cloudinary.com/mhmd/image/upload/v1556834133/avatar-2_f8dowd.png" width="100" />\r\n<h5 class="mb-0">Tom Sunderland</h5>\r\n<span class="small text-uppercase text-muted">CEO - Founder</span>\r\n\r\n<ul class="social mb-0 list-inline mt-3">\r\n	<li class="list-inline-item">&nbsp;</li>\r\n	<li class="list-inline-item">&nbsp;</li>\r\n	<li class="list-inline-item">&nbsp;</li>\r\n	<li class="list-inline-item">&nbsp;</li>\r\n</ul>\r\n</div>\r\n</div>\r\n<!-- End--><!-- Team item-->\r\n\r\n<div class="col-xl-3 col-sm-6 mb-5">\r\n<div class="bg-white rounded shadow-sm py-5 px-4"><img alt="" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm" src="https://res.cloudinary.com/mhmd/image/upload/v1556834133/avatar-1_s02nlg.png" width="100" />\r\n<h5 class="mb-0">John Tarly</h5>\r\n<span class="small text-uppercase text-muted">CEO - Founder</span>\r\n\r\n<ul class="social mb-0 list-inline mt-3">\r\n	<li class="list-inline-item">&nbsp;</li>\r\n	<li class="list-inline-item">&nbsp;</li>\r\n	<li class="list-inline-item">&nbsp;</li>\r\n	<li class="list-inline-item">&nbsp;</li>\r\n</ul>\r\n</div>\r\n</div>\r\n<!-- End--></div>\r\n</div>\r\n</div>\r\n\r\n<footer class="bg-light pb-5">\r\n<div class="container text-center"><a class="cstm-btn" href="javascript:void(0);">Contact us</a></div>\r\n</footer>', 1, '2019-11-21 04:39:24', '2019-11-21 08:26:00'),
+(1, 'about-us', 'About Us', 'About Us Description', 'About Us keywords', 'About Us', '<div class="bg-light">\r\n<div class="container py-5">\r\n<div class="row h-100 align-items-center py-5">\r\n<div class="col-lg-6">\r\n<p class="display-4">&nbsp;</p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>', 1, '2019-11-21 04:39:24', '2020-07-24 07:55:27'),
 (2, 'terms-and-condition', 'Terms and Condition', 'Terms and Condition description', 'Terms and Condition keyword', 'Terms & Condition', '<p><strong>Terms and Conditions - the following applies to both Camp GO! and Coaching Courses</strong></p>\r\n\r\n<p><strong>Definitions :</strong></p>\r\n\r\n<p><strong>Activity:</strong><strong>&nbsp;Any camp, club, course, event or activity organised and ran by DRH Sports Ltd.</strong></p>\r\n\r\n<p><strong>Terms &amp; Conditions:</strong><strong>&nbsp;The terms contained in this document and any other document referred to within it.</strong></p>\r\n\r\n<p><strong>Childcare Vouchers</strong></p>\r\n\r\n<p>DRH Sports LTD is now registered with Ofsted and therefore able to accept childcare vouchers as payment. Please see the list below of the voucher providers that we are currently registered with. If the provider that you are registered with does not appear on the list below then please email us at info@drhsports.co.uk.</p>\r\n\r\n<p>To make a booking using childcare vouchers please email us at info@drhsports.co.uk with a detailed description of the booking that you would like to make and we will send you an invoice. We will soon be able to take childcare voucher bookings through the website.</p>\r\n\r\n<p>- Computershare - 24767070<br />\r\n<br />\r\n- Mychildcaervouchers (Eden Red) - P21144641<br />\r\n<br />\r\n- Sodexo &ndash; 878811</p>\r\n\r\n<p><strong>General</strong></p>\r\n\r\n<ul>\r\n	<li>It is your responsibility to make sure that you are there to pick your child up on time after their session has finished.</li>\r\n	<li>You should wear appropriate sports clothing, non-marking trainers, no jewellery and long hair should be tied back.</li>\r\n	<li>Any form of abuse towards any of our staff will not be tolerated.</li>\r\n	<li>Anyone that is deemed to be too disruptive to the class due to antisocial behaviour will not be allowed to continue on the course and no refund will be issued. However, every effort will be made to resolve any issues should this arise.</li>\r\n</ul>\r\n\r\n<p><strong>Child Protection</strong></p>\r\n\r\n<p><strong>All our staff are DBS checked and have regular training in safeguarding in accordance with our qualifications/ insurance. They all act in accordance with our child protection policy &ndash; a copy of which is available on request. Please email&nbsp;</strong><a href="mailto:info@drhsports.co.uk">info@drhsports.co.uk</a></p>\r\n\r\n<p><strong>Course/Camp cancellation/Refunds</strong></p>\r\n\r\n<ul>\r\n	<li><strong>Coaching courses &amp; School Clubs:</strong>&nbsp;No refunds will be issued once enrolled in course/camp in regards to illness or injury, except on production of a&nbsp;letter from a doctor or medical professional.</li>\r\n	<li><strong>Kids Camps:</strong>&nbsp;If you give at least 7 days notice before the camp date(s) you would like to cancel we will refund all monies paid, minus your deposit of 25% of the total amount per child per day.</li>\r\n	<li>If you give 3 days notice we will only refund you 50% of the total fee.</li>\r\n	<li>As we offer a discounted weekly price, if you wish to cancel a day(s) within a week, we will then recalculate your booking at the daily rate which may result in an additional charge.</li>\r\n	<li>(The following applies to tennis coaching classes) If you want to request to make up a class you will need to contact the head coach before the session is missed. Classes can be made up at a later stage in the term provided that you have let the Head Coach know at least 24 hours prior to the missed class and that there is available space in the class you intend to join. Missed classes must be made up within the intended term and cannot be carried over to future terms or be held in credit for other participants, camps or courses.</li>\r\n	<li>Any courses that have insufficient numbers of participants may be cancelled at the Head Coach or Camp Director&rsquo;s discretion. In this case money paid will be refunded or another course may be booked if places available.</li>\r\n	<li>Sessions must be booked in advance to enable us to manage the coach to player ratio and so the coaching team can contact parents in the event of cancellation.</li>\r\n	<li>In the event that DRH Sports has to cancel an activity for any reason, alternative provisions to stage the activity at another time will be arranged and confirmed to all.</li>\r\n	<li>If you are unable to attend the alternatively arranged time you must confirm with DRH and we will try our best to accommodate you in another class.</li>\r\n</ul>\r\n\r\n<p><strong>Photography/Video footage</strong></p>\r\n\r\n<ul>\r\n	<li>DRH Sports Ltd may from time to time take photographs/ videos of any activity. The use of which is solely for promoting and publicising DRH Sports Ltd.&rsquo;s activities through relevant use on social media, our website and for advertising. Please note we cannot guarantee your child will appear on these.</li>\r\n	<li>Parents/ guardians that do not wish for their child to be photographed/filmed must make DRH Sports Ltd aware of this at the time of booking in writing, and before the activity starts to the lead coach. Please state this also on your DRH account.</li>\r\n	<li>Where possible we will inform parents/guardians at the start of an activity when we plan to take photographs/ videos.</li>\r\n</ul>\r\n\r\n<p><strong>Your Child&rsquo;s Information</strong></p>\r\n\r\n<ul>\r\n	<li>It is the responsibility of the person making the booking to ensure that all details provided are accurate.</li>\r\n	<li>In particular, full info about each child, including medical and other special educational needs, and emergency contact info.</li>\r\n	<li>If we do not have all this information before camp starts, or before any session with DRH Sports begins, your child will not be allowed to leave your care.</li>\r\n	<li>We can&rsquo;t take responsibility for the child until we have all of this information.</li>\r\n</ul>\r\n\r\n<p><strong>Data Protection</strong></p>\r\n\r\n<ul>\r\n	<li><strong>DRH Sports Ltd will hold all personal data in accordance with its Privacy Policy.</strong></li>\r\n</ul>\r\n\r\n<p><strong>Special Requirement</strong></p>\r\n\r\n<ul>\r\n	<li>DRH Sports recognises that the needs of individual children vary, and will endeavour to accommodate children with specific needs and medical conditions within the camp environment.</li>\r\n	<li>It is our policy not to exclude any child due to specific needs and/or medical conditions wherever possible.</li>\r\n	<li>It is the responsibility of the parent/carer to inform us of any medical conditions, special educational needs, or disabilities when booking online or over email so we can discuss how best to accommodate the child and consider whether there are reasonable adjustments which can be made to ensure they are able to fully participate and enjoy the activities within the staffing ratios.</li>\r\n	<li>The needs of each child vary so decisions are made on a case-by-case basis and depend upon the level of support each individual child may require.</li>\r\n	<li>Our staffing ratio procedure requires two members of staff at least at all times. We can&rsquo;t accommodate our ratios for any specific needs or medical conditions.</li>\r\n	<li>Where we feel that a child is not coping within these ratios, we reserve the right to ask the parent/carer to come and collect their child. No refund will be available.</li>\r\n	<li>Where a child does require one-to-one support, DRH Sports ltd will permit parents/carers to attend camp to support their child, providing they are fully DBS checked and vetted.</li>\r\n	<li>DRH Sports does not provide one-to-one support.</li>\r\n</ul>\r\n\r\n<p><strong>Complaints</strong></p>\r\n\r\n<ul>\r\n	<li>DRH Sports is committed to ensuring every adult/child has a great time on our coaching courses or camps. If you or your child is not happy with the service, we provide then we&#39;d like to hear about it.</li>\r\n	<li>In the first instance raise it with the senior coach at the activity. He/she will deal with the problem in accordance with our policies and procedures.</li>\r\n	<li>If your problem is not resolved to your satisfaction then please write to our customer services team at&nbsp;<a href="mailto:info@drhsports.co.uk">info@drhsports.co.uk</a>&nbsp;within 7 days of your child&rsquo;s attendance of the activity. We will respond to your complaint within 28 days.</li>\r\n	<li>We take your views and complaints very seriously and will endeavour to resolve your complaint as quickly as possible.</li>\r\n	<li>Refunds will only be issued if DRH Sports Ltd is proven to be in breach of its T&amp;Cs.</li>\r\n</ul>\r\n\r\n<p><strong>Personal Property / Lost Property</strong></p>\r\n\r\n<ul>\r\n	<li>DRH Sports cannot be held responsible for any loss or damage to any personal belongings whilst attending a DRH Sports Ltd activity.</li>\r\n	<li>Please ensure that your children don&rsquo;t arrive to one of our activities with valuables.</li>\r\n	<li>Lost property for any activity held at Milton Keynes Tennis Club will be kept in our lost property container for 2 weeks.</li>\r\n	<li>If you leave an item at a leisure centre or other venue and we find it, we will take it with us and keep it at Milton Keynes Tennis Club for 2 weeks.</li>\r\n	<li>If an item is left at one of our external venues and we don&rsquo;t find it the leisure centre will hold on to it in accordance with their policy.</li>\r\n	<li>No electronic tablets, mobile phones or recording devices are permitted during any of our activities. Please ask your child to pass such items to a member of staff for safekeeping.</li>\r\n</ul>\r\n\r\n<p><strong>Health and Safety</strong></p>\r\n\r\n<ul>\r\n	<li>A full risk assessment will be carried out before any activity takes place at a new venue.</li>\r\n	<li>By agreeing to these terms and conditions, you are providing consent for DRH Sports Ltd professionals to administer all necessary first aid to your child as required at any time.</li>\r\n	<li>For safety reasons it is compulsory for all attendees to wear shin pads on any activity that involves football, hockey or other contact sports. DRH Sports Ltd reserves the right to refuse permission for any child not wearing shin protection to participate. &ndash; We advise shin pads are worn.</li>\r\n	<li>Any participant wearing earrings will need to have them removed prior to attendance or, for newly pierced ears, they must be covered with appropriate tape.</li>\r\n	<li>It is the parent/guardian&rsquo;s responsibility to ensure appropriate clothing is worn and/or available for their child for the activity being undertaken and weather conditions. If a child arrives without the appropriate clothing the coaches have the right to send them home.</li>\r\n</ul>\r\n\r\n<p><strong>Medical Conditions</strong></p>\r\n\r\n<ul>\r\n	<li>Any medical conditions that any participant may have must be fully disclosed</li>\r\n</ul>\r\n\r\n<ol>\r\n	<li>When you create your account with DRH.</li>\r\n	<li>To the lead coach of the activity or at the venue.</li>\r\n</ol>\r\n\r\n<ul>\r\n	<li>If the booking is made outside of the website then the medical concern must be disclosed to the lead coach and camp director.</li>\r\n	<li>Any child with allergies must have an Epi-pen with them or we must exclude them from an activity.</li>\r\n	<li>Any child with asthma must have their inhaler with them otherwise we must exclude them from the activity.</li>\r\n	<li>If your child has any medical condition which requires equipment they must bring it with them otherwise we are not allowed to have them participating.</li>\r\n</ul>\r\n\r\n<p><strong>Leaving an Activity</strong></p>\r\n\r\n<ul>\r\n	<li>All children must be collected and dropped off by a parent&nbsp;or guardian and they must sign in and out with a member of DRH staff.</li>\r\n	<li>Any child that normally walks home unaccompanied from any activity will only be allowed to leave unaccompanied if a parent or guardian has provided written consent prior to the activity starting. &ndash; any child aged 12 or under must be collected.</li>\r\n</ul>\r\n\r\n<p><strong>Exclusions</strong></p>\r\n\r\n<ul>\r\n	<li>DRH Sports has a responsibility for ensuring the well being and safety of all children in our care and have approved procedures for managing behaviour.</li>\r\n	<li>The company follows a zero-tolerance policy on discrimination, bullying and persistent poor behaviour of any kind, irrespective of any special needs.</li>\r\n	<li>On rare occasions, and in more serious cases, we reserve the right to ask parents to remove children from camps/ sessions for the remainder of day/lesson or for the entirety of a camp/term.</li>\r\n	<li>DRH Sports reserve the right to exclude any child for any reason at its absolute discretion, including, persistent late collection. No refund will be made for days missed and no compensation will be made for any other cost or losses incurred as a result. Any costs associated with the exclusion will be the parents&rsquo; responsibility.</li>\r\n	<li>We reserve the right to exclude a child at any time prior or during a session due to illness. The parents/ carer will be expected to come and collect their child.</li>\r\n</ul>\r\n\r\n<p><strong>Policies &amp; Procedures</strong></p>\r\n\r\n<p>Copies of DRH Sports Ltd&rsquo;s policies and procedures can be made available upon request from info@drhsports.co.uk</p>\r\n\r\n<p><strong>INFO</strong></p>\r\n\r\n<ul>\r\n	<li>The information on this site is updated regularly. However, we hereby exclude any warranties (whether expressed or implied) as to the quality, accuracy, efficiency, completeness, performance and fitness for a particular purpose of the site.</li>\r\n	<li>These T&amp;Cs form the entire agreement between you and DRH Sports Ltd.</li>\r\n	<li>By booking an activity with DRH you are acknowledging your full acceptance of these T&amp;Cs and confirm that you have not relied on any other representation other than those contained within these T&amp;Cs.</li>\r\n	<li>If any term within these T&amp;Cs is found to be unenforceable by a competent Court then such a term shall be struck out, but the remaining terms within these T&amp;Cs shall continue in force to the full extent permitted by law.</li>\r\n	<li>These T&amp;Cs are governed by English Law and subject to the exclusive jurisdiction of the Courts of England.</li>\r\n</ul>\r\n\r\n<p><strong>Camp GO! Terms and Conditions - the following applies only to Camp GO!</strong></p>\r\n\r\n<p><strong>Bookings/ Payments</strong></p>\r\n\r\n<ul>\r\n	<li><strong>DRH Sports Ltd bookings are strictly limited to availability.</strong></li>\r\n	<li><strong>The booking customer must be aged 18 or over.</strong></li>\r\n	<li><strong>Bookings made online or by telephone will be confirmed by email. A booking is confirmed when we receive the appropriate deposit and/ or childcare vouchers, and receipt of these constitutes acceptance of these terms and conditions.</strong></li>\r\n	<li><strong>DRH Sports accept payment by credit card, debit card and childcare vouchers. We do not accept payment by cheque or Paypal.</strong></li>\r\n	<li><strong>A deposit of 25% of your booking cost is non-refundable.</strong></li>\r\n</ul>\r\n\r\n<p><strong>Coupon Codes/ Discounts</strong></p>\r\n\r\n<p>Sibling Discount &ndash; 10% &ndash; Coupon is: sb10 (this coupon code must be entered at the checkout page when completing your booking).<br />\r\n<br />\r\n<br />\r\n<br />\r\nThis discount applies to two of more courses being booked for siblings. The booking for both players must be made at the same time.</p>\r\n\r\n<p><strong>Changing your Booking</strong></p>\r\n\r\n<ul>\r\n	<li><strong>You can change your booking once for free providing there is space and suitable numbers.</strong></li>\r\n	<li><strong>There is a&nbsp;</strong>&pound;5&nbsp;<strong>booking charge for every change after that.</strong></li>\r\n	<li><strong>In order to change your booking you must email&nbsp;</strong><a href="mailto:info@drhsports.co.uk">info@drhsports.co.uk</a></li>\r\n</ul>\r\n\r\n<p><strong>Age</strong></p>\r\n\r\n<p>We can only accept children aged 4.5 and above.</p>\r\n\r\n<p>If your child is four years old or younger on August 31st 2017 they can only attend 4 hours in a single day.</p>\r\n\r\n<p><strong>Equipment</strong></p>\r\n\r\n<ul>\r\n	<li><strong>All players must treat all equipment with respect at all times.</strong></li>\r\n	<li><strong>If players damage equipment there will be a fee dependent upon the item.</strong></li>\r\n</ul>\r\n\r\n<p><strong>Inclement Weather</strong></p>\r\n\r\n<ul>\r\n	<li>In the event of inclement weather you must assume the camp will go ahead unless you hear otherwise from a member of the coaching team.</li>\r\n	<li>We have limited indoor space at MKTC so if we need to cancel the camp due to bad or insufficient numbers then participants can transfer their booking to the Multi-sports camp at Oakgrove Leisure Centre.</li>\r\n</ul>\r\n\r\n<p><strong>Extended Care</strong></p>\r\n\r\n<ul>\r\n	<li>Our standard extended care hours are 8:15-9am and 4-5:30pm and can be booked at an additional cost.</li>\r\n	<li>Some venue times vary and this is confirmed at the time of booking.</li>\r\n	<li>Extended care can be cancelled. If you give us 7 days notice or more before camp starts we will refund you in full.</li>\r\n	<li>With less than 7 days notice, no refund is payable.</li>\r\n	<li>If you wish to move extended care to a different camp day, this is possible with 7 days or more notice free of charge.</li>\r\n</ul>\r\n\r\n<p><strong>Late Pick-Up</strong></p>\r\n\r\n<ul>\r\n	<li>If you are more than 10 minutes late for the standard 4pm finish time you will be charged the late pick up fee of &pound;10, provided there is late stay occurring.</li>\r\n	<li>If there is no late stay, or if you are late for extended care, we will charge you &pound;20 for every 15 minutes you are late to pay for staff costs.</li>\r\n	<li>This applies if there is no communication from the parent, if you communicate with us the fee will be down to the coaches&rsquo; discretion.</li>\r\n	<li>If we have no contact from a parent/ guardian we will have to call social services after 6pm and you will be charged.</li>\r\n</ul>\r\n\r\n<p><strong>Tuck Shop</strong></p>\r\n\r\n<ul>\r\n	<li>We advise your child brings no more than &pound;2 for the tuck shop.</li>\r\n</ul>\r\n\r\n<p>DRH Sports Ltd&rsquo;s eating policy is reinforced throughout any activity and staff will encourage children to eat their packed lunches before buying from the camp shop.</p>\r\n\r\n<p><strong>Notice of Absence</strong></p>\r\n\r\n<ul>\r\n	<li>If a child is not attending a scheduled day of camp, parents/ carers must telephone the camp manager or head office to allow us to update records.</li>\r\n</ul>\r\n\r\n<p><strong>Programmes &amp; Activities</strong></p>\r\n\r\n<ul>\r\n	<li>From time to time, we may need to change venues, dates, activities and courses for reasons within or outside our control.</li>\r\n	<li>Activity programmes are subject to change in the event of unsuitable weather or other circumstances beyond our control.</li>\r\n	<li>Timetables displayed on camp are a guide and are subject to change.</li>\r\n	<li>We can&rsquo;t guarantee certain activities will 100% happen on certain days.</li>\r\n	<li>In exceptional circumstances we may have to cancel particular dates at a venue, and in this event, we will try to give those booked as much notice as possible and offer a suitable alternative.</li>\r\n	<li>If no alternative is available, we will refund all monies paid for the dates cancelled.</li>\r\n	<li>If our tennis camp gets cancelled due to inclement weather or insufficient numbers we will transfer all bookings to our multi-sports camp at Oakgrove Leisure centre, if they are both running on the same day. This is due to the close proximity of the leisure centre to MKTC and we hope it should be easy for parents to make the change. We will give you as much notice as possible.</li>\r\n</ul>\r\n\r\n<p><strong>DRH Sports Coaching Courses Terms and Conditions - the following applies only to Coaching Courses</strong></p>\r\n\r\n<p><strong>Bookings/ Payments</strong></p>\r\n\r\n<ul>\r\n	<li><strong>DRH Sports Ltd bookings are strictly limited to availability.</strong></li>\r\n	<li><strong>The booking customer must be aged 18 or over.</strong></li>\r\n	<li><strong>For coaching courses, you book on at the beginning of each term. If you book on part way through the term, there is a reduced price dependent on how many weeks are left.</strong></li>\r\n	<li><strong>In some circumstances special payments can be made, if you are signing up more than 3 people in a term. Entire family etc.</strong></li>\r\n	<li><strong>Bookings made online or by telephone will be confirmed by email. A booking is confirmed when we receive the appropriate deposit and/ or childcare vouchers, and receipt of these constitutes acceptance of these terms and conditions.</strong></li>\r\n	<li><strong>DRH Sports accept payment by credit card, debit card and childcare vouchers. We do not accept payment by cheque or Paypal.</strong></li>\r\n</ul>\r\n\r\n<p><strong>Coupon Codes/ Discounts</strong></p>\r\n\r\n<p>To receive the early bird discount price (12% off) you must enter the following coupon code at the checkout page: EARLY.<br />\r\n<br />\r\nThis coupon can only be used during the specified early bird offer dates and cannot be used in conjunction with any other coupons, discounts or offers. Once the early bird deadline has passed, only one coupon per booking can be applied.<br />\r\n<br />\r\n<br />\r\n<br />\r\nSibling Discount &ndash;10% &ndash; Coupon is: sb10.<br />\r\n<br />\r\nMultiple booking discount - Coupon is: mb10 (10%) This coupon can only be used if one participant is booking onto 2 our more coaching groups.<br />\r\n<br />\r\nFamily Discount -Coupon is: fam10. (10%) This coupon can only be used for 3 or more members of the same family are booked onto courses. Must include at least 2 adults and one child.</p>\r\n\r\n<p><strong>Taster Sessions</strong></p>\r\n\r\n<p><strong>You are allowed to try a taster class for maximum of 2 classes to the head coach&rsquo;s discretion. You can only try any particular session one time.</strong></p>\r\n\r\n<p><strong>Equipment (Borrowing Rackets)</strong></p>\r\n\r\n<ul>\r\n	<li><strong>The first two times you are allowed to borrow a racket free of charge.</strong></li>\r\n	<li><strong>After this, rackets cost&nbsp;</strong>&pound;<strong>2 to hire for children and&nbsp;</strong>&nbsp;&pound;<strong>4 for adults.</strong></li>\r\n	<li><strong>All players must treat all equipment with respect at all times.</strong></li>\r\n	<li><strong>If players damage equipment there will be a fee dependent upon the item.</strong></li>\r\n</ul>\r\n\r\n<p><strong>Group Sessions/Inclement Weather</strong></p>\r\n\r\n<ul>\r\n	<li>In the event of inclement weather you must assume the group will go ahead unless you hear otherwise from a member of the coaching team.</li>\r\n	<li>Any sessions cancelled by us prior to the start time will be made up at another time of our choosing.</li>\r\n	<li>If the weather turns bad once a session has started the coach will ensure the children are picked up or engaged in activities and the session will not be made up at a later time.</li>\r\n	<li>The coach may leave the club after 15 minutes passed the start time if nobody shows and has not been warned of your late arrival.</li>\r\n</ul>', 1, '2019-11-21 05:09:48', '2020-03-13 02:09:11'),
-(3, 'privacy-policy', 'Privacy Policy', 'Privacy Policy', 'Privacy Policy', 'Privacy Policy', '<p>Here are a few examples:</p>\r\n\r\n<p>Here&rsquo;s how&nbsp;<a href="https://500px.com/terms">500px</a>&nbsp;lists its prohibited activities:</p>\r\n\r\n<ol>\r\n	<li>The&nbsp;<strong>Intellectual Property</strong>&nbsp;disclosure will inform users that the contents, logo and other visual media you created is your property and is protected by copyright laws.</li>\r\n	<li>A&nbsp;<strong>Termination</strong>&nbsp;clause will inform that users&rsquo; accounts on your website and mobile app or users&rsquo; access to your website and mobile (if users can&rsquo;t have an account with you) can be terminated in case of abuses or at your sole discretion.</li>\r\n	<li>A&nbsp;<strong>Governing Law</strong>&nbsp;will inform users which laws govern the agreement. This should the country in which your company is headquartered or the country from which you operate your website and mobile app.</li>\r\n	<li>A&nbsp;<strong>Links To Other Web Sites</strong>&nbsp;clause will inform users that you are not responsible for any third party websites that you link to. This kind of clause will generally inform users that they are responsible for reading and agreeing (or disagreeing) with the Terms and Conditions or Privacy Policies of these third parties.</li>\r\n	<li>\r\n	<p>If your website or mobile app allows users to create content and make that content public to other users, a&nbsp;<strong>Content</strong>&nbsp;section will inform users that they own the rights to the content they have created. The &ldquo;Content&rdquo; clause usually mentions that users must give you (the website or mobile app developer) a license so that you can share this content on your website/mobile app and to make it available to other users.</p>\r\n\r\n	<p>Because the content created by users is public to other users, a&nbsp;<a href="https://termsfeed.com/blog/dmca-terms-and-conditions/">DMCA notice clause</a>&nbsp;(or Copyright Infringement ) section is helpful to inform users and copyright authors that, if any content is found to be a copyright infringement, you will respond to any DMCA takedown notices received and you will take down the content.</p>\r\n	</li>\r\n	<li>A&nbsp;<strong>Limit What Users Can Do</strong>&nbsp;clause can inform users that&nbsp;<strong>by agreeing to use your service, they&rsquo;re also agreeing to not do certain things</strong>. This can be part of a very long and thorough list in your Terms and Conditions agreements so as to encompass the most amount of negative uses.</li>\r\n</ol>', 1, '2019-11-21 07:08:44', '2019-11-21 07:54:11');
+(3, 'privacy-policy', 'Privacy Policy', 'Privacy Policy', 'Privacy Policy', 'Privacy Policy', '<div class="bg-light">\r\n<div class="container py-5">\r\n<div class="row h-100 align-items-center py-5">\r\n<div class="col-lg-6">\r\n<h1 class="display-4">Privacy Policies page</h1>\r\n\r\n<p class="lead text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id sem fringilla, sollicitudin nisl aliquam, sodales neque. Pellentesque ac ultricies felis. Nam et iaculis quam, et pharetra felis. Proin vulputate tincidunt velit id euismod..</p>\r\n</div>\r\n\r\n<div class="col-lg-6 d-none d-lg-block"><img alt="" class="img-fluid" src="https://res.cloudinary.com/mhmd/image/upload/v1556834136/illus_kftyh4.png" /></div>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<h3>&nbsp;</h3>\r\n\r\n<h4>Here&rsquo;s how&nbsp;<a href="https://500px.com/terms">500px</a>&nbsp;lists its prohibited activities:</h4>\r\n\r\n<h4>&nbsp;</h4>\r\n\r\n<ol>\r\n	<li>\r\n	<p>The&nbsp;<strong>Intellectual Property</strong>&nbsp;disclosure will inform users that the contents, logo and other visual media you created is your property and is protected by copyright laws.</p>\r\n	</li>\r\n	<li>A&nbsp;<strong>Termination</strong>&nbsp;clause will inform that users&rsquo; accounts on your website and mobile app or users&rsquo; access to your website and mobile (if users can&rsquo;t have an account with you) can be terminated in case of abuses or at your sole discretion.</li>\r\n	<li>A&nbsp;<strong>Governing Law</strong>&nbsp;will inform users which laws govern the agreement. This should the country in which your company is headquartered or the country from which you operate your website and mobile app.</li>\r\n	<li>A&nbsp;<strong>Links To Other Web Sites</strong>&nbsp;clause will inform users that you are not responsible for any third party websites that you link to. This kind of clause will generally inform users that they are responsible for reading and agreeing (or disagreeing) with the Terms and Conditions or Privacy Policies of these third parties.</li>\r\n	<li>\r\n	<p>If your website or mobile app allows users to create content and make that content public to other users, a&nbsp;<strong>Content</strong>&nbsp;section will inform users that they own the rights to the content they have created. The &ldquo;Content&rdquo; clause usually mentions that users must give you (the website or mobile app developer) a license so that you can share this content on your website/mobile app and to make it available to other users.</p>\r\n\r\n	<p>Because the content created by users is public to other users, a&nbsp;<a href="https://termsfeed.com/blog/dmca-terms-and-conditions/">DMCA notice clause</a>&nbsp;(or Copyright Infringement ) section is helpful to inform users and copyright authors that, if any content is found to be a copyright infringement, you will respond to any DMCA takedown notices received and you will take down the content.</p>\r\n	</li>\r\n	<li>A&nbsp;<strong>Limit What Users Can Do</strong>&nbsp;clause can inform users that&nbsp;<strong>by agreeing to use your service, they&rsquo;re also agreeing to not do certain things</strong>. This can be part of a very long and thorough list in your Terms and Conditions agreements so as to encompass the most amount of negative uses.</li>\r\n</ol>', 1, '2019-11-21 07:08:44', '2020-07-21 03:53:05'),
+(6, 'safeguarding-with-drh-sports', 'Safeguarding with DRH Sports', 'Safeguarding with DRH Sports', 'Safeguarding with DRH Sports', 'Safeguarding with DRH Sports', '<p>Test Data</p>\r\n\r\n<h1>Test Data</h1>\r\n\r\n<h1>Test Data</h1>\r\n\r\n<h4>Test Data</h4>', 1, '2020-07-22 05:12:38', '2020-07-23 01:18:47'),
+(7, 'safeguarding-with-drh-sports-1', 'Safeguarding with DRH Sports', 'Safeguarding with DRH Sports', 'Safeguarding with DRH Sports', 'Safeguarding with DRH Sports', '<table border="0" cellpadding="0" cellspacing="0" style="width:100%">\r\n	<tbody>\r\n		<tr>\r\n			<td style="width:50%">\r\n			<h3 style="text-align: center;">DRH Sports and safeguarding</h3>\r\n			</td>\r\n			<td style="text-align: center;">&nbsp;</td>\r\n			<td style="width:50%">\r\n			<h3 style="text-align: center;">DRH Sports health and safety</h3>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p style="text-align: center;">la fjsaofjsajfasf</p>\r\n\r\n			<p style="text-align: center;">sdfsdf</p>\r\n\r\n			<p style="text-align: center;">sdfsdjsdjfsdjfk;sdjf sdjfsdjf osdjf osdjf sdj fsdjf</p>\r\n\r\n			<p style="text-align: center;">sd fjsd fjsd fjosd</p>\r\n			</td>\r\n			<td style="text-align: center;">&nbsp;</td>\r\n			<td>\r\n			<p style="text-align: center;">bla fjsaofjsajfasf</p>\r\n\r\n			<p style="text-align: center;">sdfsdf</p>\r\n\r\n			<p style="text-align: center;">sdfsdjsdjfsdjfk;sdjf sdjfsdjf osdjf osdjf sdj fsdjf</p>\r\n\r\n			<p style="text-align: center;">sd fjsd fjsd fjosd</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p style="text-align: center;"><span style="font-size:20px;"><strong>More about DRH Sports will go here</strong></span></p>\r\n\r\n<p>&nbsp;</p>', 1, '2020-07-22 05:13:00', '2020-07-24 02:09:14');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `coach_documents`
+--
+
+CREATE TABLE `coach_documents` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `coach_id` int(11) NOT NULL,
+  `document_name` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `document_type` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `expiry_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `notification` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `upload_document` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `coach_documents`
+--
+
+INSERT INTO `coach_documents` (`id`, `coach_id`, `document_name`, `document_type`, `expiry_date`, `notification`, `upload_document`, `created_at`, `updated_at`) VALUES
+(60, 116, 'test', 'DBS Certificate', '2020-04-13', '1 Month', '1587021643keqrn.pdf', '2020-04-16 01:50:43', '2020-04-16 01:50:43'),
+(61, 116, 'aa', 'DBS Certificate', '2020-04-12', '1 Month', '1587023198dPAbo.pdf', '2020-04-16 02:16:38', '2020-04-16 02:16:38'),
+(62, 116, 'bb', 'Safeguarding Certificate', '2020-04-07', '6 Months', '1587025067dPFBc.pdf', '2020-04-16 02:47:47', '2020-04-16 02:47:47'),
+(63, 326, 'aa', 'First Aid Certificate', '2020-04-13', '3 Months', '1587027300EYyak.pdf', '2020-04-16 03:25:00', '2020-04-16 03:25:00'),
+(64, 326, 'mehak', 'Others', '2020-04-01', '6 Months', '1587030627WuvVA.pptx', '2020-04-16 04:20:27', '2020-04-16 04:20:27'),
+(65, 323, 'Document Name', 'First Aid Certificate', '2020-04-16', '1 Month', '15870320314fYcs.jpg', '2020-04-16 04:43:51', '2020-04-16 04:43:51'),
+(66, 323, 'Document Name', 'DBS Certificate', '2020-04-30', '3 Months', '1587032075MlOmr.jpg', '2020-04-16 04:44:35', '2020-04-16 04:44:35'),
+(67, 334, 'mehak', 'First Aid Certificate', '2020-04-14', '1 Month', '1587037045XqREB.pptx', '2020-04-16 06:07:25', '2020-04-16 06:07:25'),
+(72, 343, 'coach', 'DBS Certificate', '2020-02-03', '1 Month', '1588170593pwvLQ.docx', '2020-04-29 08:59:53', '2020-04-29 08:59:53'),
+(74, 346, 'a', 'DBS Certificate', '2020-04-01', '1 Month', '1588224489RjsoJ.pptx', '2020-04-29 23:58:09', '2020-04-29 23:58:09'),
+(77, 116, '123123', 'Safeguarding Certificate', '275760-03-12', '3 Months', '1588230526Yijaz.png', '2020-04-30 01:38:46', '2020-04-30 01:38:46'),
+(78, 349, 'df', 'DBS Certificate', '2018-03-24', '1 Month', '1588238868s2A5x.png', '2020-04-30 03:57:48', '2020-04-30 03:57:48'),
+(79, 355, '12111111', 'First Aid Certificate', '2019-02-13', '3 Months', '1588321006JRC5R.png', '2020-05-01 02:46:46', '2020-05-01 02:46:46'),
+(80, 355, '435', 'DBS Certificate', '0435-04-05', 'No Reminder', '1588324327i4zmv.png', '2020-05-01 03:42:07', '2020-05-01 03:42:07'),
+(81, 357, 'mehak', 'DBS Certificate', '2017-03-04', '6 Months', '1588335253CdLxF.png', '2020-05-01 06:44:13', '2020-05-01 06:44:13'),
+(82, 361, 'd', 'DBS Certificate', '2011-12-24', '6 Months', '15883370421t258.png', '2020-05-01 07:14:02', '2020-05-01 07:14:02'),
+(83, 365, 'K', 'DBS Certificate', '2020-05-01', '3 Months', '1588339643Zbeis.jpeg', '2020-05-01 07:57:23', '2020-05-01 07:57:23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `coach_profiles`
+--
+
+CREATE TABLE `coach_profiles` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `coach_id` int(11) DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `profile_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `qualified_clubs` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `qualifications` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `personal_statement` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `coach_profiles`
+--
+
+INSERT INTO `coach_profiles` (`id`, `coach_id`, `image`, `profile_name`, `qualified_clubs`, `qualifications`, `personal_statement`, `created_at`, `updated_at`) VALUES
+(2, 325, '1587030477.png', 'Tennis coach', 'fgf', 'graduation', 'rdfgdfg', '2020-04-16 03:22:07', '2020-04-16 04:17:57'),
+(3, 323, '1587031942.jpg', 'Coach', 'club', 'high end', 'dfgdfgdfg', '2020-04-16 04:42:22', '2020-04-16 04:42:22'),
+(4, 334, '', 'mehak', 'football coach', 'B.sc', 'nothing', '2020-04-16 05:51:34', '2020-04-16 05:58:03'),
+(8, 133, '1594294464.jpg', 'Coach Deftsoft', 'Milton Keynes Tennis Club', 'LTA Level 4, PTR Pro', 'I have been a tennis coach for over 15 years and have worked with all age groups and abilities. I was previously a professional tennis player achieving a world ranking and being lucky enough to travel all over the world to compete in tournaments. \r\n\r\nI now have a passion for developing performance tennis players and helping them achieve their goals. I believe that with hard work, determination and a love for the game, anything is possible!', '2020-04-29 23:59:00', '2020-07-09 06:04:24'),
+(9, 133, NULL, '', '', '', '', '2020-06-01 03:43:59', '2020-06-01 03:43:59'),
+(10, 133, NULL, 'Test', 'Test tennis club', 'test', 'test', '2020-06-18 07:35:56', '2020-06-18 07:35:56'),
+(11, 133, NULL, 'My Profile Name', 'My Tennis Club', 'My Tennis Club', 'My Tennis Club', '2020-06-18 07:38:19', '2020-06-18 07:38:19'),
+(12, 133, NULL, 'My Profile Name', 'My Tennis Club', 'My Tennis Club', 'My Tennis Club', '2020-06-18 07:38:28', '2020-06-18 07:38:28'),
+(13, 133, NULL, 'Coach Deftsoftt', 'Milton Keynes Tennis Club', 'LTA Level 41, PTR Pro1', 'I have been a tennis coach for over 15 years and have worked with all age groups and abilities. I was previously a professional tennis player achieving a world ranking and being lucky enough to travel all over the world to compete in tournaments. \r\n\r\nI now have a passion for developing performance tennis players and helping them achieve their goals. I believe that with hard work, determination and a love for the game, anything is possible!', '2020-06-18 07:42:48', '2020-06-18 07:42:48'),
+(14, 133, NULL, 'Coach Deftsoft', 'Milton Keynes Tennis Club', 'LTA Level 41, PTR Pro11', 'I have been a tennis coach for over 15 years and have worked with all age groups and abilities. I was previously a professional tennis player achieving a world ranking and being lucky enough to travel all over the world to compete in tournaments. \r\n\r\nI now have a passion for developing performance tennis players and helping them achieve their goals. I believe that with hard work, determination and a love for the game, anything is possible!', '2020-06-18 07:43:56', '2020-06-18 07:43:56');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `coach_upload_pdfs`
+--
+
+CREATE TABLE `coach_upload_pdfs` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `coach_id` int(11) NOT NULL,
+  `invoice_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `invoice_document` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int(11) DEFAULT NULL,
+  `reason_of_rejection` longtext COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `coach_upload_pdfs`
+--
+
+INSERT INTO `coach_upload_pdfs` (`id`, `coach_id`, `invoice_name`, `invoice_document`, `status`, `reason_of_rejection`, `created_at`, `updated_at`) VALUES
+(2, 133, 'test', '1591006196.pdf', NULL, NULL, '2020-06-01 04:39:56', '2020-07-09 06:05:47'),
+(3, 133, 'Test Invoice', '1591015103.pdf', 0, 'ftftftyf', '2020-06-01 07:08:23', '2020-07-10 04:52:08'),
+(4, 133, 'invoice 123', '1591024178.pdf', 1, 'This invoice has incorrect dates, please check all the dates and re-send', '2020-06-01 09:39:38', '2020-07-10 04:51:55'),
+(5, 133, 'Dominic Ross-Hurst - LSTC - March 2020', '1591870740.pdf', 1, NULL, '2020-06-11 04:49:00', '2020-07-10 04:51:53'),
+(6, 133, 'bla bla bla', '1591870913.jpg', 1, NULL, '2020-06-11 04:51:53', '2020-07-07 05:53:46'),
+(7, 133, 'tttt', '1592288886.pdf', 1, 'drsehytkm', '2020-06-16 00:58:06', '2020-07-09 06:05:39'),
+(9, 133, 'Testing@123', '1592293682.docx', 1, 'hello whts up ,,, hello whts up ,,,hello whts up ,,, hello whts up ,,, hello whts up ,,,hello whts up ,,, hello whts up ,,, hello whts up ,,,hello whts up ,,, hello whts up ,,, hello whts up ,,,hello whts up ,,,hello whts up ,,, hello whts up ,,,hello whts up ,,,hello whts up ,,, hello whts up ,,,hello whts up ,,, hello whts up ,,, hello whts up ,,,hello whts up ,,,hello whts up ,,, hello whts up ,,,hello whts up ,,,', '2020-06-16 02:18:02', '2020-07-07 05:53:54'),
+(16, 133, 'dd', '1592308229.pdf', 1, 'Please state why this invoice cannot be accepted Please state why this invoice cannot be accepted Please state why this invoice cannot be accepted', '2020-06-16 06:20:29', '2020-07-13 04:16:27'),
+(17, 133, 'nisha', '1594639186.pdf', 0, 'http://49.249.236.30:8654/dominic-new/user/upload-invoice/add', '2020-07-13 05:49:46', '2020-07-13 05:50:53');
 
 -- --------------------------------------------------------
 
@@ -563,15 +1049,52 @@ INSERT INTO `commissions` (`id`, `parent`, `slab_from`, `slab_to`, `commission_t
 CREATE TABLE `contact_details` (
   `id` int(10) UNSIGNED NOT NULL,
   `participant_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `participant_dob` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `participant_gender` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `parent_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `participant_dob` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `participant_gender` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parent_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `parent_email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `parent_telephone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `class` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `subject` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `message` varchar(2000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `contact_details`
+--
+
+INSERT INTO `contact_details` (`id`, `participant_name`, `participant_dob`, `participant_gender`, `parent_name`, `parent_email`, `parent_telephone`, `class`, `type`, `subject`, `message`, `created_at`, `updated_at`) VALUES
+(36, 'dsffd', '03/17/2020', 'male', 'sa', 'test56@yopmail.com', '1111111111', 'dsf', 'course', NULL, NULL, '2020-03-24 01:45:00', '2020-03-24 01:45:00'),
+(37, 'hasgdfjagdihw', '05/05/2020', 'female', 'gfdd', 'mehak@yopmail.com', '1223445566', 'mehak', 'course', NULL, NULL, '2020-03-24 04:41:52', '2020-03-24 04:41:52'),
+(38, 'ghgf', '03/06/2019', 'female', 'trtyf', 'mehak2@gmail.com', '12345566778788', 'hgfjhgug', 'course', NULL, NULL, '2020-03-24 04:44:17', '2020-03-24 04:44:17'),
+(39, 'ftgdfg', '03/01/2020', 'male', 'Test', 'jassi93@yopmail.com', '1234456789', 'gfdeyryr', 'course', NULL, NULL, '2020-03-24 04:45:35', '2020-03-24 04:45:35'),
+(40, 'Test', '03/09/2020', 'female', 'Test', 'jassi93@yopmail.com', '1234456789', 'hgfjfgu', 'course', NULL, NULL, '2020-03-24 04:47:18', '2020-03-24 04:47:18'),
+(41, 'nfskdf', '03/02/2020', 'female', 'test', 'jassi93@yopmail.com', '12345678', 'hi hi', 'course', NULL, NULL, '2020-03-24 04:51:30', '2020-03-24 04:51:30'),
+(42, 'Test', '03/10/2020', 'female', 'Test', 'jassi93@yopmail.com', '1234456789', 'srasfrasfasd', 'course', NULL, NULL, '2020-03-24 05:04:38', '2020-03-24 05:04:38'),
+(43, 'ghdfyjf', '2/30/2020', 'male', 'jhih', 'mjbjg@gmail.com', '1234456789', 'fgd', 'course', NULL, NULL, '2020-03-26 07:27:43', '2020-03-26 07:27:43'),
+(44, 'Gg', '03/24/2020', 'male', 'Yy', 'Hello@yopmail.com', '12444455', 'V', 'course', NULL, NULL, '2020-03-30 07:48:59', '2020-03-30 07:48:59'),
+(45, 'mehak', '05/05/2019', 'female', 'nirmala', 'mehak@yopmail.com', '1234456789', 'hi', 'course', NULL, NULL, '2020-03-31 08:28:15', '2020-03-31 08:28:15'),
+(46, 'aa', '04/07/2020', 'male', 'aa', 'test56@yopmail.com', '1111111111', 'aa', 'course', NULL, NULL, '2020-04-01 01:12:14', '2020-04-01 01:12:14'),
+(49, 'test', '04/17/2020', 'male', 'sfas', 'sf@d.fgh', '1312312', 'sd', 'course', NULL, NULL, '2020-04-06 03:37:05', '2020-04-06 03:37:05'),
+(50, 'mehak', '05/05/2019', 'female', 'rekha', 'mehak@yopmail.com', '1234567890', 'hii', 'course', NULL, NULL, '2020-04-06 03:48:28', '2020-04-06 03:48:28'),
+(51, 'mehak', '04/08/2020', 'female', 'rekha', 'rekha@yopmail.com', '1234456789', 'hi', 'course', NULL, NULL, '2020-04-06 03:53:50', '2020-04-06 03:53:50'),
+(52, 'hi', '04/13/2020', 'male', 'hlo', 'ram@yopmail.com', '1234524', 'ew', 'course', NULL, NULL, '2020-04-06 06:56:01', '2020-04-06 06:56:01'),
+(53, 'test', NULL, NULL, NULL, 'test@yopmail.com', '11111111', NULL, 'contact', 'dfgfddf', 'dfhdfhdfh', '2020-04-15 23:28:24', '2020-04-15 23:28:24'),
+(54, 'test', '04/17/2020', 'male', 'saa', 'asd@gf.dfv', '222222222', 'dsfsd', 'course', NULL, NULL, '2020-04-15 23:43:51', '2020-04-15 23:43:51'),
+(55, 'test', '04/15/2020', 'male', 'test', 'test@yopmail.com', '1236547890', 'test', 'course', NULL, NULL, '2020-04-24 08:45:05', '2020-04-24 08:45:05'),
+(56, 'ddd', '04/30/2020', 'male', 'fff', 'ff@fffccc.vv', '111111111', 'cffff', 'course', NULL, NULL, '2020-04-29 00:39:54', '2020-04-29 00:39:54'),
+(57, 'sonia', '04/08/2020', 'female', 'mehak', 'mehakg@yopmail.com', '1212312312', 'sdf', 'course', NULL, NULL, '2020-04-29 09:13:13', '2020-04-29 09:13:13'),
+(58, 'asdasd', '04/07/2021', 'female', 'mehak', 'baby@yopmail.com', '131273152', 'good morning', 'course', NULL, NULL, '2020-04-30 01:08:39', '2020-04-30 01:08:39'),
+(59, 'ggg', '2020-04-23', 'female', 'werwe', 'd@yopmail.com', '213123123123', NULL, 'course', NULL, NULL, '2020-04-30 02:41:55', '2020-04-30 02:41:55'),
+(60, 'd', NULL, 'female', 'e', 's@yopmail.com', '2131233', NULL, 'course', NULL, NULL, '2020-04-30 03:12:16', '2020-04-30 03:12:16'),
+(61, 'test', NULL, 'male', 'test', 'test@yopmail.com', '999999999', 'test', 'course', NULL, NULL, '2020-04-30 04:54:01', '2020-04-30 04:54:01'),
+(62, 'mehak', '2002-02-02', 'male', 'xcc', 'e@yopmail.com', '2323424234', '6t', 'course', NULL, NULL, '2020-05-01 06:53:11', '2020-05-01 06:53:11'),
+(63, 'dfg', '1188-03-24', 'male', 'sdf', 'k@yopmail.com', '123123123', 'asdsa', 'course', NULL, NULL, '2020-05-01 06:55:37', '2020-05-01 06:55:37'),
+(64, 'd', '2020-04-27', 'female', 's', 'p@yopmail.com', '23121323', 'xc', 'course', NULL, NULL, '2020-05-01 07:15:19', '2020-05-01 07:15:19'),
+(65, 'N', '2020-05-01', 'female', 'Bb', 'k@yopmail.com', '42527272727', 'Vbbb', 'course', NULL, NULL, '2020-05-01 07:51:49', '2020-05-01 07:51:49');
 
 -- --------------------------------------------------------
 
@@ -844,6 +1367,39 @@ INSERT INTO `country_code` (`countrycode`, `countryname`, `code`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `coupons`
+--
+
+CREATE TABLE `coupons` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `coupon_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `start_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `end_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `uses` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `discount_type` int(11) DEFAULT NULL,
+  `amount` double(8,2) DEFAULT NULL,
+  `flat_discount` double(8,2) DEFAULT NULL,
+  `courses` longtext COLLATE utf8mb4_unicode_ci,
+  `camps` longtext COLLATE utf8mb4_unicode_ci,
+  `products` longtext COLLATE utf8mb4_unicode_ci,
+  `status` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `coupons`
+--
+
+INSERT INTO `coupons` (`id`, `coupon_code`, `start_date`, `end_date`, `uses`, `discount_type`, `amount`, `flat_discount`, `courses`, `camps`, `products`, `status`, `created_at`, `updated_at`) VALUES
+(1, '#seiop55', '2020-05-04', '2020-05-16', '2', 1, 20.00, 10.00, '2', '2', '45', 1, '2020-04-24 10:12:59', '2020-05-15 07:00:03'),
+(2, '#drh789', '2020-04-30', '2020-05-27', '90', 0, 12.00, 12.00, '1', '2', '49', 1, '2020-05-01 00:26:22', '2020-05-15 07:00:15'),
+(3, '#drh67', '2020-05-04', '2020-05-28', '100', 1, 22.00, 10.00, '7', '2', '45,54,63', 1, '2020-05-05 00:52:06', '2020-05-15 07:27:20'),
+(4, 'Dom', '2020-07-01', '2020-07-31', '1', 1, NULL, 10.00, '1,2,3,7,25,26', '2', '45,49,54,58,62,75,76', 1, '2020-05-11 04:26:59', '2020-07-03 05:03:29');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `courses`
 --
 
@@ -852,9 +1408,10 @@ CREATE TABLE `courses` (
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `season` int(11) DEFAULT NULL,
   `type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `subtype` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `term` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `level` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `age` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `session_date` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -862,11 +1419,15 @@ CREATE TABLE `courses` (
   `day_time` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `age_group` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `booking_slot` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `more_info` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `more_info` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `player` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` float DEFAULT NULL,
   `early_birth_price` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bottom_section` longtext COLLATE utf8mb4_unicode_ci,
+  `linked_coach` int(11) DEFAULT NULL,
+  `coach_cost` bigint(20) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
+  `sort` int(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -875,11 +1436,14 @@ CREATE TABLE `courses` (
 -- Dumping data for table `courses`
 --
 
-INSERT INTO `courses` (`id`, `slug`, `description`, `title`, `type`, `subtype`, `term`, `image`, `age`, `session_date`, `location`, `day_time`, `age_group`, `booking_slot`, `more_info`, `player`, `price`, `early_birth_price`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'mini-tots', 'Week commencing Jan 6th and runs for 12 weeks', 'MINI TOTS', '156', '0', 'Spring - 2020', '1584016216.png', '3-4 years', '12 WEEKS - Jan 11th, 18th, 25th – Feb 1st,  8th, 15th, 29th - Mar 7th, 14th, 21st, 28th – Apr 4th', 'NDOORS at Oakgrove Leisure Centre, MK10 9JQ', 'Saturday 9-10am', '6-10', '12', 'In our Tots sessions we give the players an introduction to tennis through fun games and exercises designed to develop co-ordination and athletic ability.\r\nAll the equipment and rackets will be provided by the club.', 'Player2', 42, '', 1, '2020-03-12 07:00:16', '2020-03-20 01:25:26'),
-(2, 'red-club-1-spring-2020-mon-5-6pm', 'Week commencing Jan 6th and runs for 12 weeks', 'RED CLUB 1', '158', '0', 'SPRING 2020', '1584071612.png', '5-8 years', 'Jan 6th, 13th, 20th, 27th - Feb 3rd, 10th, 24th - Mar 2nd, 9th, 16th, 23rd, 30th', 'Oakgrove Leisure Centre, Brickhill Street, MK10 9JQ.', 'MON 5-6PM', '3-7', '20', 'In our Red Club groups we aim to teach our players the basics in a fun environment, with plenty of fun games to break up the learning.\r\nThroughout a term we will cover the main four shots in tennis: forehand, backhand, serve and volley.', 'Player1', 40, '', 1, '2020-03-12 22:23:32', '2020-03-20 01:25:38'),
-(3, 'red-club-2-spring-2020-wed-4-45-5-45pm', 'Week commencing Jan 6th and runs for 12 weeks', 'RED CLUB 2', '157', '160', 'SPRING 2020', '1584071789.png', '5-8 years', 'Jan 8th, 15th, 22nd, 29th - Feb 5th, 12th, 26th - Mar 4th, 11th, 18th, 25th – Apr 1st', 'Oakgrove Secondary School, Venture Gate, MK10 9JQ.', 'WED 4.45-5.45PM', '9-17', '10', 'In our Red Club groups we aim to teach our players the basics in a fun environment, with plenty of fun games to break up the learning.\r\nThroughout a term we will cover the main four shots in tennis: forehand, backhand, serve and volley.', 'Player1', 40, '38', 1, '2020-03-12 22:26:29', '2020-03-18 01:19:03'),
-(7, 'tadpoles-2', 'There will be no coaching during half term (Monday Feb 13th - Sunday Feb 23rd 2020)', 'TADPOLES', '156', '0', 'SPRING 2020', NULL, 'School foundation and year 1', 'Jan 11th, 18th, 25th – Feb 1st,  8th, 15th, 29th - Mar 7th, 14th, 21st, 28th – Apr 4th', 'INDOORS at Oakgrove Leisure Centre, MK10 9JQ', 'Saturday 9-10am', '8-11', '10', 'Course Cost: £84 - if paid up front (£7 per session) - The course price will change weekly to represent the number of weeks remaining in the course \r\nDrop in cost: £8.50 (pay on the day). You can only PAYG for a maximum of 1 time before advanced booking r', NULL, 21, '', 1, '2020-03-19 01:18:20', '2020-03-20 01:25:47');
+INSERT INTO `courses` (`id`, `slug`, `description`, `title`, `season`, `type`, `subtype`, `level`, `image`, `age`, `session_date`, `location`, `day_time`, `age_group`, `booking_slot`, `more_info`, `player`, `price`, `early_birth_price`, `bottom_section`, `linked_coach`, `coach_cost`, `status`, `sort`, `created_at`, `updated_at`) VALUES
+(1, 'mini-tots', '<p><span style="color:#000000;">This course requires membership to Milton Keynes Tennis Club. To do this, go to&nbsp;</span><a href="https://clubspark.lta.org.uk/MiltonKeynesTennisClub"><span style="color:#000000;">https://clubspark.lta.org.uk/MiltonKeynesTennisClu</span></a></p>', 'MINI TOTS  2', 11, '156', '164', 'Beginner', '1584016216.png', '', 'ww', 'Oakgrove Leisure Centre, MK10 9JQ', 'Saturday 9-10am', '6-10', '12', '<h2>Useful information and downloads</h2>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<ul>\r\n	<li><span style="color:#1abc9c;">We take our responsibilities for the care of each child at our camps very seriously. This page is designed to provide all necessary and useful information for parents; from the timings of a typical day to our booking terms and conditions.</span></li>\r\n	<li>We take our responsibilities for the care of each child at our camps very seriously. This page is designed to provide all necessary and useful information for parents; from the timings of a typical day to our booking terms and conditions.</li>\r\n	<li>We take our responsibilities for the care of each child at our camps very seriously. This page is designed to provide all necessary and useful information for parents; from the timings of a typical day to our booking terms and conditions.</li>\r\n</ul>', 'Player2', 31, '', '<section>\r\n<p>In our Tots sessions we give the players an introduction to tennis through fun games and exercises designed to develop co-ordination and athletic ability</p>\r\n</section>\r\n\r\n<section>&nbsp;</section>', NULL, 10, 1, 2, '2020-03-12 07:00:16', '2020-06-30 06:41:21'),
+(2, 'red-club-1-spring-2020-mon-5-6pm', '<p>Week commencing Jan 6th and runs for 12 weeks</p>', 'RED CLUB 1', 9, '156', '163', 'Advanced', '1584071612.png', '', 'Jan 6th, 13th, 20th, 27th - Feb 3rd, 10th, 24th - Mar 2nd, 9th, 16th, 23rd, 30th', 'Oakgrove Leisure Centre, Brickhill Street, MK10 9JQ.', 'MON 5-6PM', '7-10', '20', '<p>In our Red Club groups we aim to teach our players the basics in a fun environment, with plenty of fun games to break up the learning. Throughout a term we will cover the main four shots in tennis: forehand, backhand, serve and volley.</p>', 'Player1', 30, '', '<p>Hello&nbsp;</p>\r\n\r\n<p><strong>HELL</strong>O</p>\r\n\r\n<ul>\r\n	<li><span style="color:#2980b9;">TESTing</span></li>\r\n</ul>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><span style="color:#2980b9;">dfsdfsdfsdf</span></p>', 325, 20, 1, 1, '2020-03-12 22:23:32', '2020-07-17 02:28:43'),
+(3, 'red-club-2-spring-2020-wed-4-45-5-45pm', '<p>Week commencing Jan 6th and runs for 12 weeks</p>', 'RED CLUB 2', 7, '156', '164', 'Intermediate', '1584071789.png', '', 'Jan 8th, 15th, 22nd, 29th - Feb 5th, 12th, 26th - Mar 4th, 11th, 18th, 25th – Apr 1st', 'Oakgrove Secondary School, Venture Gate, MK10 9JQ.', 'WED 4.45-5.45PM', '9-17', '10', '<p>In our Red Club groups we aim to teach our players the basics in a fun environment, with plenty of fun games to break up the learning. Throughout a term we will cover the main four shots in tennis: forehand, backhand, serve and volley.</p>', 'Player1', 10, '', NULL, NULL, 40, 1, 2, '2020-03-12 22:26:29', '2020-06-19 01:14:58'),
+(7, 'tadpoles-2', '<p>There will be no coaching during half term (Monday Feb 13th - Sunday Feb 23rd 2020)</p>', 'TADPOLES', 9, '156', '162', 'Intermediate', NULL, '', 'Jan 11th, 18th, 25th – Feb 1st,  8th, 15th, 29th - Mar 7th, 14th, 21st, 28th – Apr 4th', 'INDOORS at Oakgrove Leisure Centre, MK10 9JQ', 'Saturday 9-10am', '1-100', '10', '<p>Course Cost: &pound;84 - if paid up front (&pound;7 per session) - The course price will change weekly to represent the number of weeks remaining in the course Drop in cost: &pound;8.50 (pay on the day). You can only PAYG for a maximum of 1 time before advanced booking r</p>', NULL, 100, '', NULL, NULL, 10, 1, 1, '2020-03-19 01:18:20', '2020-07-14 00:47:22'),
+(25, 'tadpoles', '<p>There will be no coaching during half term (Monday Feb 13th - Sunday Feb 23rd 2020)</p>', 'TADPOLES(copy)2', 8, '191', '0', 'Beginner', NULL, '', 'Jan 11th, 18th, 25th – Feb 1st,  8th, 15th, 29th - Mar 7th, 14th, 21st, 28th – Apr 4th', 'INDOORS at Oakgrove Leisure Centre, MK10 9JQ', 'Saturday 9-11am', '8-11', '10', '<p>Course Cost: &pound;84 - if paid up front (&pound;7 per session) - The course price will change weekly to represent the number of weeks remaining in the course Drop in cost: &pound;8.50 (pay on the day). You can only PAYG for a maximum of 1 time before advanced booking r</p>', NULL, 80, '', NULL, NULL, 10, 1, 2, '2020-04-06 03:37:23', '2020-06-19 01:15:07'),
+(26, 'quality-test', '<p>In our Tots sessions we give the players an introduction to tennis through fun games and exercises designed to develop co-ordination and athletic abilityIn our Tots sessions we give the players an introductio</p>', 'Quality Test', 11, '156', '162', 'Intermediate', NULL, '', '12-12-2020', 'mohali', '10:00am', '10-50', '70', '<p>In our Tots sessions we give the players an introduction to tennis through fun games and exercises designed to develop co-ordination and athletic abilityIn our Tots sessions we give the players an introduction to tennis through fun games and exercises designed to develop co-ordination and athletic abilityIn our Tots sessions we give the players an introduction to tennis through fun games and exercises designed to develop co-ordination and athletic ability</p>', NULL, 99, '', '<p>In our Tots sessions we give the players an introduction to tennis through fun games and exercises designed to develop co-ordination and athletic abilityIn our Tots sessions we give the players an introduction to tennis through fun games and exercises designed to develop co-ordination and athletic abilityIn our Tots sessions we give the players an introduction to tennis through fun games and exercises designed to develop co-ordination and athletic ability</p>', NULL, 20, 1, 1, '2020-04-06 06:00:09', '2020-06-30 06:38:42'),
+(33, 'football-course', '<p>dsdfs</p>', 'Football course', 9, '157', '0', 'Beginner', NULL, '', 'esfdff', 'sdfsdf', 'Mon 5-6pm', '3-7', '1', '<p>dfghdhdfhdfh</p>', NULL, 20, '', NULL, 325, 10, 1, NULL, '2020-05-14 18:19:55', '2020-07-28 02:28:56');
 
 -- --------------------------------------------------------
 
@@ -901,27 +1465,70 @@ CREATE TABLE `course_dates` (
 --
 
 INSERT INTO `course_dates` (`id`, `course_id`, `course_date`, `display_course`, `created_at`, `updated_at`) VALUES
-(119, 3, '2020-03-19', '', '2020-03-19 06:29:42', '2020-03-19 06:29:42'),
-(120, 3, '2020-03-11', '1', '2020-03-19 06:29:42', '2020-03-19 06:29:42'),
-(121, 3, '2020-03-17', '1', '2020-03-19 06:29:42', '2020-03-19 06:29:42'),
-(122, 8, '2020-03-13', '1', '2020-03-19 06:31:36', '2020-03-19 06:31:36'),
 (124, 9, '2020-03-27', '1', '2020-03-19 06:36:02', '2020-03-19 06:36:02'),
 (125, 9, '2020-03-27', '1', '2020-03-19 06:36:02', '2020-03-19 06:36:02'),
-(126, 1, '2020-03-19', '1', '2020-03-20 01:25:26', '2020-03-20 01:25:26'),
-(127, 1, '2020-03-28', '1', '2020-03-20 01:25:26', '2020-03-20 01:25:26'),
-(128, 1, '2020-04-02', '1', '2020-03-20 01:25:26', '2020-03-20 01:25:26'),
-(129, 1, '2020-03-02', '1', '2020-03-20 01:25:26', '2020-03-20 01:25:26'),
-(130, 1, '2020-03-13', '1', '2020-03-20 01:25:26', '2020-03-20 01:25:26'),
-(131, 1, '2020-04-09', '1', '2020-03-20 01:25:26', '2020-03-20 01:25:26'),
-(132, 1, '2020-04-16', '1', '2020-03-20 01:25:26', '2020-03-20 01:25:26'),
-(133, 1, '2020-04-23', '1', '2020-03-20 01:25:26', '2020-03-20 01:25:26'),
-(134, 1, '2020-04-30', '1', '2020-03-20 01:25:26', '2020-03-20 01:25:26'),
-(135, 2, '2020-03-14', '1', '2020-03-20 01:25:38', '2020-03-20 01:25:38'),
-(136, 2, '2020-03-28', '', '2020-03-20 01:25:38', '2020-03-20 01:25:38'),
-(137, 7, '2020-03-12', '1', '2020-03-20 01:25:47', '2020-03-20 01:25:47'),
-(138, 7, '2020-03-19', '1', '2020-03-20 01:25:47', '2020-03-20 01:25:47'),
-(139, 7, '2020-03-27', '1', '2020-03-20 01:25:47', '2020-03-20 01:25:47'),
-(140, 7, '2020-03-20', '1', '2020-03-20 01:25:47', '2020-03-20 01:25:47');
+(207, 8, '2020-03-19', '1', '2020-03-23 00:58:35', '2020-03-23 00:58:35'),
+(208, 9, '2020-03-10', '1', '2020-03-23 04:42:03', '2020-03-23 04:42:03'),
+(416, 21, '2019-12-10', '1', '2020-03-31 08:08:28', '2020-03-31 08:08:28'),
+(605, 28, '1020-01-03', '', '2020-06-19 01:14:30', '2020-06-19 01:14:30'),
+(607, 3, '2020-03-19', '', '2020-06-19 01:14:58', '2020-06-19 01:14:58'),
+(608, 3, '2020-03-11', '1', '2020-06-19 01:14:58', '2020-06-19 01:14:58'),
+(609, 3, '2020-03-17', '1', '2020-06-19 01:14:58', '2020-06-19 01:14:58'),
+(610, 32, '2020-05-16', '', '2020-06-19 01:15:29', '2020-06-19 01:15:29'),
+(611, 32, '2020-05-19', '', '2020-06-19 01:15:29', '2020-06-19 01:15:29'),
+(626, 7, '2020-03-12', '1', '2020-06-24 01:01:36', '2020-06-24 01:01:36'),
+(627, 7, '2020-03-19', '1', '2020-06-24 01:01:36', '2020-06-24 01:01:36'),
+(628, 7, '2020-03-27', '1', '2020-06-24 01:01:36', '2020-06-24 01:01:36'),
+(629, 7, '2020-03-20', '1', '2020-06-24 01:01:37', '2020-06-24 01:01:37'),
+(634, 1, '2020-03-18', '', '2020-06-30 06:41:21', '2020-06-30 06:41:21'),
+(657, 26, '2020-04-06', '', '2020-07-09 07:54:20', '2020-07-09 07:54:20'),
+(660, 2, '2020-03-14', '1', '2020-07-17 02:28:43', '2020-07-17 02:28:43'),
+(661, 2, '2020-03-28', '', '2020-07-17 02:28:43', '2020-07-17 02:28:43'),
+(662, 2, '2020-03-10', '1', '2020-07-17 02:28:43', '2020-07-17 02:28:43'),
+(663, 2, '2020-04-18', '1', '2020-07-17 02:28:43', '2020-07-17 02:28:43'),
+(664, 2, '2020-03-25', '1', '2020-07-17 02:28:43', '2020-07-17 02:28:43'),
+(665, 2, '2020-05-08', '1', '2020-07-17 02:28:43', '2020-07-17 02:28:43'),
+(666, 2, '2020-04-25', '1', '2020-07-17 02:28:43', '2020-07-17 02:28:43'),
+(667, 2, '2020-03-20', '1', '2020-07-17 02:28:43', '2020-07-17 02:28:43'),
+(668, 2, '2020-03-13', '1', '2020-07-17 02:28:43', '2020-07-17 02:28:43'),
+(669, 2, '2020-05-24', '1', '2020-07-17 02:28:43', '2020-07-17 02:28:43'),
+(670, 2, '2020-04-18', '1', '2020-07-17 02:28:43', '2020-07-17 02:28:43'),
+(671, 2, '2020-06-26', '1', '2020-07-17 02:28:43', '2020-07-17 02:28:43'),
+(674, 33, '2020-05-14', '', '2020-07-27 06:51:04', '2020-07-27 06:51:04'),
+(675, 33, '2020-06-18', '', '2020-07-27 06:51:04', '2020-07-27 06:51:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `custom_boxes`
+--
+
+CREATE TABLE `custom_boxes` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `position` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `more_text` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sort` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `custom_boxes`
+--
+
+INSERT INTO `custom_boxes` (`id`, `type`, `position`, `title`, `slug`, `description`, `more_text`, `image`, `status`, `sort`, `created_at`, `updated_at`) VALUES
+(1, 'camp-home', '0', 'About Camp Goooo11', 'about-camp-goooo', '<p><strong>About Camp GO!</strong>&nbsp;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.&nbsp;&nbsp;</p>', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>', '1589444488.png', '1', 3, '2020-05-14 02:51:28', '2020-05-19 00:18:02'),
+(2, 'camp-parent-info', '0', 'Ofsted', 'ofsted', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.&nbsp;</p>', '<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>', '1589453001.png', '1', 2, '2020-05-14 05:13:21', '2020-05-18 23:45:21'),
+(3, 'camp-book', '0', 'Book with confidence', 'book-with-confidence', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>', '1589455991.png', '1', 4, '2020-05-14 06:03:11', '2020-05-21 00:02:43'),
+(4, 'tennis-landing-home', '0', 'Hello there!', 'hello-there', '<p>kjfasjfdsajfdl;ajmdf</p>', '<p>dfksdfa;l</p>', '1589478832.jpg', '1', 1, '2020-05-14 12:23:52', '2020-05-26 02:33:07'),
+(5, 'tennis-pro', '0', 'Connect to your tennis coach!', 'tennis-coach', '<p>Search for your tennis coach and connect to then as their pupil. Allow them to view, comment and track your tennis progress along with giving them the vital info and stats they need to help you reach your tennis goals.&nbsp;</p>', '<p>Allow them to view, comment and track your tennis progress along with giving them the vital info and stats they need to help you reach your tennis goals.&nbsp;</p>', '1589950909.png', '1', 5, '2020-05-19 07:47:23', '2020-05-19 23:31:49'),
+(6, 'tennis-landing-club-info', '0', 'This is a tennis custom box', 'this-is-a-tennis-custom-box', '<p>csdsfsdcfsdcsd</p>\r\n\r\n<p>sd</p>\r\n\r\n<p>fsd</p>\r\n\r\n<p>cf</p>\r\n\r\n<p>sdc</p>', '<p>cfs</p>\r\n\r\n<p>sd</p>\r\n\r\n<p>cfsd</p>\r\n\r\n<p>c</p>\r\n\r\n<p>sdc</p>', '1590528011.jpg', '1', 0, '2020-05-26 15:50:11', '2020-05-26 15:50:17');
 
 -- --------------------------------------------------------
 
@@ -1593,28 +2200,14 @@ CREATE TABLE `email_templates` (
 --
 
 INSERT INTO `email_templates` (`id`, `subject`, `title`, `body`, `created_at`, `updated_at`) VALUES
-(1, 'Vendor Submit {business-title} Business', 'Vendor Submit Business', '<p>Please reviews the&nbsp;{business-title} Business.</p>', '2019-12-19 18:30:00', '2019-12-02 04:34:20'),
-(2, '{business-title} Business Approve.', 'Approve Business', '<p>{business-title} Business Approved.</p>', '2019-12-13 18:30:00', '2019-12-02 04:34:46'),
-(3, '{business-title} Business Rejected.', 'Reject Business', '<p>{business-title} Business is rejected from the admin cause of some reason.</p>', NULL, '2019-12-02 04:38:28'),
-(4, 'Order Status', 'User Order Sucessful', '<p>Hello {name},</p>\r\n\r\n<p>Your order is placed Successfully.</p>\r\n\r\n<p>{OrderDetail}</p>', '2019-12-31 02:14:44', '2019-12-31 02:18:47'),
+(4, 'Order Status', 'User Order Sucessful', '<p>Hello {name},</p>\r\n\r\n<p>Your order is placed Successfully22222222222.</p>\r\n\r\n<p>{OrderDetail}</p>', '2019-12-31 02:14:44', '2020-07-22 01:25:53'),
 (5, 'New Order is placed.', 'Order Status For Admin', '<p>Hello Admin,</p>\r\n\r\n<p>The order is placed successfully&nbsp;</p>\r\n\r\n<p>{OrderDetail}</p>\r\n\r\n<p>&nbsp;</p>', '2019-12-31 06:28:39', '2019-12-31 06:55:57'),
 (6, 'You have an order : {orderID}', 'Order Status for Vendor', '<p>Hello {name},</p>\r\n\r\n<p>The order is placed successfully&nbsp;</p>\r\n\r\n<p>{OrderDetail}</p>', '2019-12-31 07:11:00', '2019-12-31 07:12:15'),
-(7, 'Your Account has been approved', 'Vendor Approval', '<p>Hello {name}</p>\r\n\r\n<p>Your Account has been approved</p>', '2020-01-02 08:54:48', '2020-01-02 08:56:04'),
 (8, 'Your Account has been rejected.', 'Reject Approval', '<p>Hello {name}</p>\r\n\r\n<p>Your Account has been rejected due to some reason which is given below:</p>\r\n\r\n<p>{detail}&nbsp;</p>\r\n\r\n<p>Please Correct your detail according to rejection : {link}</p>', '2020-01-02 08:55:01', '2020-01-09 03:15:58'),
-(9, 'We have reference to inviting you at our Website', 'Inviting Vendor', '<p>Hello {name}</p>\r\n\r\n<p>We have reference to inviting you to our Website.&nbsp;<strong>{business}</strong></p>\r\n\r\n<p>Please join&nbsp;our membership&nbsp;to grow up your business.</p>', '2020-01-03 00:45:15', '2020-01-09 02:46:41'),
-(10, 'Resubmit account for approval', 'Vendor Account Resubmit for Approval', '<p>Hello Admin</p>\r\n\r\n<p>{name} has been updated the account information according to your message.</p>\r\n\r\n<p>Please check from : {link}</p>', '2020-01-09 05:12:17', '2020-01-09 05:15:15'),
-(11, 'New Vendor Joining', 'New Vendor', '<p>Hello Admin</p>\r\n\r\n<p>{name} is joined as A vendor account.</p>\r\n\r\n<p>Please check from this link: {link}</p>', '2020-01-09 05:58:03', '2020-01-09 06:00:37'),
 (12, 'Pricing Quote Request', 'Pricing Quote Request', '<p>Hello {name},</p>\r\n\r\n<p>{username} is requested for Pricing Quote:</p>\r\n\r\n<p>{message}</p>', '2020-01-13 01:50:25', '2020-01-13 01:53:16'),
 (13, 'Request For Custom Package', 'Request For Custom Package', '<p>Hello {name}</p>\r\n\r\n<p>You have a request for create custom package by {username} :</p>\r\n\r\n<p>{message}</p>\r\n\r\n<p>&nbsp;</p>', '2020-01-13 01:50:44', '2020-01-13 04:08:04'),
 (14, 'Order Placed', 'Order Placed', '<p>Hello {name}</p>\r\n\r\n<p>Your order have been placed successfully.</p>\r\n\r\n<p>{OrderDetail}</p>', '2020-02-04 02:42:52', '2020-02-04 03:16:37'),
-(15, 'You have an new Order.', 'New Order For Vendor', '<p>Hello {name}</p>\r\n\r\n<p>You have an new Order</p>\r\n\r\n<p>{OrderDetail}</p>', '2020-02-04 05:30:50', '2020-02-04 05:33:02'),
-(16, 'Your Business is blocked', 'Block The Vendor', '<p>Hello {name}</p>\r\n\r\n<p>your business ({businesName}) is blocked.</p>\r\n\r\n<p>Thanks</p>', '2020-02-12 08:39:16', '2020-02-12 08:40:45'),
-(17, 'Inviting', 'Invite User', '<p>Hello {name}</p>\r\n\r\n<p>We have reference to inviting you to our Website.&nbsp;<b>&nbsp;</b></p>\r\n\r\n<p>Please join&nbsp;with us and find vendors.</p>', '2020-02-13 02:26:25', '2020-02-13 02:27:50'),
-(18, 'Your Shop has been rejected.', 'Shop Rejected', '<p>Hello {name},</p>\r\n\r\n<p>Your shop {shopName} is rejected to due some reasons which are given below:</p>\r\n\r\n<p>{reasons}</p>', '2020-02-17 06:35:18', '2020-02-17 06:36:48'),
-(19, 'Product Rejection', 'Product Rejection', '<p>Hello {name},</p>\r\n\r\n<p>The Product has been rejected by Admin due to some reasons:</p>\r\n\r\n<p>Shop Name : {shopName},</p>\r\n\r\n<p>Product Name : {productName)</p>\r\n\r\n<p>Reasons are:</p>\r\n\r\n<p>{reasons}</p>', '2020-02-17 06:37:07', '2020-02-17 06:48:56'),
-(20, 'Your Shop is Approved', 'Shop Approved', '<p>Hello {name}</p>\r\n\r\n<p>Your Shop ({shopName}) is approved now.</p>', '2020-02-17 08:55:52', '2020-02-17 09:13:57'),
-(21, 'Product is Approved', 'Product Approved', '<p>Hello {name},</p>\r\n\r\n<p>The Product has been approved by Admin.</p>\r\n\r\n<p>Shop Name : {shopName},</p>\r\n\r\n<p>Product Name : {productName)</p>', '2020-02-18 02:48:03', '2020-02-18 02:49:16'),
-(22, NULL, 'rr', '', '2020-03-05 05:31:46', '2020-03-05 05:31:46');
+(15, 'You have an new Order.', 'New Order For Vendor', '<p>Hello {name}</p>\r\n\r\n<p>You have an new Order</p>\r\n\r\n<p>{OrderDetail}</p>', '2020-02-04 05:30:50', '2020-02-04 05:33:02');
 
 -- --------------------------------------------------------
 
@@ -1859,6 +2452,48 @@ INSERT INTO `invite_vendors` (`id`, `user_id`, `name`, `category_id`, `business_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `menus`
+--
+
+CREATE TABLE `menus` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `type` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sub_menu` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sort` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `menus`
+--
+
+INSERT INTO `menus` (`id`, `type`, `title`, `url`, `sub_menu`, `sort`, `created_at`, `updated_at`) VALUES
+(2, 'header', 'Shop', 'http://49.249.236.30:8654/dominic-new/shop', NULL, 3, '2020-07-21 01:34:37', '2020-07-22 06:41:31'),
+(3, 'header', 'Our Services', NULL, NULL, 2, '2020-07-21 01:39:25', '2020-07-22 06:41:27'),
+(4, 'header', 'FAQs', NULL, NULL, 4, '2020-07-21 01:40:17', '2020-07-22 06:41:37'),
+(5, 'header', 'Contact Us', 'http://49.249.236.30:8654/dominic-new/contact', NULL, 5, '2020-07-21 01:40:40', '2020-07-22 06:41:42'),
+(6, 'header', 'Tennis Coaching', 'http://49.249.236.30:8654/dominic-new/tennis-landing', '3', 0, '2020-07-21 01:51:07', '2020-07-22 06:43:54'),
+(7, 'header', 'Football Coaching', 'http://49.249.236.30:8654/dominic-new/football-landing', '3', 0, '2020-07-21 01:53:15', '2020-07-22 06:44:02'),
+(8, 'header', 'School Clubs', 'http://49.249.236.30:8654/dominic-new/school-landing', '3', 0, '2020-07-21 01:53:47', '2020-07-22 06:44:12'),
+(9, 'header', 'Holiday Clubs', 'http://49.249.236.30:8654/dominic-new/camp-listing', '3', 0, '2020-07-21 01:54:07', '2020-07-22 06:44:20'),
+(10, 'header', 'DRH Tennis Pro', 'http://49.249.236.30:8654/dominic-new/tennis-pro', '3', 0, '2020-07-21 01:54:26', '2020-07-22 06:44:30'),
+(14, 'header', 'Home', 'http://49.249.236.30:8654/dominic-new', NULL, 1, '2020-07-22 01:26:37', '2020-07-22 06:24:12'),
+(15, 'footer', 'Home', 'http://49.249.236.30:8654/dominic-new', NULL, 1, '2020-07-22 08:28:03', '2020-07-22 08:32:59'),
+(16, 'footer', 'About Us', 'http://49.249.236.30:8654/dominic-new/page/about-us', NULL, 2, '2020-07-22 08:31:55', '2020-07-23 00:22:36'),
+(17, 'footer', 'Shop', 'http://49.249.236.30:8654/dominic-new/shop', NULL, 3, '2020-07-22 08:32:31', '2020-07-23 00:22:38'),
+(18, 'footer', 'Courses', 'http://49.249.236.30:8654/dominic-new/tennis-landing', NULL, 4, '2020-07-22 08:32:56', '2020-07-22 08:33:03'),
+(19, 'footer', 'Camps', 'http://49.249.236.30:8654/dominic-new/camp-listing', NULL, 5, '2020-07-22 08:35:27', '2020-07-23 00:22:44'),
+(20, 'footer', 'FAQs', NULL, NULL, 6, '2020-07-22 08:36:02', '2020-07-23 00:23:08'),
+(21, 'footer', 'Contact Us', 'http://49.249.236.30:8654/dominic-new/contact', NULL, 7, '2020-07-22 08:36:22', '2020-07-23 00:23:09'),
+(24, 'footer', 'Privacy Policy', 'http://49.249.236.30:8654/dominic-new/page/privacy-policy', NULL, 8, '2020-07-23 00:12:17', '2020-07-23 00:23:11'),
+(25, 'footer', 'Term & Condition', 'http://49.249.236.30:8654/dominic-new/page/terms-and-condition', NULL, 9, '2020-07-23 00:13:07', '2020-07-23 00:23:12');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -1932,7 +2567,35 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (59, '2020_03_12_114623_create_courses_table', 54),
 (60, '2020_03_13_014318_create_contact_details_table', 55),
 (61, '2020_03_19_061134_create_course_dates_table', 56),
-(62, '2020_03_19_112749_create_accordians_table', 57);
+(62, '2020_03_19_112749_create_accordians_table', 57),
+(63, '2020_03_24_122754_create_coach_documents_table', 58),
+(64, '2020_03_25_105834_create_camps_table', 59),
+(65, '2020_03_26_044309_create_camp_categories_table', 60),
+(66, '2020_03_26_103224_create_camp_prices_table', 61),
+(67, '2020_03_26_110821_create_camp_prices_table', 62),
+(68, '2020_03_27_024825_create_accordian_pdfs_table', 63),
+(69, '2020_03_28_134034_create_childcare_vouchers_table', 64),
+(70, '2020_03_31_125137_create_sessions_table', 65),
+(71, '2020_04_01_120434_create_children_details_table', 66),
+(72, '2020_04_07_063511_create_child_activities_table', 67),
+(73, '2020_04_13_061222_create_coach_profiles_table', 68),
+(74, '2020_04_24_125156_create_coupons_table', 69),
+(75, '2020_05_06_072345_create_parent_coach_reqs_table', 70),
+(76, '2020_05_14_064709_create_custom_boxes_table', 71),
+(77, '2020_06_01_084254_create_coach_upload_pdfs_table', 72),
+(78, '2020_06_03_045518_create_badges_table', 73),
+(79, '2020_06_05_085719_create_test_categories_table', 74),
+(80, '2020_06_05_113104_create_tests_table', 75),
+(81, '2020_06_20_083235_create_user_badges_table', 76),
+(82, '2020_06_23_055839_create_test_scores_table', 77),
+(83, '2020_07_01_053907_create_vouchures_table', 78),
+(84, '2020_07_06_103547_create_report_questions_table', 79),
+(85, '2020_07_06_105136_create_report_question_options_table', 80),
+(86, '2020_07_07_061948_create_player_reports_table', 81),
+(87, '2020_07_21_062105_create_menus_table', 82),
+(88, '2020_07_22_071628_create_notifications_table', 83),
+(89, '2020_07_27_053720_create_wallets_table', 84),
+(90, '2020_07_27_054227_create_wallet_histories_table', 85);
 
 -- --------------------------------------------------------
 
@@ -2523,6 +3186,31 @@ INSERT INTO `my_check_list_tasks` (`id`, `parent`, `task_id`, `task`, `descripti
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_id` bigint(20) UNSIGNED NOT NULL,
+  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `read_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
+('449265aa-5a07-45e2-8f5d-b330236ba9fd', 'App\\Notifications\\MyFirstNotification', 'App\\User', 1, '{"order_id":101}', NULL, '2020-07-22 02:02:52', '2020-07-22 02:02:52'),
+('624ad3a0-810f-4dc2-8db9-2975d49d1abf', 'App\\Notifications\\MyFirstNotification', 'App\\User', 1, '{"order_id":101}', NULL, '2020-07-22 02:02:48', '2020-07-22 02:02:48');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `orders`
 --
 
@@ -2859,12 +3547,12 @@ INSERT INTO `page_meta_tags` (`id`, `parent`, `key`, `keyValue`, `type`, `title`
 (205, 0, '', 'global-settings', 'global-settings', NULL, '2019-12-06 00:51:29', '2019-12-06 00:51:29'),
 (206, 0, '', 'global-settings', 'global-settings', NULL, '2019-12-06 00:51:41', '2019-12-06 00:51:41'),
 (207, 0, 'stripe_credentials', '', 'stripe_credentials', NULL, '2019-12-10 04:00:44', '2019-12-10 04:00:44'),
-(208, 0, 'stripe_credentials', '{"_token":"sGlNlc7e7fcLPgKBiwNxaBsbuNPSdQls0wSyYwEB","type":"stripe-credentials","key":"stripe_credentials","test_sk":"sk_test_p8VlaYX68wQNoikV5b3eXawB00tVn2yhs2","test_pk":"pk_test_7s4zephLlSBQHOqovi6w0XCK00U4UJ6WlO","test_client_id":"ca_GLAxBauXm8E4habSHJXBNiOWAixurQ2U","live_sk":"sk_test_p8VlaYX68wQNoikV5b3eXawB00tVn2yhs2","live_pk":"pk_test_7s4zephLlSBQHOqovi6w0XCK00U4UJ6WlO","live_client_id":"ca_GLAxBauXm8E4habSHJXBNiOWAixurQ2U"}', 'stripe-credentials', NULL, '2019-12-16 05:25:28', '2020-01-31 05:43:02'),
+(208, 0, 'stripe_credentials', '{"_token":"cQwytKAcci3aJ2x6xp1qoWohUClxw1PbFlYpYjvs","type":"stripe-credentials","key":"stripe_credentials","test_sk":"sk_test_p8VlaYX68wQNoikV5b3eXawB00tVn2yhs2","test_pk":"pk_test_7s4zephLlSBQHOqovi6w0XCK00U4UJ6WlO","test_client_id":"ca_GLAxBauXm8E4habSHJXBNiOWAixurQ2U","live_sk":"sk_test_p8VlaYX68wQNoikV5b3eXawB00tVn2yhs2","live_pk":"pk_test_7s4zephLlSBQHOqovi6w0XCK00U4UJ6WlO","live_client_id":"ca_GLAxBauXm8E4habSHJXBNiOWAixurQ2U"}', 'stripe-credentials', NULL, '2019-12-16 05:25:28', '2020-04-06 04:34:41'),
 (209, 0, 'paypal_credentials', '{"_token":"LP4MzcKahcPBpHgIF1M13hwpPpQkMNLiqPmLUU7q","type":"paypal-credentials","key":"paypal_credentials","sandbox_username":"sdsd","sandbox_password":"sssd","sandbox_clientId":"sdsdsd","sandbox_secret":"sdssd","live_username":"sdssd","live_password":"sds","live_clientId":"sddssd","live_secret":"sdsdsd"}', 'paypal-credentials', NULL, '2019-12-16 06:57:52', '2019-12-16 06:58:10'),
 (210, 0, 'commission_fee_type', '0', 'global-settings', NULL, '2019-12-26 01:51:14', '2019-12-27 04:27:57'),
 (211, 0, 'commission_fee_amount', '3', 'global-settings', NULL, '2019-12-26 01:53:48', '2019-12-27 04:27:57'),
-(212, 0, 'service_fee_type', '0', 'global-settings', NULL, '2019-12-26 01:57:38', '2019-12-27 04:27:57'),
-(213, 0, 'service_fee_amount', '2', 'global-settings', NULL, '2019-12-26 01:57:38', '2019-12-27 04:27:57'),
+(212, 0, 'service_fee_type', '1', 'global-settings', NULL, '2019-12-26 01:57:38', '2020-04-28 23:46:02'),
+(213, 0, 'service_fee_amount', '0', 'global-settings', NULL, '2019-12-26 01:57:38', '2020-05-15 05:12:07'),
 (214, 0, '', 'global-settings', 'global-settings', NULL, '2019-12-26 01:58:28', '2019-12-26 01:58:28'),
 (215, 0, '', 'global-settings', 'global-settings', NULL, '2019-12-26 01:59:07', '2019-12-26 01:59:07'),
 (216, 0, '', 'global-settings', 'global-settings', NULL, '2019-12-26 02:02:44', '2019-12-26 02:02:44'),
@@ -2901,19 +3589,19 @@ INSERT INTO `page_meta_tags` (`id`, `parent`, `key`, `keyValue`, `type`, `title`
 (248, 0, 'slider_tagline1', '1', 'homepage', NULL, '2020-03-11 06:45:27', '2020-03-11 07:10:02'),
 (249, 0, 'slider_video_url1', '', 'homepage', NULL, '2020-03-11 06:45:27', '2020-03-11 06:45:27'),
 (250, 0, 'slider_button_title1', 'Know More', 'homepage', NULL, '2020-03-11 06:45:28', '2020-03-11 07:10:02'),
-(251, 0, 'slider_button_url1', '#', 'homepage', NULL, '2020-03-11 06:45:28', '2020-03-18 04:08:13'),
+(251, 0, 'slider_button_url1', '#', 'homepage', NULL, '2020-03-11 06:45:28', '2020-04-30 02:12:58'),
 (252, 0, 'slider_title2', 'Football Coaching in Milton Kenyes - 2', 'homepage', NULL, '2020-03-11 06:45:28', '2020-03-11 07:10:02'),
 (253, 0, 'slider_tagline2', '1', 'homepage', NULL, '2020-03-11 06:45:28', '2020-03-11 07:10:02'),
 (254, 0, 'slider_video_url2', '', 'homepage', NULL, '2020-03-11 06:45:28', '2020-03-11 06:45:28'),
-(255, 0, 'slider_button_title2', 'In Partnership with MK City Colts FC.', 'homepage', NULL, '2020-03-11 06:45:28', '2020-03-11 07:10:02'),
-(256, 0, 'slider_button_url2', '#', 'homepage', NULL, '2020-03-11 06:45:28', '2020-03-18 04:08:13'),
+(255, 0, 'slider_button_title2', 'In Partnership with MK City Colts FC.', 'homepage', NULL, '2020-03-11 06:45:28', '2020-04-30 02:12:58'),
+(256, 0, 'slider_button_url2', '#', 'homepage', NULL, '2020-03-11 06:45:28', '2020-04-30 02:12:58'),
 (257, 0, 'slider_title3', 'Football Coaching in Milton Kenyes - 3', 'homepage', NULL, '2020-03-11 06:45:28', '2020-03-11 07:10:02'),
 (258, 0, 'slider_tagline3', '3', 'homepage', NULL, '2020-03-11 06:45:28', '2020-03-11 07:10:02'),
 (259, 0, 'slider_video_url3', '', 'homepage', NULL, '2020-03-11 06:45:28', '2020-03-11 06:45:28'),
 (260, 0, 'slider_button_title3', 'In Partnership with MK City Colts FC.', 'homepage', NULL, '2020-03-11 06:45:28', '2020-03-11 07:10:02'),
 (261, 0, 'slider_button_url3', '#', 'homepage', NULL, '2020-03-11 06:45:28', '2020-03-18 04:08:13'),
-(262, 0, 'slider_description1', 'In Partnership with MK City Colts FC.', 'homepage', NULL, '2020-03-11 06:45:50', '2020-03-11 07:10:02'),
-(263, 0, 'slider_description2', 'In Partnership with MK City Colts FC.', 'homepage', NULL, '2020-03-11 06:45:50', '2020-03-11 07:10:02'),
+(262, 0, 'slider_description1', 'In Partnership with MK City Colts FC.', 'homepage', NULL, '2020-03-11 06:45:50', '2020-04-30 02:12:58'),
+(263, 0, 'slider_description2', 'In Partnership with MK City Colts FC.', 'homepage', NULL, '2020-03-11 06:45:50', '2020-04-30 02:12:58'),
 (264, 0, 'slider_description3', 'In Partnership with MK City Colts FC.', 'homepage', NULL, '2020-03-11 06:45:50', '2020-03-11 07:10:02'),
 (265, 0, 'aboutus_image', '1583930402aboutus_image.png', 'homepage', NULL, '2020-03-11 06:52:07', '2020-03-11 07:10:02'),
 (266, 0, 'section1_button_title', 'Read More', 'homepage', NULL, '2020-03-11 06:54:39', '2020-03-11 07:10:02'),
@@ -2939,12 +3627,12 @@ INSERT INTO `page_meta_tags` (`id`, `parent`, `key`, `keyValue`, `type`, `title`
 (302, 0, 'page_title', 'COURSES', 'course-listing', NULL, '2020-03-12 01:41:30', '2020-03-19 06:43:58'),
 (303, 0, 'banner_image', '1583997335banner_image.png', 'course-listing', NULL, '2020-03-12 01:41:30', '2020-03-12 01:45:35'),
 (304, 0, 'heading1', 'FOOTBALL COACHING WITH DRH', 'course-listing', NULL, '2020-03-12 01:41:30', '2020-03-12 01:55:06'),
-(305, 0, 'description1', 'DRH Sports has teamed up with the MK City Colts FC to offer not just fantastic junior football coaching, but to provide a seamless link into teams and competition', 'course-listing', NULL, '2020-03-12 01:41:30', '2020-03-12 01:45:35'),
+(305, 0, 'description1', 'DRH Sports has teamed up with the MK City Colts FC to offer not just fantastic junior football coaching, but to provide a seamless link into teams and competition', 'course-listing', NULL, '2020-03-12 01:41:30', '2020-04-30 02:19:41'),
 (306, 0, 'heading2', 'OUR FOOTBALL COACHES', 'course-listing', NULL, '2020-03-12 01:41:31', '2020-03-12 01:55:06'),
-(307, 0, 'description2', 'At DRH Sports all our football coaches are fully FA qualified, insured, DBS checked and First Aid Trained. Collectively they have a great amount of experience and expertise and they all share a passion for football and coaching. Each and every one of our coaches brings energy and enthusiasm on court - they all love what they do, and we have been told that it shows!', 'course-listing', NULL, '2020-03-12 01:41:31', '2020-03-12 01:45:35'),
+(307, 0, 'description2', 'At DRH Sports all our football coaches are fully FA qualified, insured, DBS checked and First Aid Trained. Collectively they have a great amount of experience and expertise and they all share a passion for football and coaching. Each and every one of our coaches brings energy and enthusiasm on court - they all love what they do, and we have been told that it shows!     \r\nDRH Sports has teamed up with the MK City Colts FC to offer not just fantastic junior football coaching, but to provide a seamless link into teams and competition', 'course-listing', NULL, '2020-03-12 01:41:31', '2020-04-30 02:14:00'),
 (308, 0, 'heading3', 'OUR COURSES & CLASSES EXPLAINED', 'course-listing', NULL, '2020-03-12 01:41:31', '2020-03-12 01:55:06'),
-(309, 0, 'description3', 'We currently only offer a Tadpoles coaching class which is for boys and girls aged 5 and 6 years old. The aim of the class is to create the next under 7s MK City Colts team which will be lead and manged by one of the parents.', 'course-listing', NULL, '2020-03-12 01:41:31', '2020-03-12 01:45:35'),
-(310, 0, 'section4_title', 'Need help with kids camps or our coaching courses?', 'course-listing', NULL, '2020-03-12 01:41:31', '2020-03-12 01:45:35'),
+(309, 0, 'description3', 'We currently only offer a Tadpoles coaching class which is for boys and girls aged 5 and 6 years old. The aim of the class is to create the next under 7s MK City Colts team which will be lead and manged by one of the parents.', 'course-listing', NULL, '2020-03-12 01:41:31', '2020-04-30 02:19:41'),
+(310, 0, 'section4_title', 'Need help with kids camps or our coaching courses??', 'course-listing', NULL, '2020-03-12 01:41:31', '2020-05-14 23:33:36'),
 (311, 0, 'section4_button_title', 'Click Here', 'course-listing', NULL, '2020-03-12 01:41:31', '2020-03-12 01:57:00'),
 (312, 0, 'section4_button_url', '#', 'course-listing', NULL, '2020-03-12 01:41:31', '2020-03-12 01:45:35'),
 (313, 0, '', 'course-listing', 'course-listing', NULL, '2020-03-12 01:45:35', '2020-03-12 01:45:35'),
@@ -3030,7 +3718,7 @@ INSERT INTO `page_meta_tags` (`id`, `parent`, `key`, `keyValue`, `type`, `title`
 (395, 0, '', 'contact-us', 'contact-us', NULL, '2020-03-17 02:04:22', '2020-03-17 02:04:22'),
 (396, 0, '', 'contact-us', 'contact-us', NULL, '2020-03-17 02:05:23', '2020-03-17 02:05:23'),
 (397, 0, 'phone_number', '07929 341226', 'contact-us', NULL, '2020-03-17 02:08:56', '2020-03-17 02:22:29'),
-(398, 0, 'email', 'info@drhsports.co.uk', 'contact-us', NULL, '2020-03-17 02:08:56', '2020-03-17 02:22:29'),
+(398, 0, 'email', 'info@drhsports.co.uk', 'contact-us', NULL, '2020-03-17 02:08:56', '2020-04-06 03:57:31'),
 (399, 0, '', 'contact-us', 'contact-us', NULL, '2020-03-17 02:22:29', '2020-03-17 02:22:29'),
 (400, 0, '', 'contact-us', 'contact-us', NULL, '2020-03-17 02:23:00', '2020-03-17 02:23:00'),
 (401, 0, 'facebook', 'www.facebook.com', 'contact-us', NULL, '2020-03-17 02:45:51', '2020-03-17 03:32:27'),
@@ -3040,9 +3728,9 @@ INSERT INTO `page_meta_tags` (`id`, `parent`, `key`, `keyValue`, `type`, `title`
 (405, 0, '', 'contact-us', 'contact-us', NULL, '2020-03-17 03:32:27', '2020-03-17 03:32:27'),
 (421, 0, 'early_bird_date', '', 'contact-us', NULL, '2020-03-17 08:16:29', '2020-03-17 08:16:29'),
 (422, 0, 'early_bird_time', '', 'contact-us', NULL, '2020-03-17 08:16:29', '2020-03-17 08:16:29'),
-(425, 0, 'early_bird_date', '2020-03-10', 'early-bird', NULL, '2020-03-17 08:19:06', '2020-03-17 08:19:35'),
+(425, 0, 'early_bird_date', '2020-07-31', 'early-bird', NULL, '2020-03-17 08:19:06', '2020-07-03 07:16:34'),
 (426, 0, 'early_bird_time', '02:01', 'early-bird', NULL, '2020-03-17 08:19:06', '2020-03-17 08:19:35'),
-(427, 0, 'tennis_percentage', '10', 'early-bird', NULL, '2020-03-17 08:19:06', '2020-03-17 08:19:23'),
+(427, 0, 'tennis_percentage', '50', 'early-bird', NULL, '2020-03-17 08:19:06', '2020-06-17 17:03:12'),
 (428, 0, 'football_percentage', '20', 'early-bird', NULL, '2020-03-17 08:19:06', '2020-03-17 08:19:23'),
 (429, 0, 'school_percentage', '20', 'early-bird', NULL, '2020-03-17 08:19:06', '2020-03-17 08:19:23'),
 (430, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-17 08:19:22', '2020-03-17 08:19:22'),
@@ -3093,7 +3781,7 @@ INSERT INTO `page_meta_tags` (`id`, `parent`, `key`, `keyValue`, `type`, `title`
 (475, 0, 'school_course_description3', 'We currently only offer a Tadpoles coaching class which is for boys and girls aged 5 and 6 years old. The aim of the class is to create the next under 7s MK City Colts team which will be lead and manged by one of the parents.', 'school-course-listing', NULL, '2020-03-19 07:04:43', '2020-03-20 01:07:37'),
 (476, 0, 'school_course_section4_title', 'Need help with kids camps or our coaching courses?', 'school-course-listing', NULL, '2020-03-19 07:04:43', '2020-03-20 01:07:37'),
 (477, 0, 'school_course_section4_button_title', 'Click Here', 'school-course-listing', NULL, '2020-03-19 07:04:43', '2020-03-20 01:07:37'),
-(478, 0, 'school_course_section4_button_url', '#', 'school-course-listing', NULL, '2020-03-19 07:04:43', '2020-03-20 01:07:37'),
+(478, 0, 'school_course_section4_button_url', '11', 'school-course-listing', NULL, '2020-03-19 07:04:43', '2020-05-14 23:37:51'),
 (479, 0, 'pdf_upload', '', 'school-course-listing', NULL, '2020-03-19 07:04:43', '2020-03-19 07:04:43'),
 (480, 0, 'school_course_pdf_upload', '1584686257school_course_pdf_upload.pdf', 'school-course-listing', NULL, '2020-03-19 07:05:34', '2020-03-20 01:07:37'),
 (481, 0, 'football_course_page_title', '', 'footballl-course-listing', NULL, '2020-03-19 08:01:04', '2020-03-19 08:01:04'),
@@ -3111,7 +3799,685 @@ INSERT INTO `page_meta_tags` (`id`, `parent`, `key`, `keyValue`, `type`, `title`
 (493, 0, '', 'tennis-course-listing', 'tennis-course-listing', NULL, '2020-03-20 00:50:35', '2020-03-20 00:50:35'),
 (494, 0, '', 'school-course-listing', 'school-course-listing', NULL, '2020-03-20 01:07:37', '2020-03-20 01:07:37'),
 (495, 0, 'school_course_school_course_page_title', '', 'school-course-listing', NULL, '2020-03-20 01:07:44', '2020-03-20 01:07:44'),
-(496, 0, 'section4_title', '', 'school-course-listing', NULL, '2020-03-20 01:07:44', '2020-03-20 01:07:44');
+(496, 0, 'section4_title', '', 'school-course-listing', NULL, '2020-03-20 01:07:44', '2020-03-20 01:07:44'),
+(497, 0, 'admin_email', '', 'admin-email', NULL, '2020-03-24 00:07:00', '2020-03-24 00:07:00'),
+(498, 0, 'page_title', '', 'camp Listing', NULL, '2020-03-24 10:02:52', '2020-03-24 10:02:52'),
+(499, 0, 'meta_title', 'Camp Listing', 'camp-listing', NULL, '2020-03-25 00:42:00', '2020-04-29 08:59:58'),
+(500, 0, 'meta_description', 'Platform for website', 'camp-listing', NULL, '2020-03-25 00:42:00', '2020-03-25 04:23:16'),
+(501, 0, 'meta_keyword', 'Camp', 'camp-listing', NULL, '2020-03-25 00:42:00', '2020-03-25 04:23:16'),
+(502, 0, 'page_title', '', 'camp-listing', NULL, '2020-03-25 00:42:00', '2020-03-25 00:42:00'),
+(503, 0, 'banner_image', '', 'camp-listing', NULL, '2020-03-25 00:42:00', '2020-03-25 00:42:00'),
+(504, 0, 'heading1', '', 'camp-listing', NULL, '2020-03-25 00:42:01', '2020-03-25 00:42:01'),
+(505, 0, 'description1', '', 'camp-listing', NULL, '2020-03-25 00:42:01', '2020-03-25 00:42:01'),
+(506, 0, 'heading2', '', 'camp-listing', NULL, '2020-03-25 00:42:01', '2020-03-25 00:42:01'),
+(507, 0, 'description2', '', 'camp-listing', NULL, '2020-03-25 00:42:01', '2020-03-25 00:42:01'),
+(508, 0, 'heading3', '', 'camp-listing', NULL, '2020-03-25 00:42:01', '2020-03-25 00:42:01'),
+(509, 0, 'description3', '', 'camp-listing', NULL, '2020-03-25 00:42:01', '2020-03-25 00:42:01'),
+(510, 0, 'section4_title', '', 'camp-listing', NULL, '2020-03-25 00:42:01', '2020-03-25 00:42:01'),
+(511, 0, 'section4_button_title', '', 'camp-listing', NULL, '2020-03-25 00:42:01', '2020-03-25 00:42:01'),
+(512, 0, 'section4_button_url', '', 'camp-listing', NULL, '2020-03-25 00:42:01', '2020-03-25 00:42:01'),
+(513, 0, 'pdf_upload', '', 'camp-listing', NULL, '2020-03-25 00:42:01', '2020-03-25 00:42:01'),
+(514, 0, 'camp_page_title', 'DRH Sports Holiday Camps', 'camp-listing', NULL, '2020-03-25 01:07:46', '2020-04-29 08:59:58'),
+(515, 0, 'camp_banner_image', '1585129998camp_banner_image.png', 'camp-listing', NULL, '2020-03-25 01:07:46', '2020-03-25 04:23:18'),
+(516, 0, 'camp_heading2', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.', 'camp-listing', NULL, '2020-03-25 01:07:46', '2020-03-25 04:23:17'),
+(517, 0, 'camp_description2', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.\r\n\r\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna .\r\nipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud. ', 'camp-listing', NULL, '2020-03-25 01:07:46', '2020-04-06 04:23:12'),
+(518, 0, 'camp_heading3', 'Lorem ipsum dolor', 'camp-listing', NULL, '2020-03-25 01:07:46', '2020-03-25 04:23:17'),
+(519, 0, 'camp_description3', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.\r\n\r\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.\r\n\r\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna .\r\nipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud. ', 'camp-listing', NULL, '2020-03-25 01:07:46', '2020-04-06 04:23:12'),
+(520, 0, 'camp_heading4', '', 'camp-listing', NULL, '2020-03-25 01:07:46', '2020-03-25 01:07:46'),
+(521, 0, 'camp_description4', '', 'camp-listing', NULL, '2020-03-25 01:07:46', '2020-03-25 01:07:46'),
+(522, 0, 'camp_image4', '1585129998camp_image4.png', 'camp-listing', NULL, '2020-03-25 01:07:46', '2020-03-25 04:23:18'),
+(523, 0, 'camp_image5', '', 'camp-listing', NULL, '2020-03-25 01:07:47', '2020-03-25 01:07:47'),
+(524, 0, 'camp_link_title5', '', 'camp-listing', NULL, '2020-03-25 01:07:47', '2020-03-25 01:07:47'),
+(525, 0, 'camp_link5', '', 'camp-listing', NULL, '2020-03-25 01:07:47', '2020-03-25 01:07:47'),
+(526, 0, 'camp_heading6', 'Download', 'camp-listing', NULL, '2020-03-25 01:07:47', '2020-03-25 09:32:51'),
+(527, 0, 'camp_description6', '', 'camp-listing', NULL, '2020-03-25 01:07:47', '2020-03-25 01:07:47'),
+(528, 0, 'camp_title', 'Need help with kids camps or our coaching courses?', 'camp-listing', NULL, '2020-03-25 01:07:47', '2020-03-25 04:23:18'),
+(529, 0, 'camp_button_title', 'Click Here', 'camp-listing', NULL, '2020-03-25 01:07:47', '2020-03-25 04:23:18'),
+(530, 0, 'camp_button_url', '#', 'camp-listing', NULL, '2020-03-25 01:07:47', '2020-03-25 04:23:18'),
+(531, 0, 'act_heading', 'The Camp GO Pillars 3', 'camp-listing', NULL, '2020-03-25 01:24:26', '2020-04-09 09:08:10'),
+(532, 0, 'act1_image', '1585129998act1_image.png', 'camp-listing', NULL, '2020-03-25 01:24:27', '2020-03-25 04:23:18'),
+(533, 0, 'act2_image', '1585129998act2_image.png', 'camp-listing', NULL, '2020-03-25 01:24:27', '2020-03-25 04:23:18'),
+(534, 0, 'act3_image', '1585129998act3_image.png', 'camp-listing', NULL, '2020-03-25 01:24:27', '2020-03-25 04:23:18'),
+(535, 0, 'act4_image', '1585129998act4_image.png', 'camp-listing', NULL, '2020-03-25 01:24:27', '2020-03-25 04:23:18'),
+(536, 0, 'act5_image', '1585129998act5_image.png', 'camp-listing', NULL, '2020-03-25 01:24:27', '2020-03-25 04:23:18'),
+(537, 0, 'camp_image3', '1585129998camp_image3.png', 'camp-listing', NULL, '2020-03-25 01:52:07', '2020-03-25 04:23:18'),
+(538, 0, 'camp_link_title4', 'Lorem ipsum dolor sit amet.', 'camp-listing', NULL, '2020-03-25 01:52:07', '2020-03-25 04:23:17'),
+(539, 0, 'camp_link4', '#', 'camp-listing', NULL, '2020-03-25 01:52:07', '2020-03-25 04:23:17'),
+(540, 0, 'camp_heading5', 'Useful information and downloads', 'camp-listing', NULL, '2020-03-25 01:52:07', '2020-03-25 04:23:17'),
+(541, 0, 'camp_description5', 'We take our responsibilities for the care of each child at our camps very seriously. This page is designed to provide all necessary and useful information for parents; from the timings of a typical day to our booking terms and conditions.', 'camp-listing', NULL, '2020-03-25 01:52:07', '2020-03-25 04:23:17'),
+(542, 0, 'camp_link1_title6', 'An example coaching programme', 'camp-listing', NULL, '2020-03-25 02:08:37', '2020-03-25 04:23:18'),
+(543, 0, 'camp_link61', '#', 'camp-listing', NULL, '2020-03-25 02:08:37', '2020-03-25 04:23:18'),
+(544, 0, 'camp_link2_title6', 'Extra Time Club Information', 'camp-listing', NULL, '2020-03-25 02:08:37', '2020-03-25 04:23:18'),
+(545, 0, 'camp_link62', '#', 'camp-listing', NULL, '2020-03-25 02:08:37', '2020-03-25 04:23:18'),
+(546, 0, 'camp_heading7', 'Parents information', 'camp-listing', NULL, '2020-03-25 02:08:37', '2020-03-25 04:23:17'),
+(547, 0, 'camp_link1_title7', 'FAQs', 'camp-listing', NULL, '2020-03-25 02:08:37', '2020-03-25 04:23:18'),
+(548, 0, 'camp_link71', '#', 'camp-listing', NULL, '2020-03-25 02:08:37', '2020-03-25 04:23:18'),
+(549, 0, 'camp_link2_title7', 'Child information form', 'camp-listing', NULL, '2020-03-25 02:08:37', '2020-03-25 04:23:18'),
+(550, 0, 'camp_link72', '#', 'camp-listing', NULL, '2020-03-25 02:08:37', '2020-03-25 04:23:18'),
+(551, 0, 'camp_link3_title7', 'Child medical form', 'camp-listing', NULL, '2020-03-25 02:08:37', '2020-03-25 04:23:18'),
+(552, 0, 'camp_link73', '#', 'camp-listing', NULL, '2020-03-25 02:08:37', '2020-03-25 04:23:18'),
+(553, 0, 'camp_link4_title7', 'Parent guide', 'camp-listing', NULL, '2020-03-25 02:08:37', '2020-03-25 04:23:18');
+INSERT INTO `page_meta_tags` (`id`, `parent`, `key`, `keyValue`, `type`, `title`, `created_at`, `updated_at`) VALUES
+(554, 0, 'camp_link74', '#', 'camp-listing', NULL, '2020-03-25 02:08:37', '2020-03-25 04:23:18'),
+(555, 0, 'camp_link5_title7', 'Booking terms and conditions', 'camp-listing', NULL, '2020-03-25 02:08:37', '2020-03-25 04:23:18'),
+(556, 0, 'camp_link75', '#', 'camp-listing', NULL, '2020-03-25 02:08:37', '2020-03-25 04:23:18'),
+(557, 0, 'camp_link6_title7', 'Child Welfare & Safeguarding Policy', 'camp-listing', NULL, '2020-03-25 02:08:37', '2020-03-25 04:23:18'),
+(558, 0, 'camp_link76', '#', 'camp-listing', NULL, '2020-03-25 02:08:38', '2020-03-25 04:23:18'),
+(559, 0, 'act1_title', 'Activity - 1', 'camp-listing', NULL, '2020-03-25 02:28:55', '2020-03-25 04:23:17'),
+(560, 0, 'act2_title', 'Activity - 2', 'camp-listing', NULL, '2020-03-25 02:28:55', '2020-03-25 04:23:17'),
+(561, 0, 'act3_title', 'Activity - 3', 'camp-listing', NULL, '2020-03-25 02:28:55', '2020-03-25 04:23:17'),
+(562, 0, 'act4_title', 'Activity - 4', 'camp-listing', NULL, '2020-03-25 02:28:55', '2020-03-25 04:23:17'),
+(563, 0, 'act5_title', 'Activity - 5', 'camp-listing', NULL, '2020-03-25 02:28:56', '2020-03-25 04:23:17'),
+(564, 0, 'camp_tab_title', 'Camp GO Holiday Camps', 'camp-listing', NULL, '2020-03-25 02:49:02', '2020-03-25 10:07:53'),
+(565, 0, 'camp_tab1_title', 'What is Camp GO?', 'camp-listing', NULL, '2020-03-25 02:49:02', '2020-03-25 10:07:53'),
+(566, 0, 'camp_tab1_image', '1585129998camp_tab1_image.png', 'camp-listing', NULL, '2020-03-25 02:49:02', '2020-03-25 04:23:18'),
+(567, 0, 'camp_tab2_title', 'Lorem ipsum dolor sit amet, consectetur11', 'camp-listing', NULL, '2020-03-25 02:49:02', '2020-05-19 06:35:41'),
+(568, 0, 'camp_tab2_image', '1585309774camp_tab2_image.jpg', 'camp-listing', NULL, '2020-03-25 02:49:02', '2020-03-27 06:19:34'),
+(569, 0, 'camp_tab3_title', 'Lorem ipsum dolor sit amet, consectetur', 'camp-listing', NULL, '2020-03-25 02:49:02', '2020-03-27 05:23:30'),
+(570, 0, 'camp_tab3_image', '1585306410camp_tab3_image.jpg', 'camp-listing', NULL, '2020-03-25 02:49:02', '2020-03-27 05:23:30'),
+(571, 0, 'camp_tab4_title', 'Camp GO Parent info', 'camp-listing', NULL, '2020-03-25 02:49:02', '2020-03-29 23:52:59'),
+(572, 0, 'camp_tab4_image', '1585129998camp_tab4_image.png', 'camp-listing', NULL, '2020-03-25 02:49:02', '2020-03-25 04:23:18'),
+(573, 0, 'camp_tab1_description', '<h4 style="text-align: center;">Hello and welcome to Camp GO! Milton Keynes&#39; most exciting kids camps lead by the best sports coaches&nbsp;</h4>', 'camp-listing', NULL, '2020-03-25 02:58:41', '2020-04-06 04:23:12'),
+(574, 0, 'camp_tab2_description', '<h4>Lorem ipsum dolor.</h4>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>', 'camp-listing', NULL, '2020-03-25 02:58:41', '2020-03-27 06:19:34'),
+(575, 0, 'camp_tab3_description', '<h4>Lorem ipsum dolor.1111111111111111111111</h4>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>', 'camp-listing', NULL, '2020-03-25 02:58:41', '2020-05-19 06:37:54'),
+(576, 0, 'camp_tab4_description', '<h4>Lorem Ipsum Dolor Sit Amet.</h4>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>\r\n\r\n<ul>\r\n	<li>Lorem ipsum dolor sit amet.</li>\r\n	<li>Lorem ipsum dolor sit amet.</li>\r\n	<li>Lorem ipsum dolor sit amet.</li>\r\n	<li>Lorem ipsum dolor sit amet.</li>\r\n	<li>Lorem ipsum dolor sit amet.</li>\r\n	<li>Lorem ipsum dolor sit amet.</li>\r\n</ul>', 'camp-listing', NULL, '2020-03-25 02:58:41', '2020-03-27 05:06:47'),
+(577, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-25 04:23:16', '2020-03-25 04:23:16'),
+(578, 0, '', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat', 'camp-listing', NULL, '2020-03-25 04:23:17', '2020-03-25 04:23:17'),
+(579, 0, '', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat', 'camp-listing', NULL, '2020-03-25 04:23:17', '2020-03-25 04:23:17'),
+(580, 0, '', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat', 'camp-listing', NULL, '2020-03-25 04:23:17', '2020-03-25 04:23:17'),
+(581, 0, '', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat', 'camp-listing', NULL, '2020-03-25 04:23:17', '2020-03-25 04:23:17'),
+(582, 0, '', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat', 'camp-listing', NULL, '2020-03-25 04:23:17', '2020-03-25 04:23:17'),
+(583, 0, 'act1_description', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat', 'camp-listing', NULL, '2020-03-25 04:25:12', '2020-04-06 04:27:05'),
+(584, 0, 'act2_description', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat', 'camp-listing', NULL, '2020-03-25 04:25:12', '2020-04-06 04:27:05'),
+(585, 0, 'act3_description', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat', 'camp-listing', NULL, '2020-03-25 04:25:12', '2020-04-06 04:27:05'),
+(586, 0, 'act4_description', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat', 'camp-listing', NULL, '2020-03-25 04:25:12', '2020-04-06 04:27:05'),
+(587, 0, 'act5_description', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat', 'camp-listing', NULL, '2020-03-25 04:25:12', '2020-04-06 04:27:05'),
+(588, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-25 04:27:09', '2020-03-25 04:27:09'),
+(589, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-25 09:31:25', '2020-03-25 09:31:25'),
+(590, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-25 09:32:51', '2020-03-25 09:32:51'),
+(591, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-25 10:07:53', '2020-03-25 10:07:53'),
+(592, 0, 'check_tennis_percentage', '1', 'early-bird', NULL, '2020-03-26 08:24:05', '2020-05-12 01:07:58'),
+(593, 0, 'check_football_percentage', '1', 'early-bird', NULL, '2020-03-26 08:24:05', '2020-05-12 06:09:23'),
+(594, 0, 'check_school_percentage', '1', 'early-bird', NULL, '2020-03-26 08:24:05', '2020-05-12 06:09:23'),
+(595, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-26 08:28:17', '2020-03-26 08:28:17'),
+(596, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-26 08:32:16', '2020-03-26 08:32:16'),
+(597, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-26 08:33:49', '2020-03-26 08:33:49'),
+(598, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-26 08:33:54', '2020-03-26 08:33:54'),
+(599, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-26 08:36:09', '2020-03-26 08:36:09'),
+(600, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-26 08:36:13', '2020-03-26 08:36:13'),
+(601, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-26 08:38:59', '2020-03-26 08:38:59'),
+(602, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-26 08:42:18', '2020-03-26 08:42:18'),
+(603, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-26 08:46:49', '2020-03-26 08:46:49'),
+(604, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-26 08:46:57', '2020-03-26 08:46:57'),
+(605, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-27 05:06:47', '2020-03-27 05:06:47'),
+(606, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-27 05:23:30', '2020-03-27 05:23:30'),
+(607, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-27 06:14:18', '2020-03-27 06:14:18'),
+(608, 0, '', '1585309458camp_tab1_image1.jpg', 'camp-listing', NULL, '2020-03-27 06:14:18', '2020-03-27 06:14:18'),
+(609, 0, '', '1585309458camp_tab1_image2.png', 'camp-listing', NULL, '2020-03-27 06:14:18', '2020-03-27 06:14:18'),
+(610, 0, '', '1585309458camp_tab1_image3.jpg', 'camp-listing', NULL, '2020-03-27 06:14:18', '2020-03-27 06:14:18'),
+(611, 0, 'camp_tab1_image1', '1585310146camp_tab1_image1.jpg', 'camp-listing', NULL, '2020-03-27 06:14:19', '2020-03-27 06:25:46'),
+(612, 0, 'camp_tab1_image2', '1585310146camp_tab1_image2.jpg', 'camp-listing', NULL, '2020-03-27 06:14:19', '2020-03-27 06:25:46'),
+(613, 0, 'camp_tab1_image3', '1585315958camp_tab1_image3.jpg', 'camp-listing', NULL, '2020-03-27 06:14:19', '2020-03-27 08:02:38'),
+(614, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-27 06:19:34', '2020-03-27 06:19:34'),
+(615, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-27 06:21:18', '2020-03-27 06:21:18'),
+(616, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-27 06:25:46', '2020-03-27 06:25:46'),
+(617, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-27 06:26:28', '2020-03-27 06:26:28'),
+(618, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-27 08:02:38', '2020-03-27 08:02:38'),
+(619, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:21:02', '2020-03-28 02:21:02'),
+(620, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:21:38', '2020-03-28 02:21:38'),
+(621, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:28:55', '2020-03-28 02:28:55'),
+(622, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:30:31', '2020-03-28 02:30:31'),
+(623, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:31:27', '2020-03-28 02:31:27'),
+(624, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:36:12', '2020-03-28 02:36:12'),
+(625, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:38:09', '2020-03-28 02:38:09'),
+(626, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:38:15', '2020-03-28 02:38:15'),
+(627, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:38:19', '2020-03-28 02:38:19'),
+(628, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:38:23', '2020-03-28 02:38:23'),
+(629, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:38:30', '2020-03-28 02:38:30'),
+(630, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:46:10', '2020-03-28 02:46:10'),
+(631, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:46:53', '2020-03-28 02:46:53'),
+(632, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:46:59', '2020-03-28 02:46:59'),
+(633, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:47:06', '2020-03-28 02:47:06'),
+(634, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:48:12', '2020-03-28 02:48:12'),
+(635, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:48:47', '2020-03-28 02:48:47'),
+(636, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:48:54', '2020-03-28 02:48:54'),
+(637, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:49:58', '2020-03-28 02:49:58'),
+(638, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:50:03', '2020-03-28 02:50:03'),
+(639, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:50:07', '2020-03-28 02:50:07'),
+(640, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:50:12', '2020-03-28 02:50:12'),
+(641, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:53:31', '2020-03-28 02:53:31'),
+(642, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:53:39', '2020-03-28 02:53:39'),
+(643, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 02:53:44', '2020-03-28 02:53:44'),
+(644, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 04:33:20', '2020-03-28 04:33:20'),
+(645, 0, '', 'early-bird', 'early-bird', NULL, '2020-03-28 04:33:58', '2020-03-28 04:33:58'),
+(646, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-28 05:29:37', '2020-03-28 05:29:37'),
+(647, 0, 'about_camp_go_des', '<h2>About Camp Goooo!</h2>\r\n\r\n<p><strong>About Camp GO!</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.&nbsp;&nbsp;</p>', 'camp-listing', NULL, '2020-03-28 06:46:09', '2020-04-06 14:34:39'),
+(648, 0, 'why_choose_us_des', '<h2>Why Choose Us</h2>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.&nbsp; &nbsp;</p>', 'camp-listing', NULL, '2020-03-28 06:46:09', '2020-04-06 04:27:04'),
+(649, 0, 'all_about_you_des', '<h2>It&#39;s All About You</h2>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.&nbsp; &nbsp;&nbsp;</p>', 'camp-listing', NULL, '2020-03-28 06:46:09', '2020-04-06 04:27:04'),
+(650, 0, 'coaching_team_des', '<h2>Our Coaching Team</h2>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>\r\n\r\n<p>&nbsp;</p>', 'camp-listing', NULL, '2020-03-28 06:46:09', '2020-04-06 04:27:04'),
+(651, 0, 'book_with_conf', '<h2>Book With Confidence</h2>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>', 'camp-listing', NULL, '2020-03-28 07:31:58', '2020-04-06 01:52:29'),
+(652, 0, 'ofsted_des', '<h2>Ofsted</h2>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>', 'camp-listing', NULL, '2020-03-28 07:47:42', '2020-03-29 23:53:00'),
+(653, 0, 'acc_title1', 'Lorem Ipsum Dolor Sit - 1', 'camp-listing', NULL, '2020-03-29 23:48:20', '2020-03-29 23:52:59'),
+(654, 0, 'acc_desc1', 'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven\'t heard of them accusamus labore sustainable VHS.', 'camp-listing', NULL, '2020-03-29 23:48:20', '2020-03-29 23:52:59'),
+(655, 0, 'acc_title2', 'Lorem Ipsum Dolor Sit - 2', 'camp-listing', NULL, '2020-03-29 23:48:20', '2020-03-29 23:52:59'),
+(656, 0, 'acc_desc2', 'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven\'t heard of them accusamus labore sustainable VHS.', 'camp-listing', NULL, '2020-03-29 23:48:20', '2020-03-29 23:53:00'),
+(657, 0, 'acc_title3', 'Lorem Ipsum Dolor Sit - 3', 'camp-listing', NULL, '2020-03-29 23:48:20', '2020-03-29 23:53:00'),
+(658, 0, 'acc_desc3', 'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven\'t heard of them accusamus labore sustainable VHS.', 'camp-listing', NULL, '2020-03-29 23:48:20', '2020-03-29 23:53:00'),
+(659, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-29 23:52:59', '2020-03-29 23:52:59'),
+(660, 0, 'act_sub_heading', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'camp-listing', NULL, '2020-03-30 00:01:27', '2020-04-06 04:27:04'),
+(661, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-30 00:01:39', '2020-03-30 00:01:39'),
+(662, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-30 00:35:44', '2020-03-30 00:35:44'),
+(663, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-30 05:47:09', '2020-03-30 05:47:09'),
+(664, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-30 05:50:49', '2020-03-30 05:50:49'),
+(665, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-30 05:51:12', '2020-03-30 05:51:12'),
+(666, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-30 05:53:36', '2020-03-30 05:53:36'),
+(667, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-30 05:54:17', '2020-03-30 05:54:17'),
+(668, 0, 'about_camp_go_des_ex', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.', 'camp-listing', NULL, '2020-03-30 07:28:11', '2020-04-06 04:27:04'),
+(669, 0, 'why_choose_us_des_ex', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.', 'camp-listing', NULL, '2020-03-30 07:28:11', '2020-04-06 04:27:04'),
+(670, 0, 'all_about_you_des_ex', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.', 'camp-listing', NULL, '2020-03-30 07:28:11', '2020-04-06 04:27:04'),
+(671, 0, 'coaching_team_des_ex', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.', 'camp-listing', NULL, '2020-03-30 07:28:11', '2020-04-06 04:27:04'),
+(672, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-30 07:30:53', '2020-03-30 07:30:53'),
+(673, 0, 'book_with_conf_ex', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.', 'camp-listing', NULL, '2020-03-30 08:09:12', '2020-03-30 09:09:14'),
+(674, 0, 'ofsted_des_ex', 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.', 'camp-listing', NULL, '2020-03-30 08:09:12', '2020-03-30 08:58:27'),
+(675, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-30 08:58:27', '2020-03-30 08:58:27'),
+(676, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-30 09:09:14', '2020-03-30 09:09:14'),
+(677, 0, 'about_camp_go_img', '1585584239about_camp_go_img.jpg', 'camp-listing', NULL, '2020-03-30 10:28:44', '2020-03-30 10:33:59'),
+(678, 0, 'why_choose_us_img', '1585584239why_choose_us_img.png', 'camp-listing', NULL, '2020-03-30 10:28:44', '2020-03-30 10:33:59'),
+(679, 0, 'all_about_you_img', '1585584239all_about_you_img.png', 'camp-listing', NULL, '2020-03-30 10:28:44', '2020-03-30 10:33:59'),
+(680, 0, 'coaching_team_img', '1585584239coaching_team_img.png', 'camp-listing', NULL, '2020-03-30 10:28:44', '2020-03-30 10:33:59'),
+(681, 0, 'book_with_img', '1585585093book_with_img.png', 'camp-listing', NULL, '2020-03-30 10:28:44', '2020-03-30 10:48:13'),
+(682, 0, 'ofsted_img', '1585585093ofsted_img.png', 'camp-listing', NULL, '2020-03-30 10:28:44', '2020-03-30 10:48:13'),
+(683, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-30 10:33:59', '2020-03-30 10:33:59'),
+(684, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-03-30 10:48:13', '2020-03-30 10:48:13'),
+(685, 0, 'meta_title', 'Book a Camp', 'book-a-camp', NULL, '2020-03-31 06:32:32', '2020-03-31 06:36:39'),
+(686, 0, 'meta_description', 'Camp', 'book-a-camp', NULL, '2020-03-31 06:32:32', '2020-03-31 06:36:39'),
+(687, 0, 'meta_keyword', 'Camp', 'book-a-camp', NULL, '2020-03-31 06:32:32', '2020-03-31 06:36:39'),
+(688, 0, 'book_camp_title', 'Book A Camp', 'book-a-camp', NULL, '2020-03-31 06:32:32', '2020-04-03 02:03:38'),
+(689, 0, 'book_camp_banner_image', '1585656399book_camp_banner_image.png', 'book-a-camp', NULL, '2020-03-31 06:32:32', '2020-03-31 06:36:39'),
+(690, 0, 'book_camp_button_title', 'Click Here', 'book-a-camp', NULL, '2020-03-31 06:32:32', '2020-03-31 06:36:39'),
+(691, 0, 'book_camp_button_url', '#', 'book-a-camp', NULL, '2020-03-31 06:32:32', '2020-03-31 06:36:39'),
+(692, 0, '', 'book-a-camp', 'book-a-camp', NULL, '2020-03-31 06:36:39', '2020-03-31 06:36:39'),
+(693, 0, 'meta_title', 'Camp Detail', 'camp-detail', NULL, '2020-04-03 00:05:52', '2020-04-03 00:21:24'),
+(694, 0, 'meta_description', 'Platform for website', 'camp-detail', NULL, '2020-04-03 00:05:52', '2020-04-03 00:21:24'),
+(695, 0, 'meta_keyword', 'Camp Detail', 'camp-detail', NULL, '2020-04-03 00:05:52', '2020-04-03 00:21:24'),
+(696, 0, 'camp_detail_logo', '1585893084camp_detail_logo.png', 'camp-detail', NULL, '2020-04-03 00:05:52', '2020-04-03 00:21:24'),
+(697, 0, 'camp_detail_title', 'Need help with kids camps or our coaching courses?', 'camp-detail', NULL, '2020-04-03 00:05:52', '2020-04-03 00:21:24'),
+(698, 0, 'camp_detail_banner_image', '1585893084camp_detail_banner_image.png', 'camp-detail', NULL, '2020-04-03 00:05:52', '2020-04-03 00:21:24'),
+(699, 0, 'camp_detail_button_title', 'Click Here', 'camp-detail', NULL, '2020-04-03 00:05:52', '2020-04-03 00:21:24'),
+(700, 0, 'camp_detail_button_url', '#', 'camp-detail', NULL, '2020-04-03 00:05:52', '2020-04-03 00:21:24'),
+(701, 0, '', 'camp-detail', 'camp-detail', NULL, '2020-04-03 00:21:24', '2020-04-03 00:21:24'),
+(702, 0, 'camp_page_logo', '', 'camp-listing', NULL, '2020-04-03 01:36:14', '2020-04-03 01:36:14'),
+(703, 0, 'camp_go_logo', '1586790298camp_go_logo.png', 'camp-listing', NULL, '2020-04-03 01:37:43', '2020-04-13 09:34:58'),
+(704, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-03 01:38:23', '2020-04-03 01:38:23'),
+(705, 0, '', 'book-a-camp', 'book-a-camp', NULL, '2020-04-03 01:54:59', '2020-04-03 01:54:59'),
+(706, 0, 'book_camp_box_title', 'Need help with kids camps or our coaching courses?', 'book-a-camp', NULL, '2020-04-03 02:03:18', '2020-04-03 02:03:38'),
+(707, 0, '', 'book-a-camp', 'book-a-camp', NULL, '2020-04-03 02:03:38', '2020-04-03 02:03:38'),
+(708, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-03 07:30:09', '2020-04-03 07:30:09'),
+(709, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-03 07:31:36', '2020-04-03 07:31:36'),
+(710, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-03 07:31:46', '2020-04-03 07:31:46'),
+(711, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-06 01:37:52', '2020-04-06 01:37:52'),
+(712, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-06 01:52:29', '2020-04-06 01:52:29'),
+(713, 0, '', 'contact-us', 'contact-us', NULL, '2020-04-06 03:51:35', '2020-04-06 03:51:35'),
+(714, 0, '', 'contact-us', 'contact-us', NULL, '2020-04-06 03:52:23', '2020-04-06 03:52:23'),
+(715, 0, '', 'contact-us', 'contact-us', NULL, '2020-04-06 03:57:31', '2020-04-06 03:57:31'),
+(716, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-06 04:20:16', '2020-04-06 04:20:16'),
+(717, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-06 04:23:11', '2020-04-06 04:23:11'),
+(718, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-06 04:27:04', '2020-04-06 04:27:04'),
+(719, 0, '', 'early-bird', 'early-bird', NULL, '2020-04-06 06:27:55', '2020-04-06 06:27:55'),
+(720, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-06 14:34:39', '2020-04-06 14:34:39'),
+(721, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-06 14:37:54', '2020-04-06 14:37:54'),
+(722, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-06 16:47:35', '2020-04-06 16:47:35'),
+(723, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-09 09:08:10', '2020-04-09 09:08:10'),
+(724, 0, 'book_camp_box_desc', '<h4>USEFULL INFORMATION</h4>\r\n\r\n<p>We take our responsibilities for the care of each child at our camps very seriously. This page is designed to provide all necessary and useful information for parents; from the timings of a typical day to our booking terms and conditions.</p>', 'book-a-camp', NULL, '2020-04-11 04:08:07', '2020-04-11 04:18:27'),
+(725, 0, '', 'book-a-camp', 'book-a-camp', NULL, '2020-04-11 04:08:34', '2020-04-11 04:08:34'),
+(726, 0, '', 'book-a-camp', 'book-a-camp', NULL, '2020-04-11 04:18:27', '2020-04-11 04:18:27'),
+(727, 0, 'camp_go_title', '<h2><span style="font-size:72px;"><strong>Holiday Camps</strong></span></h2>\r\n\r\n<p><span style="font-family:Comic Sans MS,cursive;"><em>For kids who love to have fun!</em></span></p>', 'camp-listing', NULL, '2020-04-13 09:06:59', '2020-04-13 09:34:58'),
+(728, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-13 09:11:56', '2020-04-13 09:11:56'),
+(729, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-13 09:14:55', '2020-04-13 09:14:55'),
+(730, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-13 09:15:41', '2020-04-13 09:15:41'),
+(731, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-13 09:29:15', '2020-04-13 09:29:15'),
+(732, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-13 09:29:51', '2020-04-13 09:29:51'),
+(733, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-13 09:30:32', '2020-04-13 09:30:32'),
+(734, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-13 09:31:39', '2020-04-13 09:31:39'),
+(735, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-13 09:34:58', '2020-04-13 09:34:58'),
+(736, 0, 'form_head_content', '<p>In information you enter in the sections below will be shown on your on your profile. This will be visible to those who may wish to link too you as a player.</p>', 'my-family', NULL, '2020-04-16 07:29:39', '2020-04-16 07:33:16'),
+(737, 0, 'form_footer_content', '<p>In order for your profile to be approved, ensure that your picture is high resolution and clearly shows your head and shoulders. It&#39;s important that you look like a sports coach so sports/coaching attire is essential. At least a valid DBS is also required before your profile will be approved.</p>', 'my-family', NULL, '2020-04-16 07:29:39', '2020-04-16 07:30:38'),
+(738, 0, '', 'my-family', 'my-family', NULL, '2020-04-16 07:30:38', '2020-04-16 07:30:38'),
+(739, 0, '', 'my-family', 'my-family', NULL, '2020-04-16 07:33:16', '2020-04-16 07:33:16'),
+(740, 0, 'form_head_content', '<p>In information you enter in the sections below will be shown on your on your profile. This will be visible to those who may wish to link too you as a player.</p>', 'my-profile', NULL, '2020-04-16 07:36:30', '2020-04-16 07:36:53'),
+(741, 0, 'form_footer_content', '<p>In order for your profile to be approved, ensure that your picture is high resolution and clearly shows your head and shoulders. It&#39;s important that you look like a sports coach so sports/coaching attire is essential. At least a valid DBS is also required before your profile will be approved.</p>', 'my-profile', NULL, '2020-04-16 07:36:30', '2020-04-16 07:37:35'),
+(742, 0, '', 'my-profile', 'my-profile', NULL, '2020-04-16 07:36:53', '2020-04-16 07:36:53'),
+(743, 0, '', 'my-profile', 'my-profile', NULL, '2020-04-16 07:37:20', '2020-04-16 07:37:20'),
+(744, 0, '', 'my-profile', 'my-profile', NULL, '2020-04-16 07:37:35', '2020-04-16 07:37:35'),
+(745, 0, '', 'global-settings', 'global-settings', NULL, '2020-04-28 23:44:34', '2020-04-28 23:44:34'),
+(746, 0, '', 'global-settings', 'global-settings', NULL, '2020-04-28 23:45:07', '2020-04-28 23:45:07'),
+(747, 0, '', 'global-settings', 'global-settings', NULL, '2020-04-28 23:45:30', '2020-04-28 23:45:30'),
+(748, 0, '', 'global-settings', 'global-settings', NULL, '2020-04-28 23:46:01', '2020-04-28 23:46:01'),
+(749, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-29 08:59:22', '2020-04-29 08:59:22'),
+(750, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-04-29 08:59:58', '2020-04-29 08:59:58'),
+(751, 0, '', 'course-listing', 'course-listing', NULL, '2020-04-30 02:14:00', '2020-04-30 02:14:00'),
+(752, 0, '', 'course-listing', 'course-listing', NULL, '2020-04-30 02:19:41', '2020-04-30 02:19:41'),
+(753, 0, '', 'early-bird', 'early-bird', NULL, '2020-05-11 05:00:46', '2020-05-11 05:00:46'),
+(760, 0, 'early_bird_enable', '', 'early-bird', NULL, '2020-05-12 00:47:46', '2020-05-12 00:47:46'),
+(761, 0, 'check_early_bird', '1', 'early-bird', NULL, '2020-05-12 00:47:46', '2020-05-12 01:01:37'),
+(762, 0, '', 'early-bird', 'early-bird', NULL, '2020-05-12 00:47:55', '2020-05-12 00:47:55'),
+(763, 0, '', 'early-bird', 'early-bird', NULL, '2020-05-12 00:48:28', '2020-05-12 00:48:28'),
+(764, 0, '', 'early-bird', 'early-bird', NULL, '2020-05-12 00:59:01', '2020-05-12 00:59:01'),
+(765, 0, '', 'early-bird', 'early-bird', NULL, '2020-05-12 00:59:12', '2020-05-12 00:59:12'),
+(766, 0, '', 'early-bird', 'early-bird', NULL, '2020-05-12 01:01:26', '2020-05-12 01:01:26'),
+(767, 0, '', 'early-bird', 'early-bird', NULL, '2020-05-12 01:01:37', '2020-05-12 01:01:37'),
+(768, 0, '', 'early-bird', 'early-bird', NULL, '2020-05-12 01:07:58', '2020-05-12 01:07:58'),
+(769, 0, '', 'early-bird', 'early-bird', NULL, '2020-05-12 06:09:23', '2020-05-12 06:09:23'),
+(770, 0, '', 'early-bird', 'early-bird', NULL, '2020-05-12 06:09:51', '2020-05-12 06:09:51'),
+(771, 0, 'meta_title', 'Tennis Coaching', 'tennis-landing', NULL, '2020-05-14 07:31:28', '2020-05-27 03:25:32'),
+(772, 0, 'meta_description', 'Tennis Coaching', 'tennis-landing', NULL, '2020-05-14 07:31:28', '2020-05-27 03:25:32'),
+(773, 0, 'meta_keyword', 'Tennis Coaching', 'tennis-landing', NULL, '2020-05-14 07:31:28', '2020-05-27 03:25:32'),
+(774, 0, 'ten_lan_camp_go_logo', '1590569733ten_lan_camp_go_logo.png', 'tennis-landing', NULL, '2020-05-14 07:31:28', '2020-05-27 03:25:33'),
+(775, 0, 'ten_lan_camp_go_title', '<h2><span style="font-size:72px;"><strong>Tennis Coaching</strong></span></h2>\r\n\r\n<p><span style="font-family:Comic Sans MS,cursive;"><em>For kids who love to have fun!</em></span></p>', 'tennis-landing', NULL, '2020-05-14 07:31:28', '2020-05-27 03:25:32'),
+(776, 0, 'ten_lan_camp_page_title', 'Tennis Coaching', 'tennis-landing', NULL, '2020-05-14 07:31:28', '2020-05-27 03:25:32'),
+(777, 0, 'ten_lan_camp_banner_image', '1589956361ten_lan_camp_banner_image.png', 'tennis-landing', NULL, '2020-05-14 07:31:28', '2020-05-20 01:02:41'),
+(778, 0, 'ten_lan_camp_tab_title', '', 'tennis-landing', NULL, '2020-05-14 07:31:28', '2020-05-20 06:28:05'),
+(779, 0, 'ten_lan_camp_tab1_image1', '1590570386ten_lan_camp_tab1_image1.jpg', 'tennis-landing', NULL, '2020-05-14 07:31:28', '2020-05-27 03:36:26'),
+(780, 0, 'ten_lan_camp_tab1_image2', '1590570386ten_lan_camp_tab1_image2.jpg', 'tennis-landing', NULL, '2020-05-14 07:31:28', '2020-05-27 03:36:26'),
+(781, 0, 'ten_lan_camp_tab1_image3', '1590570386ten_lan_camp_tab1_image3.jpg', 'tennis-landing', NULL, '2020-05-14 07:31:28', '2020-05-27 03:36:26'),
+(782, 0, 'ten_lan_camp_tab1_description', '<h4>Lorem ipsum dolor sit amet, consectetur</h4>', 'tennis-landing', NULL, '2020-05-14 07:31:28', '2020-05-27 03:36:26'),
+(783, 0, 'ten_lan_about_camp_go_des', '', 'tennis-landing', NULL, '2020-05-14 07:31:28', '2020-05-14 07:31:28'),
+(784, 0, 'ten_lan_about_camp_go_des_ex', '', 'tennis-landing', NULL, '2020-05-14 07:31:28', '2020-05-14 07:31:28'),
+(785, 0, 'ten_lan_about_camp_go_img', '', 'tennis-landing', NULL, '2020-05-14 07:31:28', '2020-05-14 07:31:28'),
+(786, 0, 'ten_lan_why_choose_us_des', '', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-14 07:31:29'),
+(787, 0, 'ten_lan_why_choose_us_des_ex', '', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-14 07:31:29'),
+(788, 0, 'ten_lan_why_choose_us_img', '', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-14 07:31:29'),
+(789, 0, 'ten_lan_all_about_you_des', '', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-14 07:31:29'),
+(790, 0, 'ten_lan_all_about_you_des_ex', '', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-14 07:31:29'),
+(791, 0, 'ten_lan_all_about_you_img', '', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-14 07:31:29'),
+(792, 0, 'ten_lan_coaching_team_des', '', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-14 07:31:29'),
+(793, 0, 'ten_lan_coaching_team_des_ex', '', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-14 07:31:29'),
+(794, 0, 'ten_lan_coaching_team_img', '', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-14 07:31:29'),
+(795, 0, 'ten_lan_camp_tab2_title', '', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-14 07:31:29'),
+(796, 0, 'ten_lan_camp_tab2_image', '1589956361ten_lan_camp_tab2_image.jpg', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-20 01:02:41'),
+(797, 0, 'ten_lan_camp_tab2_description', '<h4>Lorem ipsum dolor sit amet, consectetur</h4>', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-20 01:02:40'),
+(798, 0, 'ten_lan_camp_tab3_image', '1589956361ten_lan_camp_tab3_image.jpg', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-20 01:02:41'),
+(799, 0, 'ten_lan_camp_tab3_description', '<p>Lorem ipsum dolor sit amet, consectetur Lorem ipsum dolor sit amet, consectetur Lorem ipsum dolor sit amet, consectetur Lorem ipsum dolor sit amet, consectetur Lorem ipsum dolor sit amet, consectetur Lorem ipsum dolor sit amet, consectetur Lorem ipsum dolor sit amet, consectetur Lorem ipsum dolor sit amet, consectetur</p>', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-26 04:13:25'),
+(800, 0, 'ten_lan_book_with_conf', '', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-14 07:31:29'),
+(801, 0, 'ten_lan_book_with_conf_ex', '', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-14 07:31:29'),
+(802, 0, 'ten_lan_book_with_img', '', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-14 07:31:29'),
+(803, 0, 'ten_lan_camp_tab4_title', 'Camp GO Parent info', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-27 03:25:32'),
+(804, 0, 'ten_lan_ofsted_des', '', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-14 07:31:29'),
+(805, 0, 'ten_lan_ofsted_des_ex', '', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-14 07:31:29'),
+(806, 0, 'ten_lan_ofsted_img', '', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-14 07:31:29'),
+(807, 0, 'ten_lan_act_heading', 'The Camp GO Pillars', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-27 03:25:32'),
+(808, 0, 'ten_lan_act_sub_heading', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. e hae hea thae hae', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-27 03:19:12'),
+(809, 0, 'ten_lan_act1_image', '1589956362ten_lan_act1_image.png', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-20 01:02:42'),
+(810, 0, 'ten_lan_act1_title', 'Activity - 1', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-27 03:36:26'),
+(811, 0, 'ten_lan_act1_description', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat srhae reah eah ea rae&nbsp;</p>\r\n\r\n<p>&nbsp;</p>', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-27 03:36:26'),
+(812, 0, 'ten_lan_act2_image', '1589956362ten_lan_act2_image.png', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-20 01:02:42'),
+(813, 0, 'ten_lan_act2_title', 'Activity - 2', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-27 03:36:26'),
+(814, 0, 'ten_lan_act2_description', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat dsharhyear yea aey ea yeay eay reay</p>\r\n\r\n<p>&nbsp;</p>', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-27 03:36:26'),
+(815, 0, 'ten_lan_act3_image', '1589975885ten_lan_act3_image.png', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-20 06:28:05'),
+(816, 0, 'ten_lan_act3_title', 'Activity - 3', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-27 03:37:35'),
+(817, 0, 'ten_lan_act3_description', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>\r\n\r\n<p>&nbsp;</p>', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-27 03:37:35'),
+(818, 0, 'ten_lan_act4_image', '1589975885ten_lan_act4_image.png', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-20 06:28:05'),
+(819, 0, 'ten_lan_act4_title', 'Activity - 4', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-27 03:37:36'),
+(820, 0, 'ten_lan_act4_description', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>\r\n\r\n<p>&nbsp;</p>', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-27 03:37:36'),
+(821, 0, 'ten_lan_act5_image', '1589956362ten_lan_act5_image.png', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-20 01:02:42'),
+(822, 0, 'ten_lan_act5_title', 'Activity - 5', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-27 03:37:36'),
+(823, 0, 'ten_lan_act5_description', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>\r\n\r\n<p>&nbsp;</p>', 'tennis-landing', NULL, '2020-05-14 07:31:29', '2020-05-27 03:37:36'),
+(824, 0, 'ten_lan_camp_heading2', 'Useful information and downloads', 'tennis-landing', NULL, '2020-05-14 07:31:30', '2020-05-27 03:46:14'),
+(825, 0, 'ten_lan_camp_description2', 'We take our responsibilities for the care of each child at our camps very seriously. This page is designed to provide all necessary and useful information for parents; from the timings of a typical day to our booking terms and conditions.', 'tennis-landing', NULL, '2020-05-14 07:31:30', '2020-05-27 03:46:14'),
+(826, 0, 'ten_lan_camp_heading3', '', 'tennis-landing', NULL, '2020-05-14 07:31:30', '2020-05-20 01:02:41'),
+(827, 0, 'ten_lan_camp_description3', '', 'tennis-landing', NULL, '2020-05-14 07:31:30', '2020-05-20 01:02:41'),
+(828, 0, 'ten_lan_camp_image3', '', 'tennis-landing', NULL, '2020-05-14 07:31:30', '2020-05-14 07:31:30'),
+(829, 0, 'ten_lan_camp_image4', '', 'tennis-landing', NULL, '2020-05-14 07:31:30', '2020-05-14 07:31:30'),
+(830, 0, 'ten_lan_camp_link_title4', '', 'tennis-landing', NULL, '2020-05-14 07:31:30', '2020-05-20 01:02:41'),
+(831, 0, 'ten_lan_camp_link4', '', 'tennis-landing', NULL, '2020-05-14 07:31:30', '2020-05-20 01:02:41'),
+(832, 0, 'ten_lan_camp_heading5', 'Useful information and downloads', 'tennis-landing', NULL, '2020-05-14 07:31:30', '2020-05-20 01:02:41'),
+(833, 0, 'ten_lan_camp_description5', 'We take our responsibilities for the care of each child at our camps very seriously. This page is designed to provide all necessary and useful information for parents; from the timings of a typical day to our booking terms and conditions.', 'tennis-landing', NULL, '2020-05-14 07:31:30', '2020-05-20 01:02:41'),
+(834, 0, 'ten_lan_camp_title', 'Need help with kids camps or our coaching courses?', 'tennis-landing', NULL, '2020-05-14 07:31:30', '2020-05-27 03:43:11'),
+(835, 0, 'ten_lan_camp_button_title', 'Click Here', 'tennis-landing', NULL, '2020-05-14 07:31:30', '2020-05-27 03:43:11'),
+(836, 0, 'ten_lan_camp_button_url', '#', 'tennis-landing', NULL, '2020-05-14 07:31:30', '2020-05-27 03:43:11'),
+(837, 0, 'meta_title', 'School Coaching', 'school-landing', NULL, '2020-05-14 08:05:37', '2020-05-27 03:58:02'),
+(838, 0, 'meta_description', 'School Coaching', 'school-landing', NULL, '2020-05-14 08:05:37', '2020-05-27 03:58:03'),
+(839, 0, 'meta_keyword', 'School Coaching', 'school-landing', NULL, '2020-05-14 08:05:37', '2020-05-27 03:58:02'),
+(840, 0, 'sch_lan_camp_go_logo', '1590571683sch_lan_camp_go_logo.png', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-27 03:58:03'),
+(841, 0, 'sch_lan_camp_go_title', '<h2><span style="font-size:72px;"><strong>School Coaching</strong></span></h2>\r\n\r\n<p><span style="font-family:Comic Sans MS,cursive;"><em>For kids who love to have fun!</em></span></p>', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-27 03:58:03'),
+(842, 0, 'sch_lan_camp_page_title', 'School Coaching', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-27 03:59:09'),
+(843, 0, 'sch_lan_camp_banner_image', '1589984392sch_lan_camp_banner_image.png', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-20 08:49:52'),
+(844, 0, 'sch_lan_camp_tab_title', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-20 08:49:51'),
+(845, 0, 'sch_lan_camp_tab1_image1', '1589984392sch_lan_camp_tab1_image1.jpg', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-20 08:49:52'),
+(846, 0, 'sch_lan_camp_tab1_image2', '1589984392sch_lan_camp_tab1_image2.jpg', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-20 08:49:52'),
+(847, 0, 'sch_lan_camp_tab1_image3', '1589984392sch_lan_camp_tab1_image3.jpg', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-20 08:49:52'),
+(848, 0, 'sch_lan_camp_tab1_description', '<p>Lorem ipsum dolor sit amet, consectetur</p>', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-20 08:49:51'),
+(849, 0, 'sch_lan_about_camp_go_des', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-14 08:05:38'),
+(850, 0, 'sch_lan_about_camp_go_des_ex', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-14 08:05:38'),
+(851, 0, 'sch_lan_about_camp_go_img', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-14 08:05:38'),
+(852, 0, 'sch_lan_why_choose_us_des', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-14 08:05:38'),
+(853, 0, 'sch_lan_why_choose_us_des_ex', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-14 08:05:38'),
+(854, 0, 'sch_lan_why_choose_us_img', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-14 08:05:38'),
+(855, 0, 'sch_lan_all_about_you_des', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-14 08:05:38'),
+(856, 0, 'sch_lan_all_about_you_des_ex', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-14 08:05:38');
+INSERT INTO `page_meta_tags` (`id`, `parent`, `key`, `keyValue`, `type`, `title`, `created_at`, `updated_at`) VALUES
+(857, 0, 'sch_lan_all_about_you_img', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-14 08:05:38'),
+(858, 0, 'sch_lan_coaching_team_des', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-14 08:05:38'),
+(859, 0, 'sch_lan_coaching_team_des_ex', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-14 08:05:38'),
+(860, 0, 'sch_lan_coaching_team_img', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-14 08:05:38'),
+(861, 0, 'sch_lan_camp_tab2_title', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-20 08:49:51'),
+(862, 0, 'sch_lan_camp_tab2_image', '1589984392sch_lan_camp_tab2_image.jpg', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-20 08:49:52'),
+(863, 0, 'sch_lan_camp_tab2_description', '<p>Lorem ipsum dolor sit amet, consectetur</p>', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-20 08:49:51'),
+(864, 0, 'sch_lan_camp_tab3_image', '1589984392sch_lan_camp_tab3_image.jpg', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-20 08:49:52'),
+(865, 0, 'sch_lan_camp_tab3_description', '<p>Lorem ipsum dolor sit amet, consectetur BJBFGSDJ GEKJRKJERHKJEHGKJERHGKE</p>', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-27 03:55:21'),
+(866, 0, 'sch_lan_book_with_conf', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-14 08:05:38'),
+(867, 0, 'sch_lan_book_with_conf_ex', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-14 08:05:38'),
+(868, 0, 'sch_lan_book_with_img', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-14 08:05:38'),
+(869, 0, 'sch_lan_camp_tab4_title', 'Camp GO Parent info', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-20 08:49:51'),
+(870, 0, 'sch_lan_ofsted_des', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-14 08:05:38'),
+(871, 0, 'sch_lan_ofsted_des_ex', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-14 08:05:38'),
+(872, 0, 'sch_lan_ofsted_img', '', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-14 08:05:38'),
+(873, 0, 'sch_lan_act_heading', 'The Camp GO Pillars', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-27 03:58:03'),
+(874, 0, 'sch_lan_act_sub_heading', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-27 03:58:03'),
+(875, 0, 'sch_lan_act1_image', '1589984392sch_lan_act1_image.png', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-20 08:49:52'),
+(876, 0, 'sch_lan_act1_title', 'Activity - 1 The Camp GO Pilla', 'school-landing', NULL, '2020-05-14 08:05:38', '2020-05-27 03:50:39'),
+(877, 0, 'sch_lan_act1_description', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>\r\n\r\n<p>&nbsp;</p>', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-27 03:58:03'),
+(878, 0, 'sch_lan_act2_image', '1589984393sch_lan_act2_image.png', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-20 08:49:53'),
+(879, 0, 'sch_lan_act2_title', 'Activity - 2 22', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-27 03:50:39'),
+(880, 0, 'sch_lan_act2_description', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>\r\n\r\n<p>&nbsp;</p>', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-27 03:58:03'),
+(881, 0, 'sch_lan_act3_image', '1589984393sch_lan_act3_image.png', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-20 08:49:53'),
+(882, 0, 'sch_lan_act3_title', 'Activity - 3 333', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-27 03:50:39'),
+(883, 0, 'sch_lan_act3_description', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>\r\n\r\n<p>&nbsp;</p>', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-27 03:58:03'),
+(884, 0, 'sch_lan_act4_image', '1589984393sch_lan_act4_image.png', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-20 08:49:53'),
+(885, 0, 'sch_lan_act4_title', 'Activity - 4', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-27 03:58:03'),
+(886, 0, 'sch_lan_act4_description', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>\r\n\r\n<p>&nbsp;</p>', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-27 03:58:03'),
+(887, 0, 'sch_lan_act5_image', '1589984393sch_lan_act5_image.png', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-20 08:49:53'),
+(888, 0, 'sch_lan_act5_title', 'Activity - 5', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-27 03:58:03'),
+(889, 0, 'sch_lan_act5_description', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>\r\n\r\n<p>&nbsp;</p>', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-27 03:58:03'),
+(890, 0, 'sch_lan_camp_heading2', 'Useful information and downloads sk k kdk d', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-27 03:50:40'),
+(891, 0, 'sch_lan_camp_description2', 'We take our responsibilities for the care of each child at our camps very seriously. This page is designed to provide all necessary and useful information for parents; from the timings of a typical day to our booking terms and conditions.', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-27 03:58:03'),
+(892, 0, 'sch_lan_camp_heading3', '', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-20 08:49:52'),
+(893, 0, 'sch_lan_camp_description3', '', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-20 08:49:52'),
+(894, 0, 'sch_lan_camp_image3', '', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-14 08:05:39'),
+(895, 0, 'sch_lan_camp_image4', '', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-14 08:05:39'),
+(896, 0, 'sch_lan_camp_link_title4', '', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-20 08:49:52'),
+(897, 0, 'sch_lan_camp_link4', '', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-20 08:49:52'),
+(898, 0, 'sch_lan_camp_heading5', '', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-20 08:49:52'),
+(899, 0, 'sch_lan_camp_description5', '', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-20 08:49:52'),
+(900, 0, 'sch_lan_camp_title', 'Need help with kids camps or our coaching courses?', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-20 08:49:52'),
+(901, 0, 'sch_lan_camp_button_title', 'Click Here', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-20 08:49:52'),
+(902, 0, 'sch_lan_camp_button_url', '#', 'school-landing', NULL, '2020-05-14 08:05:39', '2020-05-20 08:49:52'),
+(903, 0, 'meta_title', 'Football Coaching', 'football-landing', NULL, '2020-05-14 08:47:54', '2020-05-27 05:59:27'),
+(904, 0, 'meta_description', 'Football Coaching', 'football-landing', NULL, '2020-05-14 08:47:54', '2020-05-27 05:59:27'),
+(905, 0, 'meta_keyword', 'Football Coaching', 'football-landing', NULL, '2020-05-14 08:47:54', '2020-05-27 05:59:27'),
+(906, 0, 'foot_lan_camp_go_logo', '1589980312foot_lan_camp_go_logo.png', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-20 07:41:52'),
+(907, 0, 'foot_lan_camp_go_title', '<h2><span style="font-size:72px;"><strong>Football Coaching</strong></span></h2>\r\n\r\n<p><span style="font-family:Comic Sans MS,cursive;"><em>For kids who love to have fun!</em></span></p>', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-27 05:59:27'),
+(908, 0, 'foot_lan_camp_page_title', 'Football Coaching', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-27 05:59:27'),
+(909, 0, 'foot_lan_camp_banner_image', '1589980312foot_lan_camp_banner_image.png', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-20 07:41:52'),
+(910, 0, 'foot_lan_camp_tab_title', '', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-20 08:53:44'),
+(911, 0, 'foot_lan_camp_tab1_image1', '1589980312foot_lan_camp_tab1_image1.jpg', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-20 07:41:52'),
+(912, 0, 'foot_lan_camp_tab1_image2', '1589980312foot_lan_camp_tab1_image2.jpg', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-20 07:41:52'),
+(913, 0, 'foot_lan_camp_tab1_image3', '1589980312foot_lan_camp_tab1_image3.jpg', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-20 07:41:52'),
+(914, 0, 'foot_lan_camp_tab1_description', '<p>Hello and welcome to Camp GO! Milton Keynes&#39; most exciting kids camps lead by the best sports coaches</p>', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-27 05:59:27'),
+(915, 0, 'foot_lan_about_camp_go_des', '', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-14 08:47:55'),
+(916, 0, 'foot_lan_about_camp_go_des_ex', '', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-14 08:47:55'),
+(917, 0, 'foot_lan_about_camp_go_img', '', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-14 08:47:55'),
+(918, 0, 'foot_lan_why_choose_us_des', '', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-14 08:47:55'),
+(919, 0, 'foot_lan_why_choose_us_des_ex', '', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-14 08:47:55'),
+(920, 0, 'foot_lan_why_choose_us_img', '', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-14 08:47:55'),
+(921, 0, 'foot_lan_all_about_you_des', '', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-14 08:47:55'),
+(922, 0, 'fofootlan_all_about_you_des_ex', '', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-14 08:47:55'),
+(923, 0, 'foot_lan_all_about_you_img', '', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-14 08:47:55'),
+(924, 0, 'foot_lan_coaching_team_des', '', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-14 08:47:55'),
+(925, 0, 'foot_lan_coaching_team_des_ex', '', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-14 08:47:55'),
+(926, 0, 'foot_lan_coaching_team_img', '', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-14 08:47:55'),
+(927, 0, 'foot_lan_camp_tab2_title', '', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-14 08:47:55'),
+(928, 0, 'foot_lan_camp_tab2_image', '1589980312foot_lan_camp_tab2_image.jpg', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-20 07:41:52'),
+(929, 0, 'foot_lan_camp_tab2_description', '<p>Hello and welcome to Camp GO! Milton Keynes&#39; most exciting kids camps lead by the best sports coaches&nbsp;</p>', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-20 08:53:44'),
+(930, 0, 'foot_lan_camp_tab3_image', '1589980312foot_lan_camp_tab3_image.jpg', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-20 07:41:52'),
+(931, 0, 'foot_lan_camp_tab3_description', '<h4><span style="color:#000000;">Hello and welcome to Camp GO! Milton Keynes&#39; most exciting kids camps lead by the best sports coaches&nbsp;</span></h4>', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-27 07:39:33'),
+(932, 0, 'foot_lan_book_with_conf', '', 'football-landing', NULL, '2020-05-14 08:47:55', '2020-05-14 08:47:55'),
+(933, 0, 'foot_lan_book_with_conf_ex', '', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-14 08:47:56'),
+(934, 0, 'foot_lan_book_with_img', '', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-14 08:47:56'),
+(935, 0, 'foot_lan_camp_tab4_title', 'Camp GO Parent info', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-27 07:39:33'),
+(936, 0, 'foot_lan_ofsted_des', '', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-14 08:47:56'),
+(937, 0, 'foot_lan_ofsted_des_ex', '', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-14 08:47:56'),
+(938, 0, 'foot_lan_ofsted_img', '', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-14 08:47:56'),
+(939, 0, 'foot_lan_act_heading', 'The Camp GO Pillars', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-27 05:59:27'),
+(940, 0, 'foot_lan_act_sub_heading', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-27 05:59:28'),
+(941, 0, 'foot_lan_act1_image', '1589980312foot_lan_act1_image.png', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-20 07:41:52'),
+(942, 0, 'foot_lan_act1_title', 'Activity - 1', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-27 05:59:28'),
+(943, 0, 'foot_lan_act1_description', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>\r\n\r\n<p>&nbsp;</p>', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-27 05:59:28'),
+(944, 0, 'foot_lan_act2_image', '1589980313foot_lan_act2_image.png', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-20 07:41:53'),
+(945, 0, 'foot_lan_act2_title', 'Activity - 2 2', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-27 05:12:51'),
+(946, 0, 'foot_lan_act2_description', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>\r\n\r\n<p>&nbsp;</p>', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-27 05:59:28'),
+(947, 0, 'foot_lan_act3_image', '1589980313foot_lan_act3_image.png', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-20 07:41:53'),
+(948, 0, 'foot_lan_act3_title', 'Activity - 3', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-27 05:59:28'),
+(949, 0, 'foot_lan_act3_description', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>\r\n\r\n<p>&nbsp;</p>', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-27 05:59:28'),
+(950, 0, 'foot_lan_act4_image', '1589980313foot_lan_act4_image.png', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-20 07:41:53'),
+(951, 0, 'foot_lan_act4_title', 'Activity - 4', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-27 05:59:28'),
+(952, 0, 'foot_lan_act4_description', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>\r\n\r\n<p>&nbsp;</p>', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-27 05:59:28'),
+(953, 0, 'foot_lan_act5_image', '1589980313foot_lan_act5_image.png', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-20 07:41:53'),
+(954, 0, 'foot_lan_act5_title', 'Activity - 5', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-27 05:59:28'),
+(955, 0, 'foot_lan_act5_description', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>\r\n\r\n<p>&nbsp;</p>', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-27 05:59:28'),
+(956, 0, 'foot_lan_camp_heading2', 'Useful information and downloads', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-28 02:41:02'),
+(957, 0, 'foot_lan_camp_description2', 'We take our responsibilities for the care of each child at our camps very seriously. This page is designed to provide all necessary and useful information for parents; from the timings of a typical day to our booking terms and conditions.', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-27 05:59:28'),
+(958, 0, 'foot_lan_camp_heading3', '', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-20 08:53:44'),
+(959, 0, 'foot_lan_camp_description3', '', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-20 08:53:45'),
+(960, 0, 'foot_lan_camp_image3', '', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-14 08:47:56'),
+(961, 0, 'foot_lan_camp_image4', '', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-14 08:47:56'),
+(962, 0, 'foot_lan_camp_link_title4', '', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-20 08:53:45'),
+(963, 0, 'foot_lan_camp_link4', '', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-20 08:53:45'),
+(964, 0, 'foot_lan_camp_heading5', '', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-20 08:53:45'),
+(965, 0, 'foot_lan_camp_description5', '', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-20 08:53:45'),
+(966, 0, 'foot_lan_camp_title', 'Need help with kids camps or our coaching courses?', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-20 07:41:52'),
+(967, 0, 'foot_lan_camp_button_title', 'Click Here', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-20 07:41:52'),
+(968, 0, 'foot_lan_camp_button_url', '#', 'football-landing', NULL, '2020-05-14 08:47:56', '2020-05-20 07:41:52'),
+(969, 0, '', 'course-listing', 'course-listing', NULL, '2020-05-14 23:33:36', '2020-05-14 23:33:36'),
+(970, 0, '', 'tennis-course-listing', 'tennis-course-listing', NULL, '2020-05-14 23:37:39', '2020-05-14 23:37:39'),
+(971, 0, '', 'school-course-listing', 'school-course-listing', NULL, '2020-05-14 23:37:51', '2020-05-14 23:37:51'),
+(972, 0, '', 'football-course-listing', 'football-course-listing', NULL, '2020-05-14 23:38:04', '2020-05-14 23:38:04'),
+(973, 0, '', 'global-settings', 'global-settings', NULL, '2020-05-15 03:53:42', '2020-05-15 03:53:42'),
+(974, 0, '', 'global-settings', 'global-settings', NULL, '2020-05-15 03:54:36', '2020-05-15 03:54:36'),
+(975, 0, '', 'global-settings', 'global-settings', NULL, '2020-05-15 05:12:07', '2020-05-15 05:12:07'),
+(976, 0, 'meta_title', 'Tennis Pro', 'tennis-pro', NULL, '2020-05-19 06:23:39', '2020-05-27 06:00:57'),
+(977, 0, 'meta_description', 'Tennis Pro', 'tennis-pro', NULL, '2020-05-19 06:23:39', '2020-05-27 06:00:57'),
+(978, 0, 'meta_keyword', 'Tennis Pro', 'tennis-pro', NULL, '2020-05-19 06:23:39', '2020-05-27 06:00:57'),
+(979, 0, 'tennis_pro_page_title', 'Tennis Pro', 'tennis-pro', NULL, '2020-05-19 06:23:39', '2020-05-27 06:00:57'),
+(980, 0, 'tennis_pro_banner_image', '1589896406tennis_pro_banner_image.png', 'tennis-pro', NULL, '2020-05-19 06:24:29', '2020-05-19 08:23:26'),
+(981, 0, 'tennis_pro_img1', '1589897726tennis_pro_img1.png', 'tennis-pro', NULL, '2020-05-19 06:24:29', '2020-05-19 08:45:26'),
+(982, 0, 'tennis_pro_img2', '1589897726tennis_pro_img2.png', 'tennis-pro', NULL, '2020-05-19 06:24:29', '2020-05-19 08:45:26'),
+(983, 0, 'tennis_pro_sec1_desc', '<p style="text-align: center;"><span style="font-size:14px;"><span style="font-family:Comic Sans MS,cursive;"><strong>Welcome </strong>to Coach-Connect, a new and exciting way to connect with your tennis coach or pupil. It brings a whole new element to tennis coaching by enriching the tennis coaching experience both on and off the court for the coach, player and parent&nbsp;</span></span></p>\r\n\r\n<p style="text-align: center;"><span style="font-size:20px;"><u><strong><span style="font-family:Comic Sans MS,cursive;">DRH Tennis Pro</span></strong></u></span></p>', 'tennis-pro', NULL, '2020-05-19 06:24:29', '2020-05-29 04:50:18'),
+(984, 0, 'tennis_pro_sec1_img1', '1590527128tennis_pro_sec1_img1.png', 'tennis-pro', NULL, '2020-05-19 06:24:29', '2020-05-26 15:35:28'),
+(985, 0, 'tennis_pro_sec1_img2', '1590337349tennis_pro_sec1_img2.png', 'tennis-pro', NULL, '2020-05-19 06:24:29', '2020-05-24 10:52:29'),
+(986, 0, 'tennis_pro_sec1_btn', 'Unlock the DRH Tennis Pro feature now! For just £9.99 per month', 'tennis-pro', NULL, '2020-05-19 06:24:29', '2020-05-27 06:00:57'),
+(987, 0, 'tennis_pro_sec1_link', '#', 'tennis-pro', NULL, '2020-05-19 06:24:29', '2020-05-19 06:59:38'),
+(988, 0, 'tennis_pro_htw_title', 'How It Works j jetjebkjaebjt hak h', 'tennis-pro', NULL, '2020-05-19 06:24:29', '2020-05-27 05:37:25'),
+(989, 0, 'tennis_pro_htw_desc', '<p>DRH Tennis Pro allows you to search, link to, and share information with your tennis coach about your tennis development. Whether you&rsquo;re looking to get feedback from a recent lesson, to share your goals and post your training schedule or to write and receive match reports from recent competitions. Our Tennis Pro feature can do it all.</p>', 'tennis-pro', NULL, '2020-05-19 06:24:29', '2020-05-27 06:00:57'),
+(990, 0, 'ten_pro_lastsec_text', 'Sign up now and start becoming the tennis pro you want to be. Create your DRH Sports account, add your child to your account and then unlock the Tennis Pro features. All of these features are yours for just £9.99 per month', 'tennis-pro', NULL, '2020-05-19 06:24:29', '2020-05-27 06:00:57'),
+(991, 0, 'ten_pro_lastsec_btn1_text', 'Create my DRH account', 'tennis-pro', NULL, '2020-05-19 06:24:30', '2020-05-27 06:00:57'),
+(992, 0, 'ten_pro_lastsec_btn1_link', '#', 'tennis-pro', NULL, '2020-05-19 06:24:30', '2020-05-19 06:59:38'),
+(993, 0, 'ten_pro_lastsec_btn2_text', 'Go to my account and unlock now', 'tennis-pro', NULL, '2020-05-19 06:24:30', '2020-05-27 06:00:57'),
+(994, 0, 'ten_pro_lastsec_btn2_link', '#', 'tennis-pro', NULL, '2020-05-19 06:24:30', '2020-05-19 06:59:38'),
+(995, 0, 'tennis_pro_sec_title', 'Need help with kids camps or our coaching courses?', 'tennis-pro', NULL, '2020-05-19 06:24:30', '2020-05-19 07:02:13'),
+(996, 0, 'tennis_pro_sec_button_title', 'Click Here', 'tennis-pro', NULL, '2020-05-19 06:24:30', '2020-05-19 07:02:13'),
+(997, 0, 'tennis_pro_sec_button_url', '#', 'tennis-pro', NULL, '2020-05-19 06:24:30', '2020-05-19 07:02:13'),
+(998, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-05-19 06:35:41', '2020-05-19 06:35:41'),
+(999, 0, '', 'camp-listing', 'camp-listing', NULL, '2020-05-19 06:37:54', '2020-05-19 06:37:54'),
+(1000, 0, '', 'tennis-pro', 'tennis-pro', NULL, '2020-05-19 06:59:38', '2020-05-19 06:59:38'),
+(1001, 0, '', 'tennis-pro', 'tennis-pro', NULL, '2020-05-19 07:02:13', '2020-05-19 07:02:13'),
+(1002, 0, 'camp_tab1_image3', '', 'tennis-pro', NULL, '2020-05-19 08:19:20', '2020-05-19 08:19:20'),
+(1003, 0, '', 'tennis-pro', 'tennis-pro', NULL, '2020-05-19 08:23:19', '2020-05-19 08:23:19'),
+(1004, 0, '', 'tennis-pro', 'tennis-pro', NULL, '2020-05-19 08:23:26', '2020-05-19 08:23:26'),
+(1005, 0, '', 'tennis-pro', 'tennis-pro', NULL, '2020-05-19 08:24:04', '2020-05-19 08:24:04'),
+(1006, 0, '', 'tennis-pro', 'tennis-pro', NULL, '2020-05-19 08:28:34', '2020-05-19 08:28:34'),
+(1007, 0, '', 'tennis-pro', 'tennis-pro', NULL, '2020-05-19 08:45:26', '2020-05-19 08:45:26'),
+(1008, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-20 01:02:40', '2020-05-20 01:02:40'),
+(1009, 0, '', '1589956362ten_lan_ten_lan_act3_image.png', 'tennis-landing', NULL, '2020-05-20 01:02:42', '2020-05-20 01:02:42'),
+(1010, 0, '', '1589956362act4_image.png', 'tennis-landing', NULL, '2020-05-20 01:02:42', '2020-05-20 01:02:42'),
+(1011, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-20 01:14:53', '2020-05-20 01:14:53'),
+(1012, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-20 01:17:38', '2020-05-20 01:17:38'),
+(1013, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-20 02:50:17', '2020-05-20 02:50:17'),
+(1014, 0, '', '1589962818ten_lan_ten_lan_act3_image.png', 'tennis-landing', NULL, '2020-05-20 02:50:18', '2020-05-20 02:50:18'),
+(1015, 0, '', '1589962818act4_image.png', 'tennis-landing', NULL, '2020-05-20 02:50:18', '2020-05-20 02:50:18'),
+(1016, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-20 06:23:17', '2020-05-20 06:23:17'),
+(1017, 0, '', '1589975597ten_lan_ten_lan_act3_image.png', 'tennis-landing', NULL, '2020-05-20 06:23:17', '2020-05-20 06:23:17'),
+(1018, 0, '', '1589975597act4_image.png', 'tennis-landing', NULL, '2020-05-20 06:23:17', '2020-05-20 06:23:17'),
+(1019, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-20 06:28:05', '2020-05-20 06:28:05'),
+(1020, 0, '', 'football-landing', 'football-landing', NULL, '2020-05-20 07:41:51', '2020-05-20 07:41:51'),
+(1021, 0, '', 'school-landing', 'school-landing', NULL, '2020-05-20 08:49:51', '2020-05-20 08:49:51'),
+(1022, 0, '', 'football-landing', 'football-landing', NULL, '2020-05-20 08:53:44', '2020-05-20 08:53:44'),
+(1023, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-20 23:24:28', '2020-05-20 23:24:28'),
+(1024, 0, 'sch_lan_camp_heading2', '', 'schoo-llanding', NULL, '2020-05-21 00:22:12', '2020-05-21 00:22:12'),
+(1025, 0, 'sch_lan_camp_description2', '', 'schoo-llanding', NULL, '2020-05-21 00:22:12', '2020-05-21 00:22:12'),
+(1026, 0, 'tennis_pro_sec1_img2_link', 'http://49.249.236.30:8654/dominic-new/coach-listing', 'tennis-pro', NULL, '2020-05-21 06:01:55', '2020-05-26 15:35:28'),
+(1027, 0, '', 'tennis-pro', 'tennis-pro', NULL, '2020-05-21 06:02:35', '2020-05-21 06:02:35'),
+(1028, 0, '', 'tennis-pro', 'tennis-pro', NULL, '2020-05-21 06:04:16', '2020-05-21 06:04:16'),
+(1029, 0, '', 'tennis-pro', 'tennis-pro', NULL, '2020-05-24 10:52:29', '2020-05-24 10:52:29'),
+(1030, 0, '', 'tennis-pro', 'tennis-pro', NULL, '2020-05-25 23:49:09', '2020-05-25 23:49:09'),
+(1031, 0, 'tennis_pro_sec1_img1_link', '1590527128tennis_pro_sec1_img1_link.pdf', 'tennis-pro', NULL, '2020-05-26 00:42:07', '2020-05-26 15:35:28'),
+(1032, 0, '', 'tennis-pro', 'tennis-pro', NULL, '2020-05-26 00:48:09', '2020-05-26 00:48:09'),
+(1033, 0, 'ten_lan_tab_title1', 'Home', 'tennis-landing', NULL, '2020-05-26 01:50:11', '2020-05-27 03:25:32'),
+(1034, 0, 'ten_lan_tab_title2', 'Club Info', 'tennis-landing', NULL, '2020-05-26 01:50:11', '2020-05-27 03:25:32'),
+(1035, 0, 'ten_lan_tab_title3', 'Book a course', 'tennis-landing', NULL, '2020-05-26 01:50:11', '2020-06-28 15:55:21'),
+(1036, 0, 'ten_lan_tab_title4', 'Parent Info', 'tennis-landing', NULL, '2020-05-26 01:50:11', '2020-05-27 03:25:32'),
+(1037, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-26 01:51:52', '2020-05-26 01:51:52'),
+(1038, 0, 'sch_lan_tab_title1', 'Home', 'school-landing', NULL, '2020-05-26 01:57:21', '2020-05-27 03:58:03'),
+(1039, 0, 'sch_lan_tab_title2', 'Camp Info', 'school-landing', NULL, '2020-05-26 01:57:21', '2020-05-27 04:00:07'),
+(1040, 0, 'sch_lan_tab_title3', 'Book a Club', 'school-landing', NULL, '2020-05-26 01:57:21', '2020-05-27 04:00:08'),
+(1041, 0, 'sch_lan_tab_title4', 'Parent Info', 'school-landing', NULL, '2020-05-26 01:57:21', '2020-05-27 04:00:08'),
+(1042, 0, '', 'school-landing', 'school-landing', NULL, '2020-05-26 02:00:29', '2020-05-26 02:00:29'),
+(1043, 0, 'foot_lan_tab_title1', 'Home', 'football-landing', NULL, '2020-05-26 02:01:11', '2020-05-27 05:59:27'),
+(1044, 0, 'foot_lan_tab_title2', 'Club Info', 'football-landing', NULL, '2020-05-26 02:01:11', '2020-05-27 07:39:33'),
+(1045, 0, 'foot_lan_tab_title3', 'Book a Club', 'football-landing', NULL, '2020-05-26 02:01:11', '2020-05-27 07:39:33'),
+(1046, 0, 'foot_lan_tab_title4', 'Parent Info', 'football-landing', NULL, '2020-05-26 02:01:11', '2020-05-27 07:39:33'),
+(1047, 0, '', 'football-landing', 'football-landing', NULL, '2020-05-26 02:04:09', '2020-05-26 02:04:09'),
+(1048, 0, 'ten_lan_btn', 'Click here to book a coaching course at Milton Keynes Tennis Club', 'tennis-landing', NULL, '2020-05-26 02:38:54', '2020-06-29 11:04:14'),
+(1049, 0, 'ten_lan_btn_link', 'http://49.249.236.30:8654/dominic-new/course-listing/tennis', 'tennis-landing', NULL, '2020-05-26 02:38:54', '2020-05-26 03:10:40'),
+(1050, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-26 03:10:40', '2020-05-26 03:10:40'),
+(1051, 0, 'foot_lan_btn_link', 'http://49.249.236.30:8654/dominic-new/course-listing/football', 'football-landing', NULL, '2020-05-26 03:26:20', '2020-05-26 03:29:36'),
+(1052, 0, 'foot_lan_btn', 'Button to book course', 'football-landing', NULL, '2020-05-26 03:26:20', '2020-05-27 07:39:33'),
+(1053, 0, '', 'football-landing', 'football-landing', NULL, '2020-05-26 03:29:36', '2020-05-26 03:29:36'),
+(1054, 0, '', 'football-landing', 'football-landing', NULL, '2020-05-26 03:30:43', '2020-05-26 03:30:43'),
+(1055, 0, 'sch_lan_btn', 'Button to book course', 'school-landing', NULL, '2020-05-26 04:07:08', '2020-05-26 04:08:21'),
+(1056, 0, 'sch_lan_btn_link', 'http://49.249.236.30:8654/dominic-new/course-listing/school', 'school-landing', NULL, '2020-05-26 04:07:08', '2020-05-26 04:08:21'),
+(1057, 0, '', 'school-landing', 'school-landing', NULL, '2020-05-26 04:08:21', '2020-05-26 04:08:21'),
+(1058, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-26 04:13:25', '2020-05-26 04:13:25'),
+(1059, 0, '', 'tennis-pro', 'tennis-pro', NULL, '2020-05-26 08:59:37', '2020-05-26 08:59:37'),
+(1060, 0, '', 'tennis-pro', 'tennis-pro', NULL, '2020-05-26 15:35:28', '2020-05-26 15:35:28'),
+(1061, 0, 'coach_listing_heading', 'Link to a tennis coach', 'coach-listing', NULL, '2020-05-27 00:10:07', '2020-05-27 02:22:15'),
+(1062, 0, 'coach_listing_desc', '<p style="text-align: center;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat1.</p>\r\n\r\n<div id="gtx-trans" style="position: absolute; left: 339px; top: -5.33333px;">\r\n<div class="gtx-trans-icon">&nbsp;</div>\r\n</div>', 'coach-listing', NULL, '2020-05-27 00:10:07', '2020-05-27 00:20:29'),
+(1063, 0, '', 'coach-listing', 'coach-listing', NULL, '2020-05-27 00:10:48', '2020-05-27 00:10:48'),
+(1064, 0, '', 'coach-listing', 'coach-listing', NULL, '2020-05-27 00:20:29', '2020-05-27 00:20:29'),
+(1065, 0, '', 'coach-listing', 'coach-listing', NULL, '2020-05-27 02:22:15', '2020-05-27 02:22:15'),
+(1066, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-27 03:19:11', '2020-05-27 03:19:11'),
+(1067, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-27 03:20:04', '2020-05-27 03:20:04'),
+(1068, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-27 03:25:32', '2020-05-27 03:25:32'),
+(1069, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-27 03:29:03', '2020-05-27 03:29:03'),
+(1070, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-27 03:36:26', '2020-05-27 03:36:26'),
+(1071, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-27 03:37:35', '2020-05-27 03:37:35'),
+(1072, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-27 03:40:35', '2020-05-27 03:40:35'),
+(1073, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-27 03:41:49', '2020-05-27 03:41:49'),
+(1074, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-27 03:43:11', '2020-05-27 03:43:11'),
+(1075, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-05-27 03:46:14', '2020-05-27 03:46:14'),
+(1076, 0, '', 'school-landing', 'school-landing', NULL, '2020-05-27 03:50:39', '2020-05-27 03:50:39'),
+(1077, 0, '', 'school-landing', 'school-landing', NULL, '2020-05-27 03:53:14', '2020-05-27 03:53:14'),
+(1078, 0, '', 'school-landing', 'school-landing', NULL, '2020-05-27 03:55:21', '2020-05-27 03:55:21'),
+(1079, 0, '', 'school-landing', 'school-landing', NULL, '2020-05-27 03:58:02', '2020-05-27 03:58:02'),
+(1080, 0, '', 'school-landing', 'school-landing', NULL, '2020-05-27 03:59:09', '2020-05-27 03:59:09'),
+(1081, 0, '', 'school-landing', 'school-landing', NULL, '2020-05-27 04:00:07', '2020-05-27 04:00:07'),
+(1082, 0, '', 'football-landing', 'football-landing', NULL, '2020-05-27 05:08:58', '2020-05-27 05:08:58'),
+(1083, 0, '', 'football-landing', 'football-landing', NULL, '2020-05-27 05:12:51', '2020-05-27 05:12:51'),
+(1084, 0, '', 'football-landing', 'football-landing', NULL, '2020-05-27 05:15:11', '2020-05-27 05:15:11'),
+(1085, 0, '', 'football-landing', 'football-landing', NULL, '2020-05-27 05:30:15', '2020-05-27 05:30:15'),
+(1086, 0, '', 'football-landing', 'football-landing', NULL, '2020-05-27 05:34:17', '2020-05-27 05:34:17'),
+(1087, 0, '', 'tennis-pro', 'tennis-pro', NULL, '2020-05-27 05:37:25', '2020-05-27 05:37:25'),
+(1088, 0, '', 'football-landing', 'football-landing', NULL, '2020-05-27 05:59:27', '2020-05-27 05:59:27'),
+(1089, 0, '', 'tennis-pro', 'tennis-pro', NULL, '2020-05-27 06:00:57', '2020-05-27 06:00:57'),
+(1090, 0, '', 'football-landing', 'football-landing', NULL, '2020-05-27 07:39:33', '2020-05-27 07:39:33'),
+(1091, 0, '', 'football-landing', 'football-landing', NULL, '2020-05-28 02:41:02', '2020-05-28 02:41:02'),
+(1092, 0, '', 'tennis-pro', 'tennis-pro', NULL, '2020-05-29 04:50:18', '2020-05-29 04:50:18'),
+(1093, 0, 'badges_heading', 'DRH Tennis Pro', 'badges', NULL, '2020-06-09 00:37:28', '2020-06-10 11:30:31'),
+(1094, 0, 'badges_banner_img', '1591692256badges_banner_img.png', 'badges', NULL, '2020-06-09 00:37:28', '2020-06-09 03:14:16'),
+(1095, 0, 'goals_desc', 'The above goal setting sheet is meant to help you start to have more control, become more accountable and be more motivated to work hard to achieve the things they want. It acts as just one of many elements that will be put in place over your tennis develop and improve. Don’t worry if you find it difficult to think of things to write down or you’re not sure what you want to achieve. You can ask your parent or coach to help you if you are notsure but they cannot do it for you. At the end of the term you need to review your goals and set new ones.', 'badges', NULL, '2020-06-09 00:37:28', '2020-06-09 03:14:15'),
+(1096, 0, 'specific_title', 'SPECIFIC', 'badges', NULL, '2020-06-09 00:37:28', '2020-06-09 03:14:15'),
+(1097, 0, 'specific_desc', 'Well defined, clear and unambiguous. What is the goal and how are you going to achieve it?', 'badges', NULL, '2020-06-09 00:37:28', '2020-06-09 03:14:15'),
+(1098, 0, 'measurable_title', 'MEASURABLE', 'badges', NULL, '2020-06-09 00:37:28', '2020-06-09 03:14:15'),
+(1099, 0, 'measurable_desc', 'With specific criteria that measure your progress towards the accomplishment of the goal. How will you know if you’ve reached your goal?', 'badges', NULL, '2020-06-09 00:37:28', '2020-06-09 03:14:15'),
+(1100, 0, 'achievable_title', 'ACHIEVABLE', 'badges', NULL, '2020-06-09 00:37:28', '2020-06-09 03:14:15'),
+(1101, 0, 'achievable_desc', 'The achievability of the goal should be such that it makes you feel challenged, but defined well enough that you can actually achieve it.', 'badges', NULL, '2020-06-09 00:37:28', '2020-06-09 03:14:15'),
+(1102, 0, 'realistic_title', 'REALISTIC', 'badges', NULL, '2020-06-09 00:37:28', '2020-06-09 03:14:15'),
+(1103, 0, 'realistic_desc', 'Your SMART goal should be realistic and something you believe you can realistically achieve.', 'badges', NULL, '2020-06-09 00:37:28', '2020-06-09 03:14:15'),
+(1104, 0, 'timed_title', 'TIMED', 'badges', NULL, '2020-06-09 00:37:28', '2020-06-09 03:14:15'),
+(1105, 0, 'timed_desc', 'Your goal must be time-bound in that it has a start and finish date. If the goal is not time constrained, there will be no sense of urgency and motivation to achieve the goal.', 'badges', NULL, '2020-06-09 00:37:28', '2020-06-09 03:14:15'),
+(1106, 0, 'confirmation_msg', '“I promise to work hard and do my best to achieve the goals that I have set for myself”', 'badges', NULL, '2020-06-09 00:37:28', '2020-06-09 03:14:16'),
+(1107, 0, 'goals_date', '21 February 2020', 'badges', NULL, '2020-06-09 00:37:28', '2020-06-09 03:14:16'),
+(1108, 0, 'badges_sec_title', 'Need help with kids camps or our coaching courses?', 'badges', NULL, '2020-06-09 00:37:28', '2020-06-09 03:14:16'),
+(1109, 0, 'badges_sec_button_title', 'Click Here', 'badges', NULL, '2020-06-09 00:37:28', '2020-06-09 03:14:16'),
+(1110, 0, 'badges_sec_button_url', '#', 'badges', NULL, '2020-06-09 00:37:28', '2020-06-09 03:14:16'),
+(1111, 0, 'meta_title', 'Badges', 'badges', NULL, '2020-06-09 00:38:37', '2020-06-09 03:14:15'),
+(1112, 0, 'meta_description', 'Badges', 'badges', NULL, '2020-06-09 00:38:37', '2020-06-09 03:14:15'),
+(1113, 0, 'meta_keyword', 'Badges', 'badges', NULL, '2020-06-09 00:38:37', '2020-06-09 03:14:15'),
+(1114, 0, '', 'badges', 'badges', NULL, '2020-06-09 03:14:15', '2020-06-09 03:14:15'),
+(1115, 0, '', 'badges', 'badges', NULL, '2020-06-10 11:30:31', '2020-06-10 11:30:31'),
+(1116, 0, '', 'early-bird', 'early-bird', NULL, '2020-06-17 17:03:12', '2020-06-17 17:03:12'),
+(1117, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-06-28 15:54:14', '2020-06-28 15:54:14'),
+(1118, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-06-28 15:55:21', '2020-06-28 15:55:21'),
+(1119, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-06-29 00:23:35', '2020-06-29 00:23:35'),
+(1120, 0, 'badges_desc', 'The above goal setting sheet is meant to help you start to have more control, become more accountable and be more motivated to work hard to achieve the things they want. It acts as just one of many elements that will be put in place over your tennis develop and improve. Don’t worry if you find it difficult to think of things to write down or you’re not sure what you want to achieve. You can ask your parent or coach to help you if you are notsure but they cannot do it for you. At the end of the term you need to review your goals and set new ones1.', 'badges', NULL, '2020-06-29 01:41:24', '2020-06-29 01:41:47'),
+(1121, 0, '', 'badges', 'badges', NULL, '2020-06-29 01:41:46', '2020-06-29 01:41:46'),
+(1122, 0, '', 'tennis-landing', 'tennis-landing', NULL, '2020-06-29 11:04:14', '2020-06-29 11:04:14'),
+(1123, 0, '', 'early-bird', 'early-bird', NULL, '2020-06-30 03:29:32', '2020-06-30 03:29:32'),
+(1124, 0, '', 'early-bird', 'early-bird', NULL, '2020-07-03 07:00:08', '2020-07-03 07:00:08'),
+(1125, 0, '', 'early-bird', 'early-bird', NULL, '2020-07-03 07:16:34', '2020-07-03 07:16:34'),
+(1126, 0, 'childcare_heading', 'Please Read', 'child-care-popup', NULL, '2020-07-09 02:48:34', '2020-07-27 05:58:56'),
+(1127, 0, 'childcare_subheading', 'Please choose your childcare provider and confirm that you have read the information', 'child-care-popup', NULL, '2020-07-09 02:48:34', '2020-07-27 05:58:56'),
+(1128, 0, 'childcare_content', '<p>&nbsp;</p>\r\n\r\n<ul>\r\n	<li><span style="font-size:16px;">To find the reference number for your specific childcare voucher provider please go to our&nbsp;<a href="https://www.drhsports.co.uk/faqs.html" target="_blank">FAQS</a>&nbsp;page</span><br />\r\n	&nbsp;</li>\r\n	<li><span style="font-size:16px;">After confirming your booking you will need to follow through with the payment within 48 hours otherwise the booking will be invalid. You will need to log into your childcare voucher portal to complete the payment. Payments using Tax Free Childcare must be made 10 days prior to your child attending the camp.</span><br />\r\n	&nbsp;</li>\r\n	<li><span style="font-size:16px;">Your child will only be added to the registers once payment of the correct amount has been received and confirmed.</span><br />\r\n	&nbsp;</li>\r\n	<li><span style="font-size:16px;">If your childcare voucher provider is not listed below or if you have any question, please email info@drhsports.co.uk</span></li>\r\n</ul>', 'child-care-popup', NULL, '2020-07-09 02:48:34', '2020-07-27 06:02:12'),
+(1129, 0, 'providers_heading', 'Select a provider', 'child-care-popup', NULL, '2020-07-09 02:48:34', '2020-07-27 05:58:56'),
+(1130, 0, '', 'child-care-popup', 'child-care-popup', NULL, '2020-07-09 02:49:36', '2020-07-09 02:49:36'),
+(1131, 0, '', 'child-care-popup', 'child-care-popup', NULL, '2020-07-09 08:29:08', '2020-07-09 08:29:08'),
+(1132, 0, '', 'child-care-popup', 'child-care-popup', NULL, '2020-07-09 08:40:28', '2020-07-09 08:40:28'),
+(1133, 0, 'report1_content', '<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>', 'report', NULL, '2020-07-10 05:28:54', '2020-07-10 05:32:22'),
+(1134, 0, 'report2_content', '<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'report', NULL, '2020-07-10 05:28:55', '2020-07-10 05:32:22'),
+(1135, 0, 'report_detail', '<p><strong>Lorem Ipsum1</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'report', NULL, '2020-07-10 05:28:55', '2020-07-10 05:48:26'),
+(1136, 0, '', 'report', 'report', NULL, '2020-07-10 05:32:22', '2020-07-10 05:32:22'),
+(1137, 0, '', 'report', 'report', NULL, '2020-07-10 05:48:25', '2020-07-10 05:48:25'),
+(1138, 0, 'google_analytics', '<!-- Global site tag (gtag.js) - Google Analytics -->\r\n<script async src="https://www.googletagmanager.com/gtag/js?id=UA-173223193-1"></script>\r\n<script>\r\n window.dataLayer = window.dataLayer || [];\r\n function gtag(){dataLayer.push(arguments);}\r\n gtag(\'js\', new Date());\r\n\r\n gtag(\'config\', \'UA-173223193-1\');\r\n</script>', 'general-setting', NULL, '2020-07-17 03:28:59', '2020-07-24 01:46:59'),
+(1139, 0, '', 'general-setting', 'general-setting', NULL, '2020-07-17 03:40:06', '2020-07-17 03:40:06'),
+(1140, 0, '', 'general-setting', 'general-setting', NULL, '2020-07-17 03:42:00', '2020-07-17 03:42:00'),
+(1141, 0, '', 'general-setting', 'general-setting', NULL, '2020-07-17 04:19:25', '2020-07-17 04:19:25'),
+(1142, 0, 'mailchimp_api_key', '', 'general-setting', NULL, '2020-07-23 08:14:25', '2020-07-24 01:46:59'),
+(1143, 0, '', 'general-setting', 'general-setting', NULL, '2020-07-23 09:00:52', '2020-07-23 09:00:52'),
+(1144, 0, '', 'general-setting', 'general-setting', NULL, '2020-07-23 09:01:20', '2020-07-23 09:01:20'),
+(1145, 0, '', 'general-setting', 'general-setting', NULL, '2020-07-23 09:01:34', '2020-07-23 09:01:34'),
+(1146, 0, '', 'general-setting', 'general-setting', NULL, '2020-07-23 09:02:20', '2020-07-23 09:02:20'),
+(1147, 0, '', 'general-setting', 'general-setting', NULL, '2020-07-23 09:05:45', '2020-07-23 09:05:45'),
+(1148, 0, '', 'general-setting', 'general-setting', NULL, '2020-07-24 01:46:59', '2020-07-24 01:46:59'),
+(1149, 0, '', 'child-care-popup', 'child-care-popup', NULL, '2020-07-27 05:58:56', '2020-07-27 05:58:56'),
+(1150, 0, '', 'child-care-popup', 'child-care-popup', NULL, '2020-07-27 06:00:41', '2020-07-27 06:00:41'),
+(1151, 0, '', 'child-care-popup', 'child-care-popup', NULL, '2020-07-27 06:02:12', '2020-07-27 06:02:12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `parent_coach_reqs`
+--
+
+CREATE TABLE `parent_coach_reqs` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `parent_id` int(11) NOT NULL,
+  `child_id` int(11) DEFAULT NULL,
+  `coach_id` int(11) NOT NULL,
+  `status` int(11) DEFAULT NULL,
+  `reason_of_rejection` varchar(2000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dismiss_by_parent` int(11) DEFAULT NULL,
+  `dismiss_by_coach` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `parent_coach_reqs`
+--
+
+INSERT INTO `parent_coach_reqs` (`id`, `parent_id`, `child_id`, `coach_id`, `status`, `reason_of_rejection`, `dismiss_by_parent`, `dismiss_by_coach`, `created_at`, `updated_at`) VALUES
+(37, 366, 351, 133, NULL, NULL, NULL, NULL, '2020-06-16 05:54:45', '2020-07-27 07:01:42'),
+(38, 366, 358, 133, NULL, NULL, NULL, NULL, '2020-06-16 05:55:31', '2020-07-27 07:09:17');
 
 -- --------------------------------------------------------
 
@@ -3133,11 +4499,45 @@ INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
 ('bajwa9876470492@gmail.com', '$2y$10$w6Nzc11m9jJ5qxqsW7JhTuEFwHq0udXcINIVH3bdaNNbZnp.Tqb1m', '2019-11-12 10:46:03'),
 ('bajwa7696346232@gmail.com', '$2y$10$c1a6jFDUiLRUmfnq3AcK6.PxCl38vx88QzmJoeo99Na7Mo6KZ/lhW', '2019-11-29 03:35:02'),
 ('jaskaran@yopmail.com', '$2y$10$NvHF3cxOD/imeoShDQGlrutHQAygg1K2nrjKv8C2XEVc3st53Mzym', '2019-11-29 04:49:24'),
-('qa2.deftsoft@gmail.com', '$2y$10$HnC.lXDA0T1gKptjGQ.bI.aE0fSD8K3/AC0PU/.wd1L7rVGOS2Mua', '2019-12-05 03:34:41'),
 ('sandha78@yopmail.com', '$2y$10$gUxqdflsON9kE/2fjYOVCObN1OF6qObkJ6i0xHD4//9kH6vNntLYG', '2019-12-05 04:42:55'),
 ('user001@yopmail.com', '$2y$10$lh.vnR/re1s0UOdUk0gr/.J.AO4H4SkFzx3gy1hHlfx5oXLHUO9n.', '2019-12-06 02:12:58'),
 ('admin@gmail.com', '$2y$10$pT2YmILhGMBTQ4E/yPCZWeH1eWxRGTTzKuswzgUuFU20KLXyJmsG6', '2020-03-06 01:18:38'),
-('test90@yopmail.com', '$2y$10$KcA.fZX4975zV7f1VD0hHutVXxElJ.jOkdXmT4Vj./8SnVDO22go6', '2020-03-19 04:12:16');
+('test90@yopmail.com', '$2y$10$KcA.fZX4975zV7f1VD0hHutVXxElJ.jOkdXmT4Vj./8SnVDO22go6', '2020-03-19 04:12:16'),
+('hi@yopmail.com', '$2y$10$.1ItpPtHcetWfYePzkCel.PB4e0flOPG/rE/CBd72ZjwsEyKDIrWe', '2020-04-06 06:43:20'),
+('hello@yopmail.com', '$2y$10$QeiF/LbM1GzbyFn35kW3Nuo4I2HdFflW9aIGXOKNEKDTZTQ1smEM2', '2020-04-06 06:44:16'),
+('jaat@yopmail.com', '$2y$10$N5.NsyIkmMpSnNoBdBYzhOcOTaH8h0IUCtONoC5HAoLMgS0W26FUK', '2020-04-16 05:32:30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `player_reports`
+--
+
+CREATE TABLE `player_reports` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `coach_id` int(11) DEFAULT NULL,
+  `player_id` int(11) DEFAULT NULL,
+  `player_dob` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `season_id` int(11) DEFAULT NULL,
+  `course_id` int(11) DEFAULT NULL,
+  `date` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `term` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `selected_options` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `feedback` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `player_reports`
+--
+
+INSERT INTO `player_reports` (`id`, `type`, `coach_id`, `player_id`, `player_dob`, `season_id`, `course_id`, `date`, `term`, `selected_options`, `feedback`, `created_at`, `updated_at`) VALUES
+(20, 'simple', 133, 351, NULL, 9, 2, '2020-07-24 05:40:56', '', '["3-7","4-3"]', 'I Can Perform The Warm Up With Occassional Help', '2020-07-13 05:22:46', '2020-07-24 00:10:56'),
+(21, 'complex', 133, 351, NULL, NULL, NULL, '2020-07-16 23:17:31', '', '', 'It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of lorem Ipppppsum.', '2020-07-13 05:30:30', '2020-07-16 17:47:31'),
+(28, 'simple', 133, 358, NULL, 9, 2, '2020-07-27 11:10:12', '', '["1-1","2-6","3-7","4-3","5-13","6-9","7-8","8-11"]', 'test data1', '2020-07-20 00:35:07', '2020-07-27 05:40:12'),
+(32, 'simple', 133, 351, NULL, 9, 7, '2020-07-24 08:22:15', '', '["2-6","4-3","6-5"]', 'He is good player.', '2020-07-24 02:49:34', '2020-07-24 02:52:15');
 
 -- --------------------------------------------------------
 
@@ -3152,6 +4552,8 @@ CREATE TABLE `products` (
   `product_type` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vou_prod_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `voucher` int(11) DEFAULT NULL,
   `shop_id` int(11) NOT NULL DEFAULT '0',
   `thumbnail` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `category_id` int(11) NOT NULL DEFAULT '0',
@@ -3159,6 +4561,7 @@ CREATE TABLE `products` (
   `childcategory_id` int(11) NOT NULL DEFAULT '0',
   `featured` int(11) NOT NULL DEFAULT '0',
   `price` double NOT NULL DEFAULT '0',
+  `tag` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sale_price` double NOT NULL DEFAULT '0',
   `final_price` double DEFAULT '0',
   `description` longtext COLLATE utf8mb4_unicode_ci,
@@ -3171,6 +4574,7 @@ CREATE TABLE `products` (
   `weight` double NOT NULL DEFAULT '0',
   `length` double NOT NULL DEFAULT '0',
   `status` int(11) NOT NULL DEFAULT '0',
+  `sort` int(11) DEFAULT NULL,
   `approved_status` int(11) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -3180,26 +4584,47 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `parent`, `variant_id`, `product_type`, `name`, `slug`, `shop_id`, `thumbnail`, `category_id`, `subcategory_id`, `childcategory_id`, `featured`, `price`, `sale_price`, `final_price`, `description`, `short_description`, `user_id`, `create_status`, `inventory_status`, `width`, `height`, `weight`, `length`, `status`, `approved_status`, `created_at`, `updated_at`) VALUES
-(26, 0, 0, 1, 'Color Block Men Hooded Neck Grey, White T-Shirt', 'color-block-men-hooded-neck-grey-white-t-shirt', 1, 'images/products/1581002307BHlEqV2UmDltazxZZhYBxxlrockstaraquawhitehoodiewrathoriginalimafmdtnbwhphue5.jpeg', 1, 3, 153, 1, 0, 0, 0, '<p>Color Block Men Hooded Neck Grey, White T-Shirt</p>', 'Color Block Men Hooded Neck Grey, White T-Shirt', 31, 1, 0, 0, 0, 0, 0, 1, 1, '2020-02-06 09:38:44', '2020-02-18 04:20:26'),
-(27, 26, 1, 1, 'Color Block Men Hooded Neck Grey, White T-Shirt', 'color-block-men-hooded-neck-grey-white-t-shirt-1', 1, 'images/products/1581002018BkAnaGhkfG1B4oI9385isrockstargraywhitehoodiewrathoriginalimafmdtnggwjgktg.jpeg', 1, 3, 153, 0, 599, 100, 499, NULL, NULL, 31, 1, 0, 0, 0, 0, 0, 1, 1, '2020-02-06 09:44:29', '2020-02-18 04:20:26'),
-(28, 26, 5, 1, 'Color Block Men Hooded Neck Grey, White T-Shirt', 'color-block-men-hooded-neck-grey-white-t-shirt-2', 1, 'images/products/1581002069su954CC3Qlg0ir84vVlgxxlrockstaraquawhitehoodiewrathoriginalimafmdtnbwhphue5.jpeg', 1, 3, 153, 0, 599, 120, 479, NULL, NULL, 31, 1, 0, 0, 0, 0, 0, 1, 1, '2020-02-06 09:45:21', '2020-02-18 04:20:26'),
-(29, 26, 9, 1, 'Color Block Men Hooded Neck Grey, White T-Shirt', 'color-block-men-hooded-neck-grey-white-t-shirt-3', 1, 'images/products/1581002121vtBBU6wfDzsqqBfGooZqsrockstargraywhitehoodiewrathoriginalimafmdtnggwjgktg.jpeg', 1, 3, 153, 0, 699, 150, 549, NULL, NULL, 31, 1, 0, 0, 0, 0, 0, 1, 1, '2020-02-06 09:46:05', '2020-02-18 04:20:26'),
-(30, 26, 13, 1, 'Color Block Men Hooded Neck Grey, White T-Shirt', 'color-block-men-hooded-neck-grey-white-t-shirt-4', 1, 'images/products/1581002165Um4gq6z6HgiUDRnGbnzEsrockstargraywhitehoodiewrathoriginalimafmdtnggwjgktg.jpeg', 1, 3, 153, 0, 699, 200, 499, NULL, NULL, 31, 1, 0, 0, 0, 0, 0, 1, 1, '2020-02-06 09:46:44', '2020-02-18 04:20:26'),
-(31, 26, 17, 1, 'Color Block Men Hooded Neck Grey, White T-Shirt', 'color-block-men-hooded-neck-grey-white-t-shirt-5', 1, 'images/products/1581002204xasmQwCAcf9yBdF5qmwAsts224wrathoriginalimafmgk3rwnpenhc.jpeg', 1, 3, 153, 0, 599, 120, 479, NULL, NULL, 31, 1, 0, 0, 0, 0, 0, 1, 1, '2020-02-06 09:47:35', '2020-02-18 04:20:26'),
-(32, 26, 21, 1, 'Color Block Men Hooded Neck Grey, White T-Shirt', 'color-block-men-hooded-neck-grey-white-t-shirt-6', 1, 'images/products/1581002254oe90pF9ndmp2jYBr9EtUsts224wrathoriginalimafmgk3rwnpenhc.jpeg', 1, 3, 153, 0, 700, 100, 600, NULL, NULL, 31, 1, 0, 0, 0, 0, 0, 1, 1, '2020-02-06 09:48:21', '2020-02-18 04:20:26'),
-(33, 26, 25, 1, 'Color Block Men Hooded Neck Grey, White T-Shirt', 'color-block-men-hooded-neck-grey-white-t-shirt-7', 1, 'images/products/1581002301MTneF6m4wOmB68h1haMysts224wrathoriginalimafmgk3rwnpenhc.jpeg', 1, 3, 153, 0, 566, 180, 386, NULL, NULL, 31, 1, 0, 0, 0, 0, 0, 1, 0, '2020-02-06 09:50:10', '2020-02-18 04:20:26'),
-(34, 0, 0, 0, 'Color Block Men Hooded Neck Red, White, Blue T-Shirt', 'color-block-men-hooded-neck-red-white-blue-t-shirt', 1, 'images/products/1581088157xa6JG2iZTEMaCR4WrqIsm61ywnleweloriginalimafgxd7dfg7uub2.jpeg', 1, 3, 153, 0, 700, 150, 550, '<p>Color Block Men Hooded Neck Red, White, Blue T-Shirt</p>', 'Color Block Men Hooded Neck Red, White, Blue T-Shirt', 31, 1, 0, 1, 1, 1, 1, 1, 1, '2020-02-07 09:34:36', '2020-02-18 02:56:02'),
-(35, 0, 0, 1, 'Blue T-shirt', 'blue-t-shirt', 2, 'images/products/1581407650oxzeJgPhdS3zlaC5DRyg46bfrybluesht02beingfaboriginalimaekjr8ymhnxznp.jpeg', 1, 3, 153, 0, 0, 0, 0, '<p>Lorium Epsum is dummy values</p>', 'Lorium Epsum is dummy values', 59, 1, 0, 0, 0, 0, 0, 0, 1, '2020-02-11 02:05:26', '2020-02-11 02:24:10'),
-(36, 35, 52, 1, 'Blue T-shirt', 'blue-t-shirt-1', 2, 'images/products/1581407504n4AwVJeA8BScY6izEP8EAuthenticRoyalBlueShirtforMen5263747.jpg', 1, 3, 153, 0, 100, 50, 50, NULL, NULL, 59, 1, 0, 0, 0, 0, 0, 0, 0, '2020-02-11 02:22:39', '2020-02-11 02:40:27'),
-(37, 35, 54, 1, 'Blue T-shirt', 'blue-t-shirt-2', 2, 'images/products/1581407559PPIShwy8JHFEvvNGI78mAuthenticRoyalBlueShirtforMen5263747.jpg', 1, 3, 153, 0, 120, 100, 20, NULL, NULL, 59, 1, 0, 0, 0, 0, 0, 0, 0, '2020-02-11 02:23:12', '2020-02-11 02:40:28'),
-(38, 0, 0, 1, 'Blue-Tshirt Demo', 'blue-tshirt-demo', 2, 'images/products/1581411922KNYBe4NohMmCbVJsXzWsAuthenticRoyalBlueShirtforMen5263747.jpg', 1, 3, 153, 0, 0, 0, 0, '<p>Lorium Epsum&nbsp;Lorium Epsum&nbsp;Lorium Epsum&nbsp;Lorium Epsum</p>', 'Lorium Epsum', 59, 1, 0, 0, 0, 0, 0, 0, 1, '2020-02-11 03:21:19', '2020-02-18 02:51:18'),
-(39, 38, 59, 1, 'Blue-Tshirt Demo', 'blue-tshirt-demo-1', 2, 'images/products/1581411359zgrUnpq6y01B1vdYkWLIAuthenticRoyalBlueShirtforMen5263747.jpg', 1, 3, 153, 0, 100, 50, 50, NULL, NULL, 59, 1, 0, 0, 0, 0, 0, 0, 1, '2020-02-11 03:27:04', '2020-02-18 02:51:18'),
-(40, 38, 61, 1, 'Blue-Tshirt Demo', 'blue-tshirt-demo-2', 2, 'images/products/1581411424ZwGI9XiXnNySAvgGgQS346bfrybluesht02beingfaboriginalimaekjr8ymhnxznp.jpeg', 1, 3, 153, 0, 150, 100, 50, NULL, NULL, 59, 1, 0, 0, 0, 0, 0, 0, 1, '2020-02-11 03:31:55', '2020-02-18 02:51:18'),
-(41, 38, 67, 1, 'Blue-Tshirt Demo', 'blue-tshirt-demo-3', 2, 'images/products/1581411785jT8xfiGJwCwAxSHddqho46bfrybluesht02beingfaboriginalimaekjr8ymhnxznp.jpeg', 1, 3, 153, 0, 100, 50, 50, NULL, NULL, 59, 1, 0, 0, 0, 0, 0, 0, 1, '2020-02-11 03:36:13', '2020-02-18 02:51:18'),
-(42, 0, 0, 1, 'Men Checkered Casual Spread Shirt', 'men-checkered-casual-spread-shirt', 1, 'images/products/1581424891z9a4rt9bNTYSfHT6l5Zb44pcsfcslbe59477peterenglandoriginalimafnwjx2ymghewq.jpeg', 1, 3, 154, 0, 0, 0, 0, '<p>Men Checkered Casual Spread Shirt</p>', 'Men Checkered Casual Spread Shirt', 31, 1, 0, 0, 0, 0, 0, 1, 0, '2020-02-11 07:01:33', '2020-02-25 05:49:37'),
-(43, 42, 76, 1, 'Men Checkered Casual Spread Shirt', 'men-checkered-casual-spread-shirt-1', 1, 'images/products/1581424849efFj8uIdhI6ZhDY6eP8544pcsfcslbe59477peterenglandoriginalimafnwjx2ymghewq.jpeg', 1, 3, 154, 0, 700, 100, 600, NULL, NULL, 31, 1, 0, 0, 0, 0, 0, 1, 0, '2020-02-11 07:11:27', '2020-02-25 05:49:37'),
-(44, 42, 79, 1, 'Men Checkered Casual Spread Shirt', 'men-checkered-casual-spread-shirt-2', 1, 'images/products/15814248871zHJK3XcLRfZx86jt3QE44pcsfcslbe59477peterenglandoriginalimafnwjxmnbyu4am.jpeg', 1, 3, 154, 0, 900, 100, 800, NULL, NULL, 31, 1, 0, 0, 0, 0, 0, 1, 0, '2020-02-11 07:11:31', '2020-02-25 05:49:37');
+INSERT INTO `products` (`id`, `parent`, `variant_id`, `product_type`, `name`, `slug`, `vou_prod_type`, `voucher`, `shop_id`, `thumbnail`, `category_id`, `subcategory_id`, `childcategory_id`, `featured`, `price`, `tag`, `sale_price`, `final_price`, `description`, `short_description`, `user_id`, `create_status`, `inventory_status`, `width`, `height`, `weight`, `length`, `status`, `sort`, `approved_status`, `created_at`, `updated_at`) VALUES
+(26, 0, 0, 1, 'Color Block Men Hooded Neck Grey, White T-Shirt', 'color-block-men-hooded-neck-grey-white-t-shirt', NULL, NULL, 1, 'images/products/1581002307BHlEqV2UmDltazxZZhYBxxlrockstaraquawhitehoodiewrathoriginalimafmdtnbwhphue5.jpeg', 1, 3, 153, 1, 0, NULL, 0, 0, '<p>Color Block Men Hooded Neck Grey, White T-Shirt</p>', 'Color Block Men Hooded Neck Grey, White T-Shirt', 31, 1, 0, 0, 0, 0, 0, 1, NULL, 1, '2020-02-06 09:38:44', '2020-02-18 04:20:26'),
+(27, 26, 1, 1, 'Color Block Men Hooded Neck Grey, White T-Shirt', 'color-block-men-hooded-neck-grey-white-t-shirt-1', NULL, NULL, 1, 'images/products/1581002018BkAnaGhkfG1B4oI9385isrockstargraywhitehoodiewrathoriginalimafmdtnggwjgktg.jpeg', 1, 3, 153, 0, 599, NULL, 100, 499, NULL, NULL, 31, 1, 0, 0, 0, 0, 0, 1, NULL, 1, '2020-02-06 09:44:29', '2020-02-18 04:20:26'),
+(28, 26, 5, 1, 'Color Block Men Hooded Neck Grey, White T-Shirt', 'color-block-men-hooded-neck-grey-white-t-shirt-2', NULL, NULL, 1, 'images/products/1581002069su954CC3Qlg0ir84vVlgxxlrockstaraquawhitehoodiewrathoriginalimafmdtnbwhphue5.jpeg', 1, 3, 153, 0, 599, NULL, 120, 479, NULL, NULL, 31, 1, 0, 0, 0, 0, 0, 1, NULL, 1, '2020-02-06 09:45:21', '2020-02-18 04:20:26'),
+(29, 26, 9, 1, 'Color Block Men Hooded Neck Grey, White T-Shirt', 'color-block-men-hooded-neck-grey-white-t-shirt-3', NULL, NULL, 1, 'images/products/1581002121vtBBU6wfDzsqqBfGooZqsrockstargraywhitehoodiewrathoriginalimafmdtnggwjgktg.jpeg', 1, 3, 153, 0, 699, NULL, 150, 549, NULL, NULL, 31, 1, 0, 0, 0, 0, 0, 1, NULL, 1, '2020-02-06 09:46:05', '2020-02-18 04:20:26'),
+(30, 26, 13, 1, 'Color Block Men Hooded Neck Grey, White T-Shirt', 'color-block-men-hooded-neck-grey-white-t-shirt-4', NULL, NULL, 1, 'images/products/1581002165Um4gq6z6HgiUDRnGbnzEsrockstargraywhitehoodiewrathoriginalimafmdtnggwjgktg.jpeg', 1, 3, 153, 0, 699, NULL, 200, 499, NULL, NULL, 31, 1, 0, 0, 0, 0, 0, 1, NULL, 1, '2020-02-06 09:46:44', '2020-02-18 04:20:26'),
+(31, 26, 17, 1, 'Color Block Men Hooded Neck Grey, White T-Shirt', 'color-block-men-hooded-neck-grey-white-t-shirt-5', NULL, NULL, 1, 'images/products/1581002204xasmQwCAcf9yBdF5qmwAsts224wrathoriginalimafmgk3rwnpenhc.jpeg', 1, 3, 153, 0, 599, NULL, 120, 479, NULL, NULL, 31, 1, 0, 0, 0, 0, 0, 1, NULL, 1, '2020-02-06 09:47:35', '2020-02-18 04:20:26'),
+(32, 26, 21, 1, 'Color Block Men Hooded Neck Grey, White T-Shirt', 'color-block-men-hooded-neck-grey-white-t-shirt-6', NULL, NULL, 1, 'images/products/1581002254oe90pF9ndmp2jYBr9EtUsts224wrathoriginalimafmgk3rwnpenhc.jpeg', 1, 3, 153, 0, 700, NULL, 100, 600, NULL, NULL, 31, 1, 0, 0, 0, 0, 0, 1, NULL, 1, '2020-02-06 09:48:21', '2020-02-18 04:20:26'),
+(33, 26, 25, 1, 'Color Block Men Hooded Neck Grey, White T-Shirt', 'color-block-men-hooded-neck-grey-white-t-shirt-7', NULL, NULL, 1, 'images/products/1581002301MTneF6m4wOmB68h1haMysts224wrathoriginalimafmgk3rwnpenhc.jpeg', 1, 3, 153, 0, 566, NULL, 180, 386, NULL, NULL, 31, 1, 0, 0, 0, 0, 0, 1, NULL, 0, '2020-02-06 09:50:10', '2020-02-18 04:20:26'),
+(34, 0, 0, 0, 'Color Block Men Hooded Neck Red, White, Blue T-Shirt', 'color-block-men-hooded-neck-red-white-blue-t-shirt', NULL, NULL, 1, 'images/products/1581088157xa6JG2iZTEMaCR4WrqIsm61ywnleweloriginalimafgxd7dfg7uub2.jpeg', 1, 3, 153, 0, 700, NULL, 150, 550, '<p>Color Block Men Hooded Neck Red, White, Blue T-Shirt</p>', 'Color Block Men Hooded Neck Red, White, Blue T-Shirt', 31, 1, 0, 1, 1, 1, 1, 1, NULL, 1, '2020-02-07 09:34:36', '2020-02-18 02:56:02'),
+(35, 0, 0, 1, 'Blue T-shirt', 'blue-t-shirt', NULL, NULL, 2, 'images/products/1581407650oxzeJgPhdS3zlaC5DRyg46bfrybluesht02beingfaboriginalimaekjr8ymhnxznp.jpeg', 1, 3, 153, 0, 0, NULL, 0, 0, '<p>Lorium Epsum is dummy values</p>', 'Lorium Epsum is dummy values', 59, 1, 0, 0, 0, 0, 0, 0, NULL, 1, '2020-02-11 02:05:26', '2020-02-11 02:24:10'),
+(36, 35, 52, 1, 'Blue T-shirt', 'blue-t-shirt-1', NULL, NULL, 2, 'images/products/1581407504n4AwVJeA8BScY6izEP8EAuthenticRoyalBlueShirtforMen5263747.jpg', 1, 3, 153, 0, 100, NULL, 50, 50, NULL, NULL, 59, 1, 0, 0, 0, 0, 0, 0, NULL, 0, '2020-02-11 02:22:39', '2020-02-11 02:40:27'),
+(37, 35, 54, 1, 'Blue T-shirt', 'blue-t-shirt-2', NULL, NULL, 2, 'images/products/1581407559PPIShwy8JHFEvvNGI78mAuthenticRoyalBlueShirtforMen5263747.jpg', 1, 3, 153, 0, 120, NULL, 100, 20, NULL, NULL, 59, 1, 0, 0, 0, 0, 0, 0, NULL, 0, '2020-02-11 02:23:12', '2020-02-11 02:40:28'),
+(38, 0, 0, 1, 'Blue-Tshirt Demo', 'blue-tshirt-demo', NULL, NULL, 2, 'images/products/1581411922KNYBe4NohMmCbVJsXzWsAuthenticRoyalBlueShirtforMen5263747.jpg', 1, 3, 153, 0, 0, NULL, 0, 0, '<p>Lorium Epsum&nbsp;Lorium Epsum&nbsp;Lorium Epsum&nbsp;Lorium Epsum</p>', 'Lorium Epsum', 59, 1, 0, 0, 0, 0, 0, 0, NULL, 1, '2020-02-11 03:21:19', '2020-02-18 02:51:18'),
+(39, 38, 59, 1, 'Blue-Tshirt Demo', 'blue-tshirt-demo-1', NULL, NULL, 2, 'images/products/1581411359zgrUnpq6y01B1vdYkWLIAuthenticRoyalBlueShirtforMen5263747.jpg', 1, 3, 153, 0, 100, NULL, 50, 50, NULL, NULL, 59, 1, 0, 0, 0, 0, 0, 0, NULL, 1, '2020-02-11 03:27:04', '2020-02-18 02:51:18'),
+(40, 38, 61, 1, 'Blue-Tshirt Demo', 'blue-tshirt-demo-2', NULL, NULL, 2, 'images/products/1581411424ZwGI9XiXnNySAvgGgQS346bfrybluesht02beingfaboriginalimaekjr8ymhnxznp.jpeg', 1, 3, 153, 0, 150, NULL, 100, 50, NULL, NULL, 59, 1, 0, 0, 0, 0, 0, 0, NULL, 1, '2020-02-11 03:31:55', '2020-02-18 02:51:18'),
+(41, 38, 67, 1, 'Blue-Tshirt Demo', 'blue-tshirt-demo-3', NULL, NULL, 2, 'images/products/1581411785jT8xfiGJwCwAxSHddqho46bfrybluesht02beingfaboriginalimaekjr8ymhnxznp.jpeg', 1, 3, 153, 0, 100, NULL, 50, 50, NULL, NULL, 59, 1, 0, 0, 0, 0, 0, 0, NULL, 1, '2020-02-11 03:36:13', '2020-02-18 02:51:18'),
+(42, 0, 0, 1, 'Men Checkered Casual Spread Shirt', 'men-checkered-casual-spread-shirt', NULL, NULL, 1, 'images/products/1581424891z9a4rt9bNTYSfHT6l5Zb44pcsfcslbe59477peterenglandoriginalimafnwjx2ymghewq.jpeg', 1, 3, 154, 0, 0, NULL, 0, 0, '<p>Men Checkered Casual Spread Shirt</p>', 'Men Checkered Casual Spread Shirt', 31, 1, 0, 0, 0, 0, 0, 1, NULL, 0, '2020-02-11 07:01:33', '2020-02-25 05:49:37'),
+(43, 42, 76, 1, 'Men Checkered Casual Spread Shirt', 'men-checkered-casual-spread-shirt-1', NULL, NULL, 1, 'images/products/1581424849efFj8uIdhI6ZhDY6eP8544pcsfcslbe59477peterenglandoriginalimafnwjx2ymghewq.jpeg', 1, 3, 154, 0, 700, NULL, 100, 600, NULL, NULL, 31, 1, 0, 0, 0, 0, 0, 1, NULL, 0, '2020-02-11 07:11:27', '2020-02-25 05:49:37'),
+(44, 42, 79, 1, 'Men Checkered Casual Spread Shirt', 'men-checkered-casual-spread-shirt-2', NULL, NULL, 1, 'images/products/15814248871zHJK3XcLRfZx86jt3QE44pcsfcslbe59477peterenglandoriginalimafnwjxmnbyu4am.jpeg', 1, 3, 154, 0, 900, NULL, 100, 800, NULL, NULL, 31, 1, 0, 0, 0, 0, 0, 1, NULL, 0, '2020-02-11 07:11:31', '2020-02-25 05:49:37'),
+(45, 0, 0, 0, 'Men Shirt11', 'men-shirt', 'normal', 0, 0, 'images/products/1587654808VLUJfEKOic4yyboX1MAq2.jpeg', 192, 193, 0, 0, 120, 'Super Product!', 10, 110, '<p>aaaaaaaaaaaa</p>', 'aaaaaaaa', 1, 1, 0, 10, 10, 8, 100, 1, 1, 0, '2020-04-20 03:20:31', '2020-07-01 02:37:51'),
+(49, 0, 0, 1, 'COLOR BLOCK MEN HOODED NECK GREY, WHITE T-SHIRT', 'aaaaaaaa', 'normal', 0, 0, 'images/products/15876259593jfwmydwayugMRolFtNv1.jpeg', 192, 194, 0, 0, 200, NULL, 30, 170, '<p>Color Block Men Hooded Neck Grey, White T-Shirt</p>\r\n\r\n<form data-action="http://49.249.236.30:8654/hycinth/public/shop/ajax/add-to-cart/product/26" id="ADDToCART">&nbsp;</form>', 'Color Block Men Hooded Neck Grey, White T-Shirt', 1, 1, 0, 10, 10, 2, 10, 1, 5, 0, '2020-04-22 04:02:36', '2020-07-01 02:38:46'),
+(52, 49, 82, 1, 'COLOR BLOCK MEN HOODED NECK GREY, WHITE T-SHIRT', 'aaaaaaaa-1', NULL, NULL, 0, 'images/products/1587625954igvKUITE2eSM9vIEPU1k2.jpeg', 192, 194, 0, 0, 100, NULL, 30, 70, NULL, NULL, 1, 1, 0, 0, 0, 0, 0, 0, NULL, 0, '2020-04-22 10:15:06', '2020-04-23 01:42:39'),
+(53, 49, 85, 1, 'COLOR BLOCK MEN HOODED NECK GREY, WHITE T-SHIRT', 'aaaaaaaa-2', NULL, NULL, 0, 'images/products/1587625932yMUdoxQAS9DoHHBHiYTX1.jpeg', 192, 194, 0, 0, 100, NULL, 20, 80, NULL, NULL, 1, 1, 0, 0, 0, 0, 0, 0, NULL, 0, '2020-04-23 00:54:01', '2020-04-23 01:42:39'),
+(54, 0, 0, 1, 'DRH Tennis Racket', 'mini-tennis-balls', 'normal', 0, 0, 'images/products/15879917839WjZHLSTM1u12ThVrvVRtennisracketPNG.png', 197, 198, 0, 0, 10, NULL, 0, 10, '<p>These Mini Tennis balls are perfect way to give your child something to use when learning the game of tennis</p>', 'Check out these Mini Tennis rackets on sale by DRH Sports', 1, 1, 0, 0, 0, 0, 0, 1, 3, 0, '2020-04-23 11:48:59', '2020-07-01 02:38:38'),
+(55, 54, 101, 1, 'DRH Tennis Racket', 'mini-tennis-balls-1', NULL, NULL, 0, 'images/products/15878165289yoRG8IhzeBIevMVWBinMiniRedTennisBallsv2.jpg', 197, 198, 0, 0, 10, NULL, 5, 5, NULL, NULL, 1, 1, 0, 0, 0, 0, 0, 1, NULL, 0, '2020-04-25 05:38:15', '2020-04-25 14:04:50'),
+(56, 54, 103, 1, 'DRH Tennis Racket', 'mini-tennis-balls-2', NULL, NULL, 0, 'images/products/1587813977GRXgGvMX24Ew642d8I2RMiniOrangeTennisBalls.jpg', 197, 198, 0, 0, 8, NULL, 7, 1, NULL, NULL, 1, 1, 0, 0, 0, 0, 0, 1, NULL, 0, '2020-04-25 05:38:49', '2020-04-25 14:04:50'),
+(57, 54, 105, 1, 'DRH Tennis Racket', 'mini-tennis-balls-3', NULL, NULL, 0, 'images/products/1587814002L2r9jKOMzPbUTL1q3xF1MiniGreenTennisBalls.jpg', 197, 198, 0, 0, 15, NULL, 10, 5, NULL, NULL, 1, 1, 0, 0, 0, 0, 0, 1, NULL, 0, '2020-04-25 05:39:43', '2020-04-25 14:04:50'),
+(58, 0, 1, 1, 'DRH Sports Training Hoody', 'drh-sports-training-hoody', 'normal', 0, 0, 'images/products/1587815143EzCGhzQrjETyPuYOdQMNHoody.png', 192, 196, 0, 0, 100, NULL, 10, 90, '<p>dhdfhfg</p>', 'Check out this amazing hoody by DRH', 1, 1, 0, 10, 10, 10, 10, 1, 6, 0, '2020-04-25 06:02:57', '2020-07-02 01:42:02'),
+(59, 58, 115, 1, 'DRH Sports Training Hoody', 'drh-sports-training-hoody-1', NULL, NULL, 0, 'images/products/1587815017ct9ixxuqH0lvLUJpmXSWRedHoody.jpg', 192, 196, 0, 0, 20, NULL, 0, 20, NULL, NULL, 1, 1, 0, 0, 0, 0, 0, 1, NULL, 0, '2020-04-25 06:14:23', '2020-04-25 06:40:39'),
+(60, 58, 118, 1, 'DRH Sports Training Hoody', 'drh-sports-training-hoody-2', NULL, NULL, 0, 'images/products/15878150637bBxmUBp2vIs3xbYz17oRedHoody.jpg', 192, 196, 0, 0, 10, NULL, 0, 10, NULL, NULL, 1, 1, 0, 0, 0, 0, 0, 1, NULL, 0, '2020-04-25 06:15:12', '2020-04-25 06:40:46'),
+(61, 58, 121, 1, 'DRH Sports Training Hoody', 'drh-sports-training-hoody-3', NULL, NULL, 0, 'images/products/1587815112vet9QZIOWY0CD0KM0bZmGreenhoody.jpg', 192, 196, 0, 0, 10, NULL, 0, 10, NULL, NULL, 1, 1, 0, 0, 0, 0, 0, 1, NULL, 0, '2020-04-25 06:15:43', '2020-04-25 06:40:49'),
+(62, 0, 0, 0, 'Mini Tennis Balls (x36)', 'mini-tennis-balls-x36', 'normal', 0, 0, 'images/products/1587816180F17hToFuKYi4D4M9AeoBMiniredballbucket.jpg', 197, 198, 0, 0, 45, 'Coming Soon', 0, 45, '<ul>\r\n	<li>dhdhgsdfsdf</li>\r\n	<li>sfsdfsfs<span style="font-size:28px;"><span style="font-family:Comic Sans MS,cursive;">dfsdf&nbsp; sv fsdf sfsfsdf</span></span></li>\r\n	<li>sdfwopafjpefwafkn lfksda</li>\r\n	<li>s;fjasejf;w<strong>ejg jfosjfsdfk#\\f</strong></li>\r\n</ul>\r\n\r\n<p>rewerjwefmwefakef</p>\r\n\r\n<p>fsdfsdfsdf</p>', 'Short DescriptionShort DescriptionShort DescriptionShort DescriptionfghfghhShort DescriptionShort DescriptionShort DescriptionShort Descriptio', 1, 1, 0, 1, 1, 1, 1, 1, 2, 0, '2020-04-25 06:18:31', '2020-07-01 02:38:00'),
+(66, 64, 131, 1, 'GReeen hoody', 'greeen-hoody-1', NULL, NULL, 0, 'images/products/1589212797pw5EwByHW1IHyLYiWYdBactivitiy1.jpg', 202, 203, 0, 0, 100, NULL, 10, 90, NULL, NULL, 1, 1, 0, 0, 0, 0, 0, 1, NULL, 0, '2020-05-11 10:30:04', '2020-05-12 00:59:30'),
+(67, 64, 134, 1, 'GReeen hoody', 'greeen-hoody-2', NULL, NULL, 0, 'images/products/1589213240cDKe5Q2huTj4jVPO9DHRslide1.png', 202, 203, 0, 0, 100, NULL, 10, 90, NULL, NULL, 1, 1, 0, 0, 0, 0, 0, 1, NULL, 0, '2020-05-11 10:46:01', '2020-05-12 00:59:30'),
+(68, 64, 137, 1, 'GReeen hoody', 'greeen-hoody-3', NULL, NULL, 0, 'images/products/15892137614NJ6S6lM6BR0JVfdsl6Eactivitiy1.jpg', 202, 203, 0, 0, 100, NULL, 10, 90, NULL, NULL, 1, 1, 0, 0, 0, 0, 0, 1, NULL, 0, '2020-05-11 10:46:06', '2020-05-12 00:59:30'),
+(75, 0, 0, 1, 'shirt', 'shirt', 'normal', 0, 0, 'images/products/1590058520woew8LBNlGpDsCNuCC7qshirt3.jpg', 192, 193, 0, 0, 1000, 'shirt', 500, 500, '<p>A shirt is a&nbsp;<b>cloth garment for the upper body</b>&nbsp;(from the neck to the waist). Originally an undergarment worn exclusively by men, it has become, in American English, a catch-all term for a broad variety of upper-body garments and undergarments.</p>', 'A shirt is a cloth garment for the upper body (from the neck to the waist). Originally an undergarment worn exclusively by men, it has become, in American English, a catch-all term for a broad variety of upper-body garments and undergarments.', 1, 1, 0, 20, 20, 2, 20, 0, 10, 0, '2020-05-21 03:40:50', '2020-07-01 02:38:56'),
+(76, 0, 0, 1, 'shirt', 'shirt-3', 'normal', 0, 0, 'images/products/1590135053YysK78oMqSwnwNJz2j6fshirt2.jpg', 192, 193, 0, 0, 100, 'Shirt', 50, 50, '<p>Each&nbsp;<b>shirt</b>&nbsp;differs in shape, cut and styles of collars and sleeves. These are made of fabrics such as cotton, silk, polyester and synthetic blends. The broad categories of shirts for men include button-down, dress, jerseys, polo t-shirts, sweatshirt, tees and nightwear. Button down ones are casual shirts which are worn with casual or semi-formal pants. Dress shirts are formal versions. These are fitted perfectly and cannot be left untucked as it is worn exclusively in a formal setting ...</p>', 'Each shirt differs in shape, cut and styles of collars and sleeves. These are made of fabrics such as cotton, silk, polyester and synthetic blends. The broad categories of shirts for men include button-down, dress, jerseys, polo t-shirts, sweatshirt, tees and nightwear. Button down ones are casual shirts which are worn with casual or semi-formal pants. Dress shirts are formal versions. These are fitted perfectly and cannot be left untucked as it is worn exclusively in a formal setting ...', 1, 1, 0, 2, 2, 2, 2, 1, 2, 0, '2020-05-21 05:40:55', '2020-07-01 02:38:06'),
+(77, 75, 146, 1, 'shirt', 'shirt-1', NULL, NULL, 0, 'images/products/1590059539AEICfmZid3omETbUwTQOdrh.png', 192, 193, 0, 0, 100, NULL, 50, 50, NULL, NULL, 1, 1, 0, 0, 0, 0, 0, 0, NULL, 0, '2020-05-21 05:42:29', '2020-05-21 05:42:29'),
+(78, 75, 153, 1, 'shirt', 'shirt-2', NULL, NULL, 0, 'images/products/15900600031ySQ2Ox3WgxA5yvtnGiSshirt6.jpg', 192, 193, 0, 0, 40, NULL, 20, 20, NULL, NULL, 1, 1, 0, 0, 0, 0, 0, 0, NULL, 0, '2020-05-21 06:12:26', '2020-05-21 06:12:26'),
+(82, 0, 0, 0, 'Camp GO - Full Day Voucher *50% OFF*', 'voucher', 'voucher', 2, 0, 'images/products/1593673740sgWu2NAqzHLasa0irj2qvoucher1.png', 202, 0, 0, 0, 13, '50% OFF', 0, 13, '<p style="text-align: center;"><span style="font-size:22px;"><b>Buy this Camp GO voucher now&nbsp;</b><br />\r\nand get 50% off for a full day</span></p>', 'Buy this voucher and get 50% off a full day at Camp GO!', 1, 1, 0, 10, 10, 10, 10, 1, NULL, 0, '2020-07-02 01:36:31', '2020-07-16 01:45:45');
 
 -- --------------------------------------------------------
 
@@ -3273,7 +4698,48 @@ INSERT INTO `product_assigned_variations` (`id`, `parent`, `price`, `sale_price`
 (78, 76, 0, 0, 0, 42, 1, 31, 0, 0, 0, 0, 0, 0, 'sizes', 4, NULL, '2020-02-11 07:10:49', '2020-02-11 07:10:49'),
 (79, 0, 900, 100, 800, 42, 1, 31, 1, 1, 1, 1, 1, 1, NULL, NULL, 'images/products/15814248871zHJK3XcLRfZx86jt3QE44pcsfcslbe59477peterenglandoriginalimafnwjxmnbyu4am.jpeg', '2020-02-11 07:11:27', '2020-02-11 07:11:27'),
 (80, 79, 0, 0, 0, 42, 1, 31, 0, 0, 0, 0, 0, 0, 'colors', 32, NULL, '2020-02-11 07:11:27', '2020-02-11 07:11:27'),
-(81, 79, 0, 0, 0, 42, 1, 31, 0, 0, 0, 0, 0, 0, 'sizes', 4, NULL, '2020-02-11 07:11:27', '2020-02-11 07:11:27');
+(81, 79, 0, 0, 0, 42, 1, 31, 0, 0, 0, 0, 0, 0, 'sizes', 4, NULL, '2020-02-11 07:11:27', '2020-02-11 07:11:27'),
+(82, 0, 100, 30, 70, 49, 0, 1, 1, 1, 10, 10, 10, 10, NULL, NULL, 'images/products/1587625954igvKUITE2eSM9vIEPU1k2.jpeg', '2020-04-22 10:14:47', '2020-04-23 01:42:34'),
+(85, 0, 100, 20, 80, 49, 0, 1, 1, 1, 10, 10, 10, 10, NULL, NULL, 'images/products/1587625932yMUdoxQAS9DoHHBHiYTX1.jpeg', '2020-04-23 00:53:54', '2020-04-23 01:42:12'),
+(97, 85, 0, 0, 0, 49, 0, 1, 0, 0, 0, 0, 0, 0, 'colors', 22, NULL, '2020-04-23 01:42:12', '2020-04-23 01:42:12'),
+(98, 85, 0, 0, 0, 49, 0, 1, 0, 0, 0, 0, 0, 0, 'sizes', 6, NULL, '2020-04-23 01:42:12', '2020-04-23 01:42:12'),
+(99, 82, 0, 0, 0, 49, 0, 1, 0, 0, 0, 0, 0, 0, 'colors', 13, NULL, '2020-04-23 01:42:34', '2020-04-23 01:42:34'),
+(100, 82, 0, 0, 0, 49, 0, 1, 0, 0, 0, 0, 0, 0, 'sizes', 5, NULL, '2020-04-23 01:42:34', '2020-04-23 01:42:34'),
+(101, 0, 10, 5, 5, 54, 0, 1, 1, 1, 1, 1, 10, 10, NULL, NULL, 'images/products/15878165289yoRG8IhzeBIevMVWBinMiniRedTennisBallsv2.jpg', '2020-04-25 05:37:29', '2020-04-25 06:38:48'),
+(103, 0, 8, 7, 1, 54, 0, 1, 1, 1, 1, 1, 1, 1, NULL, NULL, 'images/products/1587813977GRXgGvMX24Ew642d8I2RMiniOrangeTennisBalls.jpg', '2020-04-25 05:38:15', '2020-04-25 05:56:17'),
+(105, 0, 15, 10, 5, 54, 0, 1, 1, 1, 1, 1, 1, 1, NULL, NULL, 'images/products/1587814002L2r9jKOMzPbUTL1q3xF1MiniGreenTennisBalls.jpg', '2020-04-25 05:38:49', '2020-04-25 05:56:42'),
+(113, 103, 0, 0, 0, 54, 0, 1, 0, 0, 0, 0, 0, 0, 'tennis-balls', 47, NULL, '2020-04-25 05:56:17', '2020-04-25 05:56:17'),
+(114, 105, 0, 0, 0, 54, 0, 1, 0, 0, 0, 0, 0, 0, 'tennis-balls', 48, NULL, '2020-04-25 05:56:43', '2020-04-25 05:56:43'),
+(115, 0, 20, 0, 20, 58, 0, 1, 1, 1, 1, 1, 1, 1, NULL, NULL, 'images/products/1587815017ct9ixxuqH0lvLUJpmXSWRedHoody.jpg', '2020-04-25 06:13:37', '2020-04-25 06:40:29'),
+(118, 0, 10, 0, 10, 58, 0, 1, 1, 1, 1, 1, 1, 1, NULL, NULL, 'images/products/15878150637bBxmUBp2vIs3xbYz17oRedHoody.jpg', '2020-04-25 06:14:23', '2020-04-25 06:40:39'),
+(121, 0, 10, 0, 10, 58, 0, 1, 1, 1, 1, 1, 1, 1, NULL, NULL, 'images/products/1587815112vet9QZIOWY0CD0KM0bZmGreenhoody.jpg', '2020-04-25 06:15:12', '2020-04-25 06:40:46'),
+(124, 101, 0, 0, 0, 54, 0, 1, 0, 0, 0, 0, 0, 0, 'tennis-balls', 46, NULL, '2020-04-25 06:38:48', '2020-04-25 06:38:48'),
+(127, 118, 0, 0, 0, 58, 0, 1, 0, 0, 0, 0, 0, 0, 'colors', 13, NULL, '2020-04-25 06:40:39', '2020-04-25 06:40:39'),
+(128, 118, 0, 0, 0, 58, 0, 1, 0, 0, 0, 0, 0, 0, 'sizes', 5, NULL, '2020-04-25 06:40:39', '2020-04-25 06:40:39'),
+(131, 0, 100, 10, 90, 64, 0, 1, 1, 1, 1, 1, 1, 1, NULL, NULL, 'images/products/1589212797pw5EwByHW1IHyLYiWYdBactivitiy1.jpg', '2020-05-11 10:29:57', '2020-05-11 10:29:57'),
+(134, 0, 100, 10, 90, 64, 0, 1, 1, 1, 11, 11, 11, 11, NULL, NULL, 'images/products/1589213240cDKe5Q2huTj4jVPO9DHRslide1.png', '2020-05-11 10:37:20', '2020-05-11 10:37:20'),
+(135, 134, 0, 0, 0, 64, 0, 1, 0, 0, 0, 0, 0, 0, 'colors', 30, NULL, '2020-05-11 10:37:20', '2020-05-11 10:37:20'),
+(136, 134, 0, 0, 0, 64, 0, 1, 0, 0, 0, 0, 0, 0, 'sizes', 6, NULL, '2020-05-11 10:37:20', '2020-05-11 10:37:20'),
+(137, 0, 100, 10, 90, 64, 0, 1, 1, 0, 1, 1, 1, 1, NULL, NULL, 'images/products/15892137614NJ6S6lM6BR0JVfdsl6Eactivitiy1.jpg', '2020-05-11 10:46:01', '2020-05-11 10:46:01'),
+(138, 137, 0, 0, 0, 64, 0, 1, 0, 0, 0, 0, 0, 0, 'colors', 29, NULL, '2020-05-11 10:46:01', '2020-05-11 10:46:01'),
+(139, 137, 0, 0, 0, 64, 0, 1, 0, 0, 0, 0, 0, 0, 'sizes', 7, NULL, '2020-05-11 10:46:01', '2020-05-11 10:46:01'),
+(141, 131, 0, 0, 0, 64, 0, 1, 0, 0, 0, 0, 0, 0, 'sizes', 4, NULL, '2020-05-14 01:58:31', '2020-05-14 01:58:31'),
+(142, 131, 0, 0, 0, 64, 0, 1, 0, 0, 0, 0, 0, 0, 'colors', NULL, NULL, '2020-05-14 01:58:31', '2020-05-14 01:58:31'),
+(143, 131, 0, 0, 0, 64, 0, 1, 0, 0, 0, 0, 0, 0, 'weights', NULL, NULL, '2020-05-14 01:58:31', '2020-05-14 01:58:31'),
+(144, 131, 0, 0, 0, 64, 0, 1, 0, 0, 0, 0, 0, 0, 'sizes', 4, NULL, '2020-05-14 01:58:31', '2020-05-14 01:58:31'),
+(145, 131, 0, 0, 0, 64, 0, 1, 0, 0, 0, 0, 0, 0, 'weights', NULL, NULL, '2020-05-14 01:58:31', '2020-05-14 01:58:31'),
+(146, 0, 100, 50, 50, 75, 0, 1, 1, 1, 1, 1, 1, 1, NULL, NULL, 'images/products/1590059539AEICfmZid3omETbUwTQOdrh.png', '2020-05-21 05:42:19', '2020-05-21 05:42:19'),
+(153, 0, 40, 20, 20, 75, 0, 1, 1, 1, 1, 1, 1, 1, NULL, NULL, 'images/products/15900600031ySQ2Ox3WgxA5yvtnGiSshirt6.jpg', '2020-05-21 05:50:03', '2020-05-21 05:50:03'),
+(154, 153, 0, 0, 0, 75, 0, 1, 0, 0, 0, 0, 0, 0, 'colors', 22, NULL, '2020-05-21 05:50:03', '2020-05-21 05:50:03'),
+(155, 153, 0, 0, 0, 75, 0, 1, 0, 0, 0, 0, 0, 0, 'sizes', 5, NULL, '2020-05-21 05:50:03', '2020-05-21 05:50:03'),
+(156, 153, 0, 0, 0, 75, 0, 1, 0, 0, 0, 0, 0, 0, 'styles', 10, NULL, '2020-05-21 05:50:03', '2020-05-21 05:50:03'),
+(157, 146, 0, 0, 0, 75, 0, 1, 0, 0, 0, 0, 0, 0, 'colors', 13, NULL, '2020-05-21 06:12:51', '2020-05-21 06:12:51'),
+(158, 146, 0, 0, 0, 75, 0, 1, 0, 0, 0, 0, 0, 0, 'sizes', 4, NULL, '2020-05-21 06:12:51', '2020-05-21 06:12:51'),
+(159, 146, 0, 0, 0, 75, 0, 1, 0, 0, 0, 0, 0, 0, 'styles', 25, NULL, '2020-05-21 06:12:51', '2020-05-21 06:12:51'),
+(160, 115, 0, 0, 0, 58, 0, 1, 0, 0, 0, 0, 0, 0, 'colors', 13, NULL, '2020-05-28 01:57:56', '2020-05-28 01:57:56'),
+(161, 115, 0, 0, 0, 58, 0, 1, 0, 0, 0, 0, 0, 0, 'sizes', 4, NULL, '2020-05-28 01:57:56', '2020-05-28 01:57:56'),
+(162, 121, 0, 0, 0, 58, 0, 1, 0, 0, 0, 0, 0, 0, 'colors', 22, NULL, '2020-05-28 01:58:15', '2020-05-28 01:58:15'),
+(163, 121, 0, 0, 0, 58, 0, 1, 0, 0, 0, 0, 0, 0, 'sizes', 4, NULL, '2020-05-28 01:58:15', '2020-05-28 01:58:15');
 
 -- --------------------------------------------------------
 
@@ -3338,9 +4804,73 @@ INSERT INTO `product_attributes` (`id`, `parent`, `product_id`, `shop_id`, `user
 (75, 74, 42, 1, 31, 'sizes', 'sizes', 3, 0, 0, '2020-02-11 07:09:58', '2020-02-11 07:09:58'),
 (76, 74, 42, 1, 31, 'sizes', 'sizes', 4, 0, 0, '2020-02-11 07:09:58', '2020-02-11 07:09:58'),
 (77, 74, 42, 1, 31, 'sizes', 'sizes', 5, 0, 0, '2020-02-11 07:09:58', '2020-02-11 07:09:58'),
-(78, 74, 42, 1, 31, 'sizes', 'sizes', 6, 0, 0, '2020-02-11 07:09:58', '2020-02-11 07:09:58'),
-(79, 74, 42, 1, 31, 'sizes', 'sizes', 7, 0, 0, '2020-02-11 07:09:58', '2020-02-11 07:09:58'),
-(80, 74, 42, 1, 31, 'sizes', 'sizes', 8, 0, 0, '2020-02-11 07:09:58', '2020-02-11 07:09:58');
+(79, 74, 45, 0, 1, 'sizes', 'sizes', 7, 0, 0, '2020-02-11 07:09:58', '2020-02-11 07:09:58'),
+(84, 0, 49, 0, 1, 'colors', 'colors', 0, 1, 1, '2020-04-23 01:00:25', '2020-04-23 01:00:25'),
+(85, 84, 49, 0, 1, 'colors', 'colors', 13, 0, 0, '2020-04-23 01:00:25', '2020-04-23 01:00:25'),
+(86, 84, 49, 0, 1, 'colors', 'colors', 22, 0, 0, '2020-04-23 01:00:25', '2020-04-23 01:00:25'),
+(87, 0, 49, 0, 1, 'sizes', 'sizes', 0, 1, 1, '2020-04-23 01:00:25', '2020-04-23 01:00:25'),
+(88, 87, 49, 0, 1, 'sizes', 'sizes', 5, 0, 0, '2020-04-23 01:00:25', '2020-04-23 01:00:25'),
+(89, 87, 49, 0, 1, 'sizes', 'sizes', 6, 0, 0, '2020-04-23 01:00:25', '2020-04-23 01:00:25'),
+(117, 0, 58, 0, 1, 'colors', 'colors', 0, 1, 1, '2020-04-25 06:11:46', '2020-04-25 06:11:46'),
+(118, 117, 58, 0, 1, 'colors', 'colors', 13, 0, 0, '2020-04-25 06:11:46', '2020-04-25 06:11:46'),
+(119, 117, 58, 0, 1, 'colors', 'colors', 22, 0, 0, '2020-04-25 06:11:46', '2020-04-25 06:11:46'),
+(120, 117, 58, 0, 1, 'colors', 'colors', 33, 0, 0, '2020-04-25 06:11:46', '2020-04-25 06:11:46'),
+(121, 0, 58, 0, 1, 'sizes', 'sizes', 0, 1, 1, '2020-04-25 06:11:46', '2020-04-25 06:11:46'),
+(122, 121, 58, 0, 1, 'sizes', 'sizes', 4, 0, 0, '2020-04-25 06:11:46', '2020-04-25 06:11:46'),
+(123, 121, 58, 0, 1, 'sizes', 'sizes', 5, 0, 0, '2020-04-25 06:11:46', '2020-04-25 06:11:46'),
+(126, 0, 54, 0, 1, 'tennis-balls', 'tennis-balls', 0, 1, 1, '2020-04-25 06:37:08', '2020-04-25 06:37:08'),
+(127, 126, 54, 0, 1, 'tennis-balls', 'tennis-balls', 46, 0, 0, '2020-04-25 06:37:08', '2020-04-25 06:37:08'),
+(128, 126, 54, 0, 1, 'tennis-balls', 'tennis-balls', 47, 0, 0, '2020-04-25 06:37:08', '2020-04-25 06:37:08'),
+(129, 126, 54, 0, 1, 'tennis-balls', 'tennis-balls', 48, 0, 0, '2020-04-25 06:37:08', '2020-04-25 06:37:08'),
+(413, 0, 64, 0, 1, 'colors', 'colors', 0, 1, 1, '2020-05-14 02:06:04', '2020-05-14 02:06:04'),
+(414, 413, 64, 0, 1, 'colors', 'colors', 2, 0, 0, '2020-05-14 02:06:04', '2020-05-14 02:06:04'),
+(415, 413, 64, 0, 1, 'colors', 'colors', 29, 0, 0, '2020-05-14 02:06:04', '2020-05-14 02:06:04'),
+(416, 413, 64, 0, 1, 'colors', 'colors', 30, 0, 0, '2020-05-14 02:06:04', '2020-05-14 02:06:04'),
+(417, 0, 64, 0, 1, 'weights', 'weights', 0, 1, 1, '2020-05-14 02:06:04', '2020-05-14 02:06:04'),
+(418, 417, 64, 0, 1, 'weights', 'weights', 18, 0, 0, '2020-05-14 02:06:04', '2020-05-14 02:06:04'),
+(419, 417, 64, 0, 1, 'weights', 'weights', 19, 0, 0, '2020-05-14 02:06:04', '2020-05-14 02:06:04'),
+(420, 417, 64, 0, 1, 'weights', 'weights', 28, 0, 0, '2020-05-14 02:06:04', '2020-05-14 02:06:04'),
+(421, 0, 69, 0, 1, 'colors', 'colors', 0, 1, 1, '2020-05-14 02:18:04', '2020-05-14 02:18:04'),
+(422, 421, 69, 0, 1, 'colors', 'colors', 13, 0, 0, '2020-05-14 02:18:04', '2020-05-14 02:18:04'),
+(423, 421, 69, 0, 1, 'colors', 'colors', 32, 0, 0, '2020-05-14 02:18:04', '2020-05-14 02:18:04'),
+(424, 0, 69, 0, 1, 'sizes', 'sizes', 0, 1, 1, '2020-05-14 02:18:04', '2020-05-14 02:18:04'),
+(425, 424, 69, 0, 1, 'sizes', 'sizes', 7, 0, 0, '2020-05-14 02:18:04', '2020-05-14 02:18:04'),
+(426, 424, 69, 0, 1, 'sizes', 'sizes', 8, 0, 0, '2020-05-14 02:18:04', '2020-05-14 02:18:04'),
+(427, 0, 65, 0, 1, 'colors', 'colors', 0, 1, 1, '2020-05-14 03:01:08', '2020-05-14 03:01:08'),
+(428, 427, 65, 0, 1, 'colors', 'colors', 13, 0, 0, '2020-05-14 03:01:08', '2020-05-14 03:01:08'),
+(429, 427, 65, 0, 1, 'colors', 'colors', 22, 0, 0, '2020-05-14 03:01:08', '2020-05-14 03:01:08'),
+(430, 427, 65, 0, 1, 'colors', 'colors', 29, 0, 0, '2020-05-14 03:01:08', '2020-05-14 03:01:08'),
+(431, 427, 65, 0, 1, 'colors', 'colors', 30, 0, 0, '2020-05-14 03:01:08', '2020-05-14 03:01:08'),
+(432, 427, 65, 0, 1, 'colors', 'colors', 32, 0, 0, '2020-05-14 03:01:08', '2020-05-14 03:01:08'),
+(433, 0, 65, 0, 1, 'sizes', 'sizes', 0, 1, 1, '2020-05-14 03:01:08', '2020-05-14 03:01:08'),
+(434, 433, 65, 0, 1, 'sizes', 'sizes', 4, 0, 0, '2020-05-14 03:01:08', '2020-05-14 03:01:08'),
+(435, 433, 65, 0, 1, 'sizes', 'sizes', 5, 0, 0, '2020-05-14 03:01:08', '2020-05-14 03:01:08'),
+(436, 433, 65, 0, 1, 'sizes', 'sizes', 6, 0, 0, '2020-05-14 03:01:08', '2020-05-14 03:01:08'),
+(437, 433, 65, 0, 1, 'sizes', 'sizes', 7, 0, 0, '2020-05-14 03:01:08', '2020-05-14 03:01:08'),
+(438, 0, 65, 0, 1, 'styles', 'styles', 0, 1, 1, '2020-05-14 03:01:08', '2020-05-14 03:01:08'),
+(439, 438, 65, 0, 1, 'styles', 'styles', 10, 0, 0, '2020-05-14 03:01:08', '2020-05-14 03:01:08'),
+(440, 438, 65, 0, 1, 'styles', 'styles', 25, 0, 0, '2020-05-14 03:01:09', '2020-05-14 03:01:09'),
+(441, 0, 65, 0, 1, 'fabric', 'fabric', 0, 1, 1, '2020-05-14 03:01:09', '2020-05-14 03:01:09'),
+(442, 441, 65, 0, 1, 'fabric', 'fabric', 36, 0, 0, '2020-05-14 03:01:09', '2020-05-14 03:01:09'),
+(448, 0, 71, 0, 1, 'sizes', 'sizes', 0, 1, 0, '2020-05-20 02:28:11', '2020-05-20 02:28:11'),
+(449, 448, 71, 0, 1, 'sizes', 'sizes', 4, 0, 0, '2020-05-20 02:28:11', '2020-05-20 02:28:11'),
+(450, 448, 71, 0, 1, 'sizes', 'sizes', 5, 0, 0, '2020-05-20 02:28:11', '2020-05-20 02:28:11'),
+(451, 448, 71, 0, 1, 'sizes', 'sizes', 6, 0, 0, '2020-05-20 02:28:11', '2020-05-20 02:28:11'),
+(452, 448, 71, 0, 1, 'sizes', 'sizes', 7, 0, 0, '2020-05-20 02:28:11', '2020-05-20 02:28:11'),
+(563, 0, 75, 0, 1, 'colors', 'colors', 0, 1, 1, '2020-05-21 05:34:43', '2020-05-21 05:34:43'),
+(564, 563, 75, 0, 1, 'colors', 'colors', 13, 0, 0, '2020-05-21 05:34:44', '2020-05-21 05:34:44'),
+(565, 563, 75, 0, 1, 'colors', 'colors', 22, 0, 0, '2020-05-21 05:34:44', '2020-05-21 05:34:44'),
+(566, 563, 75, 0, 1, 'colors', 'colors', 30, 0, 0, '2020-05-21 05:34:44', '2020-05-21 05:34:44'),
+(567, 0, 75, 0, 1, 'sizes', 'sizes', 0, 1, 1, '2020-05-21 05:34:44', '2020-05-21 05:34:44'),
+(568, 567, 75, 0, 1, 'sizes', 'sizes', 4, 0, 0, '2020-05-21 05:34:44', '2020-05-21 05:34:44'),
+(569, 567, 75, 0, 1, 'sizes', 'sizes', 5, 0, 0, '2020-05-21 05:34:44', '2020-05-21 05:34:44'),
+(570, 567, 75, 0, 1, 'sizes', 'sizes', 6, 0, 0, '2020-05-21 05:34:44', '2020-05-21 05:34:44'),
+(571, 0, 75, 0, 1, 'styles', 'styles', 0, 1, 1, '2020-05-21 05:34:44', '2020-05-21 05:34:44'),
+(572, 571, 75, 0, 1, 'styles', 'styles', 10, 0, 0, '2020-05-21 05:34:44', '2020-05-21 05:34:44'),
+(573, 571, 75, 0, 1, 'styles', 'styles', 25, 0, 0, '2020-05-21 05:34:44', '2020-05-21 05:34:44'),
+(574, 0, 76, 0, 1, 'colors', 'colors', 0, 1, 1, '2020-05-22 02:40:05', '2020-05-22 02:40:05'),
+(575, 574, 76, 0, 1, 'colors', 'colors', 13, 0, 0, '2020-05-22 02:40:06', '2020-05-22 02:40:06'),
+(576, 574, 76, 0, 1, 'colors', 'colors', 22, 0, 0, '2020-05-22 02:40:06', '2020-05-22 02:40:06');
 
 -- --------------------------------------------------------
 
@@ -3374,36 +4904,51 @@ CREATE TABLE `product_categories` (
 --
 
 INSERT INTO `product_categories` (`id`, `label`, `slug`, `parent`, `subparent`, `sorting`, `featured`, `type`, `template_id`, `image`, `thumbnail_image`, `description`, `meta_title`, `meta_tag`, `meta_description`, `status`, `created_at`, `updated_at`) VALUES
-(156, 'Tennis', 'tennis', 0, 0, 1, 1, 'Course', 1, 'images/products/categories/1584008421ESobNfl47FLFjp5pDBgMfootballcoursesecbg.png', '', NULL, 'Category', 'Category', 'Category', '1', '2020-03-12 04:50:21', '2020-03-20 01:25:00'),
-(157, 'Football', 'football', 0, 0, 2, 1, 'Course', 1, 'images/products/categories/1584008463hpmTUdwxhEuMv4WPh0nEfootballcoursesecbg.png', '', NULL, 'Category', 'Category', 'Category', '1', '2020-03-12 04:51:03', '2020-03-20 01:25:00'),
-(158, 'Schools', 'schools', 0, 0, 3, 1, 'Course', 1, 'images/products/categories/1584008675bUn2L1KzDWADPykUuNijfootballcoursesecbg.png', '', NULL, 'Category', 'Category', 'Category', '1', '2020-03-12 04:54:35', '2020-03-20 01:25:00'),
-(159, 'Beginner', 'beginner', 157, 0, 1, 1, 'Course', 1, 'images/products/categories/1584009035k2DcYpsL2ZsE3H59bMyZfootballcoursesecbg.png', '', NULL, 'Sub-category', 'Sub-category', 'Sub-category', '1', '2020-03-12 05:00:35', '2020-03-15 10:32:01'),
-(160, 'Intermediate', 'intermediate', 157, 0, 2, 1, 'Course', 0, 'images/products/categories/1584009077PYjmnYjlEVUJcZf44cALfootballcoursesecbg.png', '', NULL, 'Sub-category', 'Sub-category', 'Sub-category', '1', '2020-03-12 05:01:17', '2020-03-15 10:32:01'),
-(161, 'Advanced', 'advanced', 157, 0, 3, 1, 'Course', 1, 'images/products/categories/1584009111T9s4knrmnPBFEIgMIS7dfootballcoursesecbg.png', '', NULL, 'Sub-category', 'Sub-category', 'Sub-category', '1', '2020-03-12 05:01:51', '2020-03-15 10:32:01'),
-(162, 'Mini Tots', 'mini-tots', 156, 0, 1, 1, 'Course', 0, 'images/products/categories/1584009142hkZvlmHmiOL16YSDhhyUfootballcoursesecbg.png', '', NULL, 'Sub-Category', 'Sub-Category', 'Sub-Category', '1', '2020-03-12 05:02:23', '2020-03-20 01:25:00'),
+(156, 'Tennis', 'tennis', 0, 0, 3, 1, 'Course', 1, 'images/products/categories/1584008421ESobNfl47FLFjp5pDBgMfootballcoursesecbg.png', '', NULL, 'Category', 'Category', 'Category', '1', '2020-03-12 04:50:21', '2020-07-28 03:42:22'),
+(157, 'Football', 'football', 0, 0, 4, 1, 'Course', 1, 'images/products/categories/1584008463hpmTUdwxhEuMv4WPh0nEfootballcoursesecbg.png', '', NULL, 'Category', 'Category', 'Category', '1', '2020-03-12 04:51:03', '2020-07-28 03:42:22'),
+(158, 'Schools', 'schools', 158, 0, 3, 1, 'Course', 0, 'images/products/categories/1586165427nGguhVtcVU7QYtdK3SFLblur.png', '', NULL, 'Category', 'Category', 'Category', '1', '2020-03-12 04:54:35', '2020-04-06 04:06:21'),
+(159, 'Beginner', 'beginner', 156, 157, 1, 1, 'Course', 1, 'images/products/categories/1584009035k2DcYpsL2ZsE3H59bMyZfootballcoursesecbg.png', '', NULL, 'Sub-category', 'Sub-category', 'Sub-category', '1', '2020-03-12 05:00:35', '2020-04-29 09:17:39'),
+(160, 'Intermediate', 'intermediate', 156, 157, 3, 1, 'Course', 0, 'images/products/categories/1584009077PYjmnYjlEVUJcZf44cALfootballcoursesecbg.png', '', NULL, 'Sub-category', 'Sub-category', 'Sub-category', '1', '2020-03-12 05:01:17', '2020-04-29 09:17:39'),
+(161, 'Advanced', 'advanced', 157, 0, 1, 1, 'Course', 0, 'images/products/categories/1584009111T9s4knrmnPBFEIgMIS7dfootballcoursesecbg.png', '', NULL, 'Sub-category', 'Sub-category', 'Sub-category', '1', '2020-03-12 05:01:51', '2020-07-28 03:42:22'),
+(162, 'Mini Tots - ages 2-4', 'mini-tots', 156, 0, 1, 1, 'Course', 0, 'images/products/categories/1584009142hkZvlmHmiOL16YSDhhyUfootballcoursesecbg.png', '', NULL, 'Sub-Category', 'Sub-Category', 'Sub-Category', '1', '2020-03-12 05:02:23', '2020-03-27 06:12:47'),
 (163, 'Mini Red', 'mini-red', 156, 0, 2, 1, 'Course', 1, 'images/products/categories/1584009165fUaAwDlYT754VFXswgnXfootballcoursesecbg.png', '', NULL, 'Sub-Category', 'Sub-Category', 'Sub-Category', '1', '2020-03-12 05:02:45', '2020-03-20 01:25:00'),
 (164, 'Mini Orange', 'mini-orange', 156, 0, 4, 1, 'Course', 1, 'images/products/categories/1584009187mzr2OLxNnTvIbVbDXvEMfootballcoursesecbg.png', '', NULL, 'Sub-Category', 'Sub-Category', 'Sub-Category', '1', '2020-03-12 05:03:07', '2020-03-20 01:25:00'),
 (165, 'Mini Green', 'mini-green', 156, 0, 3, 1, 'Course', 1, 'images/products/categories/1584009208VknizKMITsxmClJM0zqdfootballcoursesecbg.png', '', NULL, 'Sub-Category', 'Sub-Category', 'Sub-Category', '1', '2020-03-12 05:03:28', '2020-03-20 01:25:00'),
-(167, 'Juniors', 'juniors', 156, 0, 6, 1, 'Course', 1, 'images/products/categories/1584009316nsLpdTuMCjlwYBgfsy8Cfootballcoursesecbg.png', '', NULL, 'Sub-Category', 'Sub-Category', 'Sub-Category', '1', '2020-03-12 05:05:16', '2020-03-20 01:25:00'),
-(168, 'Adults', 'adults', 156, 0, 7, 1, 'Course', 1, 'images/products/categories/1584009350wJxmuy4UEqmR7ColHjxUfootballcoursesecbg.png', '', NULL, 'Sub-Category', 'Sub-Category', 'Sub-Category', '1', '2020-03-12 05:05:50', '2020-03-20 01:25:00'),
-(169, 'Beginner', 'mini-tots-beginner', 156, 162, 1, 0, 'Course', 0, '', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:46:43', '2020-03-20 01:25:00'),
-(170, 'Intermediate', 'mini-tots-intermediate', 156, 162, 2, 0, 'Course', 1, 'images/products/categories/1584357592beso7z2rGY6F4mYvnWjZfootballcoursesecbg.png', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:49:52', '2020-03-20 01:25:00'),
-(171, 'Advanced', 'mini-tots-advanced', 156, 162, 3, 0, 'Course', 1, 'images/products/categories/1584357744EqhzThc8RNf61g1kwWlbfootballcoursesecbg.png', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:52:24', '2020-03-20 01:25:00'),
+(167, 'Juniors', 'juniors', 156, 167, 5, 1, 'Course', 0, 'images/products/categories/1584009316nsLpdTuMCjlwYBgfsy8Cfootballcoursesecbg.png', '', NULL, 'Sub-Category', 'Sub-Category', 'Sub-Category', '1', '2020-03-12 05:05:16', '2020-05-11 08:03:05'),
+(168, 'Adults', 'adults', 156, 0, 5, 1, 'Course', 1, 'images/products/categories/1584009350wJxmuy4UEqmR7ColHjxUfootballcoursesecbg.png', '', NULL, 'Sub-Category', 'Sub-Category', 'Sub-Category', '1', '2020-03-12 05:05:50', '2020-05-12 05:19:44'),
+(169, 'Beginner', 'mini-tots-beginner', 156, 162, 1, 0, 'Course', 0, '', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:46:43', '2020-03-27 03:07:30'),
+(170, 'Intermediate', 'mini-tots-intermediate', 156, 162, 2, 0, 'Course', 1, 'images/products/categories/1584357592beso7z2rGY6F4mYvnWjZfootballcoursesecbg.png', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:49:52', '2020-03-27 03:07:30'),
+(171, 'Advanced', 'mini-tots-advanced', 156, 162, 3, 0, 'Course', 1, 'images/products/categories/1584357744EqhzThc8RNf61g1kwWlbfootballcoursesecbg.png', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:52:24', '2020-03-22 07:45:17'),
 (172, 'Beginner', 'mini-red-beginner', 156, 163, 1, 0, 'Course', 1, '', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:57:22', '2020-03-16 05:57:32'),
 (173, 'Intermediate', 'mini-red-intermediate', 156, 163, 2, 0, 'Course', 1, 'images/products/categories/15843581731Hio8XIYbgpBKSeMImfzfootballcoursesecbg.png', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:59:33', '2020-03-16 05:59:43'),
 (174, 'Advanced', 'mini-red-advanced', 156, 163, 3, 0, 'Course', 1, '', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 06:00:51', '2020-03-16 06:01:03'),
 (175, 'Beginner', 'mini-orange-beginner', 156, 164, 1, 0, 'Course', 1, '', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:57:22', '2020-03-16 05:57:32'),
 (176, 'Intermediate', 'mini-orange-intermediate', 156, 164, 2, 0, 'Course', 1, 'images/products/categories/15843581731Hio8XIYbgpBKSeMImfzfootballcoursesecbg.png', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:59:33', '2020-03-16 05:59:43'),
 (177, 'Advanced', 'mini-orange-advanced', 156, 164, 3, 0, 'Course', 1, '', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 06:00:51', '2020-03-16 06:01:03'),
-(178, 'Beginner', 'mini-green-beginner', 156, 0, 5, 0, 'Course', 1, '', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:57:22', '2020-03-20 01:25:00'),
-(179, 'Intermediate', 'mini-green-intermediate', 156, 165, 1, 0, 'Course', 1, 'images/products/categories/15843581731Hio8XIYbgpBKSeMImfzfootballcoursesecbg.png', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:59:33', '2020-03-18 04:18:00'),
-(180, 'Advanced', 'mini-green-advanced', 156, 165, 2, 0, 'Course', 1, '', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 06:00:51', '2020-03-18 04:18:00'),
+(178, 'Beginner', 'mini-green-beginner', 156, 165, 1, 0, 'Course', 1, '', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:57:22', '2020-03-27 03:06:35'),
+(179, 'Intermediate', 'mini-green-intermediate', 156, 165, 2, 0, 'Course', 1, 'images/products/categories/15843581731Hio8XIYbgpBKSeMImfzfootballcoursesecbg.png', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:59:33', '2020-07-28 03:27:24'),
+(180, 'Advanced', 'mini-green-advanced', 156, 165, 3, 0, 'Course', 1, '', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 06:00:51', '2020-07-28 03:27:24'),
 (181, 'Beginner', 'juniors-beginner', 156, 167, 1, 0, 'Course', 1, '', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:57:22', '2020-03-16 05:57:32'),
 (182, 'Intermediate', 'juniors-intermediate', 156, 167, 2, 0, 'Course', 1, 'images/products/categories/15843581731Hio8XIYbgpBKSeMImfzfootballcoursesecbg.png', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:59:33', '2020-03-16 05:59:43'),
-(183, 'Advanced', 'juniors-advanced', 156, 167, 3, 0, 'Course', 1, '', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 06:00:51', '2020-03-16 06:01:03'),
-(184, 'Beginner', 'adults-beginner', 156, 168, 1, 0, 'Course', 1, '', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:57:22', '2020-03-16 05:57:32'),
-(185, 'Intermediate', 'adults-intermediate', 156, 168, 2, 0, 'Course', 1, 'images/products/categories/15843581731Hio8XIYbgpBKSeMImfzfootballcoursesecbg.png', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:59:33', '2020-03-16 05:59:43'),
-(186, 'Advanced', 'adults-advanced', 156, 168, 3, 0, 'Course', 1, '', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 06:00:51', '2020-03-16 06:01:03');
+(183, 'Advanced', 'juniors-advanced', 156, 167, 3, 0, 'Course', 1, '', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 06:00:51', '2020-04-06 03:33:10'),
+(184, 'Beginner', 'adults-beginner', 156, 168, 1, 0, 'Course', 1, '', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:57:22', '2020-04-06 03:22:51'),
+(185, 'Intermediate', 'adults-intermediate', 156, 168, 2, 0, 'Course', 1, 'images/products/categories/15843581731Hio8XIYbgpBKSeMImfzfootballcoursesecbg.png', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 05:59:33', '2020-04-06 03:22:57'),
+(186, 'Advanced', 'adults-advanced', 156, 168, 3, 0, 'Course', 1, '', '', NULL, 'Sub-category\'s level', 'Sub-category\'s level', 'Sub-category\'s level', '1', '2020-03-16 06:00:51', '2020-04-06 03:22:57'),
+(191, 'schools', 'schools', 0, 0, 5, 1, 'Course', 0, '', '', NULL, '1234', '1234', 'http://49.249.236.30:8654/dominic-new/public/uploads/coach-document/1585132159.pdf', '1', '2020-04-06 04:02:10', '2020-07-28 03:42:22'),
+(192, 'DRH Clothing', 'product-category', 0, 0, 2, 1, 'Product', 0, 'images/products/categories/158718852067u6FnOJqFg03jPlRlQidrh.png', '', NULL, 'Product Category', 'Product Category', 'Product Category', '1', '2020-04-18 00:12:00', '2020-07-28 03:42:22'),
+(193, 'Product Subcategory', 'product-subcategory', 192, 0, 2, 0, 'Product', 0, 'images/products/categories/1587383286dRdLaFD4PTMSz9KOZ1VAslide1.png', '', NULL, 'Product Subcategory', 'Product Subcategory', 'Product Subcategory', '1', '2020-04-20 06:18:06', '2020-05-11 08:09:45'),
+(194, 'Test Sub', 'test-sub', 192, 0, 3, 1, 'Product', 0, 'images/products/categories/1587453201YBBzW065AtfMwaZJcGJhslide1.png', '', NULL, 'Test Sub', 'Test Sub', 'Test Sub', '1', '2020-04-21 01:43:21', '2020-04-30 00:25:04'),
+(196, 'DRH Hoody', 'test11', 192, 0, 1, 1, 'Product', 0, 'images/products/categories/1587658267fI8naNuI5rDLTsOWHCpqdrh.png', '', NULL, 'product', 'product', 'product', '1', '2020-04-23 10:41:07', '2020-04-30 00:25:04'),
+(197, 'Tennis Products', 'sports-equipment', 201, 0, 1, 1, 'Product', 0, 'images/products/categories/1587841922U6KSOxNkNLxmCZz7Ok6Ytennisball500x500.jpg', '', NULL, 'Tennis Products', 'Tennis Products', 'All tennis related products', '1', '2020-04-24 06:28:47', '2020-05-12 05:16:57'),
+(198, 'Tennis rackets', 'sport-equipment', 197, 0, 1, 1, 'Product', 0, 'images/products/categories/1587842046UFWXe5msHziZIAkhFd8Rtennisball500x500.jpg', '', NULL, 'Tennis rackets', 'Tennis rackets', 'Tennis rackets', '1', '2020-04-24 06:29:29', '2020-04-25 14:00:23'),
+(199, 'Tennis rackets', 'tennis-rackets', 197, 199, 0, 1, 'Product', 0, '', '', NULL, 'Tennis rackets', 'Tennis rackets', 'Tennis rackets', '1', '2020-04-25 13:45:48', '2020-04-25 13:56:24'),
+(200, 'football', 'mehak11', 156, 157, 2, 1, 'Course', 0, 'images/products/categories/1588171582fom2OqYkkFUZvzPK62MD12.png', '', NULL, '123', '123', 'dasdasdasd', '1', '2020-04-29 09:16:22', '2020-04-29 09:17:39'),
+(202, 'DRH Vouchers', 'drh-vouchers', 0, 0, 1, 0, 'Product', 0, 'images/products/categories/15885913769LTShiJmF3RbzzE4wftM180227DRHSportVoucherFullDayFront2020.png', '', NULL, 'DRH Vouchers', 'DRH Vouchers', 'This is a DRH Voucher', '1', '2020-05-04 05:52:56', '2020-05-12 05:19:44'),
+(203, 'Camp GO vouchers', 'camp-go-full-day-voucher', 202, 0, 2, 1, 'Product', 0, 'images/products/categories/1588591474rfgXLvaULr6w4d1lBLIK180227DRHSportVoucherFullDayFront2020.png', '', NULL, 'Camp GO vouchers', 'Camp GO vouchers', 'Camp GO vouchers', '1', '2020-05-04 05:54:34', '2020-07-21 00:44:21'),
+(204, 'Testing', 'testing', 197, 198, 0, 0, 'Product', 0, 'images/products/categories/1589202792fjrNefPNsetfgDs5Kv43leaf.jpg', '', NULL, 'testing', 'testing', 'hello', '1', '2020-05-11 07:35:58', '2020-05-11 07:52:50'),
+(205, 'testing1', 'testing1', 156, 167, 0, 1, 'Product', 1, 'images/products/categories/1589203906ZT2JAAuAKvKacS5MemK1leaf.jpg', '', NULL, 'testing1', 'testing1', 'testing1', '1', '2020-05-11 08:01:46', '2020-05-11 08:01:46'),
+(206, 'testing2', 'testing2', 192, 193, 1, 1, 'Product', 0, 'images/products/categories/1589204246CxXeeaB2TJ3QHCN8NfoTleaf.jpg', '', NULL, 'testing2', 'testing2', 'testing2', '1', '2020-05-11 08:07:26', '2020-05-12 05:19:44'),
+(207, 'testing5', 'testing5', 202, 0, 1, 1, 'Product', 0, 'images/products/categories/15892618939p2eLxDEsY51xSPHzj4oleaf.jpg', '', NULL, 'testing 5', 'testing 5', 'testing 5testing 5ttesting 5testing 5esting 5testing 5', '1', '2020-05-12 00:08:13', '2020-07-21 00:44:21');
 
 -- --------------------------------------------------------
 
@@ -3439,7 +4984,22 @@ INSERT INTO `product_category_brands` (`id`, `brand_id`, `category_id`, `type`, 
 (12, 1, 42, 'brands', '2020-02-25 06:07:25', '2020-02-25 06:07:25'),
 (13, 5, 42, 'brands', '2020-02-25 06:07:25', '2020-02-25 06:07:25'),
 (14, 2, 42, 'brands', '2020-02-25 06:07:25', '2020-02-25 06:07:25'),
-(15, 4, 42, 'brands', '2020-02-25 06:07:25', '2020-02-25 06:07:25');
+(15, 4, 42, 'brands', '2020-02-25 06:07:25', '2020-02-25 06:07:25'),
+(16, 3, 198, 'brands', '2020-04-24 09:44:31', '2020-04-24 09:44:31'),
+(17, 1, 198, 'brands', '2020-04-24 09:44:31', '2020-04-24 09:44:31'),
+(18, 5, 198, 'brands', '2020-04-24 09:44:31', '2020-04-24 09:44:31'),
+(19, 2, 198, 'brands', '2020-04-24 09:44:31', '2020-04-24 09:44:31'),
+(20, 4, 198, 'brands', '2020-04-24 09:44:31', '2020-04-24 09:44:31'),
+(21, 6, 198, 'brands', '2020-04-25 05:34:47', '2020-04-25 05:34:47'),
+(22, 8, 198, 'brands', '2020-04-25 05:34:47', '2020-04-25 05:34:47'),
+(23, 7, 198, 'brands', '2020-04-25 05:34:47', '2020-04-25 05:34:47'),
+(24, 1, 203, 'brands', '2020-05-12 00:09:49', '2020-05-12 00:09:49'),
+(25, 5, 203, 'brands', '2020-05-12 00:09:49', '2020-05-12 00:09:49'),
+(26, 2, 203, 'brands', '2020-05-12 00:09:49', '2020-05-12 00:09:49'),
+(27, 6, 203, 'brands', '2020-05-14 01:41:39', '2020-05-14 01:41:39'),
+(28, 8, 203, 'brands', '2020-05-14 01:41:39', '2020-05-14 01:41:39'),
+(29, 3, 203, 'brands', '2020-05-14 01:41:39', '2020-05-14 01:41:39'),
+(30, 4, 203, 'brands', '2020-05-14 01:41:39', '2020-05-14 01:41:39');
 
 -- --------------------------------------------------------
 
@@ -3583,7 +5143,71 @@ INSERT INTO `product_category_variations` (`id`, `category_id`, `parent`, `key`,
 (357, 42, NULL, 'toppings', '38', 'toppings', NULL, '2020-02-25 06:07:25', '2020-02-25 06:07:25'),
 (358, 42, NULL, 'body-height', '39', 'body-height', NULL, '2020-02-25 06:07:25', '2020-02-25 06:07:25'),
 (359, 42, NULL, 'body-height', '40', 'body-height', NULL, '2020-02-25 06:07:25', '2020-02-25 06:07:25'),
-(360, 42, NULL, 'body-height', '41', 'body-height', NULL, '2020-02-25 06:07:25', '2020-02-25 06:07:25');
+(360, 42, NULL, 'body-height', '41', 'body-height', NULL, '2020-02-25 06:07:25', '2020-02-25 06:07:25'),
+(369, 194, NULL, 'colors', '13', 'colors', NULL, '2020-04-22 10:02:49', '2020-04-22 10:02:49'),
+(370, 194, NULL, 'colors', '22', 'colors', NULL, '2020-04-22 10:02:49', '2020-04-22 10:02:49'),
+(371, 194, NULL, 'sizes', '4', 'sizes', NULL, '2020-04-22 10:02:49', '2020-04-22 10:02:49'),
+(372, 194, NULL, 'sizes', '5', 'sizes', NULL, '2020-04-22 10:02:49', '2020-04-22 10:02:49'),
+(373, 194, NULL, 'sizes', '6', 'sizes', NULL, '2020-04-22 10:02:49', '2020-04-22 10:02:49'),
+(374, 193, NULL, 'colors', '13', 'colors', NULL, '2020-04-23 10:41:39', '2020-04-23 10:41:39'),
+(375, 193, NULL, 'colors', '22', 'colors', NULL, '2020-04-23 10:41:39', '2020-04-23 10:41:39'),
+(376, 193, NULL, 'colors', '30', 'colors', NULL, '2020-04-23 10:41:39', '2020-04-23 10:41:39'),
+(377, 193, NULL, 'styles', '10', 'styles', NULL, '2020-04-23 10:41:39', '2020-04-23 10:41:39'),
+(378, 193, NULL, 'styles', '25', 'styles', NULL, '2020-04-23 10:41:39', '2020-04-23 10:41:39'),
+(379, 193, NULL, 'weights', '17', 'weights', NULL, '2020-04-23 10:41:39', '2020-04-23 10:41:39'),
+(380, 193, NULL, 'weights', '18', 'weights', NULL, '2020-04-23 10:41:39', '2020-04-23 10:41:39'),
+(381, 193, NULL, 'sizes', '4', 'sizes', NULL, '2020-04-23 10:41:39', '2020-04-23 10:41:39'),
+(382, 193, NULL, 'sizes', '5', 'sizes', NULL, '2020-04-23 10:41:39', '2020-04-23 10:41:39'),
+(383, 193, NULL, 'sizes', '6', 'sizes', NULL, '2020-04-23 10:41:39', '2020-04-23 10:41:39'),
+(407, 196, NULL, 'colors', '13', 'colors', NULL, '2020-04-25 06:05:22', '2020-04-25 06:05:22'),
+(408, 196, NULL, 'colors', '22', 'colors', NULL, '2020-04-25 06:05:22', '2020-04-25 06:05:22'),
+(409, 196, NULL, 'colors', '29', 'colors', NULL, '2020-04-25 06:05:22', '2020-04-25 06:05:22'),
+(410, 196, NULL, 'colors', '30', 'colors', NULL, '2020-04-25 06:05:22', '2020-04-25 06:05:22'),
+(411, 196, NULL, 'colors', '32', 'colors', NULL, '2020-04-25 06:05:22', '2020-04-25 06:05:22'),
+(412, 196, NULL, 'colors', '33', 'colors', NULL, '2020-04-25 06:05:22', '2020-04-25 06:05:22'),
+(413, 196, NULL, 'sizes', '3', 'sizes', NULL, '2020-04-25 06:05:22', '2020-04-25 06:05:22'),
+(414, 196, NULL, 'sizes', '4', 'sizes', NULL, '2020-04-25 06:05:22', '2020-04-25 06:05:22'),
+(415, 196, NULL, 'sizes', '5', 'sizes', NULL, '2020-04-25 06:05:22', '2020-04-25 06:05:22'),
+(416, 196, NULL, 'sizes', '6', 'sizes', NULL, '2020-04-25 06:05:23', '2020-04-25 06:05:23'),
+(417, 196, NULL, 'sizes', '7', 'sizes', NULL, '2020-04-25 06:05:23', '2020-04-25 06:05:23'),
+(418, 198, NULL, 'test', '43', 'test', NULL, '2020-04-25 13:43:03', '2020-04-25 13:43:03'),
+(425, 198, NULL, 'tennis-balls', '46', 'tennis-balls', NULL, '2020-04-25 14:05:35', '2020-04-25 14:05:35'),
+(426, 198, NULL, 'tennis-balls', '47', 'tennis-balls', NULL, '2020-04-25 14:05:35', '2020-04-25 14:05:35'),
+(427, 198, NULL, 'tennis-balls', '48', 'tennis-balls', NULL, '2020-04-25 14:05:35', '2020-04-25 14:05:35'),
+(428, 198, NULL, 'tennis-balls', '49', 'tennis-balls', NULL, '2020-04-25 14:05:35', '2020-04-25 14:05:35'),
+(429, 198, NULL, 'tennis-balls', '50', 'tennis-balls', NULL, '2020-04-25 14:05:35', '2020-04-25 14:05:35'),
+(430, 198, NULL, 'tennis-balls', '51', 'tennis-balls', NULL, '2020-04-25 14:05:35', '2020-04-25 14:05:35'),
+(431, 198, NULL, 'tennis-balls', '52', 'tennis-balls', NULL, '2020-04-25 14:05:35', '2020-04-25 14:05:35'),
+(699, 203, NULL, 'colors', '2', 'colors', NULL, '2020-05-21 03:01:16', '2020-05-21 03:01:16'),
+(700, 203, NULL, 'colors', '13', 'colors', NULL, '2020-05-21 03:01:16', '2020-05-21 03:01:16'),
+(701, 203, NULL, 'colors', '22', 'colors', NULL, '2020-05-21 03:01:16', '2020-05-21 03:01:16'),
+(702, 203, NULL, 'colors', '29', 'colors', NULL, '2020-05-21 03:01:16', '2020-05-21 03:01:16'),
+(703, 203, NULL, 'colors', '30', 'colors', NULL, '2020-05-21 03:01:16', '2020-05-21 03:01:16'),
+(704, 203, NULL, 'colors', '32', 'colors', NULL, '2020-05-21 03:01:16', '2020-05-21 03:01:16'),
+(705, 203, NULL, 'colors', '33', 'colors', NULL, '2020-05-21 03:01:16', '2020-05-21 03:01:16'),
+(706, 203, NULL, 'styles', '10', 'styles', NULL, '2020-05-21 03:01:16', '2020-05-21 03:01:16'),
+(707, 203, NULL, 'styles', '25', 'styles', NULL, '2020-05-21 03:01:16', '2020-05-21 03:01:16'),
+(708, 203, NULL, 'styles', '35', 'styles', NULL, '2020-05-21 03:01:16', '2020-05-21 03:01:16'),
+(709, 203, NULL, 'weights', '17', 'weights', NULL, '2020-05-21 03:01:16', '2020-05-21 03:01:16'),
+(710, 203, NULL, 'weights', '18', 'weights', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17'),
+(711, 203, NULL, 'weights', '19', 'weights', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17'),
+(712, 203, NULL, 'weights', '28', 'weights', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17'),
+(713, 203, NULL, 'sizes', '4', 'sizes', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17'),
+(714, 203, NULL, 'sizes', '5', 'sizes', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17'),
+(715, 203, NULL, 'sizes', '6', 'sizes', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17'),
+(716, 203, NULL, 'sizes', '7', 'sizes', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17'),
+(717, 203, NULL, 'sizes', '8', 'sizes', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17'),
+(718, 203, NULL, 'sizes', '15', 'sizes', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17'),
+(719, 203, NULL, 'sizes', '16', 'sizes', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17'),
+(720, 203, NULL, 'sizes', '24', 'sizes', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17'),
+(721, 203, NULL, 'fabric', '36', 'fabric', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17'),
+(722, 203, NULL, 'fabric', '42', 'fabric', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17'),
+(723, 203, NULL, 'test', '43', 'test', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17'),
+(724, 203, NULL, 'test', '44', 'test', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17'),
+(725, 203, NULL, 'tennis-balls', '46', 'tennis-balls', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17'),
+(726, 203, NULL, 'tennis-balls', '47', 'tennis-balls', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17'),
+(727, 203, NULL, 'tennis-balls', '48', 'tennis-balls', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17'),
+(728, 203, NULL, 'tennis-shoes', '53', 'tennis-shoes', NULL, '2020-05-21 03:01:17', '2020-05-21 03:01:17');
 
 -- --------------------------------------------------------
 
@@ -3654,7 +5278,47 @@ INSERT INTO `product_images` (`id`, `image`, `product_id`, `variation_id`, `type
 (49, 'images/products/1581424726JwlCxMUVHoCbCFOw9ujV44pcsfcslbe59477peterenglandoriginalimafnwjxgzdxewxz.jpeg', 42, 0, 'product', '2020-02-11 07:08:46', '2020-02-11 07:08:46'),
 (50, 'images/products/1581424726NpkmQGH7Ds3erYER22iZ44pcsfcslbe59477peterenglandoriginalimafnwjxmnbyu4am.jpeg', 42, 0, 'product', '2020-02-11 07:08:46', '2020-02-11 07:08:46'),
 (51, 'images/products/1581424726rPFpKl0SkybVSbcbtvQu44pcsfcslbe59477peterenglandoriginalimafnwjxhnu2hhhj.jpeg', 42, 0, 'product', '2020-02-11 07:08:46', '2020-02-11 07:08:46'),
-(53, 'images/products/1582629576yIIGtSF6zbM9mSewQteAmts223wrathoriginalimafmgk39asf3upa.jpeg', 42, 0, 'product', '2020-02-25 05:49:36', '2020-02-25 05:49:36');
+(53, 'images/products/1582629576yIIGtSF6zbM9mSewQteAmts223wrathoriginalimafmgk39asf3upa.jpeg', 42, 0, 'product', '2020-02-25 05:49:36', '2020-02-25 05:49:36'),
+(57, 'images/products/1587453296uoQd6DduEg1chEnYgY12slide1.png', 47, 0, 'product', '2020-04-21 01:44:56', '2020-04-21 01:44:56'),
+(58, 'images/products/1587453324NSQqwWbYJMjZ8ePJwTPjslide1.png', 47, 0, 'product', '2020-04-21 01:45:24', '2020-04-21 01:45:24'),
+(59, 'images/products/15874533488ibXQvrB9p0sYqr3hE5eslide1.png', 47, 0, 'product', '2020-04-21 01:45:48', '2020-04-21 01:45:48'),
+(65, 'images/products/1587549044HY669Nzqn15WvryMH2ay20200412.jpg', 50, 0, 'product', '2020-04-22 04:20:44', '2020-04-22 04:20:44'),
+(66, 'images/products/1587625855k1jflmCOi1qug9Mf0Zsm2.jpeg', 49, 0, 'product', '2020-04-23 01:40:55', '2020-04-23 01:40:55'),
+(67, 'images/products/1587625872TJkuqabdzewEcrTZWoh81.jpeg', 49, 0, 'product', '2020-04-23 01:41:12', '2020-04-23 01:41:12'),
+(68, 'images/products/1587654755AlFeRelbfTqJbkSNzajJ1.jpeg', 46, 0, 'product', '2020-04-23 09:42:35', '2020-04-23 09:42:35'),
+(77, 'images/products/1587814756imQRaCGWkCni8JXDEhGDHoody.png', 58, 0, 'product', '2020-04-25 06:09:16', '2020-04-25 06:09:16'),
+(78, 'images/products/1587814775VZi8knUGhSlBP6yZ75QwHoody.png', 58, 0, 'product', '2020-04-25 06:09:35', '2020-04-25 06:09:35'),
+(79, 'images/products/1587814783qQDni6BURbxlMWzIW9UcGreenhoody.jpg', 58, 0, 'product', '2020-04-25 06:09:43', '2020-04-25 06:09:43'),
+(80, 'images/products/1587814792DbSekP5OZ28Wqoo9ggMFGreenhoody.jpg', 58, 0, 'product', '2020-04-25 06:09:52', '2020-04-25 06:09:52'),
+(81, 'images/products/1587814806KTa4oqRiC7yDfpDOwVgXRedHoody.jpg', 58, 0, 'product', '2020-04-25 06:10:06', '2020-04-25 06:10:06'),
+(82, 'images/products/1587814810LsJGuGGqBncfcctKuxZ0RedHoody.jpg', 58, 0, 'product', '2020-04-25 06:10:10', '2020-04-25 06:10:10'),
+(84, 'images/products/1587816114ENLhmeu0j0oborjAkY86Miniredballbucket.jpg', 62, 0, 'product', '2020-04-25 06:31:54', '2020-04-25 06:31:54'),
+(87, 'images/products/1587843227rZI24bJRcSPdqWF4TtY1tennisracketPNG.png', 54, 0, 'product', '2020-04-25 14:03:47', '2020-04-25 14:03:47'),
+(88, 'images/products/15885939608pcsihrGPq0uDJNTw3mt180227DRHSportVoucherFullDayFront2020.png', 63, 0, 'product', '2020-05-04 06:36:00', '2020-05-04 06:36:00'),
+(89, 'images/products/1588593972XCmvNQpK9dta8pHKN9SN180227DRHSportVoucherFullDayBack2020.png', 63, 0, 'product', '2020-05-04 06:36:12', '2020-05-04 06:36:12'),
+(98, 'images/products/15892938977TMQWWPCFcptFgQYtxupslide2.png', 65, 0, 'product', '2020-05-12 09:01:37', '2020-05-12 09:01:37'),
+(106, 'images/products/1589441866JZFGD1MGrVCRDY9HixVLth_1_.jpg', 69, 0, 'product', '2020-05-14 02:07:46', '2020-05-14 02:07:46'),
+(107, 'images/products/1589441890N8zGffqGIqiELqwkNhCJleaf.jpg', 69, 0, 'product', '2020-05-14 02:08:10', '2020-05-14 02:08:10'),
+(108, 'images/products/1589442369ajuZDBoaag3qPgjJOvlsth_3_.jpg', 69, 0, 'product', '2020-05-14 02:16:09', '2020-05-14 02:16:09'),
+(110, 'images/products/1589442407UDjQmZel8n6PdKI0KsaIth.jpg', 69, 0, 'product', '2020-05-14 02:16:47', '2020-05-14 02:16:47'),
+(111, 'images/products/1589444160Ns5ZMfuJN0e9YrEE1yTHshirt3.jpg', 65, 0, 'product', '2020-05-14 02:46:00', '2020-05-14 02:46:00'),
+(115, 'images/products/15894446893TE7U6GB9wUV3QqBHPG1shirt2.jpg', 65, 0, 'product', '2020-05-14 02:54:49', '2020-05-14 02:54:49'),
+(116, 'images/products/1589444799H8UBDaU3VuyDpBMkZx43shirt6.jpg', 65, 0, 'product', '2020-05-14 02:56:39', '2020-05-14 02:56:39'),
+(117, 'images/products/1589444812n5Utp3UpNr6O0kCaJl8Oshirt4.jpg', 65, 0, 'product', '2020-05-14 02:56:52', '2020-05-14 02:56:52'),
+(125, 'images/products/1589545603JYUZEVGZ27xZQoblHejrshirt3.jpg', 71, 0, 'product', '2020-05-15 06:56:43', '2020-05-15 06:56:43'),
+(127, 'images/products/1589546194tZWni6c3bafYd5ae4Uf4shirt6.jpg', 71, 0, 'product', '2020-05-15 07:06:34', '2020-05-15 07:06:34'),
+(129, 'images/products/1589546465krVlTJU8chvOl2mGxmACshirt4.jpg', 72, 0, 'product', '2020-05-15 07:11:05', '2020-05-15 07:11:05'),
+(130, 'images/products/1589546494DPmundIHToDmMWbYisxdshirt2.jpg', 72, 0, 'product', '2020-05-15 07:11:34', '2020-05-15 07:11:34'),
+(131, 'images/products/1589550819sZbAAbTZE2PuNJeh27CYshirt6.jpg', 72, 0, 'product', '2020-05-15 08:23:39', '2020-05-15 08:23:39'),
+(137, 'images/products/1589881242jzlwb746Xd2RJsPRTw20slide1.png', 73, 0, 'product', '2020-05-19 04:10:42', '2020-05-19 04:10:42'),
+(150, 'images/products/1589886724XimcFEHsxLzgy7PhiVgNslide2.png', 74, 0, 'product', '2020-05-19 05:42:04', '2020-05-19 05:42:04'),
+(153, 'images/products/1589962092bbcfzxrgfm2MENlroRfEshirt6.jpg', 71, 0, 'product', '2020-05-20 02:38:12', '2020-05-20 02:38:12'),
+(180, 'images/products/1590060305upzlJ28BxkbTeW9UVtt7shirt2.jpg', 75, 0, 'product', '2020-05-21 05:55:05', '2020-05-21 05:55:05'),
+(181, 'images/products/1590060325h4WeOolHh4JOHLLL6aD9shirt3.jpg', 75, 0, 'product', '2020-05-21 05:55:25', '2020-05-21 05:55:25'),
+(192, 'images/products/1590134947DuaeAJvRebl5CzSqX73tshirt6.jpg', 76, 0, 'product', '2020-05-22 02:39:07', '2020-05-22 02:39:07'),
+(193, 'images/products/1590134964HIMdTrMd064iKIRjAWNHshirt4.jpg', 76, 0, 'product', '2020-05-22 02:39:24', '2020-05-22 02:39:24'),
+(195, 'images/products/1593982326PkAxK1oAcVmGgy2Tk2sJ180227DRHSportVoucherFullDayFront2020.png', 82, 0, 'product', '2020-07-05 15:22:06', '2020-07-05 15:22:06'),
+(196, 'images/products/1593982334bgXfL7RT42oc86c6CrmK180227DRHSportVoucherFullDayBack2020.png', 82, 0, 'product', '2020-07-05 15:22:14', '2020-07-05 15:22:14');
 
 -- --------------------------------------------------------
 
@@ -3695,7 +5359,27 @@ INSERT INTO `product_inventories` (`id`, `parent`, `product_id`, `shop_id`, `use
 (11, 0, 38, 2, 59, 61, 'SKU17867', 20, 0, 2, '2020-02-11 03:27:04', '2020-02-11 03:27:04'),
 (12, 0, 38, 2, 59, 67, 'SKU7861', 9, 0, 1, '2020-02-11 03:33:05', '2020-02-11 03:45:52'),
 (13, 0, 42, 1, 31, 76, 'fsdasasas', 25, 0, 10, '2020-02-11 07:10:50', '2020-02-11 07:10:50'),
-(14, 0, 42, 1, 31, 79, '112sd213', 52, 0, 15, '2020-02-11 07:11:27', '2020-02-11 07:11:27');
+(14, 0, 42, 1, 31, 79, '112sd213', 52, 0, 15, '2020-02-11 07:11:27', '2020-02-11 07:11:27'),
+(15, 0, 46, 0, 1, 0, 'SKU11', 12, 0, 1, '2020-04-21 03:32:05', '2020-04-21 03:32:05'),
+(16, 0, 49, 0, 1, 82, 'sku90', 19, 0, 2, '2020-04-22 10:16:18', '2020-05-23 03:31:07'),
+(17, 0, 49, 0, 1, 85, 'sku00', 17, 0, 4, '2020-04-23 00:53:54', '2020-05-12 03:17:37'),
+(18, 0, 54, 0, 1, 101, 'Mini_red', 8, 0, 10, '2020-04-25 05:37:29', '2020-04-30 07:26:18'),
+(19, 0, 54, 0, 1, 103, 'Mini_Or', 100, 0, 10, '2020-04-25 05:38:15', '2020-04-25 05:38:15'),
+(20, 0, 54, 0, 1, 105, 'Mini_Gr', 5, 0, 10, '2020-04-25 05:38:49', '2020-04-25 05:56:43'),
+(21, 0, 58, 0, 1, 115, 'hoodie_red', 20, 0, 2, '2020-04-25 06:13:37', '2020-05-28 01:57:56'),
+(22, 0, 58, 0, 1, 118, 'sdfcs', 5, 0, 7, '2020-04-25 06:14:23', '2020-07-02 01:35:03'),
+(23, 0, 58, 0, 1, 121, 'fedsf', 20, 0, 10, '2020-04-25 06:15:12', '2020-05-28 01:58:15'),
+(24, 0, 62, 0, 1, 0, '46546', 10, 1, 2, '2020-04-28 03:52:51', '2020-04-28 03:52:51'),
+(25, 0, 63, 0, 1, 0, '12345', 100, 1, 2, '2020-05-04 06:31:46', '2020-07-01 03:37:36'),
+(26, 0, 64, 0, 1, 0, 'SKU535576', 30, 1, 7, '2020-05-11 08:37:59', '2020-05-11 08:38:54'),
+(27, 0, 64, 0, 1, 131, 'sss3333', 100, 0, 10, '2020-05-11 10:29:57', '2020-05-11 10:29:57'),
+(28, 0, 64, 0, 1, 134, 'se465f', 66, 0, 10, '2020-05-11 10:37:20', '2020-05-11 10:37:20'),
+(29, 0, 65, 0, 1, 0, 'SKU09875467', 5, 1, 2, '2020-05-14 02:59:10', '2020-05-14 02:59:10'),
+(30, 0, 75, 0, 1, 0, 'SKU89764567', 20, 1, 10, '2020-05-21 05:29:16', '2020-05-21 05:29:16'),
+(31, 0, 75, 0, 1, 146, 'se13', 10, 0, 1, '2020-05-21 05:42:19', '2020-05-23 03:22:24'),
+(32, 0, 75, 0, 1, 153, 'se14', 20, 0, 2, '2020-05-21 05:50:03', '2020-05-21 05:50:03'),
+(33, 0, 76, 0, 1, 0, 'se18', 22, 0, 16, '2020-05-22 02:51:16', '2020-05-22 02:51:16'),
+(34, 0, 82, 0, 1, 0, 'sku890', 80, 1, 5, '2020-07-02 01:38:54', '2020-07-02 01:38:54');
 
 -- --------------------------------------------------------
 
@@ -3740,7 +5424,7 @@ INSERT INTO `product_variations` (`id`, `parent`, `name`, `data`, `type`, `statu
 (21, 0, 'Cakes', '{"_token":"z3PEJnCC6Z7BiGvYh1aN4Nq3GthCT6SA0vVE6LSL","type":"by-robby-friedman","name":"Cakes"}', 'by-robby-friedman', 1, '2020-01-28 08:19:02', '2020-01-28 08:19:02'),
 (22, 0, 'Green', '{"_token":"LTewn48vGIfsiUaaqE5uyQo4vER8DNOr5G9RgpcK","type":"colors","name":"Green","color":"#00ff00"}', 'colors', 1, '2020-01-28 08:22:22', '2020-01-31 03:00:48'),
 (23, 0, 'Strawbery', '{"_token":"z3PEJnCC6Z7BiGvYh1aN4Nq3GthCT6SA0vVE6LSL","type":"flavours","name":"Strawbery"}', 'flavours', 1, '2020-01-28 08:22:42', '2020-01-28 08:22:42'),
-(24, 0, '9UK', '{"_token":"z3PEJnCC6Z7BiGvYh1aN4Nq3GthCT6SA0vVE6LSL","type":"sizes","name":"9UK"}', 'sizes', 1, '2020-01-28 08:23:01', '2020-01-28 08:23:01'),
+(24, 0, 'UKkkkkkk', '{"_token":"wMVZD2K19AAEXZtoTk7NubRpWqnCVWWPLBKbAVaX","type":"sizes","name":"UKkkkkkk"}', 'sizes', 1, '2020-01-28 08:23:01', '2020-04-23 10:59:22'),
 (25, 0, 'Half Sleeve', '{"_token":"z3PEJnCC6Z7BiGvYh1aN4Nq3GthCT6SA0vVE6LSL","type":"styles","name":"Half Sleeve"}', 'styles', 1, '2020-01-28 08:23:22', '2020-01-28 08:23:22'),
 (26, 0, 'Oak Harbo', '{"_token":"z3PEJnCC6Z7BiGvYh1aN4Nq3GthCT6SA0vVE6LSL","type":"toppins","name":"Oak Harbo"}', 'toppins', 1, '2020-01-28 08:24:42', '2020-01-28 08:24:42'),
 (27, 0, 'Reception', '{"_token":"z3PEJnCC6Z7BiGvYh1aN4Nq3GthCT6SA0vVE6LSL","type":"types","name":"Reception"}', 'types', 1, '2020-01-28 08:24:57', '2020-01-28 08:24:57'),
@@ -3757,7 +5441,19 @@ INSERT INTO `product_variations` (`id`, `parent`, `name`, `data`, `type`, `statu
 (38, 0, '200CM', '{"_token":"xcPXEVokyJ0mJE04QbhBjZgazmtXVhI5C2bnJeQo","type":"toppings","name":"200CM"}', 'toppings', 1, '2020-02-11 02:02:33', '2020-02-11 02:02:33'),
 (39, 0, '100CM', '{"_token":"i9SN1iVrF5dLQ21i3RW9ncqzBHSBTDBokzbXbLLk","type":"body-height","name":"100CM"}', 'body-height', 1, '2020-02-11 03:17:37', '2020-02-11 03:17:37'),
 (40, 0, '200CM', '{"_token":"i9SN1iVrF5dLQ21i3RW9ncqzBHSBTDBokzbXbLLk","type":"body-height","name":"200CM"}', 'body-height', 1, '2020-02-11 03:17:45', '2020-02-11 03:17:45'),
-(41, 0, '300CM', '{"_token":"i9SN1iVrF5dLQ21i3RW9ncqzBHSBTDBokzbXbLLk","type":"body-height","name":"300CM"}', 'body-height', 1, '2020-02-11 03:17:51', '2020-02-11 03:17:51');
+(41, 0, '300CM', '{"_token":"i9SN1iVrF5dLQ21i3RW9ncqzBHSBTDBokzbXbLLk","type":"body-height","name":"300CM"}', 'body-height', 1, '2020-02-11 03:17:51', '2020-02-11 03:17:51'),
+(42, 0, 'Cotton', '{"_token":"909bhgMQCRTIQwdn1Eoz5zB0VuNOXV0cwH0F3wnu","type":"fabric","name":"Cotton"}', 'fabric', 1, '2020-04-23 15:38:07', '2020-04-23 15:38:07'),
+(43, 0, 'Tennis', '{"_token":"Zig2PbnPbe4xwloFZYm5ib6PgU49K1uZPSQ4u4Zt","type":"test","name":"Tennis"}', 'test', 1, '2020-04-24 09:43:04', '2020-04-24 09:43:04'),
+(44, 0, 'Batball', '{"_token":"Zig2PbnPbe4xwloFZYm5ib6PgU49K1uZPSQ4u4Zt","type":"test","name":"Batball"}', 'test', 1, '2020-04-24 09:43:09', '2020-04-24 09:43:09'),
+(45, 0, 'Baseball', '{"_token":"Zig2PbnPbe4xwloFZYm5ib6PgU49K1uZPSQ4u4Zt","type":"test","name":"Baseball"}', 'test', 1, '2020-04-24 09:43:18', '2020-04-24 09:43:18'),
+(46, 0, '21 inch rackets', '{"_token":"q4nojfRikUyfslRNs3cEHEGgwOlbUqxon4ox8dSS","type":"tennis-balls","name":"21 inch rackets"}', 'tennis-balls', 1, '2020-04-25 05:24:13', '2020-04-25 14:01:40'),
+(47, 0, '19 inch rackets', '{"_token":"q4nojfRikUyfslRNs3cEHEGgwOlbUqxon4ox8dSS","type":"tennis-balls","name":"19 inch rackets"}', 'tennis-balls', 1, '2020-04-25 05:24:18', '2020-04-25 14:01:27'),
+(48, 0, '17 inch rackets', '{"_token":"q4nojfRikUyfslRNs3cEHEGgwOlbUqxon4ox8dSS","type":"tennis-balls","name":"17 inch rackets"}', 'tennis-balls', 1, '2020-04-25 05:24:24', '2020-04-25 14:01:03'),
+(49, 0, '23 inch rackets', '{"_token":"q4nojfRikUyfslRNs3cEHEGgwOlbUqxon4ox8dSS","type":"tennis-balls","name":"23 inch rackets"}', 'tennis-balls', 1, '2020-04-25 14:01:50', '2020-04-25 14:01:50'),
+(50, 0, '25 inch rackets', '{"_token":"q4nojfRikUyfslRNs3cEHEGgwOlbUqxon4ox8dSS","type":"tennis-balls","name":"25 inch rackets"}', 'tennis-balls', 1, '2020-04-25 14:01:59', '2020-04-25 14:01:59'),
+(51, 0, '26 inch rackets', '{"_token":"q4nojfRikUyfslRNs3cEHEGgwOlbUqxon4ox8dSS","type":"tennis-balls","name":"26 inch rackets"}', 'tennis-balls', 1, '2020-04-25 14:02:05', '2020-04-25 14:02:05'),
+(52, 0, '27 inch rackets', '{"_token":"q4nojfRikUyfslRNs3cEHEGgwOlbUqxon4ox8dSS","type":"tennis-balls","name":"27 inch rackets"}', 'tennis-balls', 1, '2020-04-25 14:02:11', '2020-04-25 14:02:11'),
+(53, 0, '3 stripe', '{"_token":"jteCXNciZjqKKATP8BZIWoDOAeUBuzO2MHHm68Ck","type":"tennis-shoes","name":"3 stripe"}', 'tennis-shoes', 1, '2020-04-27 07:22:47', '2020-04-27 07:22:47');
 
 -- --------------------------------------------------------
 
@@ -3799,7 +5495,369 @@ INSERT INTO `rejection_reasons` (`id`, `type_id`, `reason`, `type`, `created_at`
 (18, 42, 'Product is Approved', 'product', '2020-02-18 02:56:16', '2020-02-18 02:56:16'),
 (19, 26, 'User has been changed something in shop settings', 'product', '2020-02-18 04:19:52', '2020-02-18 04:19:52'),
 (20, 26, 'User has been changed something in shop settings', 'product', '2020-02-18 04:20:26', '2020-02-18 04:20:26'),
-(21, 42, 'User has been changed something in shop settings', 'product', '2020-02-25 05:49:36', '2020-02-25 05:49:36');
+(21, 42, 'User has been changed something in shop settings', 'product', '2020-02-25 05:49:36', '2020-02-25 05:49:36'),
+(22, 45, 'The shop has been submitted for approval.', 'product', '2020-04-21 00:45:36', '2020-04-21 00:45:36'),
+(23, 45, 'The shop has been submitted for approval.', 'product', '2020-04-21 00:46:00', '2020-04-21 00:46:00'),
+(24, 45, 'The shop has been submitted for approval.', 'product', '2020-04-21 01:07:18', '2020-04-21 01:07:18'),
+(25, 45, 'The shop has been submitted for approval.', 'product', '2020-04-21 01:35:02', '2020-04-21 01:35:02'),
+(26, 45, 'The shop has been submitted for approval.', 'product', '2020-04-21 01:35:24', '2020-04-21 01:35:24'),
+(27, 46, 'The shop has been submitted for approval.', 'product', '2020-04-21 01:36:33', '2020-04-21 01:36:33'),
+(28, 47, 'The shop has been submitted for approval.', 'product', '2020-04-21 01:44:56', '2020-04-21 01:44:56'),
+(29, 47, 'The shop has been submitted for approval.', 'product', '2020-04-21 01:45:24', '2020-04-21 01:45:24'),
+(30, 47, 'The shop has been submitted for approval.', 'product', '2020-04-21 01:45:48', '2020-04-21 01:45:48'),
+(31, 46, 'The shop has been submitted for approval.', 'product', '2020-04-21 03:30:52', '2020-04-21 03:30:52'),
+(32, 46, 'The shop has been submitted for approval.', 'product', '2020-04-21 03:31:28', '2020-04-21 03:31:28'),
+(33, 48, 'The shop has been submitted for approval.', 'product', '2020-04-22 00:03:11', '2020-04-22 00:03:11'),
+(34, 48, 'The shop has been submitted for approval.', 'product', '2020-04-22 00:03:23', '2020-04-22 00:03:23'),
+(35, 49, 'The shop has been submitted for approval.', 'product', '2020-04-22 04:09:12', '2020-04-22 04:09:12'),
+(36, 49, 'The shop has been submitted for approval.', 'product', '2020-04-22 04:10:19', '2020-04-22 04:10:19'),
+(37, 50, 'The shop has been submitted for approval.', 'product', '2020-04-22 04:20:44', '2020-04-22 04:20:44'),
+(38, 50, 'The shop has been submitted for approval.', 'product', '2020-04-22 04:23:26', '2020-04-22 04:23:26'),
+(39, 49, 'The shop has been submitted for approval.', 'product', '2020-04-22 10:15:06', '2020-04-22 10:15:06'),
+(40, 49, 'The shop has been submitted for approval.', 'product', '2020-04-23 00:54:01', '2020-04-23 00:54:01'),
+(41, 49, 'The shop has been submitted for approval.', 'product', '2020-04-23 01:40:55', '2020-04-23 01:40:55'),
+(42, 49, 'The shop has been submitted for approval.', 'product', '2020-04-23 01:41:12', '2020-04-23 01:41:12'),
+(43, 49, 'The shop has been submitted for approval.', 'product', '2020-04-23 01:42:39', '2020-04-23 01:42:39'),
+(44, 46, 'The shop has been submitted for approval.', 'product', '2020-04-23 09:42:35', '2020-04-23 09:42:35'),
+(45, 46, 'The shop has been submitted for approval.', 'product', '2020-04-23 09:42:39', '2020-04-23 09:42:39'),
+(46, 45, 'The shop has been submitted for approval.', 'product', '2020-04-23 09:43:28', '2020-04-23 09:43:28'),
+(47, 54, 'The shop has been submitted for approval.', 'product', '2020-04-23 11:51:39', '2020-04-23 11:51:39'),
+(48, 46, 'The shop has been submitted for approval.', 'product', '2020-04-23 11:53:12', '2020-04-23 11:53:12'),
+(49, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 05:27:20', '2020-04-25 05:27:20'),
+(50, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 05:27:53', '2020-04-25 05:27:53'),
+(51, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 05:39:44', '2020-04-25 05:39:44'),
+(52, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 05:41:48', '2020-04-25 05:41:48'),
+(53, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 05:41:55', '2020-04-25 05:41:55'),
+(54, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 05:42:15', '2020-04-25 05:42:15'),
+(55, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 05:46:47', '2020-04-25 05:46:47'),
+(56, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 05:50:46', '2020-04-25 05:50:46'),
+(57, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 05:53:18', '2020-04-25 05:53:18'),
+(58, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 05:53:32', '2020-04-25 05:53:32'),
+(59, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 05:53:44', '2020-04-25 05:53:44'),
+(60, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 05:53:48', '2020-04-25 05:53:48'),
+(61, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 05:56:49', '2020-04-25 05:56:49'),
+(62, 58, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:09:16', '2020-04-25 06:09:16'),
+(63, 58, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:09:35', '2020-04-25 06:09:35'),
+(64, 58, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:09:43', '2020-04-25 06:09:43'),
+(65, 58, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:09:52', '2020-04-25 06:09:52'),
+(66, 58, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:10:06', '2020-04-25 06:10:06'),
+(67, 58, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:10:10', '2020-04-25 06:10:10'),
+(68, 58, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:15:43', '2020-04-25 06:15:43'),
+(69, 62, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:21:50', '2020-04-25 06:21:50'),
+(70, 62, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:26:21', '2020-04-25 06:26:21'),
+(71, 62, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:31:54', '2020-04-25 06:31:54'),
+(72, 62, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:33:00', '2020-04-25 06:33:00'),
+(73, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:33:40', '2020-04-25 06:33:40'),
+(74, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:35:24', '2020-04-25 06:35:24'),
+(75, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:37:03', '2020-04-25 06:37:03'),
+(76, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:37:11', '2020-04-25 06:37:11'),
+(77, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:38:05', '2020-04-25 06:38:05'),
+(78, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:38:21', '2020-04-25 06:38:21'),
+(79, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:39:04', '2020-04-25 06:39:04'),
+(80, 58, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:40:49', '2020-04-25 06:40:49'),
+(81, 46, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:42:33', '2020-04-25 06:42:33'),
+(82, 46, 'The shop has been submitted for approval.', 'product', '2020-04-25 06:45:43', '2020-04-25 06:45:43'),
+(83, 63, 'The shop has been submitted for approval.', 'product', '2020-04-25 07:35:58', '2020-04-25 07:35:58'),
+(84, 64, 'The shop has been submitted for approval.', 'product', '2020-04-25 07:37:56', '2020-04-25 07:37:56'),
+(85, 62, 'The shop has been submitted for approval.', 'product', '2020-04-25 08:15:10', '2020-04-25 08:15:10'),
+(86, 62, 'The shop has been submitted for approval.', 'product', '2020-04-25 08:16:51', '2020-04-25 08:16:51'),
+(87, 62, 'The shop has been submitted for approval.', 'product', '2020-04-25 08:17:26', '2020-04-25 08:17:26'),
+(88, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 14:03:47', '2020-04-25 14:03:47'),
+(89, 54, 'The shop has been submitted for approval.', 'product', '2020-04-25 14:04:34', '2020-04-25 14:04:34'),
+(90, 62, 'The shop has been submitted for approval.', 'product', '2020-04-27 00:08:27', '2020-04-27 00:08:27'),
+(91, 62, 'The shop has been submitted for approval.', 'product', '2020-04-27 00:08:50', '2020-04-27 00:08:50'),
+(92, 65, 'The shop has been submitted for approval.', 'product', '2020-04-27 00:16:27', '2020-04-27 00:16:27'),
+(93, 66, 'The shop has been submitted for approval.', 'product', '2020-04-27 00:19:03', '2020-04-27 00:19:03'),
+(94, 67, 'The shop has been submitted for approval.', 'product', '2020-04-27 00:34:06', '2020-04-27 00:34:06'),
+(95, 70, 'The shop has been submitted for approval.', 'product', '2020-04-27 01:28:13', '2020-04-27 01:28:13'),
+(96, 71, 'The shop has been submitted for approval.', 'product', '2020-04-27 01:34:11', '2020-04-27 01:34:11'),
+(97, 72, 'The shop has been submitted for approval.', 'product', '2020-04-27 04:01:10', '2020-04-27 04:01:10'),
+(98, 73, 'The shop has been submitted for approval.', 'product', '2020-04-27 04:03:54', '2020-04-27 04:03:54'),
+(99, 54, 'The shop has been submitted for approval.', 'product', '2020-04-27 07:19:44', '2020-04-27 07:19:44'),
+(100, 45, 'The shop has been submitted for approval.', 'product', '2020-04-27 12:19:57', '2020-04-27 12:19:57'),
+(101, 62, 'The shop has been submitted for approval.', 'product', '2020-04-27 12:24:13', '2020-04-27 12:24:13'),
+(102, 62, 'The shop has been submitted for approval.', 'product', '2020-04-27 12:25:38', '2020-04-27 12:25:38'),
+(103, 58, 'The shop has been submitted for approval.', 'product', '2020-04-28 03:28:46', '2020-04-28 03:28:46'),
+(104, 45, 'The shop has been submitted for approval.', 'product', '2020-04-28 03:33:23', '2020-04-28 03:33:23'),
+(105, 45, 'The shop has been submitted for approval.', 'product', '2020-04-28 03:39:31', '2020-04-28 03:39:31'),
+(106, 45, 'The shop has been submitted for approval.', 'product', '2020-04-28 03:39:45', '2020-04-28 03:39:45'),
+(107, 45, 'The shop has been submitted for approval.', 'product', '2020-04-28 03:51:18', '2020-04-28 03:51:18'),
+(108, 62, 'The shop has been submitted for approval.', 'product', '2020-04-28 03:52:55', '2020-04-28 03:52:55'),
+(109, 63, 'The shop has been submitted for approval.', 'product', '2020-05-04 06:33:16', '2020-05-04 06:33:16'),
+(110, 63, 'The shop has been submitted for approval.', 'product', '2020-05-04 06:34:27', '2020-05-04 06:34:27'),
+(111, 63, 'The shop has been submitted for approval.', 'product', '2020-05-04 06:34:52', '2020-05-04 06:34:52'),
+(112, 63, 'The shop has been submitted for approval.', 'product', '2020-05-04 06:36:00', '2020-05-04 06:36:00'),
+(113, 63, 'The shop has been submitted for approval.', 'product', '2020-05-04 06:36:12', '2020-05-04 06:36:12'),
+(114, 63, 'The shop has been submitted for approval.', 'product', '2020-05-04 06:36:22', '2020-05-04 06:36:22'),
+(115, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 08:34:13', '2020-05-11 08:34:13'),
+(116, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 08:34:38', '2020-05-11 08:34:38'),
+(117, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 08:39:04', '2020-05-11 08:39:04'),
+(118, 65, 'The shop has been submitted for approval.', 'product', '2020-05-11 08:54:40', '2020-05-11 08:54:40'),
+(119, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 08:59:11', '2020-05-11 08:59:11'),
+(120, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 09:00:42', '2020-05-11 09:00:42'),
+(121, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 09:01:24', '2020-05-11 09:01:24'),
+(122, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 09:16:54', '2020-05-11 09:16:54'),
+(123, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 09:17:23', '2020-05-11 09:17:23'),
+(124, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 09:17:42', '2020-05-11 09:17:42'),
+(125, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 09:17:46', '2020-05-11 09:17:46'),
+(126, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 09:18:50', '2020-05-11 09:18:50'),
+(127, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 09:20:18', '2020-05-11 09:20:18'),
+(128, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 09:31:01', '2020-05-11 09:31:01'),
+(129, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 09:39:07', '2020-05-11 09:39:07'),
+(130, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 09:48:12', '2020-05-11 09:48:12'),
+(131, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 10:30:04', '2020-05-11 10:30:04'),
+(132, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 10:30:37', '2020-05-11 10:30:37'),
+(133, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 10:33:32', '2020-05-11 10:33:32'),
+(134, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 10:35:23', '2020-05-11 10:35:23'),
+(135, 64, 'The shop has been submitted for approval.', 'product', '2020-05-11 10:46:06', '2020-05-11 10:46:06'),
+(136, 64, 'The shop has been submitted for approval.', 'product', '2020-05-12 00:28:17', '2020-05-12 00:28:17'),
+(137, 64, 'The shop has been submitted for approval.', 'product', '2020-05-12 00:31:32', '2020-05-12 00:31:32'),
+(138, 64, 'The shop has been submitted for approval.', 'product', '2020-05-12 00:32:30', '2020-05-12 00:32:30'),
+(139, 64, 'The shop has been submitted for approval.', 'product', '2020-05-12 00:33:01', '2020-05-12 00:33:01'),
+(140, 64, 'The shop has been submitted for approval.', 'product', '2020-05-12 00:34:19', '2020-05-12 00:34:19'),
+(141, 64, 'The shop has been submitted for approval.', 'product', '2020-05-12 00:55:10', '2020-05-12 00:55:10'),
+(142, 64, 'The shop has been submitted for approval.', 'product', '2020-05-12 00:57:59', '2020-05-12 00:57:59'),
+(143, 64, 'The shop has been submitted for approval.', 'product', '2020-05-12 04:21:58', '2020-05-12 04:21:58'),
+(144, 64, 'The shop has been submitted for approval.', 'product', '2020-05-12 04:22:16', '2020-05-12 04:22:16'),
+(145, 65, 'The shop has been submitted for approval.', 'product', '2020-05-12 09:01:37', '2020-05-12 09:01:37'),
+(146, 65, 'The shop has been submitted for approval.', 'product', '2020-05-12 09:01:48', '2020-05-12 09:01:48'),
+(147, 64, 'The shop has been submitted for approval.', 'product', '2020-05-13 03:42:14', '2020-05-13 03:42:14'),
+(148, 64, 'The shop has been submitted for approval.', 'product', '2020-05-13 04:01:02', '2020-05-13 04:01:02'),
+(149, 64, 'The shop has been submitted for approval.', 'product', '2020-05-13 04:01:56', '2020-05-13 04:01:56'),
+(150, 64, 'The shop has been submitted for approval.', 'product', '2020-05-13 05:46:07', '2020-05-13 05:46:07'),
+(151, 64, 'The shop has been submitted for approval.', 'product', '2020-05-13 06:11:39', '2020-05-13 06:11:39'),
+(152, 64, 'The shop has been submitted for approval.', 'product', '2020-05-13 06:12:40', '2020-05-13 06:12:40'),
+(153, 45, 'The shop has been submitted for approval.', 'product', '2020-05-13 06:14:30', '2020-05-13 06:14:30'),
+(154, 64, 'The shop has been submitted for approval.', 'product', '2020-05-13 07:20:36', '2020-05-13 07:20:36'),
+(155, 64, 'The shop has been submitted for approval.', 'product', '2020-05-13 07:21:16', '2020-05-13 07:21:16'),
+(156, 64, 'The shop has been submitted for approval.', 'product', '2020-05-14 01:36:05', '2020-05-14 01:36:05'),
+(157, 64, 'The shop has been submitted for approval.', 'product', '2020-05-14 01:37:47', '2020-05-14 01:37:47'),
+(158, 64, 'The shop has been submitted for approval.', 'product', '2020-05-14 01:44:43', '2020-05-14 01:44:43'),
+(159, 64, 'The shop has been submitted for approval.', 'product', '2020-05-14 01:46:00', '2020-05-14 01:46:00'),
+(160, 64, 'The shop has been submitted for approval.', 'product', '2020-05-14 01:47:06', '2020-05-14 01:47:06'),
+(161, 64, 'The shop has been submitted for approval.', 'product', '2020-05-14 01:50:09', '2020-05-14 01:50:09'),
+(162, 64, 'The shop has been submitted for approval.', 'product', '2020-05-14 01:50:30', '2020-05-14 01:50:30'),
+(163, 64, 'The shop has been submitted for approval.', 'product', '2020-05-14 01:50:49', '2020-05-14 01:50:49'),
+(164, 64, 'The shop has been submitted for approval.', 'product', '2020-05-14 01:54:42', '2020-05-14 01:54:42'),
+(165, 64, 'The shop has been submitted for approval.', 'product', '2020-05-14 01:55:33', '2020-05-14 01:55:33'),
+(166, 64, 'The shop has been submitted for approval.', 'product', '2020-05-14 01:57:09', '2020-05-14 01:57:09'),
+(167, 64, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:03:22', '2020-05-14 02:03:22'),
+(168, 64, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:04:00', '2020-05-14 02:04:00'),
+(169, 64, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:06:08', '2020-05-14 02:06:08'),
+(170, 69, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:07:46', '2020-05-14 02:07:46'),
+(171, 69, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:08:10', '2020-05-14 02:08:10'),
+(172, 69, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:16:09', '2020-05-14 02:16:09'),
+(173, 69, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:16:27', '2020-05-14 02:16:27'),
+(174, 69, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:16:47', '2020-05-14 02:16:47'),
+(175, 69, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:18:09', '2020-05-14 02:18:09'),
+(176, 69, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:20:00', '2020-05-14 02:20:00'),
+(177, 65, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:46:00', '2020-05-14 02:46:00'),
+(178, 65, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:46:11', '2020-05-14 02:46:11'),
+(179, 65, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:46:28', '2020-05-14 02:46:28'),
+(180, 65, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:50:49', '2020-05-14 02:50:49'),
+(181, 65, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:54:18', '2020-05-14 02:54:18'),
+(182, 65, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:54:49', '2020-05-14 02:54:49'),
+(183, 65, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:56:39', '2020-05-14 02:56:39'),
+(184, 65, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:56:52', '2020-05-14 02:56:52'),
+(185, 65, 'The shop has been submitted for approval.', 'product', '2020-05-14 02:57:00', '2020-05-14 02:57:00'),
+(186, 65, 'The shop has been submitted for approval.', 'product', '2020-05-14 03:01:14', '2020-05-14 03:01:14'),
+(187, 65, 'The shop has been submitted for approval.', 'product', '2020-05-14 03:16:09', '2020-05-14 03:16:09'),
+(188, 65, 'The shop has been submitted for approval.', 'product', '2020-05-14 03:17:52', '2020-05-14 03:17:52'),
+(189, 65, 'The shop has been submitted for approval.', 'product', '2020-05-14 03:19:19', '2020-05-14 03:19:19'),
+(190, 64, 'The shop has been submitted for approval.', 'product', '2020-05-14 03:20:21', '2020-05-14 03:20:21'),
+(191, 64, 'The shop has been submitted for approval.', 'product', '2020-05-15 00:34:25', '2020-05-15 00:34:25'),
+(192, 64, 'The shop has been submitted for approval.', 'product', '2020-05-15 00:35:01', '2020-05-15 00:35:01'),
+(193, 64, 'The shop has been submitted for approval.', 'product', '2020-05-15 00:38:22', '2020-05-15 00:38:22'),
+(194, 64, 'The shop has been submitted for approval.', 'product', '2020-05-15 00:47:30', '2020-05-15 00:47:30'),
+(195, 64, 'The shop has been submitted for approval.', 'product', '2020-05-15 00:52:19', '2020-05-15 00:52:19'),
+(196, 64, 'The shop has been submitted for approval.', 'product', '2020-05-15 00:59:40', '2020-05-15 00:59:40'),
+(197, 65, 'The shop has been submitted for approval.', 'product', '2020-05-15 02:33:32', '2020-05-15 02:33:32'),
+(198, 65, 'The shop has been submitted for approval.', 'product', '2020-05-15 02:34:21', '2020-05-15 02:34:21'),
+(199, 63, 'The shop has been submitted for approval.', 'product', '2020-05-15 02:44:50', '2020-05-15 02:44:50'),
+(200, 71, 'The shop has been submitted for approval.', 'product', '2020-05-15 06:56:31', '2020-05-15 06:56:31'),
+(201, 71, 'The shop has been submitted for approval.', 'product', '2020-05-15 06:56:43', '2020-05-15 06:56:43'),
+(202, 71, 'The shop has been submitted for approval.', 'product', '2020-05-15 06:56:59', '2020-05-15 06:56:59'),
+(203, 71, 'The shop has been submitted for approval.', 'product', '2020-05-15 06:58:14', '2020-05-15 06:58:14'),
+(204, 71, 'The shop has been submitted for approval.', 'product', '2020-05-15 07:06:34', '2020-05-15 07:06:34'),
+(205, 72, 'The shop has been submitted for approval.', 'product', '2020-05-15 07:10:33', '2020-05-15 07:10:33'),
+(206, 72, 'The shop has been submitted for approval.', 'product', '2020-05-15 07:11:05', '2020-05-15 07:11:05'),
+(207, 72, 'The shop has been submitted for approval.', 'product', '2020-05-15 07:11:35', '2020-05-15 07:11:35'),
+(208, 72, 'The shop has been submitted for approval.', 'product', '2020-05-15 08:23:04', '2020-05-15 08:23:04'),
+(209, 72, 'The shop has been submitted for approval.', 'product', '2020-05-15 08:23:39', '2020-05-15 08:23:39'),
+(210, 73, 'The shop has been submitted for approval.', 'product', '2020-05-19 02:24:44', '2020-05-19 02:24:44'),
+(211, 73, 'The shop has been submitted for approval.', 'product', '2020-05-19 02:24:52', '2020-05-19 02:24:52'),
+(212, 73, 'The shop has been submitted for approval.', 'product', '2020-05-19 02:43:05', '2020-05-19 02:43:05'),
+(213, 73, 'The shop has been submitted for approval.', 'product', '2020-05-19 02:44:35', '2020-05-19 02:44:35'),
+(214, 63, 'The shop has been submitted for approval.', 'product', '2020-05-19 02:48:11', '2020-05-19 02:48:11'),
+(215, 73, 'The shop has been submitted for approval.', 'product', '2020-05-19 04:09:55', '2020-05-19 04:09:55'),
+(216, 73, 'The shop has been submitted for approval.', 'product', '2020-05-19 04:10:42', '2020-05-19 04:10:42'),
+(217, 74, 'The shop has been submitted for approval.', 'product', '2020-05-19 04:11:39', '2020-05-19 04:11:39'),
+(218, 74, 'The shop has been submitted for approval.', 'product', '2020-05-19 04:16:48', '2020-05-19 04:16:48'),
+(219, 74, 'The shop has been submitted for approval.', 'product', '2020-05-19 04:18:44', '2020-05-19 04:18:44'),
+(220, 74, 'The shop has been submitted for approval.', 'product', '2020-05-19 04:19:38', '2020-05-19 04:19:38'),
+(221, 74, 'The shop has been submitted for approval.', 'product', '2020-05-19 04:24:29', '2020-05-19 04:24:29'),
+(222, 74, 'The shop has been submitted for approval.', 'product', '2020-05-19 04:26:45', '2020-05-19 04:26:45'),
+(223, 74, 'The shop has been submitted for approval.', 'product', '2020-05-19 04:26:59', '2020-05-19 04:26:59'),
+(224, 72, 'The shop has been submitted for approval.', 'product', '2020-05-19 04:36:48', '2020-05-19 04:36:48'),
+(225, 72, 'The shop has been submitted for approval.', 'product', '2020-05-19 04:37:00', '2020-05-19 04:37:00'),
+(226, 58, 'The shop has been submitted for approval.', 'product', '2020-05-19 04:40:42', '2020-05-19 04:40:42'),
+(227, 63, 'The shop has been submitted for approval.', 'product', '2020-05-19 04:41:06', '2020-05-19 04:41:06'),
+(228, 63, 'The shop has been submitted for approval.', 'product', '2020-05-19 04:41:30', '2020-05-19 04:41:30'),
+(229, 45, 'The shop has been submitted for approval.', 'product', '2020-05-19 04:41:50', '2020-05-19 04:41:50'),
+(230, 45, 'The shop has been submitted for approval.', 'product', '2020-05-19 04:42:08', '2020-05-19 04:42:08'),
+(231, 49, 'The shop has been submitted for approval.', 'product', '2020-05-19 04:43:43', '2020-05-19 04:43:43'),
+(232, 74, 'The shop has been submitted for approval.', 'product', '2020-05-19 05:32:08', '2020-05-19 05:32:08'),
+(233, 74, 'The shop has been submitted for approval.', 'product', '2020-05-19 05:32:16', '2020-05-19 05:32:16'),
+(234, 74, 'The shop has been submitted for approval.', 'product', '2020-05-19 05:32:30', '2020-05-19 05:32:30'),
+(235, 74, 'The shop has been submitted for approval.', 'product', '2020-05-19 05:34:02', '2020-05-19 05:34:02'),
+(236, 74, 'The shop has been submitted for approval.', 'product', '2020-05-19 05:34:12', '2020-05-19 05:34:12'),
+(237, 74, 'The shop has been submitted for approval.', 'product', '2020-05-19 05:42:05', '2020-05-19 05:42:05'),
+(238, 71, 'The shop has been submitted for approval.', 'product', '2020-05-20 02:36:43', '2020-05-20 02:36:43'),
+(239, 71, 'The shop has been submitted for approval.', 'product', '2020-05-20 02:37:16', '2020-05-20 02:37:16'),
+(240, 71, 'The shop has been submitted for approval.', 'product', '2020-05-20 02:38:12', '2020-05-20 02:38:12'),
+(241, 58, 'The shop has been submitted for approval.', 'product', '2020-05-21 03:13:47', '2020-05-21 03:13:47'),
+(242, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 03:43:23', '2020-05-21 03:43:23'),
+(243, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 03:43:31', '2020-05-21 03:43:31'),
+(244, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 03:43:47', '2020-05-21 03:43:47'),
+(245, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 03:43:54', '2020-05-21 03:43:54'),
+(246, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 03:44:54', '2020-05-21 03:44:54'),
+(247, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 03:45:07', '2020-05-21 03:45:07'),
+(248, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 04:40:58', '2020-05-21 04:40:58'),
+(249, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 04:41:59', '2020-05-21 04:41:59'),
+(250, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 04:42:20', '2020-05-21 04:42:20'),
+(251, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 04:42:43', '2020-05-21 04:42:43'),
+(252, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 04:55:18', '2020-05-21 04:55:18'),
+(253, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 04:58:08', '2020-05-21 04:58:08'),
+(254, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 04:58:15', '2020-05-21 04:58:15'),
+(255, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 04:59:05', '2020-05-21 04:59:05'),
+(256, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 04:59:12', '2020-05-21 04:59:12'),
+(257, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:08:07', '2020-05-21 05:08:07'),
+(258, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:08:54', '2020-05-21 05:08:54'),
+(259, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:16:52', '2020-05-21 05:16:52'),
+(260, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:18:37', '2020-05-21 05:18:37'),
+(261, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:18:58', '2020-05-21 05:18:58'),
+(262, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:21:16', '2020-05-21 05:21:16'),
+(263, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:21:43', '2020-05-21 05:21:43'),
+(264, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:22:14', '2020-05-21 05:22:14'),
+(265, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:24:22', '2020-05-21 05:24:22'),
+(266, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:25:20', '2020-05-21 05:25:20'),
+(267, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:27:20', '2020-05-21 05:27:20'),
+(268, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:27:38', '2020-05-21 05:27:38'),
+(269, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:27:42', '2020-05-21 05:27:42'),
+(270, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:30:38', '2020-05-21 05:30:38'),
+(271, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:32:21', '2020-05-21 05:32:21'),
+(272, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:35:04', '2020-05-21 05:35:04'),
+(273, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:35:12', '2020-05-21 05:35:12'),
+(274, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:35:48', '2020-05-21 05:35:48'),
+(275, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:42:29', '2020-05-21 05:42:29'),
+(276, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:48:05', '2020-05-21 05:48:05'),
+(277, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:55:05', '2020-05-21 05:55:05'),
+(278, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:55:25', '2020-05-21 05:55:25'),
+(279, 76, 'The shop has been submitted for approval.', 'product', '2020-05-21 05:57:31', '2020-05-21 05:57:31'),
+(280, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 06:12:26', '2020-05-21 06:12:26'),
+(281, 75, 'The shop has been submitted for approval.', 'product', '2020-05-21 06:12:56', '2020-05-21 06:12:56'),
+(282, 76, 'The shop has been submitted for approval.', 'product', '2020-05-22 00:49:11', '2020-05-22 00:49:11'),
+(283, 76, 'The shop has been submitted for approval.', 'product', '2020-05-22 00:50:21', '2020-05-22 00:50:21'),
+(284, 76, 'The shop has been submitted for approval.', 'product', '2020-05-22 00:50:28', '2020-05-22 00:50:28'),
+(285, 76, 'The shop has been submitted for approval.', 'product', '2020-05-22 00:51:23', '2020-05-22 00:51:23'),
+(286, 76, 'The shop has been submitted for approval.', 'product', '2020-05-22 00:53:27', '2020-05-22 00:53:27'),
+(287, 76, 'The shop has been submitted for approval.', 'product', '2020-05-22 00:56:30', '2020-05-22 00:56:30'),
+(288, 76, 'The shop has been submitted for approval.', 'product', '2020-05-22 01:50:09', '2020-05-22 01:50:09'),
+(289, 76, 'The shop has been submitted for approval.', 'product', '2020-05-22 01:50:34', '2020-05-22 01:50:34'),
+(290, 76, 'The shop has been submitted for approval.', 'product', '2020-05-22 01:51:27', '2020-05-22 01:51:27'),
+(291, 76, 'The shop has been submitted for approval.', 'product', '2020-05-22 02:39:07', '2020-05-22 02:39:07'),
+(292, 76, 'The shop has been submitted for approval.', 'product', '2020-05-22 02:39:24', '2020-05-22 02:39:24'),
+(293, 76, 'The shop has been submitted for approval.', 'product', '2020-05-22 02:40:53', '2020-05-22 02:40:53'),
+(294, 76, 'The shop has been submitted for approval.', 'product', '2020-05-22 02:48:40', '2020-05-22 02:48:40'),
+(295, 76, 'The shop has been submitted for approval.', 'product', '2020-05-22 02:49:19', '2020-05-22 02:49:19'),
+(296, 58, 'The shop has been submitted for approval.', 'product', '2020-05-28 01:58:20', '2020-05-28 01:58:20'),
+(297, 80, 'The shop has been submitted for approval.', 'product', '2020-07-01 02:21:55', '2020-07-01 02:21:55'),
+(298, 63, 'The shop has been submitted for approval.', 'product', '2020-07-01 02:27:33', '2020-07-01 02:27:33'),
+(299, 45, 'The shop has been submitted for approval.', 'product', '2020-07-01 02:37:51', '2020-07-01 02:37:51'),
+(300, 62, 'The shop has been submitted for approval.', 'product', '2020-07-01 02:38:00', '2020-07-01 02:38:00'),
+(301, 76, 'The shop has been submitted for approval.', 'product', '2020-07-01 02:38:06', '2020-07-01 02:38:06'),
+(302, 54, 'The shop has been submitted for approval.', 'product', '2020-07-01 02:38:38', '2020-07-01 02:38:38'),
+(303, 49, 'The shop has been submitted for approval.', 'product', '2020-07-01 02:38:46', '2020-07-01 02:38:46'),
+(304, 75, 'The shop has been submitted for approval.', 'product', '2020-07-01 02:38:56', '2020-07-01 02:38:56'),
+(305, 58, 'The shop has been submitted for approval.', 'product', '2020-07-01 02:39:09', '2020-07-01 02:39:09'),
+(306, 81, 'The shop has been submitted for approval.', 'product', '2020-07-01 03:05:50', '2020-07-01 03:05:50'),
+(307, 63, 'The shop has been submitted for approval.', 'product', '2020-07-01 03:37:41', '2020-07-01 03:37:41'),
+(308, 63, 'The shop has been submitted for approval.', 'product', '2020-07-02 01:22:05', '2020-07-02 01:22:05'),
+(309, 82, 'The shop has been submitted for approval.', 'product', '2020-07-02 01:39:00', '2020-07-02 01:39:00'),
+(310, 82, 'The shop has been submitted for approval.', 'product', '2020-07-02 01:40:43', '2020-07-02 01:40:43'),
+(311, 82, 'The shop has been submitted for approval.', 'product', '2020-07-02 01:40:57', '2020-07-02 01:40:57'),
+(312, 58, 'The shop has been submitted for approval.', 'product', '2020-07-02 01:42:02', '2020-07-02 01:42:02'),
+(313, 82, 'The shop has been submitted for approval.', 'product', '2020-07-02 01:47:10', '2020-07-02 01:47:10'),
+(314, 82, 'The shop has been submitted for approval.', 'product', '2020-07-05 15:15:18', '2020-07-05 15:15:18'),
+(315, 82, 'The shop has been submitted for approval.', 'product', '2020-07-05 15:17:39', '2020-07-05 15:17:39'),
+(316, 82, 'The shop has been submitted for approval.', 'product', '2020-07-05 15:18:37', '2020-07-05 15:18:37'),
+(317, 82, 'The shop has been submitted for approval.', 'product', '2020-07-05 15:19:15', '2020-07-05 15:19:15'),
+(318, 82, 'The shop has been submitted for approval.', 'product', '2020-07-05 15:21:47', '2020-07-05 15:21:47'),
+(319, 82, 'The shop has been submitted for approval.', 'product', '2020-07-05 15:22:06', '2020-07-05 15:22:06'),
+(320, 82, 'The shop has been submitted for approval.', 'product', '2020-07-05 15:22:14', '2020-07-05 15:22:14'),
+(321, 82, 'The shop has been submitted for approval.', 'product', '2020-07-05 15:23:58', '2020-07-05 15:23:58');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `report_questions`
+--
+
+CREATE TABLE `report_questions` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `report_questions`
+--
+
+INSERT INTO `report_questions` (`id`, `title`, `slug`, `created_at`, `updated_at`) VALUES
+(1, 'Ground Strokes', 'ground-strokes', '2020-07-06 05:19:28', '2020-07-06 05:19:28'),
+(2, 'Serve', 'serve', '2020-07-06 05:19:43', '2020-07-06 05:19:43'),
+(3, 'Rallying', 'rallying', '2020-07-06 05:19:55', '2020-07-06 05:19:55'),
+(4, 'Attitude', 'attitude', '2020-07-06 05:20:15', '2020-07-06 05:20:15'),
+(5, 'Competition', 'competition', '2020-07-06 05:20:24', '2020-07-06 05:20:24'),
+(6, 'Volleying', 'volleying', '2020-07-06 05:20:38', '2020-07-06 05:20:38'),
+(7, 'In Play | Warm Up', 'in-play-warm-up', '2020-07-06 05:20:52', '2020-07-06 05:20:52'),
+(8, 'New category', 'new-category', '2020-07-27 05:37:51', '2020-07-27 05:37:51');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `report_question_options`
+--
+
+CREATE TABLE `report_question_options` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `report_question_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `option_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `report_question_options`
+--
+
+INSERT INTO `report_question_options` (`id`, `report_question_id`, `option_title`, `created_at`, `updated_at`) VALUES
+(1, '1', 'I know and can perform all the correct stages of groundstrokes without being reminded', '2020-07-06 05:49:06', '2020-07-06 08:52:55'),
+(2, '1', 'I am not yet ready to play matches', '2020-07-06 05:55:16', '2020-07-06 12:07:06'),
+(3, '4', 'I can stay focussed and listen well for most of the session', '2020-07-06 06:58:36', '2020-07-13 06:53:00'),
+(4, '7', 'I can perform the warm up with occassional help', '2020-07-06 07:01:11', '2020-07-13 06:53:09'),
+(5, '6', 'I am not able to approach net and volley', '2020-07-06 07:08:06', '2020-07-06 07:08:06'),
+(6, '2', 'I don\'t know all the stages of my serve yet', '2020-07-06 07:15:22', '2020-07-06 07:15:22'),
+(7, '3', 'I can rally 10 shots from the back of the court without making a mistake', '2020-07-06 12:06:32', '2020-07-06 12:06:32'),
+(8, '7', 'THis is a questions about In PLay / warm up', '2020-07-27 05:36:52', '2020-07-27 05:36:52'),
+(9, '6', 'THis is a volleying question', '2020-07-27 05:37:10', '2020-07-27 05:37:10'),
+(10, '2', 'This is a serve question', '2020-07-27 05:37:29', '2020-07-27 05:37:29'),
+(11, '8', 'This is a new category', '2020-07-27 05:38:10', '2020-07-27 05:38:10'),
+(12, '5', 'This is a competition question', '2020-07-27 05:39:15', '2020-07-27 05:39:15'),
+(13, '5', 'This is also another competition question', '2020-07-27 05:39:30', '2020-07-27 05:39:30'),
+(14, '4', 'This person has attitude', '2020-07-27 05:39:55', '2020-07-27 05:39:55');
 
 -- --------------------------------------------------------
 
@@ -3862,10 +5920,9 @@ INSERT INTO `roles` (`id`, `name`, `display_name`, `created_at`, `updated_at`) V
 
 CREATE TABLE `seasons` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` longtext COLLATE utf8mb4_unicode_ci,
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '1',
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -3875,12 +5932,10 @@ CREATE TABLE `seasons` (
 -- Dumping data for table `seasons`
 --
 
-INSERT INTO `seasons` (`id`, `name`, `description`, `slug`, `image`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Hots', 'Hot Desi', 'hots', NULL, 1, '2019-11-13 15:07:45', '2019-12-20 06:01:49'),
-(2, 'Summer Season', 'Summer Desc', 'summer-season', NULL, 1, '2019-11-15 04:17:49', '2019-11-18 03:57:16'),
-(3, 'Winter season', 'Winter season desc', 'my-new-season', NULL, 1, '2019-11-15 22:57:50', '2019-11-15 23:00:14'),
-(4, 'Rainy Season', 'The wet season is the time of year', 'rainy-season', NULL, 1, '2019-11-19 04:09:51', '2019-12-20 06:12:28'),
-(5, 'Rainy', 'The wet season (sometimes called the rainy season) is the time of year when most of a region\'s average annual rainfall occurs. Generally the season lasts at least a month. ... When the wet season occurs during a warm season, or summer, precipitation falls mainly during the late afternoon and early evening.', 'rainy', NULL, 1, '2019-12-05 05:00:37', '2019-12-20 06:04:51');
+INSERT INTO `seasons` (`id`, `title`, `description`, `slug`, `status`, `created_at`, `updated_at`) VALUES
+(9, 'Spring 2020', 'Spring 2020', 'spring-2020', 1, '2020-06-23 08:37:52', '2020-06-29 00:44:59'),
+(10, 'Summer 2020', 'Summer 2020', 'summer-2020', 1, '2020-06-23 08:38:08', '2020-06-23 08:38:11'),
+(11, 'Autumn 2020', 'Autumn 2020', 'autumn-2020', 1, '2020-06-23 08:38:20', '2020-06-23 08:38:24');
 
 -- --------------------------------------------------------
 
@@ -3928,25 +5983,63 @@ INSERT INTO `service_aproval_processes` (`id`, `user_id`, `parent`, `vendor_serv
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sessions`
+--
+
+CREATE TABLE `sessions` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `session` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `time` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cost` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sessions`
+--
+
+INSERT INTO `sessions` (`id`, `session`, `time`, `cost`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Early Drop1', '8-9am', '4', '1', '2020-03-31 08:29:28', '2020-03-31 08:36:58'),
+(2, 'Morning', '9-10am', '14', '1', '2020-03-31 08:50:08', '2020-03-31 08:50:12'),
+(3, 'Lunch Club', '12-1pm', '4', '1', '2020-03-31 08:50:43', '2020-03-31 08:54:06'),
+(4, 'Afternoon', '1-4pm', '14', '1', '2020-03-31 08:51:15', '2020-03-31 08:54:03'),
+(5, 'Late Pick Up', '4-5pm', '10', '1', '2020-03-31 08:51:47', '2020-03-31 08:53:59'),
+(6, 'Full Day', '9-4pm', '26', '1', '2020-03-31 08:53:50', '2020-03-31 08:53:56');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `shop_cart_items`
 --
 
 CREATE TABLE `shop_cart_items` (
   `id` int(10) UNSIGNED NOT NULL,
+  `shop_type` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT 'product',
   `product_id` int(11) NOT NULL DEFAULT '0',
+  `course_season` int(11) DEFAULT NULL,
   `variant_id` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL DEFAULT '0',
   `quantity` int(11) NOT NULL DEFAULT '0',
   `price` double NOT NULL DEFAULT '0',
   `vendor_id` int(11) NOT NULL DEFAULT '0',
   `shop_id` int(11) NOT NULL DEFAULT '0',
+  `voucher_id` int(11) DEFAULT NULL,
+  `voucher_code` varchar(2000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `name` int(11) DEFAULT NULL,
   `total` double NOT NULL DEFAULT '0',
+  `child_id` int(11) DEFAULT NULL,
   `order_id` int(11) NOT NULL DEFAULT '0',
   `orderID` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `week` longtext COLLATE utf8mb4_unicode_ci,
+  `camp_price` int(11) DEFAULT NULL,
+  `discount_code` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `discount_price` int(11) DEFAULT NULL,
   `type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'cart',
+  `participant_info` int(11) DEFAULT NULL,
   `payment_status` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -3954,18 +6047,44 @@ CREATE TABLE `shop_cart_items` (
 -- Dumping data for table `shop_cart_items`
 --
 
-INSERT INTO `shop_cart_items` (`id`, `product_id`, `variant_id`, `user_id`, `quantity`, `price`, `vendor_id`, `shop_id`, `created_at`, `updated_at`, `name`, `total`, `order_id`, `orderID`, `type`, `payment_status`) VALUES
-(2, 26, 21, 32, 3, 600, 31, 1, '2020-02-07 03:29:03', '2020-02-07 09:26:30', NULL, 1800, 5, '#ENVSHOP1581044188', 'order', 1),
-(5, 26, 9, 32, 8, 549, 31, 1, '2020-02-07 07:44:17', '2020-02-07 09:06:26', NULL, 4392, 4, '#ENVSHOP1581042984', 'order', 1),
-(6, 26, 25, 32, 1, 386, 31, 1, '2020-02-07 09:15:07', '2020-02-07 09:26:30', NULL, 386, 5, '#ENVSHOP1581044188', 'order', 1),
-(7, 34, 0, 32, 10, 550, 31, 1, '2020-02-07 09:59:58', '2020-02-07 10:03:59', NULL, 5500, 6, '#ENVSHOP1581046438', 'order', 1),
-(8, 34, 0, 32, 1, 550, 31, 1, '2020-02-07 10:05:11', '2020-02-07 10:05:43', NULL, 550, 7, '#ENVSHOP1581046542', 'order', 1),
-(9, 26, 5, 32, 1, 479, 31, 1, '2020-02-10 03:39:07', '2020-02-10 04:05:15', NULL, 479, 0, NULL, 'cart', 0),
-(10, 26, 17, 32, 6, 479, 31, 1, '2020-02-10 05:33:43', '2020-02-22 08:07:49', NULL, 2874, 0, NULL, 'cart', 0),
-(11, 35, 52, 60, 1, 50, 59, 2, '2020-02-11 02:43:10', '2020-02-11 03:07:23', NULL, 50, 9, '#ENVSHOP1581410242', 'order', 1),
-(12, 38, 67, 60, 1, 50, 59, 2, '2020-02-11 03:44:38', '2020-02-11 03:45:52', NULL, 50, 10, '#ENVSHOP1581412551', 'order', 1),
-(13, 34, 0, 32, 0, 0, 0, 0, '2020-02-11 06:36:55', '2020-02-11 06:36:55', NULL, 0, 0, NULL, 'wishlist', 0),
-(14, 42, 76, 32, 16, 600, 31, 1, '2020-02-22 08:06:12', '2020-02-22 08:08:17', NULL, 9600, 0, NULL, 'cart', 0);
+INSERT INTO `shop_cart_items` (`id`, `shop_type`, `product_id`, `course_season`, `variant_id`, `user_id`, `quantity`, `price`, `vendor_id`, `shop_id`, `voucher_id`, `voucher_code`, `created_at`, `updated_at`, `name`, `total`, `child_id`, `order_id`, `orderID`, `week`, `camp_price`, `discount_code`, `discount_price`, `type`, `participant_info`, `payment_status`) VALUES
+(9, 'product', 26, NULL, 5, 32, 1, 479, 31, 1, NULL, NULL, '2020-02-10 03:39:07', '2020-02-10 04:05:15', NULL, 479, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'cart', NULL, 0),
+(10, 'product', 26, NULL, 17, 32, 6, 479, 31, 1, NULL, NULL, '2020-02-10 05:33:43', '2020-02-22 08:07:49', NULL, 2874, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'cart', NULL, 0),
+(13, 'product', 34, NULL, 0, 32, 0, 0, 0, 0, NULL, NULL, '2020-02-11 06:36:55', '2020-02-11 06:36:55', NULL, 0, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'wishlist', NULL, 0),
+(14, 'product', 42, NULL, 76, 32, 16, 600, 31, 1, NULL, NULL, '2020-02-22 08:06:12', '2020-02-22 08:08:17', NULL, 9600, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'cart', NULL, 0),
+(19, 'product', 46, NULL, 0, 278, 1, 120, 1, 0, NULL, NULL, '2020-04-22 08:51:45', '2020-04-26 10:32:07', NULL, 120, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'cart', NULL, 0),
+(22, 'product', 45, NULL, 0, 133, 1, 110, 1, 0, NULL, NULL, '2020-04-28 23:32:44', '2020-04-30 02:28:58', NULL, 110, NULL, 11, '#ENVSHOP1588233536', NULL, NULL, NULL, NULL, 'order', NULL, 1),
+(23, 'product', 62, NULL, 0, 133, 1, 45, 1, 0, NULL, NULL, '2020-04-29 03:50:46', '2020-04-30 02:28:58', NULL, 45, NULL, 11, '#ENVSHOP1588233536', NULL, NULL, NULL, NULL, 'order', NULL, 1),
+(24, 'product', 45, NULL, 0, 116, 1, 110, 1, 0, NULL, NULL, '2020-04-29 04:21:37', '2020-04-29 04:21:37', NULL, 110, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'cart', NULL, 0),
+(25, 'product', 62, NULL, 0, 353, 1, 45, 1, 0, NULL, NULL, '2020-04-29 07:18:19', '2020-04-29 07:18:19', NULL, 45, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'cart', NULL, 0),
+(26, 'product', 45, NULL, 0, 133, 1, 110, 1, 0, NULL, NULL, '2020-04-30 03:18:16', '2020-04-30 03:19:11', NULL, 110, NULL, 12, '#DRHSHOP1588236550', NULL, NULL, NULL, NULL, 'order', NULL, 1),
+(27, 'product', 45, NULL, 0, 133, 1, 110, 1, 0, NULL, NULL, '2020-04-30 07:21:06', '2020-04-30 07:26:18', NULL, 110, NULL, 13, '#DRHSHOP1588251376', NULL, NULL, NULL, NULL, 'order', NULL, 1),
+(28, 'product', 54, NULL, 101, 133, 1, 5, 1, 0, NULL, NULL, '2020-04-30 07:21:16', '2020-04-30 07:26:18', NULL, 5, NULL, 13, '#DRHSHOP1588251376', NULL, NULL, NULL, NULL, 'order', NULL, 1),
+(29, 'product', 58, NULL, 118, 133, 2, 10, 1, 0, NULL, NULL, '2020-04-30 08:12:37', '2020-04-30 08:14:11', NULL, 20, NULL, 14, '#DRHSHOP1588211050', NULL, NULL, NULL, NULL, 'order', NULL, 1),
+(30, 'product', 45, NULL, 0, 338, 1, 110, 1, 0, NULL, NULL, '2020-04-30 08:22:08', '2020-04-30 08:23:46', NULL, 110, NULL, 15, '#DRHSHOP1588211624', NULL, NULL, NULL, NULL, 'order', NULL, 1),
+(168, 'camp', 2, NULL, 0, 1, 1, 10, 1, 0, NULL, NULL, '2020-05-15 01:11:29', '2020-05-15 01:11:29', NULL, 10, NULL, 0, NULL, '{"W4":{"late_pickup":{"Monday":"4-mon-late"}}}', 10, NULL, NULL, 'cart', NULL, 0),
+(169, 'camp', 2, NULL, 0, 1, 1, 4, 1, 0, NULL, NULL, '2020-05-15 01:11:47', '2020-05-15 01:11:47', NULL, 4, NULL, 0, NULL, '{"W1":{"early_drop":{"Monday":"1-mon-early"}}}', 4, NULL, NULL, 'cart', NULL, 0),
+(170, 'camp', 2, NULL, 0, 1, 1, 12, 1, 0, NULL, NULL, '2020-05-15 01:17:37', '2020-05-15 01:17:37', NULL, 12, NULL, 0, NULL, '{"W1":{"early_drop":{"Monday":"1-mon-early","Tuesday":"1-tue-early","Wednesday":"1-wed-early"}}}', 12, NULL, NULL, 'cart', NULL, 0),
+(175, 'camp', 2, NULL, 0, 1, 1, 130, 1, 0, NULL, NULL, '2020-05-15 01:47:44', '2020-05-15 01:47:44', NULL, 130, NULL, 0, NULL, '{"W4":{"camp":{"Monday":"4-mon-full"}}}', 130, NULL, NULL, 'cart', NULL, 0),
+(176, 'camp', 2, NULL, 0, 1, 1, 10, 1, 0, NULL, NULL, '2020-05-15 01:49:24', '2020-05-15 01:49:24', NULL, 10, NULL, 0, NULL, '{"W3":{"late_pickup":{"Monday":"3-mon-late"}}}', 10, NULL, NULL, 'cart', NULL, 0),
+(177, 'camp', 2, NULL, 0, 1, 1, 10, 1, 0, NULL, NULL, '2020-05-15 01:51:13', '2020-05-15 01:51:13', NULL, 10, NULL, 0, NULL, '{"W1":{"late_pickup":{"Fullweek":"1-fullweek-late"}}}', 10, NULL, NULL, 'cart', NULL, 0),
+(178, 'camp', 2, NULL, 0, 1, 1, 130, 1, 0, NULL, NULL, '2020-05-15 01:52:26', '2020-05-15 01:52:26', NULL, 130, NULL, 0, NULL, '{"W4":{"camp":{"Monday":"4-mon-full"}}}', 130, NULL, NULL, 'cart', NULL, 0),
+(180, 'camp', 2, NULL, 0, 366, 1, 528, 1, 0, NULL, NULL, '2020-05-15 05:14:23', '2020-05-15 05:19:50', NULL, 528, 351, 39, '#DRHSHOP1589539788', '{"W1":{"early_drop":{"Monday":"1-mon-early","Tuesday":"1-tue-early"},"camp":{"Thursday":"1-thur-full","Friday":"1-fri-full","Fullweek":"1-fullweek-full"}},"W3":{"camp":{"Fullweek":"3-fullweek-full"}}}', 528, NULL, NULL, 'order', NULL, 1),
+(181, 'course', 2, 9, 0, 366, 1, 30, 1, 0, NULL, NULL, '2020-05-15 05:15:01', '2020-06-19 07:34:29', NULL, 30, 358, 39, '#DRHSHOP1589539788', NULL, NULL, NULL, NULL, 'order', NULL, 1),
+(182, 'product', 45, NULL, 0, 366, 1, 110, 1, 0, NULL, NULL, '2020-05-15 05:19:11', '2020-05-15 05:19:50', NULL, 110, NULL, 39, '#DRHSHOP1589539788', NULL, NULL, NULL, NULL, 'order', NULL, 1),
+(193, 'camp', 2, NULL, 0, 366, 1, 39.800000000000004, 1, 0, NULL, NULL, '2020-05-15 08:10:40', '2020-05-15 08:19:13', NULL, 39.800000000000004, 358, 40, '#DRHSHOP1589507352', '{"W1":{"early_drop":{"Monday":"1-mon-early"},"lunch":{"Monday":"1-mon-lunch"},"camp":{"Monday":"1-mon-noon","Tuesday":"1-tue-full"},"late_pickup":{"Monday":"1-mon-late"}},"W2":{"early_drop":{"Tuesday":"2-tue-early","Wednesday":"2-wed-early"},"lunch":{"Tuesday":"2-tue-lunch","Wednesday":"2-wed-lunch"},"camp":{"Tuesday":"2-tue-noon","Wednesday":"2-wed-noon","Thursday":"2-thur-full"},"late_pickup":{"Tuesday":"2-tue-late","Wednesday":"2-wed-late"}}}', 398, 'Dom', 10, 'order', NULL, 1),
+(210, 'product', 58, NULL, 121, 366, 1, 10, 1, 0, NULL, NULL, '2020-05-21 03:58:31', '2020-05-21 03:59:40', NULL, 10, NULL, 42, '#DRHSHOP1590053378', NULL, NULL, NULL, NULL, 'order', NULL, 1),
+(215, 'product', 49, NULL, 82, 366, 1, 70, 1, 0, NULL, NULL, '2020-05-23 03:30:06', '2020-05-23 03:31:07', NULL, 70, NULL, 44, '#DRHSHOP1590224465', NULL, NULL, NULL, NULL, 'order', NULL, 1),
+(296, 'course', 7, 11, 0, 366, 1, 100, 1, 0, NULL, NULL, '2020-06-08 07:03:41', '2020-06-18 05:11:30', NULL, 100, 351, 47, '#DRHSHOP1591619685', NULL, NULL, NULL, NULL, 'order', NULL, 1),
+(312, 'course', 1, 9, 0, 366, 1, 31, 1, 0, NULL, NULL, '2020-06-20 09:20:25', '2020-06-20 09:21:37', NULL, 31, 351, 51, '#DRHSHOP1592621496', NULL, NULL, NULL, NULL, 'order', NULL, 1),
+(354, 'product', 82, NULL, 0, 366, 1, 13, 1, 0, 2, '#DRH1594016172', '2020-07-06 00:46:12', '2020-07-06 00:46:51', NULL, 13, NULL, 74, '#DRHSHOP1594016210', NULL, NULL, NULL, NULL, 'order', NULL, 1),
+(363, 'product', 45, NULL, 0, 133, 1, 110, 1, 0, 0, '#DRH1594098046', '2020-07-06 23:30:46', '2020-07-14 05:11:16', NULL, 110, NULL, 0, '#DRHSHOP1594723276', NULL, NULL, NULL, NULL, 'order', NULL, 0),
+(365, 'product', 49, NULL, 82, 366, 1, 70, 1, 0, 0, '#DRH1594383097', '2020-07-10 06:41:37', '2020-07-10 06:41:54', NULL, 70, NULL, 0, '', NULL, NULL, NULL, NULL, 'order', NULL, 0),
+(371, 'course', 2, 9, 0, 366, 1, 15, 1, 0, NULL, NULL, '2020-07-23 02:54:39', '2020-07-23 02:55:04', NULL, 15, 351, 0, '#DRHSHOP1595492704', NULL, NULL, NULL, NULL, 'order', NULL, 0),
+(372, 'course', 7, 9, 0, 366, 1, 50, 1, 0, NULL, NULL, '2020-07-27 05:55:09', '2020-07-29 00:44:41', NULL, 50, 366, 0, '#DRHSHOP1596003281', NULL, NULL, NULL, NULL, 'order', NULL, 0),
+(374, 'product', 58, NULL, 118, 366, 1, 10, 1, 0, 0, NULL, '2020-07-29 00:50:58', '2020-07-29 01:17:04', NULL, 10, NULL, 0, '#DRHSHOP1596005224', NULL, NULL, NULL, NULL, 'order', NULL, 0),
+(381, 'product', 45, NULL, 0, 133, 1, 110, 1, 0, 0, NULL, '2020-07-29 06:08:51', '2020-07-29 08:17:40', NULL, 110, NULL, 0, '#DRHSHOP1595987259', NULL, NULL, NULL, NULL, 'order', NULL, 0),
+(383, 'product', 54, NULL, 101, 133, 1, 5, 1, 0, 0, '#DRH1595987354', '2020-07-29 08:19:14', '2020-07-29 08:19:14', NULL, 5, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'cart', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -4212,6 +6331,8 @@ CREATE TABLE `shop_orders` (
   `balance_transaction` longtext COLLATE utf8mb4_unicode_ci,
   `amount` double NOT NULL DEFAULT '0',
   `payment_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `transaction_details` longtext COLLATE utf8mb4_unicode_ci,
+  `provider_id` int(11) DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -4221,17 +6342,39 @@ CREATE TABLE `shop_orders` (
 -- Dumping data for table `shop_orders`
 --
 
-INSERT INTO `shop_orders` (`id`, `orderID`, `user_id`, `shipping_address`, `billing_address`, `payment_detail`, `balance_transaction`, `amount`, `payment_by`, `status`, `created_at`, `updated_at`) VALUES
-(1, '#ENVSHOP1581065849', 32, '{"name":"Narinder Singh","email":"bajwa9876470491@gmail.com","phone_number":"01212878777","address":"Bergen Town Center","country":"United States","state":"NJ","city":"Paramus","zipcode":"07652","latitude":"40.9157361","longitude":"-74.06090449999999","country_short_code":"US"}', '{"name":"Narinder Singh","email":"bajwa9876470491@gmail.com","phone_number":"01212878777","address":"Bergen Town Center","country":"United States","state":"NJ","city":"Paramus","zipcode":"07652","latitude":"40.9157361","longitude":"-74.06090449999999","country_short_code":"US","tax":6.63}', '{"id":"ch_1G9SeTENgNZPUt9KBwU0DakS","object":"charge","amount":244963,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1G9SeVENgNZPUt9KhPKt8zW3","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"bajwa9876470491@gmail.com","phone":null},"captured":true,"created":1581065849,"currency":"usd","customer":null,"description":"Customer for pay for #ENVSHOP1581065849","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":56,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1G9SeQENgNZPUt9KMsiFUV6p","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":12,"exp_year":2020,"fingerprint":"5yPNVhsLBrcpIKlS","funding":"unknown","installments":null,"last4":"1111","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1G9SeTENgNZPUt9KBwU0DakS\\/rcpt_GgqLUFqS33vuTRlccueg7m3kPKPGokl","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1G9SeTENgNZPUt9KBwU0DakS\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1G9SeQENgNZPUt9KMsiFUV6p","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":12,"exp_year":2020,"fingerprint":"5yPNVhsLBrcpIKlS","funding":"unknown","last4":"1111","metadata":[],"name":"bajwa9876470491@gmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"31":{"vendor_id":31,"total":2449.63,"amount":"2395","tax":6.63,"commission_fee":95.8,"service_fee":48,"payable_amount":2251,"account_id":"acct_1G6cxyFzSNgbCEQp","stripeAccountParams":{"amount":2251,"stripe_account":"acct_1G6cxyFzSNgbCEQp"}}}', 2449.63, 'STRIPE', 3, '2020-02-07 03:27:31', '2020-02-07 03:27:31'),
-(2, '#ENVSHOP1581065997', 32, '{"name":"Narinder Singh","email":"bajwa9876470491@gmail.com","phone_number":"01212878777","address":"Bourbon Street","country":"United States","state":"NJ","city":"Wayne","zipcode":"07470","latitude":"40.9492264","longitude":"-74.2616527","country_short_code":"US"}', '{"name":"Narinder Singh","email":"bajwa9876470491@gmail.com","phone_number":"01212878777","address":"Bergen Town Center","country":"United States","state":"NJ","city":"Paramus","zipcode":"07652","latitude":"40.9157361","longitude":"-74.06090449999999","country_short_code":"US","tax":6.63}', '{"id":"ch_1G9SgrENgNZPUt9KeHIFb57y","object":"charge","amount":429063,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1G9SgsENgNZPUt9KhLsV4iJI","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"bajwa9876470491@gmail.com","phone":null},"captured":true,"created":1581065997,"currency":"usd","customer":null,"description":"Customer for pay for #ENVSHOP1581065997","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":60,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1G9SgoENgNZPUt9KT1jbFjcA","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":12,"exp_year":2020,"fingerprint":"5yPNVhsLBrcpIKlS","funding":"unknown","installments":null,"last4":"1111","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1G9SgrENgNZPUt9KeHIFb57y\\/rcpt_GgqNAgqslnQWqNCd93pn9shhlPDIyco","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1G9SgrENgNZPUt9KeHIFb57y\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1G9SgoENgNZPUt9KT1jbFjcA","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":12,"exp_year":2020,"fingerprint":"5yPNVhsLBrcpIKlS","funding":"unknown","last4":"1111","metadata":[],"name":"bajwa9876470491@gmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"31":{"vendor_id":31,"total":4290.63,"amount":"6595","tax":6.63,"commission_fee":395.70000000000005,"service_fee":132,"payable_amount":6067,"account_id":"acct_1G6cxyFzSNgbCEQp","stripeAccountParams":{"amount":6067,"stripe_account":"acct_1G6cxyFzSNgbCEQp"}}}', 4290.63, 'STRIPE', 1, '2020-02-07 03:29:58', '2020-02-07 03:29:58'),
-(3, '#ENVSHOP1581068750', 32, '{"name":"Narinder Singh","email":"bajwa9876470491@gmail.com","phone_number":"01212878777","address":"Bourbon Street","country":"United States","state":"MA","city":"Peabody","zipcode":"01960","latitude":"42.5466407","longitude":"-70.9792677","country_short_code":"US"}', '{"name":"Narinder Singh","email":"bajwa9876470491@gmail.com","phone_number":"01212878777","address":"Bergen Town Center","country":"United States","state":"NJ","city":"Paramus","zipcode":"07652","latitude":"40.9157361","longitude":"-74.06090449999999","country_short_code":"US","tax":6.63}', '{"id":"ch_1G9TPHENgNZPUt9KinsnJ415","object":"charge","amount":147163,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1G9TPHENgNZPUt9K7HCBQBoO","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"bajwa9876470491@gmail.com","phone":null},"captured":true,"created":1581068751,"currency":"usd","customer":null,"description":"Customer for pay for #ENVSHOP1581068750","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":3,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1G9TPCENgNZPUt9KdBn9x7bF","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":12,"exp_year":2020,"fingerprint":"5yPNVhsLBrcpIKlS","funding":"unknown","installments":null,"last4":"1111","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1G9TPHENgNZPUt9KinsnJ415\\/rcpt_Ggr7RJmWAgok15UbkFS2zC2W1CwkCoX","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1G9TPHENgNZPUt9KinsnJ415\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1G9TPCENgNZPUt9KdBn9x7bF","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":12,"exp_year":2020,"fingerprint":"5yPNVhsLBrcpIKlS","funding":"unknown","last4":"1111","metadata":[],"name":"bajwa9876470491@gmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"31":{"vendor_id":31,"total":1471.63,"amount":"5637","tax":6.63,"commission_fee":338.21999999999997,"service_fee":112,"payable_amount":5187,"account_id":"acct_1G6cxyFzSNgbCEQp","stripeAccountParams":{"amount":5187,"stripe_account":"acct_1G6cxyFzSNgbCEQp"}}}', 1471.63, 'STRIPE', 1, '2020-02-07 04:15:52', '2020-02-07 04:15:52'),
-(4, '#ENVSHOP1581042984', 32, '{"name":"Narinder Singh","email":"bajwa9876470491@gmail.com","phone_number":"01212878777","address":"Bourbon Street","country":"United States","state":"NJ","city":"Wayne","zipcode":"07470","latitude":"40.9492264","longitude":"-74.2616527","country_short_code":"US"}', '{"name":"Narinder Singh","email":"bajwa9876470491@gmail.com","phone_number":"01212878777","address":"Bergen Town Center","country":"United States","state":"NJ","city":"Paramus","zipcode":"07652","latitude":"40.9157361","longitude":"-74.06090449999999","country_short_code":"US","tax":6.63}', '{"id":"ch_1G9XwTENgNZPUt9KEe1CFl8P","object":"charge","amount":790563,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1G9XwTENgNZPUt9KobzDIWBE","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"bajwa9876470491@gmail.com","phone":null},"captured":true,"created":1581086185,"currency":"usd","customer":null,"description":"Customer for pay for #ENVSHOP1581042984","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":45,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1G9XwPENgNZPUt9KV9nNZZOM","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":12,"exp_year":2020,"fingerprint":"5yPNVhsLBrcpIKlS","funding":"unknown","installments":null,"last4":"1111","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1G9XwTENgNZPUt9KEe1CFl8P\\/rcpt_GgvoMK9jnuYyFPqNk5OERraOlkVF8dL","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1G9XwTENgNZPUt9KEe1CFl8P\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1G9XwPENgNZPUt9KV9nNZZOM","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":12,"exp_year":2020,"fingerprint":"5yPNVhsLBrcpIKlS","funding":"unknown","last4":"1111","metadata":[],"name":"bajwa9876470491@gmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"31":{"vendor_id":31,"total":7905.63,"amount":"11945","tax":6.63,"commission_fee":238.9,"service_fee":238,"payable_amount":11468,"account_id":"acct_1G6cxyFzSNgbCEQp","stripeAccountParams":{"amount":11468,"stripe_account":"acct_1G6cxyFzSNgbCEQp"}}}', 7905.63, 'STRIPE', 1, '2020-02-07 09:06:25', '2020-02-07 09:06:25'),
-(5, '#ENVSHOP1581044188', 32, '{"name":"Narinder Singh","email":"bajwa9876470491@gmail.com","phone_number":"01212878777","address":"Broadway","country":"United States","state":"NY","city":"New York","zipcode":"wqewewe","latitude":"40.7186342","longitude":"-74.0025412","country_short_code":"US"}', '{"name":"Narinder Singh","email":"bajwa9876470491@gmail.com","phone_number":"01212878777","address":"Bourbon Street","country":"United States","state":"NJ","city":"Wayne","zipcode":"07470","latitude":"40.9492264","longitude":"-74.2616527","country_short_code":"US","tax":6.63}', '{"id":"ch_1G9YFtENgNZPUt9KCVTntzBv","object":"charge","amount":223663,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1G9YFtENgNZPUt9Kky4kZz3E","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"bajwa9876470491@gmail.com","phone":null},"captured":true,"created":1581087389,"currency":"usd","customer":null,"description":"Customer for pay for #ENVSHOP1581044188","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":50,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1G9YFpENgNZPUt9K2Tu6HvMA","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":12,"exp_year":2020,"fingerprint":"5yPNVhsLBrcpIKlS","funding":"unknown","installments":null,"last4":"1111","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1G9YFtENgNZPUt9KCVTntzBv\\/rcpt_Ggw8LzvofabYhKLZ5wyN3kOXFG9nkn2","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1G9YFtENgNZPUt9KCVTntzBv\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1G9YFpENgNZPUt9K2Tu6HvMA","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":12,"exp_year":2020,"fingerprint":"5yPNVhsLBrcpIKlS","funding":"unknown","last4":"1111","metadata":[],"name":"bajwa9876470491@gmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"31":{"vendor_id":31,"total":2236.63,"amount":"9931","tax":6.63,"commission_fee":198.62,"service_fee":198,"payable_amount":9534,"account_id":"acct_1G6cxyFzSNgbCEQp","stripeAccountParams":{"amount":9534,"stripe_account":"acct_1G6cxyFzSNgbCEQp"}}}', 2236.63, 'STRIPE', 1, '2020-02-07 09:26:30', '2020-02-07 09:26:30'),
-(6, '#ENVSHOP1581046438', 32, '{"name":"Narinder Singh","email":"bajwa9876470491@gmail.com","phone_number":"01212878777","address":"Bourbon Street","country":"United States","state":"LA","city":"New Orleans","zipcode":"wqewewe","latitude":"29.9590238","longitude":"-90.0652876","country_short_code":"US"}', '{"name":"Narinder Singh","email":"bajwa9876470491@gmail.com","phone_number":"01212878777","address":"Balaji Temple Drive","country":"United States","state":"NJ","city":"Bridgewater Township","zipcode":"08807","latitude":"40.628165","longitude":"-74.63283969999999","country_short_code":"US","tax":6.63}', '{"id":"ch_1G9YqBENgNZPUt9KyCK2akbL","object":"charge","amount":561663,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1G9YqBENgNZPUt9KmzX3Qk9S","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"bajwa9876470491@gmail.com","phone":null},"captured":true,"created":1581089639,"currency":"usd","customer":null,"description":"Customer for pay for #ENVSHOP1581046438","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":31,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1G9Yq7ENgNZPUt9KIivq8VNp","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":12,"exp_year":2020,"fingerprint":"5yPNVhsLBrcpIKlS","funding":"unknown","installments":null,"last4":"1111","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1G9YqBENgNZPUt9KyCK2akbL\\/rcpt_GgwjI0V4R41zXyrRxJch6AcAMq09q7z","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1G9YqBENgNZPUt9KyCK2akbL\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1G9Yq7ENgNZPUt9KIivq8VNp","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":12,"exp_year":2020,"fingerprint":"5yPNVhsLBrcpIKlS","funding":"unknown","last4":"1111","metadata":[],"name":"bajwa9876470491@gmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"31":{"vendor_id":31,"total":5616.63,"amount":"15431","tax":6.63,"commission_fee":308.62,"service_fee":308,"payable_amount":14814,"account_id":"acct_1G6cxyFzSNgbCEQp","stripeAccountParams":{"amount":14814,"stripe_account":"acct_1G6cxyFzSNgbCEQp"}}}', 5616.63, 'STRIPE', 1, '2020-02-07 10:03:59', '2020-02-07 10:03:59'),
-(7, '#ENVSHOP1581046542', 32, '{"name":"Narinder Singh","email":"bajwa9876470491@gmail.com","phone_number":"01212878777","address":"Bourbon Street","country":"United States","state":"LA","city":"New Orleans","zipcode":"wqewewe","latitude":"29.9590238","longitude":"-90.0652876","country_short_code":"US"}', '{"name":"Narinder Singh","email":"bajwa9876470491@gmail.com","phone_number":"01212878777","address":"Balaji Temple Drive","country":"United States","state":"NJ","city":"Bridgewater Township","zipcode":"08807","latitude":"40.628165","longitude":"-74.63283969999999","country_short_code":"US","tax":6.63}', '{"id":"ch_1G9YrrENgNZPUt9KIoQFHGgg","object":"charge","amount":56863,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1G9YrrENgNZPUt9KcFHNeIQJ","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"bajwa9876470491@gmail.com","phone":null},"captured":true,"created":1581089743,"currency":"usd","customer":null,"description":"Customer for pay for #ENVSHOP1581046542","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":39,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1G9YrnENgNZPUt9KIoLiOQQZ","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":12,"exp_year":2020,"fingerprint":"5yPNVhsLBrcpIKlS","funding":"unknown","installments":null,"last4":"1111","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1G9YrrENgNZPUt9KIoQFHGgg\\/rcpt_GgwlXJV50kSvNTTFcpS60Yqx7Kth47S","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1G9YrrENgNZPUt9KIoQFHGgg\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1G9YrnENgNZPUt9KIoLiOQQZ","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":12,"exp_year":2020,"fingerprint":"5yPNVhsLBrcpIKlS","funding":"unknown","last4":"1111","metadata":[],"name":"bajwa9876470491@gmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"31":{"vendor_id":31,"total":568.63,"amount":"15981","tax":6.63,"commission_fee":319.62,"service_fee":320,"payable_amount":15341,"account_id":"acct_1G6cxyFzSNgbCEQp","stripeAccountParams":{"amount":15341,"stripe_account":"acct_1G6cxyFzSNgbCEQp"}}}', 568.63, 'STRIPE', 1, '2020-02-07 10:05:43', '2020-02-07 10:05:43'),
-(8, '#ENVSHOP1581325714', 32, '{"name":"Narinder Singh","email":"bajwa9876470491@gmail.com","phone_number":"01212878777","address":"Bourbon Street","country":"United States","state":"MA","city":"Peabody","zipcode":"01960","latitude":"42.5466407","longitude":"-70.9792677","country_short_code":"US"}', '{"name":"Narinder Singh","email":"bajwa9876470491@gmail.com","phone_number":"01212878777","address":"Gravity Falls Lane","country":"United States","state":"OK","city":"Oklahoma City","zipcode":"73142","latitude":"35.6200913","longitude":"-97.6450338","country_short_code":"US","tax":8.63}', '{"id":"ch_1GAYFqENgNZPUt9KQCRyImWK","object":"charge","amount":489463,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1GAYFrENgNZPUt9K6uv39HDx","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"bajwa9876470491@gmail.com","phone":null},"captured":true,"created":1581325714,"currency":"usd","customer":null,"description":"Customer for pay for #ENVSHOP1581325714","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":10,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1GAYFmENgNZPUt9KhpN9AqJA","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":12,"exp_year":2020,"fingerprint":"5yPNVhsLBrcpIKlS","funding":"unknown","installments":null,"last4":"1111","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1GAYFqENgNZPUt9KQCRyImWK\\/rcpt_GhyCrpYPQcnaevGi36OhruFYElYUg7v","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1GAYFqENgNZPUt9KQCRyImWK\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1GAYFmENgNZPUt9KhpN9AqJA","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":12,"exp_year":2020,"fingerprint":"5yPNVhsLBrcpIKlS","funding":"unknown","last4":"1111","metadata":[],"name":"bajwa9876470491@gmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"31":{"vendor_id":31,"total":4894.63,"amount":"17418","tax":8.63,"commission_fee":348.36,"service_fee":348,"payable_amount":16722,"account_id":"acct_1G6cxyFzSNgbCEQp","stripeAccountParams":{"amount":16722,"stripe_account":"acct_1G6cxyFzSNgbCEQp"}}}', 4894.63, 'STRIPE', 3, '2020-02-10 03:38:35', '2020-02-10 03:38:35'),
-(9, '#ENVSHOP1581410242', 60, '{"name":"Kanny Customer","email":"kannyc@yopmail.com","phone_number":"9465470549","address":"New Bern Avenue","country":"United States","state":"NC","city":"Raleigh","zipcode":"07114","latitude":"35.7899227","longitude":"-78.58670099999999","country_short_code":"US"}', '{"name":"Kanny Customer","email":"kannyc@yopmail.com","phone_number":"9465470549","address":"New Bern Avenue","country":"United States","state":"NC","city":"Raleigh","zipcode":"07114","latitude":"35.7899227","longitude":"-78.58670099999999","country_short_code":"US","tax":6.63}', '{"id":"ch_1GAuFCENgNZPUt9KGibezxkk","object":"charge","amount":5863,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1GAuFDENgNZPUt9KHoOYgt6X","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"kannyc@yopmail.com","phone":null},"captured":true,"created":1581410242,"currency":"usd","customer":null,"description":"Customer for pay for #ENVSHOP1581410242","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":22,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1GAuF9ENgNZPUt9KH5Jzm7td","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1GAuFCENgNZPUt9KGibezxkk\\/rcpt_GiKvq7JDi3BV2xo1NhAXTYv9aQrvVvL","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1GAuFCENgNZPUt9KGibezxkk\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1GAuF9ENgNZPUt9KH5Jzm7td","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"kannyc@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"59":{"vendor_id":59,"total":58.629999999999995,"amount":"50","tax":6.63,"commission_fee":1,"service_fee":2,"payable_amount":47,"account_id":"acct_1Fz0whE8A1VCXYb0","stripeAccountParams":{"amount":47,"stripe_account":"acct_1Fz0whE8A1VCXYb0"}}}', 58.629999999999995, 'STRIPE', 1, '2020-02-11 03:07:23', '2020-02-11 03:07:23'),
-(10, '#ENVSHOP1581412551', 60, '{"name":"Kanny Customer","email":"kannyc@yopmail.com","phone_number":"9465470549","address":"New Bern Avenue","country":"United States","state":"NC","city":"Raleigh","zipcode":"07114","latitude":"35.7899227","longitude":"-78.58670099999999","country_short_code":"US"}', '{"name":"Kanny Customer","email":"kannyc@yopmail.com","phone_number":"9465470549","address":"New Bern Avenue","country":"United States","state":"NC","city":"Raleigh","zipcode":"07114","latitude":"35.7899227","longitude":"-78.58670099999999","country_short_code":"US","tax":6.63}', '{"id":"ch_1GAuqRENgNZPUt9K4Fuy32Js","object":"charge","amount":5863,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1GAuqSENgNZPUt9KoPCBowCM","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"kannyc@yopmail.com","phone":null},"captured":true,"created":1581412551,"currency":"usd","customer":null,"description":"Customer for pay for #ENVSHOP1581412551","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":29,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1GAuqOENgNZPUt9K5XHGH8vy","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1GAuqRENgNZPUt9K4Fuy32Js\\/rcpt_GiLXox6KnqR4GwMt15ZDp7bI6eY8TPs","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1GAuqRENgNZPUt9K4Fuy32Js\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1GAuqOENgNZPUt9K5XHGH8vy","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"kannyc@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"59":{"vendor_id":59,"total":58.629999999999995,"amount":"100","tax":6.63,"commission_fee":2,"service_fee":2,"payable_amount":96,"account_id":"acct_1Fz0whE8A1VCXYb0","stripeAccountParams":{"amount":96,"stripe_account":"acct_1Fz0whE8A1VCXYb0"}}}', 58.629999999999995, 'STRIPE', 1, '2020-02-11 03:45:52', '2020-02-11 03:45:52');
+INSERT INTO `shop_orders` (`id`, `orderID`, `user_id`, `shipping_address`, `billing_address`, `payment_detail`, `balance_transaction`, `amount`, `payment_by`, `transaction_details`, `provider_id`, `status`, `created_at`, `updated_at`) VALUES
+(12, '#DRHSHOP1588236550', 133, '{"name":"test","email":"test44@yopmail.com","phone_number":"1234567890","address":"Town Center Parkway","country":"United States","state":"FL","city":"Jacksonville","zipcode":"sse","latitude":"30.2619341","longitude":"-81.5290028","country_short_code":"US"}', '{"name":"test","email":"test44@yopmail.com","phone_number":"12345678900","address":"County Road TT","country":"United States","state":"WI","city":"Waukesha","zipcode":"se13aa","latitude":"43.0141413","longitude":"-88.28609159999999","country_short_code":"US","tax":0}', '{"id":"ch_1GdY4wENgNZPUt9KuTRZSQi4","object":"charge","amount":13000,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1GdY4xENgNZPUt9KbYDZy7cw","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"test44@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1588236550,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1588236550","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":59,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1GdY4tENgNZPUt9Km0WqlgsZ","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2020,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1GdY4wENgNZPUt9KuTRZSQi4\\/rcpt_HBvwgSY5Hr0Gdr81v3YbrLhMO6WHIU9","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1GdY4wENgNZPUt9KuTRZSQi4\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1GdY4tENgNZPUt9Km0WqlgsZ","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2020,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"test44@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":130,"amount":"540","tax":0,"commission_fee":10.8,"service_fee":"20","payable_amount":509,"account_id":0,"stripeAccountParams":{"amount":509}}}', 130, 'STRIPE', NULL, NULL, 1, '2020-04-30 03:19:11', '2020-04-30 03:19:11'),
+(13, '#DRHSHOP1588251376', 133, '{"name":"test","email":"test44@yopmail.com","phone_number":"1234567890","address":"Texas 249","country":"United States","state":"TX","city":"Houston","zipcode":"ssss","latitude":"29.9825681","longitude":"-95.5683547","country_short_code":"US"}', '{"name":"test","email":"test44@yopmail.com","phone_number":"1234567890","address":"Texas 249","country":"United States","state":"TX","city":"Houston","zipcode":"se111","latitude":"29.9825681","longitude":"-95.5683547","country_short_code":"US","tax":0}', '{"id":"ch_1Gdbw5ENgNZPUt9K2RsZPDaz","object":"charge","amount":13500,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1Gdbw5ENgNZPUt9KlVGM9NWG","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"test44@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1588251377,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1588251376","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":63,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1Gdbw1ENgNZPUt9KRxNiJ4ex","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2020,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1Gdbw5ENgNZPUt9K2RsZPDaz\\/rcpt_HBzvRB6lks2bDr4ZZF7oLwYHmMwB99K","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1Gdbw5ENgNZPUt9K2RsZPDaz\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1Gdbw1ENgNZPUt9KRxNiJ4ex","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2020,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"test44@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":135,"amount":"655","tax":0,"commission_fee":13.1,"service_fee":"20","payable_amount":622,"account_id":0,"stripeAccountParams":{"amount":622}}}', 135, 'STRIPE', NULL, NULL, 1, '2020-04-30 07:26:18', '2020-04-30 07:26:18'),
+(14, '#DRHSHOP1588211050', 133, '{"name":"test","email":"test44@yopmail.com","phone_number":"1234567890","address":"Texas 249","country":"United States","state":"TX","city":"Houston","zipcode":"se11","latitude":"29.9825681","longitude":"-95.5683547","country_short_code":"US"}', '{"name":"test","email":"test44@yopmail.com","phone_number":"1234567890","address":"Texas 249","country":"United States","state":"TX","city":"Houston","zipcode":"se11","latitude":"29.9825681","longitude":"-95.5683547","country_short_code":"US","tax":0}', '{"id":"ch_1GdcgQENgNZPUt9KoessH3Ny","object":"charge","amount":4000,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1GdcgRENgNZPUt9KUkipurle","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"test44@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1588254250,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1588211050","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":34,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1GdcgMENgNZPUt9KCc23Sm3R","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2020,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1GdcgQENgNZPUt9KoessH3Ny\\/rcpt_HC0h1VUWlqmgxKADgcSi198ZWcrupzW","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1GdcgQENgNZPUt9KoessH3Ny\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1GdcgMENgNZPUt9KCc23Sm3R","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2020,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"test44@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":40,"amount":"675","tax":0,"commission_fee":13.5,"service_fee":"20","payable_amount":642,"account_id":0,"stripeAccountParams":{"amount":642}}}', 40, 'STRIPE', NULL, NULL, 1, '2020-04-30 08:14:11', '2020-04-30 08:14:11'),
+(15, '#DRHSHOP1588211624', 338, '{"name":"test","email":"rr44@yopmail.com","phone_number":"1234567890","address":"The Bridle Path","country":"Canada","state":"ON","city":"Toronto","zipcode":"s","latitude":"43.7362335","longitude":"-79.3699908","country_short_code":"CA"}', '{"name":"test","email":"rr44@yopmail.com","phone_number":"1234567890","address":"That Street","country":"Canada","state":"NS","city":"Porters Lake","zipcode":"se333","latitude":"44.73886900000001","longitude":"-63.3036419","country_short_code":"CA","tax":0}', '{"id":"ch_1GdcphENgNZPUt9KmINKmFq8","object":"charge","amount":13000,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1GdcphENgNZPUt9KST9TiziD","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"rr44@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1588254825,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1588211624","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":50,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1GdcpdENgNZPUt9K33Y6EvLz","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2020,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1GdcphENgNZPUt9KmINKmFq8\\/rcpt_HC0rBgUVhK0EywRkoobrtLlvK4f7Frr","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1GdcphENgNZPUt9KmINKmFq8\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1GdcpdENgNZPUt9K33Y6EvLz","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2020,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"rr44@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":130,"amount":"785","tax":0,"commission_fee":15.7,"service_fee":"20","payable_amount":749,"account_id":0,"stripeAccountParams":{"amount":749}}}', 130, 'STRIPE', NULL, NULL, 1, '2020-04-30 08:23:46', '2020-04-30 08:23:46'),
+(39, '#DRHSHOP1589539788', 366, '{"name":"Dominic Dom","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"Dominic Dom","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null,"tax":0}', '{"id":"ch_1Gj16vENgNZPUt9KxLVgFNpL","object":"charge","amount":66800,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1Gj16vENgNZPUt9KiXiE8kLF","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1589539789,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1589539788","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":19,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1Gj16rENgNZPUt9Kr1hK1kvG","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1Gj16vENgNZPUt9KxLVgFNpL\\/rcpt_HHaHPm0CZe7MpFIK9m8eeKKEbS14liw","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1Gj16vENgNZPUt9KxLVgFNpL\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1Gj16rENgNZPUt9Kr1hK1kvG","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":668,"amount":"1759","tax":0,"commission_fee":52.769999999999996,"service_fee":"0","payable_amount":1706,"account_id":0,"stripeAccountParams":{"amount":1706}}}', 668, 'STRIPE', NULL, NULL, 1, '2020-05-15 05:19:50', '2020-05-21 08:33:51'),
+(40, '#DRHSHOP1589507352', 366, '{"name":"Dominic Dom","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"Dominic Dom","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null,"tax":0}', '{"id":"ch_1Gj3uXENgNZPUt9KK0hfvoRU","object":"charge","amount":3980,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1Gj3uXENgNZPUt9KhJgP2Z9j","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1589550553,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1589507352","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":53,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1Gj3uTENgNZPUt9KDIKGdetA","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1Gj3uXENgNZPUt9KK0hfvoRU\\/rcpt_HHdAdfPCB4nHP9QOkzXBRcH2gxWsLvX","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1Gj3uXENgNZPUt9KK0hfvoRU\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1Gj3uTENgNZPUt9KDIKGdetA","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":39.800000000000004,"amount":"1798.8","tax":0,"commission_fee":53.964,"service_fee":"0","payable_amount":1745,"account_id":0,"stripeAccountParams":{"amount":1745}}}', 39.800000000000004, 'STRIPE', NULL, NULL, 1, '2020-05-15 08:19:13', '2020-05-15 08:19:13'),
+(41, '#DRHSHOP1589788151', 366, '{"name":"Dominic Dom","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"Dominic Dom","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null,"tax":0}', '{"id":"ch_1Gk3imENgNZPUt9KzXz5yi1R","object":"charge","amount":61000,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1Gk3imENgNZPUt9Kpolo4TQE","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1589788152,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1589788151","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":11,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1Gk3iiENgNZPUt9KdfP80dkh","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1Gk3imENgNZPUt9KzXz5yi1R\\/rcpt_HIf2CQLRfhIPYEeMP8VbfUmXxDf8XqY","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1Gk3imENgNZPUt9KzXz5yi1R\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1Gk3iiENgNZPUt9KdfP80dkh","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":610,"amount":"2408.8","tax":0,"commission_fee":96.352,"service_fee":"0","payable_amount":2312,"account_id":0,"stripeAccountParams":{"amount":2312}}}', 610, 'STRIPE', NULL, NULL, 1, '2020-05-18 02:19:13', '2020-05-18 02:19:13'),
+(42, '#DRHSHOP1590053378', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null,"tax":0}', '{"id":"ch_1GlAidENgNZPUt9K076Yebmj","object":"charge","amount":1000,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1GlAieENgNZPUt9KzhRWLkH7","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1590053379,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1590053378","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":60,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1GlAiZENgNZPUt9KglioQWzb","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2020,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1GlAidENgNZPUt9K076Yebmj\\/rcpt_HJoLx38Qy0KuRfLma1is96sPM2F6TxY","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1GlAidENgNZPUt9K076Yebmj\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1GlAiZENgNZPUt9KglioQWzb","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2020,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":10,"amount":"2418.8","tax":0,"commission_fee":96.75200000000001,"service_fee":"0","payable_amount":2322,"account_id":0,"stripeAccountParams":{"amount":2322}}}', 10, 'STRIPE', NULL, NULL, 1, '2020-05-21 03:59:40', '2020-05-21 03:59:40'),
+(44, '#DRHSHOP1590224465', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null,"tax":0}', '{"id":"ch_1GltE6ENgNZPUt9Kv4ea9Ih9","object":"charge","amount":7000,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1GltE6ENgNZPUt9KD63wAUcA","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1590224466,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1590224465","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":60,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1GltE2ENgNZPUt9KdS5RG1WT","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1GltE6ENgNZPUt9Kv4ea9Ih9\\/rcpt_HKYK4P7NDhX8oQLCsyIYDBckd32RQTw","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1GltE6ENgNZPUt9Kv4ea9Ih9\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1GltE2ENgNZPUt9KdS5RG1WT","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":70,"amount":"2488.8","tax":0,"commission_fee":99.552,"service_fee":"0","payable_amount":2389,"account_id":0,"stripeAccountParams":{"amount":2389}}}', 70, 'STRIPE', NULL, NULL, 1, '2020-05-23 03:31:07', '2020-05-23 03:31:07'),
+(45, '#DRHSHOP1590734605', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"","email":"","phone_number":"","address":"","country":"","state":"","city":"","zipcode":"","country_short_code":"","latitude":"","longitude":""}', '{"id":"ch_1Go1wAENgNZPUt9KOZUH2yrK","object":"charge","amount":14400,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1Go1wAENgNZPUt9Khf444gK0","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1590734606,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1590734605","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":23,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1Go1w6ENgNZPUt9KR5oKfeFi","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1Go1wAENgNZPUt9KOZUH2yrK\\/rcpt_HMlTKZqxRmHpYbmkiPbS9f2X91ZqoFy","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1Go1wAENgNZPUt9KOZUH2yrK\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1Go1w6ENgNZPUt9KR5oKfeFi","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":144,"amount":"2632.8","tax":0,"commission_fee":105.31200000000001,"service_fee":"0","payable_amount":2527,"account_id":0,"stripeAccountParams":{"amount":2527}}}', 144, 'STRIPE', NULL, NULL, 1, '2020-05-29 01:13:27', '2020-05-29 01:13:27'),
+(46, '#DRHSHOP1590721068', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"","email":"","phone_number":"","address":"","country":"","state":"","city":"","zipcode":"","country_short_code":"","latitude":"","longitude":""}', '{"id":"ch_1Go9ebENgNZPUt9KYreM5Ufp","object":"charge","amount":3200,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1Go9ecENgNZPUt9Kpvh81PmM","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1590764269,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1590721068","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":52,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1Go9eWENgNZPUt9KM9NvBaXV","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1Go9ebENgNZPUt9KYreM5Ufp\\/rcpt_HMtR04k0DoPiyddH3XPVXLCTrSBV2fF","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1Go9ebENgNZPUt9KYreM5Ufp\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1Go9eWENgNZPUt9KM9NvBaXV","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":32,"amount":"2664.8","tax":0,"commission_fee":106.59200000000001,"service_fee":"0","payable_amount":2558,"account_id":0,"stripeAccountParams":{"amount":2558}}}', 32, 'STRIPE', NULL, NULL, 1, '2020-05-29 09:27:50', '2020-05-29 09:27:50'),
+(47, '#DRHSHOP1591619685', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"","email":"","phone_number":"","address":"","country":"","state":"","city":"","zipcode":"","country_short_code":"","latitude":"","longitude":""}', '{"id":"ch_1GrkBdENgNZPUt9K3okjKwbE","object":"charge","amount":10000,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1GrkBeENgNZPUt9KZVNvJzeV","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1591619685,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1591619685","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":53,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1GrkBZENgNZPUt9KBkiWZRXz","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1GrkBdENgNZPUt9K3okjKwbE\\/rcpt_HQbOEfZ5W9iImjt1eHmzo8RTmGSPetd","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1GrkBdENgNZPUt9K3okjKwbE\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1GrkBZENgNZPUt9KBkiWZRXz","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":100,"amount":"2772.8","tax":0,"commission_fee":110.912,"service_fee":"0","payable_amount":2662,"account_id":0,"stripeAccountParams":{"amount":2662}}}', 100, 'STRIPE', NULL, NULL, 1, '2020-06-08 07:04:46', '2020-06-08 07:04:46'),
+(48, '#DRHSHOP1592643942', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"","email":"","phone_number":"","address":"","country":"","state":"","city":"","zipcode":"","country_short_code":"","latitude":"","longitude":""}', '{"id":"ch_1Gw2dvENgNZPUt9KR5rAoTfB","object":"charge","amount":10000,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1Gw2dvENgNZPUt9KHaayTTWN","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1592643943,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1592643942","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":9,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1Gw2drENgNZPUt9KRy6w8tqh","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1Gw2dvENgNZPUt9KR5rAoTfB\\/rcpt_HV2jvj9CJde3nTWE9B2jL7UpiKD646L","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1Gw2dvENgNZPUt9KR5rAoTfB\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1Gw2drENgNZPUt9KRy6w8tqh","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":100,"amount":"2874.8","tax":0,"commission_fee":114.992,"service_fee":"0","payable_amount":2760,"account_id":0,"stripeAccountParams":{"amount":2760}}}', 100, 'STRIPE', NULL, NULL, 1, '2020-06-20 03:35:43', '2020-06-20 03:35:43'),
+(49, '#DRHSHOP1592646157', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"","email":"","phone_number":"","address":"","country":"","state":"","city":"","zipcode":"","country_short_code":"","latitude":"","longitude":""}', '{"id":"ch_1Gw3DeENgNZPUt9Kf5TGGIUl","object":"charge","amount":10000,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1Gw3DeENgNZPUt9KZ4eIJmrL","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1592646158,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1592646157","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":38,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1Gw3DaENgNZPUt9KVbhNL65P","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1Gw3DeENgNZPUt9Kf5TGGIUl\\/rcpt_HV3K8sh1J3V9N8ABKfODiWsn0y9I1qn","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1Gw3DeENgNZPUt9Kf5TGGIUl\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1Gw3DaENgNZPUt9KVbhNL65P","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":100,"amount":"2874.8","tax":0,"commission_fee":114.992,"service_fee":"0","payable_amount":2760,"account_id":0,"stripeAccountParams":{"amount":2760}}}', 100, 'STRIPE', NULL, NULL, 1, '2020-06-20 04:12:38', '2020-06-20 04:12:38'),
+(50, '#DRHSHOP1592657233', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"","email":"","phone_number":"","address":"","country":"","state":"","city":"","zipcode":"","country_short_code":"","latitude":"","longitude":""}', '{"id":"ch_1Gw66IENgNZPUt9K1W6W0bGJ","object":"charge","amount":3000,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1Gw66IENgNZPUt9KyUEJKhp3","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1592657234,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1592657233","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":63,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1Gw66EENgNZPUt9KdWKPEenD","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1Gw66IENgNZPUt9K1W6W0bGJ\\/rcpt_HV6IIbuplty4057gCSyN4bOMIA6qeDW","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1Gw66IENgNZPUt9K1W6W0bGJ\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1Gw66EENgNZPUt9KdWKPEenD","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":30,"amount":"2804.8","tax":0,"commission_fee":112.19200000000001,"service_fee":"0","payable_amount":2693,"account_id":0,"stripeAccountParams":{"amount":2693}}}', 30, 'STRIPE', NULL, NULL, 1, '2020-06-20 07:17:14', '2020-06-20 07:17:14'),
+(51, '#DRHSHOP1592621496', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"","email":"","phone_number":"","address":"","country":"","state":"","city":"","zipcode":"","country_short_code":"","latitude":"","longitude":""}', '{"id":"ch_1Gw82eENgNZPUt9KAA7eBTne","object":"charge","amount":3100,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1Gw82fENgNZPUt9K1ECb3zNO","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1592664696,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1592621496","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":42,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1Gw82aENgNZPUt9KyWw4LfeS","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1Gw82eENgNZPUt9KAA7eBTne\\/rcpt_HV8J2GfpkEPH8DgfMSxpX3gbmh2d4Ny","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1Gw82eENgNZPUt9KAA7eBTne\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1Gw82aENgNZPUt9KyWw4LfeS","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":31,"amount":"2805.8","tax":0,"commission_fee":112.23200000000001,"service_fee":"0","payable_amount":2694,"account_id":0,"stripeAccountParams":{"amount":2694}}}', 31, 'STRIPE', NULL, NULL, 1, '2020-06-20 09:21:37', '2020-06-20 09:21:37');
+INSERT INTO `shop_orders` (`id`, `orderID`, `user_id`, `shipping_address`, `billing_address`, `payment_detail`, `balance_transaction`, `amount`, `payment_by`, `transaction_details`, `provider_id`, `status`, `created_at`, `updated_at`) VALUES
+(52, '#DRHSHOP1592830172', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"","email":"","phone_number":"","address":"","country":"","state":"","city":"","zipcode":"","country_short_code":"","latitude":"","longitude":""}', '{"id":"ch_1Gwp5gENgNZPUt9KzPhSfK7L","object":"charge","amount":10000,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1Gwp5hENgNZPUt9KF7GgGlhi","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1592830176,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1592830172","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":59,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1Gwp5ZENgNZPUt9KF2VkObI5","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1Gwp5gENgNZPUt9KzPhSfK7L\\/rcpt_HVqn30d8pdpMbEZ1iv1ctFkW13eCN94","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1Gwp5gENgNZPUt9KzPhSfK7L\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1Gwp5ZENgNZPUt9KF2VkObI5","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":100,"amount":"2905.8","tax":0,"commission_fee":116.23200000000001,"service_fee":"0","payable_amount":2790,"account_id":0,"stripeAccountParams":{"amount":2790}}}', 100, 'STRIPE', NULL, NULL, 1, '2020-06-22 07:19:37', '2020-06-22 07:19:37'),
+(53, '#DRHSHOP1593087786', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"","email":"","phone_number":"","address":"","country":"","state":"","city":"","zipcode":"","country_short_code":"","latitude":"","longitude":""}', '{"id":"ch_1Gxu6hENgNZPUt9KmUaRhMu8","object":"charge","amount":10000,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1Gxu6hENgNZPUt9KSxxxCOlT","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1593087787,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1593087786","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":32,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1Gxu6dENgNZPUt9Kx1VCGuQD","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1Gxu6hENgNZPUt9KmUaRhMu8\\/rcpt_HWy2oNPZ5PX3dJvYq8gn4sjgWpyZzKY","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1Gxu6hENgNZPUt9KmUaRhMu8\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1Gxu6dENgNZPUt9Kx1VCGuQD","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":100,"amount":"2905.8","tax":0,"commission_fee":116.23200000000001,"service_fee":"0","payable_amount":2790,"account_id":0,"stripeAccountParams":{"amount":2790}}}', 100, 'STRIPE', NULL, NULL, 1, '2020-06-25 06:53:08', '2020-06-25 06:53:08'),
+(54, '#DRHSHOP1593088125', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"","email":"","phone_number":"","address":"","country":"","state":"","city":"","zipcode":"","country_short_code":"","latitude":"","longitude":""}', '{"id":"ch_1GxuCAENgNZPUt9KheuHJ5hf","object":"charge","amount":3100,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1GxuCAENgNZPUt9KoKGq32ys","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1593088126,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1593088125","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":64,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1GxuC6ENgNZPUt9KvzqO1ZCC","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1GxuCAENgNZPUt9KheuHJ5hf\\/rcpt_HWy8WeYJihNJwS9nNekVjhPuA20MqnA","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1GxuCAENgNZPUt9KheuHJ5hf\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1GxuC6ENgNZPUt9KvzqO1ZCC","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":31,"amount":"2836.8","tax":0,"commission_fee":113.47200000000001,"service_fee":"0","payable_amount":2723,"account_id":0,"stripeAccountParams":{"amount":2723}}}', 31, 'STRIPE', NULL, NULL, 1, '2020-06-25 06:58:46', '2020-06-25 06:58:46'),
+(55, '#DRHSHOP1593089229', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"","email":"","phone_number":"","address":"","country":"","state":"","city":"","zipcode":"","country_short_code":"","latitude":"","longitude":""}', '{"id":"ch_1GxuTyENgNZPUt9K5H4m4ho1","object":"charge","amount":9900,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1GxuTyENgNZPUt9KDkvcGkEC","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1593089230,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1593089229","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":54,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1GxuTuENgNZPUt9KtcXUc9Ks","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1GxuTyENgNZPUt9K5H4m4ho1\\/rcpt_HWyQYOLU1DMFvbz7zImpb14W8NhAqb8","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1GxuTyENgNZPUt9K5H4m4ho1\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1GxuTuENgNZPUt9KtcXUc9Ks","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":99,"amount":"2935.8","tax":0,"commission_fee":117.432,"service_fee":"0","payable_amount":2818,"account_id":0,"stripeAccountParams":{"amount":2818}}}', 99, 'STRIPE', NULL, NULL, 1, '2020-06-25 07:17:10', '2020-06-25 07:17:10'),
+(56, '#DRHSHOP1593672217', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"","email":"","phone_number":"","address":"","country":"","state":"","city":"","zipcode":"","country_short_code":"","latitude":"","longitude":""}', '{"id":"ch_1H0M90ENgNZPUt9KbMmfmAm2","object":"charge","amount":2200,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1H0M90ENgNZPUt9KtURHIR4m","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1593672218,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1593672217","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":18,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1H0M8wENgNZPUt9Kpspblb1q","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1H0M90ENgNZPUt9KbMmfmAm2\\/rcpt_HZV9C6vCAgMRNa2jSdbFdT8chI5BsCb","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1H0M90ENgNZPUt9KbMmfmAm2\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1H0M8wENgNZPUt9Kpspblb1q","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":22,"amount":"2957.8","tax":0,"commission_fee":118.31200000000001,"service_fee":"0","payable_amount":2839,"account_id":0,"stripeAccountParams":{"amount":2839}}}', 22, 'STRIPE', NULL, NULL, 1, '2020-07-02 01:13:38', '2020-07-02 01:13:38'),
+(57, '#DRHSHOP1593672326', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"","email":"","phone_number":"","address":"","country":"","state":"","city":"","zipcode":"","country_short_code":"","latitude":"","longitude":""}', '{"id":"ch_1H0MAkENgNZPUt9KASrU9AAo","object":"charge","amount":2200,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1H0MAkENgNZPUt9KCVp0rbkG","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1593672326,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1593672326","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":55,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1H0MAhENgNZPUt9K96o9xYCh","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1H0MAkENgNZPUt9KASrU9AAo\\/rcpt_HZVBp1ZwYtZWHzFWII9zsRMuMvOM49A","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1H0MAkENgNZPUt9KASrU9AAo\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1H0MAhENgNZPUt9K96o9xYCh","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":22,"amount":"2957.8","tax":0,"commission_fee":118.31200000000001,"service_fee":"0","payable_amount":2839,"account_id":0,"stripeAccountParams":{"amount":2839}}}', 22, 'STRIPE', NULL, NULL, 1, '2020-07-02 01:15:27', '2020-07-02 01:15:27'),
+(58, '#DRHSHOP1593672812', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"","email":"","phone_number":"","address":"","country":"","state":"","city":"","zipcode":"","country_short_code":"","latitude":"","longitude":""}', '{"id":"ch_1H0MIbENgNZPUt9K1uA7GW3V","object":"charge","amount":5200,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1H0MIbENgNZPUt9K2yvr7zHz","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1593672813,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1593672812","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":10,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1H0MIXENgNZPUt9KwrSbWbSB","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1H0MIbENgNZPUt9K1uA7GW3V\\/rcpt_HZVJGy1omJo157SU2tN8mhLgzf9iXDl","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1H0MIbENgNZPUt9K1uA7GW3V\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1H0MIXENgNZPUt9KwrSbWbSB","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":52,"amount":"2987.8","tax":0,"commission_fee":119.512,"service_fee":"0","payable_amount":2868,"account_id":0,"stripeAccountParams":{"amount":2868}}}', 52, 'STRIPE', NULL, NULL, 1, '2020-07-02 01:23:34', '2020-07-02 01:23:34'),
+(61, '#DRHSHOP1593673502', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"","email":"","phone_number":"","address":"","country":"","state":"","city":"","zipcode":"","country_short_code":"","latitude":"","longitude":""}', '{"id":"ch_1H0MTiENgNZPUt9KWPvyrsUa","object":"charge","amount":1000,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1H0MTjENgNZPUt9K9ru7Kyi6","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1593673502,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1593673502","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":24,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1H0MTfENgNZPUt9Ky9DJtYUu","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1H0MTiENgNZPUt9KWPvyrsUa\\/rcpt_HZVUgtHRI2mdTuyuCYc30Q3L9IR7dn9","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1H0MTiENgNZPUt9KWPvyrsUa\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1H0MTfENgNZPUt9Ky9DJtYUu","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":10,"amount":"2945.8","tax":0,"commission_fee":117.83200000000001,"service_fee":"0","payable_amount":2828,"account_id":0,"stripeAccountParams":{"amount":2828}}}', 10, 'STRIPE', NULL, NULL, 1, '2020-07-02 01:35:03', '2020-07-02 01:35:03'),
+(62, '#DRHSHOP1593673788', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"","email":"","phone_number":"","address":"","country":"","state":"","city":"","zipcode":"","country_short_code":"","latitude":"","longitude":""}', '{"id":"ch_1H0MYLENgNZPUt9KutSb5Jhd","object":"charge","amount":1000,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1H0MYLENgNZPUt9KE7qwnoTy","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1593673789,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1593673788","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":20,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1H0MYHENgNZPUt9KAdLHuFPw","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1H0MYLENgNZPUt9KutSb5Jhd\\/rcpt_HZVZZcjVXNp6NjeGkM9M9qIy7T6k0ju","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1H0MYLENgNZPUt9KutSb5Jhd\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1H0MYHENgNZPUt9KAdLHuFPw","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":10,"amount":"2945.8","tax":0,"commission_fee":117.83200000000001,"service_fee":"0","payable_amount":2828,"account_id":0,"stripeAccountParams":{"amount":2828}}}', 10, 'STRIPE', NULL, NULL, 1, '2020-07-02 01:39:49', '2020-07-02 01:39:49'),
+(63, '#DRHSHOP1593674072', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"","email":"","phone_number":"","address":"","country":"","state":"","city":"","zipcode":"","country_short_code":"","latitude":"","longitude":""}', '{"id":"ch_1H0McvENgNZPUt9KCF5i6bzV","object":"charge","amount":4500,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1H0McvENgNZPUt9KEL6FbDkW","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1593674073,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1593674072","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":4,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1H0McrENgNZPUt9K3RCTGQYt","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1H0McvENgNZPUt9KCF5i6bzV\\/rcpt_HZVeYCk79TTwjsRrO0fw53k0SU2QWB5","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1H0McvENgNZPUt9KCF5i6bzV\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1H0McrENgNZPUt9K3RCTGQYt","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":45,"amount":"2980.8","tax":0,"commission_fee":119.23200000000001,"service_fee":"0","payable_amount":2862,"account_id":0,"stripeAccountParams":{"amount":2862}}}', 45, 'STRIPE', NULL, NULL, 1, '2020-07-02 01:44:33', '2020-07-02 01:44:33'),
+(74, '#DRHSHOP1594016210', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"","email":"","phone_number":"","address":"","country":"","state":"","city":"","zipcode":"","country_short_code":"","latitude":"","longitude":""}', '{"id":"ch_1H1ndHENgNZPUt9KhlppPN7k","object":"charge","amount":1300,"amount_refunded":0,"application":null,"application_fee":null,"application_fee_amount":null,"balance_transaction":"txn_1H1ndHENgNZPUt9KMrvURleg","billing_details":{"address":{"city":null,"country":null,"line1":null,"line2":null,"postal_code":null,"state":null},"email":null,"name":"parent11@yopmail.com","phone":null},"calculated_statement_descriptor":"FAVORVILLE LLC","captured":true,"created":1594016211,"currency":"usd","customer":null,"description":"Customer for pay for #DRHSHOP1594016210","destination":null,"dispute":null,"disputed":false,"failure_code":null,"failure_message":null,"fraud_details":[],"invoice":null,"livemode":false,"metadata":[],"on_behalf_of":null,"order":null,"outcome":{"network_status":"approved_by_network","reason":null,"risk_level":"normal","risk_score":29,"seller_message":"Payment complete.","type":"authorized"},"paid":true,"payment_intent":null,"payment_method":"card_1H1ndDENgNZPUt9KeSl5ma61","payment_method_details":{"card":{"brand":"visa","checks":{"address_line1_check":null,"address_postal_code_check":null,"cvc_check":"pass"},"country":"US","exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","installments":null,"last4":"4242","network":"visa","three_d_secure":null,"wallet":null},"type":"card"},"receipt_email":null,"receipt_number":null,"receipt_url":"https:\\/\\/pay.stripe.com\\/receipts\\/acct_1Fbq7RENgNZPUt9K\\/ch_1H1ndHENgNZPUt9KhlppPN7k\\/rcpt_HazcxyR1kk9HIMq3ILpD463CTf7lohz","refunded":false,"refunds":{"object":"list","data":[],"has_more":false,"total_count":0,"url":"\\/v1\\/charges\\/ch_1H1ndHENgNZPUt9KhlppPN7k\\/refunds"},"review":null,"shipping":null,"source":{"id":"card_1H1ndDENgNZPUt9KeSl5ma61","object":"card","address_city":null,"address_country":null,"address_line1":null,"address_line1_check":null,"address_line2":null,"address_state":null,"address_zip":null,"address_zip_check":null,"brand":"Visa","country":"US","customer":null,"cvc_check":"pass","dynamic_last4":null,"exp_month":11,"exp_year":2022,"fingerprint":"msKWEk5zSbOlPaGy","funding":"credit","last4":"4242","metadata":[],"name":"parent11@yopmail.com","tokenization_method":null},"source_transfer":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"succeeded","transfer_data":null,"transfer_group":null}', '{"1":{"vendor_id":1,"total":13,"amount":"2849.8","tax":0,"commission_fee":113.992,"service_fee":"0","payable_amount":2736,"account_id":0,"stripeAccountParams":{"amount":2736}}}', 13, 'STRIPE', NULL, NULL, 1, '2020-07-06 00:46:51', '2020-07-06 00:46:51'),
+(85, '#DRHSHOP1594693157', 366, NULL, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', NULL, NULL, 15, 'Childcare', NULL, 5, 1, '2020-07-14 08:49:17', '2020-07-14 08:49:17'),
+(87, '#DRHSHOP1595492704', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', NULL, NULL, 15, 'Childcare', NULL, 2, 1, '2020-07-23 02:55:04', '2020-07-23 02:55:04'),
+(91, '#DRHSHOP1596005224', 366, '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"Dominic Dom1","email":"parent11@yopmail.com","phone_number":"11111111111","address":"test","country":"Angola","state":"test","city":"aaa","zipcode":"test","latitude":null,"longitude":null,"country_short_code":null}', NULL, NULL, 10, 'Wallet', NULL, NULL, 1, '2020-07-29 01:17:04', '2020-07-29 01:17:04'),
+(106, '#DRHSHOP1595987259', 133, '{"name":"Coach Deftsoft","email":"test44@yopmail.com","phone_number":"1234567","address":"yuyu","country":"Belgium","state":"yuyu","city":"yuyu","zipcode":"yuyu","latitude":null,"longitude":null,"country_short_code":null}', '{"name":"Coach Deftsoft","email":"test44@yopmail.com","phone_number":"1234567","address":"yuyu","country":"Belgium","state":"yuyu","city":"yuyu","zipcode":"yuyu","latitude":null,"longitude":null,"country_short_code":null}', NULL, NULL, 110, 'Wallet & Stripe', 'Wallet- 22, Stripe - 88', NULL, 1, '2020-07-29 08:17:39', '2020-07-29 08:17:39');
 
 -- --------------------------------------------------------
 
@@ -4296,6 +6439,7 @@ INSERT INTO `styles` (`id`, `user_id`, `added_by`, `slug`, `description`, `title
 
 CREATE TABLE `testimonials` (
   `id` int(10) UNSIGNED NOT NULL,
+  `page_title` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4309,10 +6453,108 @@ CREATE TABLE `testimonials` (
 -- Dumping data for table `testimonials`
 --
 
-INSERT INTO `testimonials` (`id`, `slug`, `description`, `title`, `image`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'marbel-freytag', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500, when an unknown printer took a galley of type and scrambledspecimen book.', 'MARBEL FREYTAG', '1583919328.jpeg', 1, '2020-03-11 02:51:13', '2020-03-12 00:02:03'),
-(2, 'nikki-rogers', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambledspecimen book.', 'NIKKI ROGERS', '1583919344.png', 1, '2020-03-11 03:17:39', '2020-03-11 04:54:49'),
-(3, 'ria-hannah', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambledspecimen book.', 'RIA HANNAH', '1583919351.jpeg', 1, '2020-03-11 03:19:28', '2020-03-11 04:56:48');
+INSERT INTO `testimonials` (`id`, `page_title`, `slug`, `description`, `title`, `image`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'school-landing', 'marbel-freytag', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text', 'MARBEL FREYTAG gggg', '1583919328.jpeg', 1, '2020-03-11 02:51:13', '2020-06-01 17:38:25'),
+(2, 'tennis-landing', 'nikki-rogers', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem', 'NIKKI ROGERS', '1583919344.png', 1, '2020-03-11 03:17:39', '2020-05-29 05:26:37'),
+(3, 'home-page', 'ria-hannah', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambledspecimen book.', 'RIA HANNAH', '1583919351.jpeg', 1, '2020-03-11 03:19:28', '2020-04-03 08:13:26'),
+(4, 'football-landing', 'marbel-freytag-1', 'Lorem Ipsum Sit Amet\r\nLorem Ipsum Sit Amet\r\nLorem Ipsum Sit Amet\r\nLorem Ipsum Sit Amet', 'MARBEL FREYTAG', '1586324452.png', 1, '2020-04-08 00:10:52', '2020-05-29 05:27:49'),
+(6, 'camp-detail', 'dom-ross-hurst', 'Best Kids Camp ever', 'Dom Ross-Hurst', '1586557871.jpg', 1, '2020-04-10 17:01:11', '2020-04-10 17:01:11'),
+(7, 'school-landing', 'sfsgd', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', '1', '', 1, '2020-04-11 01:35:46', '2020-06-01 01:13:30'),
+(8, 'camp-listing', 'manikirat', 'hello whats the plan ?', '2', '1590566930.jpeg', 1, '2020-05-27 02:38:50', '2020-05-29 06:58:47'),
+(9, 'badges', 'test-monika', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text', 'Test Monika', '1591617089.png', 1, '2020-06-08 06:21:29', '2020-06-08 06:21:29'),
+(10, 'badges', 'test-team', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text', 'Test Team', '1591617156.jpg', 0, '2020-06-08 06:22:36', '2020-07-24 02:30:53');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tests`
+--
+
+CREATE TABLE `tests` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `test_cat_id` int(11) NOT NULL,
+  `season` int(11) DEFAULT NULL,
+  `courses` longtext COLLATE utf8mb4_unicode_ci,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tests`
+--
+
+INSERT INTO `tests` (`id`, `test_cat_id`, `season`, `courses`, `slug`, `title`, `description`, `status`, `created_at`, `updated_at`) VALUES
+(5, 2, 9, '2', 'frame-downs', 'Frame downs', 'These are Fame downs', 1, '2020-06-17 16:08:49', '2020-07-14 00:34:29'),
+(6, 2, 9, '2', 'frame-ups', 'Frame Ups', 'These are Frame Ups', 1, '2020-06-17 16:09:23', '2020-07-14 00:34:48'),
+(7, 2, 9, '2', 'rally-w-p-mini-red', 'Rally w/p - Red', 'This test involves a player being able to rally with another Mini Red player. They must be positioned predominantly at the back of the court ensuring that they recover correctly and do not volley the ball', 1, '2020-06-17 16:22:41', '2020-06-29 01:55:21'),
+(12, 2, 9, '2', 'test1', 'test1', 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur mag', 1, '2020-07-16 04:37:35', '2020-07-16 05:41:30'),
+(13, 2, 9, '2', 'test2', 'test2', 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur mag', 1, '2020-07-16 04:37:52', '2020-07-16 05:43:16'),
+(14, 2, 9, '2', 'test3', 'test3', 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur mag', 1, '2020-07-16 04:38:17', '2020-07-16 05:29:59');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_categories`
+--
+
+CREATE TABLE `test_categories` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(3000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(3000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `test_categories`
+--
+
+INSERT INTO `test_categories` (`id`, `title`, `slug`, `description`, `image`, `created_at`, `updated_at`) VALUES
+(2, 'Rallying', 'ralling', 'test category', NULL, '2020-06-05 05:40:59', '2020-07-14 00:34:11'),
+(3, 'Racket Skills', 'racket', 'Racket skills are a group of tests that encompass the players ability to manoeuvre the racket in specific ways whilst trying to keep the tennis ball under control. The movements replicate how some shots are played and therefor help to asses a players leve', NULL, '2020-06-05 07:18:59', '2020-06-17 16:01:10'),
+(4, 'Serving', 'serving', 'Serving', NULL, '2020-06-17 16:24:42', '2020-06-17 16:24:42'),
+(8, 'Testing - 1', 'testing-1', 'Testing - 1', NULL, '2020-07-16 04:10:01', '2020-07-16 04:10:01'),
+(9, 'testing - 2', 'testing-2', 'testing - 2', NULL, '2020-07-16 04:10:34', '2020-07-16 04:10:34');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_scores`
+--
+
+CREATE TABLE `test_scores` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `test_id` int(11) DEFAULT NULL,
+  `test_cat_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `season_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `course_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `excel_file` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `complete_data` longtext COLLATE utf8mb4_unicode_ci,
+  `test_score` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `test_scores`
+--
+
+INSERT INTO `test_scores` (`id`, `test_id`, `test_cat_id`, `user_id`, `season_id`, `course_id`, `excel_file`, `complete_data`, `test_score`, `created_at`, `updated_at`) VALUES
+(345, 0, NULL, '358', '9', '2', '1594895698-a6f47.xls', '[{"0":"Test Child1-358","frame_downs_5":1,"frame_ups_6":1,"rally_wp_red_7":10},{"0":"Test Child2-351","frame_downs_5":11,"frame_ups_6":3,"rally_wp_red_7":20}]', 'Test Child1-358', '2020-07-16 05:04:58', '2020-07-16 05:04:58'),
+(346, 5, '2', '358', '9', '2', '1594895698-a6f47.xls', '[{"0":"Test Child1-358","frame_downs_5":1,"frame_ups_6":1,"rally_wp_red_7":10},{"0":"Test Child2-351","frame_downs_5":11,"frame_ups_6":3,"rally_wp_red_7":20}]', '1', '2020-07-16 05:04:58', '2020-07-16 05:04:58'),
+(347, 6, '2', '358', '9', '2', '1594895698-a6f47.xls', '[{"0":"Test Child1-358","frame_downs_5":1,"frame_ups_6":1,"rally_wp_red_7":10},{"0":"Test Child2-351","frame_downs_5":11,"frame_ups_6":3,"rally_wp_red_7":20}]', '1', '2020-07-16 05:04:59', '2020-07-16 05:04:59'),
+(348, 7, '2', '358', '9', '2', '1594895698-a6f47.xls', '[{"0":"Test Child1-358","frame_downs_5":1,"frame_ups_6":1,"rally_wp_red_7":10},{"0":"Test Child2-351","frame_downs_5":11,"frame_ups_6":3,"rally_wp_red_7":20}]', '10', '2020-07-16 05:04:59', '2020-07-16 05:04:59'),
+(349, 0, NULL, '351', '9', '2', '1594895698-a6f47.xls', '[{"0":"Test Child1-358","frame_downs_5":1,"frame_ups_6":1,"rally_wp_red_7":10},{"0":"Test Child2-351","frame_downs_5":11,"frame_ups_6":3,"rally_wp_red_7":20}]', 'Test Child2-351', '2020-07-16 05:04:59', '2020-07-16 05:04:59'),
+(350, 5, '2', '351', '9', '2', '1594895698-a6f47.xls', '[{"0":"Test Child1-358","frame_downs_5":1,"frame_ups_6":1,"rally_wp_red_7":10},{"0":"Test Child2-351","frame_downs_5":11,"frame_ups_6":3,"rally_wp_red_7":20}]', '11', '2020-07-16 05:04:59', '2020-07-16 05:04:59'),
+(351, 6, '2', '351', '9', '2', '1594895698-a6f47.xls', '[{"0":"Test Child1-358","frame_downs_5":1,"frame_ups_6":1,"rally_wp_red_7":10},{"0":"Test Child2-351","frame_downs_5":11,"frame_ups_6":3,"rally_wp_red_7":20}]', '3', '2020-07-16 05:04:59', '2020-07-16 05:04:59'),
+(352, 7, '2', '351', '9', '2', '1594895698-a6f47.xls', '[{"0":"Test Child1-358","frame_downs_5":1,"frame_ups_6":1,"rally_wp_red_7":10},{"0":"Test Child2-351","frame_downs_5":11,"frame_ups_6":3,"rally_wp_red_7":20}]', '20', '2020-07-16 05:04:59', '2020-07-16 05:04:59');
 
 -- --------------------------------------------------------
 
@@ -4348,6 +6590,10 @@ CREATE TABLE `users` (
   `custom_token` longtext COLLATE utf8mb4_unicode_ci,
   `profile_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint(1) DEFAULT '1',
+  `parent_id` int(11) DEFAULT NULL,
+  `type` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `relation` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `book_person` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_status` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_type` tinyint(2) DEFAULT NULL,
   `paypal_account` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -4356,6 +6602,8 @@ CREATE TABLE `users` (
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `updated_status` int(11) NOT NULL DEFAULT '0',
   `refer_data` longtext COLLATE utf8mb4_unicode_ci,
+  `enable_inovice` int(11) DEFAULT NULL,
+  `tennis_club` longtext COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -4364,11 +6612,62 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `name`, `first_name`, `last_name`, `gender`, `date_of_birth`, `address`, `town`, `postcode`, `county`, `country`, `email`, `phone_number`, `user_location`, `latitude`, `longitude`, `email_verified_at`, `password`, `website_url`, `ein_bs_number`, `age`, `id_proof`, `role`, `custom_token`, `profile_image`, `status`, `payment_status`, `payment_type`, `paypal_account`, `stripe_account`, `login_count`, `remember_token`, `updated_status`, `refer_data`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Admin', 'admin', 'user', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'admin@gmail.com', '0', NULL, NULL, NULL, NULL, '$2y$10$UIg567laqenUCo1i8AyPXO7HkApsEkBOXZMZe31JKLyex7w65XXj.', NULL, NULL, NULL, NULL, 'admin', NULL, 'images/admin/1583936859PH4ZRR75ReZMRfSwYFaADRHSPORT1.png', 1, NULL, NULL, NULL, NULL, 0, 'lS91e9Ynr3eZHBPiaCSvK8yKSAKgOE3pqNCaGFVEyqeLknctraeSZT7Rkux3', 0, NULL, '2019-11-09 00:19:35', '2020-03-11 08:57:39'),
-(106, 2, 'First Name Last Name', 'First Name', 'Last Name', 'male', '121212-03-21', 'Cecilia Chapman 711-2880 Nulla St. Mankato Mississippi 96522 (257) 563-7401', 'Town TownTown', '@#@#@#%', 'CountyCounty County', 'French Southern Territories', 'parents@yopmail.com', '123456789012121', NULL, NULL, NULL, '2020-03-18 05:40:38', '$2y$10$NTUnAeDyuCgR1IlvhhYAiuRTr15GsaYCizj/Oaqdr4VIfy/1lZDq6', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, '2020-03-18 05:39:44', '2020-03-18 05:45:32'),
-(107, 2, 'test team', 'test', 'team', 'male', '275760-03-10', 'fgf', 'gbn', 'vgn', 'bvm', 'Anguilla', 'test90@yopmail.com', '124567800', NULL, NULL, NULL, NULL, '$2y$10$1cfcbbjfq2F7ROdDrwJo2.u1g51ZEW6ZNB7C29BpPynVMwJKW/e1u', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, 'pOZV8TurDlItwPr4fQhkPt5W4JcszsFIYK6yGr4tvfWZiwkBrCdfuvEdAvLh', 0, NULL, '2020-03-19 00:07:24', '2020-03-19 00:07:24'),
-(108, 2, 'Shhshs Bsbsb', 'Shhshs', 'Bsbsb', 'female', '2020-03-20', 'Shhshsh', 'Hwbweb', 'Hwhw', 'Hhg', 'Åland', 'Mehak@yopmail.com', '2233334444', NULL, NULL, NULL, NULL, '$2y$10$eJj/pM3X.nB8yJrVMRDI9Om./Ls.vtGyVfhmOMjGc7tOf0kD7ogRu', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, '2020-03-19 03:18:45', '2020-03-19 03:18:45');
+INSERT INTO `users` (`id`, `role_id`, `name`, `first_name`, `last_name`, `gender`, `date_of_birth`, `address`, `town`, `postcode`, `county`, `country`, `email`, `phone_number`, `user_location`, `latitude`, `longitude`, `email_verified_at`, `password`, `website_url`, `ein_bs_number`, `age`, `id_proof`, `role`, `custom_token`, `profile_image`, `status`, `parent_id`, `type`, `relation`, `book_person`, `payment_status`, `payment_type`, `paypal_account`, `stripe_account`, `login_count`, `remember_token`, `updated_status`, `refer_data`, `enable_inovice`, `tennis_club`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Admin', 'admin', 'user', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'admin@gmail.com', '0', NULL, NULL, NULL, NULL, '$2y$10$9vNCi8pHmRFrwnOBpLzbPO0HoY21FGJ6Q27v0y18oKs/I.VmSHm4C', NULL, NULL, NULL, NULL, 'admin', NULL, 'images/admin/1583936859PH4ZRR75ReZMRfSwYFaADRHSPORT1.png', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'oTzxu1XDnUEHDXCjaxMEHsmNL5iF5zIEfKBxGetMTIYWQqM2PaluMsIpGOJC', 0, NULL, NULL, NULL, '2019-11-09 00:19:35', '2020-04-13 00:26:58'),
+(107, 2, 'test team', 'test', 'team', 'male', '2011-03-10', 'fgf', 'gbn', 'vgn', 'bvm', 'Anguilla', 'test90@yopmail.com', '124567800', NULL, NULL, NULL, '2020-03-18 05:40:38', '$2y$10$1cfcbbjfq2F7ROdDrwJo2.u1g51ZEW6ZNB7C29BpPynVMwJKW/e1u', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'pOZV8TurDlItwPr4fQhkPt5W4JcszsFIYK6yGr4tvfWZiwkBrCdfuvEdAvLh', 0, NULL, NULL, NULL, '2020-03-19 00:07:24', '2020-05-01 06:07:26'),
+(110, 2, 'test test', 'test', 'test', 'male', '2020-03-18', '111', 'aa', '11', 'aa', 'Antarctica', 'test67@yopmail.com', '1111111111', NULL, NULL, NULL, NULL, '$2y$10$sj.l.dzo/KlPuzzAkTMmseAeOk5nrUKaDSxqlmYNlIY8Symi3poPm', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '0tsy92fKYUjRNQVYFo14lqZUbJ7EPjix5F9WpvmNs2YJXnmxqZwE9PeFdoug', 0, NULL, NULL, NULL, '2020-03-24 02:38:49', '2020-03-24 02:38:49'),
+(117, 2, 'Namaste Hmm', 'Namaste', 'Hmm', 'male', '2020-03-26', 'Wss', 'Df', '444', 'Gg', 'Argentina', 'Ffgk@ff.hj', '557778888', NULL, NULL, NULL, NULL, '$2y$10$E0d1a4HNiHD5bkIHW51J2OgT8n4pKtfyrItZNye2G9fVEid4zlER2', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, '2020-03-26 07:02:20', '2020-03-26 07:02:20'),
+(133, 3, 'Coach Deftsoft', 'Coach', 'Deftsoft', 'male', '2020-04-13', 'yuyu', 'yuyu', 'yuyu', 'yuyu', 'Belgium', 'test44@yopmail.com', '1234567', NULL, NULL, NULL, '2020-03-18 05:40:38', '$2y$10$4dPyx83JcMnSE6c1.lQxZ.JoY1eUOH2.DSjzJZvS21bYcXMPLWXKC', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'UsqzhbfTTXXJOaWqXMCql0MhnBmV4zrfNEjFufP5dpX7EzhEuv8aeMw9Oc2a', 1, NULL, 1, NULL, '2020-04-01 09:35:47', '2020-06-02 08:00:09'),
+(143, 2, 'qq qq', 'qq', 'qq', 'male', '04/27/2020', 'qq', 'qq', 'q', 'qq', 'Portugal', 'qq@qq.fd', '12345677', NULL, NULL, NULL, '2020-03-18 05:40:38', '$2y$10$o.dpJqeezgFm5VNCXshDrOLPUqgP79F/fnLDkPJHa2qAxtUKRdALm', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'srscPBZFeto89iAJk5lARvKAyN4h2WhTIO0bTAzxH0IN2zLZsNk9igYlvvSl', 0, NULL, NULL, NULL, '2020-04-06 00:52:02', '2020-04-06 00:52:02'),
+(312, 2, 'Parent Name', 'Parent', 'Name', 'male', '04/16/2020', 'Address (Number & Street)', 'Town', 'Postcode', 'County', 'Aruba', 'hi123@yopmail.com', '11111111111111', NULL, NULL, NULL, '2020-03-18 05:40:38', '$2y$10$vk6GeI2B./7TFxjbYi080uIixMZvmSExfx7CPj/rU1bgLGxag0PpC', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'Z49om6X8Rwq5PFDq9CV0zYMq81AHVpzapypHV8xFy1w21Sn9TbA1rVvduvgH', 0, NULL, NULL, NULL, '2020-04-16 00:16:11', '2020-04-16 02:21:14'),
+(313, 2, 'Parent Name', 'Parent', 'Name', 'male', '2020-04-16', 'Address (Number & Street)', 'Town', 'Postcode', 'County', 'India', 'hi12345@yopmail.com', '99998564566', NULL, NULL, NULL, '2020-03-18 05:40:38', '$2y$10$Ow4rUeEsX9HmALyLg4eUD.AiIkCHBAj/75tywIQpEosT/zQjYX2F6', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'cxhjKHmcPQKcCFIU6Cibw9CtIDgXIe7Ghhq9niYDTzLUm60kpwbncXRPl5qt', 1, NULL, NULL, NULL, '2020-04-16 00:19:12', '2020-04-16 02:26:59'),
+(318, 4, 'fdgfdgdg ', 'fdgfdgdg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Aruba', '', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, 313, 'child', NULL, 'book_person_yes', NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, '2020-04-16 01:25:27', '2020-04-16 01:25:27'),
+(319, 4, ' ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Aruba', '', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, 313, 'child', NULL, 'book_person_yes', NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, '2020-04-16 01:43:01', '2020-04-16 01:43:01'),
+(321, 4, 'Adult Name', 'Adult', 'Name', NULL, '2020-04-16', 'Address (Number & Street)', 'Town', 'Postcode', 'County', 'India', '', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, 313, 'adult', NULL, 'book_person_yes', NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, '2020-04-16 01:45:35', '2020-04-16 01:45:35'),
+(323, 3, 'Coach Name', 'Coach', 'Name', 'male', NULL, 'Address (Number & Street)', 'Town', 'Postcode', 'County', 'India', 'hicoach@yopmail.com', '111111111111', NULL, NULL, NULL, '2020-03-18 05:40:38', '$2y$10$RzwzKziMAPPt0MIYCZBfO.b2KoTBATBbRfyQgu/p9inT.2SBLu7/W', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'lSjP1j7gF2KXalZEsi9Y28Ijpu19MjpmYySIAL1vkh0HLAAPuRzLpweorfsA', 0, NULL, NULL, NULL, '2020-04-16 01:53:12', '2020-05-11 09:54:05'),
+(324, 3, 'Coach qa', 'Coach', 'qa', 'male', '04/21/2020', 'aa', 'aa', 'se13aa', 'aa', 'Australia', 'coachqa1@yopmail.com', '1234567890', NULL, NULL, NULL, '2020-03-18 05:40:38', '$2y$10$P6IcAT6cGotIQjD3DBnBh.6R1o/wGdNTuOio4ChOqZOTVphdrphyW', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'Myg2tJgjvcM6d1fARUelv2ECcnh0L8MRRDqd3p1LezDyeuXflIatrBKitWAS', 0, NULL, NULL, NULL, '2020-04-16 03:08:57', '2020-04-16 03:08:57'),
+(325, 3, 'Coach Qa', 'Coach', 'Qa', 'male', NULL, 'aa', 'aa', 'se13aa', 'aa', 'Angola', 'qacoach11@yopmail.com', '111111111111', NULL, NULL, NULL, '2020-03-18 05:40:38', '$2y$10$vpaeIE7m.nSHXoRRs6BcpeuoBeVwmeYA1wknWcwsdfm8SLbqp68kK', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'g1QIqza59cCXMfmZoYyEzsSGDYmfIxMcKuYLYwWeNdFzCzuZETbIBvkymv8X', 0, NULL, 1, NULL, '2020-04-16 03:18:02', '2020-06-02 01:20:15'),
+(333, 4, 't t', 't', 't', NULL, '2020-04-15', 'fg', 'fdg', 'fg', 'fdg', 'Aruba', '', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, 331, 'child', 'Mother', 'book_person_yes', NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, '2020-04-16 05:02:45', '2020-04-16 05:02:45'),
+(338, 2, 'aa aa', 'aa', 'aa', 'female', '2020-04-15', 'ss', 'ss', 'ss', 'ss', 'Australia', 'rr44@yopmail.com', '1122334455', NULL, NULL, NULL, '2020-03-18 05:40:38', '$2y$10$1fgNjSghT0JluDFCse9vl.QA/N3u5ziuBIRh8oQEEr8YSn92APDPS', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'n3HxRlM4rbhGt37kgFtHSbewl27Z4V83eYBUDklKNrhWBY3oryMSbvDEwo61', 0, NULL, NULL, NULL, '2020-04-29 00:56:22', '2020-04-29 00:56:22'),
+(344, 2, 'sona gqsdu', 'sona', 'gqsdu', 'female', '2020-04-21', '88', 'cas', '123123123', 'ewa', 'Aruba', 'samita@yopmail.com', '123123123', NULL, NULL, NULL, '2020-04-29 23:40:12', '$2y$10$Rei1j1jIH/GSKIElAFKPTOiWMHBZ71lYJlw2OWCXx88LeeWulN0Qa', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'PCTJWUh1OAHsJT2q10f6jwXw2mrErDyNumStAvh1UaLhXoc6DBuVUxZLwhIw', 0, NULL, NULL, NULL, '2020-04-29 23:36:31', '2020-04-29 23:40:12'),
+(351, 4, 'Test Child2', 'Test', 'Child2', 'male', '2012-03-23', 'sdf', 'sdfs', 'dfg', 'dfsd', 'Aruba', '', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, 'user', NULL, '', 1, 366, 'adult', 'Grandparent', 'book_person_yes', NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, 'Test Tennis Club', '2020-04-30 03:32:41', '2020-07-09 07:32:47'),
+(356, 2, 'mehak jangra', 'mehak', 'jangra', 'female', '1996-12-29', '#88', 'ambala', '134003', 'ambala city', 'India', 'qa2.deftsoft@gmail.com', '1234567890', NULL, NULL, NULL, '2020-03-18 05:40:38', '$2y$10$yIjwjsM2ZfGESVhIo89uE.YEv70r4UR8yEfDJRzNDSwOtqyvG9Rdy', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'QfUeDX1bqoPNO8cg5cbm3Rt3EeTg63ZXJhBjS4wvvdYsbLjjglvJdcE60Hxj', 1, NULL, NULL, NULL, '2020-05-01 06:21:00', '2020-05-01 06:48:01'),
+(358, 4, 'Test Child1', 'Test', 'Child1', 'female', '1995-01-01', '#88', 'ambala', '134003', 'ambala city', 'India', '', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, 'user', NULL, '', 1, 366, 'child', NULL, 'book_person_yes', NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, 'Testt', '2020-05-01 06:49:24', '2020-07-09 07:13:52'),
+(359, 2, 'mehak jangra', 'mehak', 'jangra', 'female', '2018-02-03', '2312312', 'asda', 'dgfd', 'sa', 'Democratic Republic of the Congo', 'l@yopmail.com', '42432423', NULL, NULL, NULL, '2020-03-18 05:40:38', '$2y$10$O5NXH04lnqVyJlFkn.OjGOs3qx3KZ4NdSS6nZCtS1N6Lv1F7d1vyW', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'w76rJ50KaxCXxsNiplcMg1OFtYtBxvksGEX2FmrElpWqzP2c6V1Sa12A1QPV', 1, NULL, NULL, NULL, '2020-05-01 07:07:08', '2020-05-01 07:12:45'),
+(360, 4, 'w f', 'w', 'f', NULL, '2020-04-27', '2312312', 'asda', 'dgfd', 'sa', 'Democratic Republic of the Congo', '', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, 359, 'child', NULL, 'book_person_yes', NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, '2020-05-01 07:08:29', '2020-05-01 07:08:29'),
+(362, 2, 'Baby Jan', 'Baby', 'Jan', 'male', '2020-04-10', '#88', 'Hh', 'Bhzbzbs', 'H', 'Armenia', 'A@yopmail.com', '272727727272', NULL, NULL, NULL, '2020-03-18 05:40:38', '$2y$10$ScsJ3UUQBPV76.PSlM1i0Oa8Qk22cDpEy6mZJc7T.NKDUIsDYRvP6', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '8pkP5IFN5zKlVIlAZExs9ME9TpvKg3MpUzNmTkjlltyaNpVWBc6IN2WiOPwY', 0, NULL, NULL, NULL, '2020-05-01 07:47:04', '2020-05-01 07:48:03'),
+(363, 4, 'Jj Nn', 'Jj', 'Nn', NULL, '2020-05-01', '#88', 'Hh', 'Bhzbzbs', 'H', 'Armenia', '', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, 362, 'child', NULL, 'book_person_yes', NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, '2020-05-01 07:48:53', '2020-05-01 07:48:53'),
+(364, 4, 'B N', 'B', 'N', NULL, '2020-05-01', '#88', 'Hh', 'Bhzbzbs', 'H', 'Armenia', '', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, 362, 'adult', NULL, 'book_person_yes', NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, '2020-05-01 07:49:29', '2020-05-01 07:49:29'),
+(366, 2, 'Dominic Dom1', 'Dominic', 'Dom1', 'male', '2010-05-05', 'test', 'test', 'se13aa', 'aaa', 'Angola', 'parent11@yopmail.com', '11111111111', NULL, NULL, NULL, '2020-03-18 05:40:38', '$2y$10$WWrnilPoZeeOeDXZZ18/OONsKbNYAZ.hvlMNRdXXtKS5Tg5Uk9XSi', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'iCbyjGO0fZjySWlKJCcDc1CNZUncmL9p6pcSudntua7e5FjDCzN09XH2StXJ', 0, NULL, NULL, NULL, '2020-05-05 09:19:35', '2020-05-19 00:57:05'),
+(367, NULL, ' ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, 366, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, '2020-06-16 03:13:37', '2020-06-16 03:13:37'),
+(368, NULL, ' ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, 366, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, '2020-06-16 03:18:00', '2020-06-16 03:18:00'),
+(369, 2, 'fdh fjg', 'fdh', 'fjg', 'female', '2020-07-21', 'fruyht', 'fdgutj', 'gfuj', 'jhg', 'Australia', 'ty67@yopmail.com', '111111111111', NULL, NULL, NULL, '2020-03-18 05:40:38', '$2y$10$TDrgOo366LdeBLWCzZEJCeLd1RtwfLQzv5HySDQzwaPfq8w8zzxja', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, '2020-07-22 02:45:59', '2020-07-22 02:45:59'),
+(370, 2, 'fdh fgj', 'fdh', 'fgj', 'female', '2020-07-16', 'fdj', 'gfjk', 'fh', 'hjk', 'Guatemala', 'deftlead5@yopmail.com', '1234567890', NULL, NULL, NULL, '2020-03-18 05:40:38', '$2y$10$20Db8C5RM38cH3qevP46POk1AHJGEBHePRgI2FlsE.3vvs5liFyrG', NULL, NULL, NULL, NULL, 'user', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'nfgWROWcv93UkbmJv2ky2MEFBYfmesxLK8i3d2xjCsokTEgqIdXLma3rOp0A', 0, NULL, NULL, NULL, '2020-07-22 02:51:08', '2020-07-22 02:51:08');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_badges`
+--
+
+CREATE TABLE `user_badges` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `season_id` int(11) NOT NULL,
+  `badges` longtext COLLATE utf8mb4_unicode_ci,
+  `badges_points` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `user_badges`
+--
+
+INSERT INTO `user_badges` (`id`, `user_id`, `season_id`, `badges`, `badges_points`, `created_at`, `updated_at`) VALUES
+(21, 351, 11, '1,2,3,4,6', 80, '2020-07-13 05:06:18', '2020-07-13 05:06:18'),
+(22, 358, 9, '1,3,4,6,7,13,14,16', 90, '2020-07-13 05:06:29', '2020-07-13 05:15:28'),
+(23, 366, 9, '1,3', 15, '2020-07-29 02:48:44', '2020-07-29 02:48:44');
 
 -- --------------------------------------------------------
 
@@ -4650,15 +6949,15 @@ CREATE TABLE `variations` (
 INSERT INTO `variations` (`id`, `type`, `parent`, `name`, `value`, `status`, `created_at`, `updated_at`) VALUES
 (2, 'colors', 0, 'Colors', '["price","stock"]', 1, '2020-01-16 10:27:57', '2020-01-22 01:43:45'),
 (3, 'styles', 0, 'Styles', NULL, 1, '2020-01-16 10:28:03', '2020-01-16 10:28:03'),
-(4, 'types', 0, 'Types', 'null', 1, '2020-01-16 10:28:12', '2020-01-17 10:22:46'),
-(5, 'toppins', 0, 'Toppins', NULL, 1, '2020-01-16 10:37:24', '2020-01-16 10:37:24'),
-(6, 'flavours', 0, 'Flavours', NULL, 1, '2020-01-17 01:49:42', '2020-01-17 01:49:42'),
 (7, 'weights', 0, 'Weights', NULL, 1, '2020-01-17 01:50:10', '2020-01-17 01:50:10'),
 (8, 'sizes', 0, 'Sizes', NULL, 1, '2020-01-17 01:55:11', '2020-01-17 01:55:11'),
-(9, 'by-robby-friedman', 0, 'By Robby Friedman', NULL, 1, '2020-01-17 08:33:34', '2020-01-17 08:33:34'),
 (10, 'fabric', 0, 'Fabric', '["price","stock"]', 1, '2020-02-06 02:51:24', '2020-02-06 02:51:24'),
-(11, 'toppings', 0, 'Body Width', 'null', 1, '2020-02-11 01:57:08', '2020-02-11 02:02:07'),
-(12, 'body-height', 0, 'Body Height', 'null', 1, '2020-02-11 03:16:08', '2020-02-11 03:16:08');
+(16, 'sport', 0, 'Sport', 'null', 1, '2020-04-23 15:08:42', '2020-04-23 15:08:42'),
+(17, 'test', 0, 'Sports-1', 'null', 1, '2020-04-24 09:37:06', '2020-04-24 09:42:18'),
+(18, 'tennis-balls', 0, 'Mini Tennis Rackets', 'null', 1, '2020-04-25 05:20:08', '2020-04-27 07:11:49'),
+(19, 'racket-size', 0, 'Racket size', 'null', 1, '2020-04-25 13:46:31', '2020-04-25 13:46:31'),
+(21, 'tennis-shoes', 0, 'Tennis Shoes', 'null', 1, '2020-04-27 07:21:36', '2020-04-27 07:21:36'),
+(22, 'voucher-types', 0, 'Voucher types', 'null', 1, '2020-05-04 05:56:20', '2020-05-04 05:56:20');
 
 -- --------------------------------------------------------
 
@@ -4685,7 +6984,17 @@ CREATE TABLE `variation_extras` (
 
 INSERT INTO `variation_extras` (`id`, `parent`, `slug`, `label`, `name`, `type`, `attributes`, `status`, `created_at`, `updated_at`) VALUES
 (1, 0, 'colors', 'Colour Code', 'color', 'color', '{"id":"get","onchange":"fetch()","style":"width: 46px; margin-left: -2px;","required":"true"}', 1, '2020-01-17 07:00:18', '2020-01-17 07:15:26'),
-(2, 0, 'types', 'Test', 'Test', 'color', '{"id":"#1111","placelholder":"test","required":"true"}', 0, '2020-01-31 04:57:16', '2020-01-31 05:00:19');
+(2, 0, 'types', 'Test', 'Test', 'color', '{"id":"#1111","placelholder":"test","required":"true"}', 0, '2020-01-31 04:57:16', '2020-01-31 05:00:19'),
+(4, 0, 'newone', 'tl', 'tl', 'color', '{"class":"tl"}', 1, '2020-04-23 10:56:19', '2020-04-23 10:56:19'),
+(5, 0, 'tennis-balls', 'Mini Red', 'Mini Red', 'color', '{"":"","required":"true"}', 0, '2020-04-25 05:20:46', '2020-04-25 05:23:55'),
+(6, 0, 'tennis-balls', 'Mini Orange', 'Mini Orange', 'color', '{"":"","required":"true"}', 0, '2020-04-25 05:22:38', '2020-04-25 05:23:57'),
+(7, 0, 'racket-size', '17 inch', '17 inch', 'color', '{"":"","required":"true"}', 1, '2020-04-25 13:47:10', '2020-04-25 13:48:16'),
+(8, 0, 'racket-size', '19 inch', '19 inch', 'color', '{"":"","required":"true"}', 1, '2020-04-25 13:47:24', '2020-04-25 13:48:30'),
+(9, 0, 'racket-size', '23 inch', '23 inch', 'color', '{"":"","required":"true"}', 1, '2020-04-25 13:47:38', '2020-04-25 13:48:39'),
+(10, 0, 'racket-size', '25 inch', '25 inch', 'color', '{"":"","required":"true"}', 1, '2020-04-25 13:47:52', '2020-04-25 13:48:51'),
+(11, 0, 'racket-size', '26 inch', '26 inch', 'color', '{"":"","required":"true"}', 1, '2020-04-25 13:49:03', '2020-04-25 13:49:03'),
+(12, 0, 'racket-size', '27 inch', '27 inch', 'color', '{"":"","required":"true"}', 1, '2020-04-25 13:49:16', '2020-04-25 13:49:16'),
+(13, 0, 'sizes', 'BLA BLA', 'BLA BLA', 'color', '{"":"","required":"true"}', 1, '2020-04-27 07:23:34', '2020-04-27 07:23:34');
 
 -- --------------------------------------------------------
 
@@ -5471,6 +7780,99 @@ INSERT INTO `venues` (`id`, `slug`, `description`, `title`, `image`, `status`, `
 (2, 'jassiiiii', 'The image must be an image. Error message should be correct .  it should be sound goodThe image must be an image. Error message should be correct .  it should be sound good', 'jassiiiii', '1574317703.jpg', 1, '2019-11-20 07:57:47', '2019-11-26 01:06:53'),
 (3, 'england', 'England is the largest part of the island of Great Britain, and it is also the largest constituent country of the United Kingdom. Scotland and Wales are also part of Great Britain (and the UK), Scotland to the north and Wales to the west. To the east and south, and part of the west, England is bordered by sea.', 'England', '1583913774.png', 1, '2019-12-05 05:07:45', '2020-03-11 02:32:54');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vouchures`
+--
+
+CREATE TABLE `vouchures` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `start_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `end_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `uses` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `discount_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `amount` double(8,2) DEFAULT NULL,
+  `flat_discount` double(8,2) DEFAULT NULL,
+  `courses` longtext COLLATE utf8mb4_unicode_ci,
+  `camps` longtext COLLATE utf8mb4_unicode_ci,
+  `products` longtext COLLATE utf8mb4_unicode_ci,
+  `status` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `vouchures`
+--
+
+INSERT INTO `vouchures` (`id`, `title`, `slug`, `start_date`, `end_date`, `uses`, `discount_type`, `amount`, `flat_discount`, `courses`, `camps`, `products`, `status`, `created_at`, `updated_at`) VALUES
+(2, 'Camp GO Voucher - Full Day', 'vochure1', '2020-06-10', '2020-07-31', '3', '0', NULL, 10.00, '', '2', '', 1, '2020-07-01 01:10:44', '2020-07-06 07:47:23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wallets`
+--
+
+CREATE TABLE `wallets` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `money_amount` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wallets`
+--
+
+INSERT INTO `wallets` (`id`, `user_id`, `money_amount`, `created_at`, `updated_at`) VALUES
+(6, 366, 301, '2020-07-27 01:43:51', '2020-07-29 02:37:06'),
+(7, 133, 0, '2020-07-27 02:22:53', '2020-07-29 08:17:39');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wallet_histories`
+--
+
+CREATE TABLE `wallet_histories` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `money_amount` int(11) NOT NULL,
+  `type` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wallet_histories`
+--
+
+INSERT INTO `wallet_histories` (`id`, `user_id`, `money_amount`, `type`, `payment_by`, `created_at`, `updated_at`) VALUES
+(5, 366, 34, 'credit', NULL, '2020-07-27 01:43:51', '2020-07-27 01:43:51'),
+(6, 366, 12, 'credit', NULL, '2020-07-27 01:45:39', '2020-07-27 03:04:19'),
+(7, 366, 98, 'credit', NULL, '2020-07-27 01:46:44', '2020-07-27 01:46:44'),
+(10, 366, 10, 'debit', 1, '2020-07-27 03:08:07', '2020-07-27 03:08:07'),
+(12, 366, 10, 'debit', 1, '2020-07-27 03:19:03', '2020-07-27 03:19:03'),
+(14, 366, 30, 'credit', NULL, '2020-07-27 03:20:21', '2020-07-27 03:20:21'),
+(15, 366, 56, 'credit', NULL, '2020-07-27 04:03:26', '2020-07-27 04:03:26'),
+(16, 133, 12, 'credit', NULL, '2020-07-27 06:03:38', '2020-07-27 06:03:38'),
+(17, 133, 2, 'debit', 1, '2020-07-27 06:03:51', '2020-07-27 06:03:51'),
+(18, 133, 100, 'credit', 1, '2020-07-27 06:22:38', '2020-07-27 06:22:38'),
+(19, 366, 100, 'credit', NULL, '2020-07-27 06:25:55', '2020-07-27 06:25:55'),
+(20, 133, 12, 'credit', NULL, '2020-07-27 06:44:29', '2020-07-27 06:44:29'),
+(21, 366, 100, 'credit', 1, '2020-07-27 08:08:12', '2020-07-27 08:08:12'),
+(26, 366, 11, 'credit', NULL, '2020-07-28 00:25:15', '2020-07-28 00:25:15'),
+(27, 366, 10, 'debit', NULL, '2020-07-29 01:17:04', '2020-07-29 01:17:04'),
+(28, 366, 110, 'debit', NULL, '2020-07-29 02:37:06', '2020-07-29 02:37:06'),
+(29, 133, 100, 'debit', 1, '2020-07-29 03:06:20', '2020-07-29 03:06:20'),
+(41, 133, 22, 'debit', NULL, '2020-07-29 08:17:39', '2020-07-29 08:17:39');
+
 --
 -- Indexes for dumped tables
 --
@@ -5482,15 +7884,45 @@ ALTER TABLE `accordians`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `accordian_pdfs`
+--
+ALTER TABLE `accordian_pdfs`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `amenities`
 --
 ALTER TABLE `amenities`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `badges`
+--
+ALTER TABLE `badges`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `brands`
 --
 ALTER TABLE `brands`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `camps`
+--
+ALTER TABLE `camps`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `camp_categories`
+--
+ALTER TABLE `camp_categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `camp_prices`
+--
+ALTER TABLE `camp_prices`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -5524,9 +7956,45 @@ ALTER TABLE `check_lists`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `childcare_vouchers`
+--
+ALTER TABLE `childcare_vouchers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `children_details`
+--
+ALTER TABLE `children_details`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `child_activities`
+--
+ALTER TABLE `child_activities`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `cms_pages`
 --
 ALTER TABLE `cms_pages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `coach_documents`
+--
+ALTER TABLE `coach_documents`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `coach_profiles`
+--
+ALTER TABLE `coach_profiles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `coach_upload_pdfs`
+--
+ALTER TABLE `coach_upload_pdfs`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -5548,6 +8016,12 @@ ALTER TABLE `country_code`
   ADD PRIMARY KEY (`countrycode`);
 
 --
+-- Indexes for table `coupons`
+--
+ALTER TABLE `coupons`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `courses`
 --
 ALTER TABLE `courses`
@@ -5557,6 +8031,12 @@ ALTER TABLE `courses`
 -- Indexes for table `course_dates`
 --
 ALTER TABLE `course_dates`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `custom_boxes`
+--
+ALTER TABLE `custom_boxes`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -5626,6 +8106,12 @@ ALTER TABLE `invite_vendors`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `menus`
+--
+ALTER TABLE `menus`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -5636,6 +8122,13 @@ ALTER TABLE `migrations`
 --
 ALTER TABLE `my_check_list_tasks`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`);
 
 --
 -- Indexes for table `orders`
@@ -5653,6 +8146,18 @@ ALTER TABLE `package_meta_datas`
 -- Indexes for table `page_meta_tags`
 --
 ALTER TABLE `page_meta_tags`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `parent_coach_reqs`
+--
+ALTER TABLE `parent_coach_reqs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `player_reports`
+--
+ALTER TABLE `player_reports`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -5716,6 +8221,18 @@ ALTER TABLE `rejection_reasons`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `report_questions`
+--
+ALTER TABLE `report_questions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `report_question_options`
+--
+ALTER TABLE `report_question_options`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `reviews`
 --
 ALTER TABLE `reviews`
@@ -5737,6 +8254,12 @@ ALTER TABLE `seasons`
 -- Indexes for table `service_aproval_processes`
 --
 ALTER TABLE `service_aproval_processes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sessions`
+--
+ALTER TABLE `sessions`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -5776,9 +8299,33 @@ ALTER TABLE `testimonials`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tests`
+--
+ALTER TABLE `tests`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `test_categories`
+--
+ALTER TABLE `test_categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `test_scores`
+--
+ALTER TABLE `test_scores`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_badges`
+--
+ALTER TABLE `user_badges`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -5842,6 +8389,24 @@ ALTER TABLE `venues`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `vouchures`
+--
+ALTER TABLE `vouchures`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `wallets`
+--
+ALTER TABLE `wallets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `wallet_histories`
+--
+ALTER TABLE `wallet_histories`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -5849,17 +8414,42 @@ ALTER TABLE `venues`
 -- AUTO_INCREMENT for table `accordians`
 --
 ALTER TABLE `accordians`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+--
+-- AUTO_INCREMENT for table `accordian_pdfs`
+--
+ALTER TABLE `accordian_pdfs`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 --
 -- AUTO_INCREMENT for table `amenities`
 --
 ALTER TABLE `amenities`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
+-- AUTO_INCREMENT for table `badges`
+--
+ALTER TABLE `badges`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+--
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `camps`
+--
+ALTER TABLE `camps`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `camp_categories`
+--
+ALTER TABLE `camp_categories`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `camp_prices`
+--
+ALTER TABLE `camp_prices`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `categories`
 --
@@ -5886,10 +8476,40 @@ ALTER TABLE `chat_messages`
 ALTER TABLE `check_lists`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=211;
 --
+-- AUTO_INCREMENT for table `childcare_vouchers`
+--
+ALTER TABLE `childcare_vouchers`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `children_details`
+--
+ALTER TABLE `children_details`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
+--
+-- AUTO_INCREMENT for table `child_activities`
+--
+ALTER TABLE `child_activities`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+--
 -- AUTO_INCREMENT for table `cms_pages`
 --
 ALTER TABLE `cms_pages`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `coach_documents`
+--
+ALTER TABLE `coach_documents`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+--
+-- AUTO_INCREMENT for table `coach_profiles`
+--
+ALTER TABLE `coach_profiles`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT for table `coach_upload_pdfs`
+--
+ALTER TABLE `coach_upload_pdfs`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `commissions`
 --
@@ -5899,17 +8519,27 @@ ALTER TABLE `commissions`
 -- AUTO_INCREMENT for table `contact_details`
 --
 ALTER TABLE `contact_details`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+--
+-- AUTO_INCREMENT for table `coupons`
+--
+ALTER TABLE `coupons`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT for table `course_dates`
 --
 ALTER TABLE `course_dates`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=676;
+--
+-- AUTO_INCREMENT for table `custom_boxes`
+--
+ALTER TABLE `custom_boxes`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `custom_packages`
 --
@@ -5934,7 +8564,7 @@ ALTER TABLE `dispute_vendors`
 -- AUTO_INCREMENT for table `email_templates`
 --
 ALTER TABLE `email_templates`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `eshops`
 --
@@ -5966,10 +8596,15 @@ ALTER TABLE `f_a_qs`
 ALTER TABLE `invite_vendors`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
+-- AUTO_INCREMENT for table `menus`
+--
+ALTER TABLE `menus`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 --
 -- AUTO_INCREMENT for table `my_check_list_tasks`
 --
@@ -5989,57 +8624,77 @@ ALTER TABLE `package_meta_datas`
 -- AUTO_INCREMENT for table `page_meta_tags`
 --
 ALTER TABLE `page_meta_tags`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=497;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1152;
+--
+-- AUTO_INCREMENT for table `parent_coach_reqs`
+--
+ALTER TABLE `parent_coach_reqs`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+--
+-- AUTO_INCREMENT for table `player_reports`
+--
+ALTER TABLE `player_reports`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 --
 -- AUTO_INCREMENT for table `product_assigned_variations`
 --
 ALTER TABLE `product_assigned_variations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
 --
 -- AUTO_INCREMENT for table `product_attributes`
 --
 ALTER TABLE `product_attributes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=577;
 --
 -- AUTO_INCREMENT for table `product_categories`
 --
 ALTER TABLE `product_categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=187;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=208;
 --
 -- AUTO_INCREMENT for table `product_category_brands`
 --
 ALTER TABLE `product_category_brands`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `product_category_variations`
 --
 ALTER TABLE `product_category_variations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=361;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=729;
 --
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=197;
 --
 -- AUTO_INCREMENT for table `product_inventories`
 --
 ALTER TABLE `product_inventories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT for table `product_variations`
 --
 ALTER TABLE `product_variations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 --
 -- AUTO_INCREMENT for table `rejection_reasons`
 --
 ALTER TABLE `rejection_reasons`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=322;
+--
+-- AUTO_INCREMENT for table `report_questions`
+--
+ALTER TABLE `report_questions`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `report_question_options`
+--
+ALTER TABLE `report_question_options`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `reviews`
 --
@@ -6054,17 +8709,22 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `seasons`
 --
 ALTER TABLE `seasons`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `service_aproval_processes`
 --
 ALTER TABLE `service_aproval_processes`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
 --
+-- AUTO_INCREMENT for table `sessions`
+--
+ALTER TABLE `sessions`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
 -- AUTO_INCREMENT for table `shop_cart_items`
 --
 ALTER TABLE `shop_cart_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=384;
 --
 -- AUTO_INCREMENT for table `shop_categories`
 --
@@ -6074,7 +8734,7 @@ ALTER TABLE `shop_categories`
 -- AUTO_INCREMENT for table `shop_orders`
 --
 ALTER TABLE `shop_orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 --
 -- AUTO_INCREMENT for table `shop_pages`
 --
@@ -6089,12 +8749,32 @@ ALTER TABLE `styles`
 -- AUTO_INCREMENT for table `testimonials`
 --
 ALTER TABLE `testimonials`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `tests`
+--
+ALTER TABLE `tests`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT for table `test_categories`
+--
+ALTER TABLE `test_categories`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `test_scores`
+--
+ALTER TABLE `test_scores`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=353;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=371;
+--
+-- AUTO_INCREMENT for table `user_badges`
+--
+ALTER TABLE `user_badges`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `user_events`
 --
@@ -6109,12 +8789,12 @@ ALTER TABLE `user_event_meta_datas`
 -- AUTO_INCREMENT for table `variations`
 --
 ALTER TABLE `variations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `variation_extras`
 --
 ALTER TABLE `variation_extras`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `vendor_amenities`
 --
@@ -6145,6 +8825,21 @@ ALTER TABLE `vendor_packages`
 --
 ALTER TABLE `venues`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `vouchures`
+--
+ALTER TABLE `vouchures`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `wallets`
+--
+ALTER TABLE `wallets`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `wallet_histories`
+--
+ALTER TABLE `wallet_histories`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

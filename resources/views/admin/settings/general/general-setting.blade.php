@@ -111,7 +111,15 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title"><u>GOOGLE ANALYTICS</u></h5>
-             {{textbox($errors,'Google Analytics Code <span class="cst-upper-star">*</span>','copyright_section',$copyright_section)}}
+             {{textarea($errors,'Google Analytics Code <span class="cst-upper-star">*</span>','google_analytics',$google_analytics)}}
+          </div>
+        </div>
+
+        <!-- Mailchimp Api Key -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>Mailchimp API Key</u></h5>
+            {{textbox($errors,'Mailchimp API Key','mailchimp_api_key',$mailchimp_api_key)}}
           </div>
         </div>
 
@@ -141,4 +149,8 @@
 @section('scripts')
 <script src="{{url('/admin-assets/js/validations/settings/homePageValidation.js')}}"></script>
 <script src="{{url('/js/validations/imageShow.js')}}"></script>
+<script src="{{ asset('js/cke_config.js') }}"></script>
+<script type="text/javascript">
+   // CKEDITOR.replace('google_analytics', options);
+</script>
 @endsection

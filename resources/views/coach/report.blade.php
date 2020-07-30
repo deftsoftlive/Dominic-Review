@@ -4,7 +4,7 @@
 @php
 $country_code = DB::table('country_code')->get();
 $notification = DB::table('parent_coach_reqs')->where('coach_id',Auth::user()->id)->where('status',NULL)->count();
-$user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->first();
+$user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->first(); 
 @endphp
 <style>
 input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
@@ -19,19 +19,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
         </div>
         <nav>
             <ul>
-                <li><a href="{{ route('coach_profile') }}" class="{{ \Request::route()->getName() === 'coach_profile' ? 'active' : '' }}">My Profile</a></li>
-                <li><a href="{{ route('coach_report') }}" class="{{ \Request::route()->getName() === 'coach_report' ? 'active' : '' }}">Reports</a></li>
-                <!-- <li><a href="{{ route('qualifications') }}" class="{{ \Request::route()->getName() === 'qualifications' ? 'active' : '' }}">Qualifications</a></li> -->
-                @if(!empty($user))
-                @if($user->enable_inovice == 1)
-                <li><a href="{{ route('upload_invoice') }}" class="{{ \Request::route()->getName() === 'upload_invoice' ? 'active' : '' || \Request::route()->getName() === 'add_upload_invoice' ? 'active' : '' }}">Invoices</a></li>
-                @endif
-                @endif
-                <li><a href="{{ route('coach_player') }}" class="{{ \Request::route()->getName() === 'coach_player' ? 'active' : '' }}">My Players</a></li>
-                <li><a href="{{ route('my-bookings') }}" class="{{ \Request::route()->getName() === 'my-bookings' ? 'active' : '' }}">My Bookings</a></li>
-                <li><a href="{{ route('request_by_parent') }}" class="{{ \Request::route()->getName() === 'request_by_parent' ? 'active' : '' }}">Notifications <span class="notification-icon">({{$notification}})</span></a></li>
-                <li><a href="{{ route('account_settings') }}" class="{{ \Request::route()->getName() === 'account_settings' ? 'active' : '' }}">Settings</a></li>
-                <li><a href="{{ route('logout') }}" class="{{ \Request::route()->getName() === 'logout' ? 'active' : '' }}">Logout</a></li>
+                @include('inc.coach-menu')
             </ul>
         </nav>
     </div>
@@ -39,6 +27,10 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
 @if(Session::has('success'))
 <div class="alert_msg alert alert-success">
     <p>{{ Session::get('success') }} </p>
+</div>
+@elseif(Session::has('error'))
+<div class="alert_msg alert alert-danger">
+    <p>{!! Session::get('error') !!} </p>
 </div>
 @endif
 
@@ -74,7 +66,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                             $season = DB::table('seasons')->orderBy('id','asc')->get();
                                             @endphp
                                             @foreach($season as $se)
-                                            <option value="{{$se->id}}" @if(!empty($player_report) && $player_report->season_id == $se->id) selected @endif >{{$se->title}}</option>
+                                            <option value="{{$se->id}}" @if(!empty($season_id) && $season_id == $se->id) selected @endif >{{$se->title}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -82,8 +74,8 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <h6>Course :<h6>
-                                                @if(!empty($player_report->course_id))
-                                                <input type="text" disabled="" name="" class="form-control" value="@php echo getCoursename($player_report->course_id); @endphp">
+                                                @if(!empty($course_id))
+                                                <input type="text" disabled="" name="" class="form-control" value="@php echo getCoursename($course_id); @endphp">
                                                 @else
                                                 <select id="course_ID" name="course_id" class="form-control">
                                                     <option selected="" disabled="">Select Course</option>
@@ -100,8 +92,8 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <h6>Select Player :<h6>
-                                                @if(!empty($player_report->player_id))
-                                                <input type="text" disabled="" name="" class="form-control" value="@php echo getUsername($player_report->player_id); @endphp">
+                                                @if(!empty($user_id))
+                                                <input type="text" disabled="" name="" class="form-control" value="@php echo getUsername($user_id); @endphp">
                                                 @else
                                                 <select id="player_ID" name="player_id" class="player_data_ID form-control">
                                                     <option selected="" disabled="">Select Player</option>
@@ -125,51 +117,90 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                             @csrf
                             <input type="hidden" name="sim_report_id" value="{{isset($player_report->id) ? $player_report->id : ''}}">
                             <input type="hidden" name="type" value="simple">
-                            <input type="hidden" id="season_id" name="season_id" value="{{isset($player_report->season_id) ? $player_report->season_id : ''}}">
-                            <input type="hidden" id="course_id" name="course_id" value="{{isset($player_report->course_id) ? $player_report->course_id : ''}}">
-                            <input type="hidden" id="player_id" name="player_id" value="{{isset($player_report->player_id) ? $player_report->player_id : ''}}">
+                            <input type="hidden" id="season_id" name="season_id" value="{{isset($season_id) ? $season_id : ''}}">
+                            <input type="hidden" id="course_id" name="course_id" value="{{isset($course_id) ? $course_id : ''}}">
+                            <input type="hidden" id="player_id" name="player_id" value="{{isset($user_id) ? $user_id : ''}}">
                             <input type="hidden" id="rp_type" name="rp_type" value="simple">
-                            <!--  <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group date-row">
-                                        <label>Date :</label>
-                                        <input name="date" value="{{isset($player_report->date) ? $player_report->date : ''}}" type="Date" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group date-row">
-                                        <label>Term:</label>
-                                        <input name="term" value="{{isset($player_report->term) ? $player_report->term : ''}}" type="text" class="form-control">
-                                    </div>
-                                </div>
-                            </div> -->
+
                             <div class="row">
                                 @php
-                                $report_questions = DB::table('report_questions')->get();
+                                    $report_questions = DB::table('report_questions')->get(); 
                                 @endphp
+
                                 @foreach($report_questions as $ques)
                                 @php
-                                $options = DB::table('report_question_options')->where('report_question_id',$ques->id)->get();
+                                    $options = DB::table('report_question_options')->where('report_question_id',$ques->id)->get();
+                                    $player_rp = DB::table('player_reports')->where('player_id',$user_id)->where('season_id',$season_id)->where('course_id',$course_id)->first();  
                                 @endphp
-                                @if(!empty($options))
+
+                                @if($player_rp)
+
+                                @php 
+                                    $selected_options = json_decode($player_rp->selected_options);
+                                    $cat_option=[];
+                                @endphp
+
+                                @foreach($selected_options as $opt)
+                                @php 
+                                    $sel_data = explode('-',$opt);
+                                    $cat_option[] =  $sel_data[0].'-'.$sel_data[1];
+                                @endphp
+                                @endforeach
+
+                                    <div class="col-md-6">
+                                    <div class="inner-form-box">
+                                        <p class="top-heading">{{$ques->title}}</p>
+                                        <div class="form-wrap">
+                                            @foreach($options as $op)
+                                            @php
+                                                $all_option = $ques->id.'-'.$op->id; 
+                                                $all_opt_arr = explode(' ',$all_option);
+                                            @endphp
+                                            
+
+                                            @if(in_array($all_option,$cat_option)) 
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="selected_options[]" type="checkbox" value="{{$ques->id}}-{{$op->id}}" checked id="defaultCheck">
+                                                    <label class="form-check-label" for="defaultCheck1">
+                                                        {{$op->option_title}}
+                                                    </label>
+                                                </div>
+                                            @else
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="selected_options[]" type="checkbox" value="{{$ques->id}}-{{$op->id}}"  id="defaultCheck">
+                                                    <label class="form-check-label" for="defaultCheck1">
+                                                        {{$op->option_title}}
+                                                    </label>
+                                                </div>
+                                            @endif
+
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @else
+                                    
                                 <div class="col-md-6">
                                     <div class="inner-form-box">
                                         <p class="top-heading">{{$ques->title}}</p>
                                         <div class="form-wrap">
                                             @foreach($options as $op)
+                                        
                                             <div class="form-check">
-                                                <input class="form-check-input" name="selected_options[]" type="checkbox" value="{{$ques->id}}-{{$op->id}}" id="defaultCheck1">
+                                                <input class="form-check-input" name="selected_options[]" type="checkbox" value="{{$ques->id}}-{{$op->id}}"  id="defaultCheck">
                                                 <label class="form-check-label" for="defaultCheck1">
                                                     {{$op->option_title}}
                                                 </label>
                                             </div>
+
                                             @endforeach
                                         </div>
                                     </div>
                                 </div>
+
                                 @endif
+
                                 @endforeach
                             </div>
                             <div class="row">
@@ -180,14 +211,65 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Test Score data:</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="test_score_data" placeholder="Please enter test score data">{{isset($player_report->test_score_data) ? $player_report->test_score_data : ''}}</textarea>
-                                    </div>
-                                </div>
+                            
+
+                            @if(!empty($season_id) && !empty($user_id) && !empty($course_id))
+                            @php 
+                                $test_score = DB::table('test_scores')->where('test_cat_id','!=',NULL)->where('season_id',$season_id)->where('user_id',$user_id)->where('course_id',$course_id)->get();
+                            @endphp
+                            <br/>
+
+                            @if(count($test_score)>0)
+                            <div class="pink-heading">
+                                <h2>Test Score Data</h2>
                             </div>
+                            <!-- <label>Test Score Data:</label> -->
+                            <div class="table-layout">
+                                <table class="table table-bordered rp_test_score">
+                                    <thead>
+                                      <tr>
+                                          @if(count($test_score)> 0)
+                                            <th class="rp_player_name" rowspan="2">Player Name</th>
+                                          @endif
+
+                                          @if(count($test_score)> 0)
+                                          @foreach($test_score as $arr)
+                                            <th>@php echo getTestCatname($arr->test_cat_id); @endphp</th>
+                                          @endforeach
+                                          @endif
+                                          </tr>
+
+                                          <tr>
+                                          @if(count($test_score)> 0)
+                                          @foreach($test_score as $arr)
+                                            <th>@php echo getTestname($arr->test_id); @endphp</th>
+                                          @endforeach
+                                          @endif
+                                      </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                    @php
+                                      $test_score1 = DB::table('test_scores')->where('course_id',$course_id)->where('test_cat_id','!=',NULL)->where('season_id',$season_id)->where('user_id',$user_id)->groupBy('user_id')->get(); 
+                                    @endphp
+                                    @foreach($test_score1 as $arr)
+                                    <tr>
+                                        <td>@php $user = DB::table('users')->where('id',$arr->user_id)->first(); @endphp {{$user->name}}</td>
+                                        @php
+                                          $test_score12 = DB::table('test_scores')->where('user_id',$user->id)->where('course_id',$course_id)->where('test_cat_id','!=',NULL)->where('season_id',$season_id)->groupBy('test_id')->get(); 
+                                        @endphp
+                                        @foreach($test_score12 as $arr)
+                                            <td>{{$arr->test_score}}</td>
+                                        @endforeach
+                                    </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            @endif
+                            @endif
+
                             <div class="row">
                                 <div class="col-md-4">
                                     <div id="submit_sim_rep" class="form-group">

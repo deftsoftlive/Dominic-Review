@@ -331,19 +331,92 @@ public function changeProfileImage(Request $request) {
 
     public function course_revenue()
     {
-      $purchased_courses = \DB::table('shop_cart_items')->where('shop_type','course')->where('type','order')->paginate(10);
+      $course_name = request()->get('course_name'); 
+
+      if(!empty($course_name)){
+          $purchased_courses = \DB::table('shop_cart_items')
+                            ->join('courses', 'shop_cart_items.product_id', '=', 'courses.id')
+                            ->select('shop_cart_items.*','courses.title')  
+                            ->where('shop_type','course')->where('shop_cart_items.type','order')    
+                            ->where( 'courses.title', 'LIKE', '%' . $course_name . '%' ) 
+                            ->groupBy('product_id')        
+                            ->paginate(10);
+      }else{
+          $purchased_courses = \DB::table('shop_cart_items')->where('shop_type','course')->where('type','order')->groupBy('product_id')->paginate(10);
+      }
+
+      // dd($purchased_courses);
       return view('admin.revenue.course-revenue',compact('purchased_courses'));
+    }
+
+    public function course_revenue_detail($id)
+    {
+      $purchased_courses = \DB::table('shop_cart_items')->where('shop_type','course')->where('product_id',$id)->where('type','order')->paginate(50);
+      return view('admin.revenue.view-course-report',compact('purchased_courses','id'));
     }
 
     public function camp_revenue()
     {
-      $purchased_camp = \DB::table('shop_cart_items')->where('shop_type','camp')->where('type','order')->paginate(10);
+      $camp_name = request()->get('camp_name'); 
+
+      if(!empty($camp_name)){
+          $purchased_camp = \DB::table('shop_cart_items')
+                            ->join('camps', 'shop_cart_items.product_id', '=', 'camps.id')
+                            ->select('shop_cart_items.*','camps.title')  
+                            ->where('shop_type','camp')->where('shop_cart_items.type','order')    
+                            ->where( 'camps.title', 'LIKE', '%' . $camp_name . '%' ) 
+                            ->groupBy('product_id')        
+                            ->paginate(10);
+      }else{
+          $purchased_camp = \DB::table('shop_cart_items')->where('shop_type','camp')->where('type','order')->groupBy('product_id')->paginate(10);
+      }
+
+      // dd($purchased_camp);
+
       return view('admin.revenue.camp-revenue',compact('purchased_camp'));
+    }
+
+    public function camp_revenue_detail($id)
+    {
+      $purchased_camp = \DB::table('shop_cart_items')->where('shop_type','camp')->where('product_id',$id)->where('type','order')->paginate(50);
+      return view('admin.revenue.view-camp-report',compact('purchased_camp','id'));
     }
 
     public function product_revenue()
     {
-      $purchased_product = \DB::table('shop_cart_items')->where('shop_type','product')->where('type','order')->paginate(10);
+      $product_cat = request()->get('product_cat');
+      $start_date = date('Y-m-d h:i:s',strtotime(request()->get('start_date')));
+      $end_date = date('Y-m-d h:i:s',strtotime(request()->get('end_date')));
+
+      // dd($product_cat,$start_date,$end_date);
+
+      if(!empty($product_cat) && !empty($start_date) && !empty($end_date && $start_date != '1970-01-01 12:00:00' && $end_date != '1970-01-01 12:00:00'))
+      {
+        $purchased_product = \DB::table('shop_cart_items')
+                            ->join('products', 'shop_cart_items.product_id', '=', 'products.id')
+                            ->join('product_categories', 'products.category_id', '=', 'product_categories.id')
+                            ->select('products.name','products.category_id','product_categories.label','shop_cart_items.*')
+                            ->where('shop_type','product','created_at as')
+                            ->where('shop_cart_items.type','order')
+                            ->where('products.category_id', $product_cat) 
+                            ->where('shop_cart_items.created_at', '>', $start_date)
+                            ->where('shop_cart_items.created_at', '<', $end_date)      
+                            ->paginate(10);
+      }
+      elseif(!empty($product_cat) && $start_date == '1970-01-01 12:00:00' && $end_date == '1970-01-01 12:00:00')
+      {
+        $purchased_product = \DB::table('shop_cart_items')
+                            ->join('products', 'shop_cart_items.product_id', '=', 'products.id')
+                            ->join('product_categories', 'products.category_id', '=', 'product_categories.id')
+                            ->select('products.name','products.category_id','product_categories.label','shop_cart_items.*')
+                            ->where('shop_type','product','created_at as')
+                            ->where('shop_cart_items.type','order')
+                            ->where('products.category_id', $product_cat) 
+                            ->paginate(10);
+      }else{
+        $purchased_product = \DB::table('shop_cart_items')->where('shop_type','product')->where('type','order')->paginate(10);
+      }
+        
       return view('admin.revenue.product-revenue',compact('purchased_product'));
     }
 

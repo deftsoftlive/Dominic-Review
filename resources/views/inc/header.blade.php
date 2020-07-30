@@ -1,4 +1,3 @@
-<!-- Header section start here --> 
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -21,6 +20,7 @@
     <link href="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css" rel="stylesheet">
     <script src="{{URL::asset('/js/timeCounter.js')}}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    {!! getAllValueWithMeta('google_analytics', 'general-setting') !!}
   </head>
   <style>
     input#crop {

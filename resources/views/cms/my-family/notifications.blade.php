@@ -23,15 +23,11 @@
       @endphp
 
       @if($user_id == '2')
-  	    <li><a href="{{ route('my-family') }}" class="{{ \Request::route()->getName() === 'my-family' ? 'active' : '' || \Request::route()->getName() === 'add-family-member' ? 'active' : '' || \Request::route()->getName() === 'edit-family-member' ? 'active' : '' }}">My family</a></li>
-        <!-- <li><a href="{{ route('player_report_listing') }}" class="{{ \Request::route()->getName() === 'player_report_listing' ? 'active' : '' }}">Reports</a></li> -->
-        <li><a href="{{ route('my-bookings') }}" class="{{ \Request::route()->getName() === 'my-bookings' ? 'active' : '' }}">My Bookings</a></li>
-        <li><a href="{{ route('badges') }}" class="{{ \Request::route()->getName() === 'badges' ? 'active' : '' }}">DRH Tennis Pro</a></li>
-        <li><a href="{{ route('linked_coaches') }}" class="{{ \Request::route()->getName() === 'linked_coaches' ? 'active' : '' }}">My Coaches</a></li>
-        <li><a href="{{ route('parent_notifications') }}" class="{{ \Request::route()->getName() === 'parent_notifications' ? 'active' : '' }}">Notifications <span class="notification-icon"></span></a></li>
-        <li><a href="" class="">Settings</a></li>
-        <li><a href="{{ route('logout') }}" class="{{ \Request::route()->getName() === 'logout' ? 'active' : '' }}">Logout</a></li>
+      
+  	    @include('inc.parent-menu')
+
       @elseif($user_id == 3)
+
         <li><a href="{{ route('coach_profile') }}" class="{{ \Request::route()->getName() === 'coach_profile' ? 'active' : '' }}">My Profile</a></li>
         <!-- <li><a href="{{ route('qualifications') }}" class="{{ \Request::route()->getName() === 'qualifications' ? 'active' : '' }}">Qualifications</a></li> -->
         <li><a href="{{ route('coach_player') }}" class="{{ \Request::route()->getName() === 'coach_player' ? 'active' : '' }}">My Players</a></li>
@@ -44,6 +40,12 @@
 	</nav>
   </div>
 </div>
+
+@if(Session::has('success'))
+<div class="alert_msg alert alert-success">
+   <p>{{ Session::get('success') }} </p>
+</div>
+@endif
 
 <section class="member section-padding">
   <div class="container">
@@ -70,10 +72,11 @@
                             <th>Name Of Coach</th>
                             <th>Status</th>
                             <th>Further Details</th>
+                            <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
-                        
+                        @if(!empty($req))
                         @foreach($req as $re)
                         @php 
                          $parent = DB::table('users')->where('id',$re->parent_id)->first(); 
@@ -96,8 +99,16 @@
                               @endif
                             </p></td>
                             <td><p>{{isset($re->reason_of_rejection) ? $re->reason_of_rejection : '-'}}</p></td> 
+                            <td>
+                              <form action="{{route('dismiss-request-parent')}}" method="POST">
+                                  @csrf
+                                  <input type="hidden" name="id" value="{{$re->id}}">
+                                  <button type="submit" class="cstm-btn">Dismiss</button>
+                              </form>
+                            </td>
                           </tr>
                           @endforeach
+                          @endif
                         </tbody>
                       </table>
 
@@ -142,8 +153,66 @@
                           </tr>
                         </thead>
                         <tbody>
+                          @php 
+                            $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('child_id','!=',NULL)->where('orderID','!=',NULL)->where('order_id','!=',NULL)->groupBy('child_id')->paginate(10);
+                          @endphp
+                          @if(count($purchase_course)>0)
+                          @foreach($purchase_course as $bd)
+
+                          @php 
+                              $shop = DB::table('shop_cart_items')->where('child_id',$bd->child_id)->where('shop_type','course')->where('orderID','!=',NULL)->get();
+                              $user = DB::table('users')->where('id',$bd->child_id)->first();
+                              $user_badges = DB::table('user_badges')->where('user_id',$bd->child_id)->first();
+
+                              $selected_badges = isset($user_badges->badges) ? explode(',',$user_badges->badges) : '';
+                          @endphp
+                           
+
+                              <tr>
+                                  <td><p>{{$bd->updated_at}}</p></td>
+                                  <td><p>{{$user->name}}</p></td>
+                                  <td>
+                                     @php $course = array(); @endphp
+                                     @foreach($shop as $sh)
+                                          @php $course[] = getCourseName($sh->product_id); @endphp
+                                     @endforeach 
+                                     @php $course_name = implode(', ',$course); @endphp
+                                     {{$course_name}}
+                                  </td>
+                                  <td>{{isset($user_badges->badges_points) ? $user_badges->badges_points : ''}}</td>
+                                  <td>
+
+                                    <ul class="leader-bord-bages">
+                                      <li>
+                                        <figure>
+                                          @if(!empty($selected_badges))
+                                          @foreach($selected_badges as $se)
+                                              @php 
+                                                  $badge = DB::table('badges')->where('id',$se)->first();
+                                              @endphp
+                                                  <img class="badge-img"  src="{{URL::asset('/uploads')}}/{{$badge->image}}">
+                                          @endforeach
+                                          @endif
+                                        </figure>
+                                    </li>
+                                    </ul>
+                                      
+                                  </td>
+                                 
+                              </tr>
+
+                          @endforeach
+                          @else
+                          <tr>
+                              <td colspan="5">
+                                  <div class="no_results">
+                                      <h3>No result found.</h3>
+                                  </div>
+                              </td>
+                          </tr>
+                          @endif
                           
-                        @foreach($purchase_course as $re)
+                       <!--  @foreach($purchase_course as $re)
                         @php 
                          $child = DB::table('users')->where('id',$re->child_id)->first();
                          $course = DB::table('courses')->where('id',$re->product_id)->first();
@@ -181,7 +250,7 @@
                           </li>
                           </ul></td>
                           </tr>
-                          @endforeach
+                          @endforeach -->
                         </tbody>
                       </table>
 

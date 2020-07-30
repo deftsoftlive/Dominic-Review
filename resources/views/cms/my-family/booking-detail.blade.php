@@ -27,15 +27,11 @@
 	  @php
         $user_id = \Auth::user()->role_id;
       @endphp
+      
 	  @if($user_id == '2')
-  	    <li><a href="{{ route('my-family') }}" class="{{ \Request::route()->getName() === 'my-family' ? 'active' : '' || \Request::route()->getName() === 'add-family-member' ? 'active' : '' || \Request::route()->getName() === 'edit-family-member' ? 'active' : '' }}">My family</a></li>
-  	    <!-- <li><a href="{{ route('player_report_listing') }}" class="{{ \Request::route()->getName() === 'player_report_listing' ? 'active' : '' }}">Reports</a></li> -->
-        <li><a href="{{ route('my-bookings') }}" class="{{ \Request::route()->getName() === 'my-bookings' ? 'active' : '' }}">My Bookings</a></li>
-        <li><a href="{{ route('badges') }}" class="{{ \Request::route()->getName() === 'badges' ? 'active' : '' }}">DRH Tennis Pro</a></li>
-        <li><a href="{{ route('linked_coaches') }}" class="{{ \Request::route()->getName() === 'linked_coaches' ? 'active' : '' }}">My Coaches</a></li>
-        <li><a href="{{ route('parent_notifications') }}" class="{{ \Request::route()->getName() === 'parent_notifications' ? 'active' : '' }}">Notifications <span class="notification-icon"></span></a></li>
-        <li><a href="" class="">Settings</a></li>
-        <li><a href="{{ route('logout') }}" class="{{ \Request::route()->getName() === 'logout' ? 'active' : '' }}">Logout</a></li>
+
+  	    @include('inc.parent-menu')
+
       @elseif($user_id == 3)
         <li><a href="{{ route('coach_profile') }}" class="{{ \Request::route()->getName() === 'coach_profile' ? 'active' : '' }}">My Profile</a></li>
         <li><a href="{{ route('coach_report') }}" class="{{ \Request::route()->getName() === 'coach_report' ? 'active' : '' }}">Reports</a></li>
@@ -101,6 +97,27 @@
 									  <th scope="row">Payment Method : </th>
 									  <td> {{$order->payment_by}}</td>
 									</tr>
+
+									@if(!empty($order->transaction_details))
+									<tr>
+									  <th scope="row">Payment details : </th>
+									  <td> 
+									  	@php 
+									  		$transaction_details = explode(',',$order->transaction_details); 
+									  		$tr_data = [];
+									  	@endphp
+									  	@foreach($transaction_details as $tr)
+									  		@php 
+									  			$tr1 = explode('- ',$tr); 
+									  			$tr0 = $tr1[0];
+									  			$tr1 = '&pound;'.$tr1[1];	
+									  			$tr_data[] = $tr0.'- '.$tr1;
+									  		@endphp
+									  	@endforeach
+									  	@php echo implode(',', $tr_data); @endphp
+									  </td>
+									</tr>
+									@endif
 
 									@if(!empty($order->provider_id))
                                     @php 

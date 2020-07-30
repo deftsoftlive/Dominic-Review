@@ -103,6 +103,23 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::any('/seasons/status/{slug}','Admin\SeasonController@seasons_Status')->name('admin.seasons.status');
 		Route::any('/seasons/delete/{id}','Admin\SeasonController@delete_seasons')->name('delete_seasons');
 
+
+		#----------------------------------------------------------------
+		#  Menu Management
+		#----------------------------------------------------------------
+		Route::any('/menu/footer','Admin\MenuController@menu_footer_index')->name('admin.Menu.footer-list');
+		Route::any('/menu/header','Admin\MenuController@menu_index')->name('admin.Menu.list');
+		Route::any('/menu/active','Admin\MenuController@menu_active')->name('admin.Menu.active');
+		Route::any('/menu/in-active','Admin\MenuController@menu_inactive')->name('admin.Menu.inactive');
+		Route::get('/menu/create','Admin\MenuController@menu_showCreate')->name('admin.Menu.showCreate');
+		Route::post('/menu/create','Admin\MenuController@menu_create')->name('admin.Menu.create');
+		Route::get('/menu/{slug}','Admin\MenuController@menu_showEdit')->name('admin.Menu.showEdit');
+		Route::post('/menu/{slug}','Admin\MenuController@menu_update')->name('admin.Menu.update');
+		Route::any('/menu/status/{slug}','Admin\MenuController@menu_Status')->name('admin.Menu.status');
+		Route::any('/menu/delete/{id}','Admin\MenuController@menu_delete')->name('delete_menu');
+		Route::any('/update_menu_sort/{sort_no}/{menu_id}','Admin\MenuController@update_menu_sort')->name('update.menu.sort');
+
+
 		#----------------------------------------------------------------
 		#  Vochure Management
 		#----------------------------------------------------------------
@@ -387,16 +404,19 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
         #  Revenue Management
         #------------------------------------------------------------------------------------
         Route::get('/revenue', 'Admin\AdminController@revenue')->name('admin.revenue');
-        Route::get('/revenue/courses', 'Admin\AdminController@course_revenue')->name('admin.revenue.courses');
-        Route::get('/revenue/camps', 'Admin\AdminController@camp_revenue')->name('admin.revenue.camps');
-        Route::get('/revenue/products', 'Admin\AdminController@product_revenue')->name('admin.revenue.products');
+        Route::any('/revenue/courses', 'Admin\AdminController@course_revenue')->name('admin.revenue.courses');
+        Route::get('/revenue/courses/{id}', 'Admin\AdminController@course_revenue_detail')->name('admin.revenue.courses.detail');
+        Route::any('/revenue/camps', 'Admin\AdminController@camp_revenue')->name('admin.revenue.camps');
+        Route::get('/revenue/camps/{id}', 'Admin\AdminController@camp_revenue_detail')->name('admin.revenue.camps.detail');
+        Route::any('/revenue/products', 'Admin\AdminController@product_revenue')->name('admin.revenue.products');
+        Route::any('/calculate_male/{id}', 'Admin\AdminController@calculate_male')->name('admin.revenue.calculate_male');
 
 
         #----------------------------------------------------------------
 		#  Register Template Management
 		#----------------------------------------------------------------
 		Route::any('/register-template/course/{id}','Admin\RegisterTemplateController@course_reg_temp')->name('course_reg_temp');
-		Route::any('/register-template/camp','Admin\RegisterTemplateController@camp_reg_temp')->name('camp_reg_temp');
+		Route::any('/register-template/camp/{id}','Admin\RegisterTemplateController@camp_reg_temp')->name('camp_reg_temp');
 
 
         #------------------------------------------------------------------------------------
@@ -422,8 +442,6 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
         #-------------------------------------------------------------------------------------------------------------
         #  Email Templates
         #-------------------------------------------------------------------------------------------------------------
-
-
         Route::get('/email-management', 'Admin\EmailManagementController@index')->name('admin.emails.index');
         Route::post('/email-management', 'Admin\EmailManagementController@create')->name('admin.emails.index');
         Route::get('/email-management/{id}', 'Admin\EmailManagementController@edit')->name('admin.emails.update');
@@ -432,27 +450,34 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
         #-------------------------------------------------------------------------------------------------------------
         #  admin.orders
         #-------------------------------------------------------------------------------------------------------------
-
         Route::get('/orders','Admin\OrderController@index')->name('admin.orders');
         Route::get('/orders/detail/{id}','Admin\OrderController@detail')->name('admin.orderDetail');
         Route::get('/orders/ajax','Admin\OrderController@ajax')->name('admin.ajaxOrders');
 
         Route::get('/orders/download/{id}','Admin\OrderController@order_pdf')->name('admin.order.pdf');
 
+
+        #-------------------------------------------------------------------------------------------------------------
+        #  Wallet Management
+        #-------------------------------------------------------------------------------------------------------------
+        Route::get('/wallet','Admin\WalletController@wallet_index')->name('admin.wallet');
+        Route::any('/credit-in-wallet','Admin\WalletController@credit_amt_by_admin')->name('admin.credit.wallet');
+        Route::any('/debit-from-wallet','Admin\WalletController@debit_amt_by_admin')->name('admin.debit.wallet');
+        Route::get('/wallet-details/view/{user_id}','Admin\WalletController@wallet_detail')->name('admin.wallet.detail');
+
+
        #--------------------------------------------------------------------------------------------------------------
        #  Vendors
-       #--------------------------------------------------------------------------------------------------------------
-        
-	     Route::get('/inviting/vendors','Admin\VendersController@invite')->name('admin.vendor.invite');
-	     Route::get('/inviting/vendor/{id}','Admin\VendersController@inviteDetail')->name('admin.vendor.inviting');
-	     Route::get('/inviting/vendor/request/{id}','Admin\VendersController@vendorInvite')->name('admin.vendorInvite');
+       #--------------------------------------------------------------------------------------------------------------   
+	    Route::get('/inviting/vendors','Admin\VendersController@invite')->name('admin.vendor.invite');
+	    Route::get('/inviting/vendor/{id}','Admin\VendersController@inviteDetail')->name('admin.vendor.inviting');
+	    Route::get('/inviting/vendor/request/{id}','Admin\VendersController@vendorInvite')->name('admin.vendorInvite');
 
 
 
        #--------------------------------------------------------------------------------------------------------------
        #  users
        #--------------------------------------------------------------------------------------------------------------
-       
 		Route::get('/inviting/users','Admin\VendersController@invite2')->name('admin.user.invite');
 		Route::get('/inviting/user/{id}','Admin\VendersController@inviteDetail2')->name('admin.user.inviting');
 		Route::get('/inviting/user/request/{id}','Admin\VendersController@vendorInvite2')->name('admin.userInvite');

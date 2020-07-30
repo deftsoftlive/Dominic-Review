@@ -69,7 +69,7 @@
                 </thead>
             </table>
             <figure>
-                <img src="http://49.249.236.30:8654/dominic-new/public/uploads/1584078701website_logo.png">
+                <!-- <img src="http://49.249.236.30:8654/dominic-new/public/uploads/1584078701website_logo.png"> -->
             </figure>
         </div>
             <table class="table table-bordered camp-table">
@@ -96,45 +96,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>                      
-                        <td></td>                        
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>                        
-                    </tr>
-                    <tr>
-                        
-                        <td>2</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>                      
-                        <td></td>                        
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>                        
-                    </tr>
-                    
+
+                @if(count($shop)>0)
+                    @foreach($shop as $sh)
+
+                    @php 
+                        $player = DB::table('users')->where('id',$sh->child_id)->first();
+                        $parent = DB::table('users')->where('id',$player->parent_id)->first();
+                        $child_details = DB::table('children_details')->where('id',$sh->child_id)->first(); 
+                    @endphp
+                        <tr>
+                            <td class="@if($player->gender == 'male') odd-name-row @elseif($player->gender == 'female') even-name-row @endif">{{$player->name}}</td>
+                            <td>{{$player->date_of_birth}}</td>
+                            <td>@if($child_details['med_cond'] == 'confirm_accurate_no') N @else Y @endif</td>
+                            <td>{{$parent->name}}</td>                      
+                            <td>{{$parent->phone_number}}</td>                        
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{$parent->email}}</td>                        
+                        </tr>
+                    @endforeach
+                @endif
                         
                 </tbody>
             </table>

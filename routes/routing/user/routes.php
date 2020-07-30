@@ -40,11 +40,17 @@
          Route::any('update_user_profile','HomeController@update_user_profile')->name('update_user_profile');
          Route::any('update_tennis_club/{tennis_club}/{user_id}/{shop_id}','HomeController@update_tennis_club')->name('update_tennis_club');
 
+         Route::any('dismiss-request/coach', 'HomeController@dismiss_req_by_coach')->name('dismiss-request-coach');
+         Route::any('dismiss-request/parent', 'HomeController@dismiss_req_by_parent')->name('dismiss-request-parent');
+
          Route::any('request-by-parent', 'HomeController@request_by_parent')->name('request_by_parent');
          Route::any('my-coaches', 'HomeController@linked_coaches')->name('linked_coaches');
          Route::any('reject_request', 'HomeController@reject_request')->name('reject_request');
          Route::any('undo_reject_request', 'HomeController@undo_reject_request')->name('undo_reject_request');
          Route::any('parent-coach', 'HomeController@parent_coach')->name('parent_coach');
+         Route::any('add-money-to-wallet', 'HomeController@add_money_to_wallet')->name('add_money_to_wallet');
+         Route::any('stripe-wallet', 'HomeController@stripe_wallet')->name('stripe-wallet');
+         Route::any('add-wallet-amt', 'HomeController@add_wallet_amt')->name('add_wallet_amt');
          Route::post('updatePassword', 'HomeController@updatePassword')->name('coach.updatePassword');
          Route::any('notifications', 'HomeController@parent_notifications')->name('parent_notifications');
 

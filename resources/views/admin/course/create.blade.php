@@ -39,7 +39,6 @@
                 @endphp
                   
                   {{textbox($errors,'Title*','title')}}
-                  {{textbox($errors,'Term*','term')}}
                   {{textarea($errors,'Description*','description')}}
 
                   <div class="form-group">
@@ -98,6 +97,8 @@
                       @endforeach
                     </select>
                   </div>
+
+                  {{textbox($errors,'Coach Cost','coach_cost')}}
 
                   <table class="add_on_services">
                     <thead>

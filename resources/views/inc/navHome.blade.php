@@ -33,34 +33,50 @@
                   <div class="menu-title-wrap">
                     <a href="javascript:void(0);">menu</a>
                   </div>
+
                   <ul class="navbar-nav mr-auto">
-                    <li><a href="{{url('/')}}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a></li>
-                    <li><a href="javascript:void(0);" class="nav-link">About Us</a></li>
-                    <li><a href="{{url('/shop')}}" class="nav-link"> Shop</a></li>
-                    <!-- <li><a href="{{route('listing')}}" id="course_listing" class="nav-link {{ request()->is('course-listing') ? 'active' : '' }}">Courses</a></li> -->
 
-                    
 
-                      <!-- <a class="nav-link dropdown-toggle" href="{{route('listing')}}" >
-                       Courses
-                      </a> -->
+                    @php 
+                      $menus = DB::table('menus')->where('sub_menu',NULL)->where('type','header')->orderBy('sort','asc')->get();  
+                      $current_url = \Request::url(); 
+                    @endphp
+
+                    @foreach($menus as $me)
+
+                    @if(!empty($me->url))
+                      <li><a href="{{$me->url}}" class="nav-link @if($me->url == url()->current()) active @endif">{{$me->title}}</a></li>
+                    @endif
+
+                    @if(empty($me->url))
+
+                    @php
+                      $linked_submenu = DB::table('menus')->where('sub_menu',$me->id)->get();   
+                    @endphp
+
+                    @if(count($linked_submenu)>0)
                       <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="javascript:void(0);"id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                       Our Services <span ><i class="fas fa-caret-down"></i></span> </a>
-                      
-                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{url('tennis-landing')}}">Tennis Coaching</a>
-                        <a class="dropdown-item" href="{{url('football-landing')}}">Football Coaching</a>
-                        <a class="dropdown-item" href="{{url('school-landing')}}">School Clubs</a>
-                        <a class="dropdown-item" href="{{route('camp-listing')}}">Holiday Camps</a>
-                        <a class="dropdown-item" href="{{url('tennis-pro')}}">DRH Tennis Pro</a>
+                        <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                         {{$me->title}}<span >&nbsp;<i class="fas fa-caret-down"></i></span> </a>
+                        
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          @foreach($linked_submenu as $sub_me)
+                            <a class="dropdown-item" href="{{$sub_me->url}}">{{$sub_me->title}}</a>
+                          @endforeach
+                        </div>
+                      </li>
+                    @else
+                      <li><a href="javascript::void(0);" class="nav-link @if($me->url == url()->current()) active @endif">{{$me->title}}</a></li>
+                    @endif
 
-                      </div>
-                    </li>
+                    @endif
 
-                    <li><a href="javascript:void(0);" class="nav-link">FAQs</a></li>
-                    <li><a href="{{route('contact-us')}}" class="nav-link {{ request()->is('contact') ? 'active' : '' }}">Contact Us</a></li>
+                    @endforeach
+
+
                   </ul>
+
+
                   <ul class="serch-login-signup">
                     <li>
                         <div class="search-icon">

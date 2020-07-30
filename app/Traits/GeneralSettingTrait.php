@@ -672,6 +672,10 @@ trait GeneralSettingTrait {
 
                        // Copyright Section
                        'copyright_section' => getAllValueWithMeta('copyright_section', $slug),
+                       'google_analytics' => getAllValueWithMeta('google_analytics', $slug),
+
+                       // Mailchimp API Key
+                       'mailchimp_api_key' => getAllValueWithMeta('mailchimp_api_key', $slug),
           ];
 		 	case 'global-settings': 
           return [

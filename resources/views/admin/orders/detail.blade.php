@@ -188,7 +188,7 @@
                         </div> 
 
                     </div>
-                                               
+                                             
         @include('admin.error_message')
 
 
@@ -264,6 +264,27 @@
                                               <th>Payment Method</th><td><strong></strong>{{$order->payment_by}}</td>
                                             </tr>
 
+                                            @if(!empty($order->transaction_details))
+                                              <tr>
+                                                <th scope="row">Payment details : </th>
+                                                <td> 
+                                                  @php 
+                                                    $transaction_details = explode(',',$order->transaction_details); 
+                                                    $tr_data = [];
+                                                  @endphp
+                                                  @foreach($transaction_details as $tr)
+                                                    @php 
+                                                      $tr1 = explode('- ',$tr); 
+                                                      $tr0 = $tr1[0];
+                                                      $tr1 = '&pound;'.$tr1[1]; 
+                                                      $tr_data[] = $tr0.'- '.$tr1;
+                                                    @endphp
+                                                  @endforeach
+                                                  @php echo implode(',', $tr_data); @endphp
+                                                </td>
+                                              </tr>
+                                            @endif
+
                                             @if(!empty($order->provider_id))
                                             @php 
                                               $provider = DB::table('childcare_vouchers')->where('id',$order->provider_id)->first();
@@ -306,7 +327,6 @@
 <!-- User Details - End Here -->
 
 <!-- Shipping/Billing Address - Start Here -->
-
 <?php 
   $shop_type = array(); 
   foreach($cart_items as $sh){
@@ -328,45 +348,42 @@ if (in_array('product', $shop_type, TRUE)){ ?>
                                   <div class="text-center cst_heading">
                                   <h3>Shipping Address</h3>
                                 </div> 
+
+                                
                                 @php 
                                   $shipping_add = json_decode($order->shipping_address); 
                                 @endphp
                                   <table class="cart-table margin-top-5">
-                                     
-                                     
+
                                     <tbody>
                                       <tr>
-                                          <th>Name</th><td><strong>{{$shipping_add->name}}</strong></td>
+                                          <th>Name</th><td><strong>{{isset($shipping_add->name) ? $shipping_add->name : ''}}</strong></td>
                                       </tr>
 
                                       <tr>
-                                          <th>Email</th><td><strong>{{$shipping_add->email}}</strong></td>
+                                          <th>Email</th><td><strong>{{isset($shipping_add->email) ? $shipping_add->email : ''}}</strong></td>
                                       </tr>
 
                                       <tr>
-                                          <th>Phone Number</th><td><strong>{{$shipping_add->phone_number}}</strong></td>
+                                          <th>Phone Number</th><td><strong>{{isset($shipping_add->phone_number) ? $shipping_add->phone_number : ''}}</strong></td>
                                       </tr>
                                        
                                       <tr>
                                         <th>Address</th>
-                                        <td><strong>{{$shipping_add->address}}, {{$shipping_add->country}}, {{ $shipping_add->state}}, {{ $shipping_add->city}}, Zipcode- {{$shipping_add->zipcode}}</strong></td>
+                                        <td><strong>{{isset($shipping_add->address) ? $shipping_add->address.',' : ''}} {{isset($shipping_add->country) ? $shipping_add->country.',' : ''}} {{isset($shipping_add->state) ? $shipping_add->state.',' : ''}} {{isset($shipping_add->city) ? $shipping_add->city.',' : ''}} {{isset($shipping_add->zipcode) ? 'Zipcode-'.$shipping_add->zipcode : ''}}</strong></td>
                                       </tr>
-                                              
-                                       
-
-                                         
+    
                                   </tbody>
                                 </table>
-                                  
-                                 
+         
+                          </div>
                       </div>
-                   </div>
                      
                   </div>
                 </div>
                </div>
               </div>
-               <div class="col-lg-6">
+              <div class="col-lg-6">
                <div class="total-price-wrap full-invoice">
                   <div id="cartTotals">
                     <div class="total-price-wrap">

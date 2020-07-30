@@ -79,9 +79,9 @@
                                                     @endif
                                                 </a>
 
-                                                <a href="{{url('admin/camp')}}/register/{{$test->id}}" class="dropdown-item">View Register</a>
+                                                <!-- <a href="{{url('admin/camp')}}/register/{{$test->id}}" class="dropdown-item">View Register</a> -->
 
-                                                <!-- <a href="{{url('admin/register-template/camp')}}" class="dropdown-item">View Register</a> -->
+                                                <a href="{{url('admin/register-template/camp')}}/{{$test->id}}" class="dropdown-item">View Register</a>
                                             </div>
                                         </div>
                                     </td>

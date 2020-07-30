@@ -69,10 +69,10 @@
 
                             <div class="col-md-12 det-gender-opt">
 
-                                <input type="radio" id="male" name="gender" value="male">
-                                <label for="male">Male</label><br>
-                                <input type="radio" id="female" name="gender" value="female">
-                                <label for="female">Female</label><br>
+                                <input type="radio" id="male22" name="gender" value="male">
+                                <label for="male22">Male</label><br>
+                                <input type="radio" id="female22" name="gender" value="female">
+                                <label for="female22">Female</label><br>
 
                                 <div id="select_gender"></div>
                                 @if ($errors->has('gender'))
