@@ -117,7 +117,7 @@ class TestController extends Controller
     /*----------------------------------------
     |   Update testcategory content
     |----------------------------------------*/ 
-    public function test_update(Request $request, $slug) {	
+    public function test_update(Request $request, $slug) {	//dd($request->all());
     	$validatedData = $request->validate([
             'title' => ['required', 'string', 'max:20'],
             'description' => ['required', 'string'],
@@ -137,7 +137,9 @@ class TestController extends Controller
     		'description' => $request['description'],
     		'test_cat_id' => $request['test_cat_id'],
             'season'      => $request['season'],
-            'courses'     => $request['course']
+            'courses'     => !empty($request['course']) ? $request['course'] : $request['selected_course']
+
+            
     	]);
     	return redirect()->route('admin.test.list')->with('flash_message', 'Test has been updated successfully!');
     }

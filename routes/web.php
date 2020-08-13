@@ -22,8 +22,8 @@ Route::get('/register/coach','Auth\RegisterController@regsiter_coach')->name('re
 
 Route::any('selectedCat','HomeController@selectedCat')->name('selectedCat');
 
-Route::get('image-crop', 'HomeController@imageCrop');
-Route::post('image-crop', 'HomeController@imageCropPost');
+Route::get('crop-image', 'HomeController@index_crop');
+Route::post('crop-image', ['as'=>'croppie.upload-image','uses'=>'HomeController@imageCrop']);
 
 
 error_reporting(E_ALL);
@@ -83,6 +83,9 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     Route::any('parent-req-status','HomeController@parent_req_status')->name('parent_req_status');
     Route::any('course_booking','HomeController@course_booking')->name('course_booking');
 
+    // Goals Management
+    Route::any('save-goal','HomeController@save_goal')->name('save_goal');
+
     // Player reports in parent dashboard
     Route::get('player-reports','HomeController@player_report_listing')->name('player_report_listing');
     Route::any('player-report/{report_id}','HomeController@player_report_detail')->name('player_report_detail');
@@ -99,6 +102,20 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     // Childcare voucher
     Route::any('save_childcare_voucher','HomeController@save_childcare_voucher')->name('save_childcare_voucher');
     Route::any('save_wallet','HomeController@save_wallet')->name('save_wallet');
+
+    // Coach - Add Competition & match report 
+    Route::any('add_competition','HomeController@add_competition')->name('add_competition');
+    Route::any('edit_competition','HomeController@edit_competition')->name('edit_competition');
+    Route::any('reports/comp/{id}','HomeController@comp_data')->name('comp_data');
+    Route::any('add_match','HomeController@add_match')->name('add_match');
+    Route::any('competitions','HomeController@competition_list')->name('competition_list');
+    Route::any('competitions/{id}','HomeController@matches_under_comp')->name('matches_under_comp');
+    Route::any('competition/{comp_id}/match/{match_id}/stats','HomeController@match_stats')->name('match_stats');
+
+    // Coach - Goals management
+    Route::any('goals/list','HomeController@goal_list')->name('goal_list');
+    Route::any('goal/{goal_type}/{id}/add-comment','HomeController@goal_detail')->name('goal_detail');
+    Route::any('goal/save-comment','HomeController@save_comment_by_coach')->name('save_comment_by_coach');
 });
 
 // Coupon code

@@ -117,7 +117,7 @@
                                         <td>Course</td>                               
                                         <td>
                                           <h5>{{$course->title}}</h5>
-                                          <p>{{$course->term}} | {{$course->day_time}}</p>
+                                          <p>@php echo getSeasonname($course->season); @endphp | {{$course->day_time}}</p>
                                           <p><b>Child</b> :{{$child->name}}</p>
                                         </td>                               
                                         <td>{{isset($cart->discount_code) ? $cart->discount_code : '-'}}

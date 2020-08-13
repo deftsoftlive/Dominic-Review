@@ -177,7 +177,12 @@ class CourseController extends Controller
             'day_time' => ['required', 'string'],
             'more_info' => ['required', 'string'],
             'booking_slot' => ['required', 'numeric', 'max:100'],
-            'price' => ['required', 'numeric', 'min:10', 'max:100']
+            'price' => ['required', 'numeric', 'min:1', 'max:100'],
+            'coach_cost' => ['required', 'numeric', 'min:1', 'max:100'],
+            'venue_cost' => ['required', 'numeric', 'min:1', 'max:100'],
+            'equipment_cost' => ['required', 'numeric', 'min:1', 'max:100'],
+            'other_cost' => ['required', 'numeric', 'min:1', 'max:100'],
+            'tax_cost' => ['required', 'numeric', 'min:1', 'max:100']
         ]);
 
     	$course = Course::create([
@@ -197,6 +202,10 @@ class CourseController extends Controller
             'price' => $request['price'],
             'linked_coach' => $request['linked_coach'],
             'coach_cost' => $request['coach_cost'],
+            'venue_cost' => $request['venue_cost'],
+            'equipment_cost' => $request['equipment_cost'],
+            'other_cost' => $request['other_cost'],
+            'tax_cost' => $request['tax_cost'],
             'early_birth_price' => isset($request['early_birth_price']) ? $request['early_birth_price'] : '',
             'bottom_section' => isset($request['bottom_section']) ? $request['bottom_section'] : '',
     	]);
@@ -267,7 +276,12 @@ class CourseController extends Controller
             'day_time' => ['required', 'string'],
             'more_info' => ['required', 'string'],
             'booking_slot' => ['required', 'numeric', 'max:100'],
-            'price' => ['required', 'numeric', 'min:10', 'max:100']
+            'price' => ['required', 'numeric', 'min:1', 'max:100'],
+            'coach_cost' => ['required', 'numeric', 'min:1', 'max:100'],
+            'venue_cost' => ['required', 'numeric', 'min:1', 'max:100'],
+            'equipment_cost' => ['required', 'numeric', 'min:1', 'max:100'],
+            'other_cost' => ['required', 'numeric', 'min:1', 'max:100'],
+            'tax_cost' => ['required', 'numeric', 'min:1', 'max:100']
         ]);
 
     	$venue = Course::FindBySlugOrFail($slug);
@@ -288,6 +302,10 @@ class CourseController extends Controller
             'price' => $request['price'],
             'linked_coach' => $request['linked_coach'],
             'coach_cost' => $request['coach_cost'],
+            'venue_cost' => $request['venue_cost'],
+            'equipment_cost' => $request['equipment_cost'],
+            'other_cost' => $request['other_cost'],
+            'tax_cost' => $request['tax_cost'],
             'early_birth_price' => isset($request['early_birth_price']) ? $request['early_birth_price'] : '',
             'bottom_section' => isset($request['bottom_section']) ? $request['bottom_section'] : '',
     	]);

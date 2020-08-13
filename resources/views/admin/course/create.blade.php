@@ -100,6 +100,11 @@
 
                   {{textbox($errors,'Coach Cost','coach_cost')}}
 
+                  {{textbox($errors,'Court/Venue Cost','venue_cost')}}
+                  {{textbox($errors,'Equipment Cost','equipment_cost')}}
+                  {{textbox($errors,'Other Cost','other_cost')}}
+                  {{textbox($errors,'Tax/Vat Cost','tax_cost')}}
+
                   <table class="add_on_services">
                     <thead>
                       <tr>

@@ -43,6 +43,11 @@
         margin: 0 30px 0 7px;
     }
 
+    #save_goal {
+        margin-right: 15px;
+    }
+
+
     .request-actions .cstm-btn {
         font-size: 12px;
     }
@@ -55,9 +60,9 @@
     form.reject_req {
         margin-top: 0;
     }
-    .child-voc
-    {
-        padding-right:0!important;
+
+    .child-voc {
+        padding-right: 0 !important;
     }
 
     form.register-form .option_row .form-group.row .form-radios {
@@ -280,6 +285,10 @@
     .leader-board-table th:first-child(2) div#filters-sidebar .filters-sidebar>a,
     main.products-layout-wrap .product-listing-wrap .products-head {
         display: none;
+    }
+
+    .account-menu nav li+li {
+        margin-left: 3px;
     }
 
     div#filters-sidebar .filters-sidebar {
@@ -727,11 +736,16 @@
     }
 
     .menu-title {
-        margin-bottom: 10px;
+        margin-bottom: 0px;
     }
 
+    .account-menu nav a {
+        padding: 5px 4px;
+    }
+
+
     .account-menu nav li+li {
-        margin-left: 5px;
+        margin-left: 1px;
     }
 
     .account-menu nav a {
@@ -916,6 +930,18 @@
         order: 1;
     }
 
+    .report-sec ul#myTab li {
+
+        margin-bottom: 15px;
+    }
+
+    .goal-filter .form-group {
+        margin-bottom: 20px!important;
+        justify-content: center!important;
+        margin-right: 0!important;
+    }
+
+
     .acc_sub_menu .dropdown-menu.show {
         position: relative !important;
         top: 8px !important;
@@ -923,10 +949,25 @@
         float: unset !important;
         transform: unset !important;
     }
+
+    .account-menu nav a,
+    .account-menu ul li.nav-item.dropdown a {
+        padding: 5px 10px !important;
+    }
+
+    .account-menu ul li.nav-item.dropdown {
+        line-height: 14px;
+        display: flex;
+    }
+
+    .account-menu ul li.nav-item.dropdown .dropdown-menu.show {
+        top: 5px !important;
+    }
+
     .report-tab-sec .form-wrap {
-    
-    padding: 15px 0;
-}
+
+        padding: 15px 0;
+    }
 
     .leader-board-table th {
 
@@ -935,12 +976,17 @@
         text-align: center;
 
     }
-    .child-voc .form-check.child_check_wrap
-    {
-        padding-left:10px;
+
+    .account-menu ul li.nav-item.dropdown a {
+
+        padding: 5px 4px;
     }
-    .child-voc label#accept-error
-    {
+
+    .child-voc .form-check.child_check_wrap {
+        padding-left: 10px;
+    }
+
+    .child-voc label#accept-error {
         left: 10px;
     }
 
@@ -1693,6 +1739,8 @@
         width: 33%;
 
     }
+
+
 
     .click-sec-content .click-sec-tagline {
         font-size: 24px;

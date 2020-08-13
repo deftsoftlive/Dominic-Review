@@ -8,6 +8,7 @@ use App\ReportQuestion;
 use App\ReportQuestionOption;
 use App\PlayerReport;
 use App\User;
+use App\Competition;
 
 class ReportQuestionController extends Controller
 {
@@ -297,6 +298,22 @@ class ReportQuestionController extends Controller
     public function player_reports_detail($id){
         $report = PlayerReport::where('id',$id)->orderBy('id','asc')->first();
         return view('admin.player-report.player-report-detail')->with('report',$report);
-    } 
+    }
+
+    /*-------------------------------------------------
+    |   Match Reports - Competition Records
+    |-------------------------------------------------*/
+    public function comp_list(){
+        $competitions = Competition::orderBy('id','desc')->paginate(10);
+        return view('admin.player-report.match-report.competition')->with('competitions',$competitions);
+    }  
+
+    /*-------------------------------------------------
+    |    Match Reports - Competition Details
+    |--------------------------------------------------*/
+    public function comp_detail($id){
+        $competition = Competition::where('id',$id)->first();
+        return view('admin.player-report.match-report.match')->with('competition',$competition);
+    }
 
 }

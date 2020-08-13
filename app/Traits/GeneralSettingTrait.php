@@ -637,6 +637,7 @@ trait GeneralSettingTrait {
                        // Child care popup
                        'report1_content' => getAllValueWithMeta('report1_content', $slug),
                        'report2_content' => getAllValueWithMeta('report2_content', $slug),
+                       'report3_content' => getAllValueWithMeta('report3_content', $slug),
                        'report_detail' => getAllValueWithMeta('report_detail', $slug),
           ];
         case 'child-care-popup': 
@@ -676,6 +677,9 @@ trait GeneralSettingTrait {
 
                        // Mailchimp API Key
                        'mailchimp_api_key' => getAllValueWithMeta('mailchimp_api_key', $slug),
+
+                       // Thanku Page Text - Childcare voucher
+                       'thanku_page_text' => getAllValueWithMeta('thanku_page_text', $slug),
           ];
 		 	case 'global-settings': 
           return [

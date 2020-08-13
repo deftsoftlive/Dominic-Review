@@ -79,21 +79,29 @@
 
                   {{textbox($errors,'Price<span class="cst-upper-star">*</span>','price', $venue->price)}}
                   {!! textarea($errors,'Bottom Section<span class="cst-upper-star">*</span>','bottom_section', $venue->bottom_section) !!}
-                  <!-- {{textbox($errors,'Early Birth Price<span class="cst-upper-star">*</span>','early_birth_price', $venue->early_birth_price)}} -->
+
+                  <label>Linked Coach</label>
+                  <input type="text" disabled="" class="form-control" value="@php echo getUserName($venue->linked_coach); @endphp">
+                  <br/>
                   <div class="form-group">
-                    <label class="label-file control-label">Linked Coach</label>
+                    <label class="label-file control-label">Change Linked Coach</label>
                       <select name="linked_coach" class="select-player">
                         <option selected="" disabled="">Select Coach</option>
                         @php 
                           $coach = DB::table('users')->where('role_id',3)->get(); 
                         @endphp
                         @foreach($coach as $co)
-                        <option value="{{$co->id}}" @if($co->id = $venue->linked_coach) selected @endif >{{$co->name}}</option>
+                        <option value="{{$co->id}}">{{$co->name}}</option>
                         @endforeach
                       </select>
                   </div>
 
                   {{textbox($errors,'Coach Cost','coach_cost', $venue->coach_cost)}}
+                  
+                  {{textbox($errors,'Court/Venue Cost','venue_cost', $venue->venue_cost)}}
+                  {{textbox($errors,'Equipment Cost','equipment_cost', $venue->equipment_cost)}}
+                  {{textbox($errors,'Other Cost','other_cost', $venue->other_cost)}}
+                  {{textbox($errors,'Tax/Vat Cost','tax_cost', $venue->tax_cost)}}
 
                   <div class="form-group">
                         <label class="control-label" for="timelsots">Dates of course</label>

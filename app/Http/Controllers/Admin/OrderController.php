@@ -13,8 +13,179 @@ class OrderController extends Controller
     
     public function index(Request $request)
     {
-        $orders = Shoporder::orderBy('id','desc')->paginate(10);
-    	return view('admin.orders.index',compact('orders'));
+        if(request()->get('u_name'))
+        {
+            $user_name = request()->get('u_name'); 
+        }else{
+            $user_name = '';
+        }
+         
+        if(request()->get('u_email'))
+        {
+            $user_email = request()->get('u_email');
+        }else{
+            $user_email = '';
+        }
+        
+        if(request()->get('start_date')) 
+        {   
+            $start_date = request()->get('start_date').' 00:00:00'; 
+        }
+        else{
+            $start_date = '';
+        }
+
+        if(request()->get('end_date')) 
+        {
+            $end_date = request()->get('end_date').' 00:00:00';
+        }
+        else{
+            $end_date = '';
+        }     
+
+        // dd($user_name,$user_email,$start_date,$end_date);
+        if(!empty($user_name) && !empty($user_email) && empty($start_date) && empty($end_date))
+        {
+            $orders = \DB::table('shop_orders')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email')
+                    ->where('users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->where('users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->paginate(10); 
+
+        }
+        elseif(!empty($user_name) && !empty($user_email) && !empty($start_date) && empty($end_date))
+        {
+            $orders = \DB::table('shop_orders')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email')
+                    ->where('users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->where('users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->where('shop_orders.created_at','>',$start_date)
+                    ->paginate(10); 
+        }
+        elseif(empty($user_name) && empty($user_email) && !empty($start_date) && empty($end_date))
+        {
+            $orders = \DB::table('shop_orders')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email')
+                    ->where('shop_orders.created_at','>',$start_date)
+                    ->paginate(10); 
+        }
+        elseif(empty($user_name) && empty($user_email) && empty($start_date) && !empty($end_date))
+        {
+            $orders = \DB::table('shop_orders')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email')
+                    ->where('shop_orders.created_at','<',$end_date)
+                    ->paginate(10); 
+        }
+        elseif(!empty($user_name) && !empty($user_email) && empty($start_date) && !empty($end_date))
+        {
+            $orders = \DB::table('shop_orders')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email')
+                    ->where('users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->where('users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->where('shop_orders.created_at','<',$end_date)
+                    ->paginate(10); 
+        }
+        elseif(!empty($user_name) && !empty($user_email) && !empty($start_date) && !empty($end_date))
+        {
+            $orders = \DB::table('shop_orders')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email')
+                    ->where('users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->where('users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->where('shop_orders.created_at','>',$start_date)
+                    ->where('shop_orders.created_at','<',$end_date)
+                    ->paginate(10); 
+        }
+        elseif(!empty($user_name) && empty($user_email) && empty($start_date) && empty($end_date))
+        {
+            $orders = \DB::table('shop_orders')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name')
+                    ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->paginate(10); 
+        }
+        elseif(!empty($user_name) && empty($user_email) && !empty($start_date) && empty($end_date))
+        {
+            $orders = \DB::table('shop_orders')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name')
+                    ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->where('shop_orders.created_at','>',$start_date)
+                    ->paginate(10); 
+        }
+        elseif(!empty($user_name) && empty($user_email) && empty($start_date) && !empty($end_date))
+        {
+            $orders = \DB::table('shop_orders')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name')
+                    ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->where('shop_orders.created_at','<',$end_date)
+                    ->paginate(10); 
+        }
+        elseif(!empty($user_name) && empty($user_email) && !empty($start_date) && !empty($end_date))
+        {
+            $orders = \DB::table('shop_orders')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name')
+                    ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->where('shop_orders.created_at','>',$start_date)
+                    ->where('shop_orders.created_at','<',$end_date)
+                    ->paginate(10); 
+        }
+        elseif(empty($user_name) && empty($user_email) && !empty($start_date) && !empty($end_date))
+        {
+            $orders = \DB::table('shop_orders')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name')
+                    ->where('shop_orders.created_at','>',$start_date)
+                    ->where('shop_orders.created_at','<',$end_date)
+                    ->paginate(10); 
+        }
+        elseif(empty($user_name) && !empty($user_email) && empty($start_date) && empty($end_date))
+        {
+            $orders = \DB::table('shop_orders')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.email')
+                    ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->paginate(10); 
+        }
+        elseif(empty($user_name) && !empty($user_email) && !empty($start_date) && empty($end_date))
+        {
+            $orders = \DB::table('shop_orders')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.email')
+                    ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->where('shop_orders.created_at','>',$start_date)
+                    ->paginate(10); 
+        }
+        elseif(empty($user_name) && !empty($user_email) && empty($start_date) && !empty($end_date))
+        {
+            $orders = \DB::table('shop_orders')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.email')
+                    ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->where('shop_orders.created_at','<',$end_date)
+                    ->paginate(10); 
+        }
+        elseif(empty($user_name) && !empty($user_email) && !empty($start_date) && !empty($end_date))
+        {
+            $orders = \DB::table('shop_orders')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.email')
+                    ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->where('shop_orders.created_at','>',$start_date)
+                    ->where('shop_orders.created_at','<',$end_date)
+                    ->paginate(10); 
+        }elseif(empty($user_name) && empty($user_email) && empty($start_date) && empty($end_date)){
+           $orders = Shoporder::orderBy('id','desc')->paginate(10); 
+        }
+        
+    	return view('admin.orders.index',compact('orders','user_name','user_email','start_date','end_date'));
     }
 
     /*-----------------------------------------------
@@ -24,6 +195,230 @@ class OrderController extends Controller
     {
     	$orders =Shoporder::find($id);
     	return view('admin.orders.detail')->with('order',$orders);
+    }
+
+    /*-----------------------------------------------
+    |   Download Orders
+    |------------------------------------------------*/
+    public function download_orders()
+    { 
+        $user_name = request()->get('download_name');
+        $user_email = request()->get('download_email');
+        $start_date = request()->get('download_sd');
+        $end_name = request()->get('download_ed');
+
+        $fileName = 'orders.csv';
+
+
+        if(!empty($user_name) && !empty($user_email) && empty($start_date) && empty($end_date))
+        {
+            $tasks = \DB::table('shop_orders')
+                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->where('users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->where('users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->get(); 
+
+        }
+        elseif(!empty($user_name) && !empty($user_email) && !empty($start_date) && empty($end_date))
+        {
+            $tasks = \DB::table('shop_orders')
+                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->where('users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->where('users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->where('shop_orders.created_at','>',$start_date)
+                    ->get(); 
+        }
+        elseif(empty($user_name) && empty($user_email) && !empty($start_date) && empty($end_date))
+        {
+            $tasks = \DB::table('shop_orders')
+                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->where('shop_orders.created_at','>',$start_date)
+                    ->get(); 
+        }
+        elseif(empty($user_name) && empty($user_email) && empty($start_date) && !empty($end_date))
+        {
+            $tasks = \DB::table('shop_orders')
+                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->where('shop_orders.created_at','<',$end_date)
+                    ->get(); 
+        }
+        elseif(!empty($user_name) && !empty($user_email) && empty($start_date) && !empty($end_date))
+        {
+            $tasks = \DB::table('shop_orders')
+                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->where('users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->where('users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->where('shop_orders.created_at','<',$end_date)
+                    ->get(); 
+        }
+        elseif(!empty($user_name) && !empty($user_email) && !empty($start_date) && !empty($end_date))
+        {
+            $tasks = \DB::table('shop_orders')
+                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->where('users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->where('users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->where('shop_orders.created_at','>',$start_date)
+                    ->where('shop_orders.created_at','<',$end_date)
+                    ->get(); 
+        }
+        elseif(!empty($user_name) && empty($user_email) && empty($start_date) && empty($end_date))
+        {
+            $tasks = \DB::table('shop_orders')
+                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->get(); 
+        }
+        elseif(!empty($user_name) && empty($user_email) && !empty($start_date) && empty($end_date))
+        {
+            $tasks = \DB::table('shop_orders')
+                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->where('shop_orders.created_at','>',$start_date)
+                    ->get(); 
+        }
+        elseif(!empty($user_name) && empty($user_email) && empty($start_date) && !empty($end_date))
+        {
+            $tasks = \DB::table('shop_orders')
+                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->where('shop_orders.created_at','<',$end_date)
+                    ->get(); 
+        }
+        elseif(!empty($user_name) && empty($user_email) && !empty($start_date) && !empty($end_date))
+        {
+            $tasks = \DB::table('shop_orders')
+                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->where('shop_orders.created_at','>',$start_date)
+                    ->where('shop_orders.created_at','<',$end_date)
+                    ->get(); 
+        }
+        elseif(empty($user_name) && empty($user_email) && !empty($start_date) && !empty($end_date))
+        {
+            $tasks = \DB::table('shop_orders')
+                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->where('shop_orders.created_at','>',$start_date)
+                    ->where('shop_orders.created_at','<',$end_date)
+                    ->get(); 
+        }
+        elseif(empty($user_name) && !empty($user_email) && empty($start_date) && empty($end_date))
+        {
+            $tasks = \DB::table('shop_orders')
+                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->get(); 
+        }
+        elseif(empty($user_name) && !empty($user_email) && !empty($start_date) && empty($end_date))
+        {
+            $tasks = \DB::table('shop_orders')
+                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->where('shop_orders.created_at','>',$start_date)
+                    ->get(); 
+        }
+        elseif(empty($user_name) && !empty($user_email) && empty($start_date) && !empty($end_date))
+        {
+            $tasks = \DB::table('shop_orders')
+                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->where('shop_orders.created_at','<',$end_date)
+                    ->get(); 
+        }
+        elseif(empty($user_name) && !empty($user_email) && !empty($start_date) && !empty($end_date))
+        {
+            $tasks = \DB::table('shop_orders')
+                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->where('shop_orders.created_at','>',$start_date)
+                    ->where('shop_orders.created_at','<',$end_date)
+                    ->get(); 
+        }
+        elseif(empty($user_name) && empty($user_email) && empty($start_date) && empty($end_date))
+        {
+           $tasks = \DB::table('shop_orders')
+                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->get();
+        }
+
+            $headers = array(
+                "Content-type"        => "text/csv",
+                "Content-Disposition" => "attachment; filename=$fileName",
+                "Pragma"              => "no-cache",
+                "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+                "Expires"             => "0"
+            );
+
+            $columns = array('Date', 'Order ID', 'Order Type', 'User Name', 'User Email', 'Amount', 'Payment By', 'Transaction Details', 'Provider ID');
+
+            $callback = function() use($tasks, $columns) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+
+
+                foreach ($tasks as $task) {
+
+                    if(!empty($task->provider_id)){
+                        $provider = \DB::table('childcare_vouchers')->where('id',$task->provider_id)->first();
+                    }
+
+                    // if($task->shop_type == 'course')
+                    // {
+                    //     $course = DB::table('courses')->where('id',$task->product_id)->first(); 
+                    //     $course_type = $task->shop_type .' - '. getProductCatname($course->type);
+                    // }else{
+                    //     $course_type = $task->shop_type;
+                    // }
+
+
+                    $row['Date']       = $task->created_at;
+                    $row['Order ID']   = $task->orderID;
+                    $row['Order Type'] = getShopType($task->orderID);
+                    $row['User Name']  = $task->name;
+                    $row['User Email'] = $task->email;
+                    $row['Amount']     = $task->amount;
+                    $row['Payment By'] = $task->payment_by;
+                    $row['Transaction Details']  = isset($task->transaction_details) ? $task->transaction_details : '-';
+                    $row['Provider ID']  = isset($task->provider_id) ? $provider->provider_name : '-';
+
+                    fputcsv($file, array($row['Date'], $row['Order ID'], $row['Order Type'], $row['User Name'], $row['User Email'], $row['Amount'], $row['Payment By'], $row['Transaction Details'], $row['Provider ID']));
+                }
+
+                fclose($file);
+            };
+
+        return response()->stream($callback, 200, $headers);
     }
 
     /*-----------------------------------------------

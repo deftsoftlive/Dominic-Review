@@ -106,11 +106,11 @@
                         $child_details = DB::table('children_details')->where('id',$sh->child_id)->first(); 
                     @endphp
                         <tr>
-                            <td class="@if($player->gender == 'male') odd-name-row @elseif($player->gender == 'female') even-name-row @endif">{{$player->name}}</td>
-                            <td>{{$player->date_of_birth}}</td>
+                            <td class="@if($player->gender == 'male') odd-name-row @elseif($player->gender == 'female') even-name-row @endif">{{isset($player->name) ? $player->name : ''}}</td>
+                            <td>{{isset($player->date_of_birth) ? $player->date_of_birth : ''}}</td>
                             <td>@if($child_details['med_cond'] == 'confirm_accurate_no') N @else Y @endif</td>
-                            <td>{{$parent->name}}</td>                      
-                            <td>{{$parent->phone_number}}</td>                        
+                            <td>{{isset($parent->name) ? $parent->name : ''}}</td>                      
+                            <td>{{isset($parent->phone_number) ? $parent->phone_number : ''}}</td>                        
                             <td></td>
                             <td></td>
                             <td></td>
@@ -121,7 +121,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td>{{$parent->email}}</td>                        
+                            <td>{{isset($parent->email) ? $parent->email : ''}}</td>                        
                         </tr>
                     @endforeach
                 @endif

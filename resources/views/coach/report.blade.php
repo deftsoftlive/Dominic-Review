@@ -1,11 +1,11 @@
 @extends('inc.homelayout')
 @section('title', 'DRH|Register')
 @section('content')
-@php
+@php 
 $country_code = DB::table('country_code')->get();
 $notification = DB::table('parent_coach_reqs')->where('coach_id',Auth::user()->id)->where('status',NULL)->count();
 $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->first(); 
-@endphp
+@endphp 
 <style>
 input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
     background: white;
@@ -19,7 +19,14 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
         </div>
         <nav>
             <ul>
-                @include('inc.coach-menu')
+            @php
+            $user_role = \Auth::user()->role_id;
+            @endphp
+            @if($user_role == '2')
+            @include('inc.parent-menu')
+            @elseif($user_role == 3)
+            @include('inc.coach-menu')
+            @endif
             </ul>
         </nav>
     </div>
@@ -39,6 +46,8 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
     <div class="container">
         <div class="inner-cont">
             <ul class="nav nav-tabs report-tab" id="myTab" role="tablist">
+
+                @if(Auth::user()->role_id == '3')
                 <li class="nav-item">
                     <a class="nav-link cstm-btn active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">End of term report</a>
                 </li>
@@ -48,13 +57,18 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                 <li class="nav-item">
                     <a class="nav-link cstm-btn" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Match Report</a>
                 </li>
+                @else
+                <li class="nav-item">
+                    <a class="nav-link cstm-btn" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Match Report</a>
+                </li>
+                @endif
             </ul>
             <div class="tab-content" id="myTabContent">
                 <!-- Report - 1 (Start Here)-->
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-pane fade @if(Auth::user()->role_id == '3') show active @endif" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="upper-form report-tab-sec report-tab-one">
                         <p class="sub-head">Player Report</p>
-                        <form id="simple_report_filter" action="{{route('coach_report')}}" method="POST">
+                        <form id="simple_report_filter" action="{{route('coach_report')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-3">
@@ -81,24 +95,18 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                                     <option selected="" disabled="">Select Course</option>
                                                 </select>
                                                 @endif
-                                                <!--   @php 
-                                                $course = DB::table('courses')->where('linked_coach',Auth::user()->id)->orderBy('id','asc')->get();
-                                            @endphp
-                                            @foreach($course as $se) 
-                                              <option value="{{$se->id}}" @if(!empty($player_report) && $player_report->course_id == $se->id) selected @endif >{{$se->title}}</option>
-                                            @endforeach -->
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <h6>Select Player :<h6>
-                                                @if(!empty($user_id))
-                                                <input type="text" disabled="" name="" class="form-control" value="@php echo getUsername($user_id); @endphp">
-                                                @else
-                                                <select id="player_ID" name="player_id" class="player_data_ID form-control">
-                                                    <option selected="" disabled="">Select Player</option>
-                                                </select>
-                                                @endif
+                                            @if(!empty($user_id))
+                                            <input type="text" disabled="" name="" class="form-control" value="@php echo getUsername($user_id); @endphp">
+                                            @else
+                                            <select id="player_ID" name="player_id" class="player_data_ID form-control">
+                                                <option selected="" disabled="">Select Player</option>
+                                            </select>
+                                            @endif
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -113,7 +121,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                             </div>
                         </div>
                         <br />
-                        <form id="simple_report" action="{{route('save_simple_report')}}" method="POST">
+                        <form id="simple_report" action="{{route('save_simple_report')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="sim_report_id" value="{{isset($player_report->id) ? $player_report->id : ''}}">
                             <input type="hidden" name="type" value="simple">
@@ -130,22 +138,24 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                 @foreach($report_questions as $ques)
                                 @php
                                     $options = DB::table('report_question_options')->where('report_question_id',$ques->id)->get();
-                                    $player_rp = DB::table('player_reports')->where('player_id',$user_id)->where('season_id',$season_id)->where('course_id',$course_id)->first();  
+                                    $player_rp = DB::table('player_reports')->where('player_id',$user_id)->where('season_id',$season_id)->where('course_id',$course_id)->first();
                                 @endphp
 
                                 @if($player_rp)
 
                                 @php 
                                     $selected_options = json_decode($player_rp->selected_options);
-                                    $cat_option=[];
+                                    $cat_option=[]; 
                                 @endphp
 
+                                @if(!empty($selected_options))
                                 @foreach($selected_options as $opt)
                                 @php 
                                     $sel_data = explode('-',$opt);
                                     $cat_option[] =  $sel_data[0].'-'.$sel_data[1];
                                 @endphp
                                 @endforeach
+                                @endif
 
                                     <div class="col-md-6">
                                     <div class="inner-form-box">
@@ -337,7 +347,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="upper-form report-tab-sec">
                         <p class="sub-head">End of Term Report</p>
-                        <form id="complex_report_filter" action="{{route('coach_report')}}" method="POST">
+                        <form id="complex_report_filter" action="{{route('coach_report')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-sm-4">
@@ -368,7 +378,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                             </div>
                         </form>
                         <!-- Complex Report -->
-                        <form id="complex_report" action="{{route('save_complex_report')}}" method="POST">
+                        <form id="complex_report" action="{{route('save_complex_report')}}" method="POST" enctype="multipart/form-data">
                         <!-- <form method="POST"> -->
                             @csrf
                             <input type="hidden" name="report_id" value="{{ isset($player_rep->id) ? $player_rep->id : '' }}">
@@ -449,20 +459,9 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                 <!-- Report - 2 (End Here)-->
 
                 <!-- Match Report (Start Here)-->
-                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                <div class="tab-pane fade @if(Auth::user()->role_id == '2') show active @endif" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                     <div class="content-wrap">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                            tempor incidt in voluptate velit esse
-                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                            tempor incididunt uupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        {!! getAllValueWithMeta('report3_content', 'report') !!}
                     </div>
                     <div class="form-head">
                         <div class="pink-heading">
@@ -471,13 +470,15 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                         <form>
                             <p>Who is this report for?</p>
                             <div class="form-group">
-                                <select>
+                                <select id="child_id">
                                     <option disabled="" selected="">Select Player</option>
-                                    <option>1</option>
-                                    <option>1</option>
-                                    <option>1</option>
-                                    <option>1</option>
-                                    <option>1</option>
+                                    @php 
+                                        $players = DB::table('parent_coach_reqs')->where('status',1)->orderBy('id','asc')->get();
+                                    @endphp
+                                    @foreach($players as $bd)
+                                        @php $user = DB::table('users')->where('id',$bd->child_id)->first(); @endphp
+                                        <option value="{{$bd->child_id}}" @if(!empty($player_rep)) @if($player_rep->player_id == $bd->child_id) selected @endif @endif>{{$user->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </form>
@@ -485,100 +486,85 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                     <div class="outer-wrap">
                         <div class="upper-form">
                             <p class="sub-head">Competition Creation</p>
-                            <form>
+                            <form action="{{route('add_competition')}}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="player_id" id="match_player_id" value="@if(!empty($comp->player_id)){{isset($comp->player_id) ? $comp->player_id : ''}}@endif">
+                                <input type="hidden" name="comp_id" value="@if(!empty($comp->id)){{isset($comp->id) ? $comp->id : ''}}@endif">
+                                <input type="hidden" name="coach_id" value="{{Auth::user()->id}}">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <select>
+                                            <select name="comp_type">
                                                 <option selected="" disabled="">Competition Type</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                                <option>1</option>
+                                                <option value="Tournament">Tournament</option>
+                                                <option value="Match play">Match play</option>
+                                                <option value="Club Event">Club Event</option>
+                                                <option value="Social Match">Social Match</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="date" placeholder="Competition Date" class="form-control">
+                                            <input type="date" name="comp_date" value="" placeholder="Competition Date" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" placeholder="Competition Venue" class="form-control" placeholder="aacabcabc">
+                                            <input type="text" name="comp_venue" placeholder="Competition Venue" value="" class="form-control" placeholder="Competition Venue">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <input type="text" placeholder="Competition Name" class="form-control" placeholder="aacabcabc">
+                                            <input type="text" name="comp_name" placeholder="Competition Name" class="form-control" placeholder="Competition Name" value="">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <button type="button" class="cstm-btn">submit</button>
+                                            <button type="submit" class="cstm-btn">submit</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="match-form-wrap">
-                            <p>Competition Match</p>
-                            <form>
+                            <p class="sub-head">Competition Match</p>
+                            <form action="{{route('add_match')}}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="player_id" id="match_player_id" value="@if(!empty($comp->player_id)){{isset($comp->player_id) ? $comp->player_id : ''}}@endif">
+                                <input type="hidden" name="comp_id" value="@if(!empty($comp->id)){{isset($comp->id) ? $comp->id : ''}}@endif">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" placeholder="Match Title" class="form-control" placeholder="aacabcabc">
+                                            <input type="text" name="match_title" placeholder="Match Title" class="form-control" placeholder="Match Title">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="date" placeholder="Match Start Date" class="form-control">
+                                            <input type="date" name="start_date" placeholder="Match Start Date" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <select>
-                                                <option disabled="" selected="">Match Surface Type</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                            </select>
+                                            <input type="text" name="surface_type" class="form-control" placeholder="Match Surface Type">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <select>
-                                                <option disabled="" selected="">Match Conditions</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                            </select>
+                                            <input type="text" name="condition" class="form-control" placeholder="Match Condition">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <select>
-                                                <option disabled="" selected="">Match Result</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                            </select>
+                                            <input type="text" name="result" class="form-control" placeholder="Match Result">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" placeholder="Score" class="form-control">
+                                            <input type="text" placeholder="Score" name="score" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -587,7 +573,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1">What went well</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                <textarea class="form-control" name="wht_went_well" id="exampleFormControlTextarea1" rows="3"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -595,18 +581,23 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1">What could've been better</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                <textarea class="form-control" name="wht_could_better" id="exampleFormControlTextarea1" rows="3"></textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlTextarea1">Other comments</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        <textarea class="form-control" name="other_comments" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Upload Match Chart</label><br/>
+                                        <input type="file" name="match_chart"></div>
                                     </div>
                                 </div>
+                                <button type="submit" class="cstm-btn">submit</button>
                             </form>
                         </div>
-                        <button type="button" class="cstm-btn">submit</button>
+                        
                     </div>
                 </div>
                 <!-- Match Report (End Here)-->

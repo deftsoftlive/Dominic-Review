@@ -108,7 +108,6 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> -->
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/0.1.12/wow.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.js"></script>
 
     <script src="{{URL::asset('/e-shop/js/animation.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('/e-shop/js/owl.carousel.min.js')}}"></script>
@@ -135,8 +134,27 @@ $(document).ready(function($){
           $('.child-selection-content').css('display','block');
         }
     });
+
+  $("#add_match").click(function(){
+      $('#add_new_match').css('display','block');
+      $('#add_match').css('display','none');
+  });
+
 });
 
+/*------------------------------
+| player Goals
+|-------------------------------*/ 
+$(document).ready(function(){
+  $("select#goal_player").change(function(){
+      var player = $(this).children("option:selected").val();    
+      $('#goal_player_name').val(player);
+  });
+  $("select#goal_type").change(function(){
+      var goal_type = $(this).children("option:selected").val();    
+      $('#pl_goal_type').val(goal_type);
+  });
+}); 
 
 $("#money_amount").change(function(){
 
@@ -238,64 +256,58 @@ $(document).ready(function(){
 });
 </script>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.js"></script>
 <script type="text/javascript">
-
-    $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+$.ajaxSetup({
+headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+}
+});
+var resize = $('#upload-demo').croppie({
+    enableExif: true,
+    enableOrientation: true,    
+    viewport: { // Default { width: 100, height: 100, type: 'square' } 
+        width: 200,
+        height: 200,
+        type: 'circle' //square
+    },
+    boundary: {
+        width: 300,
+        height: 300
     }
-    });
-
-
-    $uploadCrop = $('#upload-demo').croppie({
-        enableExif: true,
-        viewport: {
-            width: 200,
-            height: 200,
-            type: 'circle'
-        },
-        boundary: {
-            width: 300,
-            height: 300
-        }
-    });
-
-
-    $('#upload').on('change', function () { 
-      var reader = new FileReader();
-        reader.onload = function (e) {
-          console.log(e);
-
-          $uploadCrop.croppie('bind', {
-            url: e.target.result
-          }).then(function(){
-            console.log('jQuery bind complete');
-          });
-        }
-        console.log(this.files[0]);
-        reader.readAsDataURL(this.files[0]);
-    });
-
-
-    $('.upload-result').on('click', function (ev) {
-      $uploadCrop.croppie('result', {
-        type: 'canvas',
-        size: 'viewport'
-      }).then(function (resp) { 
-        $.ajax({
-          url: "http://49.249.236.30:8654/dominic-new/image-crop",
-          type: "POST",
-          data: {"image":resp},
-          success: function (data) {
-            html = '<img src="' + resp + '" />';
-            $("#upload-demo-i").html(html);
-          }
-        });
+});
+$('#image_file').on('change', function () { 
+  var reader = new FileReader();
+    reader.onload = function (e) {
+      resize.croppie('bind',{
+        url: e.target.result
+      }).then(function(){
+        console.log('jQuery bind complete');
       });
-    });
-
-
-    </script>
+    }
+    reader.readAsDataURL(this.files[0]);
+});
+$('.upload-image').on('click', function (ev) {
+  resize.croppie('result', {
+    type: 'canvas',
+    size: 'viewport'
+  }).then(function (img) {
+    html = '<img src="' + img + '" />';
+    $("#preview-crop-image").html(html);
+    $("#upload-success").html("Images cropped and uploaded successfully.");
+    $("#upload-success").show();
+    // $.ajax({
+    //   url: "{{route('croppie.upload-image')}}",
+    //   type: "POST",
+    //   data: {"image":img},
+    //   success: function (data) {
+        
+    //   }
+    // });
+  });
+});
+</script>
 
     <!-- Variation Selection -->
     <script>

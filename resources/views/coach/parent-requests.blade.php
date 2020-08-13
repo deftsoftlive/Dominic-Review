@@ -101,31 +101,31 @@
                      <!-- <p>Parent Email: <span class="request-name">{{$par_details->email}}</span></p> -->
                      <!-- <p>Phone Number: <span class="request-name">{{$par_details->phone_number}}</span></p> -->
 
-                     @if($req->status == '0')
-                     	<div class="profile-status">Request Status: <span class="p-s-not-verified"><i class="fas fa-times-circle"></i> Did not accept</span></div>
-                      <br/>
-                      <form action="{{route('undo_reject_request')}}" class="reject_req" method="POST">
-                      @csrf
-                      <input type="hidden" name="id" value="{{$req->id}}">
-                      <button type="submit" class="cstm-btn">Enable Link</button>
-                      </form>
-                     @elseif($req->status == '1')
-                     	<div class="profile-status">Request Status: <span class="p-s-verified"><i class="fas fa-check-circle"></i> Accepted</span></div> 
-                      <br/>
-                      <form action="{{route('undo_reject_request')}}" class="reject_req" method="POST">
-                      @csrf
-                      <input type="hidden" name="id" value="{{$req->id}}">
-                      <button type="submit" class="cstm-btn">Unlink</button>
-                      </form>
-                     @elseif($req->status == '')
-                     <div id="parent_request" class="request-actions par-req-{{$child_id}}">
-                        <a href="javascript:void(0);" child="{{$child_id}}" parent="{{$parent_id}}" req="1" class="cstm-btn">Accept</a>
-                        <div class="reject-view" data-toggle="modal" data-target="#reject-detail-{{$req->id}}">
-                          <a href="javascript:void(0);" class="cstm-btn">Unable To Accept</a>
+                      @if($req->status == '0')
+                        <div id="parent_request" class="request-actions par-req-{{$child_id}}">
+                          <a href="javascript:void(0);" child="{{$child_id}}" parent="{{$parent_id}}" req="1" class="cstm-btn">Accept</a>
+                          <div class="reject-view" data-toggle="modal" data-target="#reject-detail-{{$req->id}}">
+                            <a href="javascript:void(0);" class="cstm-btn">Unable To Accept</a>
+                          </div>
                         </div>
-                        
-                     </div>
-                     @endif
+                      @elseif($req->status == '1')
+                        <div class="profile-status">Request Status: <span class="p-s-verified"><i class="fas fa-check-circle"></i> Accepted</span></div> 
+                        <br/>
+                        <form action="{{route('undo_reject_request')}}" class="reject_req" method="POST">
+                          @csrf
+                          <input type="hidden" name="id" value="{{$req->id}}">
+                          <button type="submit" class="cstm-btn">Unlink</button>
+                        </form>
+                      @elseif($req->status == '2' && !empty($req->reason_of_rejection))
+                        <div class="profile-status">Request Status: <span class="p-s-not-verified"><i class="fas fa-times-circle"></i> Did not accept</span></div>
+                        <br/>
+                        <form action="{{route('undo_reject_request')}}" class="reject_req" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$req->id}}">
+                        <button type="submit" class="cstm-btn">Enable Link</button>
+                        </form>
+                      @endif
+                      
                   </figcaption>
 
                </div>

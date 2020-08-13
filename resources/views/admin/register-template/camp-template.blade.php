@@ -17,27 +17,35 @@
                         <th scope="col"></th>
                         <th scope="col"></th>
 
-                        @if($day == 'Monday')
-                            <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?day=Monday">Monday</a></th>
-                        @elseif($day == 'Tuesday')
-                            <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?day=Tuesday">Tuesday</a></th>
-                        @elseif($day == 'Wednesday')
-                            <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?day=Wednesday">Wednesday</a></th>
-                        @elseif($day == 'Thursday')
-                            <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?day=Thursday">Thursday</a></th>
-                        @elseif($day == 'Friday')
-                            <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?day=Friday">Friday</a></th>
-                        @elseif($day == 'Fullweek')
-                            <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?day=Fullweek">Fullweek</a></th>
-                        @else
-                            <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?day=Monday">Monday</a></th>
-                            <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?day=Tuesday">Tuesday</a></th>
-                            <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?day=Wednesday">Wednesday</a></th>
-                            <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?day=Thursday">Thursday</a></th>
-                            <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?day=Friday">Friday</a></th>
-                            <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?day=Fullweek">Fullweek</a></th>
-                        @endif
+                        @php
+                            $camp_price = DB::table('camp_prices')->where('camp_id',$camp->id)->first();
+                            $admin_selected = json_decode($camp_price->week); 
+                        @endphp
 
+                        @foreach($admin_selected as $key=>$we)
+
+                            @if($key == 0)
+                                @if(!empty($we->Monday))
+                                    <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?day=Monday">Monday</a></th>
+                                @endif
+                                @if(!empty($we->Tuesday))
+                                    <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?day=Tuesday">Tuesday</a></th>
+                                @endif
+                                @if(!empty($we->Wednesday))
+                                    <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?day=Wednesday">Wednesday</a></th>
+                                @endif
+                                @if(!empty($we->Thursday))
+                                    <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?day=Thursday">Thursday</a></th>
+                                @endif
+                                @if(!empty($we->Friday))                               
+                                    <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?day=Friday">Friday</a></th>
+                                @endif
+                                @if(!empty($we->Fullweek))
+                                    <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?day=Fullweek">Fullweek</a></th>
+                                @endif
+                            @endif
+
+                        @endforeach
                     </tr>
                 </thead>
                 <tbody>
@@ -45,26 +53,59 @@
                         <td>Name:</td>
                         <td>Age</td>
 
-                        @php  
+                        @foreach($admin_selected as $key=>$we)
 
-                        $weeks=[
-                        'Monday'=>'Monday',
-                        'Tuesday'=>'Tuesday',
-                        'Wednesday'=>'Wednesday',
-                        'Thursday'=>'Thursday',
-                        'Friday'=>'Friday',
-                        'Fullweek'=>'Fullweek'
-                        ]; 
+                            @if($key == 0)
+                                @if(!empty($we->Monday))
+                                    <td class="">ED</td>
+                                    <td class="">AM</td>
+                                    <td class="">LC</td>
+                                    <td class="">PM</td>
+                                    <td class="">FD</td>
+                                    <td class="">LS</td> 
+                                @endif
+                                @if(!empty($we->Tuesday))
+                                    <td class="">ED</td>
+                                    <td class="">AM</td>
+                                    <td class="">LC</td>
+                                    <td class="">PM</td>
+                                    <td class="">FD</td>
+                                    <td class="">LS</td> 
+                                @endif
+                                @if(!empty($we->Wednesday))
+                                    <td class="">ED</td>
+                                    <td class="">AM</td>
+                                    <td class="">LC</td>
+                                    <td class="">PM</td>
+                                    <td class="">FD</td>
+                                    <td class="">LS</td> 
+                                @endif
+                                @if(!empty($we->Thursday))
+                                    <td class="">ED</td>
+                                    <td class="">AM</td>
+                                    <td class="">LC</td>
+                                    <td class="">PM</td>
+                                    <td class="">FD</td>
+                                    <td class="">LS</td> 
+                                @endif
+                                @if(!empty($we->Friday))                               
+                                    <td class="">ED</td>
+                                    <td class="">AM</td>
+                                    <td class="">LC</td>
+                                    <td class="">PM</td>
+                                    <td class="">FD</td>
+                                    <td class="">LS</td> 
+                                @endif
+                                @if(!empty($we->Fullweek))
+                                    <td class="">ED</td>
+                                    <td class="">AM</td>
+                                    <td class="">LC</td>
+                                    <td class="">PM</td>
+                                    <td class="">FD</td>
+                                    <td class="">LS</td> 
+                                @endif
+                            @endif
 
-                        @endphp
-
-                        @foreach($weeks as $weekDays=>$weekDaysValue)
-                            <td class="{{$weekDays}}-early">ED</td>
-                            <td class="{{$weekDays}}-mor">AM</td>
-                            <td class="{{$weekDays}}-lunch">LC</td>
-                            <td class="{{$weekDays}}-noon">PM</td>
-                            <td class="{{$weekDays}}-full">FD</td>
-                            <td class="{{$weekDays}}-late">LS</td>                          
                         @endforeach
 
                         <td>Dob</td>
@@ -86,51 +127,57 @@
                         $user_diff = abs($current_date1 - $user_age);
                         $years1 = floor($user_diff / (365*60*60*24));
 
-                        $week = json_decode($sh->week); 
+                        $user_selected = json_decode($sh->week); 
                     @endphp
 
                     <tr>
                         <td class="@if($player->gender == 'male') odd-name-row @elseif($player->gender == 'female') even-name-row @endif">{{$player->name}}</td>
                         <td>{{$years1}}</td>
-                           
-                        @php 
-                            $comp_week = array('Monday','Tuesday','Wednesday','Thursday','Friday','Fullweek');
-                        @endphp       
 
-                        @foreach($week as $number=>$number_array)   
-
-                        @if($number == 'W1')
-
-                        @foreach($number_array as $data=>$user_data)
-                          @foreach($user_data as $data1=>$user_data1)
-
-                            @php 
-                              $split = explode('-',$user_data1);   
-                              $get_session = $data1.'-'.$split[2]; 
-                            @endphp
-
-                            @if(in_array($data1,$comp_week))
-
-                                <td>@if($get_session ==  $data1.'-early') X - @php echo $data1; @endphp @endif </td>
-                                <td>@if($get_session ==  $data1.'-mor') X @php echo $data1; @endphp @endif</td>
-                                <td>@if($get_session ==  $data1.'-lunch') X @php echo $data1; @endphp @endif</td>
-                                <td>@if($get_session ==  $data1.'-noon') X @php echo $data1; @endphp @endif</td>
-                                <td>@if($get_session ==  $data1.'-full') X @php echo $data1; @endphp @endif</td>
-                                <td>@if($get_session ==  $data1.'-late') X @php echo $data1; @endphp @endif</td>
-
-                            @elseif(!in_array($data1,$comp_week))
-                                @php echo '11'; @endphp
-                            @endif
-
-                          @endforeach
                         
-                          @endforeach
+                        @foreach($admin_selected as $key=>$days)
 
-                        @endif
+                            @php echo "<pre>";$camp_we = []; @endphp
+                            @foreach($days as $key1=>$day)
+                                @php $camp_we[] = $key1;
+                                    $userSelectedDataByWeek=[];
+                                  @endphp
+                            @endforeach
+
+                            @foreach($user_selected as $number=>$number_array)   
+
+                            <!-- @if($number == 'W1') -->
+
+                            @foreach($number_array as $data=>$user_data)
+                                @php                                 
+                                  print_r($user_data); echo "--";
+                                  print_r($data); echo "--";
+                                @endphp
+                              @foreach($user_data as $data1=>$user_data1)
+
+                                @php 
+                                  $userSelectedDataByWeek[$data1][]=$data;
+                                  $split = explode('-',$user_data1);   
+                                  $get_session = $data1.'-'.$split[2];  
+                                  print_r($data1); echo "--";
+                                @endphp
+
+                              @endforeach
+                            @endforeach
+
+                            <!-- @endif -->
+
+                            @endforeach
+
+                               @php print_r($camp_we); @endphp
+                           
 
                         @endforeach
+                        
 
-                        @php dd('1'); @endphp
+                           
+            
+
 
 
                         <td>{{$player->date_of_birth}}</td>
@@ -141,41 +188,6 @@
                         <td>{{$parent->email}}</td>
                     </tr>
                     @endforeach
-
-                    <!-- <tr>
-                        <td>Total</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr> -->
                 </tbody>
             </table>
         </div>

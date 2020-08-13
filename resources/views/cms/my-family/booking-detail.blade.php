@@ -233,7 +233,7 @@
 											  <td style="width: 30%; text-align: left;"><b>Child : </b>{{isset($child->name) ? $child->name : 'No child selected'}}</td>
 											  <td style="width: 40%;">
 											  	<h5>{{$course->title}}</h5>
-											  	<p>{{$course->term}} | {{$course->day_time}}</p>
+											  	<p>@php echo getSeasonname($course->season); @endphp | {{$course->day_time}}</p>
 		                                      </td>
 		                                      <td>Course
 		                                      	@if(!empty($cart->discount_code))

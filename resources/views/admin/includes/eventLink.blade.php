@@ -55,12 +55,15 @@
                 |       USER MANAGEMENT
                 |
                 |********************************* -->
-                <li class="nav-item pcoded-hasmenu <?= ActiveMenu(['list_users', 'parent_users', 'coach_users'],'pcoded-trigger') ?>" >
+                <li class="nav-item pcoded-hasmenu <?= ActiveMenu(['list_users', 'parent_users', 'coach_users','linked_coach_player'],'pcoded-trigger') ?>" >
                 <a href="javascript:" class="nav-link "><span class="pcoded-micon">
                     <i class="fas fa-users"></i></span><span class="pcoded-mtext">User Management</span></a>
-                <ul class="pcoded-submenu" style="display: <?= ActiveMenu(['list_users', 'parent_users', 'coach_users'], 'block') ?>;">
+                <ul class="pcoded-submenu" style="display: <?= ActiveMenu(['list_users', 'parent_users', 'coach_users','linked_coach_player'], 'block') ?>;">
                     <li class="<?= ActiveMenu(['list_users'],'active') ?>">
                         <a href="{{ route('list_users') }}" class="">Users</a>
+                    </li>
+                    <li class="<?= ActiveMenu(['linked_coach_player'],'active') ?>">
+                        <a href="{{ route('linked_coach_player') }}" class="">Linked Coaches</a>
                     </li>
                 </ul>
                 </li>
@@ -174,11 +177,21 @@
                      <a href="javascript:" class="nav-link "><span class="pcoded-micon">
                            <i class="fas fa-address-card"></i></span><span class="pcoded-mtext">Reports Management</span>
                      </a>
-                <ul class="pcoded-submenu" style="display: <?= ActiveMenu(['admin.reportquestion.list', 'admin.reportquestion.showCreate', 'admin.reportquestion.showEdit','admin.reportquestionopt.list', 'admin.reportquestionopt.showCreate', 'admin.reportquestionopt.showEdit', 'admin.player_reports.listing'], 'block') ?>;">
+                <ul class="pcoded-submenu" style="display: <?= ActiveMenu(['admin.reportquestion.list', 'admin.reportquestion.showCreate', 'admin.reportquestion.showEdit','admin.reportquestionopt.list', 'admin.reportquestionopt.showCreate', 'admin.reportquestionopt.showEdit', 'admin.player_reports.listing', 'admin.matchReports.compList'], 'block') ?>;">
                     <li class="<?= ActiveMenu(['admin.reportquestion.list', 'admin.reportquestion.showCreate', 'admin.reportquestion.showEdit'],'active') ?>"><a href="{{ route('admin.reportquestion.list') }}" class="">Question Categories</a></li>
                     <li class="<?= ActiveMenu(['admin.reportquestionopt.list', 'admin.reportquestionopt.showCreate', 'admin.reportquestionopt.showEdit'],'active') ?>"><a href="{{ route('admin.reportquestionopt.list') }}" class="">Report Questions</a></li>
                     <li class="<?= ActiveMenu(['admin.player_reports.listing'],'active') ?>"><a href="{{ route('admin.player_reports.listing') }}" class="">Player Reports</a></li>
+                    <li class="<?= ActiveMenu(['admin.matchReports.compList'],'active') ?>"><a href="{{ route('admin.matchReports.compList') }}" class="">Match Reports</a></li>
                 </ul>
+                </li>
+
+                <!-- ****************************
+                |
+                |       GOAL MANAGEMENT
+                |
+                |********************************* -->
+                <li class="nav-item {{ \Request::route()->getName() === 'admin.goal.list' ? 'nav-item active' : 'nav-item' }}">
+                <a href="{{url(route('admin.goal.list'))}}" class="nav-link "><span class="pcoded-micon"><i class="fas fa-list-alt"></i></span><span class="pcoded-mtext">Goal Management</span></a>
                 </li>
 
 

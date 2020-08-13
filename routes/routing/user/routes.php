@@ -48,6 +48,7 @@
          Route::any('reject_request', 'HomeController@reject_request')->name('reject_request');
          Route::any('undo_reject_request', 'HomeController@undo_reject_request')->name('undo_reject_request');
          Route::any('parent-coach', 'HomeController@parent_coach')->name('parent_coach');
+         Route::any('unlink-coach', 'HomeController@unlink_coach')->name('unlink_coach');
          Route::any('add-money-to-wallet', 'HomeController@add_money_to_wallet')->name('add_money_to_wallet');
          Route::any('stripe-wallet', 'HomeController@stripe_wallet')->name('stripe-wallet');
          Route::any('add-wallet-amt', 'HomeController@add_wallet_amt')->name('add_wallet_amt');

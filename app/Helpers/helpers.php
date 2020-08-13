@@ -1,5 +1,20 @@
 <?php 
 
+/*----------------------------------
+| Get shop type using orderID
+|----------------------------------*/
+function getShopType($orderID){
+  $shop = \DB::table('shop_cart_items')->where('orderID',$orderID)->get(); 
+  $shop_ty = [];
+
+  foreach($shop as $sh)
+  {
+    $shop_ty[] = $sh->shop_type;
+  }
+  $orderType = implode(', ',$shop_ty);
+  return $orderType;
+}
+
 /*-------------------------------------
 | User name using category ID 
 |-------------------------------------*/

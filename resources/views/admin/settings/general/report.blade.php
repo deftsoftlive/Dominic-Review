@@ -47,7 +47,7 @@
         <!-- Section - 1 -->
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title"><u>REPORT - 1</u></h5>
+            <h5 class="card-title"><u>End of term report</u></h5>
              {{textarea($errors,'Report 1 Content <span class="cst-upper-star">*</span>','report1_content',$report1_content)}}
           </div>
         </div>
@@ -55,8 +55,16 @@
         <!-- Section - 2 -->
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title"><u>REPORT - 2</u></h5>
+            <h5 class="card-title"><u>Player report</u></h5>
              {{textarea($errors,'Report 2 Content <span class="cst-upper-star">*</span>','report2_content',$report2_content)}}
+          </div>
+        </div>
+
+        <!-- Section - 3 -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>Match report</u></h5>
+             {{textarea($errors,'Report 3 Content <span class="cst-upper-star">*</span>','report3_content',$report3_content)}}
           </div>
         </div>
 
@@ -99,6 +107,7 @@
 <script type="text/javascript">
    CKEDITOR.replace('report1_content', options);
    CKEDITOR.replace('report2_content', options);
+   CKEDITOR.replace('report3_content', options);
    CKEDITOR.replace('report_detail', options);
 </script>
 @endsection

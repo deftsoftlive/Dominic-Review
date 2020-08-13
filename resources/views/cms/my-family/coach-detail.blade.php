@@ -25,7 +25,7 @@
     </div>
     @elseif(Session::has('error'))
     <div class="alert_msg alert alert-danger">
-       <p>{{ Session::get('error') }} </p>
+       <p>{!! Session::get('error') !!} </p>
     </div>
     @endif
 

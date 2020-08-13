@@ -48,7 +48,7 @@
 
                    {{textbox($errors,'Location<span class="cst-upper-star">*</span>','location', $venue->location)}}
 
-                   {{textbox($errors,'Term<span class="cst-upper-star">*</span>','term', $venue->term)}}
+                   {{textbox($errors,'Season<span class="cst-upper-star">*</span>','term', $venue->term)}}
 
                    <div class="form-group">
                     <label class="label-file control-label">Category</label>
@@ -75,6 +75,10 @@
                   <img id="image_src" style="width: 100px; height: 100px;" src="{{ URL::asset('/uploads').'/'.$venue->image }}" />
 
                   {{textbox($errors,'Coach Cost<span class="cst-upper-star">*</span>','coach_cost', $venue->coach_cost)}}
+                  {{textbox($errors,'Court/Venue Cost<span class="cst-upper-star">*</span>','venue_cost', $venue->venue_cost)}}
+                  {{textbox($errors,'Equipment Cost<span class="cst-upper-star">*</span>','equipment_cost', $venue->equipment_cost)}}
+                  {{textbox($errors,'Other Cost<span class="cst-upper-star">*</span>','other_cost', $venue->other_cost)}}
+                  {{textbox($errors,'Tax/Vat Cost<span class="cst-upper-star">*</span>','tax_cost', $venue->tax_cost)}}
 
 
                   <!-- ***********************************************

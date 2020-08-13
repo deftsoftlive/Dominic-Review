@@ -14,7 +14,18 @@ class WalletController extends Controller
 	|********************************/
     public function wallet_index()
     {
-    	$wallet = Wallet::orderBy('id','asc')->paginate(10);
+        $user_name = request()->get('u_name');  
+
+        if(!empty($user_name)){
+            $wallet = \DB::table('wallets')
+                    ->leftjoin('users', 'wallets.user_id', '=', 'users.id')
+                    ->select('wallets.*', 'users.name')
+                    ->orWhere( 'users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->paginate(10); 
+        }else{
+           $wallet = Wallet::orderBy('id','asc')->paginate(10); 
+       }  
+    	
     	return view('admin.wallet.index',compact('wallet'));
     }
 

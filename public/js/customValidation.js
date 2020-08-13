@@ -610,6 +610,49 @@ $(document).ready(function (){
     }
   });
 
+    /*validations on goals filter*/
+  $('#goals').validate({
+           rules: {
+            goal_player: {
+                required: true
+            },
+            goal_type: {
+                required: true
+            }
+        },
+        messages:{
+            goal_player:{required:"This field is required."},
+            goal_type:{required:"This field is required."},
+        },
+
+    highlight: function (element, errorClass, validClass) {
+
+      if(element.type =='text'||element.type =='password'||element.type =='email'||element.type =='select-one') {
+          $(element).siblings("label").addClass("error");
+          $(element).addClass('input--error').removeClass(validClass+' input--success');
+          $(element).closest('.myForm').removeClass('has-success has-feedback').addClass('has-error has-feedback');
+        // this.findByName(element.name).removeClass('has-success has-feedback').addClass('has-error has-feedback');
+        $(element).closest('.myForm').find('i.fa').remove();
+        $(element).closest('.myForm').append('<i class="fa fa-exclamation fa-lg form-control-feedback"></i>');
+      }
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      if (element.type === "text"||element.type =='password' ||element.type =='email'||element.type =='select-one') {
+          $(element).siblings("label").removeClass("error");
+          $('.errorMsg').addClass('displaynone');
+          $(element).closest('.myForm').removeClass('has-error has-feedback').addClass('has-success has-feedback');
+          $(element).removeClass('input--error').addClass(validClass+' input--success');
+          $(element).closest('.myForm').find('i.fa').remove();
+          $(element).closest('.myForm').append('<i class="fa fa-check fa-lg form-control-feedback"></i>');
+      } 
+    },
+       
+      submitHandler: function(form) {
+        $("#save_goal").attr("disabled", true);
+        form.submit();
+    }
+  });
+
   /*validations on simple report*/
   $('#complex_report_filter').validate({
            rules: {

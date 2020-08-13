@@ -21,7 +21,15 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
         </div>
         <nav>
             <ul>
-                @include('inc.coach-menu')
+                @php
+                    $user_id = \Auth::user()->role_id;
+                @endphp
+
+                @if($user_id == '3')
+                    @include('inc.coach-menu')
+                @elseif($user_id == '2')
+                    @include('inc.parent-menu')
+                @endif
             </ul>
         </nav>
     </div>

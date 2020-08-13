@@ -144,6 +144,7 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::any('/user/delete/{id}','Admin\UserController@delete_user')->name('delete_user');
 		Route::get('/user/status/{id}','Admin\UserController@user_Status')->name('admin.user.status');
 		Route::any('enable_inv_status', 'Admin\UserController@enable_inv_status')->name('enable_inv_status');
+		Route::any('/linked-coaches', 'Admin\UserController@linked_coaches')->name('linked_coach_player');
 
 		#----------------------------------------------------------------
 		#  Parents/Children/Coach Management
@@ -271,6 +272,12 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::any('/test/duplicate/{id}','Admin\TestController@duplicate_test')->name('duplicate_test');
 
 		#----------------------------------------------------------------
+		#  Test Management
+		#----------------------------------------------------------------
+		Route::any('/goals','Admin\AdminController@goals')->name('admin.goal.list');
+		Route::any('/goal/{goal_type}/{id}','Admin\AdminController@goal_detail')->name('admin.goal.detail');
+
+		#----------------------------------------------------------------
 		#  Report Question Management
 		#----------------------------------------------------------------
 		Route::get('/reportquestion','Admin\ReportQuestionController@reportquestion_index')->name('admin.reportquestion.list');
@@ -290,6 +297,9 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 
 		Route::any('/player-reports','Admin\ReportQuestionController@player_reports')->name('admin.player_reports.listing');
 		Route::get('/player-report/{id}','Admin\ReportQuestionController@player_reports_detail')->name('admin.player_reports.detail');
+
+		Route::any('/match-reports/competitions','Admin\ReportQuestionController@comp_list')->name('admin.matchReports.compList');
+		Route::any('/match-reports/competition/{id}','Admin\ReportQuestionController@comp_detail')->name('admin.matchReports.compDetail');
 
 		#----------------------------------------------------------------
 		#  Import/Export Excel for Test
@@ -410,7 +420,9 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
         Route::get('/revenue/camps/{id}', 'Admin\AdminController@camp_revenue_detail')->name('admin.revenue.camps.detail');
         Route::any('/revenue/products', 'Admin\AdminController@product_revenue')->name('admin.revenue.products');
         Route::any('/calculate_male/{id}', 'Admin\AdminController@calculate_male')->name('admin.revenue.calculate_male');
-
+		Route::any('/generate_course_report', 'Admin\AdminController@generate_course_report')->name('generate_course_report');
+		Route::any('/generate_camp_report', 'Admin\AdminController@generate_camp_report')->name('generate_camp_report');
+		Route::any('/generate_product_report', 'Admin\AdminController@generate_product_report')->name('generate_product_report');
 
         #----------------------------------------------------------------
 		#  Register Template Management
@@ -450,17 +462,18 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
         #-------------------------------------------------------------------------------------------------------------
         #  admin.orders
         #-------------------------------------------------------------------------------------------------------------
-        Route::get('/orders','Admin\OrderController@index')->name('admin.orders');
+        Route::any('/orders','Admin\OrderController@index')->name('admin.orders');
         Route::get('/orders/detail/{id}','Admin\OrderController@detail')->name('admin.orderDetail');
         Route::get('/orders/ajax','Admin\OrderController@ajax')->name('admin.ajaxOrders');
 
         Route::get('/orders/download/{id}','Admin\OrderController@order_pdf')->name('admin.order.pdf');
+        Route::any('download_orders','Admin\OrderController@download_orders')->name('download.orders');
 
 
         #-------------------------------------------------------------------------------------------------------------
         #  Wallet Management
         #-------------------------------------------------------------------------------------------------------------
-        Route::get('/wallet','Admin\WalletController@wallet_index')->name('admin.wallet');
+        Route::any('/wallet','Admin\WalletController@wallet_index')->name('admin.wallet');
         Route::any('/credit-in-wallet','Admin\WalletController@credit_amt_by_admin')->name('admin.credit.wallet');
         Route::any('/debit-from-wallet','Admin\WalletController@debit_amt_by_admin')->name('admin.debit.wallet');
         Route::get('/wallet-details/view/{user_id}','Admin\WalletController@wallet_detail')->name('admin.wallet.detail');

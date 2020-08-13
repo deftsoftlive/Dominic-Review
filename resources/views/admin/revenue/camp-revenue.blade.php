@@ -79,9 +79,10 @@
                 <th>Camp Name</th>
                 <th>Attendees</th>
                 <th>Revenue</th>
-                <th>Coach Costs</th> 
+                <th>Costs</th> 
                 <th>Profit</th>
                 <th>Action</th>
+                <th>Link</th>
             </tr>
             </thead>
             <tbody>
@@ -115,12 +116,26 @@
                     <td>{{$camp->title}}</td>
                     <td>{{$participants}}</td>
                     <td>&pound;{{$sum_revenue}}</td>
-                    <td>@if(!empty($camp->coach_cost)) {{$camp->coach_cost}} @else - @endif</td> 
-                    <td>&pound;{{$get_revenue}}</td>
+                    <td>
+                    @php 
+                        $cumulative_sum = ($camp->coach_cost)+($camp->venue_cost)+($camp->equipment_cost)+($camp->other_cost)+($camp->tax_cost); 
+                    @endphp
+                    &pound;{{$cumulative_sum}}
+                    </td> 
+                    <td>
+                        @php 
+                            $profit = $sum_revenue - $cumulative_sum; 
+                        @endphp 
+                        &pound;{{$profit}}
+                    </td>
                     <td><a href="{{url('/admin/revenue/camps')}}/{{$co->product_id}}">View Report</a></td>
+                    <form action="{{route('generate_camp_report')}}" method="POST">
+                    @csrf
+                    <td><input type="checkbox" name="link[]" value="{{$co->id}}"></td>
                 </tr>
             @endforeach
-
+                <button style="float:right;margin-bottom: 10px;" class="btn btn-primary" type="submit">Generate Report</button>
+            </form>
             @else
                 <tr><td colspan="6"><div class="no_results"><h3>No result found</h3></div></td></tr>
             @endif

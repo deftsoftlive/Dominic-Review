@@ -158,6 +158,7 @@
                 <th>Player</th>
                 <th>Purchased Product</th> 
                 <th>Price</th>
+                <th>Link</th>
             </tr>
             </thead>
             <tbody>
@@ -170,8 +171,13 @@
                         <td>@php echo getUsername($co->user_id); @endphp</td>
                         <td>{{$product->name}}</td>
                         <td>&pound{{$co->total}}</td>
+                        <form action="{{route('generate_product_report')}}" method="POST">
+                        @csrf
+                        <td><input type="checkbox" name="link[]" value="{{$co->id}}"></td>
                     </tr>
                 @endforeach
+                <button style="float:right;margin-bottom: 10px;" class="btn btn-primary" type="submit">Generate Report</button>
+            </form>
             @else
                 <tr><td colspan="3"><div class="no_results"><h3>No result found</h3></div></td></tr>
             @endif

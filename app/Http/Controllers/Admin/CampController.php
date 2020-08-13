@@ -41,7 +41,12 @@ class CampController extends Controller
             'description' => ['required', 'string'],
             // 'image' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
             'category' => ['required', 'string'],
-            'camp_date' => ['required']
+            'camp_date' => ['required'],
+            'coach_cost' => ['required', 'numeric', 'min:1', 'max:100'],
+            'venue_cost' => ['required', 'numeric', 'min:1', 'max:100'],
+            'equipment_cost' => ['required', 'numeric', 'min:1', 'max:100'],
+            'other_cost' => ['required', 'numeric', 'min:1', 'max:100'],
+            'tax_cost' => ['required', 'numeric', 'min:1', 'max:100']
         ]);
 
         $arrSku = $request->Week;   
@@ -120,6 +125,10 @@ class CampController extends Controller
     		'image' => $filename,
     		'category' => $request['category'],
             'coach_cost' => $request['coach_cost'],
+            'venue_cost' => $request['venue_cost'],
+            'equipment_cost' => $request['equipment_cost'],
+            'other_cost' => $request['other_cost'],
+            'tax_cost' => $request['tax_cost'],
             'camp_date' => $request['camp_date'],
             'popup_title' => $request['popup_title'],
             'popup_subtitle' => $request['popup_subtitle'],
@@ -156,7 +165,12 @@ class CampController extends Controller
             'description' => ['required', 'string'],
             // 'image' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
             'category' => ['required', 'string'],
-            'camp_date' => ['required']
+            'camp_date' => ['required'],
+            'coach_cost' => ['required', 'numeric', 'min:1', 'max:100'],
+            'venue_cost' => ['required', 'numeric', 'min:1', 'max:100'],
+            'equipment_cost' => ['required', 'numeric', 'min:1', 'max:100'],
+            'other_cost' => ['required', 'numeric', 'min:1', 'max:100'],
+            'tax_cost' => ['required', 'numeric', 'min:1', 'max:100']
         ]);
 
         $arrSku = $request->Week;   
@@ -244,6 +258,10 @@ class CampController extends Controller
             'category' => $request['category'],
             'camp_date' => $request['camp_date'],
             'coach_cost' => $request['coach_cost'],
+            'venue_cost' => $request['venue_cost'],
+            'equipment_cost' => $request['equipment_cost'],
+            'other_cost' => $request['other_cost'],
+            'tax_cost' => $request['tax_cost'],
             'popup_title' => $request['popup_title'],
             'popup_subtitle' => $request['popup_subtitle'],
             'popup_enable' => $request['popup_enable'],

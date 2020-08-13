@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\CoachDocument;
+use App\ParentCoachReq;
 
 class UserController extends Controller
 {
@@ -440,6 +441,15 @@ class UserController extends Controller
       $st->save();
 
       return \Redirect::back()->with('success','Status updated successfully.');
+    }
+
+    /*********************************
+    |   Linked Coaches 
+    |*********************************/
+    public function linked_coaches()
+    {
+        $parentCoachReq = ParentCoachReq::orderBy('id','desc')->paginate(10);
+        return view('admin.user-vendor.users.linked-coach',compact('parentCoachReq')); 
     }
 
 }

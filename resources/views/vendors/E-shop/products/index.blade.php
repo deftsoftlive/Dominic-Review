@@ -7,7 +7,7 @@ p.vou_prod_type {
     color: #3f4d67;
     font-weight: 600;
     border-radius: 12px;
-    margin: 0px 260px 0px 0px;
+    margin: 0px 60px 0px 0px;
 }
 </style>
  <div class="container-fluid">
@@ -104,7 +104,7 @@ p.vou_prod_type {
                                               <tr>
                                                 <th>Product ID</th>
                                                 <th>Sort</th>
-                                                <th width="40%">Name</th>
+                                                <th>Name</th>
                                                 <th>Image</th>
                                                 <!-- <th>Available Stock</th> -->
                                                 <th>Action</th>

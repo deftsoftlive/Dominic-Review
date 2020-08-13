@@ -476,8 +476,205 @@ form.cst-selection select.select_player
     background: #3f4d67!important;
     color: #fff;
 }
-
+ .print_logo  {
+        display: block!important;
+    }
 }
+.page-wrapper .accordian_summary
+{
+  padding:0 25px; 
+}
+.page-wrapper .accordian_summary .card .card-header {
+    background: #3f4d67;
+    padding: 10px 15px!important;
+}
+.accordian_summary .card .card-header a {
+    font-size: 22px;
+    padding: 0 5px;
+    color: #fff;
+}
+.accordian_summary .card .card-header a span {
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    display: inline-block;
+    text-align: center;
+    border-radius: 50%;
+    line-height: 30px;
+    font-size: 22px;
+    color: #3f4d67;
+    margin-right: 10px;
+    margin: -5px 10px -5px 0;
+}
+.accordian_summary .card .card-header, .accordian_summary .card .card-header:first-child {
+    margin-bottom: 5px;
+    border-radius: 0!important;
+    border-top-left-radius: 0!important;
+    border-top-right-radius: 0!important;
+    border: 0;
+}
+.accordian_summary .collapse.show,
+.accordian_summary .collapsing {
+    border: 2px solid #3f4d67;
+    margin-bottom: 5px;
+}
+table.table.table-bordered.cst-reports th, table.table.table-bordered.cst-reports td {
+    width: 50%;
+}
+
+
+.player-goal-card {
+    border: 2px solid #be298d;
+    padding: 0 36px 20px;
+    border-radius: 7px;
+    margin-bottom: 23px;
+    box-shadow: 7px 7px 20px 0px rgba(0, 0, 0, 0.1);
+}
+.player-goal-card legend {
+    font-size: 26px;
+    color: #bea029;
+    font-family: 'Bangers', cursive;
+    width: auto;
+    line-height: 14px;
+    padding: 5px 11px;
+}
+
+.player-goal-card .form-control.goal-textarea {
+    height: 115px;
+    border: 0;
+    background: #d7fcff;
+    resize: none;
+}
+.player-goal-card p {
+    margin-bottom: 16px;
+    padding: 0 11px;
+}
+.player-goal-card .form-group {
+    margin-bottom: 0;
+}.goal-reciew-feedback .form-control.goal-textarea {
+    height: 80px;
+    border: 0;
+    background: #d7fcff;
+    resize: none;
+}
+.goal-reciew-feedback {
+    padding: 0 36px 20px;
+    margin-bottom: 20px;
+}
+.cstm-btn:hover {
+    background: #ffffff;
+    color: #be298d;
+    text-decoration: none;
+}
+.player-goal-inner-text-wrap {
+    margin-top: 23px;
+}
+.player-goal-inner-text-wrap li {
+    margin-bottom: 9px;
+}
+.player-goal-inner-text-wrap h2 {
+    font-size: 26px;
+    text-transform: uppercase;
+    color: #bea029;
+    font-family: 'Bangers', cursive;
+    line-height: 1;
+    letter-spacing: 1px;
+}.player-goal-inner-text-wrap p {
+    font-size: 18px;
+    color: #333333;
+}
+.form-check {
+    position: relative;
+    display: block;
+    padding-left: 1.25rem;
+}
+.player-goal-info .form-group.form-check .form-check-input {
+    background: #666666 !important;
+}
+.player-goal-info .form-group.form-check label {
+    font-size: 15px;
+    color: #666666;
+    font-weight: 300;
+}
+.player-goal-date p {
+    font-size: 15px;
+    margin-bottom: 24px;
+}
+.player-goal-date span {
+    font-weight: 500;
+}
+
+.outer-wrap-player-goal .accordian_summary {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}.accordian_summary .card {
+    margin-top: 0;
+    box-shadow: none!important;
+}
+.accordian_summary .card {
+    border: none !important;
+    overflow: hidden;
+    margin-top: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+.outer-wrap-player-goal .accordian_summary .card .card-header {
+    border: 3px solid #be298d!important;
+    text-align: center;
+    background: #fff;
+    padding: 8px 15px;
+}
+.accordian_summary .card .card-header, .accordian_summary .card .card-header:first-child {
+    margin-bottom: 5px;
+    border-radius: 0!important;
+    border-top-left-radius: 0!important;
+    border-top-right-radius: 0!important;
+    border: 0;
+}
+.outer-wrap-player-goal .accordian_summary .card .card-header a {
+    font-size: 22px;
+    padding: 0 5px;
+    color: #000000;
+    text-align: center!important;
+    font-weight: 600;
+    display: block;
+    width: 100%;
+}
+
+.outer-wrap-player-goal .collapse.show, .outer-wrap-player-goal .collapsing {
+    border: 3px solid #be298d;
+    margin-bottom: 5px;
+    margin-top: -7px;
+    box-shadow: inset 7px 7px 20px 0px rgba(0, 0, 0, 0.1);
+    margin: -8px 15px 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* ================================    Dropdown End  ===================== */
 @media (min-width: 1600px) {
@@ -6036,6 +6233,7 @@ table.table.table-hover tbody td:first-child
 {
   /*text-transform: capitalize;*/
   vertical-align: middle;
+  width: 25%;
 }
 table.table.table-hover tbody td
 {  vertical-align: middle;
@@ -11670,7 +11868,7 @@ span.notification-icon {
     display: none!important;
 }
 @media print {
-    .print_logo  {
+    .page-wrapper .print_logo  {
         display: block!important;
     }
 }

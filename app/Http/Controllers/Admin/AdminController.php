@@ -8,6 +8,7 @@ use Auth;
 use App\User;
 use App\ChildActivity;
 use App\CoachUploadPdf;
+use App\SetGoal;
 class AdminController extends Controller
 {
     
@@ -340,9 +341,9 @@ public function changeProfileImage(Request $request) {
                             ->where('shop_type','course')->where('shop_cart_items.type','order')    
                             ->where( 'courses.title', 'LIKE', '%' . $course_name . '%' ) 
                             ->groupBy('product_id')        
-                            ->paginate(10);
+                            ->paginate(20);
       }else{
-          $purchased_courses = \DB::table('shop_cart_items')->where('shop_type','course')->where('type','order')->groupBy('product_id')->paginate(10);
+          $purchased_courses = \DB::table('shop_cart_items')->where('shop_type','course')->where('type','order')->groupBy('product_id')->paginate(20);
       }
 
       // dd($purchased_courses);
@@ -351,7 +352,7 @@ public function changeProfileImage(Request $request) {
 
     public function course_revenue_detail($id)
     {
-      $purchased_courses = \DB::table('shop_cart_items')->where('shop_type','course')->where('product_id',$id)->where('type','order')->paginate(50);
+      $purchased_courses = \DB::table('shop_cart_items')->where('shop_type','course')->where('product_id',$id)->where('type','order')->paginate(20);
       return view('admin.revenue.view-course-report',compact('purchased_courses','id'));
     }
 
@@ -366,9 +367,9 @@ public function changeProfileImage(Request $request) {
                             ->where('shop_type','camp')->where('shop_cart_items.type','order')    
                             ->where( 'camps.title', 'LIKE', '%' . $camp_name . '%' ) 
                             ->groupBy('product_id')        
-                            ->paginate(10);
+                            ->paginate(20);
       }else{
-          $purchased_camp = \DB::table('shop_cart_items')->where('shop_type','camp')->where('type','order')->groupBy('product_id')->paginate(10);
+          $purchased_camp = \DB::table('shop_cart_items')->where('shop_type','camp')->where('type','order')->groupBy('product_id')->paginate(20);
       }
 
       // dd($purchased_camp);
@@ -378,7 +379,7 @@ public function changeProfileImage(Request $request) {
 
     public function camp_revenue_detail($id)
     {
-      $purchased_camp = \DB::table('shop_cart_items')->where('shop_type','camp')->where('product_id',$id)->where('type','order')->paginate(50);
+      $purchased_camp = \DB::table('shop_cart_items')->where('shop_type','camp')->where('product_id',$id)->where('type','order')->paginate(20);
       return view('admin.revenue.view-camp-report',compact('purchased_camp','id'));
     }
 
@@ -401,7 +402,7 @@ public function changeProfileImage(Request $request) {
                             ->where('products.category_id', $product_cat) 
                             ->where('shop_cart_items.created_at', '>', $start_date)
                             ->where('shop_cart_items.created_at', '<', $end_date)      
-                            ->paginate(10);
+                            ->paginate(20);
       }
       elseif(!empty($product_cat) && $start_date == '1970-01-01 12:00:00' && $end_date == '1970-01-01 12:00:00')
       {
@@ -412,12 +413,88 @@ public function changeProfileImage(Request $request) {
                             ->where('shop_type','product','created_at as')
                             ->where('shop_cart_items.type','order')
                             ->where('products.category_id', $product_cat) 
-                            ->paginate(10);
+                            ->paginate(20);
       }else{
-        $purchased_product = \DB::table('shop_cart_items')->where('shop_type','product')->where('type','order')->paginate(10);
+        $purchased_product = \DB::table('shop_cart_items')->where('shop_type','product')->where('type','order')->paginate(20);
       }
         
       return view('admin.revenue.product-revenue',compact('purchased_product'));
     }
 
+    /*****************************
+    | Link Course Reports
+    |*****************************/ 
+    public function generate_course_report(Request $request)
+    {
+      $link_reports = $request->link;
+      $purchased_courses = [];
+
+      if(!empty($link_reports))
+      {
+        foreach($link_reports as $rep)
+        {
+          $purchased_courses[] = \DB::table('shop_cart_items')->where('id',$rep)->first();
+        }
+      }
+      
+      return view('admin.revenue.generate-report.course-report',compact('purchased_courses'));
+    }
+
+
+    /*****************************
+    | Link Camp Reports
+    |*****************************/ 
+    public function generate_camp_report(Request $request)
+    {
+      $link_reports = $request->link;
+      $purchased_camp = [];
+
+      if(!empty($link_reports))
+      {
+        foreach($link_reports as $rep)
+        {
+          $purchased_camp[] = \DB::table('shop_cart_items')->where('id',$rep)->first();
+        }
+      }
+      
+      return view('admin.revenue.generate-report.camp-report',compact('purchased_camp'));
+    }
+
+    /*****************************
+    | Link Product Reports
+    |*****************************/ 
+    public function generate_product_report(Request $request)
+    {
+      $link_reports = $request->link;
+      $purchased_product = [];
+
+      if(!empty($link_reports))
+      {
+        foreach($link_reports as $rep)
+        {
+          $purchased_product[] = \DB::table('shop_cart_items')->where('id',$rep)->first();
+        }
+      }
+      
+      return view('admin.revenue.generate-report.product-report',compact('purchased_product'));
+    }
+
+    /******************************
+    | Goals Listing
+    |******************************/
+    public function goals()
+    {
+      $goals = SetGoal::groupBy('player_id')->paginate(10);
+      return view('admin.goals.goal-listing',compact('goals'));
+    }
+
+    /******************************
+    | Goal Detail
+    |******************************/
+    public function goal_detail($goal_type,$id)
+    { 
+      $get_goal = SetGoal::where('id',$id)->first();
+      $goals_data = SetGoal::where('parent_id',$get_goal->parent_id)->where('player_id',$get_goal->player_id)->where('goal_type',$goal_type)->get();
+      return view('admin.goals.goal-detail',compact('get_goal','goals_data'));
+    }
 }

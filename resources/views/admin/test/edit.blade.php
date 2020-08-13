@@ -46,7 +46,7 @@ div#selectator_multiple {
                     @endphp
                     <select class="select-player" name="test_cat_id">
                       @foreach($testcategory as $te)
-                      <option @if($venue->test_cat_id == $te->id) 'selected' @endif value="{{$te->id}}">{{$te->title}}</option>
+                      <option @if($venue->test_cat_id == $te->id) selected="" @endif value="{{$te->id}}">{{$te->title}}</option>
                       @endforeach
                     </select><br/>
 
@@ -67,8 +67,10 @@ div#selectator_multiple {
 
                     <div class="form-group" >
                       <label class="control-label">Selected Course </label>
-                      <input type="text" class="form-control" disabled="" value="@php echo getCourseName($venue->courses); @endphp">
+                      <input type="text" class="form-control" readonly="" value="@php echo getCourseName($venue->courses); @endphp">
                     </div>
+
+                    <input type="hidden" name="selected_course" value="{{$venue->courses}}">
 
                     <div class="form-group" >
                       <label class="control-label">Change Course</label>

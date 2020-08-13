@@ -48,7 +48,7 @@
 
                    {{textbox($errors,'Camp Title*','title')}}
                    {{textbox($errors,'Location*','location')}}
-                   {{textbox($errors,'Term*','term')}}
+                   {{textbox($errors,'Season*','term')}}
 
                    <div class="form-group">
                     <label class="label-file control-label">Category</label>
@@ -74,7 +74,11 @@
                   <img src="" id="image_src" style="width: 100px; height: 100px; display: none"/>
                   <br/><br/>
 
-                  {{textbox($errors,'Coach Cost*','coach_cost')}}
+                  {{textbox($errors,'Coach Cost<span class="cst-upper-star">*</span>','coach_cost')}}
+                  {{textbox($errors,'Court/Venue Cost<span class="cst-upper-star">*</span>','venue_cost')}}
+                  {{textbox($errors,'Equipment Cost<span class="cst-upper-star">*</span>','equipment_cost')}}
+                  {{textbox($errors,'Other Cost<span class="cst-upper-star">*</span>','other_cost')}}
+                  {{textbox($errors,'Tax/Vat Cost<span class="cst-upper-star">*</span>','tax_cost')}}
 
                   <!-- ***********************************************
                   |

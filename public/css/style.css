@@ -1,4 +1,4 @@
-body {
+.player-report-table.tbl_shadowbody {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     transition: all ease 0.3s;
@@ -535,8 +535,8 @@ section.coach_listing figcaption.dsgn-coach-box:hover {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;*/
-    /*background: #007afc!important;*/
-    /*transition: all linear 0.3s;*/
+    background: #007afc!important;
+    transition: all linear 0.3s;
 }
 
 .activity-caption:hover h2,
@@ -556,6 +556,7 @@ section.coach_listing figcaption.dsgn-coach-box:hover {
     color: #fff;
     text-decoration: underline;
     transition: all linear 0.3s;
+    text-decoration: none;
 }
 
 
@@ -1367,7 +1368,7 @@ select#inputPlayer-3 {
     font-family: 'Bangers', cursive;
     width: auto;
     line-height: 14px;
-    padding: 0 11px;
+    padding: 5px 11px;
 }
 
 .player-goal-card .form-control.goal-textarea {
@@ -4136,7 +4137,7 @@ a.inner-logo {
 }
 
 .account-menu nav li+li {
-    margin-left: 20px;
+    margin-left: 15px;
 }
 
 .account-menu nav a {
@@ -5122,7 +5123,8 @@ table th {
     align-items: stretch;
 }
 
-.my-players h2 {
+.my-players h2,
+.coach-goal-comment-sec .pink-heading h2 {
     text-align: center;
     margin-bottom: 40px;
     font-size: 50px;
@@ -6095,6 +6097,10 @@ footer.site-footer .footer-links .footer-header a.footer-brand {
     border-radius: 20px;
     overflow: hidden;
 }
+.player-report-table.tbl_shadow.goal_reports
+{
+    overflow: auto!important;
+}
 
 .order-book.cst_order_section {
     max-width: 1000px;
@@ -6179,6 +6185,7 @@ footer.site-footer .footer-links .footer-header a.footer-brand {
     font-size: 22px;
     padding: 0 5px;
     color: #fff;
+    display: block;
 }
 
 .accordian_summary .card .card-header a span {
@@ -8322,7 +8329,9 @@ form.register-form .option_row .form-group.row .form-radios {
     width: 60%;
 }
 
-.report_detail_page .cst-reports th {
+.report_detail_page .cst-reports th,
+.matches-dtl .cst-reports th
+ {
 
     width: 190px;
     background-image: url(../images/print-bg.png) !important;
@@ -8390,7 +8399,8 @@ section.member.section-padding .player-report-table.tbl_shadow {
 
 
 
-    .report_detail_page .cst-reports th {
+    .report_detail_page .cst-reports th,
+    .player-report-table.tbl_shadow .rp_test_score th {
         background-image: url(../images/print-bg.png) !important;
     }
 
@@ -8400,8 +8410,37 @@ section.member.section-padding .player-report-table.tbl_shadow {
 
         height: 100% !important;
     }
+    .print_logo.print-logo-design {
+    display: block!important;
+    text-align: center;margin:0 auto 20px!important;
 
-    div#report_detail_cont {
+}
+section.member.section-padding.report_detail_page .pink-heading h2
+{
+margin-bottom: 0!important;
+}
+
+   
+    .player-report-table.tbl_shadow .rp_test_score td
+    {
+       
+        border:1px solid #d9dada!important;
+    }
+    /*.player-report-table.tbl_shadow .rp_test_score tr td::first-child
+
+    {
+        border-bottom-left-radius: 20px!important;
+         border:1px solid #d9dada!important;
+
+    }
+    .player-report-table.tbl_shadow .rp_test_score tr td::last-child
+    {
+      border-bottom-right-radius: 20px !important;
+       border:1px solid #d9dada!important;
+    }*/
+
+    div#report_detail_cont,
+    section.member.section-padding.report_detail_page .table-layout {
         page-break-inside: avoid !important;
     }
 
@@ -8695,6 +8734,13 @@ form#wallet .wallet_form {
 }
 .child-voc .modal-footer {
     border-top: 2px solid #be298d;
+    display: flex;
+    justify-content: flex-start;
+}
+.child-voc .button-check {
+ 
+
+    padding-left: 30px!important;
 }
 .child-voc .form-check.child_check_wrap {
     padding-left: 30px;
@@ -8712,8 +8758,242 @@ font-family: 'Roboto', sans-serif;
 .print_data, .print_logo{
     display: none!important;
 }
-/*@media print {
-    .print_logo  {
-        display: block!important;
-    }
+.form-check.child_check_wrap .cstm-check label::before {
+   
+    top: 2px;
+}
+.form-check.child_check_wrap .cstm-check label::after {
+    
+    top: 5px;
+   
+}
+
+.player-report-table.tbl_shadow .rp_test_score th  {
+    border-left: 1px solid #fff!important;
+}
+.print_logo.print-logo-design {
+    text-align: center;
+    display: none;
+    width: 126px;
+    height: 70px;
+
+}
+.matches-dtl .cst-reports th p
+{
+    color: #fff!important;
+}
+
+.matches-dtl table.table.table-bordered.cst-reports {
+    width: 100%;
+    /* table-layout: fixed; */
+    border-radius: 20px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #d9dada;
+    overflow: hidden;
+}
+.account-menu ul
+{
+    align-items: center;
+}
+.account-menu ul li.nav-item.dropdown {
+    line-height: 14px;
+}
+.account-menu ul li.nav-item.dropdown a
+{
+        color: #fff;
+    text-transform: capitalize;
+    text-decoration: none !important;
+    padding: 7.5px 10px;
+}
+.account-menu ul li.nav-item.dropdown .dropdown-menu.show {
+    border: 2px solid #ba288a;
+    border-radius: 0;
+    top: 13px!important;
+}
+.account-menu ul li.nav-item.dropdown .dropdown-menu.show  a
+{
+    color: #000;
+}
+.account-menu ul li.nav-item.dropdown .dropdown-menu.show  a:hover
+{
+    color: #fff;
+    border-radius: 0; 
+    background: #ba288a;
+}
+.account-menu ul li.nav-item.dropdown .dropdown-toggle::after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: .255em;
+    content: "";
+    position: relative;
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-bottom: 0;
+    border-left: .3em solid transparent;
+    top: 2px;
+}
+
+.accordian_summary {
+    margin-top:30px;
+}
+.accordian_summary .card {
+    margin-top: 0;
+    box-shadow: none!important;
+}
+.accordian_summary .card .card-header, .accordian_summary .card .card-header:first-child {
+    margin-bottom: 5px;
+    border-radius: 0!important;
+    border-top-left-radius: 0!important;
+    border-top-right-radius: 0!important;
+    border: 0;
+}
+.member .pink-heading {
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+}
+.member .pink-heading h2.text-left {
+    margin-bottom:0px;
+    
+}
+.member .pink-heading a {
+    margin-left: 5px;
+}
+.member .pink-heading a i {
+   font-size: 16px!important;
+    height: 30px;
+    width: 30px;
+    color: #fff!important;
+    background:#00a0d5;
+    border:2px solid #00a0d5;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    justify-content: center;
+}
+.member .pink-heading a i:hover {
+   
+    color: #00a0d5!important;
+    background:#fff;
+    text-decoration: none;
+  
+}
+.member .pink-heading a:hover
+{
+    text-decoration: none;
+}
+.matches_summery .card-header {
+    background: #be298d!important;
+}
+.matches_summery .collapse.show,
+.matches_summery .collapsing {
+    border: 2px solid #be298d;
+    margin-bottom: 5px;
+}
+.matches_summery .card .card-header a span
+{
+    color: #be298d; 
+}
+a#add_match {
+    color: #fff;
+    cursor: pointer;
+}
+a#add_match:hover {
+    color: #be298d;
+}
+.matches-status-text {
+    max-width: 100%;
+}
+.matches-status-text label {
+    padding-left: 0!important;
+}
+.matches-status-text label {
+    padding-left: 0!important;
+    display: inline-flex;
+}
+.matches-status-text label span {
+    color: #be298d;
+    font-weight: 500;
+    margin-right: 3px;
+}
+.matches-card-body {
+    padding: 0 15px!important;
+}
+.matches-card-body .form-group {
+    padding: 10px;
+    border: 2px solid #00afef;
+}
+/*.cstm-reg-sec .card.coach_profile{
+    border: none; 
+     padding: 0; 
+     box-shadow: none; 
+     border-radius: 0;
 }*/
+.cstm-reg-sec .card-header {
+    font-family: 'Bangers', cursive;
+    color: #be298d;
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 50px;
+    padding: 0;
+    line-height: 42px;
+    font-weight: 400;
+}
+.cstm-reg-sec .button_form_row {
+    border: none!important;
+    padding: 0!important;;
+}
+.cstm-reg-sec .form-button
+{
+    padding: 0!important;;
+}
+
+#crop_image .modal-dialog {
+    max-width: 80%;
+    margin: 1.75rem auto;
+}
+
+.outer-wrap-player-goal .collapse.show, .outer-wrap-player-goal .collapsing {
+    border: 3px solid #be298d;
+    margin-bottom: 5px;
+    margin-top: -7px;
+    box-shadow: inset 7px 7px 20px 0px rgba(0, 0, 0, 0.1);
+    margin: -8px 15px 5px;
+}
+.outer-wrap-player-goal .accordian_summary .card .card-header {
+    border: 3px solid #be298d!important;
+    text-align: center;
+    background: #fff;
+    padding: 8px 15px;
+}
+.outer-wrap-player-goal .accordian_summary .card .card-header a {
+    font-size: 22px;
+    padding: 0 5px;
+    color: #000000;
+    text-align: center!important;
+    font-weight: 600;
+    display: block;
+}
+.outer-wrap-player-goal .accordian_summary {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+.goal-level-report
+{
+	padding-bottom: 0!important;
+}
+.goal-filter .form-group label {
+    font-size: 14px;
+    color: #dc3545;
+    font-weight: 500;
+    width: 100%;
+    margin-bottom: 0;
+    position: absolute;
+    top: 45px;
+    left: 5px;
+}
+.coach-goal-comment-sec {
+    padding: 100px 0;
+}

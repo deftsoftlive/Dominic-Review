@@ -14,15 +14,15 @@
       </div>
       <nav>
          <ul>
-          <li><a href="{{ route('my-family') }}" class="{{ \Request::route()->getName() === 'my-family' ? 'active' : '' || \Request::route()->getName() === 'add-family-member' ? 'active' : '' || \Request::route()->getName() === 'edit-family-member' ? 'active' : '' }}">My family</a></li>
-          <!-- <li><a href="{{ route('player_report_listing') }}" class="{{ \Request::route()->getName() === 'player_report_listing' ? 'active' : '' }}">Reports</a></li> -->
-          <li><a href="{{ route('my-bookings') }}" class="{{ \Request::route()->getName() === 'my-bookings' ? 'active' : '' }}">My Bookings</a></li>
-          <li><a href="{{ route('badges') }}" class="{{ \Request::route()->getName() === 'badges' ? 'active' : '' }}">DRH Tennis Pro</a></li>
-          <li><a href="{{ route('linked_coaches') }}" class="{{ \Request::route()->getName() === 'linked_coaches' ? 'active' : '' }}">My Coaches</a></li>
-          <li><a href="{{ route('parent_notifications') }}" class="{{ \Request::route()->getName() === 'parent_notifications' ? 'active' : '' }}">Notifications <span class="notification-icon"></span></a></li>
-          <li><a href="" class="">Settings</a></li>
-          <li><a href="{{ route('logout') }}" class="{{ \Request::route()->getName() === 'logout' ? 'active' : '' }}">Logout</a></li>
-         </ul>
+            @php
+            $user_id = \Auth::user()->role_id;
+            @endphp
+            @if($user_id == '2')
+            @include('inc.parent-menu')
+            @elseif($user_id == 3)
+            @include('inc.coach-menu')
+            @endif
+          </ul>
       </nav>
    </div>
 </div>
@@ -69,30 +69,29 @@
                      <p>Date: <span class="request-name">@php echo date("d/m/Y (H:i)",strtotime($req->updated_at)); @endphp</span></p>
 
                      @if($req->status == '0')
-                     	<div class="profile-status">Request Status: <span class="p-s-not-verified"><i class="fas fa-times-circle"></i> Did not accept</span></div>
-                      <br/>
-                      <form action="{{route('undo_reject_request')}}" method="POST">
-                      @csrf
-                      <input type="hidden" name="id" value="{{$req->id}}">
-                      <button type="submit" class="cstm-btn">Enable Link</button>
-                      </form>
-                     @elseif($req->status == '1')
-                     	<div class="profile-status">Request Status: <span class="p-s-verified"><i class="fas fa-check-circle"></i> Accepted</span></div> 
-                      <br/>
-                      <form action="{{route('undo_reject_request')}}" method="POST">
-                      @csrf
-                      <input type="hidden" name="id" value="{{$req->id}}">
-                      <button type="submit" class="cstm-btn">Unlink</button>
-                      </form>
-                     @elseif($req->status == '')
-                     <div id="parent_request" class="request-actions">
-                        <a href="javascript:void(0);" child="{{$child_id}}" parent="{{$parent_id}}" req="1" class="cstm-btn">Accept</a>
-                        <div class="reject-view" data-toggle="modal" data-target="#reject-detail">
-                          <a href="javascript:void(0);" class="cstm-btn">Unable To Accept</a>
+                        <div id="parent_request" class="request-actions par-req-{{$child_id}}">
+                          <a href="javascript:void(0);" child="{{$child_id}}" parent="{{$parent_id}}" req="1" class="cstm-btn">Accept</a>
+                          <div class="reject-view" data-toggle="modal" data-target="#reject-detail-{{$req->id}}">
+                            <a href="javascript:void(0);" class="cstm-btn">Unable To Accept</a>
+                          </div>
                         </div>
-                        
-                     </div>
-                     @endif
+                      @elseif($req->status == '1')
+                        <div class="profile-status">Request Status: <span class="p-s-verified"><i class="fas fa-check-circle"></i> Accepted</span></div> 
+                        <br/>
+                        <form action="{{route('unlink_coach')}}" class="unlink_coach" method="POST">
+                          @csrf
+                          <input type="hidden" name="id" value="{{$req->id}}">
+                          <button type="submit" class="cstm-btn">Unlink Your Coach</button>
+                        </form>
+                      @elseif($req->status == '2' && !empty($req->reason_of_rejection))
+                        <div class="profile-status">Request Status: <span class="p-s-not-verified"><i class="fas fa-times-circle"></i> Did not accept</span></div>
+                        <br/>
+                        <form action="{{route('undo_reject_request')}}" class="reject_req" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$req->id}}">
+                        <button type="submit" class="cstm-btn">Enable Link</button>
+                        </form>
+                      @endif
                   </figcaption>
 
                </div>

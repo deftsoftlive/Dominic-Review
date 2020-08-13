@@ -152,4 +152,12 @@ $('#parent_request a').click(function()
         })
     });
 
+/**********************************
+|   Match Report
+|**********************************/
+$('#child_id').on('change', function() {
+  var id = $( "#child_id option:selected" ).val(); 
+  $('#match_player_id').val(id);
+});
+
 }); 

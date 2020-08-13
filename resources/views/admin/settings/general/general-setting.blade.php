@@ -123,6 +123,14 @@
           </div>
         </div>
 
+        <!-- Thanku page text - Childcare -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>Thanku Page Text - For Childcare Vouchers</u></h5>
+            {{textarea($errors,'Instructions Text','thanku_page_text',$thanku_page_text)}}
+          </div>
+        </div>
+
         <!-- /.card-body -->
         <div class="card-footer">
           <button type="submit" id="homePageFormBtn" class="btn btn-primary">Submit</button>
@@ -151,6 +159,6 @@
 <script src="{{url('/js/validations/imageShow.js')}}"></script>
 <script src="{{ asset('js/cke_config.js') }}"></script>
 <script type="text/javascript">
-   // CKEDITOR.replace('google_analytics', options);
+  CKEDITOR.replace('thanku_page_text', options);
 </script>
 @endsection

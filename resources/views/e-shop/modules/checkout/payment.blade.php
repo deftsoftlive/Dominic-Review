@@ -17,7 +17,7 @@
                         <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"><span class="tab-icon"><i class="fas fa-credit-card"></i></span>Card</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"><span class="tab-icon"><i class="fas fa-id-card"></i></span>Tax-Free Childcare</a>
+                        <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"><span class="tab-icon"><i class="fas fa-id-card"></i></span>Childcare Vouchers & Tax-Free Childcare</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"><span class="tab-icon"><i class="fas fa-envelope-open"></i></span>Wallet</a>
@@ -103,13 +103,22 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                             </div>
+
+                            <form method="POST" id="childcare_form" action="{{route('save_childcare_voucher')}}" class="pick-option"> @csrf
                             <div class="modal-body">
                                 <p>{{ getAllValueWithMeta('childcare_subheading', 'child-care-popup') }}</p>
                                 {!! getAllValueWithMeta('childcare_content', 'child-care-popup') !!}
-                                
+
+                                <div class="form-check child_check_wrap">
+                                   <!--  <div class="cstm-check"><input id="checkbox1" class="checkbox-style col-1-W1 " type="checkbox" value="1">
+                                        <label for="checkbox1" class="checkbox-style-3-label"></label>
+                                        <input type="hidden" id="checkbox1" name="checkbox1" value="1">I have read all the information.
+                                    </div> -->
+                                    <input type="checkbox" name="accept" id="accept" > I have read all the information.
+                                </div>
+                                <br/>
                             </div>
                             <div class="modal-footer">
-                                <form method="POST" id="childcare_form" action="{{route('save_childcare_voucher')}}" class="pick-option"> @csrf
                                     <p class="child_cont">{{ getAllValueWithMeta('providers_heading', 'child-care-popup') }}</p>
                                     @php
                                     $providers = DB::table('childcare_vouchers')->where('status',1)->orderBy('id','asc')->get();
@@ -126,14 +135,12 @@
                                         @endforeach
                                     </div>
                                     
-                                    <div class="form-check child_check_wrap">
-                                        <input type="checkbox" name="accept" id="accept" > I have read all the information.
-                                    </div>
+                                    
                                     <div class="form-check button-check">
                                         <button id="submit-childcare" type="submit" class="cstm-btn">Submit</button>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

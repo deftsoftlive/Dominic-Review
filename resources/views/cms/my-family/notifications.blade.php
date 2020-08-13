@@ -28,13 +28,8 @@
 
       @elseif($user_id == 3)
 
-        <li><a href="{{ route('coach_profile') }}" class="{{ \Request::route()->getName() === 'coach_profile' ? 'active' : '' }}">My Profile</a></li>
-        <!-- <li><a href="{{ route('qualifications') }}" class="{{ \Request::route()->getName() === 'qualifications' ? 'active' : '' }}">Qualifications</a></li> -->
-        <li><a href="{{ route('coach_player') }}" class="{{ \Request::route()->getName() === 'coach_player' ? 'active' : '' }}">My Players</a></li>
-        <li><a href="{{ route('my-bookings') }}" class="{{ \Request::route()->getName() === 'my-bookings' ? 'active' : '' }}">My Bookings</a></li>
-        <li><a href="{{ route('request_by_parent') }}" class="{{ \Request::route()->getName() === 'request_by_parent' ? 'active' : '' }}">Notifications <span class="notification-icon">({{$notification}})</span></a></li>
-        <li><a href="{{ route('account_settings') }}" class="{{ \Request::route()->getName() === 'account_settings' ? 'active' : '' }}">Settings</a></li>
-        <li><a href="{{ route('logout') }}" class="{{ \Request::route()->getName() === 'logout' ? 'active' : '' }}">Logout</a></li>
+        @include('inc.coach-menu')
+
       @endif
 	  </ul>
 	</nav>
@@ -92,9 +87,9 @@
                             <td><p>
                               @if($re->status == 1)
                                   <h6 style="color:green;"><b>Accepted</b></h6>
-                              @elseif($re->status == 0)
-                                  <h6 style="color:red;"><b>Coach is unable to accept your request</b></h6>
                               @elseif($re->status == 2)
+                                  <h6 style="color:red;"><b>Coach is unable to accept your request</b></h6>
+                              @elseif($re->status == 0)
                                   <h6 style="color:green;"><b>Request Sent</b></h6>
                               @endif
                             </p></td>

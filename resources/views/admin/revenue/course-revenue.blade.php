@@ -123,9 +123,10 @@
                 <th>Lead Coach</th>
                 <th>Attendees</th>
                 <th>Revenue</th>
-                <th>Coach Costs</th> 
+                <th>Costs</th> 
                 <th>Profit</th>
                 <th>Action</th>
+                <th>Link</th>
             </tr>
             </thead>
             <tbody>
@@ -166,12 +167,29 @@
                     <td>@if(!empty($course->linked_coach)) @php echo getUsername($course->linked_coach); @endphp @else - @endif</td>
                     <td>{{$participants}}</td>
                     <td>&pound;{{$sum_revenue}}</td>
-                    <td>@if(!empty($course->coach_cost)) &pound;{{$course->coach_cost}} @else - @endif</td> 
-                    <td>&pound;{{$get_revenue}}</td>
+                   <!--  <td>@if(!empty($course->coach_cost)) &pound;{{$course->coach_cost}} @else - @endif</td> 
+                    <td>&pound;{{$get_revenue}}</td> -->
+                    <td>
+                    @php 
+                        $cumulative_sum = ($course->coach_cost)+($course->venue_cost)+($course->equipment_cost)+($course->other_cost)+($course->tax_cost); 
+                    @endphp
+                    &pound;{{$cumulative_sum}}
+                    </td> 
+                    <td>
+                        @php 
+                            $profit = $sum_revenue - $cumulative_sum; 
+                        @endphp 
+                        &pound;{{$profit}}
+                    </td>
                     <td><a href="{{url('admin/revenue/courses')}}/{{$co->product_id}}">View Report</a></td>
+                    <form action="{{route('generate_course_report')}}" method="POST">
+                    @csrf
+                    <td><input type="checkbox" name="link[]" value="{{$co->id}}"></td>
+                    
                 </tr>
             @endforeach
-
+                <button style="float:right;margin-bottom: 10px;" class="btn btn-primary" type="submit">Generate Report</button>
+            </form>
             @else
                 <tr><td colspan="8"><div class="no_results"><h3>No result found</h3></div></td></tr>
             @endif

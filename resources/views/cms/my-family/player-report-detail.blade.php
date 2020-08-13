@@ -2,7 +2,7 @@
 @section('title', 'DRH|Register')
 @section('content')
 @php
-$country_code = DB::table('country_code')->get();
+$country_code = DB::table('country_code')->get(); 
 $notification = DB::table('parent_coach_reqs')->where('coach_id',Auth::user()->id)->where('status',NULL)->count();
 $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->first();
 @endphp
@@ -35,19 +35,8 @@ div#report_detail_cont {
 
                 @elseif($user_id == 3)
 
-                <li><a href="{{ route('coach_profile') }}" class="{{ \Request::route()->getName() === 'coach_profile' ? 'active' : '' }}">My Profile</a></li>
-                <li><a href="{{ route('coach_report') }}" class="{{ \Request::route()->getName() === 'coach_report' ? 'active' : '' }}">Reports</a></li>
-                <!-- <li><a href="{{ route('qualifications') }}" class="{{ \Request::route()->getName() === 'qualifications' ? 'active' : '' }}">Qualifications</a></li> -->
-                @if(!empty($user))
-                @if($user->enable_inovice == 1)
-                <li><a href="{{ route('upload_invoice') }}" class="{{ \Request::route()->getName() === 'upload_invoice' ? 'active' : '' || \Request::route()->getName() === 'add_upload_invoice' ? 'active' : '' }}">Invoices</a></li>
-                @endif
-                @endif
-                <li><a href="{{ route('coach_player') }}" class="{{ \Request::route()->getName() === 'coach_player' ? 'active' : '' }}">My Players</a></li>
-                <li><a href="{{ route('my-bookings') }}" class="{{ \Request::route()->getName() === 'my-bookings' ? 'active' : '' }}">My Bookings</a></li>
-                <li><a href="{{ route('request_by_parent') }}" class="{{ \Request::route()->getName() === 'request_by_parent' ? 'active' : '' }}">Notifications <span class="notification-icon">({{$notification}})</span></a></li>
-                <li><a href="{{ route('account_settings') }}" class="{{ \Request::route()->getName() === 'account_settings' ? 'active' : '' }}">Settings</a></li>
-                <li><a href="{{ route('logout') }}" class="{{ \Request::route()->getName() === 'logout' ? 'active' : '' }}">Logout</a></li>
+                    @include('inc.coach-menu')
+
                 @endif
             </ul>
         </nav>
@@ -59,6 +48,9 @@ div#report_detail_cont {
 <section class="member section-padding report_detail_page">
     <div class="container">
         <div class="pink-heading">
+            <div class="print_logo print-logo-design">
+                <img height="70px;" width="120px;" src="http://49.249.236.30:8654/dominic-new/public/uploads/1584078701website_logo.png">
+            </div>
             <h2>Your Report</h2>
         </div>
         <div class="col-md-12">

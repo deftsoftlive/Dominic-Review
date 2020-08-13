@@ -93,13 +93,14 @@
                                             <table class="cart-table margin-top-5">
                                                 <tbody>
                                                     <tr>
-                                                        <th>Camp</th>
+                                                        <th>Course</th>
                                                         <td><strong>{{$course->title}}</strong></td>
                                                     </tr>
                                                     <tr>
-                                                        <th>Total Revenue</th>
-                                                        <td><strong>&pound;{{$sum_revenue}}</strong></td>
+                                                        <th>Season</th>
+                                                        <td><strong>@php echo getSeasonname($course->season); @endphp</strong></td>
                                                     </tr>
+                                                  
                                                 </tbody>
                                             </table>
                                         </div>
@@ -141,7 +142,90 @@
     </div>
 </div>
 
-<div class="card-block table-border-style rp_detail_sec">
+<div class="row">
+    <div class="col-xl-12 col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="total-price-wrap full-invoice">
+                            <div id="cartTotals">
+                                <div class="total-price-wrap">
+                                    <div id="cartTotals">
+                                        <div class="cart-totals ">
+                                            <div class="text-center cst_heading">
+                                                <h3>Cost Details</h3>
+                                            </div>
+                                            <table class="cart-table margin-top-5">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Coach Cost</th>
+                                                        <td><strong>&pound;{{$course->coach_cost}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Court/Venue Cost</th>
+                                                        <td><strong>&pound;{{$course->venue_cost}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Equipment Cost</th>
+                                                        <td><strong>&pound;{{$course->equipment_cost}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Other Cost</th>
+                                                        <td><strong>&pound;{{$course->other_cost}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Tax/vat Cost</th>
+                                                        <td><strong>&pound;{{$course->tax_cost}}</strong></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="total-price-wrap full-invoice">
+                            <div id="cartTotals">
+                                <div class="total-price-wrap">
+                                    <div id="cartTotals">
+                                        <div class="cart-totals  ">
+                                            <div class="text-center cst_heading">
+                                                <h3>Revenue Details</h3>
+                                            </div>
+                                            <table class="cart-table margin-top-5">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Total Costs</th>
+                                                        @php $cumulative_sum = ($course->coach_cost)+($course->venue_cost)+($course->equipment_cost)+($course->other_cost)+($course->tax_cost); @endphp
+                                                        <td><strong>&pound;{{$cumulative_sum}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Total Income</th>
+                                                        <td><strong>&pound;{{$sum_revenue}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Profit</th>
+                                                        @php $profit = $sum_revenue - $cumulative_sum; @endphp
+                                                        <td><strong>&pound;{{$profit}}</strong></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-block table-border-style rp_detail_sec d-print-none">
     <div class="table-responsive">
         @include('admin.error_message')
         <table class="table table-hover gender_colors">
@@ -149,9 +233,7 @@
                 <tr>
                     <th>Date</th>
                     <th>Participant Name</th>
-                    <th>Revenue</th>
-                    <th>Coach Cost</th>
-                    <!-- <th>Profit</th> -->
+                    <th>Total Income</th>
                 </tr>
             </thead>
             <tbody>
@@ -164,8 +246,6 @@
                     <td>@php echo date('d-m-Y',strtotime($co->updated_at)); @endphp</td>
                     <td class="child_gender">@php echo getUserName($co->child_id); @endphp</td>
                     <td>&pound;{{$co->total}}</td>
-                    <td>&pound;{{$course->coach_cost}}</td>
-                    <!-- <td>&pound;{{$co->total - $course->coach_cost}}</td> -->
                 </tr>
                 @endforeach
             </tbody>
