@@ -42,6 +42,10 @@
     .contact-gender label {
         margin: 0 30px 0 7px;
     }
+   .card-header.view-card-header .view_stats {
+    width: 12%!important;
+    padding: 10px 10px!important;
+}
 
     #save_goal {
         margin-right: 15px;
@@ -287,6 +291,7 @@
         display: none;
     }
 
+   
     .account-menu nav li+li {
         margin-left: 3px;
     }
@@ -305,6 +310,22 @@
     .event-info p.detail-cont {
         min-height: 72px;
     }
+    .report-tab-one .inner-form-box
+    {
+        height: 174px;
+    }
+     .player-report-row {
+    padding: 0 0 0 15px;
+}
+.card-header.view-card-header .view_stats {
+    width: 16%!important;
+    padding: 10px!important;
+}
+
+.report-tab-sec button.cstm-btn
+{
+    margin-right: 10px;
+}
 
 
     form.register-form .option_row .form-group.row .form-radios {
@@ -928,7 +949,10 @@
 @media(max-width: 767px) {
     .about-us-sec>.container>.row>div.col-md-6:nth-of-type(odd) {
         order: 1;
-    }
+    }.card-header.view-card-header .view_stats {
+    width: 27%!important;
+   
+}
 
     .report-sec ul#myTab li {
 
@@ -939,6 +963,10 @@
         margin-bottom: 20px!important;
         justify-content: center!important;
         margin-right: 0!important;
+    }
+    .report-tab-one .inner-form-box
+    {
+        height:auto;
     }
 
 
@@ -1739,6 +1767,10 @@
         width: 33%;
 
     }
+    .card-header.view-card-header .view_stats {
+    width: 40%!important;
+   
+}
 
 
 
@@ -1837,9 +1869,7 @@
         text-align: left;
     }
 
-        {
-        display: none;
-    }
+     
 
     .event-text {
 

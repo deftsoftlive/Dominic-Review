@@ -9,6 +9,7 @@ use App\ReportQuestionOption;
 use App\PlayerReport;
 use App\User;
 use App\Competition;
+use App\MatchStats;
 
 class ReportQuestionController extends Controller
 {
@@ -314,6 +315,21 @@ class ReportQuestionController extends Controller
     public function comp_detail($id){
         $competition = Competition::where('id',$id)->first();
         return view('admin.player-report.match-report.match')->with('competition',$competition);
+    }
+
+    /*-------------------------------------------------
+    |    Match Stats
+    |--------------------------------------------------*/
+    public function match_stats($comp_id,$match_id){    
+        $stats = MatchStats::where('competition_id',$comp_id)->where('match_id',$match_id)->first();
+
+        if(!empty($stats))
+        {
+            $stats_calculation = statsCalculation($stats);
+        }else{
+            $stats_calculation = '';
+        }
+        return view('admin.player-report.match-report.stats',compact('stats_calculation','comp_id','match_id'));
     }
 
 }

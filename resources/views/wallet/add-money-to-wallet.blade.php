@@ -46,6 +46,8 @@ $wallet_amt = DB::table('wallets')->where('user_id',Auth::user()->id)->first();
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10">
+                <p>{!! getAllValueWithMeta('wallet_text', 'general-setting') !!}</p>
+                <br/>
                 <div class="wallet_amt">
                     @if(!empty($wallet_amt))
                     <h4>Total Wallet Money : &pound;{{$wallet_amt->money_amount}}</h4>

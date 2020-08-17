@@ -28,7 +28,7 @@
 @endif
 <section class="member section-padding">
    <div class="container">
-      <div class="pink-heading">
+      <div class="pink-heading comp_match">
          <h2 class="text-left">Competiton Matches&nbsp; </h2><a href="{{url('/user/reports/comp')}}/@php echo base64_encode($comp_id); @endphp"><i style="font-size: 18px; color: #00a0d5; cursor: pointer;" class="fas fa-pen" aria-hidden="true"></i></a>
       </div>
       @php $competition = DB::table('competitions')->where('id',$comp_id)->first(); @endphp
@@ -62,15 +62,22 @@
          <div class="card">
             @php $i = 1; @endphp
             @foreach($matches as $match)
-            <div class="card-header">
+            <div class="card-header view-card-header">
                <a class="collapsed card-link" data-toggle="collapse" href="#Personal-{{$match->id}}">
-               <span>{{$i}}</span> {{$match->match_title}}
+               <span>{{$i}}</span> {{$match->opponent_name}}
                </a>
+               @php 
+                  $check_stats = DB::table('match_stats')->where('competition_id',$competition->id)->where('match_id',$match->id)->first();
+               @endphp
+               @if(!empty($check_stats))
+                  <a class="view_stats" href="{{url('/user/competition')}}/{{$competition->id}}/match/{{$match->id}}/stats/view">View Stats</a>
+               @endif
             </div>
             <div id="Personal-{{$match->id}}" class="collapse" >
                <div class="card-body">
                   <div class="report-table-wrap report-tab-sec report-tab-one player_rp_detail matches-dtl">
                      <div class="col-md-12 report_row">
+
                         <table class="table table-bordered  cst-reports">
                            <tbody>
                               <tr>

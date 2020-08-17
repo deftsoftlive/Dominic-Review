@@ -94,8 +94,9 @@
                         @foreach($matches as $match)
                         <div class="card-header">
                            <a class="collapsed card-link" data-toggle="collapse" href="#Personal-{{$match->id}}">
-                           <span>{{$i}}</span> {{$match->match_title}}
+                           <span>{{$i}}</span> {{$match->opponent_name}} - {{$match->result}} - {{$match->score}}
                            </a>
+                           <a href="{{url('admin/competition')}}/{{$competition->id}}/match/{{$match->id}}/stats"><button class="btn btn-primary">View Stats</button></a>
                         </div>
                         <div id="Personal-{{$match->id}}" class="collapse" >
                            <div class="card-body">

@@ -680,6 +680,12 @@ trait GeneralSettingTrait {
 
                        // Thanku Page Text - Childcare voucher
                        'thanku_page_text' => getAllValueWithMeta('thanku_page_text', $slug),
+
+                       // Wallet Text
+                       'wallet_text' => getAllValueWithMeta('wallet_text', $slug),
+
+                       // Match Stats Text
+                       'match_stats_text' => getAllValueWithMeta('match_stats_text', $slug),
           ];
 		 	case 'global-settings': 
           return [

@@ -9,6 +9,11 @@
   .badge-img{
     width: 50%;
 }
+label.confirm_msg.form-check-label {
+    font-size: 15px;
+    color: #666666;
+    font-weight: 300;
+}
 </style>
 <section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/{{ getAllValueWithMeta('badges_banner_img', 'badges') }});">
     <div class="container">
@@ -39,7 +44,7 @@
                         <a class="nav-item nav-link menu-tab-link" id="nav-goals-tab" data-toggle="tab" href="#nav-goals" role="tab" aria-controls="nav-home" aria-selected="false"><span><i class="fas fa-bullseye"></i></span>Player Goals</a>
                         <a class="nav-item nav-link menu-tab-link active" id="nav-badges-tab" data-toggle="tab" href="#nav-badges" role="tab" aria-controls="nav-profile" aria-selected="true"><span><i class="fas fa-trophy"></i></span>Player Badges</a>
                         <a class="nav-item nav-link menu-tab-link" id="nav-reports-tab" data-toggle="tab" href="#nav-reports" role="tab" aria-controls="nav-contact" aria-selected="false"><span><i class="fas fa-clipboard-list"></i></span>Player Reports</a>
-                        <a class="nav-item nav-link menu-tab-link" id="nav-schedule-tab" data-toggle="tab" href="#nav-schedule" role="tab" aria-controls="nav-schedule" aria-selected="true"><span><i class="fas fa-users"></i></span>Matches</a>
+                        <a class="nav-item nav-link menu-tab-link" id="nav-matches-tab" data-toggle="tab" href="#nav-matches" role="tab" aria-controls="nav-matches" aria-selected="true"><span><i class="fas fa-users"></i></span>Matches</a>
                         <a class="nav-item nav-link menu-tab-link" id="nav-schedule-tab" data-toggle="tab" href="#nav-schedule" role="tab" aria-controls="nav-schedule" aria-selected="false"><span><i class="fas fa-calendar-alt"></i></span>Schedule</a>
                         <a class="nav-item nav-link menu-tab-link" id="nav-stats-tab" data-toggle="tab" href="#nav-stats" role="tab" aria-controls="nav-stats" aria-selected="false"><span><i class="fas fa-cog"></i></span>Stats</a>
                     </div>
@@ -78,7 +83,8 @@
                                             @endif
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <form id="goals" class="select-player-goal-form goal-filter">
+                                                    <form id="goals" action="{{route('badges')}}" method="POST" class="select-player-goal-form goal-filter">
+                                                    	@csrf
                                                         <div class="form-row">
                                                             <div class="form-group col-md-4 col-sm-6">
                                                                 <!-- <label for="inputPlayer">Select Player :</label> -->
@@ -98,8 +104,8 @@
                                                                 @endforeach
                                                                 </select>
                                                             </div>
-                                                            <div class="form-group col-md-4 col-sm-6">
-                                                                <!-- <label for="inputGoal">Select Goals :</label> -->
+                                                            <input type="hidden" name="goal_type" value="beginner">
+                                                            <!-- <div class="form-group col-md-4 col-sm-6">
                                                                 <select name="goal_type" id="goal_type" class="form-control">
                                                                     <option selected="" disabled="">Select Goal Type</option> 
                                                                     <option value="beginner"
@@ -115,7 +121,7 @@
                                                                         @endif 
                                                                     @endif>Advanced Goals</option>
                                                                 </select>
-                                                            </div>
+                                                            </div> -->
                                                             <div class="form-group col-md-2">
                                                                 <button id="save_goal" class="cstm-btn">Submit</button>
                                                                 <a href="{{url('/user/badges')}}" class="cstm-btn">Reset</a>
@@ -123,10 +129,34 @@
                                                         </div>
                                                     </form>
                                                 </div>
-                                                <br/>
+                                                <br/><br/>
                                                 <div class="col-md-12">
                                                     <div class="player-goal-heading">
                                                         <h1>All of your goals apart from your Big Dreams should follow the acronym S.M.A.R.T.</h1>
+
+                                                        <ul class="player-goal-inner-text-wrap">
+                                                            <li>
+                                                                <h2>{{ getAllValueWithMeta('specific_title', 'badges') }}</h2>
+                                                                <p>{{ getAllValueWithMeta('specific_desc', 'badges') }}</p>
+                                                            </li>
+                                                            <li>
+                                                                <h2>{{ getAllValueWithMeta('measurable_title', 'badges') }}</h2>
+                                                                <p>{{ getAllValueWithMeta('measurable_desc', 'badges') }}</p>
+                                                            </li>
+                                                            <li>
+                                                                <h2>{{ getAllValueWithMeta('achievable_title', 'badges') }}</h2>
+                                                                <p>{{ getAllValueWithMeta('achievable_desc', 'badges') }}</p>
+                                                            </li>
+                                                            <li>
+                                                                <h2>{{ getAllValueWithMeta('realistic_title', 'badges') }}</h2>
+                                                                <p>{{ getAllValueWithMeta('realistic_desc', 'badges') }}</p>
+                                                            </li>
+                                                            <li>
+                                                                <h2>{{ getAllValueWithMeta('timed_title', 'badges') }}</h2>
+                                                                <p>{{ getAllValueWithMeta('timed_desc', 'badges') }}</p>
+                                                            </li>
+                                                        </ul>
+                                                        <br/>
                                                     </div>
                                                 </div>
 
@@ -134,10 +164,10 @@
                                                     $goals = DB::table('goals')->where('goal_type','beginner')->get();
                                                 @endphp
 
-                                                <form action="{{route('save_goal')}}" class="col-md-12" method="POST">
+                                                <form id="goal_detail" action="{{route('save_goal')}}" class="col-md-12" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="goal_player_name" id="goal_player_name" value="{{isset($goal_player) ? $goal_player : ''}}">
-                                                    <input type="hidden" name="pl_goal_type" id="pl_goal_type" value="{{isset($goal_type) ? $goal_type : ''}}">
+                                                    <input type="hidden" name="pl_goal_type" id="pl_goal_type" value="beginner">
                                                     <input type="hidden" name="parent_id" value="{{Auth::user()->id}}">
                                                     
                                                     @foreach($goals as $go)
@@ -157,7 +187,7 @@
                                                                 </div>
                                                         </fieldset>
                                                         <div class="goal-reciew-feedback">
-                                                            <p>Write goal review feedback</p>
+                                                            <p>Linked Coach Feedback</p>
                                                                 <div class="form-group">
                                                                     <textarea class="form-control goal-textarea" readonly="" rows="3">@if(!empty($goal_player) && !empty($user_goal)){{$user_goal->coach_comment}}@endif</textarea>
                                                                 </div>
@@ -165,8 +195,16 @@
                                                     </div>
 
                                                     @endforeach
-                                                    
-                                                    <button type="submit" class="cstm-btn">Submit</button>
+                                                    <div class="form-group form-check">
+													    <input type="checkbox" class="form-check-input" name="confirmation" id="confirmation_msg">
+													    <label class="confirm_msg form-check-label" for="exampleCheck1">{{ getAllValueWithMeta('confirmation_msg', 'badges') }}</label>
+													</div>
+													<br/>
+													<div class="player-goal-date">
+													    <p><span>Date :</span> {{ date('d F Y') }} </p>
+													</div>
+
+                                                    <button type="submit" class="cstm-btn">set goal</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -187,7 +225,8 @@
                                             @endif
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <form id="goals" class="select-player-goal-form goal-filter">
+                                                    <form id="goals1" action="{{route('badges')}}" method="POST" class="select-player-goal-form goal-filter">
+                                                    	@csrf
                                                         <div class="form-row">
                                                             <div class="form-group col-md-4 col-sm-6">
                                                                 <!-- <label for="inputPlayer">Select Player :</label> -->
@@ -207,23 +246,7 @@
                                                                 @endforeach
                                                                 </select>
                                                             </div>
-                                                            <div class="form-group col-md-4 col-sm-6">
-                                                                <!-- <label for="inputGoal">Select Goals :</label> -->
-                                                                <select name="goal_type" id="goal_type" class="form-control">
-                                                                    <option selected="" disabled="">Select Goal Type</option> 
-                                                                    <option value="beginner"
-                                                                    @if(!empty($goal_type))
-                                                                        @if($goal_type == 'beginner')   
-                                                                            selected 
-                                                                        @endif
-                                                                    @endif>Beginner Goals</option>
-                                                                    <option value="advanced"
-                                                                    @if(!empty($goal_type))
-                                                                        @if($goal_type == 'advanced')   selected 
-                                                                        @endif
-                                                                    @endif>Advanced Goals</option>
-                                                                </select>
-                                                            </div>
+                                                            <input type="hidden" name="goal_type" value="advanced">
                                                             <div class="form-group col-md-2">
                                                                 <button id="save_goal" class="cstm-btn">Submit</button>
                                                                 <a href="{{url('/user/badges')}}" class="cstm-btn">Reset</a>
@@ -255,340 +278,86 @@
                                                                 <p>{{ getAllValueWithMeta('timed_desc', 'badges') }}</p>
                                                             </li>
                                                         </ul>
-                                                        
-                                                        <!-- <div class="set-goal-btn-wrap">
-                                                <a href="javascript:void(0);" class="cstm-btn">set goals</a>
-                                              </div> -->
-                                                        <!--  </div>                          
-                                          </div> -->
-                                                        <!-- <div class="col-md-12">
-                                              <div class="player-goal-heading">
-                                                <h1>All of your goals apart from your Big Dreams should follow the acronym S.M.A.R.T.</h1>
-                                              </div>
-                                          </div> -->
-                                                        <!-- <div class="col-md-12">
-                                            <fieldset class="player-goal-card">
-                                              <legend>MY BIG DREAMS</legend>
-                                              <p>What do you want to do or be when you are grown up? This doesn’t have to be tennis related</p>
-                                              <form>
-                                                <div class="form-group">
-                                                  <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                </div>
-                                              </form>
-                                            </fieldset>
-                                            <div class="goal-reciew-feedback">
-                                              <p>Write goal review feedback</p>
-                                              <form>
-                                                <div class="form-group">
-                                                  <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                </div>
-                                              </form>
-                                            </div>
-                                          </div>
-                                          <div class="col-md-12">
-                                            <fieldset class="player-goal-card">
-                                              <legend>SHORT TERM TENNIS GOALS</legend>
-                                              <p>Between now and the end of the term</p>
-                                              <form>
-                                                <div class="form-group">
-                                                      <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                    </div>
-                                              </form>
-                                            </fieldset>
-                                            <div class="goal-reciew-feedback">
-                                              <p>Write goal review feedback</p>
-                                              <form>
-                                                <div class="form-group">
-                                                  <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                </div>
-                                              </form>
-                                            </div>
-                                          </div>
-                                          <div class="col-md-12">
-                                            <fieldset class="player-goal-card">
-                                              <legend>MEDIUM TERM TENNIS GOALS</legend>
-                                              <p>3 to 6 months from now</p>
-                                              <form>
-                                                <div class="form-group">
-                                                      <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                    </div>
-                                              </form>
-                                            </fieldset>
-                                            <div class="goal-reciew-feedback">
-                                              <p>Write goal review feedback</p>
-                                              <form>
-                                                <div class="form-group">
-                                                  <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                </div>
-                                              </form>
-                                            </div>
-                                          </div>
-                                          <div class="col-md-12">
-                                            <fieldset class="player-goal-card">
-                                              <legend>LONG TERM TENNIS GOALS</legend>
-                                              <p>6 to 12 months from now</p>
-                                              <form>
-                                                <div class="form-group">
-                                                      <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                    </div>
-                                              </form>
-                                            </fieldset>
-                                            <div class="goal-reciew-feedback">
-                                              <p>Write goal review feedback</p>
-                                              <form>
-                                                <div class="form-group">
-                                                  <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                </div>
-                                              </form>
-                                            </div>
-                                          </div> -->
-                                                        <div class="outer-wrap-player-goal">
-                                                            <div class="accordian_summary">
-                                                                <div class="card">
-                                                                    <div class="card-header">
-                                                                        <a class="collapsed card-link" data-toggle="collapse" href="#goal-1">
-                                                                            My technical tennis goals
-                                                                        </a>
-                                                                    </div>
-                                                                    <div id="goal-1" class="collapse">
-                                                                        <div class="card-body">
-                                                                            <div class="report-table-wrap report-tab-sec report-tab-one player_rp_detail matches-dtl">
-                                                                                <div class="col-md-12 report_row">
-                                                                                    <div class="col-md-12">
-                                                                                        <fieldset class="player-goal-card">
-                                                                                            <legend>MY BIG DREAMS</legend>
-                                                                                            <p>What do you want to do or be when you are grown up? This doesn’t have to be tennis related</p>
-                                                                                            <form>
-                                                                                                <div class="form-group">
-                                                                                                    <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                                                                </div>
-                                                                                            </form>
-                                                                                        </fieldset>
-                                                                                       
-                                                                                    </div>
-                                                                                    <div class="col-md-12">
-                                                                                        <fieldset class="player-goal-card">
-                                                                                            <legend>SHORT TERM TENNIS GOALS</legend>
-                                                                                            <p>Between now and the end of the term</p>
-                                                                                            <form>
-                                                                                                <div class="form-group">
-                                                                                                    <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                                                                </div>
-                                                                                            </form>
-                                                                                        </fieldset>
-                                                                                        
-                                                                                    </div>
-                                                                                    <div class="col-md-12">
-                                                                                        <fieldset class="player-goal-card">
-                                                                                            <legend>MEDIUM TERM TENNIS GOALS</legend>
-                                                                                            <p>3 to 6 months from now</p>
-                                                                                            <form>
-                                                                                                <div class="form-group">
-                                                                                                    <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                                                                </div>
-                                                                                            </form>
-                                                                                        </fieldset>
-                                                                                        <div class="goal-reciew-feedback">
-                                                                                            <p>Write goal review feedback</p>
-                                                                                            <form>
-                                                                                                <div class="form-group">
-                                                                                                    <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                                                                </div>
-                                                                                            </form>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="card-header">
-                                                                        <a class="collapsed card-link" data-toggle="collapse" href="#goal-4">
-                                                                            My Tactical tennis goals
-                                                                        </a>
-                                                                    </div>
-                                                                    <div id="goal-4" class="collapse">
-                                                                        <div class="card-body">
-                                                                            <div class="report-table-wrap report-tab-sec report-tab-one player_rp_detail matches-dtl">
-                                                                                <div class="col-md-12 report_row">
-                                                                                    <div class="col-md-12">
-                                                                                        <fieldset class="player-goal-card">
-                                                                                            <legend>MY BIG DREAMS</legend>
-                                                                                            <p>What do you want to do or be when you are grown up? This doesn’t have to be tennis related</p>
-                                                                                            <form>
-                                                                                                <div class="form-group">
-                                                                                                    <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                                                                </div>
-                                                                                            </form>
-                                                                                        </fieldset>
-                                                                                       
-                                                                                    </div>
-                                                                                    <div class="col-md-12">
-                                                                                        <fieldset class="player-goal-card">
-                                                                                            <legend>SHORT TERM TENNIS GOALS</legend>
-                                                                                            <p>Between now and the end of the term</p>
-                                                                                            <form>
-                                                                                                <div class="form-group">
-                                                                                                    <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                                                                </div>
-                                                                                            </form>
-                                                                                        </fieldset>
-                                                                                        
-                                                                                    </div>
-                                                                                    <div class="col-md-12">
-                                                                                        <fieldset class="player-goal-card">
-                                                                                            <legend>MEDIUM TERM TENNIS GOALS</legend>
-                                                                                            <p>3 to 6 months from now</p>
-                                                                                            <form>
-                                                                                                <div class="form-group">
-                                                                                                    <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                                                                </div>
-                                                                                            </form>
-                                                                                        </fieldset>
-                                                                                        <div class="goal-reciew-feedback">
-                                                                                            <p>Write goal review feedback</p>
-                                                                                            <form>
-                                                                                                <div class="form-group">
-                                                                                                    <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                                                                </div>
-                                                                                            </form>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="card-header">
-                                                                        <a class="collapsed card-link" data-toggle="collapse" href="#goal-2">
-                                                                            My Physical tennis goals
-                                                                        </a>
-                                                                    </div>
-                                                                    <div id="goal-2" class="collapse">
-                                                                        <div class="card-body">
-                                                                            <div class="report-table-wrap report-tab-sec report-tab-one player_rp_detail matches-dtl">
-                                                                                <div class="col-md-12 report_row">
-                                                                                    <div class="col-md-12">
-                                                                                        <fieldset class="player-goal-card">
-                                                                                            <legend>MY BIG DREAMS</legend>
-                                                                                            <p>What do you want to do or be when you are grown up? This doesn’t have to be tennis related</p>
-                                                                                            <form>
-                                                                                                <div class="form-group">
-                                                                                                    <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                                                                </div>
-                                                                                            </form>
-                                                                                        </fieldset>
-                                                                                       
-                                                                                    </div>
-                                                                                    <div class="col-md-12">
-                                                                                        <fieldset class="player-goal-card">
-                                                                                            <legend>SHORT TERM TENNIS GOALS</legend>
-                                                                                            <p>Between now and the end of the term</p>
-                                                                                            <form>
-                                                                                                <div class="form-group">
-                                                                                                    <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                                                                </div>
-                                                                                            </form>
-                                                                                        </fieldset>
-                                                                                        
-                                                                                    </div>
-                                                                                    <div class="col-md-12">
-                                                                                        <fieldset class="player-goal-card">
-                                                                                            <legend>MEDIUM TERM TENNIS GOALS</legend>
-                                                                                            <p>3 to 6 months from now</p>
-                                                                                            <form>
-                                                                                                <div class="form-group">
-                                                                                                    <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                                                                </div>
-                                                                                            </form>
-                                                                                        </fieldset>
-                                                                                        <div class="goal-reciew-feedback">
-                                                                                            <p>Write goal review feedback</p>
-                                                                                            <form>
-                                                                                                <div class="form-group">
-                                                                                                    <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                                                                </div>
-                                                                                            </form>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                    <div class="card-header">
-                                                                        <a class="collapsed card-link" data-toggle="collapse" href="#goal-3">
-                                                                            My Mental tennis goals
-                                                                        </a>
-                                                                    </div>
-                                                                    <div id="goal-3" class="collapse">
-                                                                        <div class="card-body">
-                                                                            <div class="report-table-wrap report-tab-sec report-tab-one player_rp_detail matches-dtl">
-                                                                                <div class="col-md-12 report_row">
-                                                                                    <div class="col-md-12">
-                                                                                        <fieldset class="player-goal-card">
-                                                                                            <legend>MY BIG DREAMS</legend>
-                                                                                            <p>What do you want to do or be when you are grown up? This doesn’t have to be tennis related</p>
-                                                                                            <form>
-                                                                                                <div class="form-group">
-                                                                                                    <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                                                                </div>
-                                                                                            </form>
-                                                                                        </fieldset>
-                                                                                       
-                                                                                    </div>
-                                                                                    <div class="col-md-12">
-                                                                                        <fieldset class="player-goal-card">
-                                                                                            <legend>SHORT TERM TENNIS GOALS</legend>
-                                                                                            <p>Between now and the end of the term</p>
-                                                                                            <form>
-                                                                                                <div class="form-group">
-                                                                                                    <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                                                                </div>
-                                                                                            </form>
-                                                                                        </fieldset>
-                                                                                        
-                                                                                    </div>
-                                                                                    <div class="col-md-12">
-                                                                                        <fieldset class="player-goal-card">
-                                                                                            <legend>MEDIUM TERM TENNIS GOALS</legend>
-                                                                                            <p>3 to 6 months from now</p>
-                                                                                            <form>
-                                                                                                <div class="form-group">
-                                                                                                    <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                                                                </div>
-                                                                                            </form>
-                                                                                        </fieldset>
-                                                                                        <div class="goal-reciew-feedback">
-                                                                                            <p>Write goal review feedback</p>
-                                                                                            <form>
-                                                                                                <div class="form-group">
-                                                                                                    <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                                                                                </div>
-                                                                                            </form>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                </div>
-                                                            </div>
-                                                             <div class="form-group form-check">
-                                                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                                            <label class="form-check-label" for="exampleCheck1">“{{ getAllValueWithMeta('confirmation_msg', 'badges') }}”</label>
-                                                        </div>
-                                                        <div class="player-goal-date">
-                                                            <p><span>Date :</span> {{ getAllValueWithMeta('goals_date', 'badges') }} </p>
-                                                        </div>
-                                                        </div>
-                                                        <div class="set-goal-btn-wrap">
-                                                <a href="javascript:void(0);" class="cstm-btn">set goals</a>
-                                              </div>
 
+                                                        <form id="goal_detail1" enctype="multipart/form-data" action="{{route('advanced_goal')}}" method="POST">
+                                                        @csrf
+	                                                    <input type="hidden" name="goal_player_name" id="goal_player_name" value="{{isset($goal_player) ? $goal_player : ''}}">
+	                                                    <input type="hidden" name="pl_goal_type" id="pl_goal_type" value="advanced">
+	                                                    <input type="hidden" name="parent_id" value="{{Auth::user()->id}}">
+                                                        <div class="outer-wrap-player-goal">
+													    <div class="accordian_summary">
+													        <div class="card">
+													            @php 
+													                $ad_goals = DB::table('goals')->where('goal_type','advanced')->groupBy('advanced_type')->orderBy('id','asc')->get(); 
+													            @endphp
+
+													            @foreach($ad_goals as $goals)
+													            <div class="card-header">
+													                <a class="collapsed card-link" data-toggle="collapse" href="#goal-{{$goals->id}}">
+													                    @if($goals->advanced_type == 'technical')
+													                        My technical tennis goals
+													                    @elseif($goals->advanced_type == 'tactical')
+													                        My tactical tennis goals
+													                    @elseif($goals->advanced_type == 'physical')
+													                        My physical tennis goals
+													                    @elseif($goals->advanced_type == 'mental')
+													                        My mental tennis goals
+													                    @endif
+													                </a>
+													            </div>
+													            <div id="goal-{{$goals->id}}" class="collapse">
+													                <div class="card-body">
+													                    <div class="report-table-wrap report-tab-sec report-tab-one player_rp_detail matches-dtl">
+													                        <div class="col-md-12 report_row">
+
+													                            @php 
+													                                $get_goals = DB::table('goals')->where('advanced_type',$goals->advanced_type)->get();  
+													                            @endphp
+
+													                            @foreach($get_goals as $go)
+
+													                            @if(!empty($goal_player))
+							                                                    @php 
+							                                                        $user_goal = DB::table('set_goals')->where('player_id',$goal_player)->where('parent_id',Auth::user()->id)->where('goal_type','advanced')->where('advanced_type',$go->advanced_type)->where('goal_id',$go->id)->first();
+							                                                    @endphp
+							                                                    @endif
+													                            <div class="col-md-12">
+													                                <fieldset class="player-goal-card">
+													                                    <legend>{{$go->goal_title}}</legend>
+													                                    <p>{{$go->goal_subtitle}}</p>
+													                                        <div class="form-group">
+													                                            <textarea name="ad_goal[{{$go->advanced_type}}][{{$go->id}}]" class="form-control goal-textarea" rows="3">@if(!empty($goal_player) && !empty($user_goal)){{$user_goal->parent_comment}}@endif</textarea>
+													                                        </div>
+													                                </fieldset>   
+													                            </div>
+													                            @endforeach
+
+													                            <div class="goal-reciew-feedback">
+													                              <p>Linked Coach Feedback</p>
+													                                <div class="form-group">
+													                                    <textarea class="form-control goal-textarea" readonly="" rows="3">@if(!empty($goal_player) && !empty($user_goal)){{$user_goal->coach_comment}}@endif</textarea>
+													                                </div>
+													                            </div>
+													                        </div>
+													                    </div>
+													                </div>
+													            </div>
+													            @endforeach
+													            
+													        </div>
+													    </div>
+													<div class="form-group form-check">
+													    <input type="checkbox" class="form-check-input" name="confirmation" id="confirmation_msg">
+													    <label class="form-check-label" for="exampleCheck1">{{ getAllValueWithMeta('confirmation_msg', 'badges') }}</label>
+													</div>
+													<br/>
+													<div class="player-goal-date">
+													    <p><span>Date :</span> {{ date('d F Y') }} </p>
+													</div>
+
+													<button type="submit" href="javascript:void(0);" class="cstm-btn">set goals</button>
+													</div>
+			                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1168,6 +937,85 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="nav-matches" role="tabpanel" aria-labelledby="nav-matches-tab">
+
+                        	<section class="member section-padding">
+							   <div class="container">
+							    <div class="pink-heading">
+							        <h2>My Competitions & Matches</h2>
+                                    <a class="add_competition cstm-btn" href="{{ route('coach_report') }}">Add Competition</a>
+							    </div>
+
+							      <div class="col-md-12">
+							      	@php 
+							      		$user_role = \Auth::user()->role_id;
+									    if($user_role == '3')
+									    {
+									        $competitions = DB::table('competitions')->where('coach_id',Auth::user()->id)->paginate(10);
+									    }
+									    elseif($user_role == '2'){
+									        $competitions = DB::table('competitions')->where('parent_id', Auth::user()->id)->paginate(10);
+									    }
+							      	@endphp
+							         @if(count($competitions)> 0)
+							         <div class="player-report-table tbl_shadow">
+							            <div class="report-table-wrap">
+							               <div class="m-b-table">
+							                  <table>
+							                     <thead>
+							                        <tr>
+							                           <th>Player Name</th>
+							                           <th>Competition Type</th>
+							                           <th>Competition Date</th>
+							                           <th>Competition Venue</th>
+							                           <th>Competition Name</th>
+							                           <th>Action</th>
+							                        </tr>
+							                     </thead>
+							                     <tbody>
+							                        @if(count($competitions)>0)
+							                        @foreach($competitions as $sho)
+							                        <tr>
+							                           <td>
+							                              <p>@php echo getUsername($sho->player_id); @endphp</p>
+							                           </td>
+							                           <td>
+							                              <p>{{$sho->comp_type}}</p>
+							                           </td>
+							                           <td>
+							                              <p>{{$sho->comp_date}}</p>
+							                           </td>
+							                           <td>
+							                              <p>{{$sho->comp_venue}}</p>
+							                           </td>
+							                           <td>
+							                              <p>{{$sho->comp_name}}</p>
+							                           </td>
+							                           <td>
+							                              <p><a href="{{url('/user/competitions')}}/@php echo base64_encode($sho->id); @endphp">View Matches</a></p>
+							                           </td>
+							                        </tr>
+							                        @endforeach
+							                        @endif
+							                     </tbody>
+							                  </table>
+							               </div>
+							               @if(count($competitions)>0)
+							               {{$competitions->render()}}
+							               @endif
+							            </div>
+							         </div>
+							         @else
+							         <div class="noData offset-md-4 col-md-4 sorry_msg">
+							            <div class="no_results">
+							               <h3>Sorry, no results</h3>
+							               <p>No Competition Found</p>
+							            </div>
+							         </div>
+							         @endif
+							      </div>
+							   </div>
+							</section>
+
                             </div>
                             <div class="tab-pane fade" id="nav-schedule" role="tabpanel" aria-labelledby="nav-schedule-tab">
                             </div>

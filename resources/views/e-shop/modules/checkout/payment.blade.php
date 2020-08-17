@@ -29,7 +29,7 @@
                         @include('e-shop.includes.checkout.stripe')
                     </div>
                     <div class="tab-pane" id="tabs-2" role="tabpanel">
-                        <a href="javascript:void(0);" class="cstm-btn" data-toggle="modal" data-target="#exampleModal">Pay with Tax-Free Childcare</a>
+                        <a href="javascript:void(0);" class="cstm-btn" data-toggle="modal" data-target="#exampleModal">Pay with vouchers or Tax-Free Childcare</a>
                     </div>
                     <div class="tab-pane" id="tabs-3" role="tabpanel">
                         @php 

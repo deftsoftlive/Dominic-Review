@@ -11,6 +11,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
     background: white;
     border:none;
 }
+
 </style>
 <div class="account-menu">
     <div class="container">
@@ -67,14 +68,14 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                 <!-- Report - 1 (Start Here)-->
                 <div class="tab-pane fade @if(Auth::user()->role_id == '3') show active @endif" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="upper-form report-tab-sec report-tab-one">
-                        <p class="sub-head">Player Report</p>
+                        <p class="sub-head">End of Term Report</p>
                         <form id="simple_report_filter" action="{{route('coach_report')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-3 ">
                                     <div class="form-group">
                                         <h6>Term :</h6>
-                                        <select id="season_ID" name="season_id" class="form-control">
+                                        <select id="season_ID" name="season_id" >
                                             <option selected="" disabled="">Select Term</option>
                                             @php
                                             $season = DB::table('seasons')->orderBy('id','asc')->get();
@@ -85,11 +86,11 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 ">
                                     <div class="form-group">
                                         <h6>Course :<h6>
                                                 @if(!empty($course_id))
-                                                <input type="text" disabled="" name="" class="form-control" value="@php echo getCoursename($course_id); @endphp">
+                                                <input type="text" disabled="" name=""  value="@php echo getCoursename($course_id); @endphp">
                                                 @else
                                                 <select id="course_ID" name="course_id" class="form-control">
                                                     <option selected="" disabled="">Select Course</option>
@@ -97,11 +98,11 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                                 @endif
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 ">
                                     <div class="form-group">
                                         <h6>Select Player :<h6>
                                             @if(!empty($user_id))
-                                            <input type="text" disabled="" name="" class="form-control" value="@php echo getUsername($user_id); @endphp">
+                                            <input type="text" disabled="" name=""  value="@php echo getUsername($user_id); @endphp">
                                             @else
                                             <select id="player_ID" name="player_id" class="player_data_ID form-control">
                                                 <option selected="" disabled="">Select Player</option>
@@ -109,7 +110,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                             @endif
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 player-report-row">
                                     <button type="submit" class="cstm-btn">Submit</button>
                                     <a href="{{route('coach_report')}}" class="cstm-btn">Reset</a>
                                 </div>
@@ -346,17 +347,17 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                 <!-- Report - 2 (Start Here)-->
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="upper-form report-tab-sec">
-                        <p class="sub-head">End of Term Report</p>
+                        <p class="sub-head">Player Report</p>
                         <form id="complex_report_filter" action="{{route('coach_report')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
-                                <div class="col-sm-4">
+                                <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <h6>Select Player :<h6>
                                                 @if(!empty($player_rep->player_id))
                                                 <input class="form-control" type="text" value="@php echo getUsername($player_rep->player_id); @endphp" disabled="">
                                                 @else
-                                                <select id="inputPlayer" name="coach_player_id" class="coach_player_id form-control">
+                                                <select id="inputPlayer" name="coach_player_id" class="coach_player_id">
                                                     <option selected="" disabled="">Select Player</option>
                                                     @php
                                                     $players = DB::table('parent_coach_reqs')->where('status',1)->orderBy('id','asc')->get();
@@ -423,7 +424,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                                         <div class=" col-md-12 coach">
                                                             <ul>
                                                                 <li>
-                                                                    <span>You are about to sent Player Report to: </span>
+                                                                    <span>You are about to send this Player Report to: </span>
                                                                 </li>
                                                                 <li>
                                                                     <strong>Player Name : <input readonly type="text" class="popup form-control" name="pl_name" id="pl_name"></strong>
@@ -434,11 +435,11 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                                                     <span></span>
                                                                 </li>
                                                                 <br>
-                                                                <li>
-                                                                    <div class="cstm-radio">
+                                                                <!-- <li> -->
+                                                                  <!--   <div class="cstm-radio">
                                                                         <input type="checkbox" name="confirmation" id="report">
-                                                                        <label for="report">Please click confirm submission to send.</label> </div>
-                                                                </li>
+                                                                        <label for="report">Please click confirm submission to send.</label> </div> -->
+                                                                <!-- </li> -->
                                                             </ul>
                                                             <div class="form-group">
                                                                 <button type="submit" id="submit-complex-report" class="cstm-btn">Submit Report</button>
@@ -494,18 +495,22 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
+                                            
                                             <select name="comp_type">
                                                 <option selected="" disabled="">Competition Type</option>
                                                 <option value="Tournament">Tournament</option>
-                                                <option value="Match play">Match play</option>
+                                                <option value="Match Play">Match Play</option>
                                                 <option value="Club Event">Club Event</option>
-                                                <option value="Social Match">Social Match</option>
+                                                <option value="Friendly">Friendly</option>
+                                                <option value="Other">Other</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="date" name="comp_date" value="" placeholder="Competition Date" class="form-control">
+                                            <input class="form-control" placeholder="Competition Date - dd/mm/yyyy" name="comp_date" class="textbox-n" type="text" onfocus="(this.type='date')" id="date">
+
+                                            <!-- <input type="date" name="comp_date" value="" placeholder="Competition Date" onChange="this.setAttribute('value', this.value)" class="form-control"> -->
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -537,12 +542,13 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" name="match_title" placeholder="Match Title" class="form-control" placeholder="Match Title">
+                                            <input type="text" name="opponent_name" placeholder="Opponent Name" class="form-control" placeholder="Opponent Name">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="date" name="start_date" placeholder="Match Start Date" class="form-control">
+                                            <input class="form-control" placeholder="Match Date - dd/mm/yyyy" name="start_date" class="textbox-n" type="text" onfocus="(this.type='date')" id="date">
+                                            <!-- <input type="date" name="start_date" placeholder="Match Start Date" class="form-control"> -->
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -554,12 +560,17 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" name="condition" class="form-control" placeholder="Match Condition">
+                                            <input type="text" name="condition" class="form-control" placeholder="Conditions">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" name="result" class="form-control" placeholder="Match Result">
+                                            <select name="result">
+                                                <option selected="" disabled="">Match Result</option>
+                                                <option value="Won">Won</option>
+                                                <option value="Lost">Lost</option>
+                                                <option value="Did Not Finish">Did Not Finish</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4">

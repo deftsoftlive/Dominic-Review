@@ -649,7 +649,11 @@ table.table.table-bordered.cst-reports th, table.table.table-bordered.cst-report
 }
 
 
-
+table.table.table-bordered.cst-reports.reports-detail th,
+table.table.table-bordered.cst-reports.reports-detail td
+{
+  width: 17%;
+}
 
 
 
@@ -6224,18 +6228,37 @@ body.layout-8 .card:hover {
 
 /*dashboard css starts here*/
 
-table.table.table-hover th {
+table.table.table-hover th, 
+table.table.table-bordered.cst-reports th{
+
     background: #3f4d67;
-    color: #fff;
+    color: #fff; padding: 18px 10px;
+    
+}
+table.table.table-hover th p,
+table.table.table-hover td h4
+{margin-bottom: 0!important;
+
+}
+table.table.table-bordered.cst-reports th {
+    width: 70%;
+   
+}
+table.table.table-bordered.cst-reports td
+{
+  width: 30%;
 }
 table.table.table-hover th,
 table.table.table-hover tbody td:first-child 
+table.table.table-bordered.cst-reports th,
+table.table.table-bordered.cst-reports tbody td:first-child
 {
   /*text-transform: capitalize;*/
   vertical-align: middle;
   width: 25%;
 }
-table.table.table-hover tbody td
+table.table.table-hover tbody td,
+table.table.table-bordered.cst-reports tbody td
 {  vertical-align: middle;
   
 }

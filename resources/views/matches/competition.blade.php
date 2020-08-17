@@ -28,7 +28,7 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
 <section class="member section-padding">
    <div class="container">
       <div class="pink-heading">
-         <h2>My Competions & Matches</h2>
+         <h2>My Competitions & Matches</h2>
       </div>
       <div class="col-md-12">
          @if(count($competitions)> 0)
@@ -39,7 +39,7 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
                      <thead>
                         <tr>
                            <th>Player Name</th>
-                           <th>Competition Type</th>
+                           <th>Opponent Type</th>
                            <th>Competition Date</th>
                            <th>Competition Venue</th>
                            <th>Competition Name</th>
@@ -47,6 +47,7 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
                         </tr>
                      </thead>
                      <tbody>
+                        
                         @if(count($competitions)>0)
                         @foreach($competitions as $sho)
                         <tr>

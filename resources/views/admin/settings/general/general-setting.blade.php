@@ -131,6 +131,22 @@
           </div>
         </div>
 
+        <!-- Wallet text -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>Wallet Text</u></h5>
+            {{textarea($errors,'Wallet Text','wallet_text',$wallet_text)}}
+          </div>
+        </div>
+
+        <!-- Match Stats text -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>Match Stats Text</u></h5>
+            {{textarea($errors,'Match Stats Text','match_stats_text',$match_stats_text)}}
+          </div>
+        </div>
+
         <!-- /.card-body -->
         <div class="card-footer">
           <button type="submit" id="homePageFormBtn" class="btn btn-primary">Submit</button>

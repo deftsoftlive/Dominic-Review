@@ -2910,17 +2910,16 @@ position: absolute;
     cursor: pointer;
 
 }
-
 .inner-event-section {
     background-position: top;
     position: relative;
+    padding-bottom: 160px;
 }
-
 .inner-event-section::after {
     position: absolute;
     content: '';
     background: url(../images/sec-bottom.png);
-    bottom: -50px;
+    bottom: 36px;
     left: 0;
     right: 0;
     background-repeat: no-repeat;
@@ -7907,6 +7906,7 @@ form#complex_report_filter .error {
     position: relative;
     box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
     margin: 20px 0;
+    height: 126px;
 }
 
 .report-tab-sec label {
@@ -8849,9 +8849,13 @@ font-family: 'Roboto', sans-serif;
     border: 0;
 }
 .member .pink-heading {
-    margin-bottom: 25px;
+    margin-bottom: 50px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+}
+.member .pink-heading.comp_match {
+    justify-content: flex-start!important;
 }
 .member .pink-heading h2.text-left {
     margin-bottom:0px;
@@ -8956,25 +8960,29 @@ a#add_match:hover {
 }
 
 .outer-wrap-player-goal .collapse.show, .outer-wrap-player-goal .collapsing {
-    border: 3px solid #be298d;
+    border: 3px solid #83cee9;
     margin-bottom: 5px;
     margin-top: -7px;
     box-shadow: inset 7px 7px 20px 0px rgba(0, 0, 0, 0.1);
-    margin: -8px 15px 5px;
+    margin: -5px 15px 5px;
+    border-top: 0;
 }
 .outer-wrap-player-goal .accordian_summary .card .card-header {
-    border: 3px solid #be298d!important;
+    background: #00afef;
+    border: 3px solid #00afef!important;
     text-align: center;
-    background: #fff;
-    padding: 8px 15px;
+    background: #00afef;
+    padding: 4px 15px;
+    border-radius: 10px!important;
 }
 .outer-wrap-player-goal .accordian_summary .card .card-header a {
-    font-size: 22px;
+    font-size: 17px;
     padding: 0 5px;
-    color: #000000;
+    color: #ffffff;
     text-align: center!important;
     font-weight: 600;
     display: block;
+    text-transform: capitalize;
 }
 .outer-wrap-player-goal .accordian_summary {
     margin-top: 30px;
@@ -8996,4 +9004,71 @@ a#add_match:hover {
 }
 .coach-goal-comment-sec {
     padding: 100px 0;
+}
+.player-report-row button.cstm-btn {
+    margin-right: 15px;
+}
+#simple_report_filter select,
+#complex_report_filter select,
+select#child_id
+{
+	    display: block;
+    width: 100%;
+    height: 43px;
+    padding: 6px 12px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    position: relative;
+    background-image: url(../images/select.svg)!important;
+    background-size: 10px;
+    background-repeat: no-repeat;
+    background-position: top 50% right 12px;
+    z-index: 9;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+form#simple_report_filter select:focus,
+#complex_report_filter select:focus,
+select#child_id:focus
+{
+	outline: none;
+}.card-header.view-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.card-header.view-card-header a
+{
+    width: 90%;
+}
+.card-header.view-card-header .view_stats {
+  
+    width: 12%!important;
+    font-size: 14px!important;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #fff;
+    color: #000!important; 
+    margin: 0!important;
+    color: #ffffff;
+    font-weight: 500;  
+    padding: 10px 18px!important;  
+    /*transition: all linear 0.3s;*/
+
+    border: 2px solid #fff;
+    border-radius: 4px;
+    font-weight: 500;
+    text-align: center;
+}
+.card-header.view-card-header .view_stats:hover
+{
+    border: 2px solid #be298d;
+    color: #be298d!important;
 }

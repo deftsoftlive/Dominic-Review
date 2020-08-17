@@ -614,15 +614,11 @@ $(document).ready(function (){
   $('#goals').validate({
            rules: {
             goal_player: {
-                required: true
-            },
-            goal_type: {
-                required: true
+              required: true
             }
         },
         messages:{
             goal_player:{required:"This field is required."},
-            goal_type:{required:"This field is required."},
         },
 
     highlight: function (element, errorClass, validClass) {
@@ -646,6 +642,154 @@ $(document).ready(function (){
           $(element).closest('.myForm').append('<i class="fa fa-check fa-lg form-control-feedback"></i>');
       } 
     },
+       
+      submitHandler: function(form) {
+        $("#save_goal").attr("disabled", true);
+        form.submit();
+    }
+  });
+
+  /*validations on goals filter*/
+  $('#goals1').validate({
+           rules: {
+            goal_player: {
+                required: true
+            }
+        },
+        messages:{
+            goal_player:{required:"This field is required."},
+        },
+
+    highlight: function (element, errorClass, validClass) {
+
+      if(element.type =='text'||element.type =='password'||element.type =='email'||element.type =='select-one') {
+          $(element).siblings("label").addClass("error");
+          $(element).addClass('input--error').removeClass(validClass+' input--success');
+          $(element).closest('.myForm').removeClass('has-success has-feedback').addClass('has-error has-feedback');
+        // this.findByName(element.name).removeClass('has-success has-feedback').addClass('has-error has-feedback');
+        $(element).closest('.myForm').find('i.fa').remove();
+        $(element).closest('.myForm').append('<i class="fa fa-exclamation fa-lg form-control-feedback"></i>');
+      }
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      if (element.type === "text"||element.type =='password' ||element.type =='email'||element.type =='select-one') {
+          $(element).siblings("label").removeClass("error");
+          $('.errorMsg').addClass('displaynone');
+          $(element).closest('.myForm').removeClass('has-error has-feedback').addClass('has-success has-feedback');
+          $(element).removeClass('input--error').addClass(validClass+' input--success');
+          $(element).closest('.myForm').find('i.fa').remove();
+          $(element).closest('.myForm').append('<i class="fa fa-check fa-lg form-control-feedback"></i>');
+      } 
+    },
+
+      submitHandler: function(form) {
+        $("#save_goal").attr("disabled", true);
+        form.submit();
+    }
+  });
+
+
+  /*validations on goals confirmation filter*/
+  $('#goal_detail').validate({
+           rules: {
+            confirmation: {
+              required: true
+            }
+        },
+        messages:{
+            confirmation:{required:"This field is required."},
+        },
+
+    highlight: function (element, errorClass, validClass) {
+
+      if(element.type =='text'||element.type =='password'||element.type =='email'||element.type =='select-one') {
+          $(element).siblings("label").addClass("error");
+          $(element).addClass('input--error').removeClass(validClass+' input--success');
+          $(element).closest('.myForm').removeClass('has-success has-feedback').addClass('has-error has-feedback');
+        // this.findByName(element.name).removeClass('has-success has-feedback').addClass('has-error has-feedback');
+        $(element).closest('.myForm').find('i.fa').remove();
+        $(element).closest('.myForm').append('<i class="fa fa-exclamation fa-lg form-control-feedback"></i>');
+      }
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      if (element.type === "text"||element.type =='password' ||element.type =='email'||element.type =='select-one') {
+          $(element).siblings("label").removeClass("error");
+          $('.errorMsg').addClass('displaynone');
+          $(element).closest('.myForm').removeClass('has-error has-feedback').addClass('has-success has-feedback');
+          $(element).removeClass('input--error').addClass(validClass+' input--success');
+          $(element).closest('.myForm').find('i.fa').remove();
+          $(element).closest('.myForm').append('<i class="fa fa-check fa-lg form-control-feedback"></i>');
+      } 
+    },
+
+    errorElement : 'div',
+    errorPlacement: function(error, element) {
+     // $(element).next().remove();
+        var placement = $(element).data('error');
+        var placement1 = element.attr('confirmation');
+
+        if (placement) {
+          $(placement).append(error)
+        }else if(placement1=="confirmation"){
+            error.insertAfter("#confirmation_msg");
+        }else {
+          error.insertAfter(element);
+        }
+      },
+       
+      submitHandler: function(form) {
+        $("#save_goal").attr("disabled", true);
+        form.submit();
+    }
+  });
+
+  /*validations on goals confirmation filter*/
+  $('#goal_detail1').validate({
+           rules: {
+            confirmation: {
+              required: true
+            }
+        },
+        messages:{
+            confirmation:{required:"This field is required."},
+        },
+
+    highlight: function (element, errorClass, validClass) {
+
+      if(element.type =='text'||element.type =='password'||element.type =='email'||element.type =='select-one') {
+          $(element).siblings("label").addClass("error");
+          $(element).addClass('input--error').removeClass(validClass+' input--success');
+          $(element).closest('.myForm').removeClass('has-success has-feedback').addClass('has-error has-feedback');
+        // this.findByName(element.name).removeClass('has-success has-feedback').addClass('has-error has-feedback');
+        $(element).closest('.myForm').find('i.fa').remove();
+        $(element).closest('.myForm').append('<i class="fa fa-exclamation fa-lg form-control-feedback"></i>');
+      }
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      if (element.type === "text"||element.type =='password' ||element.type =='email'||element.type =='select-one') {
+          $(element).siblings("label").removeClass("error");
+          $('.errorMsg').addClass('displaynone');
+          $(element).closest('.myForm').removeClass('has-error has-feedback').addClass('has-success has-feedback');
+          $(element).removeClass('input--error').addClass(validClass+' input--success');
+          $(element).closest('.myForm').find('i.fa').remove();
+          $(element).closest('.myForm').append('<i class="fa fa-check fa-lg form-control-feedback"></i>');
+      } 
+    },
+
+    errorElement : 'div',
+    errorPlacement: function(error, element) {
+     // $(element).next().remove();
+        var placement = $(element).data('error');
+        var placement1 = element.attr('confirmation');
+
+        if (placement) {
+          $(placement).append(error)
+        }else if(placement1=="confirmation"){
+            error.insertAfter("#confirmation_msg");
+        }else {
+          error.insertAfter(element);
+        }
+      },
        
       submitHandler: function(form) {
         $("#save_goal").attr("disabled", true);

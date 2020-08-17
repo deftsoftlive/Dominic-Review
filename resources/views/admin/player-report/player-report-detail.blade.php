@@ -32,7 +32,7 @@
 
                             @if($report->type == 'simple')
                             
-                                <table class="table table-bordered  cst-reports" style="width:100%">
+                                <table class="table table-bordered  cst-reports reports-detail" style="width:100%">
                                   <tr>
                                     <th><p><b>Date</b></p></th>
                                     <th><p><b>Player Name</b></p></th> 
@@ -75,7 +75,7 @@
                         
                         <div class="row">
                             @php
-                                $report_questions = DB::table('report_questions')->get();
+                                $report_questions = DB::table('report_questions')->get();  
                                 @endphp
                                 @foreach($report_questions as $ques)
                                 @php
@@ -90,12 +90,14 @@
                                     $cat_option=[];
                                 @endphp
 
+                                @if(!empty($selected_options))
                                 @foreach($selected_options as $opt)
                                 @php 
                                     $sel_data = explode('-',$opt);
                                     $cat_option[] =  $sel_data[0].'-'.$sel_data[1];
                                 @endphp
                                 @endforeach
+                                @endif
 
                                     <div class="col-md-6">
                                     <div class="inner-form-box">

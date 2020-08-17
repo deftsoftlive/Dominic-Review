@@ -1,12 +1,14 @@
 <li><a href="{{ route('my-family') }}" class="{{ \Request::route()->getName() === 'my-family' ? 'active' : '' || \Request::route()->getName() === 'add-family-member' ? 'active' : '' || \Request::route()->getName() === 'edit-family-member' ? 'active' : '' }}">My family</a></li>
 
-<li class="nav-item dropdown">
+<!-- <li class="nav-item dropdown">
 	<a class="nav-link dropdown-toggle {{ \Request::route()->getName() === 'coach_report' ? 'active' : '' || \Request::route()->getName() === 'competition_list' ? 'active' : '' }}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Reports</a>
  	<div class="dropdown-menu" aria-labelledby="navbarDropdown">
       <a class="dropdown-item" href="{{route('coach_report')}}">Report</a>
       <a class="dropdown-item" href="{{route('competition_list')}}">Matches</a>
     </div>
 </li>
+ -->
+<!-- <li><a href="{{ route('coach_report') }}" class="{{ \Request::route()->getName() === 'coach_report' ? 'active' : '' }}">Reports</a></li> -->
 
 <li><a href="{{ route('my-bookings') }}" class="{{ \Request::route()->getName() === 'my-bookings' ? 'active' : '' }}">My Bookings</a></li>
 

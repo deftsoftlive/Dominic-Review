@@ -43,6 +43,7 @@ use Newsletter;
 use App\TestScore;
 use App\Wallet;
 use App\WalletHistory;
+use App\MatchStats;
 use App\Models\Shop\ShopCartItems;
 use App\Models\Products\ProductCategory;
 use App\Traits\ProductCart\UserCartTrait;
@@ -1332,7 +1333,7 @@ public function stripe_wallet(Request $request)
     $pk = $stripe['pk'];
     $amount = $request->wallet_amount*100;
     $output = '
-    <p>You have to pay the amount to admin to add the amount in wallet.</p>
+    <p>Add funds to your wallet with your payment card.</p>
     <script
          src="https://checkout.stripe.com/checkout.js" class="stripe-button new-main-button"
          data-key="'.$pk.'"
@@ -2632,7 +2633,7 @@ public function selectedSeason(Request $request)
 }
 
 /*----------------------------------------
-| Save Goal Data
+| BEGINNER GOALS - Save Goal Data
 |----------------------------------------*/
 public function save_goal(Request $request)
 {
@@ -2680,6 +2681,7 @@ public function save_goal(Request $request)
               $set_goal->goal_type = $request->pl_goal_type;
               $set_goal->parent_id = $request->parent_id;
               $set_goal->coach_id = isset($get_coach_id) ? $get_coach_id->coach_id : '';
+              $set_goal->goal_date = date("d F Y",strtotime("tomorrow"));
               $set_goal->save();
           }
           
@@ -2688,12 +2690,12 @@ public function save_goal(Request $request)
       }
     }
   }else{
-    return \Redirect::back()->with('error','Please select player and goal type.');
+    return \Redirect::back()->with('error','Please select player.');
   } 
 }
 
 /*----------------------------------------------------
-| Add comment on goals - By Coach 
+| BEGINNER GOALS - Add comment on goals - By Coach 
 |-----------------------------------------------------*/
 public function save_comment_by_coach(Request $request)
 {
@@ -2707,12 +2709,88 @@ public function save_comment_by_coach(Request $request)
     return \Redirect::back()->with('success','Comments added successfully.');
 }
 
+/*----------------------------------------
+| ADVANCED GOALS - Save Goal Data
+|----------------------------------------*/
+public function advanced_goal(Request $request)
+{
+  $goal_data = $request->all(); 
+  $check_goal = SetGoal::where('player_id',$request->goal_player_name)->where('goal_type','advanced')->where('goal_type',$request->pl_goal_type)->get();
+  // dd($check_goal);
+
+  if(!empty($request->goal_player_name) && !empty($request->pl_goal_type))
+  { 
+    if(count($check_goal)>0)
+    {
+      foreach($request->ad_goal as $key=>$goalValue)
+      { 
+        foreach($goalValue as $goaldata=>$value)
+        {
+          $get_coach_id = ParentCoachReq::where('child_id',$request->goal_player_name)->where('status',1)->first();
+
+          $coach_id = isset($get_coach_id) ? $get_coach_id->coach_id : '';
+
+          // dd($goaldata,$request->all(),$key,$value,$coach_id);
+          if($value != null)
+          {
+            SetGoal::where('parent_id',$request->parent_id)->where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->where('goal_id',$goaldata)->update(array('parent_comment' => $value, 'coach_id' => $coach_id));
+          }
+        }
+      }
+      return \Redirect::back()->with('success','Goal data updated successfully.');
+    }
+    else
+    {
+      if(!empty($request->ad_goal))
+      {
+        foreach($request->ad_goal as $key=>$goalValue)
+        {
+          foreach($goalValue as $goaldata=>$value)
+          {
+              $get_coach_id = ParentCoachReq::where('child_id',$request->goal_player_name)->where('status',1)->first();
+
+              $datetime = new DateTime('tomorrow');
+              $goal_date = $datetime->format('d F Y');
+
+              $set_goal = new SetGoal;
+              $set_goal->goal_id = $goaldata;
+              $set_goal->parent_comment = $value;
+              $set_goal->player_id = $request->goal_player_name;
+              $set_goal->goal_type = $request->pl_goal_type;
+              $set_goal->parent_id = $request->parent_id;
+              $set_goal->advanced_type = $key;
+              $set_goal->coach_id = isset($get_coach_id) ? $get_coach_id->coach_id : '';
+              $set_goal->goal_date = date("d F Y",strtotime("tomorrow"));
+              $set_goal->save();
+          }
+          
+        }
+        return \Redirect::back()->with('success','Goal data added successfully.');
+      }
+    }
+  }else{
+        return \Redirect::back()->with('error','Please select player.');
+      }
+}
+
+/*----------------------------------------------------
+| ADVANCED GOALS - Add comment on goals - By Coach 
+|-----------------------------------------------------*/
+public function save_ad_coach_comment(Request $request)
+{
+  foreach($request->coach_comment as $key=>$goalValue)
+  { 
+    SetGoal::where('parent_id',$request->parent_id)->where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->where('advanced_type',$key)->update(array('coach_comment' => $goalValue)); 
+  }
+  return \Redirect::back()->with('success','Comments added successfully.');
+}
+
 /*----------------------------------------------------
 | Coach Section - List of goals set by player's parent
 |-----------------------------------------------------*/
 public function goal_list()
 {
-  $goals = SetGoal::where('coach_id',Auth::user()->id)->groupBy('player_id')->get();
+  $goals = SetGoal::where('coach_id',Auth::user()->id)->groupBy(['player_id', 'goal_type'])->get();
   return view('coach.goals.goal-listing',compact('goals'));
 }
 
@@ -3231,16 +3309,22 @@ public function newsletter_integration(Request $request)
 |   Save Competition Report
 |---------------------------------*/
 public function add_competition(Request $request)
-{
+{ 
     $user_role = Auth::user()->role_id;
     $comp_id = isset($request->comp_id) ? $request->comp_id : '';
+    // $user = User::where('id',$request->coach_id)->first(); 
+    // if($user->role_id == 2)
+    // {
+    //   $parent_id = $request->coach_id;
+    // }elseif($user->role_id == 3)
+    // {
+    //   $coach_id = $request->coach_id;
+    // }
 
     if(!empty($comp_id))
     {
         $comp = Competition::find($comp_id);
         $comp->player_id = $request->player_id;
-        $comp->parent_id = isset($request->parent_id) ? $request->parent_id : '';
-        $comp->coach_id = isset($request->coach_id) ? $request->coach_id : '';
         $comp->comp_type = $request->comp_type;
         $comp->comp_date = $request->comp_date;
         $comp->comp_venue = $request->comp_venue;
@@ -3301,7 +3385,7 @@ public function add_match(Request $request)
             $match = MatchReport::find($request->match_id); 
             $match->comp_id = $request->comp_id;
             $match->player_id = $request->player_id;
-            $match->match_title = $request->match_title;
+            $match->opponent_name = $request->opponent_name;
             $match->start_date = $request->start_date;
             $match->surface_type = $request->surface_type;
             $match->condition = $request->condition;
@@ -3341,7 +3425,7 @@ public function add_match(Request $request)
 |---------------------------------------------------*/
 public function competition_list()
 {
-    $user_role = \Auth::user()->role_id;
+    $user_role = \Auth::user()->role_id; 
     if($user_role == '3')
     {
         $competitions = Competition::where('coach_id',Auth::user()->id)->paginate(10);
@@ -3369,6 +3453,39 @@ public function matches_under_comp($id)
 public function match_stats($comp_id,$match_id)
 {
     return view('matches.stats',compact('comp_id','match_id'));
+}
+
+/*--------------------------------------
+| Save match stats data 
+|--------------------------------------*/
+public function save_match_stats(Request $request)
+{
+    $match_stats = MatchStats::create($request->all()); 
+    $match_stats->competition_id = $request->competition_id;
+    $match_stats->tp_won = $request->tp_won;
+    $match_stats->save();
+
+    $data = json_encode($request->all());
+    $stats_calculation = statsCalculation($data);
+
+    $comp_id = base64_encode($request->competition_id);
+
+    return redirect('/user/competitions/'.$comp_id)->with('success','Match Stats data added successfully.');
+}
+
+/*--------------------------------------
+| View Match Stats
+|---------------------------------------*/
+public function view_match_stats($comp_id,$match_id)
+{
+    $stats = MatchStats::where('competition_id',$comp_id)->where('match_id',$match_id)->first();
+    if(!empty($stats))
+    {
+        $stats_calculation = statsCalculation($stats);
+    }else{
+        $stats_calculation = '';
+    }
+    return view('matches.view-stats',compact('stats_calculation','comp_id','match_id'));
 }
 
 }

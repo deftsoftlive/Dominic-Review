@@ -49,7 +49,7 @@
                 @foreach($goals as $go)
 
                   <tr>
-                    <td><p>@php echo date('Y-m-d',strtotime($go->created_at)); @endphp</p></td>
+                    <td><p>{{$go->goal_date}}</p></td>
                     <td><p>@php echo getUsername($go->player_id); @endphp</p></td>
                     <td><p>@php echo getUsername($go->parent_id); @endphp</p></td>
                     <td><p>

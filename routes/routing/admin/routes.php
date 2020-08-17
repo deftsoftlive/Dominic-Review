@@ -300,6 +300,7 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 
 		Route::any('/match-reports/competitions','Admin\ReportQuestionController@comp_list')->name('admin.matchReports.compList');
 		Route::any('/match-reports/competition/{id}','Admin\ReportQuestionController@comp_detail')->name('admin.matchReports.compDetail');
+		Route::any('/competition/{comp_id}/match/{match_id}/stats','Admin\ReportQuestionController@match_stats')->name('admin.matchReports.matchStats');
 
 		#----------------------------------------------------------------
 		#  Import/Export Excel for Test

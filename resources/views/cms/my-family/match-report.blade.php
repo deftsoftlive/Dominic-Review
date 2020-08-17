@@ -19,7 +19,14 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
         </div>
         <nav>
             <ul>
+                @php
+                $user_role = \Auth::user()->role_id;
+                @endphp
+                @if($user_role == '2')
+                @include('inc.parent-menu')
+                @elseif($user_role == 3)
                 @include('inc.coach-menu')
+                @endif
             </ul>
         </nav>
     </div>
@@ -78,16 +85,17 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                 @php $comp = DB::table('competitions')->where('coach_id',Auth::user()->id)->orderBy('id','desc')->first(); @endphp
                                 <input type="hidden" name="player_id" id="match_player_id" value="@if(!empty($comp->player_id)){{isset($comp->player_id) ? $comp->player_id : ''}}@endif">
                                 <input type="hidden" name="comp_id" value="@if(!empty($comp->id)){{isset($comp->id) ? $comp->id : ''}}@endif">
-                                <input type="hidden" name="coach_id" value="{{Auth::user()->id}}">
+                                <input type="hidden" name="parent_id" value="{{Auth::user()->id}}">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <select name="comp_type">
                                                 <option selected="" disabled="">Competition Type</option>
                                                 <option value="Tournament" @if(!empty($comp)) @if($comp->comp_type == 'Tournament') selected @endif @endif>Tournament</option>
-                                                <option value="Match play" @if(!empty($comp)) @if($comp->comp_type == 'Match play') selected @endif @endif>Match play</option>
+                                                <option value="Match Play" @if(!empty($comp)) @if($comp->comp_type == 'Match Play') selected @endif @endif>Match Play</option>
                                                 <option value="Club Event" @if(!empty($comp)) @if($comp->comp_type == 'Club Event') selected @endif @endif>Club Event</option>
-                                                <option value="Social Match" @if(!empty($comp)) @if($comp->comp_type == 'Social Match') selected @endif @endif>Social Match</option>
+                                                <option value="Friendly" @if(!empty($comp)) @if($comp->comp_type == 'Friendly') selected @endif @endif>Friendly</option>
+                                                <option value="Other" @if(!empty($comp)) @if($comp->comp_type == 'Other') selected @endif @endif>Other</option>
                                             </select>
                                         </div>
                                     </div>
@@ -125,7 +133,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" name="match_title" placeholder="Match Title" class="form-control" placeholder="Match Title">
+                                            <input type="text" name="opponent_name" placeholder="Opponent Name" class="form-control" placeholder="Opponent Name">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -147,7 +155,13 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" name="result" class="form-control" placeholder="Match Result">
+                                            <select name="result">
+                                                <option selected="" disabled="">Match Result</option>
+                                                <option value="Won">Won</option>
+                                                <option value="Lost">Lost</option>
+                                                <option value="Did Not Finish" >Did Not Finish</option>
+                                            </select>
+                                           <!--  <input type="text" name="result" class="form-control" placeholder="Match Result"> -->
                                         </div>
                                     </div>
                                     <div class="col-md-4">

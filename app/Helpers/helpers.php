@@ -87,6 +87,77 @@ function getReportOptionName($id){
   return $cat_opt->option_title;
 }
 
+/*-------------------------------------
+| Matches - Stats calculation
+|-------------------------------------*/
+function statsCalculation($jsonData){
+  $data = json_decode($jsonData);
+  
+  // Calculations
+
+  // 1 - Total points played in match
+  $tp_played = $data->tp_in_match;  
+
+  // 2 - Your percentage points won in match 
+  $percent_pts_won = ($data->tp_won)/($data->tp_in_match)*100;
+
+  // 3 - Your percentage of 1st serevs in
+  $percent_1serves_in = ($data->total_1serves_in / ($data->total_1serves_in + $data->total_2serves_in + $data->total_double_faults)*100); 
+
+  // 4 - Your opponent's percentage of points in match
+  $op_percent_pts_won = (($data->tp_in_match - $data->tp_won)/$data->tp_in_match * 100); 
+
+  // 5 - Your opponent's percentage of 1st serves in match
+  $op_percent_1serves_in = ($data->total_1serve_by_op / ($data->total_1serve_by_op + $data->total_2serve_by_op + $data->total_double_fault_by_op)*100);
+
+  // 6 - Your percentagre points won in 1st serves in
+  $percent_pts_won_1serve = $data->tp_won_in_1serve / $data->total_1serves_in * 100; 
+
+  // 7 - Your percentage of points won from 2nd serve
+  $percent_pts_won_2serve = $data->tp_won_in_2serve / $data->total_2serves_in * 100;
+
+  // 8 - Your percentage of points won on opponent’s 1st serve
+  $percent_pts_won_op_1serve = $data->tp_won_ops_1sereve / $data->total_1serve_by_op * 100;
+
+  // 9 - Your percentage of points won on opponent’s 2nd serve
+  $percent_pts_won_op_2serve = $data->tp_won_ops_2sereve / $data->total_2serve_by_op * 100;
+
+  // 10 - Your percentage of points won when rally was 1-4 shots
+  $percent_pts_won_rally_1shots = $data->tp_won_rally_4shots / $data->total_shots_match * 100;
+
+  // 11 - Your percentage of points won when rally was 5+ shots
+  $percent_pts_won_rally_5shots = $data->tp_won_rally_5shots / $data->total_shots_match * 100;
+
+  // 12 - Average rally length
+  $average_rally_length = $data->total_shots_match / $data->tp_in_match * 100;
+
+  // 13 - Your total aces
+  $total_aces = $data->total_aces;
+
+  // 14 - Your total double faults
+  $total_double_faults = $data->total_double_faults;
+
+  $stats_array = [
+      'tp_played'                     =>   number_format($tp_played,2),
+      'percent_pts_won'               =>   number_format($percent_pts_won,2),
+      'percent_1serves_in'            =>   number_format($percent_1serves_in,2),
+      'op_percent_pts_won'            =>   number_format($op_percent_pts_won,2),
+      'op_percent_1serves_in'         =>   number_format($op_percent_1serves_in,2),
+      'percent_pts_won_1serve'        =>   number_format($percent_pts_won_1serve,2),
+      'percent_pts_won_2serve'        =>   number_format($percent_pts_won_2serve,2),
+      'percent_pts_won_op_1serve'     =>   number_format($percent_pts_won_op_1serve,2),
+      'percent_pts_won_op_2serve'     =>   number_format($percent_pts_won_op_2serve,2),
+      'percent_pts_won_rally_1shots'  =>   number_format($percent_pts_won_rally_1shots,2),
+      'percent_pts_won_rally_5shots'  =>   number_format($percent_pts_won_rally_5shots,2),
+      'average_rally_length'          =>   number_format($average_rally_length,2),
+      'total_aces'                    =>   number_format($total_aces,2),
+      'total_double_faults'           =>   number_format($total_double_faults,2),
+  ];
+
+  return $stats_array;
+
+}
+
 function upsArray()
 {
    return [

@@ -24,7 +24,14 @@ div#add_new_match {
         </div>
         <nav>
             <ul>
+                @php
+                $user_role = \Auth::user()->role_id;
+                @endphp
+                @if($user_role == '2')
+                @include('inc.parent-menu')
+                @elseif($user_role == 3)
                 @include('inc.coach-menu')
+                @endif
             </ul>
         </nav>
     </div>
@@ -76,12 +83,18 @@ div#add_new_match {
                                     @endphp
                                     @foreach($players as $bd)
                                         @php $user = DB::table('users')->where('id',$bd->child_id)->first(); @endphp
-                                        <option value="{{$bd->child_id}}" @if($comp->player_id == $bd->child_id) selected @endif>{{$user->name}}</option>
+                                        <option value="{{$bd->child_id}}" 
+                                            @if(!empty($comp))
+                                                @if($comp->player_id == $bd->child_id) 
+                                                    selected 
+                                                @endif
+                                            @endif>{{$user->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </form>
                     </div>
+
                     <div class="outer-wrap">
                         <div class="upper-form">
                             <p class="sub-head">Competition Creation</p>
@@ -90,22 +103,30 @@ div#add_new_match {
                                 @csrf
                                 <input type="hidden" name="player_id" id="match_player_id" value="@if(!empty($comp->player_id)){{isset($comp->player_id) ? $comp->player_id : ''}}@endif">
                                 <input type="hidden" name="comp_id" value="@if(!empty($comp->id)){{isset($comp->id) ? $comp->id : ''}}@endif">
+
+                                @if(Auth::user()->role_id == 3)
                                 <input type="hidden" name="coach_id" value="{{Auth::user()->id}}">
+                                @elseif(Auth::user()->role_id == 2)
+                                <input type="hidden" name="parent_id" value="{{Auth::user()->id}}">
+                                @endif
+                                
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <select name="comp_type">
                                                 <option selected="" disabled="">Competition Type</option>
                                                 <option value="Tournament" @if(!empty($comp)) @if($comp->comp_type == 'Tournament') selected @endif @endif>Tournament</option>
-                                                <option value="Match play" @if(!empty($comp)) @if($comp->comp_type == 'Match play') selected @endif @endif>Match play</option>
+                                                <option value="Match Play" @if(!empty($comp)) @if($comp->comp_type == 'Match Play') selected @endif @endif>Match Play</option>
                                                 <option value="Club Event" @if(!empty($comp)) @if($comp->comp_type == 'Club Event') selected @endif @endif>Club Event</option>
-                                                <option value="Social Match" @if(!empty($comp)) @if($comp->comp_type == 'Social Match') selected @endif @endif>Social Match</option>
+                                                <option value="Friendly" @if(!empty($comp)) @if($comp->comp_type == 'Friendly') selected @endif @endif>Friendly</option>
+                                                <option value="Other" @if(!empty($comp)) @if($comp->comp_type == 'Other') selected @endif @endif>Other</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="date" name="comp_date" value="@if(!empty($comp)){{isset($comp->comp_date) ? $comp->comp_date : ''}}@endif" placeholder="Competition Date" class="form-control">
+                                            <input class="form-control" placeholder="Competition Date - dd/mm/yyyy" value="@if(!empty($comp)){{isset($comp->comp_date) ? $comp->comp_date : ''}}@endif" name="comp_date" class="textbox-n" type="text" onfocus="(this.type='date')" id="date">
+                                          <!--   <input placeholder="Competition Date - " type="date" name="comp_date" value="@if(!empty($comp)){{isset($comp->comp_date) ? $comp->comp_date : ''}}@endif" placeholder="Competition Date" class="form-control"> -->
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -146,7 +167,7 @@ div#add_new_match {
                                     @foreach($matches as $ma)
                                     <div class="card-header">
                                        <a class="collapsed card-link" data-toggle="collapse" href="#match-{{$ma->id}}">
-                                       <span>{{$i}}</span>{{isset($ma->match_title) ? $ma->match_title : ''}}
+                                       <span>{{$i}}</span>{{isset($ma->opponent_name) ? $ma->opponent_name : ''}} - {{isset($ma->result) ? $ma->result : ''}} - {{isset($ma->score) ? $ma->score : ''}}
                                        </a>
                                     </div>
                                     <div id="match-{{$ma->id}}" class="collapse">
@@ -164,12 +185,13 @@ div#add_new_match {
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <input type="text" name="match_title" placeholder="Match Title" class="form-control" value="{{isset($ma->match_title) ? $ma->match_title : ''}}" placeholder="Match Title">
+                                                                    <input type="text" name="opponent_name" placeholder="Opponent Name" class="form-control" value="{{isset($ma->opponent_name) ? $ma->opponent_name : ''}}" placeholder="Opponent Name">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <input type="date" name="start_date" placeholder="Match Start Date" class="form-control" value="{{isset($ma->start_date) ? $ma->start_date : ''}}">
+                                                                    <input class="form-control" placeholder="Match Date - dd/mm/yyyy" name="start_date" class="textbox-n" type="text" onfocus="(this.type='date')" value="{{isset($ma->start_date) ? $ma->start_date : ''}}" id="date">
+                                                                    <!-- <input type="date" name="start_date" placeholder="Match Start Date" class="form-control" value="{{isset($ma->start_date) ? $ma->start_date : ''}}"> -->
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
@@ -186,7 +208,12 @@ div#add_new_match {
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <input type="text" name="result" class="form-control" placeholder="Match Result" value="{{isset($ma->result) ? $ma->result : ''}}">
+                                                                    <select name="result">
+                                                                        <option selected="" disabled="">Match Result</option>
+                                                                        <option value="Won">Won</option>
+                                                                        <option value="Lost">Lost</option>
+                                                                        <option value="Did Not Finish" >Did Not Finish</option>
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
@@ -216,6 +243,14 @@ div#add_new_match {
                                                                 <label for="exampleFormControlTextarea1">Other comments</label>
                                                                 <textarea class="form-control" name="other_comments" id="exampleFormControlTextarea1" rows="3">{{isset($ma->other_comments) ? $ma->other_comments : ''}}</textarea>
                                                             </div>
+
+                                                            @php 
+                                                                $check_stats = DB::table('match_stats')->where('competition_id',$comp->id)->where('match_id',$ma->id)->first(); 
+                                                            @endphp
+
+                                                            @if(!empty($check_stats))
+                                                                <a href="{{url('/user/competition')}}/{{$comp->id}}/match/{{$ma->id}}/stats/view">View Stats</a>
+                                                            @else
                                                             <div class="form-group">
                                                                 <label>Upload Match Chart</label><br/>
 
@@ -228,6 +263,7 @@ div#add_new_match {
                                                                 <label>Add Match Stats</label>
                                                                 <a href="{{url('/user/competition')}}/{{$comp->id}}/match/{{$ma->id}}/stats"><i class="fas fa-plus-circle"></i></a>
                                                             </div>
+                                                            @endif
                                                         </div>
                                                         <button type="submit" class="cstm-btn">submit</button>
                                                         
@@ -254,7 +290,7 @@ div#add_new_match {
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" name="match_title" placeholder="Match Title" class="form-control" placeholder="Match Title">
+                                            <input type="text" name="opponent_name" placeholder="Opponent Name" class="form-control" placeholder="Opponent Name">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -276,7 +312,12 @@ div#add_new_match {
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" name="result" class="form-control" placeholder="Match Result">
+                                            <select name="result">
+                                                <option selected="" disabled="">Match Result</option>
+                                                <option value="Won">Won</option>
+                                                <option value="Lost">Lost</option>
+                                                <option value="Did Not Finish" >Did Not Finish</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -327,7 +368,7 @@ div#add_new_match {
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" name="match_title" placeholder="Match Title" class="form-control" placeholder="Match Title">
+                                            <input type="text" name="opponent_name" placeholder="Opponent Name" class="form-control" placeholder="Opponent Name">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -349,7 +390,12 @@ div#add_new_match {
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" name="result" class="form-control" placeholder="Match Result">
+                                            <select name="result">
+                                                <option selected="" disabled="">Match Result</option>
+                                                <option value="Won">Won</option>
+                                                <option value="Lost">Lost</option>
+                                                <option value="Did Not Finish" >Did Not Finish</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4">

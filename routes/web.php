@@ -111,11 +111,15 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     Route::any('competitions','HomeController@competition_list')->name('competition_list');
     Route::any('competitions/{id}','HomeController@matches_under_comp')->name('matches_under_comp');
     Route::any('competition/{comp_id}/match/{match_id}/stats','HomeController@match_stats')->name('match_stats');
+    Route::any('competition/stats/save','HomeController@save_match_stats')->name('save_match_stats');
+    Route::any('competition/{comp_id}/match/{match_id}/stats/view','HomeController@view_match_stats')->name('view_match_stats');
 
     // Coach - Goals management
     Route::any('goals/list','HomeController@goal_list')->name('goal_list');
     Route::any('goal/{goal_type}/{id}/add-comment','HomeController@goal_detail')->name('goal_detail');
     Route::any('goal/save-comment','HomeController@save_comment_by_coach')->name('save_comment_by_coach');
+    Route::any('goal/advanced/save','HomeController@advanced_goal')->name('advanced_goal');
+    Route::any('goal/advanced/save-comment','HomeController@save_ad_coach_comment')->name('save_ad_coach_comment');
 });
 
 // Coupon code

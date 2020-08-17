@@ -16,7 +16,7 @@ class CreateMatchReportsTable extends Migration
         Schema::create('match_reports', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('comp_id');
-            $table->string('match_title');
+            $table->string('opponent_name');
             $table->string('start_time');
             $table->string('surface_type');
             $table->string('condition');

@@ -42,49 +42,56 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10">
-                <div class="card coach_profile">
+                <!-- <div class="card coach_profile"> -->
                     <div class="card-header">Match Stats</div>
-                 </div>
+                    <p>{!! getAllValueWithMeta('match_stats_text', 'general-setting') !!}</p>
+                    <br/>
+                 <!-- </div> -->
                     <div class="card-body matches-card-body">
-                        <form class="register-form" method="POST" enctype="multipart/form-data" action="{{route('update_coach_profile')}}">
+                        <form method="POST" enctype="multipart/form-data" action="{{route('save_match_stats')}}">
                             @csrf
+                            <input type="hidden" name="competition_id" value="{{$comp_id}}">
+                            <input type="hidden" name="match_id" value="{{$match_id}}">
                             <div class="profile-status-text matches-status-text" style="margin-top:5px;">
                                 <div class="row">
-                                    <!-- Total points played in match -->
+
+                                    <!-- 1) Total points played in match -->
                                     <div class="form-group row f-g-full">
                                         <div class="col-md-12">
                                             <div class="row">
                                                 <div class="col-md-8">
-                                                    <label for="total_points" class="col-md-12 col-form-label text-md-right"><span>1) </span>{{ __('Total points played in match') }}</label></div>
+                                                    <label for="tp_in_match" class="col-md-12 col-form-label text-md-right"><span>1) </span>{{ __('Total points played in match') }}</label></div>
                                                 <div class="col-md-4">
-                                                    <input id="total_points" type="text" class="form-control{{ $errors->has('total_points') ? ' is-invalid' : '' }}" name="total_points" value="{{ isset($user->total_points) ? $user->total_points : '' }}" required autofocus >
-                                                    @if ($errors->has('total_points'))
+                                                    <input id="tp_in_match" type="text" class="form-control{{ $errors->has('tp_in_match') ? ' is-invalid' : '' }}" name="tp_in_match" value="{{ isset($user->tp_in_match) ? $user->tp_in_match : '' }}" required autofocus >
+                                                    @if ($errors->has('tp_in_match'))
                                                     <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $errors->first('total_points') }}</strong>
+                                                        <strong>{{ $errors->first('tp_in_match') }}</strong>
                                                     </span>
                                                     @endif
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Total points won -->
+
+                                    <!-- 2) Total points won -->
                                     <div class="form-group row f-g-full">
                                         <div class="col-md-12">
                                             <div class="row">
                                                 <div class="col-md-8">
-                                                    <label for="total_points_won" class="col-md-12 col-form-label text-md-right"><span>2) </span>{{ __('Total points won') }}</label></div>
+                                                    <label for="tp_won" class="col-md-12 col-form-label text-md-right"><span>2) </span>{{ __('Total points won') }}</label></div>
                                                 <div class="col-md-4">
-                                                    <input id="total_points_won" type="text" class="form-control{{ $errors->has('total_points_won') ? ' is-invalid' : '' }}" name="total_points_won" value="{{ isset($user->total_points_won) ? $user->total_points_won : '' }}" required autofocus>
-                                                    @if ($errors->has('total_points_won'))
+                                                    <input id="tp_won" type="text" class="form-control{{ $errors->has('tp_won') ? ' is-invalid' : '' }}" name="tp_won" value="{{ isset($user->tp_won) ? $user->tp_won : '' }}" required autofocus>
+                                                    @if ($errors->has('tp_won'))
                                                     <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $errors->first('total_points_won') }}</strong>
+                                                        <strong>{{ $errors->first('tp_won') }}</strong>
                                                     </span>
                                                     @endif
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Total points won -->
+
+                                    <!-- 3) Total points won -->
                                     <div class="form-group row f-g-full">
                                         <div class="col-md-12">
                                             <div class="row">
@@ -102,7 +109,7 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
                                             </div>
                                         </div>
                                      </div>
-                                         <!-- Total 2nd serves in -->
+                                         <!-- 4) Total 2nd serves in -->
                                             <div class="form-group row f-g-full">
                                                 <div class="col-md-12">
                                                     <div class="row">
@@ -119,7 +126,7 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Total 2nd serves in -->
+                                            <!-- 5) Total double fault -->
                                             <div class="form-group row f-g-full">
                                                 <div class="col-md-12">
                                                     <div class="row">
@@ -136,7 +143,8 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Total aces -->
+
+                                            <!-- 6) Total aces -->
                                             <div class="form-group row f-g-full">
                                                 <div class="col-md-12">
                                                     <div class="row">
@@ -153,7 +161,8 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Total 1st serves in by opponent -->
+
+                                            <!-- 7) Total 1st serves in by opponent -->
                                             <div class="form-group row f-g-full">
                                                 <div class="col-md-12">
                                                     <div class="row">
@@ -170,7 +179,8 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Total 2nd serves in by opponent -->
+
+                                            <!-- 8) Total 2nd serves in by opponent -->
                                             <div class="form-group row f-g-full">
                                                 <div class="col-md-12">
                                                     <div class="row">
@@ -187,12 +197,13 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Total double fault by opponent -->
+
+                                            <!-- 9) Total double fault by opponent -->
                                             <div class="form-group row f-g-full">
                                                 <div class="col-md-12">
                                                     <div class="row">
                                                         <div class="col-md-8">
-                                                            <label for="total_double_fault_by_op" class="col-md-12 col-form-label text-md-right"><span>9) </span>{{ __('Total double fault by opponent') }}</label></div>
+                                                            <label for="total_double_fault_by_op" class="col-md-12 col-form-label text-md-right"><span>9) </span>{{ __('Total double faults by opponent') }}</label></div>
                                                         <div class="col-md-4">
                                                             <input id="total_double_fault_by_op" type="text" class="form-control{{ $errors->has('total_double_fault_by_op') ? ' is-invalid' : '' }}" name="total_double_fault_by_op" value="{{ isset($user->total_double_fault_by_op) ? $user->total_double_fault_by_op : '' }}" required autofocus  >
                                                             @if ($errors->has('total_double_fault_by_op'))
@@ -204,66 +215,140 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Total aces by opponent -->
+
+                                            <!-- 10) Total points won in 1 serve -->
                                             <div class="form-group row f-g-full">
                                                 <div class="col-md-12">
                                                     <div class="row">
                                                         <div class="col-md-8">
-                                                            <label for="total_aces_by_op" class="col-md-12 col-form-label text-md-right"><span>10) </span>{{ __('Total aces by opponent') }}</label></div>
+                                                            <label for="tp_won_in_1serve" class="col-md-12 col-form-label text-md-right"><span>10) </span>{{ __('Total points won when 1st serve went in') }}</label></div>
                                                         <div class="col-md-4">
-                                                            <input id="total_aces_by_op" type="text" class="form-control{{ $errors->has('total_aces_by_op') ? ' is-invalid' : '' }}" name="total_aces_by_op" value="{{ isset($user->total_aces_by_op) ? $user->total_aces_by_op : '' }}" required autofocus >
-                                                            @if ($errors->has('total_aces_by_op'))
+                                                            <input id="tp_won_in_1serve" type="text" class="form-control{{ $errors->has('tp_won_in_1serve') ? ' is-invalid' : '' }}" name="tp_won_in_1serve" value="{{ isset($user->tp_won_in_1serve) ? $user->tp_won_in_1serve : '' }}" required autofocus >
+                                                            @if ($errors->has('tp_won_in_1serve'))
                                                             <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $errors->first('total_aces_by_op') }}</strong>
+                                                                <strong>{{ $errors->first('tp_won_in_1serve') }}</strong>
                                                             </span>
                                                             @endif
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Total points when 1st serve went in -->
+
+                                            <!-- 11) Total points won in 2 serve -->
                                             <div class="form-group row f-g-full">
                                                 <div class="col-md-12">
                                                     <div class="row">
                                                         <div class="col-md-8">
-                                                            <label for="total_points_1serve_went" class="col-md-12 col-form-label text-md-right"><span>11) </span>{{ __('Total points when 1st serve went in') }}</label></div>
+                                                            <label for="tp_won_in_2serve" class="col-md-12 col-form-label text-md-right"><span>11) </span>{{ __('Total points won when 2nd serve went in') }}</label>
+                                                        </div>
                                                         <div class="col-md-4">
-                                                            <input id="total_points_1serve_went" type="text" class="form-control{{ $errors->has('total_points_1serve_went') ? ' is-invalid' : '' }}" name="total_points_1serve_went" value="{{ isset($user->total_points_1serve_went) ? $user->total_points_1serve_went : '' }}" required autofocus  >
-                                                            @if ($errors->has('total_points_1serve_went'))
+                                                            <input id="tp_won_in_2serve" type="text" class="form-control{{ $errors->has('tp_won_in_2serve') ? ' is-invalid' : '' }}" name="tp_won_in_2serve" value="{{ isset($user->tp_won_in_2serve) ? $user->tp_won_in_2serve : '' }}" required autofocus >
+                                                            @if ($errors->has('tp_won_in_2serve'))
                                                             <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $errors->first('total_points_1serve_went') }}</strong>
+                                                                <strong>{{ $errors->first('tp_won_in_2serve') }}</strong>
                                                             </span>
                                                             @endif
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Total points when 2nd serve went in -->
+
+                                            <!-- 12) Total points won when opponent's 1st serve went in -->
                                             <div class="form-group row f-g-full">
                                                 <div class="col-md-12">
                                                     <div class="row">
                                                         <div class="col-md-8">
-                                                            <label for="total_points_1serve_went" class="col-md-12 col-form-label text-md-right"><span>12) </span>{{ __('Total points when 2nd serve went in') }}</label></div>
+                                                            <label for="tp_won_ops_1sereve" class="col-md-12 col-form-label text-md-right"><span>12) </span>{{ __("Total points won when opponent's 1st serve went in") }}</label>
+                                                        </div>
                                                         <div class="col-md-4">
-                                                            <input id="total_points_2serve_went" type="text" class="form-control{{ $errors->has('total_points_2serve_went') ? ' is-invalid' : '' }}" name="total_points_2serve_went" value="{{ isset($user->total_points_2serve_went) ? $user->total_points_2serve_went : '' }}" required autofocus  >
-                                                            @if ($errors->has('total_points_2serve_went'))
+                                                            <input id="tp_won_ops_1sereve" type="text" class="form-control{{ $errors->has('tp_won_ops_1sereve') ? ' is-invalid' : '' }}" name="tp_won_ops_1sereve" value="{{ isset($user->tp_won_ops_1sereve) ? $user->tp_won_ops_1sereve : '' }}" required autofocus >
+                                                            @if ($errors->has('tp_won_ops_1sereve'))
                                                             <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $errors->first('total_points_2serve_went') }}</strong>
+                                                                <strong>{{ $errors->first('tp_won_ops_1sereve') }}</strong>
                                                             </span>
                                                             @endif
                                                         </div>
                                                     </div>
                                                 </div>
-                                             </div>
-                                                <div class="form-button">
-                                                    <div class="form-group row mb-0 button_form_row">
-                                                        <div class="col-md-12 form-btn">
-                                                            <button type="submit" class="cstm-btn">
-                                                                {{ __('Submit') }}
-                                                            </button>
+                                            </div>
+
+                                            <!-- 13) Total points won when opponent's 2nd serve went in -->
+                                            <div class="form-group row f-g-full">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            <label for="tp_won_ops_2sereve" class="col-md-12 col-form-label text-md-right"><span>13) </span>{{ __("Total points won when opponent's 2nd serve went in") }}</label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <input id="tp_won_ops_2sereve" type="text" class="form-control{{ $errors->has('tp_won_ops_2sereve') ? ' is-invalid' : '' }}" name="tp_won_ops_2sereve" value="{{ isset($user->tp_won_ops_2sereve) ? $user->tp_won_ops_2sereve : '' }}" required autofocus >
+                                                            @if ($errors->has('tp_won_ops_2sereve'))
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $errors->first('tp_won_ops_2sereve') }}</strong>
+                                                            </span>
+                                                            @endif
                                                         </div>
                                                     </div>
-                                                 </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 14) Total points won when rally 4 shots or less -->
+                                            <div class="form-group row f-g-full">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            <label for="tp_won_rally_4shots" class="col-md-12 col-form-label text-md-right"><span>14) </span>{{ __('Total points won when rally 4 shots or less') }}</label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <input id="tp_won_rally_4shots" type="text" class="form-control{{ $errors->has('tp_won_rally_4shots') ? ' is-invalid' : '' }}" name="tp_won_rally_4shots" value="{{ isset($user->tp_won_rally_4shots) ? $user->tp_won_rally_4shots : '' }}" required autofocus >
+                                                            @if ($errors->has('tp_won_rally_4shots'))
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $errors->first('tp_won_rally_4shots') }}</strong>
+                                                            </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 15) Total points won when rally 5+ shots -->
+                                            <div class="form-group row f-g-full">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            <label for="tp_won_rally_5shots" class="col-md-12 col-form-label text-md-right"><span>15) </span>{{ __('Total points won when rally 5+ shots') }}</label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <input id="tp_won_rally_5shots" type="text" class="form-control{{ $errors->has('tp_won_rally_5shots') ? ' is-invalid' : '' }}" name="tp_won_rally_5shots" value="{{ isset($user->tp_won_rally_5shots) ? $user->tp_won_rally_5shots : '' }}" required autofocus >
+                                                            @if ($errors->has('tp_won_rally_5shots'))
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $errors->first('tp_won_rally_5shots') }}</strong>
+                                                            </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 16) Total number of shots played in match -->
+                                            <div class="form-group row f-g-full">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            <label for="total_shots_match" class="col-md-12 col-form-label text-md-right"><span>16) </span>{{ __('Total number of shots played in match') }}</label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <input id="total_shots_match" type="text" class="form-control{{ $errors->has('total_shots_match') ? ' is-invalid' : '' }}" name="total_shots_match" value="{{ isset($user->total_shots_match) ? $user->total_shots_match : '' }}" required autofocus >
+                                                            @if ($errors->has('total_shots_match'))
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $errors->first('total_shots_match') }}</strong>
+                                                            </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="cstm-btn">Submit</button>
+                                            
                         </form>
                   
                 </div>
