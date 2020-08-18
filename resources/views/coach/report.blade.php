@@ -5,6 +5,7 @@
 $country_code = DB::table('country_code')->get();
 $notification = DB::table('parent_coach_reqs')->where('coach_id',Auth::user()->id)->where('status',NULL)->count();
 $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->first(); 
+$count=1; 
 @endphp 
 <style>
 input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
@@ -218,7 +219,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Coach Feedback:</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="feedback" placeholder="Comment here...">{{isset($player_report->feedback) ? $player_report->feedback : ''}}</textarea>
+                                        <textarea class="form-control" id="feedback" rows="5" name="feedback" placeholder="Comment here...">{{isset($player_report->feedback) ? $player_report->feedback : ''}}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -396,7 +397,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Coach Feedback:</label>
-                                        <textarea class="form-control" name="feedback" id="exampleFormControlTextarea1" rows="5" placeholder="Comment here...">{{isset($player_rep->feedback) ? $player_rep->feedback : ''}}</textarea>
+                                        <textarea class="form-control" name="feedback" id="feedback" rows="5" placeholder="Comment here...">{{isset($player_rep->feedback) ? $player_rep->feedback : ''}}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -600,9 +601,38 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                         <label for="exampleFormControlTextarea1">Other comments</label>
                                         <textarea class="form-control" name="other_comments" id="exampleFormControlTextarea1" rows="3"></textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Upload Match Chart</label><br/>
-                                        <input type="file" name="match_chart"></div>
+                                        <!-- <th><a onclick="addnewsection();" href="javascript:void(0);"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></th> -->
+
+
+                                        <!-- ******************************
+                                        |
+                                        |     Upload Match Chart
+                                        |
+                                        | ********************************* -->
+                                      
+                                        <table class="add_on_services">
+                                            <thead>
+                                                <tr>
+                                                    <th>Upload Match Chart</th>
+                                                    <th><a onclick="addnewsection();" href="javascript:void(0);"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                          
+                                            <input type="hidden" id="noOfQuetion" value="{{$count}}">
+                                            <div class="mainQuestions" id="mainQuestions">
+
+                                                <tr class="timeslots slots{{$count}}" value={{$count}}>
+                                                  <td><input type="file" name="match_chart[{{$count}}]"></td>
+                                                  <td><a onclick="removeSection({{$count}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></td>      
+                                                </tr>
+
+                                            </div>
+                                          
+                                            </tbody>
+                                        </table>
+
+
                                     </div>
                                 </div>
                                 <button type="submit" class="cstm-btn">submit</button>
@@ -615,4 +645,3 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
             </div>
         </div>
 </section>
-@endsection

@@ -114,6 +114,8 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     Route::any('competition/stats/save','HomeController@save_match_stats')->name('save_match_stats');
     Route::any('competition/{comp_id}/match/{match_id}/stats/view','HomeController@view_match_stats')->name('view_match_stats');
 
+    Route::any('competition/{comp_id}/match/{match_id}/player/{player_id}/game-chart/remove/{chart_id}','HomeController@remove_game_chart')->name('remove_game_chart');
+
     // Coach - Goals management
     Route::any('goals/list','HomeController@goal_list')->name('goal_list');
     Route::any('goal/{goal_type}/{id}/add-comment','HomeController@goal_detail')->name('goal_detail');

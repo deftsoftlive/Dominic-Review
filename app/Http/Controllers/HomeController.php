@@ -44,6 +44,7 @@ use App\TestScore;
 use App\Wallet;
 use App\WalletHistory;
 use App\MatchStats;
+use App\MatchGameChart;
 use App\Models\Shop\ShopCartItems;
 use App\Models\Products\ProductCategory;
 use App\Traits\ProductCart\UserCartTrait;
@@ -1402,7 +1403,7 @@ public function coach_report()
     $course_id = request()->get('course_id');
     $user_id = request()->get('player_id');
 
-    // dd($player_id,$season_id,$course_id,$user_id);
+    //dd($player_id,$season_id,$course_id,$user_id);
 
     // Filter for complex report
     if(!empty($player_id))
@@ -1428,6 +1429,8 @@ public function coach_report()
 |---------------------------------*/
 public function save_simple_report(Request $request)
 {
+  if(!empty($request->season_id) && !empty($request->course_id) && !empty($request->player_id))
+  {
     $check_report = PlayerReport::where('type','simple')->where('season_id',$request->season_id)->where('player_id',$request->player_id)->where('course_id',$request->course_id)->get();
 
     $date = Carbon::now();
@@ -1485,6 +1488,9 @@ public function save_simple_report(Request $request)
             
         }
     }
+  }else{
+    return redirect('/user/coach-reports')->with('error','Season, course & player are required fields & you missed one of those fields.'); 
+  }
 } 
 
 
@@ -2549,7 +2555,7 @@ public function badges()
     }
 
     if(!empty($term) && empty($stage) || !empty($term) && $stage==NULL){
-        $user_badge1 = \DB::table('user_badges')->where('season_id',$term)->paginate(10);
+        $user_badge1 = \DB::table('user_badges')->where('season_id',$term)->paginate(1);
     }
     elseif(!empty($term) && !empty($stage)){
         $course = Course::where('season',$term)->where('subtype',$stage)->first();
@@ -3312,14 +3318,30 @@ public function add_competition(Request $request)
 { 
     $user_role = Auth::user()->role_id;
     $comp_id = isset($request->comp_id) ? $request->comp_id : '';
-    // $user = User::where('id',$request->coach_id)->first(); 
-    // if($user->role_id == 2)
-    // {
-    //   $parent_id = $request->coach_id;
-    // }elseif($user->role_id == 3)
-    // {
-    //   $coach_id = $request->coach_id;
-    // }
+
+    $coach_user = User::where('id',$request->coach_id)->first(); 
+    if(!empty($coach_user))
+    {
+      if($coach_user->role_id == 2)
+      {
+        $parent_id = $request->coach_id;
+      }elseif($coach_user->role_id == 3)
+      {
+        $coach_id = $request->coach_id;
+      }
+    }
+
+    $parent_user = User::where('id',$request->parent_id)->first(); 
+    if(!empty($parent_user))
+    {
+      if($parent_user->role_id == 2)
+      {
+        $parent_id = $request->parent_id;
+      }elseif($parent_user->role_id == 3)
+      {
+        $coach_id = $request->parent_id;
+      }
+    }
 
     if(!empty($comp_id))
     {
@@ -3329,6 +3351,8 @@ public function add_competition(Request $request)
         $comp->comp_date = $request->comp_date;
         $comp->comp_venue = $request->comp_venue;
         $comp->comp_name = $request->comp_name;
+        $comp->parent_id = isset($parent_id) ? $parent_id : '0';
+        $comp->coach_id = isset($coach_id) ? $coach_id : '0';
         $comp->save();
 
         $comp_id = base64_encode($comp->id);
@@ -3340,6 +3364,8 @@ public function add_competition(Request $request)
         if(!empty($request->player_id))
         {
             $comp = Competition::create($request->all()); 
+            $comp->parent_id = isset($parent_id) ? $parent_id : '0';
+            $comp->coach_id = isset($coach_id) ? $coach_id : '0';
             $comp->save();
 
             $comp_id = base64_encode($comp->id);
@@ -3364,19 +3390,8 @@ public function comp_data($id)
 |   Save Match Report
 |---------------------------------*/
 public function add_match(Request $request)
-{ 
-    if(!empty($request->match_chart))
-    {
-        $filename = $request->match_chart;
-        if ($request->hasFile('match_chart')) 
-        {
-            $match_chart = $request->file('match_chart');
-            $filename = time().'.'.$match_chart->getClientOriginalExtension();  
-            $destinationPath = public_path('/uploads');
-            $img_path = public_path().'/uploads/'.$request->match_chart;
-            $match_chart->move($destinationPath, $filename);
-        }
-    }
+{
+  $data = $request->all();  
 
     if(!empty($request->match_id))
     {
@@ -3394,8 +3409,27 @@ public function add_match(Request $request)
             $match->wht_went_well = $request->wht_went_well;
             $match->wht_could_better = $request->wht_could_better;
             $match->other_comments = $request->other_comments;
-            $match->match_chart = isset($filename) ? $filename : '';
             $match->save();
+
+            if($request->hasFile('match_chart'))
+            {
+                foreach ($data['match_chart'] as $number => $value)
+                {    
+                  $string = str_random(5);
+                  $image[$number] = request()->match_chart[$number];  
+                  $filename[$number] = time().$string.'.'.$image[$number]->getClientOriginalExtension();
+                  $destinationPath[$number] = public_path('/uploads/game-charts');  
+                  $image[$number]->move($destinationPath[$number], $filename[$number]);
+
+                  $gc                 =   new MatchGameChart;
+                  $gc->comp_id        =   $match->comp_id;
+                  $gc->match_id       =   $match->id;
+                  $gc->player_id      =   $match->player_id;
+                  $gc['image']        =   isset($filename[$number]) ? $filename[$number] : '';
+                  $gc->save(); 
+
+                }
+            }
 
             $comp_id = base64_encode($match->comp_id);
 
@@ -3406,11 +3440,34 @@ public function add_match(Request $request)
 
         if(!empty($request->player_id) && !empty($request->comp_id))
         {
-            $match = MatchReport::create($request->all()); 
-            $match->match_chart = isset($filename) ? $filename : '';
+            $match = MatchReport::create($request->all());
             $match->save();
+   
+            if(isset($data) && !(empty($data['match_chart'])))
+            {
+                if($request->hasFile('match_chart'))
+                {
+                    foreach ($data['match_chart'] as $number => $value){    
+                    
+                    $string = str_random(5);
+                    $image[$number] = request()->match_chart[$number];  
+                    $filename[$number] = time().$string.'.'.$image[$number]->getClientOriginalExtension();
+                    $destinationPath[$number] = public_path('/uploads/game-charts');  
+                    $image[$number]->move($destinationPath[$number], $filename[$number]);
 
-            $comp_id = base64_encode($match->comp_id);
+                      $gc                 =   new MatchGameChart;
+                      $gc->comp_id        =   $match->comp_id;
+                      $gc->match_id       =   $match->id;
+                      $gc->player_id      =   $match->player_id;
+                      $gc['image']        =   isset($filename[$number]) ? $filename[$number] : '';
+                      $gc->save(); 
+
+                    }
+                }
+
+            }
+
+            $comp_id = base64_encode($gc->comp_id);
 
             return redirect('/user/reports/comp/'.$comp_id)->with('success','Match added successfully!');
         }else{
@@ -3418,6 +3475,25 @@ public function add_match(Request $request)
         }
     }
     
+}
+
+/*--------------------------------------------------
+| Remove game chart  
+|--------------------------------------------------*/
+public function remove_game_chart($comp_id,$match_id,$player_id,$chart_id)
+{
+  $compID = base64_decode($comp_id);
+  $matchID = base64_decode($match_id);
+  $playerID = base64_decode($player_id);
+  $chartID = base64_decode($chart_id);
+
+  $game_chart = MatchGameChart::where('id',$chartID)->where('comp_id',$compID)->where('match_id',$matchID)->where('player_id',$playerID)->first();
+  $game_chart->delete();
+
+  $image_path = "/uploads/game-charts".$game_chart->image;
+  \File::delete($image_path);
+
+  return \Redirect::back()->with('success','Game Chart has been deleted successfully.');
 }
 
 /*--------------------------------------------------

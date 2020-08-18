@@ -924,129 +924,104 @@ $(document).ready(function (){
     }
   });
 
-  /*validations on simple report*/
-  // $('#simple_report').validate({
-  //          rules: {
-  //           pla_name: {
-  //               required: true
-  //           },
-  //           pla_dob: {
-  //               required: true
-  //           },
-  //           confirmation: {
-  //               required: true
-  //           }
-  //       },
-  //       messages:{
-  //           pla_name:{required:"This field is required"},
-  //           pla_dob:{required:"This field is required"},
-  //           confirmation:{required:"This field is required"}
-  //       },
+  /*validations on complex report*/
+  $('#match_stats').validate({
+           rules: {
+            tp_in_match: {
+                required: true,
+                digits: true
+            },
+            tp_won: {
+                required: true,
+                digits: true
+            },
+            total_1serves_in: {
+                required: true,
+                digits: true
+            },
+            total_2serves_in: {
+                required: true,
+                digits: true
+            },
+            total_double_faults: {
+                required: true,
+                digits: true
+            },
+            total_aces: {
+                required: true,
+                digits: true
+            },
+            total_1serve_by_op: {
+                required: true,
+                digits: true
+            },
+            total_2serve_by_op: {
+                required: true,
+                digits: true
+            },
+            total_double_fault_by_op: {
+                required: true,
+                digits: true
+            },
+            tp_won_in_1serve: {
+                required: true,
+                digits: true
+            },
+            tp_won_in_2serve: {
+                required: true,
+                digits: true
+            },
+            tp_won_ops_1sereve: {
+                required: true,
+                digits: true
+            },
+            tp_won_ops_2sereve: {
+                required: true,
+                digits: true
+            },
+            tp_won_rally_4shots: {
+                required: true,
+                digits: true
+            },
+            tp_won_rally_5shots: {
+                required: true,
+                digits: true
+            },
+            total_shots_match: {
+                required: true,
+                digits: true
+            },
+        },
+        messages:{
+            pl_name:{required:"This field is required"},
+            pl_dob:{required:"This field is required"},
+            confirmation:{required:"This field is required"}
+        },
 
-  //   highlight: function (element, errorClass, validClass) {
+    highlight: function (element, errorClass, validClass) {
 
-  //     if(element.type =='text'||element.type =='password'||element.type =='email'||element.type =='select-one') {
-  //       $(element).siblings("label").addClass("error");
-  //       $(element).addClass('input--error').removeClass(validClass+' input--success');
-  //       $(element).closest('.myForm').removeClass('has-success has-feedback').addClass('has-error has-feedback');
-  //       $(element).closest('.myForm').find('i.fa').remove();
-  //       $(element).closest('.myForm').append('<i class="fa fa-exclamation fa-lg form-control-feedback"></i>');
-  //     }
-  //   },
-  //   unhighlight: function (element, errorClass, validClass) {
-  //     if (element.type === "text"||element.type =='password' ||element.type =='email'||element.type =='select-one') {
-  //       $(element).siblings("label").removeClass("error");
-  //       $('.errorMsg').addClass('displaynone');
-  //       $(element).closest('.myForm').removeClass('has-error has-feedback').addClass('has-success has-feedback');
-  //       $(element).removeClass('input--error').addClass(validClass+' input--success');
-  //       $(element).closest('.myForm').find('i.fa').remove();
-  //       $(element).closest('.myForm').append('<i class="fa fa-check fa-lg form-control-feedback"></i>');
-  //     } 
-  //   },
+      if(element.type =='text'||element.type =='password'||element.type =='email'||element.type =='select-one') {
+        $(element).siblings("label").addClass("error");
+        $(element).addClass('input--error').removeClass(validClass+' input--success');
+        $(element).closest('.myForm').removeClass('has-success has-feedback').addClass('has-error has-feedback');
+        $(element).closest('.myForm').find('i.fa').remove();
+        $(element).closest('.myForm').append('<i class="fa fa-exclamation fa-lg form-control-feedback"></i>');
+      }
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      if (element.type === "text"||element.type =='password' ||element.type =='email'||element.type =='select-one') {
+        $(element).siblings("label").removeClass("error");
+        $('.errorMsg').addClass('displaynone');
+        $(element).closest('.myForm').removeClass('has-error has-feedback').addClass('has-success has-feedback');
+        $(element).removeClass('input--error').addClass(validClass+' input--success');
+        $(element).closest('.myForm').find('i.fa').remove();
+        $(element).closest('.myForm').append('<i class="fa fa-check fa-lg form-control-feedback"></i>');
+      } 
+    },
        
-  //     submitHandler: function(form) {
-  //       $("#submit-simple-report").attr("disabled", true);
-  //       form.submit();
-  //   }
-  // });
-
-  // /*validation for the contact form*/
-  //    $('#add-family-mem').validate({
-
-  //     rules: {
-
-  //     first_name: {
-  //         required: true,
-  //         maxlength:25,
-  //         lettersonly:true,
-  //     },
-  //     last_name: {
-  //         required: true,
-  //         maxlength:25,
-  //         lettersonly:true,
-  //     },
-  //     date_of_birth: {
-  //         required: true,
-  //     },
-  //     address: {
-  //         required: true,
-  //         maxlength:255,
-  //     },
-  //     town: {
-  //         required: true,
-  //         maxlength:255,
-  //     },
-  //     postcode: {
-  //         required: true,
-  //         maxlength:255,
-  //     },
-  //     county: { 
-  //         required: true,
-  //         maxlength:255,
-  //     },
-  //     country: {
-  //         required: true,
-  //     },
-  //     relation: {
-  //         required: true,
-  //     },
-  //     },
-
-  //   messages:{
-  //     first_name:{required:"This field is required."},
-  //     last_name:{required:"This field is required."},  
-  //   },
-
-  //   highlight: function (element, errorClass, validClass) {
-
-  //     if(element.type =='text'||element.type =='password'||element.type =='email'||element.type =='select-one'||element.type == 'tel') {
-  //         $(element).siblings("label").addClass("error");
-  //         $(element).addClass('input--error').removeClass(validClass+' input--success');
-  //         $(element).closest('.myForm').removeClass('has-success has-feedback').addClass('has-error has-feedback');
-  //       // this.findByName(element.name).removeClass('has-success has-feedback').addClass('has-error has-feedback');
-  //       $(element).closest('.myForm').find('i.fa').remove();
-  //       $(element).closest('.myForm').append('<i class="fa fa-exclamation fa-lg form-control-feedback"></i>');
-  //     }else if(element.type == 'checkbox'){
-  //         $("input#checkbox1").after('<span class="checkmark"></span>');
-  //     }
-  //   },
-  //   unhighlight: function (element, errorClass, validClass) {
-  //     if (element.type === "text"||element.type =='password' ||element.type =='email'||element.type =='select-one'||element.type == 'tel') {
-  //         $(element).siblings("label").removeClass("error");
-  //         $('.errorMsg').addClass('displaynone');
-  //         $(element).closest('.myForm').removeClass('has-error has-feedback').addClass('has-success has-feedback');
-  //         $(element).removeClass('input--error').addClass(validClass+' input--success');
-  //         $(element).closest('.myForm').find('i.fa').remove();
-  //         $(element).closest('.myForm').append('<i class="fa fa-check fa-lg form-control-feedback"></i>');
-  //     } 
-  //   },
-
-  //     submitHandler: function(form) {        
-  //       $("#medical_info_to_next").attr("disabled", true);
-  //       $("#child_info_to_next").attr("disabled", true);
-  //       form.submit();
-  //     }
-
-  // });
-
+      submitHandler: function(form) {
+        $("#save_stats").attr("disabled", true);
+        form.submit();
+    }
+  });
 });

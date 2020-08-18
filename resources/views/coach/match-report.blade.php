@@ -252,18 +252,69 @@ div#add_new_match {
                                                                 <a href="{{url('/user/competition')}}/{{$comp->id}}/match/{{$ma->id}}/stats/view">View Stats</a>
                                                             @else
                                                             <div class="form-group">
+                                                                <label>Add Match Stats</label>
+                                                                <a href="{{url('/user/competition')}}/{{$comp->id}}/match/{{$ma->id}}/stats"><i class="fas fa-plus-circle"></i></a>
+                                                            </div>
+                                                            @endif
+
+                                                            <!-- ******************************
+                                                            |
+                                                            |     Upload Match Chart
+                                                            |
+                                                            | ********************************* -->
+                                                            @php 
+                                                                $count=1; 
+                                                                $check_game_chart = DB::table('match_game_charts')->where('comp_id',$comp->id)->where('match_id',$ma->id)->where('player_id',$comp->player_id)->get();
+                                                                $count_game_chart = $check_game_chart->count();
+                                                            @endphp
+                                                            <table class="add_on_services">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Upload Match Chart</th>
+                                                                        <th><a onclick="addnewsection();" href="javascript:void(0);"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+
+                                                                @if(isset($check_game_chart))  
+
+                                                                <input type="hidden" id="noOfQuetion" value="{{$count_game_chart}}">
+                                                                <div class="mainQuestions" id="mainQuestions">
+
+                                                                @foreach($check_game_chart as $time => $number)
+                                                                    <tr class="timeslots slots{{$time+1}}" value={{$time+1}}>
+                                                                      <td><a target="_blank" href="{{URL::asset('/uploads/game-charts')}}/{{$number->image}}"><img style="width:20%" src="{{URL::asset('/uploads/game-charts')}}/{{$number->image}}"></a></td>
+                                                                      <td><a class="cstm-btn" onclick="return confirm('Are you sure you want to delete this game chart?')" href="{{url('/user/competition')}}/@php echo base64_encode($comp->id); @endphp/match/@php echo base64_encode($ma->id); @endphp/player/@php echo base64_encode($comp->player_id); @endphp/game-chart/remove/@php echo base64_encode($number->id); @endphp">Delete</a></td>
+                                                                    </tr>
+                                                                @endforeach  
+
+                                                                </div>
+
+                                                                @else
+                                                              
+                                                                <input type="hidden" id="noOfQuetion" value="{{$count_game_chart}}">
+                                                                <div class="mainQuestions" id="mainQuestions">
+
+                                                                    <tr class="timeslots slots{{$count}}" value={{$count}}>
+                                                                      <td><input type="file" name="match_chart[{{$count}}]"></td>
+                                                                      <td><a onclick="removeSection({{$count}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></td>      
+                                                                    </tr>
+
+                                                                </div>
+
+                                                                @endif
+                                                              
+                                                                </tbody>
+                                                            </table>
+                                                          <!--   <div class="form-group">
                                                                 <label>Upload Match Chart</label><br/>
 
                                                                 @if(!empty($ma->match_chart))
                                                                     <a target="_blank" href="{{URL::asset('/uploads')}}/{{$ma->match_chart}}">View Already Uploaded Match Chart</a><br/><br/>
                                                                 @endif
                                                                 <input type="file" name="match_chart">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Add Match Stats</label>
-                                                                <a href="{{url('/user/competition')}}/{{$comp->id}}/match/{{$ma->id}}/stats"><i class="fas fa-plus-circle"></i></a>
-                                                            </div>
-                                                            @endif
+                                                            </div> -->
+                                                            
                                                         </div>
                                                         <button type="submit" class="cstm-btn">submit</button>
                                                         
@@ -348,10 +399,33 @@ div#add_new_match {
                                         <textarea class="form-control" name="other_comments" id="exampleFormControlTextarea1" rows="3"></textarea>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label>Upload Match Chart</label><br/>
-                                        <input type="file" name="match_chart">
-                                    </div>
+                                    <!-- ******************************
+                                    |
+                                    |     Upload Match Chart
+                                    |
+                                    | ********************************* -->
+                                    @php $count=1; @endphp
+                                    <table class="add_on_services">
+                                        <thead>
+                                            <tr>
+                                                <th>Upload Match Chart</th>
+                                                <th><a onclick="addnewsection();" href="javascript:void(0);"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                      
+                                        <input type="hidden" id="noOfQuetion" value="{{$count}}">
+                                        <div class="mainQuestions" id="mainQuestions">
+
+                                            <tr class="timeslots slots{{$count}}" value={{$count}}>
+                                              <td><input type="file" name="match_chart[{{$count}}]"></td>
+                                              <td><a onclick="removeSection({{$count}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></td>      
+                                            </tr>
+
+                                        </div>
+                                      
+                                        </tbody>
+                                    </table>
                                 </div>
                                 <button type="submit" class="cstm-btn">submit</button>
                             </form>
@@ -426,10 +500,34 @@ div#add_new_match {
                                         <textarea class="form-control" name="other_comments" id="exampleFormControlTextarea1" rows="3"></textarea>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label>Upload Match Chart</label><br/>
-                                        <input type="file" name="match_chart">
-                                    </div>
+                                    <!-- ******************************
+                                    |
+                                    |     Upload Match Chart
+                                    |
+                                    | ********************************* -->
+                                    @php $count=1; @endphp
+                                    <table class="add_on_services">
+                                        <thead>
+                                            <tr>
+                                                <th>Upload Match Chart</th>
+                                                <th><a onclick="addnewsection();" href="javascript:void(0);"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                      
+                                        <input type="hidden" id="noOfQuetion" value="{{$count}}">
+                                        <div class="mainQuestions" id="mainQuestions">
+
+                                            <tr class="timeslots slots{{$count}}" value={{$count}}>
+                                              <td><input type="file" name="match_chart[{{$count}}]"></td>
+                                              <td><a onclick="removeSection({{$count}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></td>      
+                                            </tr>
+
+                                        </div>
+                                      
+                                        </tbody>
+                                    </table>
+
                                 </div>
                                 <button type="submit" class="cstm-btn">submit</button>
                                 

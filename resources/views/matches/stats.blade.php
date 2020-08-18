@@ -48,7 +48,7 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
                     <br/>
                  <!-- </div> -->
                     <div class="card-body matches-card-body">
-                        <form method="POST" enctype="multipart/form-data" action="{{route('save_match_stats')}}">
+                        <form id="match_stats" method="POST" enctype="multipart/form-data" action="{{route('save_match_stats')}}">
                             @csrf
                             <input type="hidden" name="competition_id" value="{{$comp_id}}">
                             <input type="hidden" name="match_id" value="{{$match_id}}">
@@ -347,7 +347,7 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="submit" class="cstm-btn">Submit</button>
+                                            <button type="submit" id="save_stats" class="cstm-btn">Submit</button>
                                             
                         </form>
                   

@@ -150,6 +150,23 @@
                                           </tr>
                                        </tbody>
                                     </table>
+                                    <br/>
+                                    <h4 class="image-heading">Game chart</h4>
+                                    <ul class="img_wrap">
+                                    @php 
+                                      $game_charts = DB::table('match_game_charts')->where('comp_id',$competition->id)->where('match_id',$match->id)->where('player_id',$match->player_id)->get();
+                                    @endphp
+
+                                        @if(count($game_charts)>0)
+                                          @foreach($game_charts as $chart)
+                                          <li>
+                                            <a target="_blank" href="{{URL::asset('/uploads/game-charts')}}/{{$chart->image}}"><img width="20%" src="{{URL::asset('/uploads/game-charts')}}/{{$chart->image}}"></a>
+                                          </li>
+                                          @endforeach
+                                        @else
+                                          <p>No data found.</p>
+                                        @endif
+                                      </ul>
                                  </div>
                               </div>
                            </div>

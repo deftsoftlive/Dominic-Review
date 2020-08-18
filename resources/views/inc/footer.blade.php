@@ -115,8 +115,31 @@
     <script type="text/javascript" src="{{URL::asset('/e-shop/js/home/home.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('/e-shop/js/products/wishlist.js')}}"></script>
     <script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    
+
+<script type="text/javascript">
+
+    function addnewsection(){
+        //noOfattribute
+        var number = parseInt($("#noOfQuetion").val());  
+        var newnumber =number+1;                        
+        $("#noOfQuetion").val(newnumber);
+
+        var mainHtml='<tr class="timeslots slots'+newnumber+'" value="'+newnumber+'"><td><input type="file" name="match_chart['+newnumber+']"></td>';
+
+        mainHtml+='<td><a href="javascript:void(0);" onclick="removeSection('+newnumber+');" class="cstm-btn">Delete</a></td></tr>';
+
+        $(".add_on_services").append(mainHtml);
+    }
 
 
+    function removeSection(counter){
+        //noOfattribute
+        var number = parseInt($("#noOfQuetion").val()); 
+        $(".slots"+counter).remove();
+    }
+
+</script>
 
 <script type="text/javascript">
 $(document).ready(function($){

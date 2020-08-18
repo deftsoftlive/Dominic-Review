@@ -852,28 +852,23 @@ label.confirm_msg.form-check-label {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="player-achievements-card">
-                                            <div class="row">
-                                                <div class="col-lg-7 col-md-7">
-                                                    <div class="player-info">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-md-12">
                                     @php
-                                    $logined_user_id = \Auth::user()->id;
-                                    $children = DB::table('users')->where('parent_id',$logined_user_id)->orderBy('id','asc')->get();
+                                        $logined_user_id = \Auth::user()->id;
+                                        $children = DB::table('users')->where('parent_id',$logined_user_id)->orderBy('id','asc')->get();
+                                        $child_id = [];   
                                     @endphp
-                                    @if(count($children)> 0)
+
+                                    @foreach($children as $ch)
+                                        @php $child_id[] = $ch->id; @endphp
+                                    @endforeach
+
+                                    @if(count($child_id)>0)
+                                    @php 
+                                        $reports = DB::table('player_reports')->whereIn('player_id',$child_id)->orderBy('id','desc')->paginate(5); 
+                                    @endphp
+
+                                    @if(count($reports)> 0)
                                     <div class="player-report-table tbl_shadow goal_reports">
                                         <div class="report-table-wrap">
                                             <div class="m-b-table">
@@ -890,12 +885,7 @@ label.confirm_msg.form-check-label {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach($children as $rp)
-                                                        @php
-                                                        $player_id = $rp->id;
-                                                        $report = DB::table('player_reports')->where('player_id',$player_id)->get();
-                                                        @endphp
-                                                        @foreach($report as $sh)
+                                                        @foreach($reports as $sh)
                                                         <tr>
                                                             <td>
                                                                 <p>@php echo date("d/m/Y", strtotime($sh->date)); @endphp</p>
@@ -920,12 +910,12 @@ label.confirm_msg.form-check-label {
                                                             </td>
                                                         </tr>
                                                         @endforeach
-                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    {{$reports->render()}}
                                     @else
                                     <div class="noData offset-md-4 col-md-4 sorry_msg">
                                         <div class="no_results">
@@ -933,6 +923,7 @@ label.confirm_msg.form-check-label {
                                             <p>No Report Found</p>
                                         </div>
                                     </div>
+                                    @endif
                                     @endif
                                 </div>
                             </div>
