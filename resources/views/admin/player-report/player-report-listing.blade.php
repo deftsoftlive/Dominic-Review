@@ -80,7 +80,7 @@ p.rep_type {
                                         </form>
                                         <!-- Filter Section - End -->
                                         
-                                        <div class="card-block table-border-style">
+                                        <div class="card-block table-border-style pl_rp_design">
                                         <div class="table-responsive">
                                           @include('admin.error_message')
                                             <table class="table table-hover">

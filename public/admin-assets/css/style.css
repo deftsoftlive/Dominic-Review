@@ -471,6 +471,17 @@ form.cst-selection select.select_player
 }
 
 
+.pl_rp_design table.table.table-hover {
+    table-layout: auto;
+}
+.pl_rp_design .table-responsive {
+    overflow: auto;
+}
+.pl_rp_design table.table.table-hover th {
+    min-width: 175px!important;
+    
+    
+}
 
 
 
@@ -721,8 +732,15 @@ div#Personal-21 h4.image-heading {
 
 
 
-
-
+div#selectator_multiple,
+div#selectator_multiple1 {
+    min-height: 50px!important;
+    padding: 10px 20px 15px!important;
+}
+input#checkbox ,
+input#checkbox1{
+    margin-right: 5px!important;
+}
 
 
 

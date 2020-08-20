@@ -145,6 +145,8 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::get('/user/status/{id}','Admin\UserController@user_Status')->name('admin.user.status');
 		Route::any('enable_inv_status', 'Admin\UserController@enable_inv_status')->name('enable_inv_status');
 		Route::any('/linked-coaches', 'Admin\UserController@linked_coaches')->name('linked_coach_player');
+		Route::any('/subscribed-users', 'Admin\UserController@subscribed_users')->name('subscribed_users');
+		Route::any('/unsubscribed-users/{id}', 'Admin\UserController@unsubscribed_users')->name('unsubscribed_users');
 
 		#----------------------------------------------------------------
 		#  Parents/Children/Coach Management
@@ -204,6 +206,8 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::get('/childcare-vouchure/{slug}','Admin\ChildcareVoucherController@childcare_voucher_showEdit')->name('admin.ChildcareVoucher.showEdit');
 		Route::post('/childcare-vouchure/{slug}','Admin\ChildcareVoucherController@childcare_voucher_update')->name('admin.ChildcareVoucher.update');
 		Route::get('/childcare-vouchure/status/{slug}','Admin\ChildcareVoucherController@childcare_voucher_Status')->name('admin.ChildcareVoucher.status');
+		Route::any('/linked-course-camp','Admin\ChildcareVoucherController@linkedCourseCamp')->name('admin.ChildcareVoucher.link-course-camp');
+		Route::any('/linked-course-camp/save','Admin\ChildcareVoucherController@save_linkedCourseCamp')->name('admin.ChildcareVoucher.save-link-course-camp');
 
 		#----------------------------------------------------------------
 		#  Session Management

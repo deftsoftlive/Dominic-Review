@@ -59,10 +59,10 @@
                 <form id="newsletter" action="{{route('newsletter')}}" method="POST">
                   @csrf
                   <div class="form-group">
-                    <input type="text" placeholder="Your Email Address" name="email" class="form-control">
+                    <input type="text" id="email" placeholder="Your Email Address" name="email" class="form-control">
                   </div>
                   <div class="ftr-submit-btn">
-                    <button class="cstm-btn" id="disable_submit_btn" type="submit">Submit</button>
+                    <button class="cstm-btn" id="submit-newsletter" type="submit">Submit</button>
                   </div>
                 </form>
 
@@ -116,6 +116,13 @@
     <script type="text/javascript" src="{{URL::asset('/e-shop/js/products/wishlist.js')}}"></script>
     <script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
     
+<script type="text/javascript">
+$(document).ready(function(){
+  if(!$(".alert_msg").hasClass("shop_items") && !$(".alert_msg").hasClass("course_items") && !$(".alert_msg").hasClass("camp_items")){
+      $("#childcare_btn").css('display','block');
+  }
+});
+</script> 
 
 <script type="text/javascript">
 

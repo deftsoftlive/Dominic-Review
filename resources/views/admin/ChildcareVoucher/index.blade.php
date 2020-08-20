@@ -32,6 +32,7 @@
                                             <h5>{{$title}}</h5>
                                             <div class="cst-admin-filter">
                                                 <a href="{{ url(route($addLink)) }}" class="btn btn-primary">Add</a>
+                                                <a href="{{ route('admin.ChildcareVoucher.link-course-camp') }}" class="btn btn-primary">Linked course & camp</a>
                                             </div>
                                            
                                             <!-- <span class="d-block m-t-5">use class <code>table-hover</code> inside table element</span> -->

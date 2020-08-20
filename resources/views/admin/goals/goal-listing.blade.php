@@ -28,6 +28,27 @@
                     <div class="card-header">
                         <h5>Goal Management</h5>
                     </div>
+                    <br/>
+                    <!-- Filter Section - Start -->
+                    <form action="{{route('admin.goal.list')}}" method="POST" class="cst-selection">
+                    @csrf
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <input type="text" name="player_name" class="form-control" value="" placeholder="Enter player name">
+                                </div>
+
+                                <div class="col-sm-1" style="margin-right:10px;">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+
+                                <div class="col-sm-1" style="margin-left:10px">
+                                    <a href="" onclick="myFunction();" class="btn btn-primary">Reset</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- Filter Section - End -->
                 <div class="card-block table-border-style">
                     <div class="table-responsive">
                       @include('admin.error_message')
@@ -38,10 +59,12 @@
                                 <th>Player Name</th> 
                                 <th>Parent Name</th>
                                 <th>Goal Type</th>
+                                <th>Linked Coach</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
+                            @if(count($goals)>0)
                             @foreach($goals as $go)
                             <tr>
                                 <td><p>{{$go->goal_date}}</p></td>
@@ -54,10 +77,13 @@
                                     <p>Advanced</p>
                                   @endif
                                 </p></td>
+                                <td><p>@if(!empty($go->coach_id)) @php echo getUsername($go->coach_id); @endphp @else - @endif</p></td>
                                 <td><p><a href="{{url('/admin/goal')}}/{{$go->goal_type}}/{{$go->id}}">View</a></p></td> 
                             </tr>
                             @endforeach
-
+                            @else
+                                <tr><td colspan="5"><div class="no_results"><h3>No data found</h3></div></td></tr>
+                            @endif
                             </tbody>
                         </table>
                     </div>

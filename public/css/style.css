@@ -9105,3 +9105,66 @@ table.add_on_services td a img {
     padding: 5px;
     border: 2px solid #be298d;
 }
+.rp_list_section .report-table-wrap th
+{
+    min-width: 175px!important;
+}
+.newsletter-msg {
+    padding: 100px 0;
+}
+.newsletter-msg .inner-wrap  {
+    border: 2px solid green;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 35%;
+    margin: 0 auto;
+    padding: 30px;
+    box-shadow: 6px 6px 25px -4px rgba(0, 0, 0, 0.2);
+}
+.newsletter-msg .error-msg
+{
+    border-color: red!important;
+}
+.newsletter-msg .inner-wrap p {
+    font-size: 18px;
+    font-weight: 600;
+    color: green;
+}
+.newsletter-msg .inner-wrap.error-msg p
+{
+	color: red;
+}
+.newsletter-msg .inner-wrap.error-msg span
+{
+   position: relative;
+    display: block;
+    height: 30px;
+    width: 30px;
+    background: red!important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    margin-bottom: 10px; 
+}
+
+.newsletter-msg .inner-wrap span {
+    position: relative;
+    display: block;
+    height: 30px;
+    width: 30px;
+    background: green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    margin-bottom: 10px;
+}
+.newsletter-msg .inner-wrap span i {
+    color: #fff;
+ 
+    
+}

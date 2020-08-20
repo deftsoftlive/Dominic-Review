@@ -55,15 +55,18 @@
                 |       USER MANAGEMENT
                 |
                 |********************************* -->
-                <li class="nav-item pcoded-hasmenu <?= ActiveMenu(['list_users', 'parent_users', 'coach_users','linked_coach_player'],'pcoded-trigger') ?>" >
+                <li class="nav-item pcoded-hasmenu <?= ActiveMenu(['list_users', 'parent_users', 'coach_users','linked_coach_player','subscribed_users'],'pcoded-trigger') ?>" >
                 <a href="javascript:" class="nav-link "><span class="pcoded-micon">
                     <i class="fas fa-users"></i></span><span class="pcoded-mtext">User Management</span></a>
-                <ul class="pcoded-submenu" style="display: <?= ActiveMenu(['list_users', 'parent_users', 'coach_users','linked_coach_player'], 'block') ?>;">
+                <ul class="pcoded-submenu" style="display: <?= ActiveMenu(['list_users', 'parent_users', 'coach_users','linked_coach_player','subscribed_users'], 'block') ?>;">
                     <li class="<?= ActiveMenu(['list_users'],'active') ?>">
                         <a href="{{ route('list_users') }}" class="">Users</a>
                     </li>
                     <li class="<?= ActiveMenu(['linked_coach_player'],'active') ?>">
                         <a href="{{ route('linked_coach_player') }}" class="">Linked Coaches</a>
+                    </li>
+                    <li class="<?= ActiveMenu(['subscribed_users'],'active') ?>">
+                        <a href="{{ route('subscribed_users') }}" class="">Subscribed Users</a>
                     </li>
                 </ul>
                 </li>

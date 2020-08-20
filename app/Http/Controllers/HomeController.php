@@ -45,6 +45,7 @@ use App\Wallet;
 use App\WalletHistory;
 use App\MatchStats;
 use App\MatchGameChart;
+use App\NewsletterSubscription;
 use App\Models\Shop\ShopCartItems;
 use App\Models\Products\ProductCategory;
 use App\Traits\ProductCart\UserCartTrait;
@@ -3289,26 +3290,53 @@ public function save_wallet(Request $request)
 |----------------------------------*/
 public function newsletter_integration(Request $request)
 {
-    $isSubscribed = Newsletter::isSubscribed(trim($request->email));  
+    $entered_email = $request->email;
+    $check_email = NewsletterSubscription::where('email',$request->email)->first();
+    $existing_email = isset($check_email) ? $check_email->email : '';
 
-    try {
-        Newsletter::subscribe($request->email);
-    } catch (ModelNotFoundException $exception) {
-        return back()->withError('User not found by ID ' . $request->email)->withInput();
+    if(!empty($check_email))
+    {
+      return view('newsletter_success',compact('existing_email'))->with('error',$entered_email. ' email is already subscribed.');
     }
+    else{
+      $newsletter = NewsletterSubscription::create($request->all()); 
+      $newsletter->status = 1;
+      $newsletter->save();
 
-    Newsletter::subscribe($request->email);
+      $user_email = $newsletter->email;
 
-    $email = $request->email;
+      // Mail to user
+      \Mail::send('emails.newsletter.subscribe', ['user_email' => $user_email,'id' => $newsletter->id] , 
+           function($message) use($user_email){
+               $message->to($user_email);
+               $message->subject('Subject : '.'Subscribe By Admin');
+             });
 
-    // Mail::send('mails.newsletter_email', ['email'=>$email] , function($message) use($email)
-    // {
-    //     $message->to($email);
-    //     // $message->to('phplead5@gmail.com');
-    //     $message->subject('Newsletter Email');
-    // });
+      return view('newsletter_success',compact('entered_email'))->with('success',$entered_email. ' email is subscribed successfully.');
+    }
+}
 
-        return view('newsletter_success')->with('isSubscribed',$isSubscribed);
+/*---------------------------------
+|   Unsubscribe user
+|----------------------------------*/
+public function unsubscribe_newsletter($id)
+{ 
+    $unsubscribed_user = NewsletterSubscription::where('id',$id)->first();
+    $unsubscribed_user->status = 0;
+    $unsubscribed_user->unsubscribed_by = $id;
+    $unsubscribed_user->save();
+
+    $user_email = $unsubscribed_user->email;
+
+    // Mail to user
+    \Mail::send('emails.newsletter.unsubscribe', ['user_email' => $user_email] , 
+         function($message) use($user_email){
+             $message->to($user_email);
+             $message->subject('Subject : '.'Unsubscribe By User');
+           });
+
+    return \Redirect::back()->with('success',$user_email.' email is unsubscribed successfully.');
+
 }
 
 /*---------------------------------
@@ -3467,7 +3495,7 @@ public function add_match(Request $request)
 
             }
 
-            $comp_id = base64_encode($gc->comp_id);
+            $comp_id = base64_encode($match->comp_id);
 
             return redirect('/user/reports/comp/'.$comp_id)->with('success','Match added successfully!');
         }else{

@@ -91,7 +91,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                     <div class="form-group">
                                         <h6>Course :<h6>
                                                 @if(!empty($course_id))
-                                                <input type="text" disabled="" name=""  value="@php echo getCoursename($course_id); @endphp">
+                                                <input type="text" disabled="" name="" class="form-control" value="@php echo getCoursename($course_id); @endphp">
                                                 @else
                                                 <select id="course_ID" name="course_id" class="form-control">
                                                     <option selected="" disabled="">Select Course</option>
@@ -103,7 +103,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                     <div class="form-group">
                                         <h6>Select Player :<h6>
                                             @if(!empty($user_id))
-                                            <input type="text" disabled="" name=""  value="@php echo getUsername($user_id); @endphp">
+                                            <input type="text" disabled="" name="" class="form-control" value="@php echo getUsername($user_id); @endphp">
                                             @else
                                             <select id="player_ID" name="player_id" class="player_data_ID form-control">
                                                 <option selected="" disabled="">Select Player</option>

@@ -869,7 +869,7 @@ label.confirm_msg.form-check-label {
                                     @endphp
 
                                     @if(count($reports)> 0)
-                                    <div class="player-report-table tbl_shadow goal_reports">
+                                    <div class="player-report-table tbl_shadow goal_reports rp_list_section">
                                         <div class="report-table-wrap">
                                             <div class="m-b-table">
                                                 <table>

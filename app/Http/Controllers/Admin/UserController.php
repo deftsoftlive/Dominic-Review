@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\CoachDocument;
 use App\ParentCoachReq;
+use App\NewsletterSubscription;
 
 class UserController extends Controller
 {
@@ -450,6 +451,37 @@ class UserController extends Controller
     {
         $parentCoachReq = ParentCoachReq::orderBy('id','desc')->paginate(10);
         return view('admin.user-vendor.users.linked-coach',compact('parentCoachReq')); 
+    }
+
+    /*********************************
+    |   Subscribed Users
+    |*********************************/
+    public function subscribed_users()
+    {
+        $subscribed_users = NewsletterSubscription::orderBy('id','desc')->paginate(10);
+        return view('admin.user-vendor.subscribed-users.newsletter',compact('subscribed_users')); 
+    }
+
+    /********************************
+    |   Unsubscribe Users
+    |********************************/
+    public function unsubscribed_users($id)
+    {
+        $unsubscribed_user = NewsletterSubscription::where('id',$id)->first();
+        $unsubscribed_user->status = 0;
+        $unsubscribed_user->unsubscribed_by = \Auth::user()->id;
+        $unsubscribed_user->save();
+
+        $user_email = $unsubscribed_user->email;
+
+        // Mail to user
+        \Mail::send('emails.newsletter.unsubscribe', ['user_email' => $user_email] , 
+             function($message) use($user_email){
+                 $message->to($user_email);
+                 $message->subject('Subject : '.'Unsubscribe By Admin');
+               });
+
+        return \Redirect::back()->with('success',$user_email.' email is unsubscribed successfully.');
     }
 
 }

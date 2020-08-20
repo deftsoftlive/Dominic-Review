@@ -85,4 +85,38 @@ class ChildcareVoucherController extends Controller
      }
      return redirect()->back()->with('flash_message', 'Something Went Woring!');
     }
+
+    /*---------------------------------------------
+    |   Linked courses & camps
+    |----------------------------------------------*/
+    public function linkedCourseCamp()
+    {
+        return view('admin.ChildcareVoucher.link-course-camp');
+    }
+
+    /*---------------------------------------------
+    |   Save Linked courses & camps
+    |---------------------------------------------*/
+    public function save_linkedCourseCamp(Request $request)
+    {
+        // All selected courses
+        $co_data = $request->courses;
+        if(!empty($co_data)){
+            $courses = implode(',', $request->courses); 
+        }else{
+            $courses ="";
+        }
+
+        // All selected camps
+        $camp_data = $request->camps;
+        if(!empty($camp_data)){
+            $camps = implode(',', $request->camps); 
+        }else{
+            $camps ="";
+        }
+
+        \DB::table('childcare_vouchers')->update(['linked_course' => $courses, 'linked_camp' => $camps]);
+
+        return redirect()->route('admin.ChildcareVoucher.list')->with('flash_message', 'Linked courses & camps has been updated successfully!');
+    }
 }

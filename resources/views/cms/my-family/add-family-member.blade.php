@@ -399,12 +399,12 @@
                                                     </div>
                                                 </div>
                                                 <!-- school -->
-                                                <div class="form-group row">
+                                                <!-- <div class="form-group row">
                                                     <label for="tennis_club" class="col-md-12 col-form-label text-md-right">Which school does this person attend</label>
                                                     <div class="col-md-12">
                                                         <input id="tennis_club" type="text" class="paste_county form-control" name="tennis_club" value="" required="">
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 <!-- Profile Picture -->
                                                 <!-- <div class="form-group">
                                                       <div class="col-sm-12">
@@ -793,9 +793,9 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <!-- school -->
+                                                <!-- Tennis Club -->
                                                 <div class="form-group row">
-                                                    <label for="tennis_club" class="col-md-12 col-form-label text-md-right">Which school does this person attend</label>
+                                                    <label for="tennis_club" class="col-md-12 col-form-label text-md-right">Tennis Club</label>
                                                     <div class="col-md-12">
                                                         <input id="tennis_club" type="text" class="paste_county form-control" name="tennis_club" value="" required="">
                                                     </div>
@@ -808,10 +808,10 @@
                                                                                     </div>
                                                    </div> -->
                                                 <!-- Selection Section - Start -->
-                                                <div class="col-md-6 option_row">
+                                                <div class="col-md-12 option_row">
                                                     <div class="form-group row ">
                                                         <div class="form-radios">
-                                                            <p style="display: inline-block; font-weight: 500; margin-right: 15px;">Is Englisg this person's primary language?</p>
+                                                            <p style="display: inline-block; font-weight: 500; margin-right: 15px;">Are you planning to book this person onto a coaching course or holiday camp with DRH Sports?</p>
                                                         </div>
                                                         <div class="cstm-radio">
                                                             <input type="radio" name="book_person_type" id="book_person_yesa">
@@ -820,10 +820,10 @@
                                                         <div class="cstm-radio">
                                                             <input type="radio" name="book_person_type" id="book_person_noa"> <label for="book_person_noa">No</label>
                                                         </div>
-                                                        <input type="text" name="book_person" class="paste_county form-control" value="">
+                                                        <!-- <input type="text" name="book_person" class="paste_county form-control" value=""> -->
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6 option_row coach_option">
+                                                <!-- <div class="col-md-6 option_row coach_option">
                                                     <div class="form-group row ">
                                                         <div class="form-radios">
                                                             <p style="display: inline-block; font-weight: 500; margin-right: 15px;">Will this person be booking onto a DRH coaching courses or holiday camp?</p>
@@ -838,7 +838,7 @@
                                                         </div>
                                                         <input type="hidden" name="book_person" id="book_person" value="">
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 <div class="col-md-12">
                                                     <button type="button" class="cstm-btn">Save Section</button>
                                                 </div>
@@ -870,153 +870,158 @@
                                     <div class="form-partition">
                                         <form class="register-form contact_form" method="POST">
                                             <div class="child-selection-content" style="display: none;">
-                                                <div class="contact-one">
-                                                    <p class="main_text"><strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed.</strong></p>
-                                                    <span>Lorem ipsum dolor:</span>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed.</p>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed.Lorem ipsum dolor sit amet,<a href=""> consectetur adipisicing elit, sed.</a></p>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <p class="main_text"><strong>Lorem ipsum dolor</strong></p>
-                                                            <p>ipsum dolor sit amet, consectetur adipisicing elit, sed.Lorem ipsum dolor sit amet, consectetur adipisi</p>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="town" class="col-md-12 col-form-label text-md-right">Town</label>
-                                                            <div class="col-md-12">
-                                                                <input id="town" type="text" class="paste_town form-control" name="town" value="" required="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="town" class="col-md-12 col-form-label text-md-right">Town</label>
-                                                            <div class="col-md-12">
-                                                                <input id="town" type="text" class="paste_town form-control" name="town" value="" required="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="town" class="col-md-12 col-form-label text-md-right">Town</label>
-                                                            <div class="col-md-12">
-                                                                <input id="town" type="text" class="paste_town form-control" name="town" value="" required="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="town" class="col-md-12 col-form-label text-md-right">Town</label>
-                                                            <div class="col-md-12">
-                                                                <input id="town" type="text" class="paste_town form-control" name="town" value="" required="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="town" class="col-md-12 col-form-label text-md-right">Town</label>
-                                                            <div class="col-md-12">
-                                                                <input id="town" type="text" class="paste_town form-control" name="town" value="" required="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="town" class="col-md-12 col-form-label text-md-right">Town</label>
-                                                            <div class="col-md-12">
-                                                                <input id="town" type="text" class="paste_town form-control" name="town" value="" required="">
-                                                            </div>
-                                                        </div>
+                                                <div class="form-group-wrap">
+                                                    <h4>Child Information</h4>
+                                                    <div class="form-group row">
+                                                       <div class="form-radios" style="margin: 10px 0;">
+                                                          <div class="col-sm-12">
+                                                             <p style="display: inline-block; font-weight: 500; margin-right: 15px;">Is English your child's primary language?</p>
+                                                             <div class="cstm-radio">
+                                                                <input type="radio" name="language" id="p-l-english-yes">
+                                                                <label for="p-l-english-yes">Yes</label>
+                                                             </div>
+                                                             <div class="cstm-radio">
+                                                                <input type="radio" name="language" id="p-l-english-no">
+                                                                <label for="p-l-english-no">No</label>
+                                                             </div>
+                                                             <input type="hidden" name="core_lang" id="core_lang" value="">
+                                                          </div>
+                                                       </div>
                                                     </div>
-                                                </div>
-                                                <div class="contact-two">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <p class="main_text"><strong>Lorem ipsum dolor</strong></p>
-                                                            <p>ipsum dolor sit amet, consectetur adipisicing elit, sed.Lorem ipsum dolor sit amet, consectetur adipisi</p>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="town" class="col-md-12 col-form-label text-md-right">Town</label>
-                                                            <div class="col-md-12">
-                                                                <input id="town" type="text" class="paste_town form-control" name="town" value="" required="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="town" class="col-md-12 col-form-label text-md-right">Town</label>
-                                                            <div class="col-md-12">
-                                                                <input id="town" type="text" class="paste_town form-control" name="town" value="" required="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="town" class="col-md-12 col-form-label text-md-right">Town</label>
-                                                            <div class="col-md-12">
-                                                                <input id="town" type="text" class="paste_town form-control" name="town" value="" required="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="town" class="col-md-12 col-form-label text-md-right">Town</label>
-                                                            <div class="col-md-12">
-                                                                <input id="town" type="text" class="paste_town form-control" name="town" value="" required="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="town" class="col-md-12 col-form-label text-md-right">Town</label>
-                                                            <div class="col-md-12">
-                                                                <input id="town" type="text" class="paste_town form-control" name="town" value="" required="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="town" class="col-md-12 col-form-label text-md-right">Town</label>
-                                                            <div class="col-md-12">
-                                                                <input id="town" type="text" class="paste_town form-control" name="town" value="" required="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12 contact_form_row">
-                                                            <button type="button" class="cstm-btn">Save Section</button>
-                                                        </div>
+                                                    <div class="form-group row" id="primary_lang">
+                                                       <label class="col-md-12 col-form-label text-md-right">What is your child's primary language?</label>
+                                                       <div class="col-md-12">
+                                                          <input id="child-school" type="text" class="form-control" name="primary_language" value="">
+                                                       </div>
                                                     </div>
-                                                </div>
+                                                    <div class="form-group row f-g-full">
+                                                       <label class="col-md-12 col-form-label text-md-right">Which school does your child attend?</label>
+                                                       <div class="col-md-12">
+                                                          <input id="child-school" type="text" class="form-control" name="school" value="">
+                                                       </div>
+                                                    </div>
+                                                    <div class="form-group-wrap">
+                                                       <h4>Please tell us about your child's sporting and activity interests.</h4>
+                                                       <div class="form-wrap-container">
+                                                          <p>Please tick the sports or activities this child likes and dislikes the most</p>
+                                                          <table>
+                                                             <thead>
+                                                                <th></th>
+                                                                <th>Like</th>
+                                                                <th>Dislike</th>
+                                                                <th>Not Sure</th>
+                                                             </thead>
+                                                             <!-- Football -->
+                                                             <tbody>
+
+                                                              @foreach($activities as $ac)
+                                                                <tr class="activity" id="{{$ac->ac_title}}">
+                                                                   <th scope="row">{{$ac->ac_title}}</th>
+                                                                   <td>
+                                                                      <div class="cstm-radio">
+                                                                         <input type="radio" name="{{$ac->ac_title}}" value="0" id="f-like" />
+                                                                         <label for="f-like">&nbsp;</label>
+                                                                      </div>
+                                                                   <td>
+                                                                      <div class="cstm-radio">
+                                                                         <input type="radio" name="{{$ac->ac_title}}" value="1" id="f-dislike" />
+                                                                         <label for="f-dislike">&nbsp;</label>
+                                                                      </div>
+                                                                   </td>
+                                                                   <td>
+                                                                      <div class="cstm-radio">
+                                                                         <input type="radio" name="{{$ac->ac_title}}" value="2" id="f-not-sure" />
+                                                                         <label for="f-not-sure">&nbsp;</label>
+                                                                      </div>
+                                                                   </td>
+                                                                </tr>
+                                                              @endforeach
+                                                             </tbody>
+                                                          </table>
+                                                          <button id="child_info_to_next" class="cstm-btn" style="margin: 10px 0;">Go to next section</button>
+                                                       </div>
+                                                    </div>
+                                                 </div>
                                             </div>
                                             <div class="adult-selection-content">
-                                                <div class="contact-one">
-                                                    <p class="main_text"><strong>Emergency amet, consectetur adipisicing elit, sed.</strong></p>
-                                                    <span>Lorem ipsum dolor:</span>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed.</p>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <p class="main_text"><strong>Lorem ipsum dolor</strong></p>
-                                                            <p>ipsum dolor sit amet, consectetur adipisicing elit, sed.Lorem ipsum dolor sit amet, consectetur adipisi</p>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="town" class="col-md-12 col-form-label text-md-right">Town</label>
-                                                            <div class="col-md-12">
-                                                                <input id="town" type="text" class="paste_town form-control" name="town" value="" required="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="town" class="col-md-12 col-form-label text-md-right">Town</label>
-                                                            <div class="col-md-12">
-                                                                <input id="town" type="text" class="paste_town form-control" name="town" value="" required="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="town" class="col-md-12 col-form-label text-md-right">Town</label>
-                                                            <div class="col-md-12">
-                                                                <input id="town" type="text" class="paste_town form-control" name="town" value="" required="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="town" class="col-md-12 col-form-label text-md-right">Town</label>
-                                                            <div class="col-md-12">
-                                                                <input id="town" type="text" class="paste_town form-control" name="town" value="" required="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="town" class="col-md-12 col-form-label text-md-right">Town</label>
-                                                            <div class="col-md-12">
-                                                                <input id="town" type="text" class="paste_town form-control" name="town" value="" required="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="town" class="col-md-12 col-form-label text-md-right">Town</label>
-                                                            <div class="col-md-12">
-                                                                <input id="town" type="text" class="paste_town form-control" name="town" value="" required="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12 contact_form_row">
-                                                            <button type="button" class="cstm-btn">Save Section</button>
-                                                        </div>
-                                                    </div>
+                                                <div class="form-group-wrap">
+                                                <h4>Medical information and emergency contacts</h4>
+                                                <div class="form-group row f-g-full">
+                                                   <div class="form-radios">
+                                                      <div class="col-sm-7">
+                                                         <p style="display: inline-block; font-weight: 500; margin-right: 15px;">Do you have any illness, injuries or medical conditions that would be helpful for the coach to be aware of?</p>
+                                                      </div>
+                                                      <div class="col-sm-5">
+                                                         <div class="cstm-radio">
+                                                            <input type="radio" name="beh_need_type" id="illness-or-injury-yes">
+                                                            <label for="illness-or-injury-yes">Yes</label>
+                                                         </div>
+                                                         <div class="cstm-radio">
+                                                            <input type="radio" name="beh_need_type" id="illness-or-injury-no">
+                                                            <label for="illness-or-injury-no">No</label>
+                                                         </div>
+                                                         <input type="hidden" name="beh_need" id="beh_need" value="">
+                                                      </div>
+                                                   </div>
                                                 </div>
+                                                
+                                                <div class="form-group col-md-12 f-g-full label-textarea" id="beh_info">
+                                                   <label>Please give more detail as to the name, type and nature of the illness or injury so that the coach may better understand your needs.</label>
+                                                   <textarea name="beh_info" id="beh_info_data"></textarea>
+                                                </div>
+                                             
+                                                <div class="col-sm-12">
+                                                   <p style="font-weight: 500; margin-right: 15px;">Please provide details for the person designated as your emergency contact.</p>
+                                                </div>
+                                                <div class="form-group row">
+                                                   <label class="col-md-12 col-form-label text-md-right">contact 1 - first name:</label>
+                                                   <div class="col-md-12">
+                                                      <input id="em_first_name" type="text" class="form-control" name="em_first_name" value="">
+                                                   </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                   <label class="col-md-12 col-form-label text-md-right">contact 1 - surname:</label>
+                                                   <div class="col-md-12">
+                                                      <input id="em_last_name" type="text" class="form-control" name="em_last_name" value="">
+                                                   </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                   <label class="col-md-12 col-form-label text-md-right">contact 1 - tel number:</label>
+                                                   <div class="col-md-12">
+                                                      <input id="em_phone" type="tel" class="form-control" name="em_phone" value="">
+                                                   </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                   <label class="col-md-12 col-form-label text-md-right">contact 1 - email:</label>
+                                                   <div class="col-md-12">
+                                                      <input id="em_email" type="email" class="form-control" name="em_email" value="" >
+                                                   </div>
+                                                </div>
+                                                <div class="form-group row f-g-full">
+                                                   <div class="form-radios">
+                                                      <div class="col-sm-7">
+                                                         <p style="display: inline-block; font-weight: 500; margin-right: 15px;">I confirm that the information given above is accurate and correct to the best of my knowledge at the time of registration. I also confirm that if any of the details change, I will amend the form to reflect these changes.</p>
+                                                      </div>
+                                                      <div class="col-sm-5">
+                                                         <div class="cstm-radio"> 
+                                                            <input type="radio" name="correct_info_type" id="confirm_accurate_yes"> <label for="confirm_accurate_yes">Yes</label> 
+                                                         </div>
+                                                         <div class="cstm-radio"> 
+                                                            <input type="radio" name="correct_info_type" id="confirm_accurate_no"> <label for="confirm_accurate_no">No</label> 
+                                                         </div>
+                                                         <input type="hidden" name="correct_info" id="correct_info" value="">
+                                                      </div>
+                                                   </div>
+                                                   <div class="col-sm-12" style="margin-top: 15px;">
+                                                      <p><b style="display: block;">Please note:</b>
+                                                         You may be asked to confirm the above details are all correct before being able to complete future bookings.
+                                                      </p>
+                                                      <!-- <a href="javascript:void(0);" id="medical_info_to_next" class="cstm-btn" style="margin: 10px 0;">Complete registration</a> -->
+
+                                                      <button id="medical_info_to_next" class="cstm-btn" style="margin: 10px 0;">Go to next section</button>
+                                                   </div>
+                                                </div>
+                                             </div>
                                             </div>
                                         </form>
                                     </div>

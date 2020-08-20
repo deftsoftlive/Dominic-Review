@@ -138,20 +138,20 @@ function statsCalculation($jsonData){
   $total_double_faults = $data->total_double_faults;
 
   $stats_array = [
-      'tp_played'                     =>   number_format($tp_played,2),
-      'percent_pts_won'               =>   number_format($percent_pts_won,2),
-      'percent_1serves_in'            =>   number_format($percent_1serves_in,2),
-      'op_percent_pts_won'            =>   number_format($op_percent_pts_won,2),
-      'op_percent_1serves_in'         =>   number_format($op_percent_1serves_in,2),
-      'percent_pts_won_1serve'        =>   number_format($percent_pts_won_1serve,2),
-      'percent_pts_won_2serve'        =>   number_format($percent_pts_won_2serve,2),
-      'percent_pts_won_op_1serve'     =>   number_format($percent_pts_won_op_1serve,2),
-      'percent_pts_won_op_2serve'     =>   number_format($percent_pts_won_op_2serve,2),
-      'percent_pts_won_rally_1shots'  =>   number_format($percent_pts_won_rally_1shots,2),
-      'percent_pts_won_rally_5shots'  =>   number_format($percent_pts_won_rally_5shots,2),
-      'average_rally_length'          =>   number_format($average_rally_length,2),
-      'total_aces'                    =>   number_format($total_aces,2),
-      'total_double_faults'           =>   number_format($total_double_faults,2),
+      'tp_played'                     =>   round($tp_played),
+      'percent_pts_won'               =>   round($percent_pts_won),
+      'percent_1serves_in'            =>   round($percent_1serves_in),
+      'op_percent_pts_won'            =>   round($op_percent_pts_won),
+      'op_percent_1serves_in'         =>   round($op_percent_1serves_in),
+      'percent_pts_won_1serve'        =>   round($percent_pts_won_1serve),
+      'percent_pts_won_2serve'        =>   round($percent_pts_won_2serve),
+      'percent_pts_won_op_1serve'     =>   round($percent_pts_won_op_1serve),
+      'percent_pts_won_op_2serve'     =>   round($percent_pts_won_op_2serve),
+      'percent_pts_won_rally_1shots'  =>   round($percent_pts_won_rally_1shots),
+      'percent_pts_won_rally_5shots'  =>   round($percent_pts_won_rally_5shots),
+      'average_rally_length'          =>   round($average_rally_length),
+      'total_aces'                    =>   round($total_aces),
+      'total_double_faults'           =>   round($total_double_faults),
   ];
 
   return $stats_array;

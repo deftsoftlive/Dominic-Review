@@ -29,7 +29,66 @@
                         @include('e-shop.includes.checkout.stripe')
                     </div>
                     <div class="tab-pane" id="tabs-2" role="tabpanel">
-                        <a href="javascript:void(0);" class="cstm-btn" data-toggle="modal" data-target="#exampleModal">Pay with vouchers or Tax-Free Childcare</a>
+                        @php 
+                            $shop_cart = DB::table('shop_cart_items')->where('user_id',Auth::user()->id)->where('type','cart')->get();
+                            $shop_items = [];
+                            $courses = [];
+                            $camps = [];
+                        @endphp
+                        
+                        @foreach($shop_cart as $shop)
+                            @php $shop_items[] = $shop->shop_type; @endphp
+
+                            @if($shop->shop_type == 'course')
+                                @php $courses[] = $shop->product_id; @endphp
+                            @endif
+
+                            @if($shop->shop_type == 'camp')
+                                @php $camps[] = $shop->product_id; @endphp
+                            @endif
+                        @endforeach
+                        
+                        @if(in_array('product',$shop_items))
+                            <div class="alert_msg alert alert-danger shop_items">
+                                <p>Shop items can never be paid using vouchers</p>
+                            </div>
+                        @else
+                        @endif
+                            @php 
+                                $link_course_camp = DB::table('childcare_vouchers')->first();
+
+                                $selected_courses = explode(',',$link_course_camp->linked_course);
+                                $selected_camps = explode(',',$link_course_camp->linked_camp);
+                            @endphp
+
+                            @if(!empty($selected_courses) && !empty($courses))
+
+                            @foreach($courses as $co)
+                                @if(in_array($co,$selected_courses))   
+
+                                @else
+                                    <div class="alert_msg alert alert-danger course_items">
+                                        <p>Course present in cart is not linked with childcare vouchers.</p>
+                                    </div>
+                                @endif
+                            @endforeach
+                            @endif
+
+                            @if(!empty($selected_camps) && !empty($camps))
+
+                            @foreach($camps as $ca)
+                                @if(in_array($ca,$selected_camps))   
+
+                                @else
+                                    <div class="alert_msg alert alert-danger camp_items">
+                                        <p>Camp present in cart is not linked with childcare vouchers.</p>
+                                    </div>
+                                @endif
+                            @endforeach
+                            @endif
+
+                         <a id="childcare_btn" style="display: none;" href="javascript:void(0);" class="cstm-btn" data-toggle="modal" data-target="#exampleModal">Pay with vouchers or Tax-Free Childcare</a>
+
                     </div>
                     <div class="tab-pane" id="tabs-3" role="tabpanel">
                         @php 

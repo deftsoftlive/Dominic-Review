@@ -64,6 +64,7 @@ Route::any('coach/detail/{id}','HomeController@coach_detail')->name('coach-detai
 
 // Newsletter
 Route::any('newsletter','HomeController@newsletter_integration')->name('newsletter');
+Route::any('unsubscribe-user/{id}','HomeController@unsubscribe_newsletter')->name('unsubscribe_newsletter');
 
 // My Family Section
 Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function() 
