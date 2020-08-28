@@ -46,7 +46,9 @@
     width: 12%!important;
     padding: 10px 10px!important;
 }
-
+.card-header.view-card-header a {
+    width: 80%;
+}
     #save_goal {
         margin-right: 15px;
     }
@@ -290,7 +292,7 @@
     main.products-layout-wrap .product-listing-wrap .products-head {
         display: none;
     }
-
+    
    
     .account-menu nav li+li {
         margin-left: 3px;
@@ -310,6 +312,9 @@
     .event-info p.detail-cont {
         min-height: 72px;
     }
+    .card-header.view-card-header a {
+        width: 65%;
+    }
     .report-tab-one .inner-form-box
     {
         height: 174px;
@@ -321,7 +326,18 @@
     width: 16%!important;
     padding: 10px!important;
 }
+.form-head form { 
+    min-width: 57%;  
+}
 
+.form-head form .form-group {
+    width: 40%;
+    margin-bottom: 0;
+}
+.form-head form p {
+    width: 45%;
+    white-space: nowrap;
+}
 .report-tab-sec button.cstm-btn
 {
     margin-right: 10px;
@@ -953,6 +969,30 @@
     width: 27%!important;
    
 }
+.report-sec .form-head
+
+{
+    flex-direction: column;
+}
+.course-list-detail .event-card-form .form-group label span {
+    font-size: 18px;
+}
+
+.course-list-detail .event-card-form .form-group label {
+   
+    font-size: 20px;
+}
+.form-head form {
+    min-width: 100%;
+}
+.form-head form {
+    min-width: 100%;
+    margin: 15px 0;
+}
+.form-head form p {
+    width: 57%;
+    white-space: nowrap;
+}
 
     .report-sec ul#myTab li {
 
@@ -1197,19 +1237,22 @@
     }
 
     .course-list-detail .event-card-form .form-group label {
-        width: 28%;
-    }
+    width: 100%;
+    margin: 15px 0;
+}
 
     .course-list-detail .form-control {
-        width: 70%;
+        width: 100%;
     }
-
+button#course_book {
+    margin: 0 auto;
+}
     .event-card-form .form-group {
         flex-wrap: wrap;
 
     }
 
-    .course-list-detail .event-card-form .form-group label.cst-fees,
+    /*.course-list-detail .event-card-form .form-group label.cst-fees,*/
     .course-list-detail .event-card-form .form-group a.cstm-btn.event-booking-btn {
         display: none;
     }
@@ -1763,13 +1806,45 @@
 }
 
 @media(max-width: 480px) {
+    .login-sec button.cstm-btn.login {
+   
+    margin-bottom: 15px;
+}
     ul.day-list li {
         width: 33%;
 
     }
+    .form-head form {
+    flex-direction: column;
+    width: 100%;
+}
+.form-head form p {
+    width: 100%;
+    white-space: nowrap;
+    text-align: center;
+    margin: 15px 0;
+}
     .card-header.view-card-header .view_stats {
     width: 40%!important;
    
+}
+.card-header.view-card-header {
+    
+    align-items:flex-start;
+    flex-direction: column;
+}
+.form-head form .form-group {
+    width: 62%;
+    margin-bottom: 0;
+}
+.card-header.view-card-header a {
+    width: 100%;
+    margin-bottom: 15px;
+}
+.card-header.view-card-header .view_stats {
+    width: 100%!important;
+    margin: 0 0 10px 0!important;
+    margin: 0 auto;
 }
 
 
@@ -1866,7 +1941,7 @@
         width: 100%;
         margin-bottom: 8px;
 
-        text-align: left;
+      
     }
 
      

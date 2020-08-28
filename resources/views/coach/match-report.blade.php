@@ -71,10 +71,10 @@ div#add_new_match {
                     </div>
                     <div class="form-head">
                         <div class="pink-heading">
-                            <h2>Add Report</h2>
+                            <h2>Add Match Report</h2>
                         </div>
                         <form>
-                            <p>Who is this report for?</p>
+                            <p>Who is this match report for?</p>
                             <div class="form-group">
                                 <select id="child_id">
                                     <option disabled="" selected="">Select Player</option>
@@ -97,7 +97,7 @@ div#add_new_match {
 
                     <div class="outer-wrap">
                         <div class="upper-form">
-                            <p class="sub-head">Competition Creation</p>
+                            <p class="sub-head">Create The Competition</p>
 
                             <form action="{{route('add_competition')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
@@ -249,7 +249,8 @@ div#add_new_match {
                                                             @endphp
 
                                                             @if(!empty($check_stats))
-                                                                <a href="{{url('/user/competition')}}/{{$comp->id}}/match/{{$ma->id}}/stats/view">View Stats</a>
+                                                                <a class="cstm-btn" href="{{url('/user/competition')}}/{{$comp->id}}/match/{{$ma->id}}/stats/view">View Stats</a>
+                                                                <a class="cstm-btn" href="{{url('/user/competition')}}/{{$comp->id}}/match/{{$ma->id}}/stats">Edit Stats</a>
                                                             @else
                                                             <div class="form-group">
                                                                 <label>Add Match Stats</label>
@@ -267,7 +268,7 @@ div#add_new_match {
                                                                 $check_game_chart = DB::table('match_game_charts')->where('comp_id',$comp->id)->where('match_id',$ma->id)->where('player_id',$comp->player_id)->get();
                                                                 $count_game_chart = $check_game_chart->count();
                                                             @endphp
-                                                            <table class="add_on_services">
+                                                            <table class="add_on_services match_game_chart">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Upload Match Chart</th>
@@ -284,14 +285,14 @@ div#add_new_match {
                                                                 @foreach($check_game_chart as $time => $number)
                                                                     <tr class="timeslots slots{{$time+1}}" value={{$time+1}}>
                                                                       <td><a target="_blank" href="{{URL::asset('/uploads/game-charts')}}/{{$number->image}}"><img style="width:20%" src="{{URL::asset('/uploads/game-charts')}}/{{$number->image}}"></a></td>
-                                                                      <td><a class="cstm-btn" onclick="return confirm('Are you sure you want to delete this game chart?')" href="{{url('/user/competition')}}/@php echo base64_encode($comp->id); @endphp/match/@php echo base64_encode($ma->id); @endphp/player/@php echo base64_encode($comp->player_id); @endphp/game-chart/remove/@php echo base64_encode($number->id); @endphp">Delete</a></td>
+                                                                      <td class="remove_game_chart"><a class="cstm-btn" onclick="return confirm('Are you sure you want to delete this game chart?')" href="{{url('/user/competition')}}/@php echo base64_encode($comp->id); @endphp/match/@php echo base64_encode($ma->id); @endphp/player/@php echo base64_encode($comp->player_id); @endphp/game-chart/remove/@php echo base64_encode($number->id); @endphp">Delete</a></td>
                                                                     </tr>
                                                                 @endforeach  
 
                                                                 </div>
 
                                                                 @else
-                                                              
+                                                             <!--  
                                                                 <input type="hidden" id="noOfQuetion" value="{{$count_game_chart}}">
                                                                 <div class="mainQuestions" id="mainQuestions">
 
@@ -301,7 +302,7 @@ div#add_new_match {
                                                                     </tr>
 
                                                                 </div>
-
+ -->
                                                                 @endif
                                                               
                                                                 </tbody>
@@ -332,103 +333,105 @@ div#add_new_match {
                             </div>
                         </div>
                         @else
-                        <div class="match-form-wrap">
-                            <p class="sub-head">Competition Match</p>
-                            <form action="{{route('add_match')}}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <input type="hidden" name="player_id" id="match_player_id" value="@if(!empty($comp->player_id)){{isset($comp->player_id) ? $comp->player_id : ''}}@endif">
-                                <input type="hidden" name="comp_id" value="@if(!empty($comp->id)){{isset($comp->id) ? $comp->id : ''}}@endif">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <input type="text" name="opponent_name" placeholder="Opponent Name" class="form-control" placeholder="Opponent Name">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <input type="date" name="start_date" placeholder="Match Start Date" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <input type="text" name="surface_type" class="form-control" placeholder="Match Surface Type">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <input type="text" name="condition" class="form-control" placeholder="Match Condition">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <select name="result">
-                                                <option selected="" disabled="">Match Result</option>
-                                                <option value="Won">Won</option>
-                                                <option value="Lost">Lost</option>
-                                                <option value="Did Not Finish" >Did Not Finish</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <input type="text" placeholder="Score" name="score" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="textarea-wrap">
+                        <div class="outer-wrap">
+                            <div class="match-form-wrap">
+                                <p class="sub-head">Create the First Match</p>
+                                <form action="{{route('add_match')}}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="player_id" id="match_player_id" value="@if(!empty($comp->player_id)){{isset($comp->player_id) ? $comp->player_id : ''}}@endif">
+                                    <input type="hidden" name="comp_id" value="@if(!empty($comp->id)){{isset($comp->id) ? $comp->id : ''}}@endif">
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="exampleFormControlTextarea1">What went well</label>
-                                                <textarea class="form-control" name="wht_went_well" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                <input type="text" name="opponent_name" placeholder="Opponent Name" class="form-control" placeholder="Opponent Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="date" name="start_date" placeholder="Match Start Date" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="surface_type" class="form-control" placeholder="Match Surface Type">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="exampleFormControlTextarea1">What could've been better</label>
-                                                <textarea class="form-control" name="wht_could_better" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                <input type="text" name="condition" class="form-control" placeholder="Match Condition">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select name="result">
+                                                    <option selected="" disabled="">Match Result</option>
+                                                    <option value="Won">Won</option>
+                                                    <option value="Lost">Lost</option>
+                                                    <option value="Did Not Finish" >Did Not Finish</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="Score" name="score" class="form-control">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Other comments</label>
-                                        <textarea class="form-control" name="other_comments" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                    </div>
-
-                                    <!-- ******************************
-                                    |
-                                    |     Upload Match Chart
-                                    |
-                                    | ********************************* -->
-                                    @php $count=1; @endphp
-                                    <table class="add_on_services">
-                                        <thead>
-                                            <tr>
-                                                <th>Upload Match Chart</th>
-                                                <th><a onclick="addnewsection();" href="javascript:void(0);"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                      
-                                        <input type="hidden" id="noOfQuetion" value="{{$count}}">
-                                        <div class="mainQuestions" id="mainQuestions">
-
-                                            <tr class="timeslots slots{{$count}}" value={{$count}}>
-                                              <td><input type="file" name="match_chart[{{$count}}]"></td>
-                                              <td><a onclick="removeSection({{$count}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></td>      
-                                            </tr>
-
+                                    <div class="textarea-wrap">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlTextarea1">What went well</label>
+                                                    <textarea class="form-control" name="wht_went_well" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                </div>
+                                            </div>
                                         </div>
-                                      
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <button type="submit" class="cstm-btn">submit</button>
-                            </form>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlTextarea1">What could've been better</label>
+                                                    <textarea class="form-control" name="wht_could_better" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlTextarea1">Other comments</label>
+                                            <textarea class="form-control" name="other_comments" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        </div>
+
+                                        <!-- ******************************
+                                        |
+                                        |     Upload Match Chart
+                                        |
+                                        | ********************************* -->
+                                        @php $count=1; @endphp
+                                        <table class="add_on_services match_game_chart">
+                                            <thead>
+                                                <tr>
+                                                    <th>Upload Match Chart</th>
+                                                    <th><a onclick="addnewsection();" href="javascript:void(0);"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                          
+                                            <input type="hidden" id="noOfQuetion" value="{{$count}}">
+                                            <div class="mainQuestions" id="mainQuestions">
+
+                                                <tr class="timeslots slots{{$count}}" value={{$count}}>
+                                                  <td><input type="file" name="match_chart[{{$count}}]"></td>
+                                                  <td class="remove_game_chart"><a class="cstm-btn" onclick="removeSection({{$count}});" href="javascript:void(0);">Delete</a></td>      
+                                                </tr>
+
+                                            </div>
+                                          
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <button type="submit" class="cstm-btn">submit</button>
+                                </form>
+                            </div>
                         </div>
                         @endif
 
@@ -506,7 +509,7 @@ div#add_new_match {
                                     |
                                     | ********************************* -->
                                     @php $count=1; @endphp
-                                    <table class="add_on_services">
+                                    <table class="add_on_services match_game_chart">
                                         <thead>
                                             <tr>
                                                 <th>Upload Match Chart</th>

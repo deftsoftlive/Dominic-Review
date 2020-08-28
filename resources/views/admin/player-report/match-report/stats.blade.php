@@ -50,85 +50,85 @@
                                              <th>
                                                 <p><b>1) Total points played in match </b></p>
                                              </th>
-                                             <td>{{$stats_calculation['tp_played']}}</td>
+                                             <td><h5><b>{{$stats_calculation['tp_played']}}</b></h5></td>
                                           </tr>
                                           <tr>
                                              <th>
                                                 <p><b>2) Your percentage points won in match </b></p>
                                              </th>
-                                             <td>{{$stats_calculation['percent_pts_won']}}%</td>
+                                             <td><h5><b>{{$stats_calculation['percent_pts_won']}}%</b></h5></td>
                                           </tr>
                                           <tr>
                                              <th>
                                                 <p><b>3) Your percentage of 1st serves in </b></p>
                                              </th>
-                                             <td>{{$stats_calculation['percent_1serves_in']}}%</td>
+                                             <td><h5><b>{{$stats_calculation['percent_1serves_in']}}%</b></h5></td>
                                           </tr>
                                           <tr>
                                              <th>
                                                 <p><b>4) Your opponent’s percentage of points won in match </b></p>
                                              </th>
-                                             <td>{{$stats_calculation['op_percent_pts_won']}}%</td>
+                                             <td><h5><b>{{$stats_calculation['op_percent_pts_won']}}%</b></h5></td>
                                           </tr>
                                           <tr>
                                              <th>
                                                 <p><b>5) Your opponent’s percentage of 1st serves in </b></p>
                                              </th>
-                                             <td>{{$stats_calculation['op_percent_1serves_in']}}%</td>
+                                             <td><h5><b>{{$stats_calculation['op_percent_1serves_in']}}%</b></h5></td>
                                           </tr>
                                           <tr>
                                              <th>
                                                 <p><b>6) Your percentage of points won from 1st serve </b></p>
                                              </th>
-                                             <td>{{$stats_calculation['percent_pts_won_1serve']}}%</td>
+                                             <td><h5><b>{{$stats_calculation['percent_pts_won_1serve']}}%</b></h5></td>
                                           </tr>
                                           <tr>
                                              <th>
                                                 <p><b>7) Your percentage of points won from 2nd serve </b></p>
                                              </th>
-                                             <td>{{$stats_calculation['percent_pts_won_2serve']}}%</td>
+                                             <td><h5><b>{{$stats_calculation['percent_pts_won_2serve']}}%</b></h5></td>
                                           </tr>
                                           <tr>
                                              <th>
                                                 <p><b>8) Your percentage of points won on opponent’s 1st serve </b></p>
                                              </th>
-                                             <td>{{$stats_calculation['percent_pts_won_op_1serve']}}%</td>
+                                             <td><h5><b>{{$stats_calculation['percent_pts_won_op_1serve']}}%</b></h5></td>
                                           </tr>
                                           <tr>
                                              <th>
                                                 <p><b>9) Your percentage of points won on opponent’s 2nd serve </b></p>
                                              </th>
-                                             <td>{{$stats_calculation['percent_pts_won_op_2serve']}}%</td>
+                                             <td><h5><b>{{$stats_calculation['percent_pts_won_op_2serve']}}%</b></h5></td>
                                           </tr>
                                           <tr>
                                              <th>
                                                 <p><b>10) Your percentage of points won when rally was 1-4 shots </b></p>
                                              </th>
-                                             <td>{{$stats_calculation['percent_pts_won_rally_1shots']}}%</td>
+                                             <td><h5><b>{{$stats_calculation['percent_pts_won_rally_1shots']}}%</b></h5></td>
                                           </tr>
                                           <tr>
                                              <th>
                                                 <p><b>11) Your percentage of points won when rally was 5+ shots </b></p>
                                              </th>
-                                             <td>{{$stats_calculation['percent_pts_won_rally_5shots']}}%</td>
+                                             <td><h5><b>{{$stats_calculation['percent_pts_won_rally_5shots']}}%</b></h5></td>
                                           </tr>
                                           <tr>
                                              <th>
                                                 <p><b>12) Average rally length </b></p>
                                              </th>
-                                             <td>{{$stats_calculation['average_rally_length']}}</td>
+                                             <td><h5><b>{{$stats_calculation['average_rally_length']}}</b></h5></td>
                                           </tr>
                                           <tr>
                                              <th>
                                                 <p><b>13) Your total Aces </b></p>
                                              </th>
-                                             <td>{{$stats_calculation['total_aces']}}</td>
+                                             <td><h5><b>{{$stats_calculation['total_aces']}}</b></h5></td>
                                           </tr>
                                           <tr>
                                              <th>
                                                 <p><b>14) Your total Double faults </b></p>
                                              </th>
-                                             <td>{{$stats_calculation['total_double_faults']}}</td>
+                                             <td><h5><b>{{$stats_calculation['total_double_faults']}}</b></h5></td>
                                           </tr>
                                        </tbody>
                                     </table>

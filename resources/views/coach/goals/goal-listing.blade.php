@@ -16,7 +16,16 @@
   </nav>
   </div>
 </div>
-
+@if(Session::has('success'))
+<div class="alert_msg alert alert-success">
+    <p>{{ Session::get('success') }} </p>
+</div>
+@endif
+@if(Session::has('error'))
+<div class="alert_msg alert alert-danger">
+    <p>{{ Session::get('error') }} </p>
+</div>
+@endif
 <section class="member section-padding">
   <div class="container">
   <div class="outer-wrap">
@@ -41,7 +50,9 @@
                     <th>Player Name</th>
                     <th>Parent Name</th>
                     <th>Goal Type</th>
-                    <th>Add Comment</th>
+                    <th>Finalized By</th>
+                    <th>Finalize</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -59,7 +70,13 @@
                         <p>Advanced</p>
                       @endif
                     </p></td>
-                    <td><p><a href="{{url('/user/goal')}}/{{$go->goal_type}}/{{$go->id}}/add-comment">View</a></p></td> 
+                    <td><p>@if(!empty($go->finalized_by)) @php echo getUsername($go->finalized_by); @endphp @else - @endif</p></td>
+                   	@if($go->finalize == 1)
+                   		<td><p>Finalized</p></td>
+                   	@else
+                    	<td><a onclick="return confirm('Are you sure you want to finalise this goal? Finalised goals cannot be changed.')" href="{{url('/user/goal/finalize')}}/@php echo base64_encode($go->id); @endphp" class="cstm-btn">Finalize</a></td> 
+                    @endif
+                    <td><p><a class="cstm-btn" href="{{url('/user/goal')}}/{{$go->goal_type}}/{{$go->id}}/add-comment">View</a></p></td>
                   </tr>
                 @endforeach
 

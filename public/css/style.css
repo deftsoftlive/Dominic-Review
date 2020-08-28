@@ -748,7 +748,8 @@ section.coach_listing figcaption.dsgn-coach-box:hover {
 
 
 .site-footer {
-    background: url(../images/footer-bg.png);
+    /*background: url(../images/footer-bg.png);*/
+    background:#333333;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -5505,7 +5506,7 @@ a.cart__checkout-button:hover {
 .product-slider-wrap #carousel li img {
     height: 58px;
     width: 100%;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center center;
 }
 
@@ -6332,6 +6333,7 @@ section.coach_listing figure.activity-card-img img {
     object-fit: cover;
     border-radius: 50%;
     background: #007bff;
+    cursor: pointer;
 }
 
 section.coach_listing figcaption.activity-caption {
@@ -7735,7 +7737,7 @@ section.account-menu-sec.player-badge-sec .leadertable-wrap ul.leader-bord-bages
 
 .report-sec .content-wrap {
     padding: 25px;
-    border: 2px solid #be298d;
+    border: 4px solid #be298d;
     margin-top: 25px;
 }
 
@@ -7793,8 +7795,10 @@ form#complex_report_filter .error {
 }
 
 .report-sec .outer-wrap {
+    margin-bottom: 30px;
     padding: 20px;
-    border: 2px solid #be298d;
+    border: 4px solid #be298d;
+    box-shadow: 6px 6px 25px -4px rgba(0, 0, 0, 0.2);
 }
 
 .report-sec .form-head {
@@ -7809,8 +7813,9 @@ form#complex_report_filter .error {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    min-width: 40%;
+    min-width: 51%;
     align-items: center;
+    justify-content: space-between;
 }
 
 .form-head form select {
@@ -7820,10 +7825,11 @@ form#complex_report_filter .error {
 .form-head form p {
     width: 45%;
     font-weight: 500;
+    text-align: right;
 }
 
 .form-head form .form-group {
-    width: 70%;
+    width: 50%;
     margin-bottom: 0;
 }
 
@@ -9009,6 +9015,10 @@ a#add_match:hover {
 .player-report-row button.cstm-btn {
     margin-right: 15px;
 }
+#simple_report_filter input
+{
+    height: 43px;
+}
 #simple_report_filter select,
 #complex_report_filter select,
 select#child_id
@@ -9047,7 +9057,7 @@ select#child_id:focus
 }
 .card-header.view-card-header a
 {
-    width: 90%;
+    width: 85%;
 }
 .card-header.view-card-header .view_stats {
   
@@ -9073,17 +9083,18 @@ select#child_id:focus
     border: 2px solid #be298d;
     color: #be298d!important;
 }
-table.add_on_services {
+.match_game_chart {
     margin: 20px 0;
     border: 1px solid #d9dada;width: 100%;
 }
-table.add_on_services th {
+.match_game_chart th {
     color: #fff;
     padding: 10px;
     font-size: 20px;
     background: #00afef;
+    width: 80%;
 }
-table.add_on_services th a i {
+.match_game_chart th a i {
     color: #fff;
   
     display: flex;
@@ -9091,10 +9102,21 @@ table.add_on_services th a i {
     
 
 }
-table.add_on_services th a:hover {
+.match_game_chart th a:hover {
     text-decoration: none;
 }
 
+
+.match_game_chart td
+{
+    padding: 15px 19px;
+    border-left: 1px solid #d9dada;
+    border-bottom: 1px solid #d9dada;
+    text-align:unset!important;
+}
+.match_game_chart td.remove_game_chart {
+    text-align: center!important;
+}
 
 
 
@@ -9168,3 +9190,170 @@ table.add_on_services td a img {
  
     
 }
+table.stats {
+    margin-bottom: 0;
+}
+.member .pink-heading.btn-right {
+    justify-content: space-between!important;
+}
+.report-table-wrap.player_rp_detail table.stats.table.table-bordered.cst-reports
+th
+{
+    vertical-align: middle;
+}
+.report-table-wrap.player_rp_detail table.stats.table.table-bordered.cst-reports {
+    border: 4px solid #b42786!important;
+    border-radius: 0!important;
+    box-shadow: 6px 6px 25px -4px rgba(0, 0, 0, 0.2);
+}
+.view_stats .card-body {
+    padding: 0;
+}
+.view_stats .report_row
+{
+	padding: 0;
+}
+/*.match_game_chart td a
+
+{
+	cursor: default;
+}
+.match_game_chart td.remove_game_chart a
+{
+	cursor: pointer;
+}*/
+
+.all-members figcaption.activity-caption:hover {
+    background: #fff!important;
+}
+.ques-row {
+    padding: 0;
+}
+
+.form-group .ques-row label {
+    font-size: 18px;
+}
+.cart-table__options li {
+    padding: 0;
+}
+.ques-row label.error {
+    font-size: 12px;
+    line-height: 12px;
+    margin: 0!important;
+   
+}
+.card-header.view-card-header .view_stats {
+    margin-left: 15px!important;
+}
+.checkout-step-sec .multi_step_form .step-form-content a.cstm-btn.solid-btn
+{
+    -moz-appearance: none;
+-webkit-appearance: none;
+}
+
+/*200827*/
+.player-info-sec{
+    padding: 70px 0px;
+}
+.game-card {
+    height: 147px;
+    border-bottom: 2px solid #be298c;
+    position: relative;
+}
+.game-card:after{
+position: absolute;
+content: "";
+width: 12px;
+height: 12px;
+background:#be298c;
+left: 50%;
+transform: translateX(-50%);
+bottom: -6px;
+border-radius: 50%;
+}
+.game-detail {
+    text-align: center;
+    padding: 10px;
+}
+.game-date {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 10px;
+}
+.game-icon-circle {
+    width: 90px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    margin: 0px auto;
+    background: #42a8e9;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 31px;
+    color: #fff;
+    position: relative;
+}
+.game-icon-circle:after {
+    position: absolute;
+    content: "";
+    top: calc(100% - 13px);
+    height: 0;
+    border-left: 30px solid transparent;
+    border-right: 31px solid transparent;
+    border-top: 63px solid #42a8e9;
+    width: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.player-info {
+    max-width: 200px;
+    display: flex;
+    flex-direction: column;
+    margin: 0px auto;
+    background: #42a7e9;
+    border-radius: 7px;
+    box-shadow: 0px 0px 10px rgb(66 166 233);
+    padding: 10px;
+    border: 2px solid #fff;
+}
+.player-info p {
+    color: #fff;
+    line-height: 1.2;
+}
+.normal-link {
+    font-size: 14px;
+    color: #be298c;
+    font-weight: 500;
+    margin-top: 4px;
+}
+.player-info-slider .owl-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+}
+.player-info-slider .owl-nav button{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px !important;
+    color: #42a7e9 !important;
+}
+.player-info-slider .owl-nav button:hover{
+   color: #be298d !important; 
+}
+
+.player-info-slider .owl-nav button i{
+    background: #fff;
+}
+.player-info-slider .owl-nav .owl-prev{
+    left:-20px;
+}
+.player-info-slider .owl-nav .owl-next{
+    right:-20px;
+}
+button:focus{
+    outline: none !important;
+}
+/************/

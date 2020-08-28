@@ -99,6 +99,40 @@
          </td>
          <td align="top" style="font-family: Verdana, 'Times New Roman', Arial; vertical-align: top; font-size: 16px; font-weight: bold; line-height: 22px; color: #0c0c0c; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">${{custom_format($item->total,2)}}</td>
       </tr>
+@elseif($item->shop_type == 'camp')
+@php 
+  $camp_id = $item->product_id;
+  $camp = DB::table('camps')->where('id',$camp_id)->first();  
+  $child = DB::table('users')->where('id',$item->child_id)->first();
+@endphp
+      <tr>
+         <td style="font-family: Verdana, 'Times New Roman', Arial; vertical-align:top;font-size: 14px; line-height: 22px; color: #0c0c0c; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; width: 70px;" >
+             Camp - 
+         </td>
+         <td style="font-family: Verdana, 'Times New Roman', Arial;vertical-align:top; font-size: 14px; line-height: 22px; color: #0c0c0c; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
+            <p style="color: #333; font-weight:bold; margin-top: 0px; margin-bottom: 5px;  font-size: 16px; font-family: Verdana, 'Times New Roman', Arial;">{{$camp->title}}</p>
+            <span style="color: #333;  font-size: 14px; font-family: Verdana, 'Times New Roman', Arial;">
+             <b>Child:</b> {{$child->name}}
+           </span>
+           
+
+
+            <p style="color: #333; font-weight:600; margin-top: 0px; margin-bottom: 5px;  font-size: 14px; font-family: Verdana, 'Times New Roman', Arial;">
+
+               <p style="line-height: 18px;padding: 0;margin: 0;color: #333;font-size: 12px;">
+                 <b>Price : </b> ${{custom_format($item->price,2)}}
+               </p>
+
+                   
+            </p>
+         </td>
+         <td style="font-family: Verdana, 'Times New Roman', Arial;vertical-align:top; font-size: 14px; line-height: 22px; color: #0c0c0c; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
+            <!-- Addons table -->
+            {{$item->quantity}}
+            
+         </td>
+         <td align="top" style="font-family: Verdana, 'Times New Roman', Arial; vertical-align: top; font-size: 16px; font-weight: bold; line-height: 22px; color: #0c0c0c; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">${{custom_format($item->total,2)}}</td>
+      </tr>
 @endif
       <!-- next row -->
                                                  

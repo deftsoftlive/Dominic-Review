@@ -1,21 +1,25 @@
- 
+
 <h3>Product Attributes</h3>
  
-<?php $allTypAlreadySaved = $product->variationAttributes->pluck('type')->toArray(); ?>
+<?php $allTypAlreadySaved = $product->variationAttributes->pluck('type')->toArray();  ?>
 
 <div class="row">
      <div class="col-sm-6">
                 <select name="variation" class="v-cstm-select form-control" id="loadAllVariationOfProduct">
-               	                   <option value="">choose</option>  
-                                  @foreach($product->subcategory->ProductVariations as $v)
-	                                  <option 
-	                                    value="{{$v->variations->type}}" 
-	                                  	id="diabled-{{$v->variations->type}}"
-	                                  	{{in_array($v->variations->type,$allTypAlreadySaved) ? 'disabled' : ''}}
-	                                  	>
-	                                  	{{$v->variations->name}}
-	                                  </option>  
-	                              @endforeach
+	                <option value="">choose</option>  
+
+	                @if(!empty($allTypAlreadySaved))
+	                  	@foreach($product->subcategory->ProductVariations as $v)
+	                      <option 
+	                        value="{{$v->variations->type}}" 
+	                      	id="diabled-{{$v->variations->type}}"
+	                      	{{in_array($v->variations->type,$allTypAlreadySaved) ? 'disabled' : ''}}
+	                      	>
+	                      	{{$v->variations->name}}
+	                      </option>  
+	                  	@endforeach
+	                @endif
+
 		        </select>
 		    </div>
 		    <div class="col-sm-4">

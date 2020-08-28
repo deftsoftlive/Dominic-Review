@@ -134,7 +134,7 @@ $(document).ready(function(){
 
         var mainHtml='<tr class="timeslots slots'+newnumber+'" value="'+newnumber+'"><td><input type="file" name="match_chart['+newnumber+']"></td>';
 
-        mainHtml+='<td><a href="javascript:void(0);" onclick="removeSection('+newnumber+');" class="cstm-btn">Delete</a></td></tr>';
+        mainHtml+='<td class="remove_game_chart"><a href="javascript:void(0);" onclick="removeSection('+newnumber+');" class="cstm-btn">Delete</a></td></tr>';
 
         $(".add_on_services").append(mainHtml);
     }
@@ -179,8 +179,8 @@ $(document).ready(function($){
 |-------------------------------*/ 
 $(document).ready(function(){
   $("select#goal_player").change(function(){
-      var player = $(this).children("option:selected").val();    
-      $('#goal_player_name').val(player);
+      var player = $(this).children("option:selected").val();  
+      $('.goal_player_name').val(player);
   });
   $("select#goal_type").change(function(){
       var goal_type = $(this).children("option:selected").val();    
@@ -1474,6 +1474,34 @@ $("#submit-booking").click(function() {
   }
   
 });
+
+    </script>
+  <!-- player info slider -->
+      <script>
+        $('.player-info-slider').owlCarousel({
+            loop:false,
+            margin: 0,
+            nav: true,
+            autoplay:false,
+            dots:false,
+            responsive: {
+                0: {
+                    items: 2
+                },
+                600: {
+                    items: 3
+
+                },
+                991: {
+                    items: 3
+                },
+                1000: {
+                    items: 4
+                }
+            }
+        });
+         $( ".player-info-slider .owl-prev").html('<i class="fas fa-arrow-circle-left"></i>');
+ $( ".player-info-slider .owl-next").html('<i class="fas fa-arrow-circle-right"></i>');
 
     </script>
   </body>

@@ -241,10 +241,10 @@
 
                           </div>
 
-                    <div class="event-booking">
+                    <!-- <div class="event-booking">
                       <h1 class="event-booking-price"><span>£</span>{{$course->price}}</h1> 
                       <a href="javascript:void(0);" class="cstm-btn">Book Now</a>
-                    </div>
+                    </div> -->
                     <div class="bottom_section event-alert-msg">
                       {!! $course->bottom_section !!} 
                     </div>   

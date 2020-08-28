@@ -59,10 +59,10 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                     </div>
                     <div class="form-head">
                         <div class="pink-heading">
-                            <h2>Add Report</h2>
+                            <h2>Add Match Report</h2>
                         </div>
                         <form>
-                            <p>Who is this report for?</p>
+                            <p>Who is this match report for?</p>
                             <div class="form-group">
                                 <select id="child_id">
                                     <option disabled="" selected="">Select Player</option>
@@ -79,7 +79,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                     </div>
                     <div class="outer-wrap">
                         <div class="upper-form">
-                            <p class="sub-head">Competition Creation</p>
+                            <p class="sub-head">Create The Competition</p>
                             <form action="{{route('add_competition')}}" method="POST">
                                 @csrf
                                 @php $comp = DB::table('competitions')->where('coach_id',Auth::user()->id)->orderBy('id','desc')->first(); @endphp

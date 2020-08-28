@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\CoachDocument;
 use App\ParentCoachReq;
+use App\Course;
+use App\Models\Shop\ShopCartItems;
+use App\Models\Shop\ShopOrder;
 use App\NewsletterSubscription;
 
 class UserController extends Controller
@@ -185,21 +188,6 @@ class UserController extends Controller
         $user->update($request->all()); 
         return \Redirect::back()->with('flash_message',' User details has been updated successfully!');
     }
-
-    /***********************************************
-    |   Change the Verification status of the user
-    |***********************************************/ 
-    // public function user_Status($id) {
-    //  $venue = User::find($id);
-
-    //  if(!empty($venue)){
-    //     $venue->updated_status = $venue->updated_status == 1 ? 0 : 1;
-    //     $venue->save();
-    //     $msg= $venue->updated_status == 1 ? 'Coach <b>'.$venue->first_name.'</b> is Verified' : 'Coach <b>'.$venue->first_name.'</b> is Not Verified';
-    //    return redirect('admin/users/coach')->with('flash_message', $msg);
-    //  }
-    //  return redirect()->back()->with('flash_message', 'Something Went Woring!');
-    // }
 
     /*******************************
     |   Delete User Record
@@ -484,4 +472,78 @@ class UserController extends Controller
         return \Redirect::back()->with('success',$user_email.' email is unsubscribed successfully.');
     }
 
+    /********************************
+    |   Purchased Courses List
+    |********************************/
+    public function change_course_list()
+    {
+        $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('orderID','!=',NULL)->where('type','order')->paginate(10);
+        return view('admin.change-course.move-child-list',compact('purchase_course')); 
+    }
+
+    /*********************************
+    |   Changed Course
+    |*********************************/
+    public function change_course($id)
+    {
+        $shop_cart_items = \DB::table('shop_cart_items')->where('id',$id)->first(); 
+        return view('admin.change-course.change-course',compact('shop_cart_items')); 
+    }
+
+    /*********************************
+    |   Save Changed Course
+    |*********************************/
+    public function save_change_course(Request $request)
+    {
+        $validatedData = $request->validate([
+            'payment_method' => ['required'],
+            'course' => ['required']
+        ]);
+
+        if($request->old_course_id == $request->course)
+        {
+            return \Redirect::back()->with('error','Purchased course is similiar to recently assigned course.');
+        }
+        else
+        {
+            $shop = \DB::table('shop_cart_items')->where('id',$request->shop_id)->first();
+            \DB::table('shop_cart_items')->where('id',$request->shop_id)->delete();
+            \DB::table('shop_orders')->where('orderID',$shop->orderID)->delete();
+
+            $course = Course::where('id',$request->course)->first();
+            
+            $shop                =  new ShopCartItems;
+            $shop->shop_type     =  'course';
+            $shop->product_id    =  $request->course;
+            $shop->child_id      =  $request->player_id;
+            $shop->user_id       =  $request->parent_id;
+            $shop->quantity      =  1;
+            $shop->price         =  $course->price;
+            $shop->total         =  $course->price;
+            $shop->course_season =  $course->season;
+            $shop->vendor_id     =  1;
+            $shop->orderID       =  '#DRHSHOP'.strtotime(date('y-m-d h:i:s'));
+            $shop->type          =  'order';
+            $shop->manual        =  1;
+            $shop->save();
+
+            $order               =  new ShopOrder;
+            $order->orderID      =  $shop->orderID;
+            $order->user_id      =  $shop->user_id;
+            $order->amount       =  $shop->price;
+            $order->payment_by   =  $request->payment_method;
+            $order->status       =  1;
+            $order->manual       =  1;
+            $order->save();
+
+            ShopCartItems::where('orderID',$order->orderID)->update(array('order_id' => $order->id));
+
+            $player_name = getUsername($request->player_id);
+            $course_name = getCourseName($shop->product_id);
+
+            $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('orderID','!=',NULL)->where('type','order')->paginate(10);
+
+            return redirect('/admin/shop/'.$shop->id.'/change-course')->with('success','Course has been changed successfully. Now, '.$course_name.' is assigned to '.$player_name);
+        }
+    } 
 }

@@ -304,8 +304,23 @@ class ReportQuestionController extends Controller
     /*-------------------------------------------------
     |   Match Reports - Competition Records
     |-------------------------------------------------*/
-    public function comp_list(){
-        $competitions = Competition::orderBy('id','desc')->paginate(10);
+    public function comp_list()
+    {
+        $player_name = request()->get('player_name');
+
+        if(!empty($player_name))
+        {
+            $competitions = \DB::table('competitions')
+                ->leftjoin('users', 'competitions.player_id', '=', 'users.id')
+                ->select('users.name', 'competitions.*')
+                ->where( 'name', 'LIKE', '%' . $player_name . '%' )
+                ->orderBy('id','desc')
+                ->paginate(10);
+        }
+        else{
+            $competitions = Competition::orderBy('id','desc')->paginate(10);
+        }
+
         return view('admin.player-report.match-report.competition')->with('competitions',$competitions);
     }  
 

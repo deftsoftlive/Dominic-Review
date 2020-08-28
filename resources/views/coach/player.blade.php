@@ -63,7 +63,7 @@
                      </div>
                      @endif  -->
                       <br>
-                       @if($pl->status == '0')
+                      @if($pl->status == '0')
                           <div class="profile-status">Request Status: <span class="p-s-not-verified"><i class="fas fa-times-circle"></i> Did not accept</span></div>
                           <br/>
                           <form action="{{route('undo_reject_request')}}" class="reject_req" method="POST">
@@ -71,7 +71,7 @@
                           <input type="hidden" name="id" value="{{$pl->id}}">
                           <button type="submit" class="cstm-btn">Enable Link</button>
                           </form>
-                       @elseif($pl->status == '1')
+                      @elseif($pl->status == '1')
                           <div class="profile-status">Request Status: <span class="p-s-verified"><i class="fas fa-check-circle"></i> Accepted</span></div> 
                           <br/>
                           <form action="{{route('undo_reject_request')}}" class="reject_req" method="POST">
@@ -79,14 +79,15 @@
                           <input type="hidden" name="id" value="{{$pl->id}}">
                           <button type="submit" class="cstm-btn">Unlink</button>
                           </form>
-                       @elseif($pl->status == '')
+                      @elseif($pl->status == '')
                           <div id="parent_request" class="request-actions par-req-{{$child_id}}">
                             <a href="javascript:void(0);" child="{{$child_id}}" parent="{{$parent_id}}" req="1" class="cstm-btn">Accept</a>
                             <div class="reject-view" data-toggle="modal" data-target="#reject-detail-{{$pl->id}}">
                               <a href="javascript:void(0);" class="cstm-btn">Unable To Accept</a>
                             </div>
                           </div>
-                       @endif
+                      @endif
+                      <a style="margin-top: 5px;" href="{{url('/user/timeline-view/player')}}/@php echo base64_encode($pl->child_id); @endphp" class="cstm-btn">View Details</a>
                     </figcaption>
 
                </div>

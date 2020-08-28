@@ -41,8 +41,8 @@ label.confirm_msg.form-check-label {
             <div class="col-md-12">
                 <nav>
                     <div class="nav nav-tabs account-menu-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link menu-tab-link" id="nav-goals-tab" data-toggle="tab" href="#nav-goals" role="tab" aria-controls="nav-home" aria-selected="false"><span><i class="fas fa-bullseye"></i></span>Player Goals</a>
-                        <a class="nav-item nav-link menu-tab-link active" id="nav-badges-tab" data-toggle="tab" href="#nav-badges" role="tab" aria-controls="nav-profile" aria-selected="true"><span><i class="fas fa-trophy"></i></span>Player Badges</a>
+                        <a class="nav-item nav-link menu-tab-link active" id="nav-goals-tab" data-toggle="tab" href="#nav-goals" role="tab" aria-controls="nav-home" aria-selected="false"><span><i class="fas fa-bullseye"></i></span>Player Goals</a>
+                        <a class="nav-item nav-link menu-tab-link" id="nav-badges-tab" data-toggle="tab" href="#nav-badges" role="tab" aria-controls="nav-profile" aria-selected="true"><span><i class="fas fa-trophy"></i></span>Player Badges</a>
                         <a class="nav-item nav-link menu-tab-link" id="nav-reports-tab" data-toggle="tab" href="#nav-reports" role="tab" aria-controls="nav-contact" aria-selected="false"><span><i class="fas fa-clipboard-list"></i></span>Player Reports</a>
                         <a class="nav-item nav-link menu-tab-link" id="nav-matches-tab" data-toggle="tab" href="#nav-matches" role="tab" aria-controls="nav-matches" aria-selected="true"><span><i class="fas fa-users"></i></span>Matches</a>
                         <a class="nav-item nav-link menu-tab-link" id="nav-schedule-tab" data-toggle="tab" href="#nav-schedule" role="tab" aria-controls="nav-schedule" aria-selected="false"><span><i class="fas fa-calendar-alt"></i></span>Schedule</a>
@@ -50,7 +50,7 @@ label.confirm_msg.form-check-label {
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade" id="nav-goals" role="tabpanel" aria-labelledby="nav-goals-tab">
+                    <div class="tab-pane fade active show" id="nav-goals" role="tabpanel" aria-labelledby="nav-goals-tab">
                         <div class="report-sec goal-level-report">
                             <div class="inner-cont">
                                 <ul class="nav nav-tabs report-tab" id="myTab" role="tablist">
@@ -58,8 +58,11 @@ label.confirm_msg.form-check-label {
                                         <a class="nav-link cstm-btn active" data-toggle="tab" href="#beginner" role="tab" aria-controls="beginner" aria-selected="true">beginner</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link cstm-btn"  data-toggle="tab" href="#advance" role="tab" aria-controls="advance" aria-selected="false">Advance</a>
-                                    </li>               
+                                        <a class="nav-link cstm-btn" data-toggle="tab" href="#advance" role="tab" aria-controls="advance" aria-selected="false">Advance</a>
+                                    </li>  
+                                    <li class="nav-item">
+                                        <a class="nav-link cstm-btn" data-toggle="tab" href="#all-goals" role="tab" aria-controls="all-goals" aria-selected="false">All Goals</a>
+                                    </li>             
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane fade active show" id="beginner" role="tabpanel" aria-labelledby="beginner">
@@ -105,23 +108,7 @@ label.confirm_msg.form-check-label {
                                                                 </select>
                                                             </div>
                                                             <input type="hidden" name="goal_type" value="beginner">
-                                                            <!-- <div class="form-group col-md-4 col-sm-6">
-                                                                <select name="goal_type" id="goal_type" class="form-control">
-                                                                    <option selected="" disabled="">Select Goal Type</option> 
-                                                                    <option value="beginner"
-                                                                    @if(!empty($goal_type))
-                                                                        @if($goal_type == 'beginner')    
-                                                                            selected 
-                                                                        @endif
-                                                                    @endif
-                                                                    >Beginner Goals</option>
-                                                                    <option value="advanced"
-                                                                    @if(!empty($goal_type))
-                                                                        @if($goal_type == 'advanced')   selected 
-                                                                        @endif 
-                                                                    @endif>Advanced Goals</option>
-                                                                </select>
-                                                            </div> -->
+
                                                             <div class="form-group col-md-2">
                                                                 <button id="save_goal" class="cstm-btn">Submit</button>
                                                                 <a href="{{url('/user/badges')}}" class="cstm-btn">Reset</a>
@@ -166,7 +153,7 @@ label.confirm_msg.form-check-label {
 
                                                 <form id="goal_detail" action="{{route('save_goal')}}" class="col-md-12" method="POST">
                                                     @csrf
-                                                    <input type="hidden" name="goal_player_name" id="goal_player_name" value="{{isset($goal_player) ? $goal_player : ''}}">
+                                                    <input type="hidden" name="goal_player_name" class="goal_player_name" value="{{isset($goal_player) ? $goal_player : ''}}">
                                                     <input type="hidden" name="pl_goal_type" id="pl_goal_type" value="beginner">
                                                     <input type="hidden" name="parent_id" value="{{Auth::user()->id}}">
                                                     
@@ -174,7 +161,7 @@ label.confirm_msg.form-check-label {
 
                                                     @if(!empty($goal_player))
                                                     @php 
-                                                        $user_goal = DB::table('set_goals')->where('player_id',$goal_player)->where('parent_id',Auth::user()->id)->where('goal_id',$go->id)->first();
+                                                        $user_goal = DB::table('set_goals')->where('player_id',$goal_player)->where('parent_id',Auth::user()->id)->where('goal_id',$go->id)->where('finalize',NULL)->first();   
                                                     @endphp
                                                     @endif
                                                     <div class="col-md-12">
@@ -281,7 +268,7 @@ label.confirm_msg.form-check-label {
 
                                                         <form id="goal_detail1" enctype="multipart/form-data" action="{{route('advanced_goal')}}" method="POST">
                                                         @csrf
-	                                                    <input type="hidden" name="goal_player_name" id="goal_player_name" value="{{isset($goal_player) ? $goal_player : ''}}">
+	                                                    <input type="hidden" name="goal_player_name" class="goal_player_name" value="{{isset($goal_player) ? $goal_player : ''}}">
 	                                                    <input type="hidden" name="pl_goal_type" id="pl_goal_type" value="advanced">
 	                                                    <input type="hidden" name="parent_id" value="{{Auth::user()->id}}">
                                                         <div class="outer-wrap-player-goal">
@@ -363,6 +350,62 @@ label.confirm_msg.form-check-label {
                                             </div>
                                         </div>                           
                                     </div>
+                                    <div class="tab-pane fade" id="all-goals" role="tabpanel" aria-labelledby="all-goals">
+                                        <br/><br/>
+                                        <div class="col-md-12">
+                                           <div class="player-report-table tbl_shadow">
+                                              <div class="report-table-wrap">
+                                                 <div class="m-b-table">
+                                                    <table>
+                                                        <thead>
+                                                            <tr> 
+                                                                <th>Date</th>
+                                                                <th>Player Name</th> 
+                                                                <th>Parent Name</th>
+                                                                <th>Goal Type</th>
+                                                                <th>Linked Coach</th>
+                                                                <th>Finalized By</th>
+                                                                <th>Status</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @php 
+                                                                $goals = DB::table('set_goals')->where('parent_id',Auth::user()->id)->groupBy(['player_id', 'goal_type','finalize'])->orderBy('id','desc')->get();
+                                                            @endphp
+                                                            @if(count($goals)>0)
+                                                            @foreach($goals as $go)
+                                                            <tr>
+                                                                <td><p>{{$go->goal_date}}</p></td>
+                                                                <td><p>@php echo getUsername($go->player_id); @endphp</p></td>
+                                                                <td><p>@php echo getUsername($go->parent_id); @endphp</p></td>
+                                                                <td>
+                                                                  @if($go->goal_type == 'beginner')
+                                                                    <p>Beginner</p>
+                                                                  @elseif($go->goal_type == 'advanced')
+                                                                    <p>Advanced</p>
+                                                                  @endif
+                                                                </td>
+                                                                <td><p>@if(!empty($go->coach_id)) @php echo getUsername($go->coach_id); @endphp @else - @endif</p></td>
+                                                                <td><p>@if(!empty($go->finalized_by)) @php echo getUsername($go->finalized_by); @endphp @else - @endif</p></td>
+                                                                @if($go->finalize == 1)
+                                                                    <td><p class="vou_prod_type" style="background:#c7f197;border-radius: 14px;padding: 0 20px;font-weight: 400;">Finalized</p></td>
+                                                                @else
+                                                                    <td><a onclick="return confirm('Are you sure you want to finalise this goal? Finalised goals cannot be changed.')" href="{{url('/user/goal/finalize')}}/@php echo base64_encode($go->id); @endphp" class="cstm-btn">Finalize</a></td> 
+                                                                @endif
+                                                                <td><p><a href="{{url('/user/goal')}}/{{$go->goal_type}}/{{$go->id}}/add-comment">View</a></p></td> 
+                                                            </tr>
+                                                            @endforeach
+                                                            @else
+                                                                <tr><td colspan="5"><div class="no_results"><h3>No data found</h3></div></td></tr>
+                                                            @endif
+                                                        </tbody>
+                                                    </table>
+                                                 </div>
+                                              </div>
+                                           </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -394,7 +437,7 @@ label.confirm_msg.form-check-label {
                       </div> -->
                             <!-- Crop Functionality - End -->
                         
-                            <div class="tab-pane fade active show" id="nav-badges" role="tabpanel" aria-labelledby="nav-badges-tab">
+                            <div class="tab-pane fade" id="nav-badges" role="tabpanel" aria-labelledby="nav-badges-tab">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="tab-page-heading">
@@ -556,7 +599,7 @@ label.confirm_msg.form-check-label {
                                                             @else
                                                             @php
                                                             $user = DB::table('users')->where('id',$shop->child_id)->first();
-                                                            $course = DB::table('courses')->where('id',$shop->product_id)->first();
+                                                            $course = DB::table('courses')->where('id',$shop->product_id)->first(); 
                                                             $badges_data = DB::table('user_badges')->where('user_id',$shop->child_id)->first();
                                                             @endphp
                                                             @endif
@@ -576,6 +619,8 @@ label.confirm_msg.form-check-label {
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                
                                                 <div class="col-lg-5  col-md-5">
                                                     <div class="player-achievements">
                                                         <!-- <h2>achievements</h2> -->

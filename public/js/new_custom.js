@@ -1,4 +1,14 @@
 /*****************************
+| Print Goal Data
+|*****************************/
+$(document).ready(function() {
+    $('#goal_print').click(function() {
+        $('.collapse').addClass('show');
+        window.print();
+    });
+});
+
+/*****************************
 | Courses's Search
 |*****************************/
 $(document).ready(function() {

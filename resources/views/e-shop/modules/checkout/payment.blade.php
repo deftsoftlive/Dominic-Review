@@ -169,11 +169,12 @@
                                 {!! getAllValueWithMeta('childcare_content', 'child-care-popup') !!}
 
                                 <div class="form-check child_check_wrap">
-                                   <!--  <div class="cstm-check"><input id="checkbox1" class="checkbox-style col-1-W1 " type="checkbox" value="1">
+                                    <div class="cstm-check">
+                                        <input id="checkbox1" class="checkbox-style col-1-W1 " type="checkbox" value="1">
                                         <label for="checkbox1" class="checkbox-style-3-label"></label>
                                         <input type="hidden" id="checkbox1" name="checkbox1" value="1">I have read all the information.
-                                    </div> -->
-                                    <input type="checkbox" name="accept" id="accept" > I have read all the information.
+                                    </div>
+                                    <!-- <input type="checkbox" name="accept" id="accept" > I have read all the information. -->
                                 </div>
                                 <br/>
                             </div>

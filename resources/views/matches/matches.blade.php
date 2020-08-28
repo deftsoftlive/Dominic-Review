@@ -64,13 +64,14 @@
             @foreach($matches as $match)
             <div class="card-header view-card-header">
                <a class="collapsed card-link" data-toggle="collapse" href="#Personal-{{$match->id}}">
-               <span>{{$i}}</span> {{$match->opponent_name}}
+               <span>{{$i}}</span> {{isset($match->opponent_name) ? $match->opponent_name : ''}} - {{isset($match->result) ? $match->result : ''}} - {{isset($match->score) ? $match->score : ''}}
                </a>
                @php 
                   $check_stats = DB::table('match_stats')->where('competition_id',$competition->id)->where('match_id',$match->id)->first();
                @endphp
                @if(!empty($check_stats))
-                  <a class="view_stats" href="{{url('/user/competition')}}/{{$competition->id}}/match/{{$match->id}}/stats/view">View Stats</a>
+                  <a class="cstm-btn view_stats" href="{{url('/user/competition')}}/{{$competition->id}}/match/{{$match->id}}/stats">Edit Stats</a>
+                  <a class="cstm-btn view_stats" href="{{url('/user/competition')}}/{{$competition->id}}/match/{{$match->id}}/stats/view">View Stats</a>
                @endif
             </div>
             <div id="Personal-{{$match->id}}" class="collapse" >

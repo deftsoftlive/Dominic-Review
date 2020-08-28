@@ -60,6 +60,8 @@
                                 <th>Parent Name</th>
                                 <th>Goal Type</th>
                                 <th>Linked Coach</th>
+                                <th>Status</th>
+                                <th>Finalized By</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -70,14 +72,20 @@
                                 <td><p>{{$go->goal_date}}</p></td>
                                 <td><p>@php echo getUsername($go->player_id); @endphp</p></td>
                                 <td><p>@php echo getUsername($go->parent_id); @endphp</p></td>
-                                <td><p>
+                                <td>
                                   @if($go->goal_type == 'beginner')
                                     <p>Beginner</p>
                                   @elseif($go->goal_type == 'advanced')
                                     <p>Advanced</p>
                                   @endif
-                                </p></td>
+                                </td>
                                 <td><p>@if(!empty($go->coach_id)) @php echo getUsername($go->coach_id); @endphp @else - @endif</p></td>
+                                @if($go->finalize == 1)
+                                    <td><p class="vou_prod_type" style="background:#c7f197;border-radius: 14px;padding: 0 5px;"><span class="cst_active cc_cursor"><i class="fas fa-check-circle cc_cursor"></i></span><b> Finalized</b></p></td>
+                                @else
+                                    <td>-</td>
+                                @endif
+                                <td><p>@if(!empty($go->finalized_by)) @php echo getUsername($go->finalized_by); @endphp @else - @endif</p></td>
                                 <td><p><a href="{{url('/admin/goal')}}/{{$go->goal_type}}/{{$go->id}}">View</a></p></td> 
                             </tr>
                             @endforeach

@@ -496,7 +496,7 @@ public function changeProfileImage(Request $request) {
       }
       else
       {
-        $goals = SetGoal::groupBy(['player_id', 'goal_type'])->paginate(10);         
+        $goals = SetGoal::groupBy(['player_id', 'goal_type', 'finalize'])->paginate(10);         
       }
       return view('admin.goals.goal-listing',compact('goals'));
     }

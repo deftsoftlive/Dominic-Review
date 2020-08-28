@@ -7,6 +7,9 @@ $notification = DB::table('parent_coach_reqs')->where('coach_id',Auth::user()->i
 $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->first(); 
 $count=1; 
 @endphp 
+
+
+
 <style>
 input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
     background: white;
@@ -219,7 +222,9 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Coach Feedback:</label>
-                                        <textarea class="form-control" id="feedback" rows="5" name="feedback" placeholder="Comment here...">{{isset($player_report->feedback) ? $player_report->feedback : ''}}</textarea>
+                                        <textarea class="form-control" id="feedback" rows="5" name="feedback" placeholder="Comment here...">
+                                            {{isset($player_report->feedback) ? $player_report->feedback : ''}}
+                                        </textarea>
                                     </div>
                                 </div>
                             </div>
@@ -397,7 +402,9 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Coach Feedback:</label>
-                                        <textarea class="form-control" name="feedback" id="feedback" rows="5" placeholder="Comment here...">{{isset($player_rep->feedback) ? $player_rep->feedback : ''}}</textarea>
+                                        <textarea class="form-control" name="feedback" id="feedback" rows="5" placeholder="Comment here...">
+                                            {{isset($player_rep->feedback) ? $player_rep->feedback : ''}}
+                                        </textarea>
                                     </div>
                                 </div>
                             </div>
@@ -467,10 +474,10 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                     </div>
                     <div class="form-head">
                         <div class="pink-heading">
-                            <h2>Add Report</h2>
+                            <h2>Add Match Report</h2>
                         </div>
                         <form>
-                            <p>Who is this report for?</p>
+                            <p>Who is this match report for?</p>
                             <div class="form-group">
                                 <select id="child_id">
                                     <option disabled="" selected="">Select Player</option>
@@ -487,7 +494,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                     </div>
                     <div class="outer-wrap">
                         <div class="upper-form">
-                            <p class="sub-head">Competition Creation</p>
+                            <p class="sub-head">Create The Competition</p>
                             <form action="{{route('add_competition')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="player_id" id="match_player_id" value="@if(!empty($comp->player_id)){{isset($comp->player_id) ? $comp->player_id : ''}}@endif">
@@ -534,8 +541,10 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                 </div>
                             </form>
                         </div>
+                    </div>
+                    <div class="outer-wrap">
                         <div class="match-form-wrap">
-                            <p class="sub-head">Competition Match</p>
+                            <p class="sub-head">Create The First Match</p>
                             <form action="{{route('add_match')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="player_id" id="match_player_id" value="@if(!empty($comp->player_id)){{isset($comp->player_id) ? $comp->player_id : ''}}@endif">
@@ -610,7 +619,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                         |
                                         | ********************************* -->
                                       
-                                        <table class="add_on_services">
+                                        <table class="add_on_services match_game_chart">
                                             <thead>
                                                 <tr>
                                                     <th>Upload Match Chart</th>

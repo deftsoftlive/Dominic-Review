@@ -149,6 +149,13 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::any('/unsubscribed-users/{id}', 'Admin\UserController@unsubscribed_users')->name('unsubscribed_users');
 
 		#----------------------------------------------------------------
+		#  Change Course of Player
+		#----------------------------------------------------------------
+		Route::any('/purchased-course','Admin\UserController@change_course_list')->name('purchased_course_data');
+		Route::any('/shop/{id}/change-course','Admin\UserController@change_course')->name('change_course');
+		Route::any('/change-course/save','Admin\UserController@save_change_course')->name('save_change_course');
+
+		#----------------------------------------------------------------
 		#  Parents/Children/Coach Management
 		#----------------------------------------------------------------
 		Route::get('/users/parent','Admin\UserController@parent_list')->name('parent_users');

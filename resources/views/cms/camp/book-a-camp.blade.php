@@ -322,13 +322,11 @@
 
                     @if(isset($arrData->$weekDays))
                     @if($arrData->$weekDays == '1')
-                    @php 
-
-                    $smallLetterWeekDays= strtolower($weekDays); 
-                    $full_weekClass=$weekDays=='Fullweek'?'full_week':'';
-                    $full_weekTitle=$weekDays=='Fullweek'?'Full Week':$weekDays;
-
-                     @endphp 
+                      @php
+                        $smallLetterWeekDays= strtolower($weekDays); 
+                        $full_weekClass=$weekDays=='Fullweek'?'full_week':'';
+                        $full_weekTitle=$weekDays=='Fullweek'?'Full Week':$weekDays;
+                      @endphp 
                     <tr class="week{{$arrKey+1}}">
                       <td class="success"><b> {{$full_weekTitle}}</b></td>
 
@@ -409,12 +407,26 @@
                         </td>
                         @endif
                       @endif
+
+                      @php 
+                        $camp_data = DB::table('camp_prices')->where('camp_id',$camp->id)->first();  
+                        $morning_seats = $camp_data->morning_seats;
+                        $afternoon_seats = $camp_data->afternoon_seats; 
+
+                        $shop_data = DB::table('shop_cart_items')->where('shop_type','camp')->where('type','order')->where('product_id',$camp->camp_id)->get();
+                        $selected_week_data = [];
+                      @endphp
+
+                      @foreach($shop_data as $sh)
+                        @php $selected_week_data[] = json_decode($sh->week); @endphp
+                      @endforeach
+                      @php $week = $selected_week_data; @endphp
+
                       <td class="active">&nbsp;</td>
                     </tr>
                     @endif
                     @endif
                     @endforeach  
-
                   </tbody>
                 </table>
               </div>

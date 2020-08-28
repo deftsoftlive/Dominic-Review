@@ -27,8 +27,9 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
 </div>
 <section class="member section-padding">
    <div class="container">
-      <div class="pink-heading">
+      <div class="pink-heading btn-right">
          <h2>My Competitions & Matches</h2>
+         <a class="add_competition cstm-btn" href="{{ route('coach_report') }}">Add Match</a>
       </div>
       <div class="col-md-12">
          @if(count($competitions)> 0)

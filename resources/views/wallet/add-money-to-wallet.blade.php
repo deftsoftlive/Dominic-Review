@@ -63,7 +63,7 @@ $wallet_amt = DB::table('wallets')->where('user_id',Auth::user()->id)->first();
                             <input type="hidden" name="user_id" value="{{\Auth::user()->id}}">
                             <div class="row wallet_form">
                                 <!-- Profile Name -->
-                                <div class="col-md-8 col-sm-8">
+                                <div class="col-md-8 col-sm-12">
                                     <div class="form-group row f-g-full">
                                         <label for="money_amount" class="col-md-12 col-form-label text-md-right">Enter money amount</label>
                                         <input id="money_amount" type="text" class="form-control{{ $errors->has('money_amount') ? ' is-invalid' : '' }}" name="money_amount" value="{{ isset($user->money_amount) ? $user->money_amount : '' }}" autofocus placeholder="Please enter amount">
@@ -74,7 +74,7 @@ $wallet_amt = DB::table('wallets')->where('user_id',Auth::user()->id)->first();
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-md-4 col-sm-4" id="add_money_btn"><a class="cstm-btn">Add Money</a></div>
+                                <div class="col-md-4 col-sm-12" id="add_money_btn"><a class="cstm-btn">Add Money</a></div>
                             </div>
                             <div class="form-button">
                                 <div class="form-group row mb-0">

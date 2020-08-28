@@ -67,8 +67,8 @@ function getTestname($id){
 | Product Category name using category ID 
 |-------------------------------------*/
 function getProductCatname($id){
-  $category = \DB::table('product_categories')->where('id',$id)->first();
-  return $category->label;
+  $category = \DB::table('product_categories')->where('id',$id)->first();  
+  return $category->label;  
 }
 
 /*-------------------------------------

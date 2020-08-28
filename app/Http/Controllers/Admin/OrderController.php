@@ -689,14 +689,15 @@ class OrderController extends Controller
                             elseif($ca->shop_type == 'course')
                             {
                                 $child_id = $ca->child_id;
-                                $user = \DB::table('users')->where('id',$child_id)->first();
+                                $user   = \DB::table('users')->where('id',$child_id)->first();
                                 $course = \DB::table('courses')->where('id',$ca->product_id)->first();
+                                $season = getSeasonname($course->season);
 
                             $output .= '<tr>
                                 <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$ca->shop_type.'</td>
                                 <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$course->title.'</td>
                                 <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$user->name.'</td>
-                                <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$course->term;   
+                                <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$season;   
 
                             $output .= '<td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">&pound;'.$ca->total.'</td>
                             </tr>';

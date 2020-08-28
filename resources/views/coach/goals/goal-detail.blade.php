@@ -1,14 +1,21 @@
 @extends('inc.homelayout')
 @section('title', 'DRH|Register')
 @section('content')
-<div class="account-menu">
+<div class="account-menu d-print-none">
     <div class="container">
         <div class="menu-title">
             <span>Account</span> menu
         </div>
         <nav>
             <ul>
-                @include('inc.coach-menu')
+                @php
+                    $user_id = \Auth::user()->role_id;
+                @endphp
+                @if($user_id == '2')
+                    @include('inc.parent-menu')
+                @elseif($user_id == 3)
+                    @include('inc.coach-menu')
+                @endif
             </ul>
         </nav>
     </div>
@@ -20,10 +27,12 @@
 @endif
 <section class="coach-goal-comment-sec">
     <div class="container">
-      <div class="pink-heading">
-         <h2>Add comment</h2>
+      <div class="pink-heading btn-right">
+         <h2>Update Your Goals</h2>
+         <a class="cstm-btn d-print-none" href="{{url('/user/badges')}}">Back to menu</a>
+         <button class="cstm-btn d-print-none" id="goal_print">Print</button>
+         <br/><br/>
       </div>
-
 
     <div class="col-md-12 invoice_apd">
         @if(!empty($get_goal))
@@ -89,9 +98,16 @@
                     @php $goals = DB::table('goals')->where('goal_type','beginner')->get(); @endphp
 
                     @foreach($goals as $go)
+
+                    @if(Auth::user()->role_id == 3)
                     @php 
                         $user_goal = DB::table('set_goals')->where('player_id',$get_goal->player_id)->where('parent_id',$get_goal->parent_id)->where('coach_id',Auth::user()->id)->where('goal_id',$go->id)->first(); 
                     @endphp
+                    @elseif(Auth::user()->role_id == 2)
+                    @php 
+                        $user_goal = DB::table('set_goals')->where('player_id',$get_goal->player_id)->where('parent_id',Auth::user()->id)->where('coach_id',$get_goal->coach_id)->where('goal_id',$go->id)->first(); 
+                    @endphp
+                    @endif
                     <div class="col-md-12">
                         <fieldset class="player-goal-card">
                             <legend>{{$go->goal_title}}</legend>
@@ -104,13 +120,13 @@
                         <div class="goal-reciew-feedback">
                             <p>Linked Coach Feedback</p>
                                 <div class="form-group">
-                                    <textarea class="form-control goal-textarea" name="goal[{{$go->id}}]" rows="3">@if(!empty($user_goal)){{$user_goal->coach_comment}}@endif</textarea>
+                                    <textarea @if($user_goal->finalize == 1) readonly="" @endif class="form-control goal-textarea" name="goal[{{$go->id}}]" rows="3">@if(!empty($user_goal)){{$user_goal->coach_comment}}@endif</textarea>
                                 </div>
                         </div>
                     </div>
                     @endforeach
 
-                    <button type="submit" class="cstm-btn">Submit</button>
+                    @if($user_goal->finalize == '')<button type="submit" class="cstm-btn">Submit</button>@endif
                 </form>
             </div>
         </div>
@@ -197,7 +213,7 @@
                             </div> -->
                         </div>
                         <div class="set-goal-btn-wrap">
-                            <button type="submit" href="javascript:void(0);" class="cstm-btn">Submit</button>
+                           @if($user_goal->finalize == '') <button type="submit" href="javascript:void(0);" class="cstm-btn">Submit</button> @endif
                         </div>
                     </form>
                     </div>

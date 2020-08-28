@@ -42,9 +42,11 @@ use App\MatchReport;
 use Newsletter;
 use App\TestScore;
 use App\Wallet;
+use DateTime;
 use App\WalletHistory;
 use App\MatchStats;
 use App\MatchGameChart;
+use App\UserBadge;
 use App\NewsletterSubscription;
 use App\Models\Shop\ShopCartItems;
 use App\Models\Products\ProductCategory;
@@ -1485,12 +1487,12 @@ public function save_simple_report(Request $request)
                 $report->status = 1;
                 $report->save();
 
-            return redirect('/user/coach-reports')->with('success','Report generated successfully for '.getUsername($request->player_id).' under '.getCourseName($request->course_id).' course'); 
+            return \Redirect::back()->with('success','Report generated successfully for '.getUsername($request->player_id).' under '.getCourseName($request->course_id).' course'); 
             
         }
     }
   }else{
-    return redirect('/user/coach-reports')->with('error','Season, course & player are required fields & you missed one of those fields.'); 
+    return \Redirect::back()->with('error','Season, course & player are required fields & you missed one of those fields.'); 
   }
 } 
 
@@ -1503,33 +1505,54 @@ public function save_complex_report(Request $request)
     $date = Carbon::now();  
     $current_date = $date->toDateTimeString();
 
-    if(!empty($request->report_id))
+    $rp = $request->input('rp');  
+
+    if(!empty($rp))
     {
-      $report = PlayerReport::find($request->report_id);
-      $report->coach_id = \Auth::user()->id;
-      $report->player_id = $request->exist_player_id; 
-      $report->type = $request->type;
-      $report->date = $current_date;
-      $report->feedback = isset($request->feedback) ? $request->feedback : '';
-      $report->selected_options = isset($request->selected_options) ? json_encode($request->selected_options) : '';
+        $update_new_rp = PlayerReport::where('id',$rp)->update(array('status' => 1));
+        $new_rp = PlayerReport::where('id',$rp)->first();
 
-      $report->save();
+        $old_rp = PlayerReport::where('course_id',$new_rp->course_id)->where('season_id',$new_rp->season_id)->where('coach_id',$new_rp->coach_id)->where('player_id',$new_rp->player_id)->where('type',$new_rp->type)->orderBy('id','asc')->first();
+        $old_rp->delete();
 
-      return redirect('/user/coach-reports')->with('success','Report updated successfully for '.getUsername($request->exist_player_id)); 
+        return \Redirect::back()->with('success','Report overriden successfully.'); 
+    }
+    else
+    {
+        if(!empty($request->report_id))
+        {
+          $report = PlayerReport::find($request->report_id);
+          $report->coach_id = \Auth::user()->id;
+          $report->player_id = $request->exist_player_id; 
+          $report->type = $request->type;
+          $report->date = $current_date;
+          $report->status = 0;
+          $report->feedback = isset($request->feedback) ? $request->feedback : '';
+          $report->selected_options = isset($request->selected_options) ? json_encode($request->selected_options) : '';
 
-    }else{
+          $report->save();
 
-      $report = new PlayerReport; 
-      $report->coach_id = \Auth::user()->id;
-      $report->player_id = $request->player_id;
-      $report->type = $request->type;
-      $report->date = $current_date;
-      $report->feedback = isset($request->feedback) ? $request->feedback : '';
-      $report->selected_options = isset($request->selected_options) ? json_encode($request->selected_options) : '';  
-      $report->save();
+          $override_url = url()->current().'?rp='.$report->id;
+                
+                return \Redirect::back()->with('error','This report has already been submitted to the player. If you submit again, previous save report data will be overridden.<a href="'.$override_url.'"> <b> <u>OVERRIDE</u></b></a>'); 
 
-      return redirect('/user/coach-reports')->with('success','Report generated successfully for '.getUsername($request->player_id)); 
-    } 
+        }else{
+
+          $report = new PlayerReport; 
+          $report->coach_id = \Auth::user()->id;
+          $report->player_id = $request->player_id;
+          $report->type = $request->type;
+          $report->date = $current_date;
+          $report->status = 1;
+          $report->feedback = isset($request->feedback) ? $request->feedback : '';
+          $report->selected_options = isset($request->selected_options) ? json_encode($request->selected_options) : '';  
+          $report->save();
+
+          return \Redirect::back()->with('success','Report generated successfully for '.getUsername($request->player_id)); 
+        } 
+    }
+
+    
 }
 
 /*-------------------------------------
@@ -2407,12 +2430,13 @@ function convert_order_data_to_html($order_id)
                                 $child_id = $ca->child_id;
                                 $user = \DB::table('users')->where('id',$child_id)->first();
                                 $course = \DB::table('courses')->where('id',$ca->product_id)->first();
+                                $season = getSeasonname($course->season);
 
                             $output .= '<tr>
                                 <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$ca->shop_type.'</td>
                                 <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$course->title.'</td>
                                 <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$user->name.'</td>
-                                <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$course->term;   
+                                <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$season;   
 
                             $output .= '<td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">&pound;'.$ca->total.'</td>
                             </tr>';
@@ -2603,10 +2627,12 @@ public function badges()
 
     if(!empty($goal_player) && !empty($goal_type))
     {
-      $user_goal = SetGoal::where('player_id',$goal_player)->where('parent_id',Auth::user()->id)->get();
+      $user_goal = SetGoal::where('player_id',$goal_player)->where('parent_id',Auth::user()->id)->where('finalize','!=',1)->get();
     }elseif(empty($goal_player) && empty($goal_type)){
       $user_goal = '';
     }
+
+    // dd($user_goal);
 
     return view('cms.badges',compact('purchase_course','testimonial','shop','user_id','course_id','season_id','user_badge','user_badge1','goal_player','goal_type','user_goal'));
 }
@@ -2645,32 +2671,33 @@ public function selectedSeason(Request $request)
 public function save_goal(Request $request)
 {
   $goal_data = $request->all(); 
-  $check_goal = SetGoal::where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->get();
+  $check_goal = SetGoal::where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->where('finalize',NULL)->get();
 
   if(!empty($request->goal_player_name) && !empty($request->pl_goal_type))
   { 
     if(count($check_goal)>0)
     {
-      if(!empty($request->goal))
-      {
-        foreach($request->goal as $key=>$goalValue)
-        { 
-          foreach($goalValue as $goaldata=>$value)
-          {
-              $get_coach_id = ParentCoachReq::where('child_id',$request->goal_player_name)->where('status',1)->first();
+      // if(!empty($request->goal))
+      // {
+      //   foreach($request->goal as $key=>$goalValue)
+      //   { 
+      //     foreach($goalValue as $goaldata=>$value)
+      //     {
+      //         $get_coach_id = ParentCoachReq::where('child_id',$request->goal_player_name)->where('status',1)->first();
 
-              $coach_id = isset($get_coach_id) ? $get_coach_id->coach_id : '';
+      //         $coach_id = isset($get_coach_id) ? $get_coach_id->coach_id : '';
 
-              // dd($request->all(),$key,$value,$coach_id);
-            if($value != null)
-            {
-              SetGoal::where('parent_id',$request->parent_id)->where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->where('goal_id',$goaldata)->update(array('parent_comment' => $value, 'coach_id' => $coach_id));
-            }
-          }
+      //       if($value != null)
+      //       {
+      //         SetGoal::where('parent_id',$request->parent_id)->where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->where('goal_id',$goaldata)->update(array('parent_comment' => $value, 'coach_id' => $coach_id));
+      //       }
+      //     }
           
-        }
-        return \Redirect::back()->with('success','Goal data updated successfully.');
-      } 
+      //   }
+      //   return \Redirect::back()->with('success','Goal data updated successfully.');
+      // }
+
+      return \Redirect::back()->with('error','You have already set goal for this child.'); 
 
     }else{
       if(!empty($request->goal))
@@ -2679,6 +2706,8 @@ public function save_goal(Request $request)
         {
           foreach($goalValue as $goaldata=>$value)
           {
+            if(!empty($value))
+            {
               $get_coach_id = ParentCoachReq::where('child_id',$request->goal_player_name)->where('status',1)->first();
 
               $set_goal = new SetGoal;
@@ -2690,6 +2719,8 @@ public function save_goal(Request $request)
               $set_goal->coach_id = isset($get_coach_id) ? $get_coach_id->coach_id : '';
               $set_goal->goal_date = date("d F Y",strtotime("tomorrow"));
               $set_goal->save();
+            }
+              
           }
           
         }
@@ -2723,7 +2754,6 @@ public function advanced_goal(Request $request)
 {
   $goal_data = $request->all(); 
   $check_goal = SetGoal::where('player_id',$request->goal_player_name)->where('goal_type','advanced')->where('goal_type',$request->pl_goal_type)->get();
-  // dd($check_goal);
 
   if(!empty($request->goal_player_name) && !empty($request->pl_goal_type))
   { 
@@ -2797,7 +2827,7 @@ public function save_ad_coach_comment(Request $request)
 |-----------------------------------------------------*/
 public function goal_list()
 {
-  $goals = SetGoal::where('coach_id',Auth::user()->id)->groupBy(['player_id', 'goal_type'])->get();
+  $goals = SetGoal::where('coach_id',Auth::user()->id)->groupBy(['player_id', 'goal_type','finalize'])->get();
   return view('coach.goals.goal-listing',compact('goals'));
 }
 
@@ -2807,8 +2837,21 @@ public function goal_list()
 public function goal_detail($goal_type,$id)
 { 
   $get_goal = SetGoal::where('id',$id)->first();
-  $goals_data = SetGoal::where('parent_id',$get_goal->parent_id)->where('player_id',$get_goal->player_id)->where('goal_type',$goal_type)->get();
+  $goals_data = SetGoal::where('parent_id',$get_goal->parent_id)->where('player_id',$get_goal->player_id)->where('goal_type',$goal_type)->get(); 
   return view('coach.goals.goal-detail',compact('get_goal','goals_data'));
+}
+
+/*--------------------------------------------
+| Finalize a goal
+|--------------------------------------------*/
+public function goal_finalize($id)
+{ 
+  $goal_id = base64_decode($id);
+  $check_goal = SetGoal::where('id',$goal_id)->first(); 
+
+  $get_goal = SetGoal::where('parent_id', $check_goal->parent_id)->where('goal_type',$check_goal->goal_type)->where('coach_id',$check_goal->coach_id)->where('player_id',$check_goal->player_id)->update(array('finalize' => 1, 'finalized_by' => \Auth::user()->id));
+  
+  return \Redirect::back()->with('success','Goal has been finalized successfully.');
 }
 
 /*----------------------------------------
@@ -3556,7 +3599,15 @@ public function matches_under_comp($id)
 |--------------------------------------*/
 public function match_stats($comp_id,$match_id)
 {
-    return view('matches.stats',compact('comp_id','match_id'));
+    $stats = MatchStats::where('competition_id',$comp_id)->where('match_id',$match_id)->first(); 
+
+    if(!empty($stats))
+    { 
+        $stats_calculation = $stats;
+    }else{  
+        $stats_calculation = '';
+    } 
+    return view('matches.stats',compact('comp_id','match_id','stats_calculation'));
 }
 
 /*--------------------------------------
@@ -3564,17 +3615,50 @@ public function match_stats($comp_id,$match_id)
 |--------------------------------------*/
 public function save_match_stats(Request $request)
 {
-    $match_stats = MatchStats::create($request->all()); 
-    $match_stats->competition_id = $request->competition_id;
-    $match_stats->tp_won = $request->tp_won;
-    $match_stats->save();
+    $match_stats = MatchStats::where('competition_id',$request->competition_id)->where('match_id',$request->match_id)->first();
 
-    $data = json_encode($request->all());
-    $stats_calculation = statsCalculation($data);
+    if(!empty($match_stats))
+    {
+      $match_stats = MatchStats::find($match_stats->id); 
+      $match_stats->tp_in_match = $request->tp_in_match;
+      $match_stats->tp_won = $request->tp_won;
+      $match_stats->total_1serves_in = $request->total_1serves_in;
+      $match_stats->total_2serves_in = $request->total_2serves_in;
+      $match_stats->total_double_faults = $request->total_double_faults;
+      $match_stats->total_aces = $request->total_aces;
+      $match_stats->total_1serve_by_op = $request->total_1serve_by_op;
+      $match_stats->total_2serve_by_op = $request->total_2serve_by_op;
+      $match_stats->total_double_fault_by_op = $request->total_double_fault_by_op;
+      $match_stats->tp_won_in_1serve = $request->tp_won_in_1serve;
+      $match_stats->tp_won_in_2serve = $request->tp_won_in_2serve;
+      $match_stats->tp_won_ops_1sereve = $request->tp_won_ops_1sereve;
+      $match_stats->tp_won_ops_2sereve = $request->tp_won_ops_2sereve;
+      $match_stats->tp_won_rally_4shots = $request->tp_won_rally_4shots;
+      $match_stats->tp_won_rally_5shots = $request->tp_won_rally_5shots;
+      $match_stats->total_shots_match = $request->total_shots_match;
+      $match_stats->save();
 
-    $comp_id = base64_encode($request->competition_id);
+      $data = json_encode($request->all());
+      $stats_calculation = statsCalculation($data);
 
-    return redirect('/user/competitions/'.$comp_id)->with('success','Match Stats data added successfully.');
+      $comp_id = base64_encode($request->competition_id);
+
+      return redirect('/user/competitions/'.$comp_id)->with('success','Match Stats data updated successfully.');
+
+    }else{
+      $match_stats = MatchStats::create($request->all()); 
+      $match_stats->competition_id = $request->competition_id;
+      $match_stats->tp_won = $request->tp_won;
+      $match_stats->save();
+
+      $data = json_encode($request->all());
+      $stats_calculation = statsCalculation($data);
+
+      $comp_id = base64_encode($request->competition_id);
+
+      return redirect('/user/competitions/'.$comp_id)->with('success','Match Stats data added successfully.');
+    }
+    
 }
 
 /*--------------------------------------
@@ -3590,6 +3674,22 @@ public function view_match_stats($comp_id,$match_id)
         $stats_calculation = '';
     }
     return view('matches.view-stats',compact('stats_calculation','comp_id','match_id'));
+}
+
+/*-------------------------------------
+| Coach Dashboard - Timeline View
+|--------------------------------------*/
+public function timeline_view($id)
+{
+  $player_id = base64_decode($id);
+  $badges = UserBadge::where('user_id',$player_id)->first();
+  $competitions = Competition::where('player_id',$player_id)->get();
+  $reports = PlayerReport::where('player_id',$player_id)->where('status',1)->get();
+  $goals = SetGoal::where('player_id',$player_id)->where('finalize',NULL)->get();
+
+  // dd($badges,$competitions,$reports,$goals);
+
+  return view('coach.timeline.index');
 }
 
 }

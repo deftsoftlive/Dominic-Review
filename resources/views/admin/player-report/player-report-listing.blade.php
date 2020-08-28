@@ -80,7 +80,8 @@ p.rep_type {
                                         </form>
                                         <!-- Filter Section - End -->
                                         
-                                        <div class="card-block table-border-style pl_rp_design">
+                                        <!-- <div class="card-block table-border-style pl_rp_design"> -->
+                                        <div class="card-block table-border-style">
                                         <div class="table-responsive">
                                           @include('admin.error_message')
                                             <table class="table table-hover">
@@ -92,7 +93,7 @@ p.rep_type {
                                                     <th>Player</th>
                                                     <th>Season</th>
                                                     <th>Course</th>
-                                                    <th>Feedback</th>
+                                                    <!-- <th>Feedback</th> -->
                                                     <th>Action</th>
                                                 </tr>
                                                 </thead>
@@ -106,7 +107,7 @@ p.rep_type {
                                                     <td><p>@php echo getUsername($sh->player_id); @endphp</p></td>
                                                     <td><p>@if(!empty($sh->season_id)) @php echo getSeasonname($sh->season_id); @endphp @else - @endif</p></td>
                                                     <td><p>@if(!empty($sh->course_id)) @php echo getCourseName($sh->course_id); @endphp @else - @endif</p></td>
-                                                    <td><p>{!! Illuminate\Support\Str::words($sh->feedback, 6, ' ...') !!}</p></td>
+                                                    <!-- <td><p>{!! Illuminate\Support\Str::words($sh->feedback, 6, ' ...') !!}</p></td> -->
                                                     <td><p><a href="{{url('admin/player-report')}}/{{$sh->id}}">View Report</a></p></td> 
                                                   </tr>
                                                 @endforeach
