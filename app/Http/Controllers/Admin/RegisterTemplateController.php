@@ -17,7 +17,7 @@ class RegisterTemplateController extends Controller
         }
         
     	$camp = Camp::where('id',$id)->first();
-    	$shop = \DB::table('shop_cart_items')->where('shop_type','camp')->where('product_id',$id)->where('type','order')->where('orderID','!=',NULL)->get();
+    	$shop = \DB::table('shop_cart_items')->where('shop_type','camp')->where('product_id',$id)->where('type','order')->where('orderID','!=',NULL)->groupBy('child_id')->get();
     	return view('admin.register-template.camp-template',compact('camp','shop','day'));
     }
 

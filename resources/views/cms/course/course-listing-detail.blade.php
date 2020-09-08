@@ -90,10 +90,10 @@
                               </div>
                             </div>
                           <div class="event-card-form">
-                            <form id="course-booking" method="POST">
+                            <form id="course-booking" action="{{route('course_booking')}}" method="POST">
                               @csrf
                               <div class="form-group">
-                                  <label for="inputPlayer-3">Select Player</label>
+                                  <p for="inputPlayer-3">Select Player</p>
                                   @php 
                                   if(Auth::check()){
                                     $children = DB::table('users')->where('parent_id',Auth::user()->id)->get();
@@ -121,69 +121,71 @@
                                     @endif
                                   </select> --> 
 
-                                  <select id="inputPlayer-3" name="child" class="form-control event-dropdown">
-                                    <option value="" selected="" disabled="">Select Player</option>
-                                    @if(Auth::check())
+                                  <div class="outer-slt">
+                                    <select id="child" name="child" class="form-control event-dropdown">
+                                      <option value="" selected="" disabled="">Select Player</option>
+                                      @if(Auth::check())
+                                          @php 
+                                            $user = DB::table('users')->where('id',Auth::user()->id)->first();
+                                          @endphp
+
+                                          @php              
+                                            $user_age = strtotime($user->date_of_birth);
+                                            $current_date1 = strtotime(date('Y-m-d')); 
+                                            $user_diff = abs($current_date1 - $user_age);
+                                            $years1 = floor($user_diff / (365*60*60*24));
+
+                                            $course_range1 = $course->age_group;
+                                            
+                                            if(!empty($course_range1))
+                                            {
+                                              $range_arr1 = explode('-',$course_range1);
+                                              $start_value1 = $range_arr1[0];
+                                              $end_value1 = $range_arr1[1];
+                                            }
+
+                                          @endphp
+                                        @endif
+
+                                        @if(!empty($start_value1) && !empty($end_value1))
+
+                                          @if($start_value1 <= $years1 && $end_value1 >= $years1)
+                                          <option {{$years1}} value="{{$user->id}}">{{$user->name}}</option>
+                                          @endif
+
+                                        @endif
+                                      
+                                      @if(Auth::check() && !empty($children))
+                                        @foreach($children as $child)
+
                                         @php 
-                                          $user = DB::table('users')->where('id',Auth::user()->id)->first();
+                                            $course_range = $course->age_group;
+                                            
+                                            if(!empty($course_range))
+                                            {
+                                              $range_arr = explode('-',$course_range);
+                                              $start_value = $range_arr[0];
+                                              $end_value = $range_arr[1];
+                                            }
+                                            
+                                            $child_age = strtotime($child->date_of_birth);
+                                            $current_date = strtotime(date('Y-m-d')); 
+                                            $diff = abs($current_date - $child_age);
+                                            $years = floor($diff / (365*60*60*24));
                                         @endphp
 
-                                        @php              
-                                          $user_age = strtotime($user->date_of_birth);
-                                          $current_date1 = strtotime(date('Y-m-d')); 
-                                          $user_diff = abs($current_date1 - $user_age);
-                                          $years1 = floor($user_diff / (365*60*60*24));
+                                        @if(!empty($start_value) && !empty($end_value))
 
-                                          $course_range1 = $course->age_group;
-                                          
-                                          if(!empty($course_range1))
-                                          {
-                                            $range_arr1 = explode('-',$course_range1);
-                                            $start_value1 = $range_arr1[0];
-                                            $end_value1 = $range_arr1[1];
-                                          }
+                                          @if($start_value <= $years && $end_value >= $years)
+                                          <option {{$years}} value="{{$child->id}}">{{$child->name}}</option>
+                                          @endif
 
-                                        @endphp
-                                      @endif
-
-                                      @if(!empty($start_value1) && !empty($end_value1))
-
-                                        @if($start_value1 <= $years1 && $end_value1 >= $years1)
-                                        <option {{$years1}} value="{{$user->id}}">{{$user->name}}</option>
                                         @endif
 
+                                        @endforeach
                                       @endif
-                                    
-                                    @if(Auth::check() && !empty($children))
-                                      @foreach($children as $child)
-
-                                      @php 
-                                          $course_range = $course->age_group;
-                                          
-                                          if(!empty($course_range))
-                                          {
-                                            $range_arr = explode('-',$course_range);
-                                            $start_value = $range_arr[0];
-                                            $end_value = $range_arr[1];
-                                          }
-                                          
-                                          $child_age = strtotime($child->date_of_birth);
-                                          $current_date = strtotime(date('Y-m-d')); 
-                                          $diff = abs($current_date - $child_age);
-                                          $years = floor($diff / (365*60*60*24));
-                                      @endphp
-
-                                      @if(!empty($start_value) && !empty($end_value))
-
-                                        @if($start_value <= $years && $end_value >= $years)
-                                        <option {{$years}} value="{{$child->id}}">{{$child->name}}</option>
-                                        @endif
-
-                                      @endif
-
-                                      @endforeach
-                                    @endif
-                                  </select>
+                                    </select>
+                                  </div>
 
                                   @php 
                                     $course_cat = $course->type; 
@@ -211,23 +213,23 @@
                                   @endif
                               
                                   <input type="hidden" name="course_id" id="course_id" value="{{$course->id}}">
-                                  <input type="hidden" name="child_id" id="child_id" value="">
-                                  <label class="cst-fees"><span>£</span>
+                                  <!-- <input type="hidden" name="child_id" id="child_id" value=""> -->
+                                  <p class="cst-fees"><span>£
 
-                                @if($currntD >= $endDate)
-                                  {{$course->price}}
-                                @else
-                                  @if($early_bird_enable == '1')
-                                    @php 
-                                      $cour_price = $course->price;
-                                      $dis_price = $cour_price - (($cour_price) * ($percentage/100));
-                                    @endphp
-                                    {{$dis_price}}
-                                  @else
-                                    {{$course->price}}
-                                  @endif
-                                @endif
-                                  </label>
+                                    @if($currntD >= $endDate)
+                                      {{$course->price}}
+                                    @else
+                                      @if($early_bird_enable == '1')
+                                        @php 
+                                          $cour_price = $course->price;
+                                          $dis_price = $cour_price - (($cour_price) * ($percentage/100));
+                                        @endphp
+                                        {{$dis_price}}
+                                      @else
+                                        {{$course->price}}
+                                      @endif
+                                    @endif
+                                  </p>
 
                                 @if(Auth::check())
                                   <button type="submit" id="course_book" class="cstm-btn event-booking-btn">Book Now</button>

@@ -115,6 +115,36 @@ $(document).ready(function(){
 }); 
 
 /*****************************
+| Parent player Linking
+|****************************/
+$(document).ready(function(){
+    $("select#parent_id").change(function(){ 
+        var parent = $(this).children("option:selected").val(); 
+       
+        $base_url = "http://49.249.236.30:8654/dominic-new";
+        $.ajax({
+            url:$base_url+"/admin/parent-player-linking/",
+            method:'GET',
+            data:{parent:parent},
+            dataType:'json',
+            success:function(data)
+            {   
+                $('#player_id').html(data.option);
+            },      
+        })
+
+        $('#selected_cat').val(selectedSeason);
+    });
+  });
+
+    $(document).ready(function(){
+      $("select#parent_id").change(function(){
+          var parent = $(this).children("option:selected").val();    
+          // $('#parent').val(parent);
+        });
+});
+
+/*****************************
 | Badge Sort Number Update
 |*****************************/
     function fetch_badge_sort_data(sort_no = '', badge_id = '')

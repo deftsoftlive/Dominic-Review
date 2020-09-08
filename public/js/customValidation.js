@@ -933,6 +933,45 @@ $(document).ready(function (){
   });
 
 
+  /*validations on course booking - player selection*/
+  $('#course-booking').validate({
+           rules: {
+            child: {
+                required: true
+            }
+        },
+        messages:{
+            child:{required:"This field is required"}
+        },
+
+    highlight: function (element, errorClass, validClass) {
+
+      if(element.type =='text'||element.type =='password'||element.type =='email'||element.type =='select-one') {
+        $(element).siblings("label").addClass("error");
+        $(element).addClass('input--error').removeClass(validClass+' input--success');
+        $(element).closest('.myForm').removeClass('has-success has-feedback').addClass('has-error has-feedback');
+        $(element).closest('.myForm').find('i.fa').remove();
+        $(element).closest('.myForm').append('<i class="fa fa-exclamation fa-lg form-control-feedback"></i>');
+      }
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      if (element.type === "text"||element.type =='password' ||element.type =='email'||element.type =='select-one') {
+        $(element).siblings("label").removeClass("error");
+        $('.errorMsg').addClass('displaynone');
+        $(element).closest('.myForm').removeClass('has-error has-feedback').addClass('has-success has-feedback');
+        $(element).removeClass('input--error').addClass(validClass+' input--success');
+        $(element).closest('.myForm').find('i.fa').remove();
+        $(element).closest('.myForm').append('<i class="fa fa-check fa-lg form-control-feedback"></i>');
+      } 
+    },
+       
+      submitHandler: function(form) {
+        $("#course_book").attr("disabled", true);
+        form.submit();
+    }
+  });
+
+
   /*validations on complex report*/
   $('#complex_report').validate({
            rules: {
@@ -1079,4 +1118,125 @@ $(document).ready(function (){
         form.submit();
     }
   });
+
+  /*validation for the register form*/
+     $('#add-family-mem').validate({
+
+      rules: {
+
+      first_name: {
+          required: true,
+          maxlength:25,
+          noSpace: true,
+          lettersonly:true
+      },
+      last_name: {
+          required: true,
+          maxlength:25,
+          noSpace: true,
+          lettersonly:true
+      },
+      gender: {
+          required: true,      
+      },
+      date_of_birth: {
+          required: true,
+      },
+      address: {
+        required: true,
+        noSpace: true,
+        maxlength: 255,
+      }, 
+      town: {
+        required: true,
+        maxlength: 40,
+        noSpace: true,
+        lettersonly:true
+      },
+      postcode: {
+        required: true,
+        letterdigitsonly: true,
+        maxlength: 10,
+      },
+      county: {
+        required: true,
+        maxlength: 30,
+        noSpace: true,
+        lettersonly:true
+      },
+      country: {
+        required: true,
+        maxlength: 30
+      },
+      phone_number: {
+          required: true,
+          digits: true,
+          minlength: 7,
+          maxlength: 15,
+      },
+      email: { 
+          required: true,
+          customemail:true,
+      },
+      relation: {
+          required: true,
+      }, 
+      },
+
+    messages:{
+      phone:{maxlength:"Maximum character limit reached."},
+      phone:{minlength:"Required, Minimum 7 characters"},
+      name:{required:"This field is required."},
+      lastname:{required:"This field is required."},
+
+      email:{required:"This field is required.",email:"Please enter a valid email address."}
+
+    },
+
+    highlight: function (element, errorClass, validClass) {
+
+      if(element.type =='text'||element.type =='password'||element.type =='email'||element.type =='select-one'||element.type == 'tel') {
+          $(element).siblings("label").addClass("error");
+          $(element).addClass('input--error').removeClass(validClass+' input--success');
+          $(element).closest('.myForm').removeClass('has-success has-feedback').addClass('has-error has-feedback');
+        // this.findByName(element.name).removeClass('has-success has-feedback').addClass('has-error has-feedback');
+        $(element).closest('.myForm').find('i.fa').remove();
+        $(element).closest('.myForm').append('<i class="fa fa-exclamation fa-lg form-control-feedback"></i>');
+      }else if(element.type == 'checkbox'){
+          $("input#checkbox1").after('<span class="checkmark"></span>');
+      }
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      if (element.type === "text"||element.type =='password' ||element.type =='email'||element.type =='select-one'||element.type == 'tel') {
+          $(element).siblings("label").removeClass("error");
+          $('.errorMsg').addClass('displaynone');
+          $(element).closest('.myForm').removeClass('has-error has-feedback').addClass('has-success has-feedback');
+          $(element).removeClass('input--error').addClass(validClass+' input--success');
+          $(element).closest('.myForm').find('i.fa').remove();
+          $(element).closest('.myForm').append('<i class="fa fa-check fa-lg form-control-feedback"></i>');
+      } 
+    },
+
+    errorElement : 'div',
+      errorPlacement: function(error, element) {
+       // $(element).next().remove();
+          var placement = $(element).data('error');
+          var placement1 = element.attr('name');
+
+          if (placement) {
+            $(placement).append(error)
+          }else if(placement1=="gender"){
+              error.insertAfter("#select_gender");
+          }else {
+            error.insertAfter(element);
+          }
+        },
+
+      submitHandler: function(form) {        
+        $("#family_mem_btn").attr("disabled", true);
+        form.submit();
+      }
+
+  });
+
 });

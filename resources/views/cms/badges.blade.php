@@ -925,7 +925,7 @@ label.confirm_msg.form-check-label {
                                                             <th>Player</th>
                                                             <th>Season</th>
                                                             <th>Course</th>
-                                                            <th>Feedback</th>
+                                                            <!-- <th>Feedback</th> -->
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -947,9 +947,9 @@ label.confirm_msg.form-check-label {
                                                             <td>
                                                                 <p>@if($sh->course_id) @php echo getCourseName($sh->course_id); @endphp @else - @endif</p>
                                                             </td>
-                                                            <td>
+                                                            <!-- <td>
                                                                 <p>{!! Illuminate\Support\Str::words($sh->feedback, 5, ' ...') !!}</p>
-                                                            </td>
+                                                            </td> -->
                                                             <td>
                                                                 <p><a href="{{url('user/player-report')}}/@php echo base64_encode($sh->id); @endphp">View Report</a></p>
                                                             </td>

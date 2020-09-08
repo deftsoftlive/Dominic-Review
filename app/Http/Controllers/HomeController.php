@@ -19,6 +19,7 @@ use App\Session;
 use App\Testimonial;
 use App\ContactDetail;
 use App\Course;
+use App\ChildContact;
 use App\CourseDate;
 use App\Accordian;
 use App\CampCategory;
@@ -843,9 +844,10 @@ public function tennis_pro()
 /* Course Booking */
 public function course_booking(Request $request)
 {
+
   // dd($request->all());
   $course_id = $request->course_id;
-  $child_id  = $request->child_id;
+  $child_id  = $request->child;
   $course    = Course::where('id',$course_id)->first(); 
 
   $course_cat = $course->type; 
@@ -901,11 +903,13 @@ if($currntD >= $endDate)
     $output = 0;
   }
 
-    $data = array(
-                'output'   => $output,
-            );
+    // $data = array(
+    //             'output'   => $output,
+    //         );
 
-    return response()->json($data);
+    // return response()->json($data);
+
+    return redirect('shop/cart');
   
 } 
 
@@ -1333,6 +1337,8 @@ public function add_money_to_wallet()
 
 public function stripe_wallet(Request $request) 
 {
+  if(!empty($request->wallet_amount))
+  {
     $stripe = SripeAccount();
     $pk = $stripe['pk'];
     $amount = $request->wallet_amount*100;
@@ -1355,6 +1361,8 @@ public function stripe_wallet(Request $request)
     );
 
     echo json_encode($data); 
+  }
+    
 }
 
 public function add_wallet_amt(Request $request) 
@@ -1804,13 +1812,21 @@ public function coach_player()
 /*----------------------------------------
 |   Delete Family Member
 |----------------------------------------*/
-public function delete_family_member($id) {
-    $acc = User::find($id);
+public function delete_family_member($id) 
+{   
+  if(!empty($id))
+  {
+    $u_id = base64_decode($id);
+    $acc = User::find($u_id);
     $acc->delete();
-    
-    $user = User::where('id',\Auth::user()->id)->first(); 
-    $children = User::where('role_id',4)->where('parent_id', '=', \Auth::user()->id)->get(); 
-    return view('cms.my-family.my-family',compact('children','user'))->with('success','Family Member has been deleted successfully!');
+
+    ChildrenDetail::where('child_id',$u_id)->delete();
+    ChildContact::where('child_id',$u_id)->delete();
+  }
+  
+  $user = User::where('id',\Auth::user()->id)->first(); 
+  $children = User::where('role_id',4)->where('parent_id', '=', \Auth::user()->id)->get(); 
+  return redirect('/user/my-family')->with('children',$user)->with('user',$user)->with('success','Family Member has been deleted successfully!');
 }
 
 /* My Family Page */
@@ -1849,11 +1865,253 @@ public function copy_address() {
     echo json_encode($data);
 } 
 
-/* medical_info_to_next */
-public function medical_info_to_next(Request $request) {
+/*------------------------------------------
+| Add Family Member - Participant Details
+|-------------------------------------------*/
+public function participants_details(Request $request)
+{   
+    // dd($request->all());
+    
+    if($request->type == 'Adult')
+    {
+      $first_name = $request->first_name;
+      $last_name = $request->last_name;
+      $gender = $request->gender;
+      $date_of_birth = $request->date_of_birth;
+      $address = $request->address;
+      $town = $request->town;
+      $postcode = $request->postcode;
+      $county = $request->county;
+      $country = $request->country;
+      $relation = $request->relation;
+      $book_person = $request->book_person;
+      $language = $request->language1;
+      $primary_language = $request->primary_language1;
+      $school = $request->school;
+    }
+    elseif($request->type == 'Child')
+    {
+      $first_name = $request->first_name1;
+      $last_name = $request->last_name1;
+      $gender = $request->gender1;
+      $date_of_birth = $request->date_of_birth1;
+      $address = $request->address1;
+      $town = $request->town1;
+      $postcode = $request->postcode1;
+      $county = $request->county1;
+      $country = $request->country1;
+      $relation = $request->relation1;
+      $book_person = $request->book_person1;
+      $language = $request->language1;
+      $primary_language = $request->primary_language1;
+      $school = $request->school1;
+    }
 
-$child_id = $request->child_id; 
-$user_id = $request->user_id;
+    // dd($first_name,$book_person,$language,$primary_language);
+
+    $check_child = User::where('id',$request->user_id)->first();
+
+    if(!empty($check_child))
+    {
+      $add_family               =    User::find($request->user_id);
+      $add_family->role_id      =    $request->role_id;
+      $add_family->name         =    $first_name.' '.$last_name;
+      $add_family->first_name   =    $first_name;
+      $add_family->last_name    =    $last_name;
+      $add_family->gender       =    $gender;
+      $add_family->date_of_birth=    $date_of_birth;
+      $add_family->address      =    $address;
+      $add_family->town         =    $town;
+      $add_family->postcode     =    $postcode;
+      $add_family->county       =    $county;
+      $add_family->country      =    $country;
+      $add_family->parent_id    =    \Auth::user()->id; 
+      $add_family->relation     =    $relation;
+      $add_family->type         =    $request->type;
+      $add_family->book_person  =    $book_person;
+      $add_family->tennis_club  =    isset($request->tennis_club) ? $request->tennis_club : '';
+      $add_family->email_verified_at = '';
+
+      // dd($add_family);
+      $add_family->save(); 
+
+      ChildrenDetail::where('child_id',$request->user_id)->update(array('core_lang' => $language, 'school' => $school, 'primary_language' => $primary_language));
+
+    }else{
+      $add_family               =    new User;
+      $add_family->role_id      =    $request->role_id;
+      $add_family->name         =    $first_name.' '.$last_name;
+      $add_family->first_name   =    $first_name;
+      $add_family->last_name    =    $last_name;
+      $add_family->gender       =    $gender;
+      $add_family->date_of_birth=    $date_of_birth;
+      $add_family->address      =    $address;
+      $add_family->town         =    $town;
+      $add_family->postcode     =    $postcode;
+      $add_family->county       =    $county;
+      $add_family->country      =    $country;
+      $add_family->parent_id    =    \Auth::user()->id; 
+      $add_family->relation     =    $relation;
+      $add_family->type         =    $request->type;
+      $add_family->book_person  =    $book_person;
+      $add_family->tennis_club  =    isset($request->tennis_club) ? $request->tennis_club : '';
+      $add_family->email_verified_at = '';
+      $add_family->save(); 
+
+      $mem_detail = ChildrenDetail::create($request->all()); 
+      $mem_detail->parent_id = $add_family->parent_id;
+      $mem_detail->child_id = $add_family->id;
+      $mem_detail->core_lang = $language;
+      $mem_detail->school = $school;
+      $mem_detail->primary_language = $primary_language;
+      $mem_detail->save();
+    }
+    
+    $last_user_id = $add_family->id;
+
+    return redirect('/user/family-member/add?user='.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Participant Details added successfully.');
+}
+
+/*------------------------------------------
+| Add Family Member - Participant Details
+|-------------------------------------------*/
+// public function medical_information(Request $request)
+// {
+//   // dd(json_encode($request->activity));
+//     $child_id = $request->child_id;
+//     $child_data = ChildrenDetail::where('child_id',$child_id)->first(); 
+
+//     if($request->type == 'child')
+//     {
+//       $mem_detail = ChildrenDetail::find($child_data->id);
+//       $mem_detail->core_lang = isset($request->core_lang) ? $request->core_lang : '';
+//       $mem_detail->primary_language = isset($request->primary_language) ? $request->primary_language : '';
+//       $mem_detail->school = isset($request->school) ? $request->school : '';
+//       $mem_detail->preferences = isset($request->activity) ? json_encode($request->activity) : '';
+//       $mem_detail->save();
+
+//     }elseif($request->type == 'adult')
+//     {
+//       $mem_detail = ChildrenDetail::find($child_data->id);
+//       $mem_detail->med_cond = isset($request->med_cond) ? $request->med_cond : '';
+//       $mem_detail->med_cond_info = isset($request->med_cond_info) ? $request->med_cond_info : '';
+//       $mem_detail->em_first_name = isset($request->em_first_name) ? $request->em_first_name : '';
+//       $mem_detail->em_last_name = isset($request->em_last_name) ? $request->em_last_name : '';
+//       $mem_detail->em_phone = isset($request->em_phone) ? $request->em_phone : '';
+//       $mem_detail->em_email = isset($request->em_email) ? $request->em_email : '';
+//       $mem_detail->correct_info = isset($request->correct_info) ? $request->correct_info : '';
+//       $mem_detail->save();
+//     }
+
+//     $last_user_id = $child_id;
+
+//     return redirect('/user/family-member/add?user='.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Medical information and emergency contacts added successfully.');
+// }
+
+/*------------------------------------------
+| Add Family Member - Contact Details
+|-------------------------------------------*/
+public function contact_information(Request $request)
+{
+  // dd($request->all());
+  if($request->type == 'Child')
+  {
+    if(count($request->contact)>0)
+    {
+      ChildContact::where('child_id',$request->child_id)->delete();
+
+      foreach($request->contact as $key=>$value)
+      {
+        $child_con = new ChildContact;
+        $child_con->child_id = $request->child_id;
+        $child_con->type = $request->type;
+        $child_con->first_name = $value['con_first_name'];
+        $child_con->surname = $value['con_last_name'];
+        $child_con->phone = $value['con_phone'];
+        $child_con->email = $value['con_email'];
+        $child_con->relationship = $value['con_relation'];
+        $child_con->who_are_they = $value['who_are_they'];
+        $child_con->save();
+      }
+    }
+  }elseif($request->type == 'Adult')
+  {
+    if(count($request->contact)>0)
+    {
+      ChildContact::where('child_id',$request->child_id)->delete();
+
+      foreach($request->contact1 as $key1=>$value1)
+      {
+        $child_con = new ChildContact;
+        $child_con->child_id = $request->child_id;
+        $child_con->type = $request->type;
+        $child_con->first_name = $value1['con_first_name1'];
+        $child_con->surname = $value1['con_last_name1'];
+        $child_con->phone = $value1['con_phone1'];
+        $child_con->email = $value1['con_email1'];
+        $child_con->relationship = $value1['con_relation1'];
+        $child_con->who_are_they = $value1['who_are_they1'];
+        $child_con->save();
+      }
+    }
+  }
+
+  $last_user_id = $request->child_id;
+
+  return redirect('/user/family-member/add?user='.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Contact Information added successfully.');
+}
+
+/*--------------------------------------------------
+| Add Family Member - Medical & Behavioural Details
+|---------------------------------------------------*/
+public function medical_information(Request $request)
+{
+  // dd($request->all());
+
+  if($request->type == 'Adult')
+  {
+    $med_cond = $request->med_cond;
+  }
+  elseif($request->type == 'Child')
+  {
+    $med_cond = $request->med_cond1;
+  }
+
+  if($request->type == 'Adult')
+  {
+    $med_cond_info = json_encode($request->med_cond_info); 
+    ChildrenDetail::where('child_id',$request->child_id)->update(array('med_cond' => $med_cond, 'med_cond_info' => $med_cond_info)); 
+  }
+  elseif($request->type == 'Child')
+  {
+    $med_cond_info = json_encode($request->med_cond_info); 
+    $allergies_info = json_encode($request->allergies_info); 
+
+    ChildrenDetail::where('child_id',$request->child_id)->update(array('med_cond' => $med_cond, 'allergies' => $request->allergies, 'allergies_info' => $allergies_info, 'med_cond_info' => $med_cond_info, 'pres_med' => $request->pres_med, 'pres_med_info' => $request->pres_med_info, 'med_req' => $request->med_req, 'med_req_info' => $request->med_req_info, 'toilet' => $request->toilet, 'beh_need' => $request->beh_need, 'beh_need_info' => $request->beh_need_info)); 
+  }
+  
+  $last_user_id = $request->child_id;
+
+  return redirect('/user/family-member/add?user='.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Medical & Behavioural Information added successfully.');
+
+}
+
+/*--------------------------------------------------
+| Add Family Member - Media Consents
+|---------------------------------------------------*/
+public function media_consent(Request $request)
+{
+    ChildrenDetail::where('child_id',$request->child_id)->update(array('media' => $request->media_consent, 'confirm' => $request->confirm)); 
+
+    $last_user_id = $request->child_id;
+
+    return redirect('/user/family-member/add?user='.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Media Consents added successfully.');
+}
+/* medical_info_to_next */
+// public function medical_info_to_next(Request $request) {
+
+// $child_id = $request->child_id; 
+// $user_id = $request->user_id;
 
 // $filename = $request->profile_image;
 //   if ($request->hasFile('profile_image')) {
@@ -1864,185 +2122,185 @@ $user_id = $request->user_id;
 //       $profile_image->move($destinationPath, $filename);
 //   }
 
-if(!empty($request->user_id))
-  {
-    $add_family               =    User::find($user_id);
-    $add_family->name         =    $request->first_name.' '.$request->last_name;
-    $add_family->first_name   =    $request->first_name;
-    $add_family->last_name    =    $request->last_name;
-    $add_family->gender       =    $request->gender;
-    $add_family->date_of_birth=    $request->date_of_birth;
-    $add_family->address      =    $request->address;
-    $add_family->town         =    $request->town;
-    $add_family->postcode     =    $request->postcode;
-    $add_family->county       =    $request->county;
-    $add_family->country      =    $request->country;
-    $add_family->parent_id    =    \Auth::user()->id; 
-    $add_family->relation     =    $request->relation;
-    $add_family->type         =    $request->form_type;
-    $add_family->book_person  =    $request->book_person;
-    // $add_family->filename     =    isset($filename) ? $filename : '';
-    $add_family->tennis_club  =    isset($request->tennis_club) ? $request->tennis_club : '';
-    $add_family->save(); 
-  }else{
-    $add_family               =    new User;
-    $add_family->role_id      =    $request->role_id;
-    $add_family->name         =    $request->first_name.' '.$request->last_name;
-    $add_family->first_name   =    $request->first_name;
-    $add_family->last_name    =    $request->last_name;
-    $add_family->gender       =    $request->gender;
-    $add_family->date_of_birth=    $request->date_of_birth;
-    $add_family->address      =    $request->address;
-    $add_family->town         =    $request->town;
-    $add_family->postcode     =    $request->postcode;
-    $add_family->county       =    $request->county;
-    $add_family->country      =    $request->country;
-    $add_family->parent_id    =    \Auth::user()->id; 
-    $add_family->relation     =    $request->relation;
-    $add_family->type         =    $request->form_type;
-    $add_family->book_person  =    $request->book_person;
-    // $add_family->filename     =    isset($filename) ? $filename : '';
-    $add_family->tennis_club  =    isset($request->tennis_club) ? $request->tennis_club : '';
-    $add_family->email_verified_at = '';
-    $add_family->save(); 
-}
-    if(!empty($child_id)){
-      $mem_detail = ChildrenDetail::find($child_id); 
-      $mem_detail->core_lang = isset($request->core_lang) ? $request->core_lang : '';
-      $mem_detail->primary_language = isset($request->primary_language) ? $request->primary_language : '';
-      $mem_detail->school = isset($request->school) ? $request->school : '';
-      $mem_detail->preferences = isset($request->preferences) ? $request->preferences : '';
+// if(!empty($request->user_id))
+//   {
+//     $add_family               =    User::find($user_id);
+//     $add_family->name         =    $request->first_name.' '.$request->last_name;
+//     $add_family->first_name   =    $request->first_name;
+//     $add_family->last_name    =    $request->last_name;
+//     $add_family->gender       =    $request->gender;
+//     $add_family->date_of_birth=    $request->date_of_birth;
+//     $add_family->address      =    $request->address;
+//     $add_family->town         =    $request->town;
+//     $add_family->postcode     =    $request->postcode;
+//     $add_family->county       =    $request->county;
+//     $add_family->country      =    $request->country;
+//     $add_family->parent_id    =    \Auth::user()->id; 
+//     $add_family->relation     =    $request->relation;
+//     $add_family->type         =    $request->form_type;
+//     $add_family->book_person  =    $request->book_person;
+//     // $add_family->filename     =    isset($filename) ? $filename : '';
+//     $add_family->tennis_club  =    isset($request->tennis_club) ? $request->tennis_club : '';
+//     $add_family->save(); 
+//   }else{
+//     $add_family               =    new User;
+//     $add_family->role_id      =    $request->role_id;
+//     $add_family->name         =    $request->first_name.' '.$request->last_name;
+//     $add_family->first_name   =    $request->first_name;
+//     $add_family->last_name    =    $request->last_name;
+//     $add_family->gender       =    $request->gender;
+//     $add_family->date_of_birth=    $request->date_of_birth;
+//     $add_family->address      =    $request->address;
+//     $add_family->town         =    $request->town;
+//     $add_family->postcode     =    $request->postcode;
+//     $add_family->county       =    $request->county;
+//     $add_family->country      =    $request->country;
+//     $add_family->parent_id    =    \Auth::user()->id; 
+//     $add_family->relation     =    $request->relation;
+//     $add_family->type         =    $request->form_type;
+//     $add_family->book_person  =    $request->book_person;
+//     // $add_family->filename     =    isset($filename) ? $filename : '';
+//     $add_family->tennis_club  =    isset($request->tennis_club) ? $request->tennis_club : '';
+//     $add_family->email_verified_at = '';
+//     $add_family->save(); 
+// }
+//     if(!empty($child_id)){
+//       $mem_detail = ChildrenDetail::find($child_id); 
+//       $mem_detail->core_lang = isset($request->core_lang) ? $request->core_lang : '';
+//       $mem_detail->primary_language = isset($request->primary_language) ? $request->primary_language : '';
+//       $mem_detail->school = isset($request->school) ? $request->school : '';
+//       $mem_detail->preferences = isset($request->preferences) ? $request->preferences : '';
 
-      $mem_detail->beh_need = isset($request->beh_need) ? $request->beh_need : '';
-      $mem_detail->beh_info = isset($request->beh_info) ? $request->beh_info : '';
-      $mem_detail->em_first_name = isset($request->em_first_name) ? $request->em_first_name : '';
-      $mem_detail->em_last_name = isset($request->em_last_name) ? $request->em_last_name : '';
-      $mem_detail->em_phone = isset($request->em_phone) ? $request->em_phone : '';
-      $mem_detail->em_email = isset($request->em_email) ? $request->em_email : '';
-      $mem_detail->correct_info = isset($request->correct_info) ? $request->correct_info : '';
-      $mem_detail->save();
+//       $mem_detail->beh_need = isset($request->beh_need) ? $request->beh_need : '';
+//       $mem_detail->beh_info = isset($request->beh_info) ? $request->beh_info : '';
+//       $mem_detail->em_first_name = isset($request->em_first_name) ? $request->em_first_name : '';
+//       $mem_detail->em_last_name = isset($request->em_last_name) ? $request->em_last_name : '';
+//       $mem_detail->em_phone = isset($request->em_phone) ? $request->em_phone : '';
+//       $mem_detail->em_email = isset($request->em_email) ? $request->em_email : '';
+//       $mem_detail->correct_info = isset($request->correct_info) ? $request->correct_info : '';
+//       $mem_detail->save();
 
-    }else{
-      $mem_detail = ChildrenDetail::create($request->all()); 
-      $mem_detail->parent_id = $add_family->parent_id;
-      $mem_detail->child_id = $add_family->id;
-      $mem_detail->save();
-    }
+//     }else{
+//       $mem_detail = ChildrenDetail::create($request->all()); 
+//       $mem_detail->parent_id = $add_family->parent_id;
+//       $mem_detail->child_id = $add_family->id;
+//       $mem_detail->save();
+//     }
       
 
-      $data = array(
-          'mem_type'        => $add_family->type,
-          'mem_detail_id'   => $mem_detail->id,
-      );
+//       $data = array(
+//           'mem_type'        => $add_family->type,
+//           'mem_detail_id'   => $mem_detail->id,
+//       );
 
-      return response()->json($data);
+//       return response()->json($data);
 
-} 
+// } 
 
 /* child_cont_to_next */ 
-public function child_cont_to_next(Request $request) {  //dd($request->all());
+// public function child_cont_to_next(Request $request) {  //dd($request->all());
 
-      $child_id = $request->child_id;
+//       $child_id = $request->child_id;
 
-      if(!empty($child_id))
-      {
-          $mem_detail                   =    ChildrenDetail::find($child_id);
-          $mem_detail->con_first_name   =    $request->con_first_name; 
-          $mem_detail->con_last_name    =    $request->con_last_name;
-          $mem_detail->con_phone        =    $request->con_phone;
-          $mem_detail->con_email        =    $request->con_email;
-          $mem_detail->con_relation     =    $request->con_relation;
-          $mem_detail->con_if_other     =    $request->con_if_other;
-          $mem_detail->save();
-      }else{
-          $mem_detail                   =    ChildrenDetail::find($request->mem_id);
-          $mem_detail->con_first_name   =    $request->con_first_name; 
-          $mem_detail->con_last_name    =    $request->con_last_name;
-          $mem_detail->con_phone        =    $request->con_phone;
-          $mem_detail->con_email        =    $request->con_email;
-          $mem_detail->con_relation     =    $request->con_relation;
-          $mem_detail->con_if_other     =    $request->con_if_other;
-          $mem_detail->save();
-      }
+//       if(!empty($child_id))
+//       {
+//           $mem_detail                   =    ChildrenDetail::find($child_id);
+//           $mem_detail->con_first_name   =    $request->con_first_name; 
+//           $mem_detail->con_last_name    =    $request->con_last_name;
+//           $mem_detail->con_phone        =    $request->con_phone;
+//           $mem_detail->con_email        =    $request->con_email;
+//           $mem_detail->con_relation     =    $request->con_relation;
+//           $mem_detail->con_if_other     =    $request->con_if_other;
+//           $mem_detail->save();
+//       }else{
+//           $mem_detail                   =    ChildrenDetail::find($request->mem_id);
+//           $mem_detail->con_first_name   =    $request->con_first_name; 
+//           $mem_detail->con_last_name    =    $request->con_last_name;
+//           $mem_detail->con_phone        =    $request->con_phone;
+//           $mem_detail->con_email        =    $request->con_email;
+//           $mem_detail->con_relation     =    $request->con_relation;
+//           $mem_detail->con_if_other     =    $request->con_if_other;
+//           $mem_detail->save();
+//       }
 
-      $data = array(
-          'mem_detail_id'   => $mem_detail->id,
-      );
+//       $data = array(
+//           'mem_detail_id'   => $mem_detail->id,
+//       );
 
-      echo json_encode($data);
-}
+//       echo json_encode($data);
+// }
 
 /* med_beh_to_next */ 
-public function med_beh_to_next(Request $request) {
+// public function med_beh_to_next(Request $request) {
 
-    $child_id = $request->child_id;
+//     $child_id = $request->child_id;
 
-    if(!empty($child_id))
-    {
-      $mem_detail                       =    ChildrenDetail::find($child_id);
-      $mem_detail->med_cond             =    $request->med_cond; 
-      $mem_detail->med_cond_info        =    $request->med_cond_info;
-      $mem_detail->allergies            =    $request->allergies;
-      $mem_detail->allergies_info       =    $request->allergies_info;
-      $mem_detail->pres_med             =    $request->pres_med;
-      $mem_detail->pres_med_info        =    $request->pres_med_info;
-      $mem_detail->med_req              =    $request->med_req; 
-      $mem_detail->med_req_info         =    $request->med_req_info;
-      $mem_detail->allergies            =    $request->allergies;
-      $mem_detail->allergies_info       =    $request->allergies_info;
-      $mem_detail->toilet               =    $request->toilet;
-      $mem_detail->special_needs        =    $request->special_needs;
-      $mem_detail->special_needs_info   =    $request->special_needs_info;
-      $mem_detail->situation            =    $request->situation;
-      $mem_detail->save();
-    }else{
-      $mem_detail                       =    ChildrenDetail::find($request->mem_id);
-      $mem_detail->med_cond             =    $request->med_cond; 
-      $mem_detail->med_cond_info        =    $request->med_cond_info;
-      $mem_detail->allergies            =    $request->allergies;
-      $mem_detail->allergies_info       =    $request->allergies_info;
-      $mem_detail->pres_med             =    $request->pres_med;
-      $mem_detail->pres_med_info        =    $request->pres_med_info;
-      $mem_detail->med_req              =    $request->med_req; 
-      $mem_detail->med_req_info         =    $request->med_req_info;
-      $mem_detail->allergies            =    $request->allergies;
-      $mem_detail->allergies_info       =    $request->allergies_info;
-      $mem_detail->toilet               =    $request->toilet;
-      $mem_detail->special_needs        =    $request->special_needs;
-      $mem_detail->special_needs_info   =    $request->special_needs_info;
-      $mem_detail->situation            =    $request->situation;
-      $mem_detail->save();
-    }
-      $data = array(
-          'mem_detail_id'   => $mem_detail->id,
-      );
+//     if(!empty($child_id))
+//     {
+//       $mem_detail                       =    ChildrenDetail::find($child_id);
+//       $mem_detail->med_cond             =    $request->med_cond; 
+//       $mem_detail->med_cond_info        =    $request->med_cond_info;
+//       $mem_detail->allergies            =    $request->allergies;
+//       $mem_detail->allergies_info       =    $request->allergies_info;
+//       $mem_detail->pres_med             =    $request->pres_med;
+//       $mem_detail->pres_med_info        =    $request->pres_med_info;
+//       $mem_detail->med_req              =    $request->med_req; 
+//       $mem_detail->med_req_info         =    $request->med_req_info;
+//       $mem_detail->allergies            =    $request->allergies;
+//       $mem_detail->allergies_info       =    $request->allergies_info;
+//       $mem_detail->toilet               =    $request->toilet;
+//       $mem_detail->special_needs        =    $request->special_needs;
+//       $mem_detail->special_needs_info   =    $request->special_needs_info;
+//       $mem_detail->situation            =    $request->situation;
+//       $mem_detail->save();
+//     }else{
+//       $mem_detail                       =    ChildrenDetail::find($request->mem_id);
+//       $mem_detail->med_cond             =    $request->med_cond; 
+//       $mem_detail->med_cond_info        =    $request->med_cond_info;
+//       $mem_detail->allergies            =    $request->allergies;
+//       $mem_detail->allergies_info       =    $request->allergies_info;
+//       $mem_detail->pres_med             =    $request->pres_med;
+//       $mem_detail->pres_med_info        =    $request->pres_med_info;
+//       $mem_detail->med_req              =    $request->med_req; 
+//       $mem_detail->med_req_info         =    $request->med_req_info;
+//       $mem_detail->allergies            =    $request->allergies;
+//       $mem_detail->allergies_info       =    $request->allergies_info;
+//       $mem_detail->toilet               =    $request->toilet;
+//       $mem_detail->special_needs        =    $request->special_needs;
+//       $mem_detail->special_needs_info   =    $request->special_needs_info;
+//       $mem_detail->situation            =    $request->situation;
+//       $mem_detail->save();
+//     }
+//       $data = array(
+//           'mem_detail_id'   => $mem_detail->id,
+//       );
 
-      echo json_encode($data);
-}
+//       echo json_encode($data);
+// }
 
 /* Complete Registration - Family Member */
-public function complete_registration(Request $request) 
-{
-  $child_id = $request->child_id; 
+// public function complete_registration(Request $request) 
+// {
+//   $child_id = $request->child_id; 
 
-    if(!empty($child_id))
-    {
-      $mem_detail             =    ChildrenDetail::find($child_id);
-      $mem_detail->media      =    $request->media; 
-      $mem_detail->confirm    =    $request->confirm;
-      $mem_detail->save();
-    }else{
-      $mem_detail             =    ChildrenDetail::find($request->mem_id);
-      $mem_detail->media      =    $request->media; 
-      $mem_detail->confirm    =    $request->confirm;
-      $mem_detail->save();
-    }
-      $data = array(
-          'confirm'   => $mem_detail->confirm,
-      );
+//     if(!empty($child_id))
+//     {
+//       $mem_detail             =    ChildrenDetail::find($child_id);
+//       $mem_detail->media      =    $request->media; 
+//       $mem_detail->confirm    =    $request->confirm;
+//       $mem_detail->save();
+//     }else{
+//       $mem_detail             =    ChildrenDetail::find($request->mem_id);
+//       $mem_detail->media      =    $request->media; 
+//       $mem_detail->confirm    =    $request->confirm;
+//       $mem_detail->save();
+//     }
+//       $data = array(
+//           'confirm'   => $mem_detail->confirm,
+//       );
 
-      return response()->json($data);
-}
+//       return response()->json($data);
+// }
 
 /* Edit Family Member */
 public function edit_family_member($id) {
@@ -2053,40 +2311,40 @@ public function edit_family_member($id) {
 } 
 
 /* Update Family Member */
-public function update_family_member(Request $request) 
-{
-    $family               =    User::find($request->user_id);
-    $family->role_id      =    $request->role_id;
-    $family->name         =    $request->first_name.' '.$request->last_name;
-    $family->first_name   =    $request->first_name;
-    $family->last_name    =    $request->last_name;
-    $family->gender       =    $request->gender;
-    $family->date_of_birth=    $request->date_of_birth;
-    $family->address      =    $request->address;
-    $family->town         =    $request->town;
-    $family->postcode     =    $request->postcode;
-    $family->county       =    $request->county;
-    $family->country      =    $request->country;
-    $family->relation     =    $request->relation;
-    $family->save();
+// public function update_family_member(Request $request) 
+// {
+//     $family               =    User::find($request->user_id);
+//     $family->role_id      =    $request->role_id;
+//     $family->name         =    $request->first_name.' '.$request->last_name;
+//     $family->first_name   =    $request->first_name;
+//     $family->last_name    =    $request->last_name;
+//     $family->gender       =    $request->gender;
+//     $family->date_of_birth=    $request->date_of_birth;
+//     $family->address      =    $request->address;
+//     $family->town         =    $request->town;
+//     $family->postcode     =    $request->postcode;
+//     $family->county       =    $request->county;
+//     $family->country      =    $request->country;
+//     $family->relation     =    $request->relation;
+//     $family->save();
 
-    if($request->form_type == 'child')
-    {
-      ChildrenDetail::where('child_id',$family->id)->delete();
-      $child = ChildrenDetail::create($request->all()); 
-      $child->parent_id = $family->parent_id;
-      $child->child_id = $family->id;
-      $child->save();
-    }
+//     if($request->form_type == 'child')
+//     {
+//       ChildrenDetail::where('child_id',$family->id)->delete();
+//       $child = ChildrenDetail::create($request->all()); 
+//       $child->parent_id = $family->parent_id;
+//       $child->child_id = $family->id;
+//       $child->save();
+//     }
 
-    if($request->form_type == 'child')
-    {
-      return redirect('user/my-family')->with('success','Child Details updated successfully.');
-    }else{
-      return redirect('user/my-family')->with('success','Adult Details updated successfully.');
-    }
+//     if($request->form_type == 'child')
+//     {
+//       return redirect('user/my-family')->with('success','Child Details updated successfully.');
+//     }else{
+//       return redirect('user/my-family')->with('success','Adult Details updated successfully.');
+//     }
     
-} 
+// } 
 
 /* Parent Notifications */
 public function parent_notifications(){
@@ -3689,7 +3947,48 @@ public function timeline_view($id)
 
   // dd($badges,$competitions,$reports,$goals);
 
-  return view('coach.timeline.index');
+  return view('coach.timeline.index',compact('player_id'));
+}
+
+/*--------------------------------------------------
+| Coach Dashboard - Player Reports - Timeline View
+|---------------------------------------------------*/
+public function playerReport($id)
+{
+  $player_id = base64_decode($id);
+  $reports = PlayerReport::where('player_id',$player_id)->orderBy('date','desc')->paginate(10);  
+  return view('coach.timeline.sections.reports-listing',compact('player_id','reports'));
+}
+
+/*--------------------------------------------------
+| Coach Dashboard - Player Competitions - Timeline View
+|---------------------------------------------------*/
+public function playerCompetition($id)
+{
+  $player_id = base64_decode($id);
+  $competitions = Competition::where('player_id',$player_id)->orderBy('created_at','desc')->paginate(10);  
+  return view('coach.timeline.sections.competitions-listing',compact('player_id','competitions'));
+}
+
+/*--------------------------------------------------
+| Coach Dashboard - Player Goals - Timeline View
+|---------------------------------------------------*/
+public function playerGoal($id)
+{
+  $player_id = base64_decode($id);
+  // $goals = SetGoal::where('player_id',$player_id)->paginate(10);  
+  $goals = SetGoal::where('player_id',$player_id)->groupBy(['goal_type','finalize'])->orderBy('created_at','desc')->paginate(10); 
+  return view('coach.timeline.sections.goals-listing',compact('player_id','goals'));
+}
+
+/*--------------------------------------------------
+| Coach Dashboard - Player Badges - Timeline View
+|---------------------------------------------------*/
+public function playerBadge($id)
+{
+  $player_id = base64_decode($id);
+  $badges = UserBadge::where('user_id',$player_id)->first();  
+  return view('coach.timeline.sections.badges-listing',compact('player_id','badges'));
 }
 
 }

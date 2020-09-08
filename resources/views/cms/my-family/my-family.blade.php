@@ -38,13 +38,13 @@
 <section class="member section-padding c-d-book-now">
 
 <div class="container">
-  <div class="text-center">
-    <div class="section-heading">
-                  <h1 class="sec-heading">My Family</h1>
-                </div>
-				</div>
-				<div class="row">
-				
+    <div class="text-center">
+        <div class="section-heading">
+              <h1 class="sec-heading">My Family</h1>
+        </div>
+    </div>
+
+        <div class="row">
 				
 				<!-- ***********************
                 |   Parent Details - Start
@@ -70,7 +70,7 @@
 				@if(count($children)>0)
 					@foreach($children as $ch)	
 					  <div class="col-md-2 type-{{$ch->type}}">
-					    <a href="{{url('/user/family-member/edit')}}/@php echo base64_encode($ch->id); @endphp" class="member-container">
+					    <a href="{{url('/user/family-member/add?user=')}}{{$ch->id}}" class="member-container">
 						  <div class="member-icon">
 						    <i class="fas fa-eye"></i>
 						  </div>

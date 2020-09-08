@@ -42,6 +42,13 @@
     .contact-gender label {
         margin: 0 30px 0 7px;
     }
+    .media_cont_wrap
+    {
+        margin-bottom: 10px;
+    }
+    .register-acc p.media_cont {
+    width: 12.5%;
+}
    .card-header.view-card-header .view_stats {
     width: 12%!important;
     padding: 10px 10px!important;
@@ -312,6 +319,16 @@
     .event-info p.detail-cont {
         min-height: 72px;
     }
+    .person_attend {
+    min-height: 56px;
+}
+p.pry-lang,
+p.holiday_camps {
+    margin: 0!important;
+}
+    .register-acc p.media_cont {
+    width: 24%;
+}
     .card-header.view-card-header a {
         width: 65%;
     }
@@ -968,6 +985,12 @@
     }.card-header.view-card-header .view_stats {
     width: 27%!important;
    
+}
+.media_cont_wrap {
+    
+    flex-direction: column;
+ 
+    
 }
 .report-sec .form-head
 
@@ -1814,6 +1837,7 @@ button#course_book {
         width: 33%;
 
     }
+
     .form-head form {
     flex-direction: column;
     width: 100%;
@@ -1872,10 +1896,11 @@ button#course_book {
 
 
 
-    .radio-outer-wrap {
-        position: relative;
-        left: -26px;
-    }
+   .radio-outer-wrap {
+    position: relative;
+    left: -26px;
+    display: block;
+}
 
     .main-radio input {
         right: -75px;

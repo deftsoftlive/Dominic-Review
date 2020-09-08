@@ -114,7 +114,7 @@
                                                  </div>
                                                  <div class="modal-body">
                                                     <div class="card coach_profile">
-                                                    <form method="POST" action="{{route('admin.credit.wallet')}}">
+                                                    <form id="credit_wallet_form" method="POST" action="{{route('admin.credit.wallet')}}">
                                                       @csrf
                                                       <input type="hidden" name="user_id" value="{{$wa->user_id}}">
                                                       <input type="hidden" name="id" value="{{$wa->id}}">
@@ -122,7 +122,7 @@
                                                         <h4>Enter money amount to credit the amount in user account:</h4>
                                                         <input type="text" name="money_amount" class="form-control">
                                                       </div>
-                                                      <button type="submit" class="btn btn-primary">Submit</button>
+                                                      <button id="credit_wallet_btn" type="submit" class="btn btn-primary">Submit</button>
                                                     </form>
                                                     </div>
                                                     </div>
@@ -135,12 +135,12 @@
                                             <div class="modal-dialog">
                                               <!-- Modal content-->
                                               <div class="modal-content">
-                                                 <div class="modal-header">
+                                                <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                 </div>
-                                                 <div class="modal-body">
+                                                </div>
+                                                <div class="modal-body">
                                                     <div class="card coach_profile">
-                                                    <form method="POST" action="{{route('admin.debit.wallet')}}">
+                                                    <form id="debit_wallet_form" method="POST" action="{{route('admin.debit.wallet')}}">
                                                       @csrf
                                                       <input type="hidden" name="id" value="{{$wa->id}}">
                                                       <input type="hidden" name="user_id" value="{{$wa->user_id}}">
@@ -148,13 +148,13 @@
                                                         <h4>Enter money amount to debit the amount from user account:</h4>
                                                         <input type="text" name="money_amount" class="form-control">
                                                       </div>
-                                                      <button type="submit" class="btn btn-primary">Submit</button>
+                                                      <button id="debit_wallet_btn" type="submit" class="btn btn-primary">Submit</button>
                                                     </form>
                                                     </div>
-                                                    </div>
-                                                 </div>
-                                              </div>
-                                           </div>
+                                                  </div>
+                                               </div>
+                                            </div>
+                                         </div>
                                     </td>
                                 </tr>
                             @endforeach

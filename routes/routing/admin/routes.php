@@ -154,6 +154,9 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::any('/purchased-course','Admin\UserController@change_course_list')->name('purchased_course_data');
 		Route::any('/shop/{id}/change-course','Admin\UserController@change_course')->name('change_course');
 		Route::any('/change-course/save','Admin\UserController@save_change_course')->name('save_change_course');
+		Route::any('/purchased-course/add','Admin\UserController@add_course_for_player')->name('add_course_for_player');
+		Route::any('/purchased-course/save','Admin\UserController@save_course_for_player')->name('save_course_for_player');
+		Route::any('/parent-player-linking','Admin\UserController@parent_player_linking')->name('parent_player_linking');
 
 		#----------------------------------------------------------------
 		#  Parents/Children/Coach Management

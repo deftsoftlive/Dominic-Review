@@ -40,6 +40,9 @@
                     <div class="card-header">
 
                         <h5>Purchased Courses</h5>
+                        <div class="cst-admin-filter">
+                            <a href="{{ route('add_course_for_player') }}" class="btn btn-primary">Assign course to player</a>
+                        </div>
                         </div>
                         <br/>
 

@@ -56,54 +56,23 @@
                         @foreach($admin_selected as $key=>$we)
 
                             @if($key == 0)
-                                @if(!empty($we->Monday))
+                                @php $weekValue=['Monday','Tuesday','Wednesday','Thursday','Friday','Fullweek'];@endphp
+                                @foreach($weekValue as $weekDays)
+                               @if(!empty($we->$weekDays))
+                                    @php
+                                    $headerValue[$weekDays]=1;
+                                    @endphp
                                     <td class="">ED</td>
                                     <td class="">AM</td>
                                     <td class="">LC</td>
                                     <td class="">PM</td>
                                     <td class="">FD</td>
                                     <td class="">LS</td> 
-                                @endif
-                                @if(!empty($we->Tuesday))
-                                    <td class="">ED</td>
-                                    <td class="">AM</td>
-                                    <td class="">LC</td>
-                                    <td class="">PM</td>
-                                    <td class="">FD</td>
-                                    <td class="">LS</td> 
-                                @endif
-                                @if(!empty($we->Wednesday))
-                                    <td class="">ED</td>
-                                    <td class="">AM</td>
-                                    <td class="">LC</td>
-                                    <td class="">PM</td>
-                                    <td class="">FD</td>
-                                    <td class="">LS</td> 
-                                @endif
-                                @if(!empty($we->Thursday))
-                                    <td class="">ED</td>
-                                    <td class="">AM</td>
-                                    <td class="">LC</td>
-                                    <td class="">PM</td>
-                                    <td class="">FD</td>
-                                    <td class="">LS</td> 
-                                @endif
-                                @if(!empty($we->Friday))                               
-                                    <td class="">ED</td>
-                                    <td class="">AM</td>
-                                    <td class="">LC</td>
-                                    <td class="">PM</td>
-                                    <td class="">FD</td>
-                                    <td class="">LS</td> 
-                                @endif
-                                @if(!empty($we->Fullweek))
-                                    <td class="">ED</td>
-                                    <td class="">AM</td>
-                                    <td class="">LC</td>
-                                    <td class="">PM</td>
-                                    <td class="">FD</td>
-                                    <td class="">LS</td> 
-                                @endif
+                       
+                                   @endif
+                                @endforeach
+                              
+
                             @endif
 
                         @endforeach
@@ -115,7 +84,15 @@
                         <td>Photos</td>
                         <td>Email</td>
                     </tr>
-                
+                        @php  
+                            $camp_we = []; 
+                            $userSelectedDataByWeek=[];       
+                          //  dd($shop);                      
+                        @endphp
+                            
+                        
+
+                       
                     @foreach($shop as $sh)
                     @php 
                         $player = DB::table('users')->where('id',$sh->child_id)->first();
@@ -130,83 +107,65 @@
                         $user_selected = json_decode($sh->week); 
                     @endphp
 
+                    @foreach($user_selected as $week=>$selected_Type)   
+                           @foreach($selected_Type as $selected_Type_Data=>$dayData)
+                               @foreach($dayData as $day=>$day_value)
+                                        
+                                        @if($selected_Type_Data=="camp")
+                                            @php   
+                                                
+                                                $check_selected_value =explode('-',$day_value);
+                                                $check_selected_value =$check_selected_value[2];
+                                                if($check_selected_value=="noon"){
+                                                    $userSelectedDataByWeek[$week][$day]["noon"]=1; 
+                                                }else if($check_selected_value=="mor"){
+                                                    $userSelectedDataByWeek[$week][$day]["mor"]=1; 
+                                                }else{
+                                                    $userSelectedDataByWeek[$week][$day]["full"]=1; 
+                                                }
+
+                                             continue;
+
+                                            @endphp
+
+                                             @php //dd($user_selected,$selected_Type_Data,$dayData);                       @endphp             
+                                        
+                                        @endif
+
+                                        @php
+                                             
+
+                                        $userSelectedDataByWeek[$week][$day][$selected_Type_Data]=1;        
+                                        @endphp
+                                 @endforeach
+                             @endforeach                        
+                        @endforeach
+                    
                     <tr>
                         <td class="@if($player->gender == 'male') odd-name-row @elseif($player->gender == 'female') even-name-row @endif">{{$player->name}}</td>
                         <td>{{$years1}}</td>
-
                         
-                        @foreach($admin_selected as $key=>$days)
-
-                            @php  
-                            $camp_we = []; 
-                            $userSelectedDataByWeek=[]; 
-                            $daysArray=(array)$days;
-                            $camp_we=array_keys($daysArray);
-                           dd($admin_selected,$user_selected);
-                              @endphp
-                            
-
-                            @foreach($user_selected as $number=>$number_array)   
-
-                            <!-- @if($number == 'W1') -->
-
-                                @foreach($number_array as $data=>$user_data)
-                                   
-                                  @foreach($user_data as $data1=>$user_data1)
-
-                                    @php 
-                                      $userSelectedDataByWeek[$data1][]=$data;
-                                      $split = explode('-',$user_data1);   
-                                      $get_session = $data1.'-'.$split[2];  
-                                     //print_r($data1); echo "--";
-                                    // print_r($camp_we); echo "--";
-                                      
-
-                                    @endphp
-
-                                        
-
-
-
-                                  @endforeach
-
-                                @endforeach
-                            
+                        @foreach($headerValue as $currentday=>$currentdaySelected)
                             @php 
-                            echo "<pre>";
-                            print_r($camp_we);
+                            $listOfHeaderItem=['early_drop','mor','lunch','noon','full','late_pickup'];
+
                             @endphp
-                        @foreach($camp_we as $weekDays) 
 
-                                @if(in_array($weekDays,$camp_we))
-                                    <td>*</td>
-                                    <td>*</td>
-                                    <td>*</td>
-                                    <td>*</td>
-                                    <td>*</td>
-                                        
+                            @foreach($listOfHeaderItem as $headItem)
+                            
 
-                                @endif
-                        @endforeach
+                            @if(isset($userSelectedDataByWeek['W1'][$currentday][$headItem]))
+                            <td>*</td>
+                            @else
+                            <td></td>
+                            @endif
+                            
 
-                                @php 
-                              //  print_r($userSelectedDataByWeek); echo "--";
-                                @endphp
-                            <!-- @endif -->
 
                             @endforeach
 
-                               @php //print_r($camp_we); @endphp
-                           
-
                         @endforeach
-                        
-
-                           
-            
-
-
-
+                             
                         <td>{{$player->date_of_birth}}</td>
                         <td>{{$parent->name}}</td>
                         <td>{{$parent->phone_number}}</td>
@@ -214,9 +173,12 @@
                         <td>@if(!empty($player->profile_image)) Y @else N @endif</td>
                         <td>{{$parent->email}}</td>
                     </tr>
+
                     @endforeach
                 </tbody>
             </table>
+
+
         </div>
         <div class="medical-info">
             <p>Medical Info:</p>

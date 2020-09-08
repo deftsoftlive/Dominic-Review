@@ -4280,6 +4280,7 @@ a.inner-logo {
 .register-form h4 {
     margin: 15px;
     text-transform: capitalize;
+    color: #000;
 }
 
 .form-wrap-container {
@@ -4300,7 +4301,8 @@ a.inner-logo {
     position: relative;
     z-index: 1;
     display: inline-block;
-    margin-right: 10px;
+    margin-right:28px;
+
 }
 
 .cstm-radio label {
@@ -4392,6 +4394,7 @@ a.inner-logo {
 
 #add-family-mem label {
     text-transform: capitalize;
+    font-weight: 500;
 }
 
 .form-group-wrap h4 {
@@ -4399,7 +4402,9 @@ a.inner-logo {
     flex: 0 0 100%;
     max-width: 100%;
 }
-
+.child-selection-content h4, .adult-selection-content h4 {
+    width: auto;
+}
 .delete-child-container {
     padding: 20px;
     margin-top: 30px;
@@ -4620,9 +4625,9 @@ a.ui-datepicker-next.ui-corner-all {
 
 .child-contact-container {
     display: flex;
+    width: 100%;
     flex-wrap: wrap;
 }
-
 .child-contact-buttons {
     padding: 0 15px 15px;
     display: flex;
@@ -6101,6 +6106,7 @@ footer.site-footer .footer-links .footer-header a.footer-brand {
 .player-report-table.tbl_shadow.goal_reports
 {
     overflow: auto!important;
+    width: 100%;
 }
 
 .order-book.cst_order_section {
@@ -7771,7 +7777,7 @@ section.account-menu-sec.player-badge-sec .leadertable-wrap ul.leader-bord-bages
 }
 form#complex_report_filter
 {
-	position: relative;
+    position: relative;
 }
 form#simple_report_filter .error,
 form#complex_report_filter .error {
@@ -8063,6 +8069,7 @@ form#complex_report_filter .error {
     border: 0;
     border-radius: 0;
     background: #00afef;
+    box-shadow: 6px 6px 25px -4px rgba(0, 0, 0, 0.2);
 }
 
 .register-acc .card-header button {
@@ -8138,10 +8145,10 @@ form#complex_report_filter .error {
     width: 70%;
     margin-right: 0px;
 }
-
 .register-acc p.main_head {
-    font-size: 24px;
+    font-size: 22px;
     margin-right: 30px !important;
+    color: #000;
 }
 
 .register-acc .cstm-radio.main-radio label {
@@ -8280,7 +8287,11 @@ input#tab1,
 input#tab2,
 input#tab3,
 input#tab4,
-input#report11 {
+input#report11,
+input#medical-yes1111,
+input#medical-yes2222,
+input#medical-no1111,
+input#medical-no2222 {
     display: none;
 
 
@@ -8574,7 +8585,7 @@ div#submit_rep a a:focus {
 }
 .term-report-modal .coach ul li
 {
-	position: relative;
+    position: relative;
 }
 .term-report-modal .coach ul li .error{
     position: absolute;
@@ -8997,7 +9008,7 @@ a#add_match:hover {
 }
 .goal-level-report
 {
-	padding-bottom: 0!important;
+    padding-bottom: 0!important;
 }
 .goal-filter .form-group label {
     font-size: 14px;
@@ -9023,7 +9034,7 @@ a#add_match:hover {
 #complex_report_filter select,
 select#child_id
 {
-	    display: block;
+        display: block;
     width: 100%;
     height: 43px;
     padding: 6px 12px;
@@ -9049,7 +9060,7 @@ form#simple_report_filter select:focus,
 #complex_report_filter select:focus,
 select#child_id:focus
 {
-	outline: none;
+    outline: none;
 }.card-header.view-card-header {
     display: flex;
     justify-content: space-between;
@@ -9157,7 +9168,7 @@ table.add_on_services td a img {
 }
 .newsletter-msg .inner-wrap.error-msg p
 {
-	color: red;
+    color: red;
 }
 .newsletter-msg .inner-wrap.error-msg span
 {
@@ -9211,20 +9222,32 @@ th
 }
 .view_stats .report_row
 {
-	padding: 0;
+    padding: 0;
 }
 /*.match_game_chart td a
 
 {
-	cursor: default;
+    cursor: default;
 }
 .match_game_chart td.remove_game_chart a
 {
-	cursor: pointer;
+    cursor: pointer;
 }*/
 
 .all-members figcaption.activity-caption:hover {
     background: #fff!important;
+}
+span.game-icon i {
+    font-size: 31px;
+    color: #fff;
+}
+span.game-icon {
+    z-index: 999;
+    position: absolute;
+    top: 44%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /*cursor: pointer;*/
 }
 .ques-row {
     padding: 0;
@@ -9257,31 +9280,46 @@ th
 }
 .game-card {
     height: 147px;
-    border-bottom: 2px solid #be298c;
+    border-bottom: 4px solid #be298c;
     position: relative;
+    box-shadow: 0 5px 7px rgba(0, 0, 0, 0.2);
 }
-.game-card:after{
-position: absolute;
-content: "";
-width: 12px;
-height: 12px;
-background:#be298c;
-left: 50%;
-transform: translateX(-50%);
-bottom: -6px;
-border-radius: 50%;
+.game-card:after {
+    position: absolute;
+    content: "";
+    width: 18px;
+    height: 18px;
+    background: #be298c;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -11px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
 }
 .game-detail {
     text-align: center;
-    padding: 10px;
+    padding:40px 10px 20px;
+   
+    position: relative;
+}
+.game-detail::before {
+    position: absolute;
+    content: '';
+    height: 35px;
+    width: 4px;
+    background: #be298d;
+    top: 7px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 .game-date {
     font-size: 18px;
     font-weight: 500;
     color: #333;
-    margin-bottom: 10px;
+   /* margin-bottom: 10px;*/
 }
-.game-icon-circle {
+/*.game-icon-circle {
     width: 90px;
     height: 90px;
     display: flex;
@@ -9293,8 +9331,8 @@ border-radius: 50%;
     font-size: 31px;
     color: #fff;
     position: relative;
-}
-.game-icon-circle:after {
+}*/
+/*.game-icon-circle:after {
     position: absolute;
     content: "";
     top: calc(100% - 13px);
@@ -9305,17 +9343,30 @@ border-radius: 50%;
     width: 0;
     left: 50%;
     transform: translateX(-50%);
-}
-.player-info {
+}*/
+.game-detail .player-info {
     max-width: 200px;
     display: flex;
     flex-direction: column;
     margin: 0px auto;
-    background: #42a7e9;
-    border-radius: 7px;
-    box-shadow: 0px 0px 10px rgb(66 166 233);
+    background: #00afef;
+    border-radius: 11px;
+    box-shadow: 6px 6px 25px -4px rgba(0, 0, 0, 0.2);
     padding: 10px;
-    border: 2px solid #fff;
+    border: 4px solid #fff;
+}
+.game-icon-circle figure {
+    height: 180px;
+    position: relative;
+}
+
+.all-members .player-report-table.tbl_shadow {
+    width: 100%;
+}
+.game-icon-circle figure img {
+    height: 100%;
+    width: 100%;
+    object-fit:contain;
 }
 .player-info p {
     color: #fff;
@@ -9323,13 +9374,14 @@ border-radius: 50%;
 }
 .normal-link {
     font-size: 14px;
-    color: #be298c;
+    color: #ffffff!important;
     font-weight: 500;
-    margin-top: 4px;
+   /* margin-top: 4px;*/
+    text-decoration: underline!important;
 }
 .player-info-slider .owl-nav {
     position: absolute;
-    top: 50%;
+    top: 20%;
     transform: translateY(-50%);
     width: 100%;
 }
@@ -9338,7 +9390,7 @@ border-radius: 50%;
     top: 50%;
     transform: translateY(-50%);
     font-size: 40px !important;
-    color: #42a7e9 !important;
+    color: #00afef !important;
 }
 .player-info-slider .owl-nav button:hover{
    color: #be298d !important; 
@@ -9346,6 +9398,8 @@ border-radius: 50%;
 
 .player-info-slider .owl-nav button i{
     background: #fff;
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 100%;
 }
 .player-info-slider .owl-nav .owl-prev{
     left:-20px;
@@ -9353,7 +9407,118 @@ border-radius: 50%;
 .player-info-slider .owl-nav .owl-next{
     right:-20px;
 }
+.player-info-card {
+    overflow: hidden;
+}
 button:focus{
     outline: none !important;
 }
 /************/
+/*.register-acc .cstm-radio {
+    margin: 0px 5px 0 0;
+}
+*/
+.event-card-form .form-group p {
+    font-weight: 500;
+}
+.event-card-form .form-group p.cst-fees {
+    font-size: 25px;
+    color: #be298d;
+}
+.outer-slt {
+    position: relative;
+    min-width: 543px;
+}
+.outer-slt select#child {
+    width: 100%;
+}
+.outer-slt .error{
+    width: 100%!important;
+    position: absolute!important;
+    left: 0!important;
+    top: 43px!important;
+    font-size: 14px!important;
+    color: #dc3545!important;
+}
+.contact_wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+.next-setp
+{
+    text-align:right;
+}
+.button-center {
+    text-align: center;
+}
+.tab-cstm-radio {
+    margin: 0;
+}
+/*.register-acc h5.mb-0 .tab-cstm-radio label::before {
+    content: "";
+    position: absolute;
+    left: -15px;
+    top: -6px;
+}
+.register-acc h5.mb-0 .tab-cstm-radio label::after {
+    content: "";
+    position: absolute;
+    left: -8px;
+    top: -3px;
+}*/
+.register-acc .media_photo  {
+    font-weight: 500;
+   
+   font-size: 16px;
+}
+.register-acc p.media_cont {
+    width:8.5%;
+    color: #000;
+    margin-right: 0!important;
+    float: left;
+}
+.media_cont_wrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    margin-bottom: 25px;
+}
+.family_mem {
+    padding-top: 0!important;
+}
+.family_mem .form-partition {
+    border: 3px solid #be298d;
+    padding: 15px;
+    border-top: 0;
+    margin: 0 10px;
+    box-shadow: 6px 6px 25px -4px rgba(0, 0, 0, 0.2);
+}
+.parent_fam_mem .card-body {
+    border:none!important;
+}
+input#male, input#female,
+input#male,
+input#p-l-english-yes,
+input#p-l-english-no,
+input#book_person_no1,
+input#p-l-eng-yes,input#p-l-eng-no {
+display: none;
+} 
+.validate_address .error {
+    top: 55px!important;
+}
+.type-Child .member-icon {
+    width: 80px;
+    height: 80px;
+}
+.textarea_wrap
+{
+    padding: 0;
+}
+div#sec_all {
+    padding: 0;
+}
+.card.disable_tab {
+    pointer-events: none;
+}

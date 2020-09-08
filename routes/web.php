@@ -73,9 +73,9 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     Route::any('update-account-settings','HomeController@update_account_settings')->name('update_account_settings');
     Route::any('my-family','HomeController@my_family')->name('my-family');
     Route::any('family-member/add','HomeController@add_family_member')->name('add-family-member');
-    Route::any('family-member/save','HomeController@save_family_member')->name('save-family-member');
+    // Route::any('family-member/save','HomeController@save_family_member')->name('save-family-member');
     Route::any('family-member/edit/{id}','HomeController@edit_family_member')->name('edit-family-member');
-    Route::any('family-member/update','HomeController@update_family_member')->name('update-family-member');
+    // Route::any('family-member/update','HomeController@update_family_member')->name('update-family-member');
     Route::any('family-member/delete/{id}','HomeController@delete_family_member')->name('delete_family_member');
     Route::any('my-bookings','HomeController@my_bookings')->name('my-bookings');
     Route::any('booking/detail/{id}','HomeController@booking_detail')->name('booking-detail');
@@ -95,10 +95,15 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     Route::any('copy_address','HomeController@copy_address')->name('copy_address');
 
     // Add Family Mamber
-    Route::any('medical_info_to_next','HomeController@medical_info_to_next')->name('medical_info_to_next');
-    Route::any('child_cont_to_next','HomeController@child_cont_to_next')->name('child_cont_to_next');
-    Route::any('med_beh_to_next','HomeController@med_beh_to_next')->name('med_beh_to_next');
-    Route::any('complete_registration','HomeController@complete_registration')->name('complete_registration');
+    Route::any('participants-details','HomeController@participants_details')->name('participants_details');
+    Route::any('contact-information','HomeController@contact_information')->name('contact_information');
+    Route::any('medical-information','HomeController@medical_information')->name('medical_information');
+    Route::any('media-consent','HomeController@media_consent')->name('media_consent');
+
+    // Route::any('medical_info_to_next','HomeController@medical_info_to_next')->name('medical_info_to_next');
+    // Route::any('child_cont_to_next','HomeController@child_cont_to_next')->name('child_cont_to_next');
+    // Route::any('med_beh_to_next','HomeController@med_beh_to_next')->name('med_beh_to_next');
+    // Route::any('complete_registration','HomeController@complete_registration')->name('complete_registration');
 
     // Childcare voucher
     Route::any('save_childcare_voucher','HomeController@save_childcare_voucher')->name('save_childcare_voucher');
@@ -126,6 +131,10 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
 
     // Coach Dashboard - Timeline View
     Route::any('timeline-view/player/{id}','HomeController@timeline_view')->name('timeline_view');
+    Route::any('report/timeline/{id}','HomeController@playerReport')->name('playerReport');
+    Route::any('competition/timeline/{id}','HomeController@playerCompetition')->name('playerCompetition');
+    Route::any('goal/timeline/{id}','HomeController@playerGoal')->name('playerGoal');
+    Route::any('badge/timeline/{id}','HomeController@playerBadge')->name('playerBadge');
 });
 
 // Coupon code

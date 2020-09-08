@@ -4,7 +4,7 @@
 @php
 $country_code = DB::table('country_code')->get(); 
 $notification = DB::table('parent_coach_reqs')->where('coach_id',Auth::user()->id)->where('status',NULL)->count();
-$user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->first();
+$user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->first();  
 @endphp
 <style>
 div#report_detail_cont {
@@ -141,12 +141,13 @@ div#report_detail_cont {
                                 @php
                                 $options = DB::table('report_question_options')->where('report_question_id',$ques->id)->get();
                                 $player_rp = DB::table('player_reports')->where('player_id',$report->player_id)->where('season_id',$report->season_id)->where('course_id',$report->course_id)->first();  
+                           
                                 @endphp
 
-                                @if($player_rp)
+                                @if(!empty($player_rp))
 
                                 @php 
-                                    $selected_options = json_decode($player_rp->selected_options);
+                                    $selected_options = json_decode($player_rp->selected_options);  
                                     $cat_option=[];
                                 @endphp
 

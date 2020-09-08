@@ -151,7 +151,7 @@ $(document).ready(function(){
 <script type="text/javascript">
 $(document).ready(function($){
     $("input[type='radio']").click(function(){
-     // alert('click');
+      
         var radioValue = $("input[type='radio']:checked").val();
 
         if(radioValue === 'Adult')
@@ -668,18 +668,18 @@ $('.upload-image').on('click', function (ev) {
         //    $('#football').val(football_type);
         // });
 
-        $('input[name=language]:radio').click(function(){
-           var lang = $(this).attr("id");
-           $('#core_lang').val(lang); 
-           var core_lang = $('#core_lang').val();
+        // $('input[name=language]:radio').click(function(){
+        //    var lang = $(this).attr("id");
+        //    $('#core_lang').val(lang); 
+        //    var core_lang = $('#core_lang').val();
 
-           if(core_lang == 'p-l-english-no')
-           {
-            $('#primary_lang').css('display','block');
-           }else{
-            $('#primary_lang').css('display','none');
-           }
-        });
+        //    if(core_lang == 'no')
+        //    {
+        //     $('#primary_lang').css('display','block');
+        //    }else{
+        //     $('#primary_lang').css('display','none');
+        //    }
+        // });
 
         $('input[name=media_type]:radio').click(function(){
            var media_type = $(this).attr("id");
@@ -802,84 +802,84 @@ $('.upload-image').on('click', function (ev) {
       // });
 
       // Save first section of add family member form
-      $('#add-family-mem').on('submit',function(event){ 
-        event.preventDefault();
+      // $('#add-family-mem').on('submit',function(event){ 
+      //   event.preventDefault();
 
         // Common form
-        user_id = $('#user_id_data').val();
-        child_id = $('#child_id').val();
-        role_id = $('#role_id').val();
-        form_type = $('#form_type').val();  
-        first_name = $('#first_name').val();
-        last_name = $('#last_name').val();
-        gender = $('#gen').val();
-        date_of_birth = $('#date_of_birth').val();
-        address = $('#address').val();
-        town = $('#town').val();
-        postcode = $('#postcode').val();
-        county = $('#county').val();
-        country = $('#country').val();
-        relation = $('#relation').val();
-        book_person = $('#book_person').val();
-        tennis_club = $('#tennis_club').val();
+        // user_id = $('#user_id_data').val();
+        // child_id = $('#child_id').val();
+        // role_id = $('#role_id').val();
+        // form_type = $('#form_type').val();  
+        // first_name = $('#first_name').val();
+        // last_name = $('#last_name').val();
+        // gender = $('#gen').val();
+        // date_of_birth = $('#date_of_birth').val();
+        // address = $('#address').val();
+        // town = $('#town').val();
+        // postcode = $('#postcode').val();
+        // county = $('#county').val();
+        // country = $('#country').val();
+        // relation = $('#relation').val();
+        // book_person = $('#book_person').val();
+        // tennis_club = $('#tennis_club').val();
 
         // Child form
-        core_lang = $('#core_lang').val();
-        primary_language = $('#primary_language').val();
-        school = $('#school').val();
-        preferences = $('#preferences').val();
+        // core_lang = $('#core_lang').val();
+        // primary_language = $('#primary_language').val();
+        // school = $('#school').val();
+        // preferences = $('#preferences').val();
 
         // Adult form
-        beh_need = $('#beh_need').val();
-        beh_info = $('#beh_info_data').val();
-        em_first_name = $('#em_first_name').val();
-        em_last_name = $('#em_last_name').val();
-        em_phone = $('#em_phone').val();
-        em_email = $('#em_email').val();
-        correct_info = $('#correct_info').val();
+      //   beh_need = $('#beh_need').val();
+      //   beh_info = $('#beh_info_data').val();
+      //   em_first_name = $('#em_first_name').val();
+      //   em_last_name = $('#em_last_name').val();
+      //   em_phone = $('#em_phone').val();
+      //   em_email = $('#em_email').val();
+      //   correct_info = $('#correct_info').val();
 
-        $.ajax({
-          url: "/dominic-new/user/medical_info_to_next",
-          type:"POST",
-          data:{
-            "_token": "{{ csrf_token() }}",
-            child_id:child_id,
-            user_id:user_id,
-            role_id:role_id,
-            form_type:form_type,
-            first_name:first_name,
-            last_name:last_name,
-            gender:gender,
-            date_of_birth:date_of_birth,
-            address:address,
-            town:town,
-            postcode:postcode,
-            county:county,
-            country:country,
-            relation:relation,
-            book_person:book_person,
-            tennis_club:tennis_club,
+      //   $.ajax({
+      //     url: "/dominic-new/user/medical_info_to_next",
+      //     type:"POST",
+      //     data:{
+      //       "_token": "{{ csrf_token() }}",
+      //       child_id:child_id,
+      //       user_id:user_id,
+      //       role_id:role_id,
+      //       form_type:form_type,
+      //       first_name:first_name,
+      //       last_name:last_name,
+      //       gender:gender,
+      //       date_of_birth:date_of_birth,
+      //       address:address,
+      //       town:town,
+      //       postcode:postcode,
+      //       county:county,
+      //       country:country,
+      //       relation:relation,
+      //       book_person:book_person,
+      //       tennis_club:tennis_club,
 
-            core_lang:core_lang,
-            primary_language:primary_language,
-            school:school,
-            preferences:preferences,
+      //       core_lang:core_lang,
+      //       primary_language:primary_language,
+      //       school:school,
+      //       preferences:preferences,
 
-            beh_need:beh_need,
-            beh_info:beh_info,
-            em_first_name:em_first_name,
-            em_last_name:em_last_name,
-            em_phone:em_phone,
-            em_email:em_email,
-            correct_info:correct_info,
-          },
-          success:function(data){
-            $('#mem_id').val(data.mem_detail_id);
-            $('#child_contacts').css('display','block');
-          }
+      //       beh_need:beh_need,
+      //       beh_info:beh_info,
+      //       em_first_name:em_first_name,
+      //       em_last_name:em_last_name,
+      //       em_phone:em_phone,
+      //       em_email:em_email,
+      //       correct_info:correct_info,
+      //     },
+      //     success:function(data){
+      //       $('#mem_id').val(data.mem_detail_id);
+      //       $('#child_contacts').css('display','block');
+      //     }
 
-          });
-      });
+      //     });
+      // });
 
       // Save child contacts
       $('#child-contacts').on('submit',function(event){ 
@@ -1102,28 +1102,28 @@ $('#inputPlayer-3').on('change', function()
 });
 
 // Save media consent
-  $('#course-booking').on('submit',function(event){ 
-    event.preventDefault();
+  // $('#course-booking').on('submit',function(event){ 
+  //   event.preventDefault();
 
-    var child_id  = $('#child_id').val();
-    var course_id = $('#course_id').val();
+  //   var child_id  = $('#child_id').val();
+  //   var course_id = $('#course_id').val();
 
-    $.ajax({
-      url: "/dominic-new/user/course_booking",
-      type:"POST",
-      data:{
-        "_token": "{{ csrf_token() }}",
-        child_id:child_id,
-        course_id:course_id,
-      },
-      success:function(data){
-        if(data.output == 1){
-          window.location.href="http://49.249.236.30:8654/dominic-new/shop/cart";
-        }
-      }
+  //   $.ajax({
+  //     url: "/dominic-new/user/course_booking",
+  //     type:"POST",
+  //     data:{
+  //       "_token": "{{ csrf_token() }}",
+  //       child_id:child_id,
+  //       course_id:course_id,
+  //     },
+  //     success:function(data){
+  //       if(data.output == 1){
+  //         window.location.href="http://49.249.236.30:8654/dominic-new/shop/cart";
+  //       }
+  //     }
 
-      });
-  });
+  //     });
+  // });
 </script>
 
     <script>
@@ -1488,7 +1488,7 @@ $("#submit-booking").click(function() {
                 0: {
                     items: 2
                 },
-                600: {
+                700: {
                     items: 3
 
                 },

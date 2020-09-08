@@ -473,6 +473,95 @@ class UserController extends Controller
     }
 
     /********************************
+    |   Add course for player
+    |********************************/
+    public function add_course_for_player()
+    {
+       return view('admin.change-course.add-course',compact('purchase_course')); 
+    }
+
+    /********************************
+    |   Save course for player
+    |********************************/
+    public function save_course_for_player(Request $request)
+    {
+        // dd($request->all()); 
+
+         $validatedData = $request->validate([
+            'parent' => ['required'],
+            'player' => ['required'],
+            'payment_method' => ['required'],
+            'course' => ['required']
+        ]);
+
+        $course = Course::where('id',$request->course)->first();
+
+        $check_shop = ShopCartItems::where('product_id',$request->course)->where('user_id',$request->parent)->where('child_id',$request->player)->where('shop_type','course')->where('type','order')->first();
+
+        if(!empty($check_shop))
+        {
+            $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('orderID','!=',NULL)->where('type','order')->paginate(10);
+            return \Redirect::back()->with('error',$course->title.' cousrse is already assigned to this child.'); 
+        }else{
+            $shop                =  new ShopCartItems;
+            $shop->shop_type     =  'course';
+            $shop->product_id    =  $request->course;
+            $shop->child_id      =  $request->player;
+            $shop->user_id       =  $request->parent;
+            $shop->quantity      =  1;
+            $shop->price         =  $course->price;
+            $shop->total         =  $course->price;
+            $shop->course_season =  $course->season;
+            $shop->vendor_id     =  1;
+            $shop->orderID       =  '#DRHSHOP'.strtotime(date('y-m-d h:i:s'));
+            $shop->type          =  'order';
+            $shop->manual        =  1;
+            $shop->save();
+
+            $order               =  new ShopOrder;
+            $order->orderID      =  $shop->orderID;
+            $order->user_id      =  $shop->user_id;
+            $order->amount       =  $shop->price;
+            $order->payment_by   =  $request->payment_method;
+            $order->status       =  1;
+            $order->manual       =  1;
+            $order->save();
+
+            ShopCartItems::where('orderID',$order->orderID)->update(array('order_id' => $order->id));
+            return \Redirect::back()->with('success','Course has been assigned to player successfully.'); 
+        }
+        
+    }
+
+    /*********************************
+    |   Parent player linking
+    |*********************************/
+    public function parent_player_linking(Request $request)
+    {
+        $parent = $request->parent; 
+        $player = User::where('parent_id',$parent)->get(); 
+
+        if(count($player) > 0)
+        {
+          // $output = '<option value="">All</option>';
+          $output = '';
+
+          foreach($player as $sh)
+          {
+                $output .= '<option value="'.$sh->id.'">'.$sh->name.'</option>';
+          }
+        }else{
+                $output = '<option value="">No data exists</option>';
+        }
+
+        $data = array(
+            'option'   => $output,
+        );
+
+        echo json_encode($data);
+        }
+
+    /********************************
     |   Purchased Courses List
     |********************************/
     public function change_course_list()
