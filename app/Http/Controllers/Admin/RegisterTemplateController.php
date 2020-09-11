@@ -11,14 +11,14 @@ class RegisterTemplateController extends Controller
 {
     public function camp_reg_temp($id,Request $request)
     {
-        if(isset($request))
+        if(isset($request->week))
         {
-            $day = $request->input('day'); 
+            $week_value = $request->week; 
         }
         
     	$camp = Camp::where('id',$id)->first();
     	$shop = \DB::table('shop_cart_items')->where('shop_type','camp')->where('product_id',$id)->where('type','order')->where('orderID','!=',NULL)->groupBy('child_id')->get();
-    	return view('admin.register-template.camp-template',compact('camp','shop','day'));
+    	return view('admin.register-template.camp-template',compact('camp','shop','week_value'));
     }
 
     public function course_reg_temp($id)

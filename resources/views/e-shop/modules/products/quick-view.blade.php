@@ -43,7 +43,16 @@
                               <div class="price-rating-wrap">
                                  <h4 class="price">
                                     <span>
-                                       <div class="product-price">£{{$product->final_price}}</div>
+                                      <div class="product-price">£{{$product->final_price}}</div>
+
+                                    <!--   @if(!empty($product->sale_price))
+                                      <div class="product-price">
+                                          <small>£ {{$product->price}}</small>
+                                            £ @php echo $product->price - $product->sale_price; @endphp
+                                      </div>
+                                      @else
+                                      <div class="product-price">£ {{$product->final_price}}</div>
+                                      @endif -->
                                     </span>
                                  </h4>
                               </div>

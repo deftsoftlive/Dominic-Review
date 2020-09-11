@@ -222,9 +222,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Coach Feedback:</label>
-                                        <textarea class="form-control" id="feedback" rows="5" name="feedback" placeholder="Comment here...">
-                                            {{isset($player_report->feedback) ? $player_report->feedback : ''}}
-                                        </textarea>
+                                        <textarea class="form-control" id="feedback" rows="5" name="feedback" placeholder="Comment here...">{{isset($player_report->feedback) ? $player_report->feedback : ''}}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -402,9 +400,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Coach Feedback:</label>
-                                        <textarea class="form-control" name="feedback" id="feedback" rows="5" placeholder="Comment here...">
-                                            {{isset($player_rep->feedback) ? $player_rep->feedback : ''}}
-                                        </textarea>
+                                        <textarea class="form-control" name="feedback" id="feedback" rows="5" placeholder="Comment here...">{{isset($player_rep->feedback) ? $player_rep->feedback : ''}}</textarea>
                                     </div>
                                 </div>
                             </div>

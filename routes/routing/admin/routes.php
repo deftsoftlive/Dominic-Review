@@ -147,12 +147,22 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::any('/linked-coaches', 'Admin\UserController@linked_coaches')->name('linked_coach_player');
 		Route::any('/subscribed-users', 'Admin\UserController@subscribed_users')->name('subscribed_users');
 		Route::any('/unsubscribed-users/{id}', 'Admin\UserController@unsubscribed_users')->name('unsubscribed_users');
+		Route::any('/family-member/overview/{id}','Admin\UserController@family_member_overview')->name('admin_family_member_overview');
+   		Route::any('family-member/add','Admin\UserController@admin_add_family_member')->name('admin-add-family-member');
+
+   		// Add Family Mamber
+	    Route::any('participants-details','Admin\UserController@participants_details')->name('admin_participants_details');
+	    Route::any('contact-information','Admin\UserController@contact_information')->name('admin_contact_information');
+	    Route::any('medical-information','Admin\UserController@medical_information')->name('admin_medical_information');
+	    Route::any('media-consent','Admin\UserController@media_consent')->name('admin_media_consent');
+	    Route::any('family-member/delete/{id}','Admin\UserController@delete_family_member')->name('admin_delete_family_member');
 
 		#----------------------------------------------------------------
 		#  Change Course of Player
 		#----------------------------------------------------------------
 		Route::any('/purchased-course','Admin\UserController@change_course_list')->name('purchased_course_data');
 		Route::any('/shop/{id}/change-course','Admin\UserController@change_course')->name('change_course');
+		Route::any('/shop/{id}/delete/player','Admin\UserController@delete_course')->name('delete_course');
 		Route::any('/change-course/save','Admin\UserController@save_change_course')->name('save_change_course');
 		Route::any('/purchased-course/add','Admin\UserController@add_course_for_player')->name('add_course_for_player');
 		Route::any('/purchased-course/save','Admin\UserController@save_course_for_player')->name('save_course_for_player');

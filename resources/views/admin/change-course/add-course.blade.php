@@ -6,12 +6,12 @@
         <div class="row align-items-center">
             <div class="col-md-12">
                 <div class="page-header-title">
-                    <h5 class="m-b-10">Assign course to player</h5>
+                    <h5 class="m-b-10">Assign player to course</h5>
                 </div>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{url(route('admin_dashboard'))}}"><i class="feather icon-home"></i></a></li>
                     <li class="breadcrumb-item"><a href="{{url('/admin/purchased-course')}}"><b>Purchased Courses</b></a></li>
-                    <li class="breadcrumb-item">Assign course to player</li>
+                    <li class="breadcrumb-item">Assign player to course</li>
                 </ul>
             </div>
         </div>
@@ -58,9 +58,17 @@
                   </select>
                   <br/>
 
-                  <label class="control-label">Select Player<span class="cst-upper-star">*</span></label>
+                  <label class="control-label">Select Player</label>
                   <select class="form-control" id="player_id" name="player">
                     <option disabled selected="" value="">Select Player</option>
+                  </select>
+                  <br/>
+
+                  <label class="control-label">Cost/No Cost<span class="cst-upper-star">*</span></label>
+                  <select class="form-control" id="cost_type" name="cost_type">
+                    <option disabled selected="" value="">Select Cost Type</option>
+                    <option value="Cost">Cost</option>
+                    <option value="No Cost">No Cost</option>
                   </select>
                   <br/>
 
@@ -74,14 +82,16 @@
                   </select>
                   <br/>
                   
-                  <label class="control-label">Payment Method<span class="cst-upper-star">*</span></label>
-                  <select class="form-control" name="payment_method">
-                    <option disabled selected="" value="">Select Payment Method</option>
-                    <option value="STRIPE">Stripe</option>
-                    <option value="Wallet">Wallet</option>
-                    <option value="Childcare">Childcare</option>
-                  </select>
-                  <br/>
+                  <div id="pay_meth">
+                    <label class="control-label">Payment Method</label>
+                    <select class="form-control" name="payment_method">
+                      <option disabled selected="" value="">Select Payment Method</option>
+                      <option value="STRIPE">Stripe</option>
+                      <option value="Wallet">Wallet</option>
+                      <option value="Childcare">Childcare</option>
+                    </select>
+                    <br/>
+                  </div>
 
                 <div class="card-footer pl-0">
                   <button type="submit" id="btnVanue" class="btn btn-primary">Submit</button>
@@ -101,4 +111,23 @@
       <!-- /.row -->
     </section>
      
+@endsection
+
+@section('scripts')
+<script type="text/javascript">
+$("#cost_type").change(function()
+{
+  var value1 = $(this).val(); 
+  
+  if(value1 == 'Cost')
+  {
+    $('#pay_meth').css('display','block');
+  }
+  else if(value1 == 'No Cost')
+  {
+    $('#pay_meth').css('display','none');
+  } 
+
+});
+</script>
 @endsection

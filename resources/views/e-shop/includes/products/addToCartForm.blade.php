@@ -34,6 +34,8 @@
               </div>
 
           </div>
+
+          @if($product->variant_id == 1)
           <div class="details col-lg-6">
               <h3 class="product-title">{{$product->name}}</h3>
 
@@ -46,7 +48,7 @@
               </div>
 
               <p class="product-description">{{$product->short_description}}</p>
-
+          @endif
 
               @if(Auth::check())
                 <form id="ADDToCART" action="{{url(route('shop.ajax.addToCart',$product->id))}}">

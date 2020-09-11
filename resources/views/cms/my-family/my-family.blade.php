@@ -70,7 +70,7 @@
 				@if(count($children)>0)
 					@foreach($children as $ch)	
 					  <div class="col-md-2 type-{{$ch->type}}">
-					    <a href="{{url('/user/family-member/add?user=')}}{{$ch->id}}" class="member-container">
+					    <a href="{{url('/user/family-member/overview')}}/{{$ch->id}}" class="member-container">
 						  <div class="member-icon">
 						    <i class="fas fa-eye"></i>
 						  </div>
@@ -171,10 +171,10 @@
                         </div>
 
                         <!-- Gender -->
-                        <div class="form-group row gender-opt signup-gender-op">
+                        <div class="form-group row gender-opt signup-gender-op ">
                             <label for="gender" class="col-md-12 col-form-label text-md-right ">{{ __('Gender') }}</label>
 
-                            <div class="col-md-12 det-gender-opt">
+                            <div class="col-md-12 det-gender-opt main_acc-set" >
 
                                 <input type="radio" id="male" name="gender" value="male" {{ $user->gender == 'male' ? 'checked' : '' }}>
                                 <label for="male">Male</label><br>

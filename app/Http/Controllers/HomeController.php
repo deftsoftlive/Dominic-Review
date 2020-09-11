@@ -1440,8 +1440,8 @@ public function coach_report()
 |---------------------------------*/
 public function save_simple_report(Request $request)
 {
-  if(!empty($request->season_id) && !empty($request->course_id) && !empty($request->player_id))
-  {
+  // if(!empty($request->season_id) && !empty($request->course_id) && !empty($request->player_id))
+  // {
     $check_report = PlayerReport::where('type','simple')->where('season_id',$request->season_id)->where('player_id',$request->player_id)->where('course_id',$request->course_id)->get();
 
     $date = Carbon::now();
@@ -1499,9 +1499,10 @@ public function save_simple_report(Request $request)
             
         }
     }
-  }else{
-    return \Redirect::back()->with('error','Season, course & player are required fields & you missed one of those fields.'); 
-  }
+  // }
+  // else{
+  //   return \Redirect::back()->with('error','Season, course & player are required fields & you missed one of those fields.'); 
+  // }
 } 
 
 
@@ -1844,6 +1845,19 @@ public function add_family_member() {
     return view('cms.my-family.add-family-member',compact('activities'));
 } 
 
+/* Overview - Family Member */
+public function family_member_overview($id) {
+    $user = User::where('id',$id)->first();  
+    $user_details = ChildrenDetail::where('child_id',$id)->first();
+    $user_contacts = ChildContact::where('child_id',$id)->get();
+
+    $user_id = $id;
+
+    // dd($user,$user_details,$user_contacts); 
+
+    return view('cms.my-family.family-member-overview',compact('user','user_id','user_details','user_contacts'));
+} 
+
 /* Copy Address */
 public function copy_address() {
     $id = \Auth::user()->id;
@@ -1888,6 +1902,7 @@ public function participants_details(Request $request)
       $language = $request->language1;
       $primary_language = $request->primary_language1;
       $school = $request->school;
+      // $show_name = $request->show_name;
     }
     elseif($request->type == 'Child')
     {
@@ -1905,6 +1920,7 @@ public function participants_details(Request $request)
       $language = $request->language1;
       $primary_language = $request->primary_language1;
       $school = $request->school1;
+      // $show_name = $request->show_name1;
     }
 
     // dd($first_name,$book_person,$language,$primary_language);
@@ -1929,10 +1945,11 @@ public function participants_details(Request $request)
       $add_family->relation     =    $relation;
       $add_family->type         =    $request->type;
       $add_family->book_person  =    $book_person;
+      // $add_family->show_name    =    $show_name;
       $add_family->tennis_club  =    isset($request->tennis_club) ? $request->tennis_club : '';
       $add_family->email_verified_at = '';
 
-      // dd($add_family);
+      //dd($add_family);
       $add_family->save(); 
 
       ChildrenDetail::where('child_id',$request->user_id)->update(array('core_lang' => $language, 'school' => $school, 'primary_language' => $primary_language));
@@ -1954,6 +1971,7 @@ public function participants_details(Request $request)
       $add_family->relation     =    $relation;
       $add_family->type         =    $request->type;
       $add_family->book_person  =    $book_person;
+      // $add_family->show_name    =    $show_name;
       $add_family->tennis_club  =    isset($request->tennis_club) ? $request->tennis_club : '';
       $add_family->email_verified_at = '';
       $add_family->save(); 
@@ -1969,7 +1987,7 @@ public function participants_details(Request $request)
     
     $last_user_id = $add_family->id;
 
-    return redirect('/user/family-member/add?user='.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Participant Details added successfully.');
+    return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Participant Details added successfully.');
 }
 
 /*------------------------------------------
@@ -2058,7 +2076,7 @@ public function contact_information(Request $request)
 
   $last_user_id = $request->child_id;
 
-  return redirect('/user/family-member/add?user='.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Contact Information added successfully.');
+  return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Contact Information added successfully.');
 }
 
 /*--------------------------------------------------
@@ -2092,7 +2110,7 @@ public function medical_information(Request $request)
   
   $last_user_id = $request->child_id;
 
-  return redirect('/user/family-member/add?user='.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Medical & Behavioural Information added successfully.');
+  return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Medical & Behavioural Information added successfully.');
 
 }
 
@@ -2105,7 +2123,7 @@ public function media_consent(Request $request)
 
     $last_user_id = $request->child_id;
 
-    return redirect('/user/family-member/add?user='.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Media Consents added successfully.');
+    return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Media Consents added successfully.');
 }
 /* medical_info_to_next */
 // public function medical_info_to_next(Request $request) {
@@ -2893,6 +2911,15 @@ public function badges()
     // dd($user_goal);
 
     return view('cms.badges',compact('purchase_course','testimonial','shop','user_id','course_id','season_id','user_badge','user_badge1','goal_player','goal_type','user_goal'));
+}
+
+public function show_name_in_leaderboard(Request $request)
+{
+  $user = User::find($request->u_id);
+  $user->show_name = $request->show_name;
+  $user->save();
+
+  return \Redirect::back()->with('success','Information updated successfully.');
 }
 
 /*----------------------------------------
@@ -3990,5 +4017,15 @@ public function playerBadge($id)
   $badges = UserBadge::where('user_id',$player_id)->first();  
   return view('coach.timeline.sections.badges-listing',compact('player_id','badges'));
 }
+
+/*------------------------------------------
+| Remove contact from Family member section
+|------------------------------------------*/
+public function remove_contact($id)
+{
+  ChildContact::where('id',$id)->delete();
+
+  return \Redirect::back()->with('success',' Contact removed successfully!');
+} 
 
 }

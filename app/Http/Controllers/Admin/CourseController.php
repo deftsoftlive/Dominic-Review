@@ -30,11 +30,11 @@ class CourseController extends Controller
     /*----------------------------------------
     |   Listing of courses
     |----------------------------------------*/ 
-    public function course_index() {
-
-          $type = request()->get('course_name');    
-          $subtype = request()->get('subtype');
-          $level = request()->get('level');
+    public function course_index() 
+    {
+        $type = request()->get('course_name');    
+        $subtype = request()->get('subtype');
+        $level = request()->get('level');
 
         if(!empty(request()->get('type')) && !empty(request()->get('subtype')) && !empty(request()->get('level')))
         {

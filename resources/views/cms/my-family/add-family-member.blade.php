@@ -4,6 +4,7 @@
 @php $country_code = DB::table('country_code')->get(); @endphp
 @php
 $user_id = request()->get('user');
+$sec = request()->get('sec');  
 @endphp
 @if(!empty($user_id))
 @php
@@ -21,8 +22,11 @@ $count_child_contacts = '';
 @endphp
 @endif
 @php
-$count = 1;
+$count = 1; 
+
+
 @endphp
+
 <style>
 #child_section, #medical_info, #child_contacts, #medical_beh, #media_consent, #primary_lang, #beh_info, #med_cond_info, #med_con_button, #pres_med_info, #allergy_button, #allergies_info, #special_needs_info{
     display: none;
@@ -48,23 +52,31 @@ $count = 1;
     <p>{{ Session::get('success') }} </p>
 </div>
 @endif
+
 <section class="register-acc">
     <div class="container">
         <div class="inner-cont">
+            @if(!empty($user_id) && !empty($user_data))
+            <div class="back-to-family">
+                <h4 class="pl_name">Player Name : <p>{{$user_data->name}}</p></h4>
+                <a href="{{url('/user/my-family')}}" class="cstm-btn">Back to my family</a>
+            </div>
+            @endif
+            <br/>
             <div id="accordion" class="parent_fam_mem">
                 <div class="card">
                     <div class="card-header family-tabs" id="headingOne">
                         <h5 class="mb-0">
-                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                <span>1</span> participant detail
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" @if($sec == 1) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="collapseOne">
+                                <span>1</span> Participant Details
                             </button>
                             <div class="cstm-radio tab-cstm-radio">
-                                <input type="radio" name="type1" data-type="child" id="tab1" @if(!empty($user_data)) checked @endif>
+                                <input type="radio" disabled="" name="type1" data-type="child" id="tab1" @if(!empty($user_data)) checked @endif>
                                 <label for="tab1"></label>
                             </div>
                         </h5>
                     </div>
-                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div id="collapseOne" class="collapse @if($sec == 1) show @endif" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
                             <div class="register-sec form-register-sec family_mem ">
                                 <form id="add-family-mem" action="{{ route('participants_details') }}" class="register-form" method="POST">
@@ -253,7 +265,7 @@ $count = 1;
                                                     <div class="col-md-6 option_row coach_option">
                                                         <div class="form-group row ">
                                                             <div class="form-radios">
-                                                                <p class="holiday_camps" style="display: inline-block; font-weight: 500; margin-right: 15px;">Will this person be booking onto a DRH coaching courses or holiday camp?</p>
+                                                                <p class="holiday_camps" style="display: inline-block; font-weight: 500; margin-right: 15px;">Will this person be booking onto a DRH coaching course or holiday camp?</p>
                                                             </div>
                                                             <div class="cstm-radio">
                                                                 <input type="radio" name="book_person1" id="book_person_yes" value="yes"  @if(!empty($user_data->book_person)) @if($user_data->book_person == 'yes') checked @endif @endif>
@@ -265,6 +277,19 @@ $count = 1;
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    <!-- Show name in leaderboard -->
+                                                    <!-- <div class="form-group row">
+                                                        <label for="relation" class="col-md-12 col-form-label text-md-right">Do you want to show player name in leaderboard?</label>
+                                                        <div class="col-md-12">
+                                                            <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+                                                            <select id="show_name" name="show_name1" class="form-control cstm-select-list">
+                                                                <option selected="" disabled="" value="">Please Choose</option>
+                                                                <option value="1" @if(!empty($user_data)) @if($user_data->show_name == '1') selected @endif @endif>Yes</option>
+                                                                <option value="0" @if(!empty($user_data)) @if($user_data->show_name == '0') selected @endif @endif>No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div> -->
                                                     <div class="col-md-12">
                                                         <button type="submit" id="family_mem_btn" class="cstm-btn">Save Section</button>
                                                     </div>
@@ -311,7 +336,7 @@ $count = 1;
                                                     </div>
                                                     <!-- Address -->
                                                     <div class="form-group row address-detail">
-                                                        <label for="address" class="col-md-12 col-form-label text-md-right">Address (Number &amp; Street)</label>
+                                                        <label for="address" class="col-md-12 col-form-label text-md-right">aaAddress (Number &amp; Street)</label>
                                                         <div class="col-md-12">
                                                             <input id="address" type="text" class="paste_address form-control" name="address" value="{{isset($user_data->address) ? $user_data->address : ''}}" required="">
                                                             <div class="copy_address">
@@ -399,7 +424,7 @@ $count = 1;
                                                         <div class="col-md-6 option_row coach_option">
                                                             <div class="form-group row ">
                                                                 <div class="form-radios">
-                                                                    <p style="display: inline-block; font-weight: 500; margin-right: 15px;">Will this person be booking onto a DRH coaching courses or holiday camp?</p>
+                                                                    <p style="display: inline-block; font-weight: 500; margin-right: 15px;">Will this person be booking onto a DRH coaching course or holiday camp?</p>
                                                                 </div>
                                                                 <div class="cstm-radio">
                                                                     <input type="radio" name="book_person" id="book_person_yes1" value="yes" @if(!empty($user_data->book_person)) @if($user_data->book_person == 'yes') checked @endif @endif>
@@ -412,6 +437,20 @@ $count = 1;
                                                                 <!-- <input type="hidden" name="book_person" id="book_person" value=""> -->
                                                             </div>
                                                         </div>
+
+                                                        <!-- Show name in leaderboard -->
+                                                        <!-- <div class="form-group row">
+                                                            <label for="relation" class="col-md-12 col-form-label text-md-right">Do you want to show player name in leaderboard?</label>
+                                                            <div class="col-md-12">
+                                                                <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+                                                                <select id="show_name" name="show_name" class="form-control cstm-select-list">
+                                                                    <option selected="" disabled="" value="">Please Choose</option>
+                                                                    <option value="1" @if(!empty($user_data)) @if($user_data->show_name == '1') selected @endif @endif>Yes</option>
+                                                                    <option value="0" @if(!empty($user_data)) @if($user_data->show_name == '0') selected @endif @endif>No</option>
+                                                                </select>
+                                                            </div>
+                                                        </div> -->
+
                                                         <div class="col-md-12">
                                                             <button type="submit" id="family_mem_btn" class="cstm-btn">Save Section</button>
                                                         </div>
@@ -427,16 +466,16 @@ $count = 1;
                 <div class="card @if(!empty($user_id)) @else disable_tab @endif">
                     <div class="card-header family-tabs" id="headingTwo">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" @if($sec == 2) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="collapseTwo">
                                 <span>2</span> contact
                             </button>
                             <div class="cstm-radio tab-cstm-radio">
-                                <input type="radio" name="type2" data-type="child" id="tab2" @if(!empty($child_contacts) && count($child_contacts)>0) checked @endif>
+                                <input type="radio" disabled="" name="type2" data-type="child" id="tab2" @if(!empty($child_contacts) && count($child_contacts)>0) checked @endif>
                                 <label for="tab2"></label>
                             </div>
                         </h5>
                     </div>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div id="collapseTwo" class="collapse @if($sec == 2) show @endif" aria-labelledby="headingTwo" data-parent="#accordion">
                         <div class="card-body">
                             <div class="card-body">
                                 <div class="register-sec form-register-sec family_mem ">
@@ -1467,16 +1506,16 @@ $count = 1;
                 <div class="card @if(!empty($user_id)) @else disable_tab @endif">
                     <div class="card-header family-tabs" id="headingThree">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" @if($sec == 3) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="collapseThree">
                                 <span>3</span> Medical and behavioural
                             </button>
                             <div class="cstm-radio tab-cstm-radio">
-                                <input type="radio" name="type3" data-type="child" id="tab3" @if(!empty($children_details) && !empty($children_details->core_lang) || !empty($children_details->med_cond) || !empty($children_details->allergies) ||    !empty($children_details->pres_med))  checked @endif>
+                                <input disabled="" type="radio" name="type3" data-type="child" id="tab3" @if(!empty($children_details) && !empty($children_details->core_lang) || !empty($children_details->med_cond) || !empty($children_details->allergies) ||    !empty($children_details->pres_med))  checked @endif>
                                 <label for="tab3"></label>
                             </div>
                         </h5>
                     </div>
-                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                    <div id="collapseThree" class="collapse @if($sec == 3) show @endif" aria-labelledby="headingThree" data-parent="#accordion">
                         <div class="card-body">
                             <div class="register-sec form-register-sec family_mem ">
                                 <div class="form-partition">
@@ -2334,16 +2373,16 @@ $count = 1;
                 <div class="card @if(!empty($user_id)) @else disable_tab @endif">
                     <div class="card-header family-tabs" id="headingfour">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapsefour" @if($sec == 4) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="collapsefour">
                                 <span>4</span> consents
                             </button>
                             <div class="cstm-radio tab-cstm-radio">
-                                <input type="radio" name="type4" data-type="child" id="tab4" @if(!empty($children_details->media) && !empty($children_details->confirm)) checked @endif>
+                                <input type="radio" disabled="" name="type4" data-type="child" id="tab4" @if(!empty($children_details->media) && !empty($children_details->confirm)) checked @endif>
                                 <label for="tab4"></label>
                             </div>
                         </h5>
                     </div>
-                    <div id="collapsefour" class="collapse" aria-labelledby="headingfour" data-parent="#accordion">
+                    <div id="collapsefour" class="collapse @if($sec == 4) show @endif" aria-labelledby="headingfour" data-parent="#accordion">
                         <div class="card-body">
                             <div class="register-sec form-register-sec family_mem ">
                                 <div class="form-partition">

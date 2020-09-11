@@ -42,14 +42,12 @@ div#report_detail_cont {
         </nav>
     </div>
 </div>
-<div class="print_logo">
-    <img src="http://49.249.236.30:8654/dominic-new/public/uploads/1584078701website_logo.png">
-</div>
+
 <section class="member section-padding report_detail_page">
     <div class="container">
-        <div class="pink-heading">
+        <div class="pink-heading print_logo_image">
             <div class="print_logo print-logo-design">
-                <img height="70px;" width="120px;" src="http://49.249.236.30:8654/dominic-new/public/uploads/1584078701website_logo.png">
+                <img height="70px;" width="120px;" src="{{url('')}}/public/uploads/1584078701website_logo.png">
             </div>
             <h2>Your Report</h2>
         </div>

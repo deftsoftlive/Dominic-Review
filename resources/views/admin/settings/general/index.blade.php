@@ -58,9 +58,9 @@
                                     </td>
                                 </tbody>
 
-                                <tbody>
+                                <!-- <tbody> -->
                                     <!-- Courses Page -->
-                                    <td>Courses Page</td>
+                                    <!-- <td>Courses Page</td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -68,7 +68,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                </tbody>
+                                </tbody> -->
 
                                 <tbody>
                                     <!-- Football Landing Page -->

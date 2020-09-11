@@ -281,11 +281,11 @@ class ReportQuestionController extends Controller
                 $user_ids[] = $user->id;
             }
             
-            $reports = PlayerReport::whereIn('coach_id',array_filter($coach_ids))->whereIn('player_id',array_filter($user_ids))->where('course_id',$course)->paginate(10);
+            $reports = PlayerReport::whereIn('coach_id',array_filter($coach_ids))->whereIn('player_id',array_filter($user_ids))->where('course_id',$course)->orderBy('id','desc')->paginate(10);
             
         }
         else{
-           $reports = PlayerReport::orderBy('id','asc')->paginate(10); 
+           $reports = PlayerReport::orderBy('id','desc')->paginate(10); 
         }
 
         // dd($reports);

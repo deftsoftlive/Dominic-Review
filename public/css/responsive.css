@@ -316,6 +316,10 @@
     padding: 10px 4px;
     font-size: 13px;
     }*/
+    .outer-slt {
+  
+    min-width: 320px;
+}
     .event-info p.detail-cont {
         min-height: 72px;
     }
@@ -984,6 +988,29 @@ p.holiday_camps {
         order: 1;
     }.card-header.view-card-header .view_stats {
     width: 27%!important;
+   
+}
+.event-card-form .form-group p {
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.event-card-form .form-group {   
+     align-items: unset;     
+    flex-direction: column;
+}
+.event-card-form .form-group p.cst-fees {
+ 
+    text-align: center;
+    margin: 10px 0 20px;
+}
+.outer-slt {
+    min-width: 320px;
+    margin-bottom: 10px;
+}
+.outer-slt .error {
+  
+    top: 30px!important;
    
 }
 .media_cont_wrap {
@@ -1829,6 +1856,10 @@ button#course_book {
 }
 
 @media(max-width: 480px) {
+    .checkout-step-sec .cart.block {
+
+    margin-top: 20px;
+}
     .login-sec button.cstm-btn.login {
    
     margin-bottom: 15px;

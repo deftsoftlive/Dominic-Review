@@ -97,7 +97,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                   <div class="t-p-text">
                                                      <h2>{{$box->title}}</h2>
                                                      <p>{!! $box->description !!}</p>
-                                                     <a class="more-about-camp" id="{{$box->id}}" href="javascript:void(0);">Read more</a>
+                                                     <a class="more-about-camp read-more-less" id="{{$box->id}}" href="javascript:void(0);">Read more</a>
                                                   </div>
                                                </div>
                                                <div class="col-sm-5">
@@ -109,7 +109,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                          </div>
                                          <div class="tab-points-container t-p-c-more">
                                             <p>{!! $box->more_text !!}</p>
-                                            <a class="less-about-camp box-{{$box->id}}" id="{{$box->id}}" href="javascript:void(0);">Read less</a>
+                                            <a class="read-more-less less-about-camp box-{{$box->id}}" id="{{$box->id}}" href="javascript:void(0);">Read less</a>
                                          </div>
                                       </div>
                                       @endif
@@ -147,7 +147,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                           <div class="t-p-text">
                                                              <h2>{{$box->title}}</h2>
                                                              <p>{!! $box->description !!}</p>
-                                                             <a class="more-about-camp" id="{{$box->id}}" href="javascript:void(0);">Read more</a>
+                                                             <a class="more-about-camp read-more-less" id="{{$box->id}}" href="javascript:void(0);">Read more</a>
                                                           </div>
                                                        </div>
                                                        <div class="col-sm-5">
@@ -159,7 +159,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                  </div>
                                                  <div class="tab-points-container t-p-c-more">
                                                     <p>{!! $box->more_text !!}</p>
-                                                    <a class="less-about-camp box-{{$box->id}}" id="{{$box->id}}" href="javascript:void(0);">Read less</a>
+                                                    <a class="read-more-less less-about-camp box-{{$box->id}}" id="{{$box->id}}" href="javascript:void(0);">Read less</a>
                                                  </div>
                                               </div>
                                               @endif
@@ -248,7 +248,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                           <div class="t-p-text">
                                                              <h2>{{$box->title}}</h2>
                                                              <p>{!! $box->description !!}</p>
-                                                             <a class="more-about-camp" id="{{$box->id}}" href="javascript:void(0);">Read more</a>
+                                                             <a class="more-about-camp read-more-less" id="{{$box->id}}" href="javascript:void(0);">Read more</a>
                                                           </div>
                                                        </div>
                                                        <div class="col-sm-5">
@@ -260,7 +260,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                  </div>
                                                  <div class="tab-points-container t-p-c-more">
                                                     <p>{!! $box->more_text !!}</p>
-                                                    <a class="less-about-camp box-{{$box->id}}" id="{{$box->id}}" href="javascript:void(0);">Read less</a>
+                                                    <a class="read-more-less less-about-camp box-{{$box->id}}" id="{{$box->id}}" href="javascript:void(0);">Read less</a>
                                                  </div>
                                               </div>
                                               @endif
@@ -365,7 +365,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                   <div class="t-p-text">
                                                      <h2>{{$box->title}}</h2>
                                                      <p>{!! $box->description !!}</p>
-                                                     <a class="more-about-camp" id="{{$box->id}}" href="javascript:void(0);">Read more</a>
+                                                     <a class="more-about-camp read-more-less" id="{{$box->id}}" href="javascript:void(0);">Read more</a>
                                                   </div>
                                                </div>
                                                <div class="col-sm-5">
@@ -377,7 +377,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                          </div>
                                          <div class="tab-points-container t-p-c-more">
                                             <p>{!! $box->more_text !!}</p>
-                                            <a class="less-about-camp box-{{$box->id}}" id="{{$box->id}}" href="javascript:void(0);">Read less</a>
+                                            <a class="read-more-less less-about-camp box-{{$box->id}}" id="{{$box->id}}" href="javascript:void(0);">Read less</a>
                                          </div>
                                       </div>
                                       @endif

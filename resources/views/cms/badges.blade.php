@@ -445,6 +445,13 @@ label.confirm_msg.form-check-label {
                                             <p class="goal-setting-text">{{ getAllValueWithMeta('goals_desc', 'badges') }}</p>
                                             <br />
                                         </div>
+
+                                        @if(Session::has('success'))
+                                        <div class="alert_msg alert alert-success">
+                                            <p>{{ Session::get('success') }} </p>
+                                        </div>
+                                        @endif
+
                                         <!-- <form class="select-player-goal-form"> -->
                                         <form action="{{route('badges')}}" method="POST" class="select-player-goal-form">
                                             @csrf
@@ -526,6 +533,40 @@ label.confirm_msg.form-check-label {
                                         </form>
                                     </div>
                                 </div>
+
+                                @if(!empty($user_id))
+
+                                @php 
+                                    $check_name = DB::table('users')->where('id',$user_id)->first();    
+                                @endphp
+
+                                <form action="{{url('/user/show-name')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="u_id" value="{{$user_id}}">
+                                    <div class="outer_wrap_playes">
+                                    <div class="form-group row">
+                                        <!-- <label for="relation" class="col-md-12 col-form-label text-md-right">Do you want to show player name in leaderboard?</label> -->
+                                        <div class="form-radios">
+                                            <p class="holiday_camps" style="display: inline-block; font-weight: 500; margin-right: 15px;">Do you want to show this player's name in the leaderboard below?</p>
+                                        </div>
+                                        <div class="cstm-radio">
+                                            <input type="radio" name="show_name" id="show_name_yes" value="1" @if($check_name->show_name == '1') checked @endif>
+                                            <label for="show_name_yes">Yes</label>
+                                        </div>
+                                        <div class="cstm-radio booking">
+                                            <input type="radio" name="show_name" id="show_name_no" value="0" @if($check_name->show_name == '0') checked @endif>
+                                            <label for="show_name_no">No</label>
+                                        </div>
+
+                                        <p class="leaderboard-note"><span>Please Note</span>: If you select YES, this player's name will appear in the leaderboard below and will be visable and public for other users to see. If you select NO, this player's name will show as 'annonymous' to all other users.</p>
+
+                                    </div>
+                                    <button class="cstm-btn" type="submit">Submit</button>
+                                </div>
+                                    
+                                </form>
+                                @endif
+
                                 @if(!empty($shop))
                                 <div class="row">
                                     <div class="col-md-12">
@@ -828,7 +869,11 @@ label.confirm_msg.form-check-label {
                                                                 <p>@php echo $i++; @endphp</p>
                                                             </td>
                                                             <td>
-                                                                <p>{{$user->name}}</p>
+                                                                @if($user->show_name == 1)
+                                                                    <p>{{$user->name}}</p>
+                                                                @elseif($user->show_name == 0)
+                                                                    <p>Anonymous</p>
+                                                                @endif
                                                             </td>
                                                             <td>
                                                                 <p>{{$years}} Years</p>

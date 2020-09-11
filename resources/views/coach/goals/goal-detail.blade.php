@@ -28,10 +28,14 @@
 <section class="coach-goal-comment-sec">
     <div class="container">
       <div class="pink-heading btn-right">
-         <h2>Update Your Goals</h2>
-         <a class="cstm-btn d-print-none" href="{{url('/user/badges')}}">Back to menu</a>
-         <button class="cstm-btn d-print-none" id="goal_print">Print</button>
-         <br/><br/>
+        <div class="print_logo print-logo-design">
+            <img height="70px;" width="120px;" src="{{url('')}}/public/uploads/1584078701website_logo.png">
+        </div>
+        
+        <h2>Update Your Goals</h2>
+        <a class="cstm-btn d-print-none" href="{{url('/user/badges')}}">Back to menu</a>
+        <button class="cstm-btn d-print-none" id="goal_print">Print</button>
+        <br/><br/>
       </div>
 
     <div class="col-md-12 invoice_apd">

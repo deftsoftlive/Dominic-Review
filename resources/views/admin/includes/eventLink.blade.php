@@ -101,9 +101,9 @@
                 |       ACTIVITIES
                 |
                 |********************************* -->
-                <li class="nav-item {{ \Request::route()->getName() === 'child_activities' ? 'nav-item active' : 'nav-item' }}">
+               <!--  <li class="nav-item {{ \Request::route()->getName() === 'child_activities' ? 'nav-item active' : 'nav-item' }}">
                     <a href="{{url(route('child_activities'))}}" class="nav-link "><span class="pcoded-micon"><i class="fas fa-circle"></i></span><span class="pcoded-mtext">Activities</span></a>
-                </li>
+                </li> -->
 
 
                 <!-- ****************************
@@ -133,7 +133,7 @@
 
                         <li class="{{ request()->is('admin/settings/general/edit/early-bird') ? 'active' : ''}} "><a href="{{url('admin/settings/general/edit/early-bird')}}" class="">Early Bird Management</a></li>
 
-                        <li class="{{ request()->is('admin/purchased-course') ? 'active' : ''}} "><a href="{{route('purchased_course_data')}}" class="">Move Player</a></li>
+                        <li class="{{ request()->is('admin/purchased-course') ? 'active' : ''}} "><a href="{{route('purchased_course_data')}}" class="">Manage Courses</a></li>
                     </ul>
                 </li>
 

@@ -153,6 +153,10 @@
 
                             @foreach($listOfHeaderItem as $headItem)
                             
+                            @php 
+                                $week_data = isset($week_value) ? $week_value : 'W1'; 
+                                $week_value = " '".$week_data."' "; 
+                            @endphp
 
                             @if(isset($userSelectedDataByWeek['W1'][$currentday][$headItem]))
                             <td>*</td>
@@ -198,7 +202,21 @@
                         @if(!empty($child_details->med_cond_info))
                         <tr>
                             <td>{{$player->name}}</td>
-                            <td>@if(!empty($child_details->med_cond_info)) {{$child_details->med_cond_info}} @else -  @endif</td>
+                            <td>@if(!empty($child_details->med_cond_info)) 
+                                    @php 
+                                        $med_cond = json_decode($child_details->med_cond_info);
+                                        $conditions = [];
+                                    @endphp
+
+                                    @foreach($med_cond as $cond)
+                                       @php $conditions[] = $cond; @endphp
+                                    @endforeach
+
+                                    @php $cond = implode(' , ',$conditions); @endphp
+                                    {{$cond}}
+                                @else 
+                                    -  
+                                @endif</td>
                         </tr>
                         @else
                         @endif
@@ -211,12 +229,12 @@
             <table class="week-dtl">
                 <tbody>
                     <tr>
-                        <td><a href="">Display Camp Week 1</a></td>
-                        <td><a href="">Display Camp Week 2</a></td>
-                        <td><a href="">Display Camp Week 3</a></td>
-                        <td><a href="">Display Camp Week 4</a></td>
-                        <td><a href="">Display Camp Week 5</a></td>
-                        <td><a href="">Display Camp Week 6</a></td>
+                      <td><a href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W1">Display Camp Week 1</a></td>
+                      <td><a href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W2">Display Camp Week 2</a></td>
+                      <td><a href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W3">Display Camp Week 3</a></td>
+                      <td><a href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W4">Display Camp Week 4</a></td>
+                      <td><a href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W5">Display Camp Week 5</a></td>
+                      <td><a href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W6">Display Camp Week 6</a></td>
                     </tr>
                     <tr>
                         <td><a href="{{url('admin/camp')}}">List of Camps</a></td>

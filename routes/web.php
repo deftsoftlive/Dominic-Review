@@ -72,6 +72,7 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     Route::any('account-settings','HomeController@account_settings')->name('account_settings');
     Route::any('update-account-settings','HomeController@update_account_settings')->name('update_account_settings');
     Route::any('my-family','HomeController@my_family')->name('my-family');
+    Route::any('family-member/overview/{id}','HomeController@family_member_overview')->name('family_member_overview');
     Route::any('family-member/add','HomeController@add_family_member')->name('add-family-member');
     // Route::any('family-member/save','HomeController@save_family_member')->name('save-family-member');
     Route::any('family-member/edit/{id}','HomeController@edit_family_member')->name('edit-family-member');
@@ -99,6 +100,7 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     Route::any('contact-information','HomeController@contact_information')->name('contact_information');
     Route::any('medical-information','HomeController@medical_information')->name('medical_information');
     Route::any('media-consent','HomeController@media_consent')->name('media_consent');
+    Route::any('remove-contact/{id}','HomeController@remove_contact')->name('remove_contact');
 
     // Route::any('medical_info_to_next','HomeController@medical_info_to_next')->name('medical_info_to_next');
     // Route::any('child_cont_to_next','HomeController@child_cont_to_next')->name('child_cont_to_next');
@@ -135,6 +137,8 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     Route::any('competition/timeline/{id}','HomeController@playerCompetition')->name('playerCompetition');
     Route::any('goal/timeline/{id}','HomeController@playerGoal')->name('playerGoal');
     Route::any('badge/timeline/{id}','HomeController@playerBadge')->name('playerBadge');
+
+    Route::post('/show-name','HomeController@show_name_in_leaderboard')->name('show_name_in_leaderboard');
 });
 
 // Coupon code

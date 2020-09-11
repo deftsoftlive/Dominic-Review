@@ -483,15 +483,207 @@ form.cst-selection select.select_player
     
 }
 
+/*11-10-20*/
+.register-acc .card-header.family-tabs {
+    padding: 10px 15px;
+    background: #3f4d67;
+}
+.register-acc .card{
+    margin-bottom: 5px;}
+.register-acc .card button.btn.btn-link {
+    padding: 0;
+}
+.register-acc .card-header button span {
+    font-size: 18px;
+    padding: 10px;
+    background: #fff;
+    color: #00afef;
+    font-weight: 500;
+    height: 30px;
+    width: 30px;
+    line-height: 13px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #00afef;
+    margin: 0 15px 0 0;
+}
+.register-acc .card-header button {
+    color: #fff;
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+}.register-acc h5.mb-0 {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: nowrap;width: 100%;
+}
 
+.register-acc .card .card-header h5::after
+{
+  display: none!important;
+}
+.register-acc table.table.table-bordered.cst-reports th {
+    width: 0%;
+}
+.register-acc .card button:hover,
+.register-acc .card button:focus
 
+{
+  text-decoration: none;
+}
+.register-acc table.table.table-bordered.cst-reports th
+{
+  vertical-align: middle;
+}
+.register-acc table.table.table-bordered.cst-reports th:nth-child(6) {
 
+    width: 100%!important;
+    min-width: 205px;
+}
+.register-acc table.table.table-bordered.cst-reports th:nth-child(7)
+{width: 100%!important;
+    min-width: 152px;
 
+}
+.radio-outer-wrap {
+    display: contents;
+}
+.register-acc p.main_head {
+    font-size: 22px;
+    margin-right: 30px !important;
+    color: #000;
+}.main-radio {
+    margin-right: 30px;
+}
+.cstm-radio {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    margin-right: 28px;
+}
+.main-radio input {
+    right: -95px;
+}
+.cstm-radio input {
+    width: 18px;
+    height: 18px;
+    position: relative;
+    top: 2px;
+    opacity: 1;
+}
+.cstm-radio.tab-cstm-radio input {
+    opacity: 0!important;
+      top: 8px;
+    right: -47px;
+}
+.register-acc .collapse.show,
+.register-acc .collapsing
+{
+  background: #eef1f4;
+    position: relative;
+    top: -1.5px;
+}
 
+.register-acc .card-body{
+    border:3px solid #04a9f5;
+    padding: 15px;
+    border-top: 0;
+    margin: 0 10px;
+    box-shadow: 6px 6px 25px -4px rgba(0, 0, 0, 0.2);
+    background: #f3f6f9;
+}
 
+#add-family-mem label {
+    text-transform: capitalize;
+    font-weight: 500;
+}
+.register-acc .cstm-radio.main-radio label {
+    font-size: 24px;
+}
+.cstm-radio label {
+    margin: 5px 0;
+}
+.cstm-radio label {
+    position: relative;
+    z-index: -1;
+    padding-left: 5px;
+}
+.cstm-radio.tab-cstm-radio label::after {
+    content: "";
+    position: absolute;
+    left: 29px;
+    top: -5px;
+    width: 7px;
+    height: 15px;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(45deg);
+    opacity: 0;
+}
+.cstm-radio input:checked+label::after {
+    opacity: 1 ;
+}
+.cstm-radio.tab-cstm-radio label::before {
+    content: "";
+    position: absolute;
+    left: 20px;
+    top: -8px;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #00afef;
+}
 
-
-
+.register-sec .form-group {
+    width: 50%;
+    margin: 0;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+.register-sec .form-group {
+    width: 50%;
+    margin: 0;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+#add-family-mem label {
+    text-transform: capitalize;
+    font-weight: 500;
+    color: #464646;
+}
+.register-sec .form-group input, .register-sec .form-group label, .login-sec .form-group input, .login-sec .form-group label {
+    text-align: left !important;
+   
+}
+.contact_wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+.medicical-form p.sub_headings {
+    font-size: 20px;
+    font-weight: 500;
+    color: #000;
+}form.register-form .option_row .form-group.row .form-radios {
+    width: 60%;
+}.radio-wrap {
+    display: flex;
+    justify-content: flex-start;
+    width: 39%;
+    margin-right: 3px;
+}.option_row .form-group.row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.textarea-wrap {
+    padding-left: 0;
+}
+.register-sec .address-detail {
+    width: 100%;
+}
 
 
 
