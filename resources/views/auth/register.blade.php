@@ -21,7 +21,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10">
-            <div class="card">
+            <div class="card pr-form">
                 <div class="card-header">{{ __('Parent/Adult Registration Form') }}</div>
 
                 <div class="card-body">
@@ -251,7 +251,7 @@
                     <div class="form-button">
                         <div class="form-group row mb-0">
                             <div class="col-md-12 form-btn">
-                                <button type="submit" class="cstm-btn">
+                                <button type="submit" class="cstm-btn main_button">
                                     {{ __('Register') }}
                                 </button>
                             </div>

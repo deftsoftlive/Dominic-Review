@@ -143,8 +143,8 @@ div#add_new_match {
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <button type="submit" class="cstm-btn">submit</button>
-                                            <a id="add_match" class="cstm-btn">Add Match</a> 
+                                            <button type="submit" class="cstm-btn main_button">submit</button>
+                                            <a id="add_match" class="cstm-btn main_button">Add Match</a> 
                                         </div>
                                     </div>
                                 </div>
@@ -317,7 +317,7 @@ div#add_new_match {
                                                             </div> -->
                                                             
                                                         </div>
-                                                        <button type="submit" class="cstm-btn">submit</button>
+                                                        <button type="submit" class="cstm-btn main_button">submit</button>
                                                         
                                                     </form><!-- <br/>
                                                     <button id="add_match" class="cstm-btn">Add Match</button> -->
@@ -421,7 +421,7 @@ div#add_new_match {
 
                                                 <tr class="timeslots slots{{$count}}" value={{$count}}>
                                                   <td><input type="file" name="match_chart[{{$count}}]"></td>
-                                                  <td class="remove_game_chart"><a class="cstm-btn" onclick="removeSection({{$count}});" href="javascript:void(0);">Delete</a></td>      
+                                                  <td class="remove_game_chart"><a class="cstm-btn main_button" onclick="removeSection({{$count}});" href="javascript:void(0);">Delete</a></td>      
                                                 </tr>
 
                                             </div>
@@ -429,7 +429,7 @@ div#add_new_match {
                                             </tbody>
                                         </table>
                                     </div>
-                                    <button type="submit" class="cstm-btn">submit</button>
+                                    <button type="submit" class="cstm-btn main_button">submit</button>
                                 </form>
                             </div>
                         </div>
@@ -532,7 +532,7 @@ div#add_new_match {
                                     </table>
 
                                 </div>
-                                <button type="submit" class="cstm-btn">submit</button>
+                                <button type="submit" class="cstm-btn main_button">submit</button>
                                 
                             </form>
                         </div>

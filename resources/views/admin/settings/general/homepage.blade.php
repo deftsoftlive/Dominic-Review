@@ -66,7 +66,7 @@
              {{textbox($errors,'Slider Button Url <span class="cst-upper-star">*</span>','slider_button_url1',$slider_button_url1)}}
 
              <div class="form-group">
-              <label class="label-file">Slider-1 Image <span class="cst-upper-star">*</span></label>
+              <label class="label-file control-label">Slider-1 Image (1349 X 805) <span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'slider_image1_src')" class="form-control" name="slider_image1">
              </div>
              <img id="slider_image1_src" src="{{ URL::asset('/uploads').'/'.$slider_image1 }}" style="width: 100px;" />
@@ -85,7 +85,7 @@
              {{textbox($errors,'Slider Button Url <span class="cst-upper-star">*</span>','slider_button_url2',$slider_button_url2)}}
 
              <div class="form-group">
-              <label class="label-file">Slider-2 Image <span class="cst-upper-star">*</span></label>
+              <label class="label-file control-label">Slider-2 Image (1349 X 805) <span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'slider_image2_src')" class="form-control" name="slider_image2">
              </div>
              <img id="slider_image2_src" src="{{ URL::asset('/uploads').'/'.$slider_image2 }}" style="width: 100px;" />
@@ -104,7 +104,7 @@
              {{textbox($errors,'Slider Button Url <span class="cst-upper-star">*</span>','slider_button_url3',$slider_button_url3)}}
 
              <div class="form-group">
-              <label class="label-file">Slider-3 Image<span class="cst-upper-star">*</span></label>
+              <label class="label-file control-label">Slider-3 Image (1349 X 805) <span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'slider_image3_src')" class="form-control" name="slider_image3">
              </div>
              <img id="slider_image3_src" src="{{ URL::asset('/uploads').'/'.$slider_image3 }}" style="width: 100px;" />
@@ -119,7 +119,7 @@
              {{textarea($errors,'Description <span class="cst-upper-star">*</span>', 'section1_tagline', $section1_tagline)}}
 
              <div class="form-group">
-              <label class="label-file">Section2 Image<span class="cst-upper-star">*</span></label>
+              <label class="label-file">Section2 Image (540 X 455) <span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'aboutus_image_src')" class="form-control" name="aboutus_image">
              </div>
              <img id="aboutus_image_src" src="{{ URL::asset('/uploads').'/'.$aboutus_image }}" style="width: 100px;" />

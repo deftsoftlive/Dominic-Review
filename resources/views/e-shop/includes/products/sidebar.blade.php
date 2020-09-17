@@ -27,7 +27,7 @@
                     <input type="hidden" name="selected_sub_cat" id="selected_sub_cat">
 
                     <div class="submit_reset_btns">
-                        <button type="submit" class="cstm-btn">Submit</button>
+                        <button type="submit" class="cstm-btn main_button">Submit</button>
                         <a href="{{url('/shop')}}" class="cstm-btn">Reset</a>
                     </div>
                 </form>

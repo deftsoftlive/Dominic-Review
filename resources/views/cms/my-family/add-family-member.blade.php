@@ -6,25 +6,38 @@
 $user_id = request()->get('user');
 $sec = request()->get('sec');  
 @endphp
-@if(!empty($user_id))
+@if(isset($user_id))
+
 @php
 $user_data = DB::table('users')->where('id',$user_id)->first();
+
 $children_details = DB::table('children_details')->where('child_id',$user_id)->first();
 $child_contacts = DB::table('child_contacts')->where('type',$user_data->type)->where('child_id',$user_id)->get();
 $count_child_contacts = $child_contacts->count();
+
+$child_medicals = DB::table('child_medicals')->where('type',$user_data->type)->where('child_id',$user_id)->get();
+$count_child_medicals = $child_medicals->count();
+
+$child_allergies = DB::table('child_allergies')->where('type',$user_data->type)->where('child_id',$user_id)->get();
+$count_child_allergies = $child_allergies->count();
+
 @endphp
+
 @else
+
 @php 
 $user_data = '';
 $children_details = '';
 $child_contacts = '';
 $count_child_contacts = '';
+$count_child_medicals = '';
+$count_child_allergies = '';
 @endphp
+
 @endif
+
 @php
 $count = 1; 
-
-
 @endphp
 
 <style>
@@ -47,19 +60,26 @@ $count = 1;
         </nav>
     </div>
 </div>
+
 @if(Session::has('success'))
 <div class="alert_msg alert alert-success">
     <p>{{ Session::get('success') }} </p>
 </div>
 @endif
 
+@if(Session::has('error'))
+<div class="alert_msg alert alert-danger">
+    <p>{{ Session::get('error') }} </p>
+</div>
+@endif
+
 <section class="register-acc">
     <div class="container">
         <div class="inner-cont">
-            @if(!empty($user_id) && !empty($user_data))
+            @if(isset($user_id) && isset($user_data))
             <div class="back-to-family">
-                <h4 class="pl_name">Player Name : <p>{{$user_data->name}}</p></h4>
-                <a href="{{url('/user/my-family')}}" class="cstm-btn">Back to my family</a>
+                <h4 class="pl_name">Name : <p>{{$user_data->name}}</p></h4>
+                <a href="{{url('/user/my-family')}}" class="cstm-btn main_button">Back to my family</a>
             </div>
             @endif
             <br/>
@@ -81,7 +101,7 @@ $count = 1;
                             <div class="register-sec form-register-sec family_mem ">
                                 <form id="add-family-mem" action="{{ route('participants_details') }}" class="register-form" method="POST">
                                     @csrf
-                                    <input type="hidden" name="user_id" id="user_id" value="{{!empty($user_id) ? $user_id : ''}}">
+                                    <input type="hidden" name="user_id" id="user_id" value="{{isset($user_id) ? $user_id : ''}}">
                                     <input type="hidden" name="role_id" id="role_id" value="4">
                                     <div class="form-partition">
                                         <div class="row">
@@ -89,14 +109,7 @@ $count = 1;
                                                 <div class="col-sm-12">
                                                     <p class="main_head" style="display: inline-block; font-weight: 500; margin-right: 15px;">Is this person an adult or a child?</p>
                                                     <div class="radio-outer-wrap">
-                                                        <!-- <div class="cstm-radio main-radio">
-                                                            <input type="radio" name="type" data-type="child" id="check_child" value="child" @if(!empty($user_data)) @if($user_data->type == 'child') checked @endif @endif>
-                                                            <label for="child">Child</label>
-                                                        </div>
-                                                        <div class="cstm-radio main-radio">
-                                                            <input type="radio" name="type" data-type="adult" id="check_adult" value="adult" @if(!empty($user_data)) @if($user_data->type == 'adult') checked @endif @endif>
-                                                            <label for="adult">Adult</label>
-                                                        </div> -->
+                                                        
                                                         <div class="cstm-radio main-radio">
                                                             <input type="radio" name="type" data-type="child" id="check_child" value="Child" @if(!empty($user_data)) @if($user_data->type == 'Child') checked @endif @endif>
                                                             <label for="child">Child</label>
@@ -240,13 +253,13 @@ $count = 1;
                                                 <div class="form-group row">
                                                     <div class="form-radios" style="margin: 10px 0;">
                                                         <div class="col-sm-12">
-                                                            <p class="pry-lang" style="display: inline-block; font-weight: 500; margin-right: 15px;">Is English your child's primary language?</p>
+                                                            <p class="pry-lang" style="display: inline-block; font-weight: 500; margin-right: 15px;">Is English this person’s primary language?</p>
                                                             <div class="cstm-radio">
-                                                                <input type="radio" name="language1" id="p-l-english-yes" value="yes" @if(!empty($children_details->core_lang)) @if($children_details->core_lang == 'yes') checked @endif @endif>
+                                                                <input type="radio" class="eng_que" name="language1" id="p-l-english-yes" value="yes" @if(isset($children_details->core_lang)) @if($children_details->core_lang == 'yes') checked @endif @endif>
                                                                 <label for="p-l-english-yes">Yes</label>
                                                             </div>
                                                             <div class="cstm-radio">
-                                                                <input type="radio" name="language1" id="p-l-english-no" value="no" @if(!empty($children_details->core_lang)) @if($children_details->core_lang == 'no') checked @endif @endif>
+                                                                <input type="radio" class="eng_que" name="language1" id="p-l-english-no" value="no" @if(isset($children_details->core_lang)) @if($children_details->core_lang == 'no') checked @endif @endif>
                                                                 <label for="p-l-english-no">No</label>
                                                             </div>
                                                             <!-- <input type="hidden" name="core_lang" id="core_lang" value=""> -->
@@ -255,8 +268,8 @@ $count = 1;
                                                 </div>
 
                                                 
-                                                <div class="form-group row" id="primary_lang" style="display: block;">
-                                                <label class="col-md-12 col-form-label text-md-right">What is their primary language?</label>
+                                                <div class="form-group row pri_lang" id="primary_lang" @if(isset($children_details->primary_language)) @if($children_details->primary_language == 'no') style="display:block;" @elseif($children_details->primary_language == 'yes') style="display:none;" @endif @endif>
+                                                <label class="col-md-12 col-form-label text-md-right">What is this person’s primary language?</label>
                                                     <div class="col-md-12">
                                                         <input id="child-school" type="text" class="form-control" name="primary_language1" value="{{isset($children_details->primary_language) ? $children_details->primary_language : ''}}">
                                                     </div>
@@ -268,30 +281,18 @@ $count = 1;
                                                                 <p class="holiday_camps" style="display: inline-block; font-weight: 500; margin-right: 15px;">Will this person be booking onto a DRH coaching course or holiday camp?</p>
                                                             </div>
                                                             <div class="cstm-radio">
-                                                                <input type="radio" name="book_person1" id="book_person_yes" value="yes"  @if(!empty($user_data->book_person)) @if($user_data->book_person == 'yes') checked @endif @endif>
+                                                                <input type="radio" name="book_person1" id="book_person_yes" value="yes"  @if(isset($user_data->book_person)) @if($user_data->book_person == 'yes') checked @endif @endif>
                                                                 <label for="book_person_yes">Yes</label>
                                                             </div>
                                                             <div class="cstm-radio booking">
-                                                                <input type="radio" name="book_person1" id="book_person_no" value="no" @if(!empty($user_data->book_person)) @if($user_data->book_person == 'no') checked @endif @endif>
+                                                                <input type="radio" name="book_person1" id="book_person_no" value="no" @if(isset($user_data->book_person)) @if($user_data->book_person == 'no') checked @endif @endif>
                                                                 <label for="book_person_no">No</label>
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <!-- Show name in leaderboard -->
-                                                    <!-- <div class="form-group row">
-                                                        <label for="relation" class="col-md-12 col-form-label text-md-right">Do you want to show player name in leaderboard?</label>
-                                                        <div class="col-md-12">
-                                                            <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-                                                            <select id="show_name" name="show_name1" class="form-control cstm-select-list">
-                                                                <option selected="" disabled="" value="">Please Choose</option>
-                                                                <option value="1" @if(!empty($user_data)) @if($user_data->show_name == '1') selected @endif @endif>Yes</option>
-                                                                <option value="0" @if(!empty($user_data)) @if($user_data->show_name == '0') selected @endif @endif>No</option>
-                                                            </select>
-                                                        </div>
-                                                    </div> -->
                                                     <div class="col-md-12">
-                                                        <button type="submit" id="family_mem_btn" class="cstm-btn">Save Section</button>
+                                                        <button type="submit" id="family_mem_btn" class="cstm-btn main_button">Save Section</button>
                                                     </div>
                                                     <!-- Selection Section - End -->
                                                 </div>
@@ -331,7 +332,7 @@ $count = 1;
                                                     <div class="form-group row">
                                                         <label for="date_of_birth" class="col-md-12 col-form-label text-md-right">Date Of Birth</label>
                                                         <div class="col-md-12">
-                                                            <input id="date_of_birth" type="date" class="form-control" name="date_of_birth" value="2020-07-07" required="" max="2020-07-07">
+                                                            <input id="date_of_birth" type="date" class="form-control" name="date_of_birth" required="" max="2020-07-07">
                                                         </div>
                                                     </div>
                                                     <!-- Address -->
@@ -401,21 +402,21 @@ $count = 1;
                                                     <div class="form-group row">
                                                         <div class="form-radios" style="margin: 10px 0;">
                                                             <div class="col-sm-12">
-                                                                <p style="display: inline-block; font-weight: 500; margin-right: 15px;">Is English your child's primary language?</p>
+                                                                <p style="display: inline-block; font-weight: 500; margin-right: 15px;">Is English this person’s primary language?</p>
                                                                 <div class="cstm-radio">
-                                                                    <input type="radio" name="language" id="p-l-eng-yes" value="yes" @if(!empty($children_details->core_lang)) @if($children_details->core_lang == 'yes') checked @endif @endif>
+                                                                    <input type="radio" class="eng_que1" name="language" id="p-l-eng-yes" value="yes" @if(isset($children_details->core_lang)) @if($children_details->core_lang == 'yes') checked @endif @endif>
                                                                     <label for="p-l-eng-yes">Yes</label>
                                                                 </div>
                                                                 <div class="cstm-radio">
-                                                                    <input type="radio" name="language" id="p-l-eng-no"  value="no" @if(!empty($children_details->core_lang)) @if($children_details->core_lang == 'no') checked @endif @endif>
+                                                                    <input type="radio" class="eng_que1" name="language" id="p-l-eng-no"  value="no" @if(isset($children_details->core_lang)) @if($children_details->core_lang == 'no') checked @endif @endif>
                                                                     <label for="p-l-eng-no">No</label>
                                                                 </div>
                                                                 <!-- <input type="hidden" name="core_lang" id="core_lang" value=""> -->
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group row" id="primary_lang" style="display: block;">
-                                                        <label class="col-md-12 col-form-label text-md-right">What is their primary language?</label>
+                                                    <div class="form-group row pri_lang1" id="primary_lang" @if(isset($children_details->primary_language)) @if($children_details->primary_language == 'no') style="display:block;" @elseif($children_details->primary_language == 'yes') style="display:none;" @endif @endif>
+                                                        <label class="col-md-12 col-form-label text-md-right">Is English this person’s primary language?</label>
                                                         <div class="col-md-12">
                                                             <input id="child-school" type="text" class="form-control" name="primary_language" value="{{isset($children_details->primary_language) ? $children_details->primary_language : ''}}">
                                                         </div>
@@ -427,32 +428,20 @@ $count = 1;
                                                                     <p style="display: inline-block; font-weight: 500; margin-right: 15px;">Will this person be booking onto a DRH coaching course or holiday camp?</p>
                                                                 </div>
                                                                 <div class="cstm-radio">
-                                                                    <input type="radio" name="book_person" id="book_person_yes1" value="yes" @if(!empty($user_data->book_person)) @if($user_data->book_person == 'yes') checked @endif @endif>
+                                                                    <input type="radio" name="book_person" id="book_person_yes1" value="yes" @if(isset($user_data->book_person)) @if($user_data->book_person == 'yes') checked @endif @endif>
                                                                     <label for="book_person_yes1">Yes</label>
                                                                 </div>
                                                                 <div class="cstm-radio booking">
-                                                                    <input type="radio" name="book_person" id="book_person_no1" value="no" @if(!empty($user_data->book_person)) @if($user_data->book_person == 'no') checked @endif @endif>
+                                                                    <input type="radio" name="book_person" id="book_person_no1" value="no" @if(isset($user_data->book_person)) @if($user_data->book_person == 'no') checked @endif @endif>
                                                                     <label for="book_person_no1">No</label>
                                                                 </div>
                                                                 <!-- <input type="hidden" name="book_person" id="book_person" value=""> -->
                                                             </div>
                                                         </div>
 
-                                                        <!-- Show name in leaderboard -->
-                                                        <!-- <div class="form-group row">
-                                                            <label for="relation" class="col-md-12 col-form-label text-md-right">Do you want to show player name in leaderboard?</label>
-                                                            <div class="col-md-12">
-                                                                <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-                                                                <select id="show_name" name="show_name" class="form-control cstm-select-list">
-                                                                    <option selected="" disabled="" value="">Please Choose</option>
-                                                                    <option value="1" @if(!empty($user_data)) @if($user_data->show_name == '1') selected @endif @endif>Yes</option>
-                                                                    <option value="0" @if(!empty($user_data)) @if($user_data->show_name == '0') selected @endif @endif>No</option>
-                                                                </select>
-                                                            </div>
-                                                        </div> -->
 
                                                         <div class="col-md-12">
-                                                            <button type="submit" id="family_mem_btn" class="cstm-btn">Save Section</button>
+                                                            <button type="submit" id="family_mem_btn" class="cstm-btn main_button">Save Section</button>
                                                         </div>
                                                         <!-- Selection Section - End -->
                                                     </div>
@@ -463,11 +452,12 @@ $count = 1;
                         </div>
                     </div>
                 </div>
-                <div class="card @if(!empty($user_id)) @else disable_tab @endif">
+
+                <div class="card @if(isset($user_id)) @else disable_tab @endif">
                     <div class="card-header family-tabs" id="headingTwo">
                         <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" @if($sec == 2) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="collapseTwo">
-                                <span>2</span> contact
+                                <span>2</span> contacts
                             </button>
                             <div class="cstm-radio tab-cstm-radio">
                                 <input type="radio" disabled="" name="type2" data-type="child" id="tab2" @if(!empty($child_contacts) && count($child_contacts)>0) checked @endif>
@@ -484,10 +474,10 @@ $count = 1;
                                         <form action="{{route('contact_information')}}" class="register-form contact_form" method="POST">
                                             @csrf
                                             <input type="hidden" name="child_id" value="{{isset($user_id) ? $user_id : ''}}"> 
-                                            <input type="hidden" name="type" value="{{!empty($user_data) ? $user_data->type : ''}}"> 
+                                            <input type="hidden" name="type" value="{{!empty($user_data) ? $user_data->type : ''}}">
 
-                                            @if(!empty($user_data))
-                                                @if($user_data->type == 'Child')
+                                            @if(!empty($user_data)) 
+                                                @if($user_data->type == 'Child') 
                                                     <div class="child-selection-content" style="display: block;">
                                                         <div class="form-group-wrap">
                                                             <p style="display: inline-block; font-weight: 500; margin:0 15px;" class="main_head">Contacts and desiginated adults for activity pick up/drop off </p>
@@ -495,16 +485,20 @@ $count = 1;
                                                                 <p style="font-weight: 500; margin-right: 15px; margin-bottom: 0;color: #858686;">Please note</p>
                                                             </div>
                                                             <div class="col-sm-12">
-                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notice about upcoming events and notification from linked coaches will be sent to the account holder email address.</p>
+                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notices about upcoming events and notifications from linked sports coaches will be sent to the account holder email address.</p>
+                                                            </div>
+                                                            
+                                                            <div class="col-sm-12">
+                                                                <p style="font-weight: 500; margin-right: 15px; margin-bottom: 0;color: #858686;">If this participant is enrolling on a DRH Sports activity:</p>
                                                             </div>
                                                             <div class="col-sm-12">
-                                                                <p style="font-weight: 400; margin-right: 15px;color: #858686;">If anyone other than the contact below acts as the pick up / drop off for the child, we will need consent given by the account holder via email to <a href="#">info@drhsports.co.uk</a> </p>
+                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">This section is to state particular individuals you would wish us to contact in the event of an emergency. Along with the individuals that could be dropping off or picking up from the DRH Sports activity (if child).</p>
                                                             </div>
                                                             <div class="contact_wrap">
 
                                                             <div class="child-contact-container" id="sec_contact">
 
-                                                                @if(!empty($count_child_contacts))
+                                                                @if(isset($count_child_contacts))
                                                                 <input type="hidden" id="noOfContact" value="{{$count_child_contacts}}">
 
                                                                 @php $i=1; @endphp
@@ -547,11 +541,11 @@ $count = 1;
                                                                             <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                                                             <select id="relation" name="contact[{{$i}}][con_relation]" class="form-control cstm-select-list">
                                                                                 <option selected="" disabled="" value="">Please Choose</option>
-                                                                                <option value="Mother" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Mother') selected @endif @endif>Mother</option>
-                                                                                <option value="Father" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Father') selected @endif @endif>Father</option>
-                                                                                <option value="Grandparent" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Grandparent') selected @endif @endif>Grandparent</option>
-                                                                                <option value="Guardian" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Guardian') selected @endif @endif>Guardian</option>
-                                                                                <option value="Spouse" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Spouse') selected @endif @endif>Spouse/Partner</option>
+                                                                                <option value="Mother" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Mother') selected @endif @endif>Mother</option>
+                                                                                <option value="Father" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Father') selected @endif @endif>Father</option>
+                                                                                <option value="Grandparent" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Grandparent') selected @endif @endif>Grandparent</option>
+                                                                                <option value="Guardian" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Guardian') selected @endif @endif>Guardian</option>
+                                                                                <option value="Spouse" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Spouse') selected @endif @endif>Spouse/Partner</option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -597,11 +591,11 @@ $count = 1;
                                                                             <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                                                             <select id="relation" name="contact[{{$count}}][con_relation]" class="form-control cstm-select-list">
                                                                                 <option selected="" disabled="" value="">Please Choose</option>
-                                                                                <option value="Mother" @if(!empty($user_data)) @if($user_data->relation == 'Mother') selected @endif @endif>Mother</option>
-                                                                                <option value="Father" @if(!empty($user_data)) @if($user_data->relation == 'Father') selected @endif @endif>Father</option>
-                                                                                <option value="Grandparent" @if(!empty($user_data)) @if($user_data->relation == 'Grandparent') selected @endif @endif>Grandparent</option>
-                                                                                <option value="Guardian" @if(!empty($user_data)) @if($user_data->relation == 'Guardian') selected @endif @endif>Guardian</option>
-                                                                                <option value="Spouse" @if(!empty($user_data)) @if($user_data->relation == 'Spouse') selected @endif @endif>Spouse/Partner</option>
+                                                                                <option value="Mother" @if(isset($user_data)) @if($user_data->relation == 'Mother') selected @endif @endif>Mother</option>
+                                                                                <option value="Father" @if(isset($user_data)) @if($user_data->relation == 'Father') selected @endif @endif>Father</option>
+                                                                                <option value="Grandparent" @if(isset($user_data)) @if($user_data->relation == 'Grandparent') selected @endif @endif>Grandparent</option>
+                                                                                <option value="Guardian" @if(isset($user_data)) @if($user_data->relation == 'Guardian') selected @endif @endif>Guardian</option>
+                                                                                <option value="Spouse" @if(isset($user_data)) @if($user_data->relation == 'Spouse') selected @endif @endif>Spouse/Partner</option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -651,11 +645,11 @@ $count = 1;
                                                                             <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                                                             <select id="relation1" name="contact[{{$count+1}}][con_relation]" class="form-control cstm-select-list">
                                                                                 <option selected="" disabled="" value="">Please Choose</option>
-                                                                                <option value="Mother" @if(!empty($user_data)) @if($user_data->relation == 'Mother') selected @endif @endif>Mother</option>
-                                                                                <option value="Father" @if(!empty($user_data)) @if($user_data->relation == 'Father') selected @endif @endif>Father</option>
-                                                                                <option value="Grandparent" @if(!empty($user_data)) @if($user_data->relation == 'Grandparent') selected @endif @endif>Grandparent</option>
-                                                                                <option value="Guardian" @if(!empty($user_data)) @if($user_data->relation == 'Guardian') selected @endif @endif>Guardian</option>
-                                                                                <option value="Spouse" @if(!empty($user_data)) @if($user_data->relation == 'Spouse') selected @endif @endif>Spouse/Partner</option>
+                                                                                <option value="Mother" @if(isset($user_data)) @if($user_data->relation == 'Mother') selected @endif @endif>Mother</option>
+                                                                                <option value="Father" @if(isset($user_data)) @if($user_data->relation == 'Father') selected @endif @endif>Father</option>
+                                                                                <option value="Grandparent" @if(isset($user_data)) @if($user_data->relation == 'Grandparent') selected @endif @endif>Grandparent</option>
+                                                                                <option value="Guardian" @if(isset($user_data)) @if($user_data->relation == 'Guardian') selected @endif @endif>Guardian</option>
+                                                                                <option value="Spouse" @if(isset($user_data)) @if($user_data->relation == 'Spouse') selected @endif @endif>Spouse/Partner</option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -671,17 +665,17 @@ $count = 1;
                                                             </div>
                                                             <div class="form-group row f-g-full">
                                                                 <div class="col-sm-12" style="margin-top: 15px;">
-                                                                    <a href="javascript:void(0);" style="margin:0;" onclick="addcontact();" class="additional_contact cstm-btn">Add an additional contact <i class="fas fa-plus"></i></a>
+                                                                    <a href="javascript:void(0);" style="margin:0;" onclick="addcontact();" class="additional_contact cstm-btn main_button">Add an additional contact <i class="fas fa-plus"></i></a>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row f-g-full ">
                                                                 <div class="col-sm-12 next-setp">
-                                                                    <button type="submit" id="medical_info_to_next" class="cstm-btn" style="margin:0px;">Save section</button>
+                                                                    <button type="submit" id="medical_info_to_next" class="cstm-btn main_button" style="margin:0px;">Save section</button>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                @elseif($user_data->type == 'Adult')
+                                                @elseif($user_data->type == 'Adult') 
                                                     <div class="child-selection-content" style="display: none;">
                                                         <div class="form-group-wrap">
                                                             <p style="display: inline-block; font-weight: 500; margin:0 15px;" class="main_head">Contacts and desiginated adults for activity pick up/drop off </p>
@@ -689,19 +683,28 @@ $count = 1;
                                                                 <p style="font-weight: 500; margin-right: 15px; margin-bottom: 0;color: #858686;">Please note</p>
                                                             </div>
                                                             <div class="col-sm-12">
-                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notice about upcoming events and notification from linked coaches will be sent to the account holder email address.</p>
+                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notices about upcoming events and notifications from linked sports coaches will be sent to the account holder email address.</p>
+                                                            </div>
+
+                                                          <!--   <div class="col-sm-12">
+                                                                <p style="font-weight: 500; margin-right: 15px; margin-bottom: 0;color: #858686;">If this participant is enrolling on a DRH Sports activity:</p>
                                                             </div>
                                                             <div class="col-sm-12">
+                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">This section is to state particular individuals you would wish us to contact in the event of an emergency. Along with the individuals that could be dropping off or picking up from the DRH Sports activity (if child).</p>
+                                                            </div> -->
+
+                                                            <!-- <div class="col-sm-12">
                                                                 <p style="font-weight: 400; margin-right: 15px;color: #858686;">If anyone other than the contact below acts as the pick up / drop off for the child, we will need consent given by the account holder via email to <a href="#">info@drhsports.co.uk</a> </p>
-                                                            </div>
+                                                            </div> -->
                                                             <div class="contact_wrap">
 
                                                             <div class="child-contact-container" id="sec_contact">
 
-                                                                @if(!empty($count_child_contacts))
+                                                                @if($count_child_contacts > 0)
                                                                 <input type="hidden" id="noOfContact" value="{{$count_child_contacts}}">
 
-                                                                @php $i=1; @endphp
+                                                                @if(!empty($child_contacts))
+                                                                @php $i=1; @endphp  
                                                                 @foreach($child_contacts as $contacts)
 
                                                                 <div class="col-sm-12">
@@ -741,11 +744,11 @@ $count = 1;
                                                                             <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                                                             <select id="relation" name="contact[{{$i}}][con_relation]" class="form-control cstm-select-list">
                                                                                 <option selected="" disabled="" value="">Please Choose</option>
-                                                                                <option value="Mother" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Mother') selected @endif @endif>Mother</option>
-                                                                                <option value="Father" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Father') selected @endif @endif>Father</option>
-                                                                                <option value="Grandparent" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Grandparent') selected @endif @endif>Grandparent</option>
-                                                                                <option value="Guardian" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Guardian') selected @endif @endif>Guardian</option>
-                                                                                <option value="Spouse" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Spouse') selected @endif @endif>Spouse/Partner</option>
+                                                                                <option value="Mother" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Mother') selected @endif @endif>Mother</option>
+                                                                                <option value="Father" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Father') selected @endif @endif>Father</option>
+                                                                                <option value="Grandparent" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Grandparent') selected @endif @endif>Grandparent</option>
+                                                                                <option value="Guardian" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Guardian') selected @endif @endif>Guardian</option>
+                                                                                <option value="Spouse" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Spouse') selected @endif @endif>Spouse/Partner</option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -758,7 +761,8 @@ $count = 1;
                                                                 </div>
                                                                 @php $i++; @endphp
                                                                 @endforeach
-                                                                @else
+                                                                @endif
+                                                                @else 
                                                                 <input type="hidden" id="noOfContact" value="{{$count+1}}">
                                                                 <div class="contact_wrap contact_section[{{$count}}]">
                                                                     <div class="form-group row">
@@ -791,11 +795,11 @@ $count = 1;
                                                                             <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                                                             <select id="relation" name="contact[{{$count}}][con_relation]" class="form-control cstm-select-list">
                                                                                 <option selected="" disabled="" value="">Please Choose</option>
-                                                                                <option value="Mother" @if(!empty($user_data)) @if($user_data->relation == 'Mother') selected @endif @endif>Mother</option>
-                                                                                <option value="Father" @if(!empty($user_data)) @if($user_data->relation == 'Father') selected @endif @endif>Father</option>
-                                                                                <option value="Grandparent" @if(!empty($user_data)) @if($user_data->relation == 'Grandparent') selected @endif @endif>Grandparent</option>
-                                                                                <option value="Guardian" @if(!empty($user_data)) @if($user_data->relation == 'Guardian') selected @endif @endif>Guardian</option>
-                                                                                <option value="Spouse" @if(!empty($user_data)) @if($user_data->relation == 'Spouse') selected @endif @endif>Spouse/Partner</option>
+                                                                                <option value="Mother" @if(isset($user_data)) @if($user_data->relation == 'Mother') selected @endif @endif>Mother</option>
+                                                                                <option value="Father" @if(isset($user_data)) @if($user_data->relation == 'Father') selected @endif @endif>Father</option>
+                                                                                <option value="Grandparent" @if(isset($user_data)) @if($user_data->relation == 'Grandparent') selected @endif @endif>Grandparent</option>
+                                                                                <option value="Guardian" @if(isset($user_data)) @if($user_data->relation == 'Guardian') selected @endif @endif>Guardian</option>
+                                                                                <option value="Spouse" @if(isset($user_data)) @if($user_data->relation == 'Spouse') selected @endif @endif>Spouse/Partner</option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -845,11 +849,11 @@ $count = 1;
                                                                             <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                                                             <select id="relation1" name="contact[{{$count+1}}][con_relation]" class="form-control cstm-select-list">
                                                                                 <option selected="" disabled="" value="">Please Choose</option>
-                                                                                <option value="Mother" @if(!empty($user_data)) @if($user_data->relation == 'Mother') selected @endif @endif>Mother</option>
-                                                                                <option value="Father" @if(!empty($user_data)) @if($user_data->relation == 'Father') selected @endif @endif>Father</option>
-                                                                                <option value="Grandparent" @if(!empty($user_data)) @if($user_data->relation == 'Grandparent') selected @endif @endif>Grandparent</option>
-                                                                                <option value="Guardian" @if(!empty($user_data)) @if($user_data->relation == 'Guardian') selected @endif @endif>Guardian</option>
-                                                                                <option value="Spouse" @if(!empty($user_data)) @if($user_data->relation == 'Spouse') selected @endif @endif>Spouse/Partner</option>
+                                                                                <option value="Mother" @if(isset($user_data)) @if($user_data->relation == 'Mother') selected @endif @endif>Mother</option>
+                                                                                <option value="Father" @if(isset($user_data)) @if($user_data->relation == 'Father') selected @endif @endif>Father</option>
+                                                                                <option value="Grandparent" @if(isset($user_data)) @if($user_data->relation == 'Grandparent') selected @endif @endif>Grandparent</option>
+                                                                                <option value="Guardian" @if(isset($user_data)) @if($user_data->relation == 'Guardian') selected @endif @endif>Guardian</option>
+                                                                                <option value="Spouse" @if(isset($user_data)) @if($user_data->relation == 'Spouse') selected @endif @endif>Spouse/Partner</option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -865,18 +869,18 @@ $count = 1;
                                                             </div>
                                                             <div class="form-group row f-g-full">
                                                                 <div class="col-sm-12" style="margin-top: 15px;">
-                                                                    <a href="javascript:void(0);" style="margin:0;" onclick="addcontact();" class="additional_contact cstm-btn">Add an additional contact <i class="fas fa-plus"></i></a>
+                                                                    <a href="javascript:void(0);" style="margin:0;" onclick="addcontact();" class="additional_contact cstm-btn main_button">Add an additional contact <i class="fas fa-plus"></i></a>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row f-g-full ">
                                                                 <div class="col-sm-12 next-setp">
-                                                                    <button type="submit" id="medical_info_to_next" class="cstm-btn" style="margin:0px;">Save section</button>
+                                                                    <button type="submit" id="medical_info_to_next" class="cstm-btn main_button" style="margin:0px;">Save section</button>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 @endif
-                                            @else
+                                            @else 
                                                 <div class="child-selection-content">
                                                     <div class="form-group-wrap">
                                                             <p style="display: inline-block; font-weight: 500; margin:0 15px;" class="main_head">Contacts and desiginated adults for activity pick up/drop off </p>
@@ -884,11 +888,18 @@ $count = 1;
                                                                 <p style="font-weight: 500; margin-right: 15px; margin-bottom: 0;color: #858686;">Please note</p>
                                                             </div>
                                                             <div class="col-sm-12">
-                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notice about upcoming events and notification from linked coaches will be sent to the account holder email address.</p>
+                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notices about upcoming events and notifications from linked sports coaches will be sent to the account holder email address.</p>
+                                                            </div>
+
+                                                            <div class="col-sm-12">
+                                                                <p style="font-weight: 500; margin-right: 15px; margin-bottom: 0;color: #858686;">If this participant is enrolling on a DRH Sports activity:</p>
                                                             </div>
                                                             <div class="col-sm-12">
-                                                                <p style="font-weight: 400; margin-right: 15px;color: #858686;">If anyone other than the contact below acts as the pick up / drop off for the child, we will need consent given by the account holder via email to <a href="#">info@drhsports.co.uk</a> </p>
+                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">This section is to state particular individuals you would wish us to contact in the event of an emergency. Along with the individuals that could be dropping off or picking up from the DRH Sports activity (if child).</p>
                                                             </div>
+                                                            <!-- <div class="col-sm-12">
+                                                                <p style="font-weight: 400; margin-right: 15px;color: #858686;">If anyone other than the contact below acts as the pick up / drop off for the child, we will need consent given by the account holder via email to <a href="#">info@drhsports.co.uk</a> </p>
+                                                            </div> -->
                                                             <div class="contact_wrap">
 
                                                             <div class="child-contact-container" id="sec_contact">
@@ -936,11 +947,11 @@ $count = 1;
                                                                             <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                                                             <select id="relation" name="contact[{{$i}}][con_relation]" class="form-control cstm-select-list">
                                                                                 <option selected="" disabled="" value="">Please Choose</option>
-                                                                                <option value="Mother" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Mother') selected @endif @endif>Mother</option>
-                                                                                <option value="Father" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Father') selected @endif @endif>Father</option>
-                                                                                <option value="Grandparent" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Grandparent') selected @endif @endif>Grandparent</option>
-                                                                                <option value="Guardian" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Guardian') selected @endif @endif>Guardian</option>
-                                                                                <option value="Spouse" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Spouse') selected @endif @endif>Spouse/Partner</option>
+                                                                                <option value="Mother" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Mother') selected @endif @endif>Mother</option>
+                                                                                <option value="Father" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Father') selected @endif @endif>Father</option>
+                                                                                <option value="Grandparent" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Grandparent') selected @endif @endif>Grandparent</option>
+                                                                                <option value="Guardian" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Guardian') selected @endif @endif>Guardian</option>
+                                                                                <option value="Spouse" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Spouse') selected @endif @endif>Spouse/Partner</option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -1060,12 +1071,12 @@ $count = 1;
                                                             </div>
                                                             <div class="form-group row f-g-full">
                                                                 <div class="col-sm-12" style="margin-top: 15px;">
-                                                                    <a href="javascript:void(0);" style="margin:0;" onclick="addcontact();" class="additional_contact cstm-btn">Add an additional contact <i class="fas fa-plus"></i></a>
+                                                                    <a href="javascript:void(0);" style="margin:0;" onclick="addcontact();" class="additional_contact cstm-btn main_button">Add an additional contact <i class="fas fa-plus"></i></a>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row f-g-full ">
                                                                 <div class="col-sm-12 next-setp">
-                                                                    <button type="submit" id="medical_info_to_next" class="cstm-btn" style="margin:0px;">Save section</button>
+                                                                    <button type="submit" id="medical_info_to_next" class="cstm-btn main_button" style="margin:0px;">Save section</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1076,16 +1087,19 @@ $count = 1;
                                                         @if($user_data->type == 'Adult')
                                                             <div class="adult-selection-content" style="display: block;">
                                                                 <div class="form-group-wrap">
-                                                                    <h4>Emergency contacts</h4>
+                                                                    <h4>Contacts</h4>
                                                                     <div class="col-sm-12">
                                                                         <p style="font-weight: 500; margin-right: 15px; margin-bottom: 0;color: #858686;">Please note</p>
                                                                     </div>
                                                                     <div class="col-sm-12">
-                                                                        <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notice about upcoming events and notification from linked coaches will be sent to the account holder email address.</p>
+                                                                        <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notices about upcoming events and notifications from linked sports coaches will be sent to the account holder email address.</p>
                                                                     </div>
+                                                                    <!-- <div class="col-sm-12">
+                                                                        <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notices about upcoming events and notifications from linked sports coaches will be sent to the account holder email address.</p>
+                                                                    </div> -->
                                                                     <div class="child-contact-container" id="sec_contact1">
                                                                         
-                                                                        @if(!empty($count_child_contacts))
+                                                                        @if(isset($count_child_contacts))
                                                                         @php $i = 1; @endphp
                                                                         <input type="hidden" id="noOfContact1" value="{{$count_child_contacts}}">
 
@@ -1127,11 +1141,11 @@ $count = 1;
                                                                                     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                                                                     <select id="relation1" name="contact1[{{$i}}][con_relation1]" class="form-control cstm-select-list">
                                                                                         <option selected="" disabled="" value="">Please Choose</option>
-                                                                                        <option value="Mother" @if(!empty($contacts->   relationship)) @if($contacts->relationship == 'Mother') selected @endif @endif>Mother</option>
-                                                                                        <option value="Father" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Father') selected @endif @endif>Father</option>
-                                                                                        <option value="Grandparent" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Grandparent') selected @endif @endif>Grandparent</option>
-                                                                                        <option value="Guardian" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Guardian') selected @endif @endif>Guardian</option>
-                                                                                        <option value="Spouse" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Spouse') selected @endif @endif>Spouse/Partner</option>
+                                                                                        <option value="Mother" @if(isset($contacts->   relationship)) @if($contacts->relationship == 'Mother') selected @endif @endif>Mother</option>
+                                                                                        <option value="Father" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Father') selected @endif @endif>Father</option>
+                                                                                        <option value="Grandparent" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Grandparent') selected @endif @endif>Grandparent</option>
+                                                                                        <option value="Guardian" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Guardian') selected @endif @endif>Guardian</option>
+                                                                                        <option value="Spouse" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Spouse') selected @endif @endif>Spouse/Partner</option>
                                                                                     </select>
                                                                                 </div>
                                                                             </div>
@@ -1183,11 +1197,11 @@ $count = 1;
                                                                                     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                                                                     <select id="relation1" name="contact1[{{$count}}][con_relation1]" class="form-control cstm-select-list">
                                                                                         <option selected="" disabled="" value="">Please Choose</option>
-                                                                                        <option value="Mother" @if(!empty($user_data)) @if($user_data->relation == 'Mother') selected @endif @endif>Mother</option>
-                                                                                        <option value="Father" @if(!empty($user_data)) @if($user_data->relation == 'Father') selected @endif @endif>Father</option>
-                                                                                        <option value="Grandparent" @if(!empty($user_data)) @if($user_data->relation == 'Grandparent') selected @endif @endif>Grandparent</option>
-                                                                                        <option value="Guardian" @if(!empty($user_data)) @if($user_data->relation == 'Guardian') selected @endif @endif>Guardian</option>
-                                                                                        <option value="Spouse" @if(!empty($user_data)) @if($user_data->relation == 'Spouse') selected @endif @endif>Spouse/Partner</option>
+                                                                                        <option value="Mother" @if(isset($user_data)) @if($user_data->relation == 'Mother') selected @endif @endif>Mother</option>
+                                                                                        <option value="Father" @if(isset($user_data)) @if($user_data->relation == 'Father') selected @endif @endif>Father</option>
+                                                                                        <option value="Grandparent" @if(isset($user_data)) @if($user_data->relation == 'Grandparent') selected @endif @endif>Grandparent</option>
+                                                                                        <option value="Guardian" @if(isset($user_data)) @if($user_data->relation == 'Guardian') selected @endif @endif>Guardian</option>
+                                                                                        <option value="Spouse" @if(isset($user_data)) @if($user_data->relation == 'Spouse') selected @endif @endif>Spouse/Partner</option>
                                                                                     </select>
                                                                                 </div>
                                                                             </div>
@@ -1202,13 +1216,13 @@ $count = 1;
                                                                     </div>
                                                                     <div class="form-group row f-g-full">
                                                                         <div class="col-sm-12" style="margin-top: 15px;">
-                                                                            <a href="javascript:void(0);" style="margin:0;" onclick="addcontact1();" class="additional_contact1 cstm-btn">Add an additional contact <i class="fas fa-plus"></i></a>
+                                                                            <a href="javascript:void(0);" style="margin:0;" onclick="addcontact1();" class="additional_contact1 cstm-btn main_button">Add an additional contact <i class="fas fa-plus"></i></a>
                                                                             <!--  <button onclick="addcontact();" class="cstm-btn" style="margin:0;">add an additional contact <i class="fas fa-plus"></i></button> -->
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row f-g-full ">
                                                                         <div class="col-sm-12 next-setp">
-                                                                            <button id="medical_info_to_next" class="cstm-btn" style="margin:0px;">Save section</button>
+                                                                            <button id="medical_info_to_next" class="cstm-btn main_button" style="margin:0px;">Save section</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1216,16 +1230,31 @@ $count = 1;
                                                         @elseif($user_data->type == 'Child')
                                                             <div class="adult-selection-content" style="display: none;">
                                                                 <div class="form-group-wrap">
-                                                                    <h4>Emergency contacts</h4>
+                                                                    <h4>Contacts</h4>
                                                                     <div class="col-sm-12">
                                                                         <p style="font-weight: 500; margin-right: 15px; margin-bottom: 0;color: #858686;">Please note</p>
                                                                     </div>
                                                                     <div class="col-sm-12">
-                                                                        <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notice about upcoming events and notification from linked coaches will be sent to the account holder email address.</p>
+                                                                        <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notices about upcoming events and notifications from linked sports coaches will be sent to the account holder email address.</p>
                                                                     </div>
+
+                                                                    <div class="col-sm-12">
+                                                                        <p style="font-weight: 500; margin-right: 15px; margin-bottom: 0;color: #858686;">If this participant is enrolling on a DRH Sports activity:</p>
+                                                                    </div>
+                                                                    <div class="col-sm-12">
+                                                                        <p style="font-weight: 400; margin-right: 15px; color: #858686;">This section is to state particular individuals you would wish us to contact in the event of an emergency. Along with the individuals that could be dropping off or picking up from the DRH Sports activity (if child).</p>
+                                                                    </div>
+
+                                                                    <div class="col-sm-12">
+                                                                        <p style="font-weight: 500; margin-right: 15px; margin-bottom: 0;color: #858686;">If this participant is enrolling on a DRH Sports activity:</p>
+                                                                    </div>
+                                                                    <div class="col-sm-12">
+                                                                        <p style="font-weight: 400; margin-right: 15px; color: #858686;">This section is to state particular individuals you would wish us to contact in the event of an emergency. Along with the individuals that could be dropping off or picking up from the DRH Sports activity (if child).</p>
+                                                                    </div>
+
                                                                     <div class="child-contact-container" id="sec_contact1">
                                                                         
-                                                                        @if(!empty($count_child_contacts))
+                                                                        @if(isset($count_child_contacts))
                                                                         @php $i = 1; @endphp
                                                                         <input type="hidden" id="noOfContact1" value="{{$count_child_contacts}}">
 
@@ -1267,11 +1296,11 @@ $count = 1;
                                                                                     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                                                                     <select id="relation1" name="contact1[{{$i}}][con_relation1]" class="form-control cstm-select-list">
                                                                                         <option selected="" disabled="" value="">Please Choose</option>
-                                                                                        <option value="Mother" @if(!empty($contacts->   relationship)) @if($contacts->relationship == 'Mother') selected @endif @endif>Mother</option>
-                                                                                        <option value="Father" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Father') selected @endif @endif>Father</option>
-                                                                                        <option value="Grandparent" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Grandparent') selected @endif @endif>Grandparent</option>
-                                                                                        <option value="Guardian" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Guardian') selected @endif @endif>Guardian</option>
-                                                                                        <option value="Spouse" @if(!empty($contacts->relationship)) @if($contacts->relationship == 'Spouse') selected @endif @endif>Spouse/Partner</option>
+                                                                                        <option value="Mother" @if(isset($contacts->   relationship)) @if($contacts->relationship == 'Mother') selected @endif @endif>Mother</option>
+                                                                                        <option value="Father" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Father') selected @endif @endif>Father</option>
+                                                                                        <option value="Grandparent" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Grandparent') selected @endif @endif>Grandparent</option>
+                                                                                        <option value="Guardian" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Guardian') selected @endif @endif>Guardian</option>
+                                                                                        <option value="Spouse" @if(isset($contacts->relationship)) @if($contacts->relationship == 'Spouse') selected @endif @endif>Spouse/Partner</option>
                                                                                     </select>
                                                                                 </div>
                                                                             </div>
@@ -1322,11 +1351,11 @@ $count = 1;
                                                                                     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                                                                     <select id="relation1" name="contact1[{{$count}}][con_relation1]" class="form-control cstm-select-list">
                                                                                         <option selected="" disabled="" value="">Please Choose</option>
-                                                                                        <option value="Mother" @if(!empty($user_data)) @if($user_data->relation == 'Mother') selected @endif @endif>Mother</option>
-                                                                                        <option value="Father" @if(!empty($user_data)) @if($user_data->relation == 'Father') selected @endif @endif>Father</option>
-                                                                                        <option value="Grandparent" @if(!empty($user_data)) @if($user_data->relation == 'Grandparent') selected @endif @endif>Grandparent</option>
-                                                                                        <option value="Guardian" @if(!empty($user_data)) @if($user_data->relation == 'Guardian') selected @endif @endif>Guardian</option>
-                                                                                        <option value="Spouse" @if(!empty($user_data)) @if($user_data->relation == 'Spouse') selected @endif @endif>Spouse/Partner</option>
+                                                                                        <option value="Mother" @if(isset($user_data)) @if($user_data->relation == 'Mother') selected @endif @endif>Mother</option>
+                                                                                        <option value="Father" @if(isset($user_data)) @if($user_data->relation == 'Father') selected @endif @endif>Father</option>
+                                                                                        <option value="Grandparent" @if(isset($user_data)) @if($user_data->relation == 'Grandparent') selected @endif @endif>Grandparent</option>
+                                                                                        <option value="Guardian" @if(isset($user_data)) @if($user_data->relation == 'Guardian') selected @endif @endif>Guardian</option>
+                                                                                        <option value="Spouse" @if(isset($user_data)) @if($user_data->relation == 'Spouse') selected @endif @endif>Spouse/Partner</option>
                                                                                     </select>
                                                                                 </div>
                                                                             </div>
@@ -1341,13 +1370,13 @@ $count = 1;
                                                                     </div>
                                                                     <div class="form-group row f-g-full">
                                                                         <div class="col-sm-12" style="margin-top: 15px;">
-                                                                            <a href="javascript:void(0);" style="margin:0;" onclick="addcontact1();" class="additional_contact1 cstm-btn">Add an additional contact <i class="fas fa-plus"></i></a>
+                                                                            <a href="javascript:void(0);" style="margin:0;" onclick="addcontact1();" class="additional_contact1 cstm-btn main_button">Add an additional contact <i class="fas fa-plus"></i></a>
                                                                             <!--  <button onclick="addcontact();" class="cstm-btn" style="margin:0;">add an additional contact <i class="fas fa-plus"></i></button> -->
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row f-g-full ">
                                                                         <div class="col-sm-12 next-setp">
-                                                                            <button id="medical_info_to_next" class="cstm-btn" style="margin:0px;">Save section</button>
+                                                                            <button id="medical_info_to_next" class="cstm-btn main_button" style="margin:0px;">Save section</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1356,12 +1385,12 @@ $count = 1;
                                                     @else
                                                         <div class="adult-selection-content" style="display: none;">
                                                             <div class="form-group-wrap">
-                                                                    <h4>Emergency contacts</h4>
+                                                                    <h4>Contacts</h4>
                                                                     <div class="col-sm-12">
                                                                         <p style="font-weight: 500; margin-right: 15px; margin-bottom: 0;color: #858686;">Please note</p>
                                                                     </div>
                                                                     <div class="col-sm-12">
-                                                                        <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notice about upcoming events and notification from linked coaches will be sent to the account holder email address.</p>
+                                                                        <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notices about upcoming events and notifications from linked sports coaches will be sent to the account holder email address.</p>
                                                                     </div>
                                                                     <div class="child-contact-container" id="sec_contact1">
                                                                         
@@ -1482,13 +1511,13 @@ $count = 1;
                                                                     </div>
                                                                     <div class="form-group row f-g-full">
                                                                         <div class="col-sm-12" style="margin-top: 15px;">
-                                                                            <a href="javascript:void(0);" style="margin:0;" onclick="addcontact1();" class="additional_contact1 cstm-btn">Add an additional contact <i class="fas fa-plus"></i></a>
+                                                                            <a href="javascript:void(0);" style="margin:0;" onclick="addcontact1();" class="additional_contact1 cstm-btn main_button">Add an additional contact <i class="fas fa-plus"></i></a>
                                                                             <!--  <button onclick="addcontact();" class="cstm-btn" style="margin:0;">add an additional contact <i class="fas fa-plus"></i></button> -->
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row f-g-full ">
                                                                         <div class="col-sm-12 next-setp">
-                                                                            <button id="medical_info_to_next" class="cstm-btn" style="margin:0px;">Save section</button>
+                                                                            <button id="medical_info_to_next" class="cstm-btn main_button" style="margin:0px;">Save section</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1503,14 +1532,15 @@ $count = 1;
                         </div>
                     </div>
                 </div>
-                <div class="card @if(!empty($user_id)) @else disable_tab @endif">
+
+                <div class="card @if(isset($user_id)) @else disable_tab @endif">
                     <div class="card-header family-tabs" id="headingThree">
                         <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" @if($sec == 3) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="collapseThree">
                                 <span>3</span> Medical and behavioural
                             </button>
                             <div class="cstm-radio tab-cstm-radio">
-                                <input disabled="" type="radio" name="type3" data-type="child" id="tab3" @if(!empty($children_details) && !empty($children_details->core_lang) || !empty($children_details->med_cond) || !empty($children_details->allergies) ||    !empty($children_details->pres_med))  checked @endif>
+                                <input disabled="" type="radio" name="type3" data-type="child" id="tab3" @if(isset($children_details) && isset($children_details->core_lang) || isset($children_details->med_cond) || isset($children_details->allergies) ||    isset($children_details->pres_med))  checked @endif>
                                 <label for="tab3"></label>
                             </div>
                         </h5>
@@ -1525,60 +1555,63 @@ $count = 1;
                                         <input type="hidden" name="type" value="{{!empty($user_data) ? $user_data->type : ''}}"> 
 
                                         @if(!empty($user_data))
-                                            @if($user_data->type == 'Child')
+                                            @if($user_data->type == 'Child')  
                                                 <div class="child-selection-content" style="display: block;">
                                                     <p class="sub_headings" style="margin-top: 15px;">Medical and behavioural conditions</p>
                                                     <div class="row">
                                                         <div class="col-md-12 option_row consent-option-row">
                                                             <div class="form-group row ">
                                                                 <div class="form-radios">
-                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does your child have any medical condition the we should be aware of?</p>
+                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical conditions that we should be aware of?</p>
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="med_cond1" id="med_cond_yes1" value="yes"  @if(!empty($children_details->med_cond)) @if($children_details->med_cond == 'yes') checked @endif @endif>
+                                                                        <input type="radio" class="medical_cond" name="med_cond1" id="med_cond_yes1" value="yes"  @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'yes') checked @endif @endif>
                                                                         <label for="med_cond_yes1">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="med_cond1" id="med_cond_no1" value="no" @if(!empty($children_details->med_cond)) @if($children_details->med_cond == 'no') checked @endif @endif> 
+                                                                        <input type="radio" class="medical_cond" name="med_cond1" id="med_cond_no1" value="no" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') checked @endif @endif> 
                                                                         <label for="med_cond_no1">No</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        @if(!empty($children_details))
+
+                                                        <div id="medical_cond" class="col-md-12 option_row consent-option-row" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') style="display:none;" 
+                                                            @elseif($children_details->med_cond == 'yes') style="display:block;" @endif @endif>
+
+                                                            @if(!empty($count_child_medicals))
+                                                            <input type="hidden" id="noOfMed1" value="{{$count_child_medicals}}">
+
+                                                            @if(isset($children_details))
                                                             @php 
                                                                 $med_cond_info = json_decode($children_details->med_cond_info); 
                                                                 $med_cond_arr = [];
                                                             @endphp
-                                                        @endif
+                                                            @endif
 
-                                                        @if(!empty($med_cond_info))
-                                                            @foreach($med_cond_info as $con)
-                                                                @php $med_cond_arr[] = $con; @endphp
-                                                            @endforeach
-                                                        
-                                                        @php 
-                                                            $count_med_cond_arr = count($med_cond_arr); 
-                                                        @endphp
-                                                        @endif
-
-                                                        <div id="medical_cond" class="col-md-12 option_row consent-option-row">
-                                                        
-                                                            @if(!empty($med_cond_arr) && count($med_cond_arr)>0)
-
-                                                            <input type="hidden" id="noOfMed1" value="{{$count_med_cond_arr}}">
+                                                            @if(isset($med_cond_info))
+                                                                @foreach($med_cond_info as $con)
+                                                                    @php $med_cond_arr[] = $con; @endphp
+                                                                @endforeach
+                                                            
+                                                            @php 
+                                                                $count_med_cond_arr = count($med_cond_arr); 
+                                                            @endphp
+                                                            @endif
 
                                                             @php $i=1; @endphp
                                                             @foreach($med_cond_info as $con)
 
-                                                            <div class="child-contact-container" id="sec_med_con1[{{$i}}]">
+                                                            <div class="child-contact-container slots{{$i}}" id="medical_cond[{{$i}}]">
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this child.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea-wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
+
+                                                                        <!-- <a onclick="removeSection1({{$i}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1589,24 +1622,26 @@ $count = 1;
 
                                                             <input type="hidden" id="noOfMed1" value="{{$count}}">
 
-                                                            <div class="child-contact-container" id="sec_med_con1[{{$count}}]">
+                                                            <div class="child-contact-container slots{{$count}}" id="sec_med_con1[{{$count}}]">
                                                                 
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this child.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea_wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$count}}]" class="form-control" rows="5"></textarea>
+
+                                                                        <!-- <a onclick="removeSection1({{$count}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             @endif
                                                         </div>
 
-                                                        <div class="form-group row f-g-full">
-                                                            <div class="col-sm-12 button-center" style="margin-top: 15px;">
+                                                        <div class="form-group row f-g-full" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') style="display:none;" @elseif($children_details->med_cond == 'yes') style="display:block;" @endif @endif>
+                                                            <div class="col-sm-12 button-center another_medical" style="margin-top: 15px;">
                                                                 <!-- <button id="medical_info_to_next" class="cstm-btn" style="margin:0;">add another medical condition <i class="fas fa-plus"></i></button> -->
-                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact cstm-btn">add another medical condition <i class="fas fa-plus"></i></a>
+                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact cstm-btn main_button">add another medical condition <i class="fas fa-plus"></i></a>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 option_row consent-option-row">
@@ -1616,24 +1651,30 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="allergies" id="allergies" value="yes" @if(!empty($children_details->allergies)) @if($children_details->allergies == 'yes') checked @endif @endif>
+                                                                        <input type="radio" class="allergy_cond" name="allergies" id="allergies" value="yes" @if(isset($children_details->allergies)) @if($children_details->allergies == 'yes') checked @endif @endif>
                                                                         <label for="allergies">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="allergies" id="allergies1" value="no" @if(!empty($children_details->allergies)) @if($children_details->allergies == 'no') checked @endif @endif> <label for="allergies1">No</label>
+                                                                        <input type="radio" class="allergy_cond" name="allergies" id="allergies1" value="no" @if(isset($children_details->allergies)) @if($children_details->allergies == 'no') checked @endif @endif> <label for="allergies1">No</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        @if(!empty($children_details))
+
+                                                        <div id="sec_all" class="col-md-12 col-form-label text-md-right" @if(isset($children_details->allergies)) @if($children_details->allergies == 'no') style="display:none;" @elseif($children_details->allergies == 'yes') style="display:block;" @endif @endif>
+
+                                                        @if(!empty($count_child_allergies))
+                                                        <input type="hidden" id="noOfAllergy" value="{{$count_child_allergies}}">
+
+                                                        @if(isset($children_details))
                                                             @php 
                                                                 $allergies_info = json_decode($children_details->allergies_info); 
                                                                 $allergies_arr = [];
                                                             @endphp
                                                         @endif
 
-                                                        @if(!empty($allergies_info))
+                                                        @if(isset($allergies_info))
                                                             @foreach($allergies_info as $con)
                                                                 @php $allergies_arr[] = $con; @endphp
                                                             @endforeach
@@ -1642,11 +1683,6 @@ $count = 1;
                                                             $count_allergies_arr = count($allergies_arr); 
                                                         @endphp
                                                         @endif
-
-                                                        <div id="sec_all" class="col-md-12 col-form-label text-md-right">
-                                                        @if(!empty($allergies_arr) && count($allergies_arr)>0)
-
-                                                        <input type="hidden" id="noOfAllergy" value="{{$count_allergies_arr}}">
 
                                                         @php $i=1; @endphp
                                                         @foreach($allergies_info as $con)
@@ -1673,9 +1709,9 @@ $count = 1;
                                                         @endif
                                                         </div>
 
-                                                        <div class="form-group row f-g-full">
-                                                            <div class="col-sm-12 button-center" style="margin-top: 15px;">
-                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addallergy();" class="additional_contact cstm-btn">add another allergy <i class="fas fa-plus"></i></a>
+                                                        <div class="form-group row f-g-full" @if(isset($children_details->allergies)) @if($children_details->allergies == 'no') style="display:none;" @elseif($children_details->allergies == 'yes') style="display:block;" @endif @endif>
+                                                            <div class="col-sm-12 button-center another_allergy" style="margin-top: 15px;">
+                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addallergy();" class="additional_contact cstm-btn main_button">add another allergy <i class="fas fa-plus"></i></a>
                                                             </div>
                                                         </div>
 
@@ -1686,11 +1722,11 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="pres_med" id="pres_med-yes" value="yes" @if(!empty($children_details->pres_med)) @if($children_details->pres_med == 'yes') checked @endif @endif>
+                                                                        <input type="radio" name="pres_med" id="pres_med-yes" value="yes" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'yes') checked @endif @endif>
                                                                         <label for="pres_med-yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="pres_med" id="pres_med-no" value="no" @if(!empty($children_details->pres_med)) @if($children_details->pres_med == 'no') checked @endif @endif> <label for="pres_med-no">No</label>
+                                                                        <input type="radio" name="pres_med" id="pres_med-no" value="no" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'no') checked @endif @endif> <label for="pres_med-no">No</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1710,11 +1746,11 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="med_req" id="med-req-yes" value="yes"  @if(!empty($children_details->med_req)) @if($children_details->med_req == 'yes') checked @endif @endif>
+                                                                        <input type="radio" name="med_req" id="med-req-yes" value="yes"  @if(isset($children_details->med_req)) @if($children_details->med_req == 'yes') checked @endif @endif>
                                                                         <label for="med-req-yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="med_req" id="med-req-no" value="no" @if(!empty($children_details->med_req)) @if($children_details->med_req == 'no') checked @endif @endif> 
+                                                                        <input type="radio" name="med_req" id="med-req-no" value="no" @if(isset($children_details->med_req)) @if($children_details->med_req == 'no') checked @endif @endif> 
                                                                         <label for="med-req-no">No</label>
                                                                     </div>
                                                                 </div>
@@ -1735,11 +1771,11 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="toilet" id="toilet-yes" value="yes" @if(!empty($children_details->toilet)) @if($children_details->toilet == 'yes') checked @endif @endif>
+                                                                        <input type="radio" name="toilet" id="toilet-yes" value="yes" @if(isset($children_details->toilet)) @if($children_details->toilet == 'yes') checked @endif @endif>
                                                                         <label for="toilet-yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="toilet" value="no" id="toilet-no" @if(!empty($children_details->toilet)) @if($children_details->toilet == 'no') checked @endif @endif> 
+                                                                        <input type="radio" name="toilet" value="no" id="toilet-no" @if(isset($children_details->toilet)) @if($children_details->toilet == 'no') checked @endif @endif> 
                                                                         <label for="toilet-no">No</label>
                                                                     </div>
                                                                 </div>
@@ -1753,16 +1789,16 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="beh_need" id="beh_need-yes" value="yes" @if(!empty($children_details->beh_need)) @if($children_details->beh_need == 'yes') checked @endif @endif>
+                                                                        <input type="radio" class="beh_cond" name="beh_need" id="beh_need-yes" value="yes" @if(isset($children_details->beh_need)) @if($children_details->beh_need == 'yes') checked @endif @endif>
                                                                         <label for="beh_need-yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="beh_need" id="beh_need-no" value="no" @if(!empty($children_details->beh_need)) @if($children_details->beh_need == 'no') checked @endif @endif> <label for="beh_need-no">No</label>
+                                                                        <input type="radio" class="beh_cond" name="beh_need" id="beh_need-no" value="no" @if(isset($children_details->beh_need)) @if($children_details->beh_need == 'no') checked @endif @endif> <label for="beh_need-no">No</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row address-detail">
+                                                        <div class="form-group row address-detail beh_info"  @if(isset($children_details->beh_need)) @if($children_details->beh_need == 'no') style="display:none;" @elseif($children_details->beh_need == 'yes') style="display:block;" @endif @endif>
                                                             <label for="address" class="col-md-12 col-form-label text-md-right">
                                                                 <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;>Please provide more information</p>
                                                             </label>
@@ -1772,64 +1808,66 @@ $count = 1;
                                                         </div>
                                                         <div class="form-group row f-g-full ">
                                                             <div class="col-sm-12 next-setp">
-                                                                <button id="medical_info_to_next" class="cstm-btn" style="margin:10px 0;">Save section</button>
+                                                                <button id="medical_info_to_next" class="cstm-btn main_button" style="margin:10px 0;">Save section</button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            @elseif($user_data->type == 'Adult')
+                                            @elseif($user_data->type == 'Adult')     
                                                 <div class="child-selection-content" style="display: none;">
                                                     <p class="sub_headings" style="margin-top: 15px;">Medical and behavioural conditions</p>
                                                     <div class="row">
                                                         <div class="col-md-12 option_row consent-option-row">
                                                             <div class="form-group row ">
                                                                 <div class="form-radios">
-                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does your child have any medical condition the we should be aware of?</p>
+                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical conditions that we should be aware of?</p>
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="med_cond" id="med_cond_yes" value="yes"  @if(!empty($children_details->med_cond)) @if($children_details->med_cond == 'yes') checked @endif @endif>
+                                                                        <input type="radio" class="medical_cond" name="med_cond" id="med_cond_yes" value="yes"  @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'yes') checked @endif @endif>
                                                                         <label for="med_cond_yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="med_cond" id="med_cond_no" value="no" @if(!empty($children_details->med_cond)) @if($children_details->med_cond == 'no') checked @endif @endif> 
+                                                                        <input type="radio" class="medical_cond" name="med_cond" id="med_cond_no" value="no" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') checked @endif @endif> 
                                                                         <label for="med_cond_no">No</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        @if(!empty($children_details))
+
+                                                        <div id="medical_cond" class="col-md-12 option_row consent-option-row" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') style="display:none;" 
+                                                            @elseif($children_details->med_cond == 'yes') style="display:block;" @endif @endif>
+                                                        
+                                                            @if(!empty($count_child_medicals))
+                                                            <input type="hidden" id="noOfMed1" value="{{$count_child_medicals}}">
+
+                                                            @if(isset($children_details))
                                                             @php 
                                                                 $med_cond_info = json_decode($children_details->med_cond_info); 
                                                                 $med_cond_arr = [];
                                                             @endphp
-                                                        @endif
+                                                            @endif
 
-                                                        @if(!empty($med_cond_info))
-                                                            @foreach($med_cond_info as $con)
-                                                                @php $med_cond_arr[] = $con; @endphp
-                                                            @endforeach
-                                                        
-                                                        @php 
-                                                            $count_med_cond_arr = count($med_cond_arr); 
-                                                        @endphp
-                                                        @endif
-
-                                                        <div id="medical_cond" class="col-md-12 option_row consent-option-row">
-                                                        
-                                                            @if(!empty($med_cond_arr) && count($med_cond_arr)>0)
+                                                            @if(isset($med_cond_info))
+                                                                @foreach($med_cond_info as $con)
+                                                                    @php $med_cond_arr[] = $con; @endphp
+                                                                @endforeach
                                                             
-                                                            <input type="hidden" id="noOfMed1" value="{{$count_med_cond_arr}}">
+                                                            @php 
+                                                                $count_med_cond_arr = count($med_cond_arr); 
+                                                            @endphp
+                                                            @endif
 
                                                             @php $i=1; @endphp
                                                             @foreach($med_cond_info as $con)
-                                                            <div class="child-contact-container" id="sec_med_con1[{{$i}}]">
+                                                            <div class="child-contact-container slots{{$i}}" id="sec_med_con1[{{$i}}]">
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this child.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea_wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1839,11 +1877,11 @@ $count = 1;
 
                                                             <input type="hidden" id="noOfMed1" value="{{$count}}">
 
-                                                            <div class="child-contact-container" id="sec_med_con1[{{$count}}]">
+                                                            <div class="child-contact-container slots{{$count}}" id="sec_med_con1[{{$count}}]">
                                                                 
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this child.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea_wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$count}}]" class="form-control" rows="5"></textarea>
@@ -1853,10 +1891,10 @@ $count = 1;
                                                             @endif
                                                         </div>
 
-                                                        <div class="form-group row f-g-full">
-                                                            <div class="col-sm-12 button-center" style="margin-top: 15px;">
+                                                        <div class="form-group row f-g-full" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') style="display:none;" @elseif($children_details->med_cond == 'yes') style="display:block;" @endif @endif>
+                                                            <div class="col-sm-12 button-center another_medical" style="margin-top: 15px;">
                                                                 <!-- <button id="medical_info_to_next" class="cstm-btn" style="margin:0;">add another medical condition <i class="fas fa-plus"></i></button> -->
-                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact cstm-btn">add another medical condition <i class="fas fa-plus"></i></a>
+                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact cstm-btn main_button">add another medical condition <i class="fas fa-plus"></i></a>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 option_row consent-option-row">
@@ -1866,37 +1904,22 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="allergies" id="allergies" value="yes" @if(!empty($children_details->allergies)) @if($children_details->allergies == 'yes') checked @endif @endif>
+                                                                        <input type="radio" class="allergy_cond" name="allergies" id="allergies" value="yes" @if(isset($children_details->allergies)) @if($children_details->allergies == 'yes') checked @endif @endif>
                                                                         <label for="allergies">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="allergies" id="allergies1" value="no" @if(!empty($children_details->allergies)) @if($children_details->allergies == 'no') checked @endif @endif> <label for="allergies1">No</label>
+                                                                        <input type="radio" class="allergy_cond" name="allergies" id="allergies1" value="no" @if(isset($children_details->allergies)) @if($children_details->allergies == 'no') checked @endif @endif> <label for="allergies1">No</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        @if(!empty($children_details))
-                                                            @php 
-                                                                $allergies_info = json_decode($children_details->allergies_info); 
-                                                                $allergies_arr = [];
-                                                            @endphp
-                                                        @endif
 
-                                                        @if(!empty($allergies_info))
-                                                            @foreach($allergies_info as $con)
-                                                                @php $allergies_arr[] = $con; @endphp
-                                                            @endforeach
-                                                        
-                                                        @php 
-                                                            $count_allergies_arr = count($allergies_arr); 
-                                                        @endphp
-                                                        @endif
+                                                        <div id="sec_all" class="col-md-12 col-form-label text-md-right" @if(isset($children_details->allergies)) @if($children_details->allergies == 'no') style="display:none;" @elseif($children_details->allergies == 'yes') style="display:block;" @endif @endif>
 
-                                                        <div id="sec_all"class="col-md-12 col-form-label text-md-right">
-                                                        @if(!empty($allergies_arr) && count($allergies_arr)>0)
-                                                        
-                                                        <input type="hidden" id="noOfAllergy" value="{{$count_allergies_arr}}">
+                                                        @if(!empty($count_child_allergies))
+                                                        <input type="hidden" id="noOfAllergy" value="{{$count_child_allergies}}">
+
                                                         @php $i=1; @endphp
                                                         @foreach($allergies_info as $con)
                                                         <div class="form-group row address-detail" id="aller[{{$i}}]">
@@ -1922,9 +1945,9 @@ $count = 1;
                                                         @endif
                                                         </div>
 
-                                                        <div class="form-group row f-g-full">
-                                                            <div class="col-sm-12 button-center" style="margin-top: 15px;">
-                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addallergy();" class="additional_contact cstm-btn">add another allergy <i class="fas fa-plus"></i></a>
+                                                        <div class="form-group row f-g-full" @if(isset($children_details->allergies)) @if($children_details->allergies == 'no') style="display:none;" @elseif($children_details->allergies == 'yes') style="display:block;" @endif @endif>
+                                                            <div class="col-sm-12 button-center another_allergy" style="margin-top: 15px;">
+                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addallergy();" class="additional_contact cstm-btn main_button">add another allergy <i class="fas fa-plus"></i></a>
                                                             </div>
                                                         </div>
 
@@ -1935,11 +1958,11 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="pres_med" id="pres_med-yes" value="yes" @if(!empty($children_details->pres_med)) @if($children_details->pres_med == 'yes') checked @endif @endif>
+                                                                        <input type="radio" name="pres_med" id="pres_med-yes" value="yes" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'yes') checked @endif @endif>
                                                                         <label for="pres_med-yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="pres_med" id="pres_med-no" value="no" @if(!empty($children_details->pres_med)) @if($children_details->pres_med == 'no') checked @endif @endif> <label for="pres_med-no">No</label>
+                                                                        <input type="radio" name="pres_med" id="pres_med-no" value="no" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'no') checked @endif @endif> <label for="pres_med-no">No</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1959,11 +1982,11 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="med_req" id="med-req-yes" value="yes"  @if(!empty($children_details->med_req)) @if($children_details->med_req == 'yes') checked @endif @endif>
+                                                                        <input type="radio" name="med_req" id="med-req-yes" value="yes"  @if(isset($children_details->med_req)) @if($children_details->med_req == 'yes') checked @endif @endif>
                                                                         <label for="med-req-yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="med_req" id="med-req-no" value="no" @if(!empty($children_details->med_req)) @if($children_details->med_req == 'no') checked @endif @endif> 
+                                                                        <input type="radio" name="med_req" id="med-req-no" value="no" @if(isset($children_details->med_req)) @if($children_details->med_req == 'no') checked @endif @endif> 
                                                                         <label for="med-req-no">No</label>
                                                                     </div>
                                                                 </div>
@@ -1984,11 +2007,11 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="toilet" id="toilet-yes" value="yes" @if(!empty($children_details->toilet)) @if($children_details->toilet == 'yes') checked @endif @endif>
+                                                                        <input type="radio" name="toilet" id="toilet-yes" value="yes" @if(isset($children_details->toilet)) @if($children_details->toilet == 'yes') checked @endif @endif>
                                                                         <label for="toilet-yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="toilet" value="no" id="toilet-no" @if(!empty($children_details->toilet)) @if($children_details->toilet == 'no') checked @endif @endif> 
+                                                                        <input type="radio" name="toilet" value="no" id="toilet-no" @if(isset($children_details->toilet)) @if($children_details->toilet == 'no') checked @endif @endif> 
                                                                         <label for="toilet-no">No</label>
                                                                     </div>
                                                                 </div>
@@ -2002,16 +2025,16 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="beh_need" id="beh_need-yes" value="yes" @if(!empty($children_details->beh_need)) @if($children_details->beh_need == 'yes') checked @endif @endif>
+                                                                        <input type="radio" name="beh_need" id="beh_need-yes" value="yes" @if(isset($children_details->beh_need)) @if($children_details->beh_need == 'yes') checked @endif @endif>
                                                                         <label for="beh_need-yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="beh_need" id="beh_need-no" value="no" @if(!empty($children_details->beh_need)) @if($children_details->beh_need == 'no') checked @endif @endif> <label for="beh_need-no">No</label>
+                                                                        <input type="radio" name="beh_need" id="beh_need-no" value="no" @if(isset($children_details->beh_need)) @if($children_details->beh_need == 'no') checked @endif @endif> <label for="beh_need-no">No</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row address-detail">
+                                                        <div class="form-group row address-detail beh_info" @if(isset($children_details->beh_need)) @if($children_details->beh_need == 'no') style="display:none;" @elseif($children_details->beh_need == 'yes') style="display:block;" @endif @endif>
                                                             <label for="address" class="col-md-12 col-form-label text-md-right">
                                                                 <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;>Please provide more information</p>
                                                             </label>
@@ -2021,7 +2044,7 @@ $count = 1;
                                                         </div>
                                                         <div class="form-group row f-g-full ">
                                                             <div class="col-sm-12 next-setp">
-                                                                <button id="medical_info_to_next" class="cstm-btn" style="margin:10px 0;">Save section</button>
+                                                                <button id="medical_info_to_next" class="cstm-btn main_button" style="margin:10px 0;">Save section</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2034,52 +2057,39 @@ $count = 1;
                                                         <div class="col-md-12 option_row consent-option-row">
                                                             <div class="form-group row ">
                                                                 <div class="form-radios">
-                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does your child have any medical condition the we should be aware of?</p>
+                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical conditions that we should be aware of?</p>
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="med_cond" id="med_cond_yes" value="yes"  @if(!empty($children_details->med_cond)) @if($children_details->med_cond == 'yes') checked @endif @endif>
+                                                                        <input type="radio" class="medical_cond" name="med_cond" id="med_cond_yes" value="yes"  @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'yes') checked @endif @endif>
                                                                         <label for="med_cond_yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="med_cond" id="med_cond_no" value="no" @if(!empty($children_details->med_cond)) @if($children_details->med_cond == 'yes') checked @endif @endif> 
+                                                                        <input type="radio" class="medical_cond" name="med_cond" id="med_cond_no" value="no" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'yes') checked @endif @endif> 
                                                                         <label for="med_cond_no">No</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        @if(!empty($children_details))
-                                                            @php 
-                                                                $med_cond_info = json_decode($children_details->med_cond_info); 
-                                                                $med_cond_arr = [];
-                                                            @endphp
-                                                        @endif
-
-                                                        @if(!empty($med_cond_info))
-                                                            @foreach($med_cond_info as $con)
-                                                                @php $med_cond_arr[] = $con; @endphp
-                                                            @endforeach
                                                         
-                                                        @php 
-                                                            $count_med_cond_arr = count($med_cond_arr); 
-                                                        @endphp
-                                                        @endif
 
-                                                        <div id="medical_cond" class="col-md-12 option_row consent-option-row">
+                                                        <div id="medical_cond" class="col-md-12 option_row consent-option-row" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') style="display:none;" 
+                                                            @elseif($children_details->med_cond == 'yes') style="display:block;" @endif @endif>
                                                         
-                                                            @if(!empty($med_cond_arr) && count($med_cond_arr)>0)
-
-                                                            <input type="hidden" id="noOfMed1" value="{{$count_med_cond_arr}}">
+                                                            @if(!empty($count_child_medicals))
+                                                            <input type="hidden" id="noOfMed1" value="{{$count_child_medicals}}">
 
                                                             @php $i=1; @endphp
                                                             @foreach($med_cond_info as $con)
-                                                            <div class="child-contact-container" id="sec_med_con1[{{$i}}]">
+                                                            <div class="child-contact-container slots{{$i}}" id="sec_med_con1[{{$i}}]">
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this child.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea-wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
+
+                                                                        <!-- <a onclick="removeSection1({{$i}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2089,24 +2099,26 @@ $count = 1;
 
                                                             <input type="hidden" id="noOfMed1" value="{{$count}}">
 
-                                                            <div class="child-contact-container" id="sec_med_con1[{{$count}}]">
+                                                            <div class="child-contact-container slots{{$count}}" id="sec_med_con1[{{$count}}]">
                                                                 
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this child.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea_wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$count}}]" class="form-control" rows="5"></textarea>
+
+                                                                        <!-- <a onclick="removeSection1({{$count}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             @endif
                                                         </div>
 
-                                                        <div class="form-group row f-g-full">
-                                                            <div class="col-sm-12 button-center" style="margin-top: 15px;">
+                                                        <div class="form-group row f-g-full" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') style="display:none;" @elseif($children_details->med_cond == 'yes') style="display:block;" @endif @endif>
+                                                            <div class="col-sm-12 button-center another_medical" style="margin-top: 15px;">
                                                                 <!-- <button id="medical_info_to_next" class="cstm-btn" style="margin:0;">add another medical condition <i class="fas fa-plus"></i></button> -->
-                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact cstm-btn">add another medical condition <i class="fas fa-plus"></i></a>
+                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact cstm-btn main_button">add another medical condition <i class="fas fa-plus"></i></a>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 option_row consent-option-row">
@@ -2116,38 +2128,23 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="allergies" id="allergies" value="yes" @if(!empty($children_details->allergies)) @if($children_details->allergies == 'yes') checked @endif @endif>
+                                                                        <input type="radio" class="allergy_cond" name="allergies" id="allergies" value="yes" @if(isset($children_details->allergies)) @if($children_details->allergies == 'yes') checked @endif @endif>
                                                                         <label for="allergies">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="allergies" id="allergies1" value="no" @if(!empty($children_details->allergies)) @if($children_details->allergies == 'no') checked @endif @endif> <label for="allergies1">No</label>
+                                                                        <input type="radio" class="allergy_cond" name="allergies" id="allergies1" value="no" @if(isset($children_details->allergies)) @if($children_details->allergies == 'no') checked @endif @endif> <label for="allergies1">No</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        @if(!empty($children_details))
-                                                            @php 
-                                                                $allergies_info = json_decode($children_details->allergies_info); 
-                                                                $allergies_arr = [];
-                                                            @endphp
-                                                        @endif
-
-                                                        @if(!empty($allergies_info))
-                                                            @foreach($allergies_info as $con)
-                                                                @php $allergies_arr[] = $con; @endphp
-                                                            @endforeach
                                                         
-                                                        @php 
-                                                            $count_allergies_arr = count($allergies_arr); 
-                                                        @endphp
-                                                        @endif
 
-                                                        <div id="sec_all" class="col-md-12 col-form-label text-md-right">
+                                                        <div id="sec_all" class="col-md-12 col-form-label text-md-right" @if(isset($children_details->allergies)) @if($children_details->allergies == 'no') style="display:none;" @elseif($children_details->allergies == 'yes') style="display:block;" @endif @endif>
                                                         
-                                                        @if(!empty($allergies_arr) && count($allergies_arr)>0)
-
-                                                        <input type="hidden" id="noOfAllergy" value="{{$count_allergies_arr}}">
+                                                        @if(!empty($count_child_allergies))
+                                                        <input type="hidden" id="noOfAllergy" value="{{$count_child_allergies}}">
+                                                        
                                                         @php $i=1; @endphp
                                                         @foreach($allergies_info as $con)
                                                         <div class="form-group row address-detail" id="aller[{{$i}}]">
@@ -2173,9 +2170,9 @@ $count = 1;
                                                         @endif
                                                         </div>
 
-                                                        <div class="form-group row f-g-full">
-                                                            <div class="col-sm-12 button-center" style="margin-top: 15px;">
-                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addallergy();" class="additional_contact cstm-btn">add another allergy <i class="fas fa-plus"></i></a>
+                                                        <div class="form-group row f-g-full" @if(isset($children_details->allergies)) @if($children_details->allergies == 'no') style="display:none;" @elseif($children_details->allergies == 'yes') style="display:block;" @endif @endif>
+                                                            <div class="col-sm-12 button-center another_allergy" style="margin-top: 15px;">
+                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addallergy();" class="additional_contact cstm-btn main_button">add another allergy <i class="fas fa-plus"></i></a>
                                                             </div>
                                                         </div>
 
@@ -2186,11 +2183,11 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="pres_med" id="pres_med-yes" value="yes" @if(!empty($children_details->pres_med)) @if($children_details->pres_med == 'yes') checked @endif @endif>
+                                                                        <input type="radio" name="pres_med" id="pres_med-yes" value="yes" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'yes') checked @endif @endif>
                                                                         <label for="pres_med-yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="pres_med" id="pres_med-no" value="no" @if(!empty($children_details->pres_med)) @if($children_details->pres_med == 'no') checked @endif @endif> <label for="pres_med-no">No</label>
+                                                                        <input type="radio" name="pres_med" id="pres_med-no" value="no" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'no') checked @endif @endif> <label for="pres_med-no">No</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2210,11 +2207,11 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="med_req" id="med-req-yes" value="yes"  @if(!empty($children_details->med_req)) @if($children_details->med_req == 'yes') checked @endif @endif>
+                                                                        <input type="radio" name="med_req" id="med-req-yes" value="yes"  @if(isset($children_details->med_req)) @if($children_details->med_req == 'yes') checked @endif @endif>
                                                                         <label for="med-req-yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="med_req" id="med-req-no" value="no" @if(!empty($children_details->med_req)) @if($children_details->med_req == 'no') checked @endif @endif> 
+                                                                        <input type="radio" name="med_req" id="med-req-no" value="no" @if(isset($children_details->med_req)) @if($children_details->med_req == 'no') checked @endif @endif> 
                                                                         <label for="med-req-no">No</label>
                                                                     </div>
                                                                 </div>
@@ -2235,11 +2232,11 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="toilet" id="toilet-yes" value="yes" @if(!empty($children_details->toilet)) @if($children_details->toilet == 'yes') checked @endif @endif>
+                                                                        <input type="radio" name="toilet" id="toilet-yes" value="yes" @if(isset($children_details->toilet)) @if($children_details->toilet == 'yes') checked @endif @endif>
                                                                         <label for="toilet-yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="toilet" value="no" id="toilet-no" @if(!empty($children_details->toilet)) @if($children_details->toilet == 'no') checked @endif @endif> 
+                                                                        <input type="radio" name="toilet" value="no" id="toilet-no" @if(isset($children_details->toilet)) @if($children_details->toilet == 'no') checked @endif @endif> 
                                                                         <label for="toilet-no">No</label>
                                                                     </div>
                                                                 </div>
@@ -2253,16 +2250,16 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="beh_need" id="beh_need-yes" value="yes" @if(!empty($children_details->beh_need)) @if($children_details->beh_need == 'yes') checked @endif @endif>
+                                                                        <input type="radio" class="beh_cond" name="beh_need" id="beh_need-yes" value="yes" @if(isset($children_details->beh_need)) @if($children_details->beh_need == 'yes') checked @endif @endif>
                                                                         <label for="beh_need-yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="beh_need" id="beh_need-no" value="no" @if(!empty($children_details->beh_need)) @if($children_details->beh_need == 'no') checked @endif @endif> <label for="beh_need-no">No</label>
+                                                                        <input type="radio" class="beh_cond" name="beh_need" id="beh_need-no" value="no" @if(isset($children_details->beh_need)) @if($children_details->beh_need == 'no') checked @endif @endif> <label for="beh_need-no">No</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row address-detail">
+                                                        <div class="form-group row address-detail beh_info" @if(isset($children_details->beh_need)) @if($children_details->beh_need == 'no') style="display:none;" @elseif($children_details->beh_need == 'yes') style="display:block;" @endif @endif>
                                                             <label for="address" class="col-md-12 col-form-label text-md-right">
                                                                 <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;>Please provide more information</p>
                                                             </label>
@@ -2272,7 +2269,7 @@ $count = 1;
                                                         </div>
                                                         <div class="form-group row f-g-full ">
                                                             <div class="col-sm-12 next-setp">
-                                                                <button id="medical_info_to_next" class="cstm-btn" style="margin:10px 0;">Save section</button>
+                                                                <button id="medical_info_to_next" class="cstm-btn main_button" style="margin:10px 0;">Save section</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2293,73 +2290,73 @@ $count = 1;
                                                                 <div class="col-md-12 option_row consent-option-row">
                                                                     <div class="form-group row ">
                                                                         <div class="form-radios">
-                                                                            <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does your child have any medical condition the we should be aware of?</p>
+                                                                            <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical conditions that we should be aware of?</p>
                                                                         </div>
                                                                         <div class="radio-wrap">
                                                                             <div class="cstm-radio">
-                                                                                <input type="radio" name="med_cond" id="med_cond_yes1" value="yes" @if(!empty($children_details->med_cond)) @if($children_details->med_cond == 'yes') checked @endif @endif>
+                                                                                <input type="radio" class="medical_cond" name="med_cond" id="med_cond_yes1" value="yes" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'yes') checked @endif @endif>
                                                                                 <label for="med_cond_yes1">Yes</label>
                                                                             </div>
                                                                             <div class="cstm-radio">
-                                                                                <input type="radio" name="med_cond" id="med_cond_no1" value="no" @if(!empty($children_details->med_cond)) @if($children_details->med_cond == 'no') checked @endif @endif> <label for="med_cond_no1">No</label>
+                                                                                <input type="radio" class="medical_cond" name="med_cond" id="med_cond_no1" value="no" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') checked @endif @endif> <label for="med_cond_no1">No</label>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                @if(!empty($children_details))
-                                                                    @php 
-                                                                        $med_cond_info = json_decode($children_details->med_cond_info); 
-                                                                        $med_cond_arr = [];
-                                                                    @endphp
-                                                                @endif
 
-                                                                @if(!empty($med_cond_info))
-                                                                    @foreach($med_cond_info as $con)
-                                                                        @php $med_cond_arr[] = $con; @endphp
-                                                                    @endforeach
+                                                                <div id="medical_cond1" class="col-md-12 option_row consent-option-row" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') style="display:none;" @elseif($children_details->med_cond == 'yes') style="display:block;" @endif @endif> 
+
                                                                 
-                                                                @php 
-                                                                    $count_med_cond_arr = count($med_cond_arr); 
-                                                                @endphp
-                                                                @endif
 
-                                                                @if(!empty($med_cond_arr) && count($med_cond_arr)>0)
+                                                                @if(!empty($count_child_medicals))
+                                                                <input type="hidden" id="noOfMed" value="{{$count_child_medicals}}">
+
+
                                                                 @php $i=1; @endphp
                                                                 @foreach($med_cond_info as $con)
-                                                                <div class="child-contact-container" id="sec_med_con">
-                                                                    <input type="hidden" id="noOfMed" value="{{$count_med_cond_arr}}">
+                                                                <div class="child-contact-container slot{{$i}}" id="sec_med_con[{{$i}}]">
+                                                                    
                                                                     <div class="form-group row address-detail">
                                                                         <label for="address" class=" col-form-label text-md-right">
-                                                                            <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this child.</p>
+                                                                            <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
                                                                         </label>
                                                                         <div class="col-md-12 textarea_wrap">
                                                                             <textarea class="form-control" name="med_cond_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
+
+                                                                            <!-- <a onclick="removeSection11({{$i}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a> -->
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 @php $i++; @endphp
                                                                 @endforeach
+
                                                                 @else
-                                                                <div class="child-contact-container" id="sec_med_con">
-                                                                    <input type="hidden" id="noOfMed" value="{{$count}}">
+
+                                                                <input type="hidden" id="noOfMed" value="{{$count}}">
+
+                                                                <div class="child-contact-container slot{{$count}}" id="sec_med_con[{{$count}}]">
+                                                                    
                                                                     <div class="form-group row address-detail">
                                                                         <label for="address" class=" col-form-label text-md-right">
-                                                                            <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this child.</p>
+                                                                            <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
                                                                         </label>
                                                                         <div class="col-md-12 textarea_wrap">
                                                                             <textarea class="form-control" name="med_cond_info[{{$count}}]" class="form-control" rows="5"></textarea>
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 @endif
-                                                                <div class="form-group row f-g-full">
-                                                                    <div class="col-sm-12 button-center" style="margin-top: 15px;">
-                                                                        <a href="javascript:void(0);" style="margin:0;" onclick="addmedical();" class="additional_contact cstm-btn">add another medical condition <i class="fas fa-plus"></i></a>
+
+                                                                </div>
+                                                                <div class="form-group row f-g-full" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') style="display:none;" @elseif($children_details->med_cond == 'yes') style="display:block;" @endif @endif>
+                                                                    <div class="col-sm-12 button-center another_medical" style="margin-top: 15px;">
+                                                                        <a href="javascript:void(0);" style="margin:0;" onclick="addmedical();" class="additional_contact cstm-btn main_button">add another medical condition <i class="fas fa-plus"></i></a>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row f-g-full ">
                                                                     <div class="col-sm-12 next-setp">
-                                                                        <button id="medical_info_to_next" class="cstm-btn" style="margin:10px 0;">Save section</button>
+                                                                        <button id="medical_info_to_next" class="cstm-btn main_button" style="margin:10px 0;">Save section</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2370,14 +2367,14 @@ $count = 1;
                         </div>
                     </div>
                 </div>
-                <div class="card @if(!empty($user_id)) @else disable_tab @endif">
+                <div class="card @if(isset($user_id)) @else disable_tab @endif">
                     <div class="card-header family-tabs" id="headingfour">
                         <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapsefour" @if($sec == 4) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="collapsefour">
                                 <span>4</span> consents
                             </button>
                             <div class="cstm-radio tab-cstm-radio">
-                                <input type="radio" disabled="" name="type4" data-type="child" id="tab4" @if(!empty($children_details->media) && !empty($children_details->confirm)) checked @endif>
+                                <input type="radio" disabled="" name="type4" data-type="child" id="tab4" @if(isset($children_details->media) && isset($children_details->confirm)) checked @endif>
                                 <label for="tab4"></label>
                             </div>
                         </h5>
@@ -2394,8 +2391,7 @@ $count = 1;
 
                                         <div class="col-md-12 option_row consent-option-row">
                                             <div class="media_cont_wrap">
-                                                <p class="main_head media_cont" style="display: inline-block; font-weight: 500; margin:15px 15px 0 0 ;">Media -</p><span class="media_photo">During our holiday camps and nn school coaching classes, we may taek photoes/videos of the activity to use solely
-                                                    for peomotional purposes.</span>
+                                                <p class="main_head media_cont" style="display: inline-block; font-weight: 500; margin:15px 15px 0 0 ;">Media -</p><span class="media_photo">During activities run by DRH Sports(excluding activities run within school settings), photos and videos may occasionally be taken solely for promotional purposes.</span>
                                             </div>
                                             <div class="form-group row ">
                                                 <div class="form-radios">
@@ -2433,7 +2429,7 @@ $count = 1;
                                             <p class="impor-note"><span>Please note: </span>You may be asked to confirm the above details are all correct before being able to complete future bookings</p>
                                         </div>
                                         <div class="col-md-12 contact_form_row">
-                                            <button type="submit" class="cstm-btn">Save Section</button>
+                                            <button type="submit" class="cstm-btn main_button">Save Section</button>
                                         </div>
                                     </form>
                                     </div>
@@ -2443,10 +2439,10 @@ $count = 1;
                     </div>
                 </div>
 
-                @if(!empty($user_id))
+                @if(isset($user_id))
                     <div class="delete-child-container">
-                        <h2>Delete Child</h2>
-                        <a href="{{url('/user/family-member/delete')}}/@php echo base64_encode($user_id); @endphp" onclick="return confirm('Are you sure you want to delete this child?')" class="cstm-btn">I confirm i want to delete this child</a>
+                        <h2>Delete Person</h2>
+                        <a href="{{url('/user/family-member/delete')}}/@php echo base64_encode($user_id); @endphp" onclick="return confirm('Are you sure you want to delete this child?')" class="cstm-btn main_button">I confirm i want to delete this person</a>
                     </div>
                 @endif
             </div>
@@ -2460,9 +2456,14 @@ function addmedical() {
     var newnumber = number + 1;
     $("#noOfMed").val(newnumber);
 
-    var mainHtml = '<div class="form-group col-md-12 f-g-full label-textarea" id="med_cond_info" style="display:block;"><label>Please state the name of the medical condition and describe how it affects this child.</label><textarea spellcheck="false" name="med_cond_info[' + newnumber + ']" id="med_con_data"></textarea></div>';
+    var mainHtml = '<div class="child-contact-container slot'+newnumber+'" id="sec_med_con['+newnumber+']"><div class="form-group row address-detail"><label for="address" class="col-form-label text-md-right"><p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p></label><div class="col-md-12 textarea_wrap"><textarea class="form-control" name="med_cond_info[' + newnumber + ']" class="form-control" rows="5"></textarea></div></div></div>';
 
-    $("#sec_med_con").append(mainHtml);
+    $("#medical_cond1").append(mainHtml);
+}
+
+function removeSection11(counter){  
+    var number = parseInt($("#noOfMed").val());     
+    $(".slot"+ counter).remove();
 }
 
 function addmedical1() {
@@ -2470,9 +2471,14 @@ function addmedical1() {
     var newnumber = number + 1;
     $("#noOfMed1").val(newnumber);
 
-    var mainHtml = '<div class="child-contact-container" id="sec_med_con1[' + newnumber + ']"><div class="form-group row address-detail"><label for="address" class="col-form-label text-md-right"><p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this child.</p></label><div class="col-md-12 textarea_wrap"><textarea class="form-control" name="med_cond_info[' + newnumber + ']" class="form-control" rows="5"></textarea></div></div></div>';
+    var mainHtml = '<div class="child-contact-container slots'+newnumber+'" id="sec_med_con1['+newnumber+']"><div class="form-group row address-detail"><label for="address" class="col-form-label text-md-right"><p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p></label><div class="col-md-12 textarea_wrap"><textarea class="form-control" name="med_cond_info[' + newnumber + ']" class="form-control" rows="5"></textarea></div></div></div>';
 
     $("#medical_cond").append(mainHtml);
+}
+
+function removeSection1(counter){   
+    var number = parseInt($("#noOfMed1").val()); 
+    $(".slots"+ counter).remove();
 }
 
 function addallergy() {

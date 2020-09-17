@@ -28,8 +28,14 @@
 @endif
 <section class="member section-padding">
    <div class="container">
-      <div class="pink-heading comp_match">
-         <h2 class="text-left">Competiton Matches&nbsp; </h2><a href="{{url('/user/reports/comp')}}/@php echo base64_encode($comp_id); @endphp"><i style="font-size: 18px; color: #00a0d5; cursor: pointer;" class="fas fa-pen" aria-hidden="true"></i></a>
+      <div class="pink-heading comp_match match_edit">
+         <div class="inner_wrap_icon">
+            <h2 class="text-left">Competition Matches&nbsp; </h2>
+            <a href="{{url('/user/reports/comp')}}/@php echo base64_encode($comp_id); @endphp">
+            <i style="font-size: 18px; color: #00a0d5; cursor: pointer;" class="fas fa-pen" aria-hidden="true"></i></a>
+         </div>
+
+         <a href="{{url('/user/badges')}}" class="cstm-btn main_button">Back to menu</a>
       </div>
       @php $competition = DB::table('competitions')->where('id',$comp_id)->first(); @endphp
       <div class="player-report-table tbl_shadow matches-wrap">

@@ -59,7 +59,7 @@
              {{textbox($errors,'Banner Title <span class="cst-upper-star">*</span>','tennis_pro_page_title',$tennis_pro_page_title)}}
 
              <div class="form-group">
-              <label class="label-file control-label">Banner Image  (1920 X 350)<span class="cst-upper-star">*</span></label>
+              <label class="label-file control-label">Banner Image  (1349 X 438)<span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'tennis_pro_banner_image_src')" class="form-control" name="tennis_pro_banner_image">
              </div>
              <img id="tennis_pro_banner_image_src" src="{{ URL::asset('/uploads').'/'.$tennis_pro_banner_image }}" style="width: 100px;" />
@@ -79,7 +79,7 @@
              <img id="tennis_pro_sec1_img1_src" src="{{ URL::asset('/uploads').'/'.$tennis_pro_sec1_img1 }}" style="width: 100px;" />
 
              <div class="form-group">
-              <label class="label-file control-label">Image - Upload PDF<span class="cst-upper-star">*</span></label>
+              <label class="label-file control-label">Image - Upload PDF (200 X 150)<span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'tennis_pro_sec1_img1_link_src')" class="form-control" name="tennis_pro_sec1_img1_link">
              </div>
              <a target="_blank" href="{{ URL::asset('/uploads').'/'.$tennis_pro_sec1_img1_link }}"/>View Uploaded PDF</a>
@@ -108,13 +108,13 @@
             <h5 class="card-title">IMAGES SECTION</h5>
 
              <div class="form-group">
-              <label class="label-file control-label">Image 1<span class="cst-upper-star">*</span></label>
+              <label class="label-file control-label">Image 1 (200 X 150)<span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'tennis_pro_img1_src')" class="form-control" name="tennis_pro_img1">
              </div>
              <img id="tennis_pro_img1_src" src="{{ URL::asset('/uploads').'/'.$tennis_pro_img1 }}" style="width: 100px;" />
 
              <div class="form-group">
-              <label class="label-file control-label">Image 2<span class="cst-upper-star">*</span></label>
+              <label class="label-file control-label">Image 2 (200 X 150)<span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'tennis_pro_img2_src')" class="form-control" name="tennis_pro_img2">
              </div>
              <img id="tennis_pro_img2_src" src="{{ URL::asset('/uploads').'/'.$tennis_pro_img2 }}" style="width: 100px;" />

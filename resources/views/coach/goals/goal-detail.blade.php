@@ -33,8 +33,8 @@
         </div>
         
         <h2>Update Your Goals</h2>
-        <a class="cstm-btn d-print-none" href="{{url('/user/badges')}}">Back to menu</a>
-        <button class="cstm-btn d-print-none" id="goal_print">Print</button>
+        <a class="cstm-btn d-print-none main_button" href="{{url('/user/badges')}}">Back to menu</a>
+        <button class="cstm-btn d-print-none main_button" id="goal_print">Print</button>
         <br/><br/>
       </div>
 
@@ -130,7 +130,7 @@
                     </div>
                     @endforeach
 
-                    @if($user_goal->finalize == '')<button type="submit" class="cstm-btn">Submit</button>@endif
+                    @if($user_goal->finalize == '')<button type="submit" class="cstm-btn main_button">Submit</button>@endif
                 </form>
             </div>
         </div>
@@ -217,7 +217,7 @@
                             </div> -->
                         </div>
                         <div class="set-goal-btn-wrap">
-                           @if($user_goal->finalize == '') <button type="submit" href="javascript:void(0);" class="cstm-btn">Submit</button> @endif
+                           @if($user_goal->finalize == '') <button type="submit" href="javascript:void(0);" class="cstm-btn main_button">Submit</button> @endif
                         </div>
                     </form>
                     </div>

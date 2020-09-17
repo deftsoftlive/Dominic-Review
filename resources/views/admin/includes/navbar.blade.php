@@ -10,7 +10,7 @@
             <div class="navbar-brand header-logo">
                 <a href="{{url(route('admin_dashboard'))}}" class="b-brand">
                     <div class="b-bg">
-                        <img src="{{URL::asset('/images/DRH-SPORT1.png')}}">
+                        <img width="100%" src="{{URL::asset('/images/logo.png')}}">
                     </div>
                     <span class="b-title">DRH Admin</span>
                 </a>

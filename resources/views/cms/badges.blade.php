@@ -110,8 +110,8 @@ label.confirm_msg.form-check-label {
                                                             <input type="hidden" name="goal_type" value="beginner">
 
                                                             <div class="form-group col-md-2">
-                                                                <button id="save_goal" class="cstm-btn">Submit</button>
-                                                                <a href="{{url('/user/badges')}}" class="cstm-btn">Reset</a>
+                                                                <button id="save_goal" class="cstm-btn main_button">Submit</button>
+                                                                <a href="{{url('/user/badges')}}" class="cstm-btn main_button">Reset</a>
                                                             </div>
                                                         </div>
                                                     </form>
@@ -191,7 +191,7 @@ label.confirm_msg.form-check-label {
 													    <p><span>Date :</span> {{ date('d F Y') }} </p>
 													</div>
 
-                                                    <button type="submit" class="cstm-btn">set goal</button>
+                                                    <button type="submit" class="cstm-btn main_button">set goal</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -235,8 +235,8 @@ label.confirm_msg.form-check-label {
                                                             </div>
                                                             <input type="hidden" name="goal_type" value="advanced">
                                                             <div class="form-group col-md-2">
-                                                                <button id="save_goal" class="cstm-btn">Submit</button>
-                                                                <a href="{{url('/user/badges')}}" class="cstm-btn">Reset</a>
+                                                                <button id="save_goal" class="cstm-btn main_button">Submit</button>
+                                                                <a href="{{url('/user/badges')}}" class="cstm-btn main_button">Reset</a>
                                                             </div>
                                                         </div>
                                                     </form>
@@ -342,7 +342,7 @@ label.confirm_msg.form-check-label {
 													    <p><span>Date :</span> {{ date('d F Y') }} </p>
 													</div>
 
-													<button type="submit" href="javascript:void(0);" class="cstm-btn">set goals</button>
+													<button type="submit" href="javascript:void(0);" class="cstm-btn main_button">set goals</button>
 													</div>
 			                                        </form>
                                                     </div>
@@ -391,7 +391,7 @@ label.confirm_msg.form-check-label {
                                                                 @if($go->finalize == 1)
                                                                     <td><p class="vou_prod_type" style="background:#c7f197;border-radius: 14px;padding: 0 20px;font-weight: 400;">Finalized</p></td>
                                                                 @else
-                                                                    <td><a onclick="return confirm('Are you sure you want to finalise this goal? Finalised goals cannot be changed.')" href="{{url('/user/goal/finalize')}}/@php echo base64_encode($go->id); @endphp" class="cstm-btn">Finalize</a></td> 
+                                                                    <td><a onclick="return confirm('Are you sure you want to finalise this goal? Finalised goals cannot be changed.')" href="{{url('/user/goal/finalize')}}/@php echo base64_encode($go->id); @endphp" class="cstm-btn main_button">Finalize</a></td> 
                                                                 @endif
                                                                 <td><p><a href="{{url('/user/goal')}}/{{$go->goal_type}}/{{$go->id}}/add-comment">View</a></p></td> 
                                                             </tr>
@@ -526,8 +526,8 @@ label.confirm_msg.form-check-label {
                                   </div> -->
                                                 </div>
                                                 <div class="col-lg-3 col-md-12 select-button" style="margin-right:10px;">
-                                                    <button type="submit" class="cstm-btn">Submit</button>
-                                                    <a href="{{url('/user/badges')}}" class="cstm-btn">Reset</a>
+                                                    <button type="submit" class="cstm-btn main_button">Submit</button>
+                                                    <a href="{{url('/user/badges')}}" class="cstm-btn main_button">Reset</a>
                                                 </div>
                                             </div>
                                         </form>
@@ -561,7 +561,7 @@ label.confirm_msg.form-check-label {
                                         <p class="leaderboard-note"><span>Please Note</span>: If you select YES, this player's name will appear in the leaderboard below and will be visable and public for other users to see. If you select NO, this player's name will show as 'annonymous' to all other users.</p>
 
                                     </div>
-                                    <button class="cstm-btn" type="submit">Submit</button>
+                                    <button class="cstm-btn main_button" type="submit">Submit</button>
                                 </div>
                                     
                                 </form>
@@ -622,7 +622,7 @@ label.confirm_msg.form-check-label {
                                                                     @endif
                                                                 </div>
                                                                 <br />
-                                                                <button type="submit" class="cstm-btn">Update</button>
+                                                                <button type="submit" class="cstm-btn main_button">Update</button>
                                                             </form>
                                                             <!-- @if(isset($user->profile_image))
                                       <img class="upload--profile-image" accept="image/*" onchange="ImagePreviewURL(this);" src="{{URL::asset('/uploads')}}/{{$user->profile_image}}">
@@ -820,8 +820,8 @@ label.confirm_msg.form-check-label {
                                   </div> -->
                                             </div>
                                             <div class="col-lg-3 col-md-12 select-button" style="margin-right:10px;">
-                                                <button type="submit" class="cstm-btn">Submit</button>
-                                                <a href="{{url('/user/badges')}}" class="cstm-btn">Reset</a>
+                                                <button type="submit" class="cstm-btn main_button">Submit</button>
+                                                <a href="{{url('/user/badges')}}" class="cstm-btn main_button">Reset</a>
                                             </div>
                                         </div>
                                     </form>
@@ -1022,8 +1022,8 @@ label.confirm_msg.form-check-label {
                         	<section class="member section-padding">
 							   <div class="container">
 							    <div class="pink-heading">
-							        <h2>My Competitions & Matches</h2>
-                                    <a class="add_competition cstm-btn" href="{{ route('coach_report') }}">Add Competition</a>
+							        <h2 class="comp_and_match">My Competitions & Matches</h2>
+                                    <a class="add_competition cstm-btn main_button" href="{{ route('coach_report') }}">Add Competition</a>
 							    </div>
 
 							      <div class="col-md-12">
@@ -1134,7 +1134,8 @@ label.confirm_msg.form-check-label {
                     <div class="item">
                         <div class="testimonial-card alt-testimonial-card">
                             <figure class="testimonial-img-wrap">
-                                <img src="{{ URL::asset('/images/testimonial-card-img-2.png')}}">
+                                <img class="nb-icon" src="{{ URL::asset('images/nb-icon.png')}}">
+                                                        <img class="b-icon" src="{{ URL::asset('images/b-icon.png')}}">
                             </figure>
                             <figcaption class="testimonial-caption">
                                 <p>{{$test->description}}</p>
@@ -1176,7 +1177,7 @@ label.confirm_msg.form-check-label {
                             </figure>
                         </li>
                         <li>
-                            <a href="#" class="cstm-btn">Click Here</a>
+                            <a href="#" class="cstm-btn main_button">Click Here</a>
                         </li>
                         <li>
                             <figure>

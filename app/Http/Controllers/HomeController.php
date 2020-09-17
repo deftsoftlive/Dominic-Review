@@ -19,6 +19,8 @@ use App\Session;
 use App\Testimonial;
 use App\ContactDetail;
 use App\Course;
+use App\ChildMedical;
+use App\ChildAllergy;
 use App\ChildContact;
 use App\CourseDate;
 use App\Accordian;
@@ -631,7 +633,7 @@ public function email()
 
 
 public function faq() {
-    $faqs = FAQs::whereIn('type', ['user', 'vendor'])->get();
+    $faqs = FAQs::where('status',1)->get();
     return view('home.faq.faq')->with(['faqs' => $faqs]);
 }
 
@@ -1850,12 +1852,14 @@ public function family_member_overview($id) {
     $user = User::where('id',$id)->first();  
     $user_details = ChildrenDetail::where('child_id',$id)->first();
     $user_contacts = ChildContact::where('child_id',$id)->get();
+    $user_medicals = ChildMedical::where('child_id',$id)->get();
+    $user_allergies = ChildAllergy::where('child_id',$id)->get();
 
     $user_id = $id;
 
     // dd($user,$user_details,$user_contacts); 
 
-    return view('cms.my-family.family-member-overview',compact('user','user_id','user_details','user_contacts'));
+    return view('cms.my-family.family-member-overview',compact('user','user_id','user_details','user_contacts','user_medicals','user_allergies'));
 } 
 
 /* Copy Address */
@@ -2031,7 +2035,10 @@ public function participants_details(Request $request)
 |-------------------------------------------*/
 public function contact_information(Request $request)
 {
-  // dd($request->all());
+  //dd($request->all());
+
+if(!empty($request->contact))
+{
   if($request->type == 'Child')
   {
     if(count($request->contact)>0)
@@ -2078,6 +2085,14 @@ public function contact_information(Request $request)
 
   return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Contact Information added successfully.');
 }
+else
+{
+  $last_user_id = $request->child_id;
+  return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','No contact information exist.');
+}  
+
+
+}
 
 /*--------------------------------------------------
 | Add Family Member - Medical & Behavioural Details
@@ -2098,12 +2113,55 @@ public function medical_information(Request $request)
   if($request->type == 'Adult')
   {
     $med_cond_info = json_encode($request->med_cond_info); 
+
+    if(count($request->med_cond_info)>0)
+    {
+      ChildMedical::where('child_id',$request->child_id)->delete();
+
+      foreach($request->med_cond_info as $key=>$value)
+      {
+        $child_med = new ChildMedical;
+        $child_med->child_id = $request->child_id;
+        $child_med->type = $request->type;
+        $child_med->medical = $value; 
+        $child_med->save();
+      }
+    }
+
     ChildrenDetail::where('child_id',$request->child_id)->update(array('med_cond' => $med_cond, 'med_cond_info' => $med_cond_info)); 
   }
   elseif($request->type == 'Child')
   {
     $med_cond_info = json_encode($request->med_cond_info); 
     $allergies_info = json_encode($request->allergies_info); 
+
+    if(count($request->med_cond_info)>0)
+    {
+      ChildMedical::where('child_id',$request->child_id)->delete();
+
+      foreach($request->med_cond_info as $key=>$value)
+      {
+        $child_med = new ChildMedical;
+        $child_med->child_id = $request->child_id;
+        $child_med->type = $request->type;
+        $child_med->medical = $value; 
+        $child_med->save();
+      }
+    }
+
+    if(count($request->allergies_info)>0)
+    {
+      ChildAllergy::where('child_id',$request->child_id)->delete();
+
+      foreach($request->allergies_info as $key1=>$value1)
+      {
+        $child_all = new ChildAllergy;
+        $child_all->child_id = $request->child_id;
+        $child_all->type = $request->type;
+        $child_all->allergy = $value1; 
+        $child_all->save();
+      }
+    }
 
     ChildrenDetail::where('child_id',$request->child_id)->update(array('med_cond' => $med_cond, 'allergies' => $request->allergies, 'allergies_info' => $allergies_info, 'med_cond_info' => $med_cond_info, 'pres_med' => $request->pres_med, 'pres_med_info' => $request->pres_med_info, 'med_req' => $request->med_req, 'med_req_info' => $request->med_req_info, 'toilet' => $request->toilet, 'beh_need' => $request->beh_need, 'beh_need_info' => $request->beh_need_info)); 
   }
@@ -2506,6 +2564,7 @@ function order_pdf($order_id)
 
 function convert_order_data_to_html($order_id)
 {
+    $base_url = \URL::to('/'); 
     $orders = $this->get_order_data($order_id); 
     $extra = getAllValueWithMeta('service_fee_amount', 'global-settings');
     $order_price = $orders->amount - $extra;
@@ -2535,7 +2594,7 @@ function convert_order_data_to_html($order_id)
                 <table style="table-layout: fixed;width: 100%;border-collapse: collapse;"">
 
                         <tr>
-                            <td  align="center"><img src="http://49.249.236.30:8654/dominic-new/public/uploads/1584078701website_logo.png" width="130px;" style="margin-bottom: 15px;">
+                            <td  align="center"><img src="'.$base_url.'/public/images/pdf-logo.png" width="130px;" style="margin-bottom: 15px;">
                             </td>
                         </tr>
                 </table>
@@ -4026,6 +4085,26 @@ public function remove_contact($id)
   ChildContact::where('id',$id)->delete();
 
   return \Redirect::back()->with('success',' Contact removed successfully!');
+} 
+
+/*------------------------------------------
+| Remove medical from Family member section
+|------------------------------------------*/
+public function remove_medical($id)
+{
+  ChildMedical::where('id',$id)->delete();
+
+  return \Redirect::back()->with('success',' Medical condition removed successfully!');
+} 
+
+/*------------------------------------------
+| Remove allergy from Family member section
+|------------------------------------------*/
+public function remove_allergy($id)
+{
+  ChildAllergy::where('id',$id)->delete();
+
+  return \Redirect::back()->with('success',' Allergy condition removed successfully!');
 } 
 
 }

@@ -29,11 +29,11 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
     <h2>Uploaded Invoices</h2>    
   </div>
   <div class="col-md-12 upload_opt">
-  <a style="float:right;" href="{{url('user/upload-invoice/add')}}" class="cstm-btn">Add New Invoice</a>
-  <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice')}}" class="cstm-btn">All Invoices</a>
-  <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice/not-approved')}}" class="cstm-btn">Not Approved</a>
-  <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice/pending')}}" class="cstm-btn">Pending</a>
-  <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice/accept')}}" class="cstm-btn">Accepted</a>
+  <a style="float:right;" href="{{url('user/upload-invoice/add')}}" class="cstm-btn  ">Add New Invoice</a>
+  <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice')}}" class="cstm-btn  ">All Invoices</a>
+  <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice/not-approved')}}" class="cstm-btn  ">Not Approved</a>
+  <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice/pending')}}" class="cstm-btn  ">Pending</a>
+  <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice/accept')}}" class="cstm-btn  ">Accepted</a>
   </div>
   <div class="col-md-12 invoice_apd">
 

@@ -184,7 +184,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('sch_lan_act1_title', 'school-landing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('sch_lan_act1_description', 'school-landing') }}</p>
+                                                    <p>{!! getAllValueWithMeta('sch_lan_act1_description', 'school-landing') !!}</p>
                                                 </li>
                                             </ul>
                                         </div>
@@ -195,7 +195,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('sch_lan_act2_title', 'school-landing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('sch_lan_act2_description', 'school-landing') }}</p>
+                                                    <p>{!! getAllValueWithMeta('sch_lan_act2_description', 'school-landing') !!}</p>
                                                 </li>
                                             </ul>
                                         </div>
@@ -206,7 +206,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('sch_lan_act3_title', 'school-landing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('sch_lan_act3_description', 'school-landing') }}</p>
+                                                    <p>{!! getAllValueWithMeta('sch_lan_act3_description', 'school-landing') !!}</p>
                                                 </li>
                                             </ul>
                                         </div>
@@ -217,7 +217,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('sch_lan_act4_title', 'school-landing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('sch_lan_act4_description', 'school-landing') }}</p>
+                                                    <p>{!! getAllValueWithMeta('sch_lan_act4_description', 'school-landing') !!}</p>
                                                 </li>
                                             </ul>
                                         </div>
@@ -228,7 +228,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('sch_lan_act5_title', 'school-landing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('sch_lan_act5_description', 'school-landing') }}</p>
+                                                    <p>{!! getAllValueWithMeta('sch_lan_act5_description', 'school-landing') !!}</p>
                                                 </li>
                                             </ul>
                                         </div>
@@ -279,7 +279,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                             {!! getAllValueWithMeta('ten_lan_camp_tab3_description', 'tennis-landing') !!}
                         </div>
                         <br/>
-                        <a style="float:right;" href="{{ getAllValueWithMeta('sch_lan_btn_link', 'school-landing') }}" class="cstm-btn">{{ getAllValueWithMeta('sch_lan_btn', 'school-landing') }}</a>
+                        <a style="float:right;" href="{{ getAllValueWithMeta('sch_lan_btn_link', 'school-landing') }}" class="cstm-btn main_button">{{ getAllValueWithMeta('sch_lan_btn', 'school-landing') }}</a>
                     </div>
                     <div class="tab-pane fade" id="nav-family" role="tabpanel" aria-labelledby="nav-family-tab">
                         <div class="o-i-tab"> 
@@ -324,7 +324,8 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                     <div class="item">
                                         <div class="testimonial-card">
                                          <figure class="testimonial-img-wrap">
-                                            <img src="http://49.249.236.30:8654/dominic-new/public/images/testimonial-card-img-1.png">
+                                             <img class="nb-icon" src="{{ URL::asset('images/nb-icon.png')}}">
+                    <img class="b-icon" src="{{ URL::asset('images/b-icon.png')}}"> 
                                          </figure>
                                          <figcaption class="testimonial-caption">
                                             <p>{{$test->description}}</p>
@@ -457,7 +458,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                      </figure>
                   </li>
                   <li>
-                     <a href="{{ getAllValueWithMeta('sch_lan_camp_button_url', 'school-landing') }}" class="cstm-btn">{{ getAllValueWithMeta('sch_lan_camp_button_title', 'school-landing') }}</a>
+                     <a href="{{ getAllValueWithMeta('sch_lan_camp_button_url', 'school-landing') }}" class="cstm-btn main_button">{{ getAllValueWithMeta('sch_lan_camp_button_title', 'school-landing') }}</a>
                   </li>
                   <li>
                      <figure>

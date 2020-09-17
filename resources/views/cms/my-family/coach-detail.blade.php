@@ -98,11 +98,11 @@
                             </select>
                             <br/>
                     <div class="col-md-12 form-btn pl-0"> 
-                        <button type="submit" id="coach-link" class="cstm-btn">Link to this coach</button>
+                        <button type="submit" id="coach-link" class="cstm-btn main_button">Link to this coach</button>
                     </div> 
             @else
                 <div class="col-md-12 form-btn pl-0"> 
-                    <a href="{{route('login')}}" id="coach-link" class="cstm-btn">Link to this coach</a>
+                    <a href="{{route('login')}}" id="coach-link" class="cstm-btn main_button">Link to this coach</a>
                 </div>
             @endif
         </form>

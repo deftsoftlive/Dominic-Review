@@ -184,7 +184,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('foot_lan_act1_title', 'football-landing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('foot_lan_act1_description', 'football-landing') }}</p>
+                                                    <p>{!! getAllValueWithMeta('foot_lan_act1_description', 'football-landing') !!}</p>
                                                 </li>
                                             </ul>
                                         </div>
@@ -195,7 +195,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('foot_lan_act2_title', 'football-landing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('foot_lan_act2_description', 'football-landing') }}</p>
+                                                    <p>{!! getAllValueWithMeta('foot_lan_act2_description', 'football-landing') !!}</p>
                                                 </li>
                                             </ul>
                                         </div>
@@ -206,7 +206,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('foot_lan_act3_title', 'football-landing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('foot_lan_act3_description', 'football-landing') }}</p>
+                                                    <p>{!! getAllValueWithMeta('foot_lan_act3_description', 'football-landing') !!}</p>
                                                 </li>
                                             </ul>
                                         </div>
@@ -228,7 +228,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('foot_lan_act5_title', 'football-landing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('foot_lan_act5_description', 'football-landing') }}</p>
+                                                    <p>{!! getAllValueWithMeta('foot_lan_act5_description', 'football-landing') !!}</p>
                                                 </li>
                                             </ul>
                                         </div>
@@ -279,7 +279,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                             {!! getAllValueWithMeta('foot_lan_camp_tab3_description', 'football-landing') !!}
                         </div>
                         <br/>
-                        <a style="float:right;" href="{{ getAllValueWithMeta('foot_lan_btn_link', 'football-landing') }}" class="cstm-btn">{{ getAllValueWithMeta('foot_lan_btn', 'football-landing') }}</a>
+                        <a style="float:right;" href="{{ getAllValueWithMeta('foot_lan_btn_link', 'football-landing') }}" class="cstm-btn main_button">{{ getAllValueWithMeta('foot_lan_btn', 'football-landing') }}</a>
                     </div>
                     <div class="tab-pane fade" id="nav-family" role="tabpanel" aria-labelledby="nav-family-tab">
                         <div class="o-i-tab"> 
@@ -324,7 +324,8 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                     <div class="item">
                                         <div class="testimonial-card">
                                          <figure class="testimonial-img-wrap">
-                                            <img src="http://49.249.236.30:8654/dominic-new/public/images/testimonial-card-img-1.png">
+                                            <img class="nb-icon" src="{{ URL::asset('images/nb-icon.png')}}">
+                    <img class="b-icon" src="{{ URL::asset('images/b-icon.png')}}"> 
                                          </figure>
                                          <figcaption class="testimonial-caption">
                                             <p>{{$test->description}}</p>
@@ -457,7 +458,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                      </figure>
                   </li>
                   <li>
-                     <a href="{{ getAllValueWithMeta('foot_lan_camp_button_url', 'football-landing') }}" class="cstm-btn">{{ getAllValueWithMeta('foot_lan_camp_button_title', 'football-landing') }}</a>
+                     <a href="{{ getAllValueWithMeta('foot_lan_camp_button_url', 'football-landing') }}" class="cstm-btn main_button">{{ getAllValueWithMeta('foot_lan_camp_button_title', 'football-landing') }}</a>
                   </li>
                   <li>
                      <figure>

@@ -7,7 +7,7 @@
             <h4>{{$camp->title}} @ {{$camp->location}} - {{$camp->term}}</h4>
             <br/>
 
-            <a style="float:right;" class="btn btn-primary" href="{{url('admin/register-template/camp')}}/{{$camp->id}}">Reset</a>
+            <button style="float:right;" class="btn btn-primary" onClick="window.print()">Print</button>
             <br/>
             
             <p>Week 1 of 6</p>
@@ -153,12 +153,12 @@
 
                             @foreach($listOfHeaderItem as $headItem)
                             
-                            @php 
+                            <?php 
                                 $week_data = isset($week_value) ? $week_value : 'W1'; 
-                                $week_value = " '".$week_data."' "; 
-                            @endphp
+                                $week_value = ''.$week_data.''; 
+                            ?>
 
-                            @if(isset($userSelectedDataByWeek['W1'][$currentday][$headItem]))
+                            @if(isset($userSelectedDataByWeek[$week_value][$currentday][$headItem]))
                             <td>*</td>
                             @else
                             <td></td>

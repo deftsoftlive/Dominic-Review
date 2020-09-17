@@ -43,4 +43,4 @@ $total = $userCartContent->sum('total');
         </table>
 
         <!-- <a class="cstm-btn solid-btn btn-xl btn-block cart__checkout-button" href="{{url(route('shop.checkout.index'))}}">Proceed to checkout</a> -->
-        <a class="cstm-btn solid-btn btn-xl btn-block cart__checkout-button" href="{{url(route('shop.checkout.reviewCart'))}}">Proceed to checkout</a>
+        <a class="cstm-btn solid-btn btn-xl btn-block cart__checkout-button main_button" href="{{url(route('shop.checkout.reviewCart'))}}">Proceed to checkout</a>

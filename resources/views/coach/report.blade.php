@@ -115,8 +115,8 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                     </div>
                                 </div>
                                 <div class="col-md-3 player-report-row">
-                                    <button type="submit" class="cstm-btn">Submit</button>
-                                    <a href="{{route('coach_report')}}" class="cstm-btn">Reset</a>
+                                    <button type="submit" class="cstm-btn main_button">Submit</button>
+                                    <a href="{{route('coach_report')}}" class="cstm-btn main_button">Reset</a>
                                 </div>
                             </div>
                         </form>
@@ -291,7 +291,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                         <!-- <a class="cstm-btn">submit report</a> -->
                                         <!-- <button type="button" class="cstm-btn" data-toggle="modal" data-target="#sim_rp_popup">Submit Button</button> -->
 
-                                        <button type="submit" class="cstm-btn">submit Report</button>
+                                        <button type="submit" class="cstm-btn main_button">submit Report</button>
                                     </div>
                                 </div>
                             </div>
@@ -329,7 +329,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                                                 </li>
                                                             </ul>
                                                             <div class="form-group">
-                                                                <button type="submit" id="submit-simple-report" class="cstm-btn">Submit Report</button>
+                                                                <button type="submit" id="submit-simple-report" class="cstm-btn main_button">Submit Report</button>
                                                             </div>
                                                            
                                                         </div>
@@ -377,8 +377,8 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <button type="submit" class="cstm-btn">Submit</button>
-                                    <a href="{{route('coach_report')}}" class="cstm-btn">Reset</a>
+                                    <button type="submit" class="cstm-btn main_button">Submit</button>
+                                    <a href="{{route('coach_report')}}" class="cstm-btn main_button">Reset</a>
                                 </div>
                             </div>
                         </form>
@@ -407,7 +407,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                             <div class="row">
                                 <div class="col-md-4">
                                     <div id="submit_rep" class="form-group">
-                                        <a class="cstm-btn">submit report</a>
+                                        <a class="cstm-btn main_button">submit report</a>
                                         <!-- <button type="button" class="cstm-btn" data-toggle="modal" data-target="#exampleModal">Submit Button</button> -->
                                     </div>
                                 </div>
@@ -446,7 +446,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                                                 <!-- </li> -->
                                                             </ul>
                                                             <div class="form-group">
-                                                                <button type="submit" id="submit-complex-report" class="cstm-btn">Submit Report</button>
+                                                                <button type="submit" id="submit-complex-report" class="cstm-btn main_button">Submit Report</button>
                                                             </div>
                                                            
                                                         </div>
@@ -531,7 +531,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <button type="submit" class="cstm-btn">submit</button>
+                                            <button type="submit" class="cstm-btn main_button">submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -628,8 +628,12 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                             <div class="mainQuestions" id="mainQuestions">
 
                                                 <tr class="timeslots slots{{$count}}" value={{$count}}>
-                                                  <td><input type="file" name="match_chart[{{$count}}]"></td>
-                                                  <td><a onclick="removeSection({{$count}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></td>      
+                                                <td><input type="file" name="match_chart[{{$count}}]"></td>
+                                                <td class="remove_game_chart">
+                                                    <!-- <a onclick="removeSection({{$count}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a> -->
+
+                                                    <a href="javascript:void(0);" onclick="removeSection({{$count}});" class="cstm-btn main_button">Delete</a>
+                                                </td>      
                                                 </tr>
 
                                             </div>
@@ -640,7 +644,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
 
                                     </div>
                                 </div>
-                                <button type="submit" class="cstm-btn">submit</button>
+                                <button type="submit" class="cstm-btn main_button">submit</button>
                             </form>
                         </div>
                         

@@ -115,13 +115,15 @@
             <div class="item">
                 <div class="testimonial-card">
                   <figure class="testimonial-img-wrap">
-                    <img src="http://49.249.236.30:8654/dominic-new/public/images/testimonial-card-img-1.png">
+                     <img class="nb-icon" src="{{ URL::asset('images/nb-icon.png')}}">
+                    <img class="b-icon" src="{{ URL::asset('images/b-icon.png')}}"> 
                   </figure>
                   <figcaption class="testimonial-caption">
                     <p>{{$test->description}}</p>
                     <div class="t-user">
                       <div class="round-arrow">
-                        <img src="http://49.249.236.30:8654/dominic-new/public/images/round-arrow-img.png">
+                         <img class="nb-icon" src="{{ URL::asset('images/nb-icon.png')}}">
+                    <img class="b-icon" src="{{ URL::asset('images/b-icon.png')}}"> 
                       </div>
                       <h3>{{$test->title}}</h3>
                       <span>
@@ -143,7 +145,7 @@
   </div>
   </div>
 </section>
-<section class="c-d-book-now">
+<section class="c-d-book-now family_members">
   <div class="container">
     <div class="text-center">
     <div class="section-heading">
@@ -163,9 +165,9 @@
       <!-- <a href="{{url('book-a-camp')}}/{{$ca->slug}}" class="cstm-btn">Book now</a> -->
 
       @if(Auth::check())
-        <a href="{{url('book-a-camp')}}/{{$ca->slug}}" class="cstm-btn">Book Now</a>
+        <a href="{{url('book-a-camp')}}/{{$ca->slug}}" class="cstm-btn main_button">Book Now</a>
       @else
-        <a href="{{url('login')}}" class="cstm-btn">Book Now</a>
+        <a href="{{url('login')}}" class="cstm-btn main_button">Book Now</a>
       @endif
       </div>
   </div>
@@ -185,7 +187,7 @@
                       </figure>
                     </li>
                     <li>
-                        <a href="{{ getAllValueWithMeta('camp_detail_button_url', 'camp-detail') }}" class="cstm-btn">{{ getAllValueWithMeta('camp_detail_button_title', 'camp-detail') }}</a>
+                        <a href="{{ getAllValueWithMeta('camp_detail_button_url', 'camp-detail') }}" class="cstm-btn main_button">{{ getAllValueWithMeta('camp_detail_button_title', 'camp-detail') }}</a>
                     </li>
                     <li>
                       <figure>

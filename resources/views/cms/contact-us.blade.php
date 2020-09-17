@@ -73,7 +73,7 @@
                       <!-- <div class="form-group cont-feedback">
                         <textarea class="form-control demo-textarea" name="message" rows="3" placeholder="Class you’d like to try "></textarea>
                       </div> -->
-                      <button type="submit" id="disable_contact_us_btnn" class="cstm-btn">Send Message</button>
+                      <button type="submit" id="disable_contact_us_btnn" class="cstm-btn main_button">Send Message</button>
                     </form>
                   </div>
                 </div>
@@ -163,7 +163,7 @@
                 </figure>
                 </li>
                 <li>
-                  <a href="{{ getAllValueWithMeta('section4_button_url', 'contact-us') }}" class="cstm-btn">{{ getAllValueWithMeta('section4_button_title', 'contact-us') }}</a>
+                  <a href="{{ getAllValueWithMeta('section4_button_url', 'contact-us') }}" class="cstm-btn main_button">{{ getAllValueWithMeta('section4_button_title', 'contact-us') }}</a>
                 </li>
                 <li>
                     <figure>

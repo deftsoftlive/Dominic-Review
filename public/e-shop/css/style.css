@@ -1698,6 +1698,11 @@ ul {
     position: relative;
     border-radius: 4px;
     background-color: #fff;
+    color: #00afef;
+    min-height: 78px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .Payment-block .nav-tabs li a:after {
     content: "";

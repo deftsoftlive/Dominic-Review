@@ -76,7 +76,7 @@ $shop = \DB::table('shop_cart_items')->where('user_id',$login_user)->where('orde
                                  <span class="checkmark"></span>
                                  </label>
                               </div>
-                              <a target="_blank" href="{{url('/user/family-member/edit')}}/@php echo base64_encode($sh->child_id); @endphp" class="cstm-btn checkout_update">Update</a>
+                              <a target="_blank" href="{{url('/user/family-member/edit')}}/@php echo base64_encode($sh->child_id); @endphp" class="cstm-btn main_button checkout_update">Update</a>
                            
                         </td>
                      </tr>
@@ -101,8 +101,8 @@ $shop = \DB::table('shop_cart_items')->where('user_id',$login_user)->where('orde
 
          @if (in_array('course', $shop_type, TRUE) || in_array('camp', $shop_type, TRUE)) 
                @if($sh->shop_type != 'product')
-               <a href="{{$backward}}" type="submit" class="cstm-btn solid-btn">back</a>
-               <button id="save_participant" class="cstm-btn" type="submit">Save &amp; Continue</button>
+               <a href="{{$backward}}" type="submit" class="cstm-btn main_button solid-btn">back</a>
+               <button id="save_participant" class="cstm-btn main_button" type="submit">Save &amp; Continue</button>
                @endif
          @endif
 
@@ -119,8 +119,8 @@ $shop = \DB::table('shop_cart_items')->where('user_id',$login_user)->where('orde
             <div class="row">
                <br/><br/><h4>&nbsp; Not required for products</h4>
             </div>
-            <a href="{{$backward}}" type="submit" class="cstm-btn solid-btn">back</a>
-            <a href="{{url('/shop/checkout/billing-address')}}" class="cstm-btn">Save &amp; Continue</a>
+            <a href="{{$backward}}" type="submit" class="cstm-btn main_button solid-btn">back</a>
+            <a href="{{url('/shop/checkout/billing-address')}}" class="cstm-btn main_button">Save &amp; Continue</a>
          @endif
          </form>
          </div>            

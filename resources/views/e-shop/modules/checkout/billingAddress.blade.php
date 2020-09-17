@@ -115,7 +115,7 @@ if (in_array('product', $shop_type, TRUE)){ ?>
          <div class="col-md-12">
             <!-- <button class="cstm-btn solid-btn">Continue</button> -->
             <div class="multistep-footer mt-4 text-right"> 
-               <button style="display:none" id="shipping" type="submit" class="cstm-btn solid-btn submitBTN">Save &amp; Continue</button>
+               <button style="display:none" id="shipping" type="submit" class="cstm-btn main_button solid-btn submitBTN">Save &amp; Continue</button>
             </div>
          </div>
       </div>
@@ -216,8 +216,8 @@ if (in_array('product', $shop_type, TRUE)){ ?>
          <div class="col-md-12">
             <!-- <button class="cstm-btn solid-btn">Continue</button> -->
             <div class="multistep-footer mt-4 text-right"> 
-               <a href="{{route('shop.checkout.participantInfo')}}" class="cstm-btn">Back</a>
-               <button id="billing" type="submit" class="cstm-btn solid-btn submitBTN">Save &amp; Continue</button>
+               <a href="{{route('shop.checkout.participantInfo')}}" class="cstm-btn main_button">Back</a>
+               <button id="billing" type="submit" class="cstm-btn main_button solid-btn submitBTN">Save &amp; Continue</button>
             </div>
          </div>
       </div>
@@ -322,7 +322,7 @@ if (in_array('product', $shop_type, TRUE)){ ?>
          <div class="col-md-12">
             <!-- <button class="cstm-btn solid-btn">Continue</button> -->
             <div class="multistep-footer mt-4 text-right"> 
-               <button style="display:none" id="shipping" type="submit" class="cstm-btn solid-btn submitBTN">Save &amp; Continue</button>
+               <button style="display:none" id="shipping" type="submit" class="cstm-btn main_button solid-btn submitBTN">Save &amp; Continue</button>
             </div>
          </div>
       </div>
@@ -422,8 +422,8 @@ if (in_array('product', $shop_type, TRUE)){ ?>
          <div class="col-md-12">
             <!-- <button class="cstm-btn solid-btn">Continue</button> -->
             <div class="multistep-footer mt-4 text-right"> 
-               <a href="{{route('shop.checkout.participantInfo')}}" class="cstm-btn">Back</a>
-               <button id="billing" type="submit" class="cstm-btn solid-btn submitBTN">Save &amp; Continue</button>
+               <a href="{{route('shop.checkout.participantInfo')}}" class="cstm-btn main_button">Back</a>
+               <button id="billing" type="submit" class="cstm-btn main_button solid-btn submitBTN">Save &amp; Continue</button>
             </div>
          </div>
       </div>

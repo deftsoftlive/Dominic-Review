@@ -69,7 +69,7 @@
                   |   Accordian - Start Here
                   |***************************** -->
                 @foreach($accordian_book_a_camp as $acc)
-                <div class="card @if($acc->color == '#be298d')pink @elseif($acc->color == '#00afef')blue @elseif($acc->color == '#bea029')yellow @endif">
+                <div class="card @if($acc->color == '#001642')blue @elseif($acc->color == '#00afef')sky-blue @elseif($acc->color == '#bea029')yellow @endif">
                   <div class="card-header" id="headingOne">
                     <h5 class="mb-0">
                       <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$acc->id}}" aria-expanded="false" aria-controls="collapse{{$acc->id}}">
@@ -446,7 +446,7 @@
             $camp_details = DB::table('camps')->where('id',$camp_id)->first();
         @endphp
 
-        <button id="submit-booking" type="submit" class="cstm-btn">Add to cart</button>
+        <button id="submit-booking" type="submit" class="cstm-btn main_button">Add to cart</button>
 
       </div>
 
@@ -468,7 +468,7 @@
               </figure>
             </li>
             <li>
-              <a href="{{URL::asset('/uploads')}}/{{ getAllValueWithMeta('book_camp_button_url', 'book-a-camp') }}" class="cstm-btn">{{ getAllValueWithMeta('book_camp_button_title', 'book-a-camp') }}</a>
+              <a href="{{URL::asset('/uploads')}}/{{ getAllValueWithMeta('book_camp_button_url', 'book-a-camp') }}" class="cstm-btn main_button">{{ getAllValueWithMeta('book_camp_button_title', 'book-a-camp') }}</a>
             </li>
             <li>
               <figure>
@@ -514,9 +514,9 @@
         </table>
       </div>
       <div class="modal-footer">
-        <a href="{{url('/shop')}}"><button type="button" class="cstm-btn">Go to Shop</button></a>
-        <button type="button" onclick="moreChild();" class="cstm-btn">Book more children</button>
-          <a href="{{url('/shop/cart')}}"><button type="button" class="cstm-btn">Continue to cart</button></a>
+        <a href="{{url('/shop')}}"><button type="button" class="cstm-btn main_button">Go to Shop</button></a>
+        <button type="button" onclick="moreChild();" class="cstm-btn main_button">Book more children</button>
+          <a href="{{url('/shop/cart')}}"><button type="button" class="cstm-btn main_button">Continue to cart</button></a>
           <!-- <button type="button" class="cstm-btn" data-dismiss="modal">Continue to cart</button> -->
       </div>
     </div>

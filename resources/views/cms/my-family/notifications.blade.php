@@ -4,6 +4,7 @@
 
 @section('content')
 
+
 <style>
   img.badge-img {
     width: 8%;
@@ -98,7 +99,7 @@
                               <form action="{{route('dismiss-request-parent')}}" method="POST">
                                   @csrf
                                   <input type="hidden" name="id" value="{{$re->id}}">
-                                  <button type="submit" class="cstm-btn">Dismiss</button>
+                                  <button type="submit" class="cstm-btn main_button">Dismiss</button>
                               </form>
                             </td>
                           </tr>
@@ -116,7 +117,7 @@
               <div class="noData offset-md-4 col-md-4 sorry_msg">
                 <div class="no_results">
                   <h3>Sorry, no results</h3>
-                  <p>No Booking Found</p>
+                  <p>No result Found</p>
                 </div>
               </div>
             @endif
@@ -183,7 +184,7 @@
                                           @if(!empty($selected_badges))
                                           @foreach($selected_badges as $se)
                                               @php 
-                                                  $badge = DB::table('badges')->where('id',$se)->first();
+                                                  $badge = DB::table('badges')->where('id',$se)->first(); 
                                               @endphp
                                                   <img class="badge-img"  src="{{URL::asset('/uploads')}}/{{$badge->image}}">
                                           @endforeach
@@ -206,46 +207,7 @@
                               </td>
                           </tr>
                           @endif
-                          
-                       <!--  @foreach($purchase_course as $re)
-                        @php 
-                         $child = DB::table('users')->where('id',$re->child_id)->first();
-                         $course = DB::table('courses')->where('id',$re->product_id)->first();
-                         $user_badges = DB::table('user_badges')->where('user_id',$re->child_id)->first();
-                         $selected_badges = explode(',',$user_badges->badges);
-                         $points = array();
-                        @endphp
-
-                        @foreach($selected_badges as $data=>$value)
-
-                        @php 
-                          $badge = DB::table('badges')->where('id',$value)->first(); 
-                          $points[] = $badge->points;
-                        @endphp
-
-                        @endforeach
-
-                        @php $total_points = array_sum($points); @endphp
-
-                          <tr>
-                            <td><p>{{$re->updated_at}}</p></td>
-                            <td><p>{{$child->name}}</p></td>
-                            <td><p>{{$course->title}}</p></td>
-                            
-                            <td><p>{{$total_points}}</p></td>
-                            <td>
-                            <ul class="leader-bord-bages">
-                            <li>
-                              <figure>
-                                @foreach($selected_badges as $data=>$value)
-                                @php $badge = DB::table('badges')->where('id',$value)->first(); @endphp
-                                  <img class="badge-img" src="{{URL::asset('/uploads')}}/{{$badge->image}}">
-                                @endforeach
-                              </figure>
-                          </li>
-                          </ul></td>
-                          </tr>
-                          @endforeach -->
+                       
                         </tbody>
                       </table>
 
@@ -255,9 +217,7 @@
           </div>
 
           @endif
-
-
-                    
+         
         </div>
 
   </div>

@@ -103,9 +103,9 @@
 
                       @if($req->status == '0')
                         <div id="parent_request" class="request-actions par-req-{{$child_id}}">
-                          <a href="javascript:void(0);" child="{{$child_id}}" parent="{{$parent_id}}" req="1" class="cstm-btn">Accept</a>
+                          <a href="javascript:void(0);" child="{{$child_id}}" parent="{{$parent_id}}" req="1" class="cstm-btn main_button">Accept</a>
                           <div class="reject-view" data-toggle="modal" data-target="#reject-detail-{{$req->id}}">
-                            <a href="javascript:void(0);" class="cstm-btn">Unable To Accept</a>
+                            <a href="javascript:void(0);" class="cstm-btn main_button">Unable To Accept</a>
                           </div>
                         </div>
                       @elseif($req->status == '1')
@@ -114,7 +114,7 @@
                         <form action="{{route('undo_reject_request')}}" class="reject_req" method="POST">
                           @csrf
                           <input type="hidden" name="id" value="{{$req->id}}">
-                          <button type="submit" class="cstm-btn">Unlink</button>
+                          <button type="submit" class="cstm-btn main_button">Unlink</button>
                         </form>
                       @elseif($req->status == '2' && !empty($req->reason_of_rejection))
                         <div class="profile-status">Request Status: <span class="p-s-not-verified"><i class="fas fa-times-circle"></i> Did not accept</span></div>
@@ -122,7 +122,7 @@
                         <form action="{{route('undo_reject_request')}}" class="reject_req" method="POST">
                         @csrf
                         <input type="hidden" name="id" value="{{$req->id}}">
-                        <button type="submit" class="cstm-btn">Enable Link</button>
+                        <button type="submit" class="cstm-btn main_button">Enable Link</button>
                         </form>
                       @endif
                       

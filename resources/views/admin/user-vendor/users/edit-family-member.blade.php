@@ -9,9 +9,17 @@ $sec = request()->get('sec');
 @if(!empty($user_id))
 @php
 $user_data = DB::table('users')->where('id',$user_id)->first();
+
 $children_details = DB::table('children_details')->where('child_id',$user_id)->first();
 $child_contacts = DB::table('child_contacts')->where('type',$user_data->type)->where('child_id',$user_id)->get();
 $count_child_contacts = $child_contacts->count();
+
+$child_medicals = DB::table('child_medicals')->where('type',$user_data->type)->where('child_id',$user_id)->get();
+$count_child_medicals = $child_medicals->count();
+
+$child_allergies = DB::table('child_allergies')->where('type',$user_data->type)->where('child_id',$user_id)->get();
+$count_child_allergies = $child_allergies->count();
+
 @endphp
 @else
 @php 
@@ -19,6 +27,8 @@ $user_data = '';
 $children_details = '';
 $child_contacts = '';
 $count_child_contacts = '';
+$count_child_medicals = '';
+$count_child_allergies = '';
 @endphp
 @endif
 @php
@@ -45,7 +55,13 @@ $count = 1;
 <section class="register-acc">
     <div class="container">
         <div class="inner-cont">
-            
+            @if(!empty($user_id) && !empty($user_data))
+            <div class="back-to-family">
+                <h4 class="pl_name">Player Name : <p>{{$user_data->name}}</p></h4>
+                <!-- <a href="{{url('/admin/my-family')}}" class="btn btn-primary">Back to my family</a> -->
+            </div>
+            @endif
+            <br/>
             <div id="accordion" class="parent_fam_mem">
                 <div class="card">
                     <div class="card-header family-tabs" id="headingOne">
@@ -81,11 +97,11 @@ $count = 1;
                                                             <label for="adult">Adult</label>
                                                         </div> -->
                                                         <div class="cstm-radio main-radio">
-                                                            <input type="radio" name="type" disabled="" data-type="child" id="check_child" value="Child" @if(!empty($user_data)) @if($user_data->type == 'Child') checked @endif @endif>
+                                                            <input type="radio" name="type" data-type="child" id="check_child" value="Child" @if(!empty($user_data)) @if($user_data->type == 'Child') checked @endif @endif>
                                                             <label for="child">Child</label>
                                                         </div>
                                                         <div class="cstm-radio main-radio">
-                                                            <input type="radio" name="type" disabled="" data-type="adult" id="check_adult" value="Adult" @if(!empty($user_data)) @if($user_data->type == 'Adult') checked @endif @endif>
+                                                            <input type="radio" name="type" data-type="adult" id="check_adult" value="Adult" @if(!empty($user_data)) @if($user_data->type == 'Adult') checked @endif @endif>
                                                             <label for="adult">Adult</label>
                                                         </div>
                                                     </div>
@@ -135,9 +151,9 @@ $count = 1;
                                                     <label for="address" class="col-md-12 col-form-label text-md-right">Address (Number &amp; Street)</label>
                                                     <div class="col-md-12">
                                                         <input id="address" type="text" class="paste_address form-control" name="address1" value="{{isset($user_data->address) ? $user_data->address : ''}}" required="">
-                                                       <!--  <div class="copy_address">
+                                                        <div class="copy_address">
                                                             <a href="javascript:void(0);">Copy address of account holder</a>
-                                                        </div> -->
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <!-- Town -->
@@ -239,7 +255,7 @@ $count = 1;
 
                                                 
                                                 <div class="form-group row" id="primary_lang" style="display: block;">
-                                                <label class="col-md-12 col-form-label text-md-right">What is their primary language?</label>
+                                                <label class="col-md-12 col-form-label text-md-right">What is this person’s primary language?</label>
                                                     <div class="col-md-12">
                                                         <input id="child-school" type="text" class="form-control" name="primary_language1" value="{{isset($children_details->primary_language) ? $children_details->primary_language : ''}}">
                                                     </div>
@@ -319,7 +335,7 @@ $count = 1;
                                                     </div>
                                                     <!-- Address -->
                                                     <div class="form-group row address-detail">
-                                                        <label for="address" class="col-md-12 col-form-label text-md-right">Address (Number &amp; Street)</label>
+                                                        <label for="address" class="col-md-12 col-form-label text-md-right">aaAddress (Number &amp; Street)</label>
                                                         <div class="col-md-12">
                                                             <input id="address" type="text" class="paste_address form-control" name="address" value="{{isset($user_data->address) ? $user_data->address : ''}}" required="">
                                                             <div class="copy_address">
@@ -398,7 +414,7 @@ $count = 1;
                                                         </div>
                                                     </div>
                                                     <div class="form-group row" id="primary_lang" style="display: block;">
-                                                        <label class="col-md-12 col-form-label text-md-right">What is their primary language?</label>
+                                                        <label class="col-md-12 col-form-label text-md-right">What is this person’s primary language?</label>
                                                         <div class="col-md-12">
                                                             <input id="child-school" type="text" class="form-control" name="primary_language" value="{{isset($children_details->primary_language) ? $children_details->primary_language : ''}}">
                                                         </div>
@@ -460,6 +476,7 @@ $count = 1;
                     </div>
                     <div id="collapseTwo" class="collapse @if($sec == 2) show @endif" aria-labelledby="headingTwo" data-parent="#accordion">
                         <div class="card-body">
+                            <div class="card-body">
                                 <div class="register-sec form-register-sec family_mem ">
                                     <div class="form-partition">
                                         <div class="row">
@@ -477,7 +494,7 @@ $count = 1;
                                                                 <p style="font-weight: 500; margin-right: 15px; margin-bottom: 0;color: #858686;">Please note</p>
                                                             </div>
                                                             <div class="col-sm-12">
-                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notice about upcoming events and notification from linked coaches will be sent to the account holder email address.</p>
+                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notices about upcoming events and notifications from linked sports coaches will be sent to the account holder email address.</p>
                                                             </div>
                                                             <div class="col-sm-12">
                                                                 <p style="font-weight: 400; margin-right: 15px;color: #858686;">If anyone other than the contact below acts as the pick up / drop off for the child, we will need consent given by the account holder via email to <a href="#">info@drhsports.co.uk</a> </p>
@@ -538,7 +555,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-12 col-form-label text-md-right">If you chose other who are they?</label>
+                                                                        <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
                                                                         <div class="col-md-12">
                                                                             <input id="who_are_they" type="text" class="form-control" name="contact[{{$i}}][who_are_they]" value="{{isset($contacts->who_are_they) ? $contacts->who_are_they : ''}}">
                                                                         </div>
@@ -588,7 +605,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-12 col-form-label text-md-right">If you chose other who are they?</label>
+                                                                        <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
                                                                         <div class="col-md-12">
                                                                             <input id="who_are_they" type="text" class="form-control" name="contact[{{$count}}][who_are_they]" value="">
                                                                         </div>
@@ -642,7 +659,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-12 col-form-label text-md-right">If you chose other who are they?</label>
+                                                                        <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
                                                                         <div class="col-md-12">
                                                                             <input id="who_are_they1" type="text" class="form-control" name="contact[{{$count+1}}][who_are_they]" value="">
                                                                         </div>
@@ -671,7 +688,7 @@ $count = 1;
                                                                 <p style="font-weight: 500; margin-right: 15px; margin-bottom: 0;color: #858686;">Please note</p>
                                                             </div>
                                                             <div class="col-sm-12">
-                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notice about upcoming events and notification from linked coaches will be sent to the account holder email address.</p>
+                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notices about upcoming events and notifications from linked sports coaches will be sent to the account holder email address.</p>
                                                             </div>
                                                             <div class="col-sm-12">
                                                                 <p style="font-weight: 400; margin-right: 15px;color: #858686;">If anyone other than the contact below acts as the pick up / drop off for the child, we will need consent given by the account holder via email to <a href="#">info@drhsports.co.uk</a> </p>
@@ -732,7 +749,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-12 col-form-label text-md-right">If you chose other who are they?</label>
+                                                                        <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
                                                                         <div class="col-md-12">
                                                                             <input id="who_are_they" type="text" class="form-control" name="contact[{{$i}}][who_are_they]" value="{{isset($contacts->who_are_they) ? $contacts->who_are_they : ''}}">
                                                                         </div>
@@ -782,7 +799,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-12 col-form-label text-md-right">If you chose other who are they?</label>
+                                                                        <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
                                                                         <div class="col-md-12">
                                                                             <input id="who_are_they" type="text" class="form-control" name="contact[{{$count}}][who_are_they]" value="">
                                                                         </div>
@@ -836,7 +853,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-12 col-form-label text-md-right">If you chose other who are they?</label>
+                                                                        <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
                                                                         <div class="col-md-12">
                                                                             <input id="who_are_they1" type="text" class="form-control" name="contact[{{$count+1}}][who_are_they]" value="">
                                                                         </div>
@@ -866,7 +883,7 @@ $count = 1;
                                                                 <p style="font-weight: 500; margin-right: 15px; margin-bottom: 0;color: #858686;">Please note</p>
                                                             </div>
                                                             <div class="col-sm-12">
-                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notice about upcoming events and notification from linked coaches will be sent to the account holder email address.</p>
+                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notices about upcoming events and notifications from linked sports coaches will be sent to the account holder email address.</p>
                                                             </div>
                                                             <div class="col-sm-12">
                                                                 <p style="font-weight: 400; margin-right: 15px;color: #858686;">If anyone other than the contact below acts as the pick up / drop off for the child, we will need consent given by the account holder via email to <a href="#">info@drhsports.co.uk</a> </p>
@@ -927,7 +944,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-12 col-form-label text-md-right">If you chose other who are they?</label>
+                                                                        <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
                                                                         <div class="col-md-12">
                                                                             <input id="who_are_they" type="text" class="form-control" name="contact[{{$i}}][who_are_they]" value="{{isset($contacts->who_are_they) ? $contacts->who_are_they : ''}}">
                                                                         </div>
@@ -977,7 +994,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-12 col-form-label text-md-right">If you chose other who are they?</label>
+                                                                        <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
                                                                         <div class="col-md-12">
                                                                             <input id="who_are_they" type="text" class="form-control" name="contact[{{$count}}][who_are_they]" value="">
                                                                         </div>
@@ -1031,7 +1048,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-12 col-form-label text-md-right">If you chose other who are they?</label>
+                                                                        <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
                                                                         <div class="col-md-12">
                                                                             <input id="who_are_they1" type="text" class="form-control" name="contact[{{$count+1}}][who_are_they]" value="">
                                                                         </div>
@@ -1058,12 +1075,12 @@ $count = 1;
                                                         @if($user_data->type == 'Adult')
                                                             <div class="adult-selection-content" style="display: block;">
                                                                 <div class="form-group-wrap">
-                                                                    <h4>Emergency contacts</h4>
+                                                                    <h4>Contacts</h4>
                                                                     <div class="col-sm-12">
                                                                         <p style="font-weight: 500; margin-right: 15px; margin-bottom: 0;color: #858686;">Please note</p>
                                                                     </div>
                                                                     <div class="col-sm-12">
-                                                                        <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notice about upcoming events and notification from linked coaches will be sent to the account holder email address.</p>
+                                                                        <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notices about upcoming events and notifications from linked sports coaches will be sent to the account holder email address.</p>
                                                                     </div>
                                                                     <div class="child-contact-container" id="sec_contact1">
                                                                         
@@ -1118,7 +1135,7 @@ $count = 1;
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
-                                                                                <label class="col-md-12 col-form-label text-md-right">If you chose other who are they?</label>
+                                                                                <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
                                                                                 <div class="col-md-12">
                                                                                     <input id="who_are_they1" type="text" class="form-control" name="contact1[{{$i}}][who_are_they1]" value="{{isset($contacts->who_are_they) ? $contacts->who_are_they : ''}}">
                                                                                 </div>
@@ -1174,7 +1191,7 @@ $count = 1;
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
-                                                                                <label class="col-md-12 col-form-label text-md-right">If you chose other who are they?</label>
+                                                                                <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
                                                                                 <div class="col-md-12">
                                                                                     <input id="who_are_they1" type="text" class="form-control" name="contact1[{{$count}}][who_are_they1]" value="">
                                                                                 </div>
@@ -1185,7 +1202,7 @@ $count = 1;
                                                                     <div class="form-group row f-g-full">
                                                                         <div class="col-sm-12" style="margin-top: 15px;">
                                                                             <a href="javascript:void(0);" style="margin:0;" onclick="addcontact1();" class="additional_contact1 btn btn-primary">Add an additional contact <i class="fas fa-plus"></i></a>
-                                                                            <!--  <button onclick="addcontact();" class="cstm-btn" style="margin:0;">add an additional contact <i class="fas fa-plus"></i></button> -->
+                                                                            <!--  <button onclick="addcontact();" class="btn btn-primary" style="margin:0;">add an additional contact <i class="fas fa-plus"></i></button> -->
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row f-g-full ">
@@ -1198,12 +1215,12 @@ $count = 1;
                                                         @elseif($user_data->type == 'Child')
                                                             <div class="adult-selection-content" style="display: none;">
                                                                 <div class="form-group-wrap">
-                                                                    <h4>Emergency contacts</h4>
+                                                                    <h4>Contacts</h4>
                                                                     <div class="col-sm-12">
                                                                         <p style="font-weight: 500; margin-right: 15px; margin-bottom: 0;color: #858686;">Please note</p>
                                                                     </div>
                                                                     <div class="col-sm-12">
-                                                                        <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notice about upcoming events and notification from linked coaches will be sent to the account holder email address.</p>
+                                                                        <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notices about upcoming events and notifications from linked sports coaches will be sent to the account holder email address.</p>
                                                                     </div>
                                                                     <div class="child-contact-container" id="sec_contact1">
                                                                         
@@ -1258,7 +1275,7 @@ $count = 1;
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
-                                                                                <label class="col-md-12 col-form-label text-md-right">If you chose other who are they?</label>
+                                                                                <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
                                                                                 <div class="col-md-12">
                                                                                     <input id="who_are_they1" type="text" class="form-control" name="contact1[{{$i}}][who_are_they1]" value="{{isset($contacts->who_are_they) ? $contacts->who_are_they : ''}}">
                                                                                 </div>
@@ -1313,7 +1330,7 @@ $count = 1;
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
-                                                                                <label class="col-md-12 col-form-label text-md-right">If you chose other who are they?</label>
+                                                                                <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
                                                                                 <div class="col-md-12">
                                                                                     <input id="who_are_they1" type="text" class="form-control" name="contact1[{{$count}}][who_are_they1]" value="">
                                                                                 </div>
@@ -1324,7 +1341,7 @@ $count = 1;
                                                                     <div class="form-group row f-g-full">
                                                                         <div class="col-sm-12" style="margin-top: 15px;">
                                                                             <a href="javascript:void(0);" style="margin:0;" onclick="addcontact1();" class="additional_contact1 btn btn-primary">Add an additional contact <i class="fas fa-plus"></i></a>
-                                                                            <!--  <button onclick="addcontact();" class="cstm-btn" style="margin:0;">add an additional contact <i class="fas fa-plus"></i></button> -->
+                                                                            <!--  <button onclick="addcontact();" class="btn btn-primary" style="margin:0;">add an additional contact <i class="fas fa-plus"></i></button> -->
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row f-g-full ">
@@ -1338,12 +1355,12 @@ $count = 1;
                                                     @else
                                                         <div class="adult-selection-content" style="display: none;">
                                                             <div class="form-group-wrap">
-                                                                    <h4>Emergency contacts</h4>
+                                                                    <h4>Contacts</h4>
                                                                     <div class="col-sm-12">
                                                                         <p style="font-weight: 500; margin-right: 15px; margin-bottom: 0;color: #858686;">Please note</p>
                                                                     </div>
                                                                     <div class="col-sm-12">
-                                                                        <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notice about upcoming events and notification from linked coaches will be sent to the account holder email address.</p>
+                                                                        <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notices about upcoming events and notifications from linked sports coaches will be sent to the account holder email address.</p>
                                                                     </div>
                                                                     <div class="child-contact-container" id="sec_contact1">
                                                                         
@@ -1398,7 +1415,7 @@ $count = 1;
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
-                                                                                <label class="col-md-12 col-form-label text-md-right">If you chose other who are they?</label>
+                                                                                <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
                                                                                 <div class="col-md-12">
                                                                                     <input id="who_are_they1" type="text" class="form-control" name="contact1[{{$i}}][who_are_they1]" value="{{isset($contacts->who_are_they) ? $contacts->who_are_they : ''}}">
                                                                                 </div>
@@ -1454,7 +1471,7 @@ $count = 1;
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
-                                                                                <label class="col-md-12 col-form-label text-md-right">If you chose other who are they?</label>
+                                                                                <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
                                                                                 <div class="col-md-12">
                                                                                     <input id="who_are_they1" type="text" class="form-control" name="contact1[{{$count}}][who_are_they1]" value="">
                                                                                 </div>
@@ -1465,7 +1482,7 @@ $count = 1;
                                                                     <div class="form-group row f-g-full">
                                                                         <div class="col-sm-12" style="margin-top: 15px;">
                                                                             <a href="javascript:void(0);" style="margin:0;" onclick="addcontact1();" class="additional_contact1 btn btn-primary">Add an additional contact <i class="fas fa-plus"></i></a>
-                                                                            <!--  <button onclick="addcontact();" class="cstm-btn" style="margin:0;">add an additional contact <i class="fas fa-plus"></i></button> -->
+                                                                            <!--  <button onclick="addcontact();" class="btn btn-primary" style="margin:0;">add an additional contact <i class="fas fa-plus"></i></button> -->
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row f-g-full ">
@@ -1514,7 +1531,7 @@ $count = 1;
                                                         <div class="col-md-12 option_row consent-option-row">
                                                             <div class="form-group row ">
                                                                 <div class="form-radios">
-                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does your child have any medical condition the we should be aware of?</p>
+                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical conditions that we should be aware of?</p>
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
@@ -1546,21 +1563,22 @@ $count = 1;
                                                         @endif
 
                                                         <div id="medical_cond" class="col-md-12 option_row consent-option-row">
-                                                        
-                                                            @if(!empty($med_cond_arr) && count($med_cond_arr)>0)
 
-                                                            <input type="hidden" id="noOfMed1" value="{{$count_med_cond_arr}}">
+                                                            @if(!empty($count_child_medicals))
+                                                            <input type="hidden" id="noOfMed1" value="{{$count_child_medicals}}">
 
                                                             @php $i=1; @endphp
                                                             @foreach($med_cond_info as $con)
 
-                                                            <div class="child-contact-container" id="sec_med_con1[{{$i}}]">
+                                                            <div class="child-contact-container slots{{$i}}" id="sec_med_con1[{{$i}}]">
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this child.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea-wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
+
+                                                                        <!-- <a onclick="removeSection1({{$i}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1571,14 +1589,16 @@ $count = 1;
 
                                                             <input type="hidden" id="noOfMed1" value="{{$count}}">
 
-                                                            <div class="child-contact-container" id="sec_med_con1[{{$count}}]">
+                                                            <div class="child-contact-container slots{{$count}}" id="sec_med_con1[{{$count}}]">
                                                                 
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this child.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea_wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$count}}]" class="form-control" rows="5"></textarea>
+
+                                                                        <!-- <a onclick="removeSection1({{$count}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1587,7 +1607,7 @@ $count = 1;
 
                                                         <div class="form-group row f-g-full">
                                                             <div class="col-sm-12 button-center" style="margin-top: 15px;">
-                                                                <!-- <button id="medical_info_to_next" class="cstm-btn" style="margin:0;">add another medical condition <i class="fas fa-plus"></i></button> -->
+                                                                <!-- <button id="medical_info_to_next" class="btn btn-primary" style="margin:0;">add another medical condition <i class="fas fa-plus"></i></button> -->
                                                                 <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact btn btn-primary">add another medical condition <i class="fas fa-plus"></i></a>
                                                             </div>
                                                         </div>
@@ -1626,9 +1646,9 @@ $count = 1;
                                                         @endif
 
                                                         <div id="sec_all" class="col-md-12 col-form-label text-md-right">
-                                                        @if(!empty($allergies_arr) && count($allergies_arr)>0)
 
-                                                        <input type="hidden" id="noOfAllergy" value="{{$count_allergies_arr}}">
+                                                        @if(!empty($count_child_allergies))
+                                                        <input type="hidden" id="noOfAllergy" value="{{$count_child_allergies}}">
 
                                                         @php $i=1; @endphp
                                                         @foreach($allergies_info as $con)
@@ -1766,7 +1786,7 @@ $count = 1;
                                                         <div class="col-md-12 option_row consent-option-row">
                                                             <div class="form-group row ">
                                                                 <div class="form-radios">
-                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does your child have any medical condition the we should be aware of?</p>
+                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical conditions that we should be aware of?</p>
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
@@ -1799,19 +1819,20 @@ $count = 1;
 
                                                         <div id="medical_cond" class="col-md-12 option_row consent-option-row">
                                                         
-                                                            @if(!empty($med_cond_arr) && count($med_cond_arr)>0)
-                                                            
-                                                            <input type="hidden" id="noOfMed1" value="{{$count_med_cond_arr}}">
+                                                            @if(!empty($count_child_medicals))
+                                                            <input type="hidden" id="noOfMed1" value="{{$count_child_medicals}}">
 
                                                             @php $i=1; @endphp
                                                             @foreach($med_cond_info as $con)
-                                                            <div class="child-contact-container" id="sec_med_con1[{{$i}}]">
+                                                            <div class="child-contact-container slots{{$i}}" id="sec_med_con1[{{$i}}]">
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this child.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea_wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
+
+                                                                        <!-- <a onclick="removeSection1({{$i}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1821,14 +1842,16 @@ $count = 1;
 
                                                             <input type="hidden" id="noOfMed1" value="{{$count}}">
 
-                                                            <div class="child-contact-container" id="sec_med_con1[{{$count}}]">
+                                                            <div class="child-contact-container slots{{$count}}" id="sec_med_con1[{{$count}}]">
                                                                 
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this child.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea_wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$count}}]" class="form-control" rows="5"></textarea>
+
+                                                                        <!-- <a onclick="removeSection1({{$count}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1837,7 +1860,7 @@ $count = 1;
 
                                                         <div class="form-group row f-g-full">
                                                             <div class="col-sm-12 button-center" style="margin-top: 15px;">
-                                                                <!-- <button id="medical_info_to_next" class="cstm-btn" style="margin:0;">add another medical condition <i class="fas fa-plus"></i></button> -->
+                                                                <!-- <button id="medical_info_to_next" class="btn btn-primary" style="margin:0;">add another medical condition <i class="fas fa-plus"></i></button> -->
                                                                 <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact btn btn-primary">add another medical condition <i class="fas fa-plus"></i></a>
                                                             </div>
                                                         </div>
@@ -1875,10 +1898,11 @@ $count = 1;
                                                         @endphp
                                                         @endif
 
-                                                        <div id="sec_all"class="col-md-12 col-form-label text-md-right">
-                                                        @if(!empty($allergies_arr) && count($allergies_arr)>0)
-                                                        
-                                                        <input type="hidden" id="noOfAllergy" value="{{$count_allergies_arr}}">
+                                                        <div id="sec_all" class="col-md-12 col-form-label text-md-right">
+
+                                                        @if(!empty($count_child_allergies))
+                                                        <input type="hidden" id="noOfAllergy" value="{{$count_child_allergies}}">
+
                                                         @php $i=1; @endphp
                                                         @foreach($allergies_info as $con)
                                                         <div class="form-group row address-detail" id="aller[{{$i}}]">
@@ -2016,7 +2040,7 @@ $count = 1;
                                                         <div class="col-md-12 option_row consent-option-row">
                                                             <div class="form-group row ">
                                                                 <div class="form-radios">
-                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does your child have any medical condition the we should be aware of?</p>
+                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical conditions that we should be aware of?</p>
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
@@ -2049,19 +2073,20 @@ $count = 1;
 
                                                         <div id="medical_cond" class="col-md-12 option_row consent-option-row">
                                                         
-                                                            @if(!empty($med_cond_arr) && count($med_cond_arr)>0)
-
-                                                            <input type="hidden" id="noOfMed1" value="{{$count_med_cond_arr}}">
+                                                            @if(!empty($count_child_medicals))
+                                                            <input type="hidden" id="noOfMed1" value="{{$count_child_medicals}}">
 
                                                             @php $i=1; @endphp
                                                             @foreach($med_cond_info as $con)
-                                                            <div class="child-contact-container" id="sec_med_con1[{{$i}}]">
+                                                            <div class="child-contact-container slots{{$i}}" id="sec_med_con1[{{$i}}]">
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this child.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea-wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
+
+                                                                        <!-- <a onclick="removeSection1({{$i}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2071,14 +2096,16 @@ $count = 1;
 
                                                             <input type="hidden" id="noOfMed1" value="{{$count}}">
 
-                                                            <div class="child-contact-container" id="sec_med_con1[{{$count}}]">
+                                                            <div class="child-contact-container slots{{$count}}" id="sec_med_con1[{{$count}}]">
                                                                 
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this child.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea_wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$count}}]" class="form-control" rows="5"></textarea>
+
+                                                                        <!-- <a onclick="removeSection1({{$count}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2087,7 +2114,7 @@ $count = 1;
 
                                                         <div class="form-group row f-g-full">
                                                             <div class="col-sm-12 button-center" style="margin-top: 15px;">
-                                                                <!-- <button id="medical_info_to_next" class="cstm-btn" style="margin:0;">add another medical condition <i class="fas fa-plus"></i></button> -->
+                                                                <!-- <button id="medical_info_to_next" class="btn btn-primary" style="margin:0;">add another medical condition <i class="fas fa-plus"></i></button> -->
                                                                 <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact btn btn-primary">add another medical condition <i class="fas fa-plus"></i></a>
                                                             </div>
                                                         </div>
@@ -2127,9 +2154,9 @@ $count = 1;
 
                                                         <div id="sec_all" class="col-md-12 col-form-label text-md-right">
                                                         
-                                                        @if(!empty($allergies_arr) && count($allergies_arr)>0)
-
-                                                        <input type="hidden" id="noOfAllergy" value="{{$count_allergies_arr}}">
+                                                        @if(!empty($count_child_allergies))
+                                                        <input type="hidden" id="noOfAllergy" value="{{$count_child_allergies}}">
+                                                        
                                                         @php $i=1; @endphp
                                                         @foreach($allergies_info as $con)
                                                         <div class="form-group row address-detail" id="aller[{{$i}}]">
@@ -2275,7 +2302,7 @@ $count = 1;
                                                                 <div class="col-md-12 option_row consent-option-row">
                                                                     <div class="form-group row ">
                                                                         <div class="form-radios">
-                                                                            <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does your child have any medical condition the we should be aware of?</p>
+                                                                            <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical conditions that we should be aware of?</p>
                                                                         </div>
                                                                         <div class="radio-wrap">
                                                                             <div class="cstm-radio">
@@ -2288,7 +2315,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                @if(!empty($children_details))
+                                                                <!-- @if(!empty($children_details))
                                                                     @php 
                                                                         $med_cond_info = json_decode($children_details->med_cond_info); 
                                                                         $med_cond_arr = [];
@@ -2303,37 +2330,53 @@ $count = 1;
                                                                 @php 
                                                                     $count_med_cond_arr = count($med_cond_arr); 
                                                                 @endphp
-                                                                @endif
+                                                                @endif -->
 
-                                                                @if(!empty($med_cond_arr) && count($med_cond_arr)>0)
+                                                                <div id="medical_cond1" class="col-md-12 option_row consent-option-row"> 
+
+                                                                @if(!empty($count_child_medicals))
+                                                                <input type="hidden" id="noOfMed" value="{{$count_child_medicals}}">
+
+                                                                <!-- <input type="hidden" id="noOfMed" value="{{$count_med_cond_arr}}"> -->
+
                                                                 @php $i=1; @endphp
                                                                 @foreach($med_cond_info as $con)
-                                                                <div class="child-contact-container" id="sec_med_con">
-                                                                    <input type="hidden" id="noOfMed" value="{{$count_med_cond_arr}}">
+                                                                <div class="child-contact-container slot{{$i}}" id="sec_med_con[{{$i}}]">
+                                                                    
                                                                     <div class="form-group row address-detail">
                                                                         <label for="address" class=" col-form-label text-md-right">
-                                                                            <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this child.</p>
+                                                                            <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
                                                                         </label>
                                                                         <div class="col-md-12 textarea_wrap">
                                                                             <textarea class="form-control" name="med_cond_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
+
+                                                                            <!-- <a onclick="removeSection11({{$i}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a> -->
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 @php $i++; @endphp
                                                                 @endforeach
+
                                                                 @else
-                                                                <div class="child-contact-container" id="sec_med_con">
-                                                                    <input type="hidden" id="noOfMed" value="{{$count}}">
+
+                                                                <input type="hidden" id="noOfMed" value="{{$count}}">
+
+                                                                <div class="child-contact-container slot{{$count}}" id="sec_med_con[{{$count}}]">
+                                                                    
                                                                     <div class="form-group row address-detail">
                                                                         <label for="address" class=" col-form-label text-md-right">
-                                                                            <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this child.</p>
+                                                                            <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
                                                                         </label>
                                                                         <div class="col-md-12 textarea_wrap">
                                                                             <textarea class="form-control" name="med_cond_info[{{$count}}]" class="form-control" rows="5"></textarea>
+
+                                                                            <!-- <a onclick="removeSection11({{$i}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a> -->
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 @endif
+
+                                                                </div>
                                                                 <div class="form-group row f-g-full">
                                                                     <div class="col-sm-12 button-center" style="margin-top: 15px;">
                                                                         <a href="javascript:void(0);" style="margin:0;" onclick="addmedical();" class="additional_contact btn btn-primary">add another medical condition <i class="fas fa-plus"></i></a>
@@ -2376,10 +2419,8 @@ $count = 1;
 
                                         <div class="col-md-12 option_row consent-option-row">
                                             <div class="media_cont_wrap">
-                                                <p class="main_head media_cont" style="display: inline-block; font-weight: 500; margin:15px 15px 0 0 ;">Media -</p><span class="media_photo">During our holiday camps and nn school coaching classes, we may taek photoes/videos of the activity to use solely
-                                                    for peomotional purposes.</span>
+                                                <p class="main_head media_cont" style="display: inline-block; font-weight: 500; margin:15px 15px 0 0 ;">Media -</p><span class="media_photo">During activities run by DRH Sports(excluding activities run within school settings), photos and videos may occasionally be taken solely for promotional purposes.</span>
                                             </div>
-                                            <br/>
                                             <div class="form-group row ">
                                                 <div class="form-radios">
                                                     <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Do you give consent for this participant to be included in photos and videos to be used for promotional purposes such as social media or marketing material?</p>
@@ -2427,10 +2468,9 @@ $count = 1;
                 </div>
 
                 @if(!empty($user_id))
-                <br/>
                     <div class="delete-child-container">
-                        <h4 style="font-weight: 400px;">Delete Child</h4>
-                        <a href="{{url('/admin/family-member/delete')}}/@php echo base64_encode($user_id); @endphp" onclick="return confirm('Are you sure you want to delete this child?')" class="btn btn-primary">I confirm i want to delete this child</a>
+                        <h2>Delete Person</h2>
+                        <a href="{{url('/admin/family-member/delete')}}/@php echo base64_encode($user_id); @endphp" onclick="return confirm('Are you sure you want to delete this child?')" class="btn btn-primary">I confirm i want to delete this person</a>
                     </div>
                 @endif
             </div>
@@ -2444,9 +2484,14 @@ function addmedical() {
     var newnumber = number + 1;
     $("#noOfMed").val(newnumber);
 
-    var mainHtml = '<div class="form-group col-md-12 f-g-full label-textarea" id="med_cond_info" style="display:block;"><label>Please state the name of the medical condition and describe how it affects this child.</label><textarea spellcheck="false" name="med_cond_info[' + newnumber + ']" id="med_con_data"></textarea></div>';
+    var mainHtml = '<div class="child-contact-container slot'+newnumber+'" id="sec_med_con['+newnumber+']"><div class="form-group row address-detail"><label for="address" class="col-form-label text-md-right"><p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p></label><div class="col-md-12 textarea_wrap"><textarea class="form-control" name="med_cond_info[' + newnumber + ']" class="form-control" rows="5"></textarea></div></div></div>';
 
-    $("#sec_med_con").append(mainHtml);
+    $("#medical_cond1").append(mainHtml);
+}
+
+function removeSection11(counter){  
+    var number = parseInt($("#noOfMed").val());     
+    $(".slot"+ counter).remove();
 }
 
 function addmedical1() {
@@ -2454,9 +2499,14 @@ function addmedical1() {
     var newnumber = number + 1;
     $("#noOfMed1").val(newnumber);
 
-    var mainHtml = '<div class="child-contact-container" id="sec_med_con1[' + newnumber + ']"><div class="form-group row address-detail"><label for="address" class="col-form-label text-md-right"><p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this child.</p></label><div class="col-md-12 textarea_wrap"><textarea class="form-control" name="med_cond_info[' + newnumber + ']" class="form-control" rows="5"></textarea></div></div></div>';
+    var mainHtml = '<div class="child-contact-container slots'+newnumber+'" id="sec_med_con1['+newnumber+']"><div class="form-group row address-detail"><label for="address" class="col-form-label text-md-right"><p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p></label><div class="col-md-12 textarea_wrap"><textarea class="form-control" name="med_cond_info[' + newnumber + ']" class="form-control" rows="5"></textarea></div></div></div>';
 
     $("#medical_cond").append(mainHtml);
+}
+
+function removeSection1(counter){   
+    var number = parseInt($("#noOfMed1").val()); 
+    $(".slots"+ counter).remove();
 }
 
 function addallergy() {
@@ -2485,7 +2535,7 @@ function addcontact() {
 
     mainHtml += '<div class="form-group row"><label for="relation" class="col-md-12 col-form-label text-md-right">What is this persons relationship to the child?</label><div class="col-md-12"><link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"><select id="con_relation" name="contact[' + newnum + '][con_relation]" class="form-control cstm-select-list"><option selected="" disabled="" value="">Please Choose</option><option value="Mother">Mother</option><option value="Father">Father</option><option value="Grandparent">Grandparent</option><option value="Guardian">Guardian</option><option value="Spouse">Spouse/Partner</option></select></div></div>';
 
-    mainHtml += '<div class="form-group row"><label class="col-md-12 col-form-label text-md-right">If you chose other who are they?</label><div class="col-md-12"><input id="who_are_they" type="text" class="form-control" name="contact[' + newnum + '][who_are_they]" value="" ></div></div></div>';
+    mainHtml += '<div class="form-group row"><label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label><div class="col-md-12"><input id="who_are_they" type="text" class="form-control" name="contact[' + newnum + '][who_are_they]" value="" ></div></div></div>';
 
     $("#sec_contact").append(mainHtml);
 
@@ -2511,7 +2561,7 @@ function addcontact1() {
 
     mainHtml += '<div class="form-group row"><label for="relation" class="col-md-12 col-form-label text-md-right">What is this persons relationship to the child?</label><div class="col-md-12"><link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"><select id="con_relation1" name="contact1[' + newnum + '][con_relation1]" class="form-control cstm-select-list"><option selected="" disabled="" value="">Please Choose</option><option value="Mother">Mother</option><option value="Father">Father</option><option value="Grandparent">Grandparent</option><option value="Guardian">Guardian</option><option value="Spouse">Spouse/Partner</option></select></div></div>';
 
-    mainHtml += '<div class="form-group row"><label class="col-md-12 col-form-label text-md-right">If you chose other who are they?</label><div class="col-md-12"><input id="who_are_they1" type="text" class="form-control" name="contact1[' + newnum + '][who_are_they1]" value="" ></div></div></div>';
+    mainHtml += '<div class="form-group row"><label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label><div class="col-md-12"><input id="who_are_they1" type="text" class="form-control" name="contact1[' + newnum + '][who_are_they1]" value="" ></div></div></div>';
 
     $("#sec_contact1").append(mainHtml);
 

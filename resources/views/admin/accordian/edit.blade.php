@@ -82,8 +82,8 @@
 
                   <label class="control-label">Color of the Accordian<span class="cst-upper-star">*</span></label>
                   <select class="form-control" name="color">
-                        <option value="#be298d" {{ $venue->color == '#be298d' ?  'selected' : '' }}>Pink</option>
-                        <option value="#00afef" {{ $venue->color == '#00afef' ?  'selected' : '' }}>Blue</option>
+                        <option value="#001642" {{ $venue->color == '#be298d' ?  'selected' : '' }}>Blue</option>
+                        <option value="#00afef" {{ $venue->color == '#00afef' ?  'selected' : '' }}>Sky Blue</option>
                         <option value="#bea029" {{ $venue->color == '#bea029' ?  'selected' : '' }}>Yellow</option>
                   </select><br/>
 

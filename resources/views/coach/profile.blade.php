@@ -8,7 +8,7 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
 @endphp
 <style>
    .card.coach_profile {
-   border: 4px solid #be298d;
+   border: 4px solid #001642;
    padding: 30px;
    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.1);
    border-radius: 0;
@@ -132,14 +132,14 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
                      <div class="form-button">
                         <div class="form-group row mb-0">
                            <div class="col-md-12 form-btn">
-                              <button type="submit" class="cstm-btn">
+                              <button type="submit" class="cstm-btn main_button">
                               {{ __('Submit') }}
                               </button>
                               <div class="profile-view" data-toggle="modal" data-target="#profile-detail">
-                                 <a class="cstm-btn">View Profile</a>
+                                 <a class="cstm-btn main_button">View Profile</a>
                               </div>
                                <div class="profile-view">
-                                 <a href="{{url('/user/coach-qualifications')}}" class="cstm-btn">Add Qualifications</a>
+                                 <a href="{{url('/user/coach-qualifications')}}" class="cstm-btn main_button">Add Qualifications</a>
                               </div>
                            </div>
                         </div>

@@ -32,7 +32,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10">
-            <div class="card">
+            <div class="card acc_card">
                 <div class="card-header">{{ __('Account Settings') }}</div>
 
                 <div class="card-body">
@@ -80,10 +80,10 @@
 
                             <div class="col-md-12 det-gender-opt">
 
-                                <input type="radio" id="male" name="gender" value="male" {{ $user->gender == 'male' ? 'checked' : '' }}>
-                                <label for="male">Male</label><br>
-                                <input type="radio" id="female" name="gender" value="female" {{ $user->gender == 'female' ? 'checked' : '' }}>
-                                <label for="female">Female</label><br>
+                                <input type="radio" id="maleacc" name="gender" value="male" {{ $user->gender == 'male' ? 'checked' : '' }}>
+                                <label for="maleacc">Male</label><br>
+                                <input type="radio" id="femaleacc" name="gender" value="female" {{ $user->gender == 'female' ? 'checked' : '' }}>
+                                <label for="femaleacc">Female</label><br>
 
                                 <div id="select_gender"></div>
                                 @if ($errors->has('gender'))
@@ -227,7 +227,7 @@
                     <div class="form-button">
                         <div class="form-group row mb-0">
                             <div class="col-md-12 form-btn">
-                                <button type="submit" class="cstm-btn">
+                                <button type="submit" class="cstm-btn main_button">
                                     {{ __('Update') }}
                                 </button>
                             </div>
@@ -275,7 +275,7 @@
                     </div><!-- /.box-body -->
 
                     <div class="box-footer">
-                        <button type="submit" id="passwordSubmitButton" class="cstm-btn">Update Password</button>
+                        <button type="submit" id="passwordSubmitButton" class="cstm-btn main_button">Update Password</button>
                     </div>
                 </form>
             </div><!-- /.box -->

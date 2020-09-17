@@ -8,11 +8,25 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
 @endphp
 <style>
    .card.coach_profile {
-   border: 4px solid #be298d;
+   border:4px solid #001642;
    padding: 30px;
    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.1);
    border-radius: 0;
+
    }
+   .main_button:hover
+{
+     background: #fff;
+    border: 2px solid#001642;
+    color: #001642;
+}
+.main_button
+{
+    background: #001642;
+    border: 2px solid #001642;
+    color: #fff;
+     margin-top: 10px;
+}
 </style>
 <div class="account-menu">
    <div class="container">
@@ -83,7 +97,7 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
                      <div class="form-button">
                         <div class="form-group row mb-0">
                            <div class="col-md-12 form-btn">
-                              <button type="submit" class="cstm-btn">
+                              <button type="submit" class="cstm-btn main_button">
                               {{ __('Submit') }}
                               </button>
                            </div>

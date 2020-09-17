@@ -8,7 +8,7 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
 @endphp
 <style>
     .card.coach_profile {
-   border: 4px solid #be298d;
+   border: 4px solid #001642;
    padding: 30px;
    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.1);
    border-radius: 0;
@@ -75,7 +75,7 @@ $wallet_amt = DB::table('wallets')->where('user_id',Auth::user()->id)->first();
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-md-4 col-sm-12" id="add_money_btn"><a class="cstm-btn">Add Money</a></div>
+                                <div class="col-md-4 col-sm-12" id="add_money_btn"><a class="cstm-btn main_button">Add Money</a></div>
                             </div>
                             <div class="form-button">
                                 <div class="form-group row mb-0">

@@ -7,12 +7,14 @@
             <div class="col-md-12">
                 <div class="page-header-title">
                     <h5 class="m-b-10">{{$title}}</h5>
+                    <a style="float:right;" class="btn btn-primary" href="{{url('/admin/user/faqs/create')}}">Add FAQ</a>
                 </div>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{url(route('admin_dashboard'))}}"><i class="feather icon-home"></i></a></li>
                     <li class="breadcrumb-item "><a href="javascript:void(0)">View</a></li>
                     <li class="breadcrumb-item "><a href="{{ route($addLink, ['type' => $type]) }}">Add</a></li>
                 </ul>
+                <br/>
             </div>
         </div>
     </div>

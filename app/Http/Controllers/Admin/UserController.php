@@ -11,6 +11,8 @@ use App\Course;
 use App\ChildrenDetail;
 use App\ChildContact;
 use App\ChildActivity;
+use App\ChildMedical;
+use App\ChildAllergy;
 use App\Models\Shop\ShopCartItems;
 use App\Models\Shop\ShopOrder;
 use App\NewsletterSubscription;
@@ -40,7 +42,7 @@ class UserController extends Controller
                      ->where('last_name', '=', $search_last_name)
                      ->where('email', '=', $search_email)
                      ->where('role','!=','admin')
-                     ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
+                     ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id','type'])
                      ->paginate(10);
 
         }else if(!empty(request()->get('search_first_name')) && !empty(request()->get('search_last_name')))
@@ -49,7 +51,7 @@ class UserController extends Controller
                      ->where('first_name', '=', $search_first_name)
                      ->where('last_name', '=', $search_last_name)
                      ->where('role','!=','admin')
-                     ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
+                     ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id','type'])
                      ->paginate(10);
 
         }else if(!empty(request()->get('search_first_name')) && !empty(request()->get('search_email')))
@@ -58,7 +60,7 @@ class UserController extends Controller
                      ->where('first_name', '=', $search_first_name)
                      ->where('email', '=', $search_email)
                      ->where('role','!=','admin')
-                     ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
+                     ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id','type'])
                      ->paginate(10);
 
         }else if(!empty(request()->get('search_last_name')) && !empty(request()->get('search_email')))
@@ -67,7 +69,7 @@ class UserController extends Controller
                      ->where('last_name', '=', $search_last_name)
                      ->where('email', '=', $search_email)
                      ->where('role','!=','admin')
-                     ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
+                     ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id','type'])
                      ->paginate(10);
 
         }else if(!empty(request()->get('search_first_name')))
@@ -75,7 +77,7 @@ class UserController extends Controller
           $users = \DB::table('users')
                      ->where('first_name', '=', $search_first_name)
                      ->where('role','!=','admin')
-                     ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
+                     ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id','type'])
                      ->paginate(10);
 
         }else if(!empty(request()->get('search_last_name')))
@@ -83,7 +85,7 @@ class UserController extends Controller
           $users = \DB::table('users')
                      ->where('last_name', '=', $search_last_name)
                      ->where('role','!=','admin')
-                     ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
+                     ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id','type'])
                      ->paginate(10);
 
         }else if(!empty(request()->get('search_email')))
@@ -91,11 +93,13 @@ class UserController extends Controller
           $users = \DB::table('users')
                      ->where('email', '=', $search_email)
                      ->where('role','!=','admin')
-                     ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
+                     ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id','type'])
                      ->paginate(10);
         }else{
-          $users = User::select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])->where('role','!=','admin')->paginate(10);
+          $users = User::select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id','type'])->where('role','!=','admin')->paginate(10);
         }
+
+        // dd($users);
 
     	return view('admin.user-vendor.users.index',compact('users'));	
     }
@@ -712,10 +716,12 @@ class UserController extends Controller
         $user = User::where('id',$id)->first();  
         $user_details = ChildrenDetail::where('child_id',$id)->first();
         $user_contacts = ChildContact::where('child_id',$id)->get();
+        $user_medicals = ChildMedical::where('child_id',$id)->get();
+        $user_allergies = ChildAllergy::where('child_id',$id)->get();
 
         // dd($user,$user_details,$user_contacts); 
 
-        return view('admin.user-vendor.users.family-member-overview',compact('user','user_details','user_contacts'));
+        return view('admin.user-vendor.users.family-member-overview',compact('user','user_details','user_contacts','user_medicals','user_allergies'));
     }
 
     /*********************************
@@ -909,12 +915,55 @@ class UserController extends Controller
       if($request->type == 'Adult')
       {
         $med_cond_info = json_encode($request->med_cond_info); 
+
+        if(count($request->med_cond_info)>0)
+        {
+          ChildMedical::where('child_id',$request->child_id)->delete();
+
+          foreach($request->med_cond_info as $key=>$value)
+          {
+            $child_med = new ChildMedical;
+            $child_med->child_id = $request->child_id;
+            $child_med->type = $request->type;
+            $child_med->medical = $value; 
+            $child_med->save();
+          }
+        }
+
         ChildrenDetail::where('child_id',$request->child_id)->update(array('med_cond' => $med_cond, 'med_cond_info' => $med_cond_info)); 
       }
       elseif($request->type == 'Child')
       {
         $med_cond_info = json_encode($request->med_cond_info); 
         $allergies_info = json_encode($request->allergies_info); 
+
+        if(count($request->med_cond_info)>0)
+        {
+          ChildMedical::where('child_id',$request->child_id)->delete();
+
+          foreach($request->med_cond_info as $key=>$value)
+          {
+            $child_med = new ChildMedical;
+            $child_med->child_id = $request->child_id;
+            $child_med->type = $request->type;
+            $child_med->medical = $value; 
+            $child_med->save();
+          }
+        }
+
+        if(count($request->allergies_info)>0)
+        {
+          ChildAllergy::where('child_id',$request->child_id)->delete();
+
+          foreach($request->allergies_info as $key1=>$value1)
+          {
+            $child_all = new ChildAllergy;
+            $child_all->child_id = $request->child_id;
+            $child_all->type = $request->type;
+            $child_all->allergy = $value1; 
+            $child_all->save();
+          }
+        }
 
         ChildrenDetail::where('child_id',$request->child_id)->update(array('med_cond' => $med_cond, 'allergies' => $request->allergies, 'allergies_info' => $allergies_info, 'med_cond_info' => $med_cond_info, 'pres_med' => $request->pres_med, 'pres_med_info' => $request->pres_med_info, 'med_req' => $request->med_req, 'med_req_info' => $request->med_req_info, 'toilet' => $request->toilet, 'beh_need' => $request->beh_need, 'beh_need_info' => $request->beh_need_info)); 
       }
@@ -956,5 +1005,35 @@ class UserController extends Controller
       $children = User::where('role_id',4)->where('parent_id', '=', \Auth::user()->id)->get(); 
       return redirect('/admin/my-family')->with('children',$user)->with('user',$user)->with('success','Family Member has been deleted successfully!');
     }
+
+    /*------------------------------------------
+    | Remove contact from Family member section
+    |------------------------------------------*/
+    public function remove_contact($id)
+    {
+      ChildContact::where('id',$id)->delete();
+
+      return \Redirect::back()->with('success',' Contact removed successfully!');
+    } 
+
+    /*------------------------------------------
+    | Remove medical from Family member section
+    |------------------------------------------*/
+    public function remove_medical($id)
+    {
+      ChildMedical::where('id',$id)->delete();
+
+      return \Redirect::back()->with('success',' Medical condition removed successfully!');
+    } 
+
+    /*------------------------------------------
+    | Remove allergy from Family member section
+    |------------------------------------------*/
+    public function remove_allergy($id)
+    {
+      ChildAllergy::where('id',$id)->delete();
+
+      return \Redirect::back()->with('success',' Allergy condition removed successfully!');
+    } 
 
 }

@@ -98,7 +98,7 @@ footer.site-footerss {
                             <input type="text" class="form-control" id="input-coupon-code" placeholder="Coupon Code">
                             <button type="submit" class="cstm-btn solid-btn">Apply Coupon</button>
                         </form> -->
-                        <div class="cart__buttons"><a href="{{url(route('shop.index'))}}" class="cstm-btn">Continue Shopping</a>  </div>
+                        <div class="cart__buttons"><a href="{{url(route('shop.index'))}}" class="cstm-btn main_button">Continue Shopping</a>  </div>
                     </div>
                 </div>
             </div>

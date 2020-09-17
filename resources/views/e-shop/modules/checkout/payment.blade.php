@@ -87,7 +87,7 @@
                             @endforeach
                             @endif
 
-                         <a id="childcare_btn" style="display: none;" href="javascript:void(0);" class="cstm-btn" data-toggle="modal" data-target="#exampleModal">Pay with vouchers or Tax-Free Childcare</a>
+                         <a id="childcare_btn" style="display: none;" href="javascript:void(0);" class="cstm-btn main_button" data-toggle="modal" data-target="#exampleModal">Pay with vouchers or Tax-Free Childcare</a>
 
                     </div>
                     <div class="tab-pane" id="tabs-3" role="tabpanel">
@@ -111,7 +111,7 @@
                         @if(!empty($cart_total) && ($cart_total <= $wallet_amount))
                             <form action="{{route('save_wallet')}}" method="POST">
                                 @csrf
-                                <button class="cstm-btn" >Pay With Wallet</button>
+                                <button class="cstm-btn main_button" >Pay With Wallet</button>
                             </form>
                         @elseif($cart_total > $wallet_amount)
 
@@ -197,7 +197,7 @@
                                     
                                     
                                     <div class="form-check button-check">
-                                        <button id="submit-childcare" type="submit" class="cstm-btn">Submit</button>
+                                        <button id="submit-childcare" type="submit" class="cstm-btn main_button">Submit</button>
                                     </div>
                                 </div>
                             </form>
@@ -311,7 +311,7 @@
                 <form action="{{route('removeCoupon')}}" method="POST">
                     @csrf
                     <input type="hidden" name="shop_id" value="{{$co->id}}">
-                    <button type="submit" class="cstm-btn">Remove Coupon</button>
+                    <button type="submit" class="cstm-btn main_button">Remove Coupon</button>
                 </form>
                 <br />
                 @endforeach
@@ -329,7 +329,7 @@
                             <input type="text" name="coupon_code" id="coupon_code" class="form-control">
                         </div>
                         <div class="col-sm-5">
-                            <button value="Apply coupon" id="submit_coupon" class="cstm-btn" title="Apply coupon" type="submit"><span>Apply coupon</span></button>
+                            <button value="Apply coupon" id="submit_coupon" class="cstm-btn main_button" title="Apply coupon" type="submit"><span>Apply coupon</span></button>
                         </div>
                     </div>
                 </form>
@@ -342,7 +342,7 @@
         <div class="col-md-12">
             <!-- <button class="cstm-btn solid-btn">Continue</button> -->
             <div class="multistep-footer mt-4 text-right">
-                <a href="{{$backward}}" class="cstm-btn">Back</a>
+                <a href="{{$backward}}" class="cstm-btn main_button">Back</a>
             </div>
         </div>
     </div>

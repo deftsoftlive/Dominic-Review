@@ -5,29 +5,34 @@
 @section('keywords') Faq @endsection
 
 @section('content')
-<section class="log-sign-banner" style="background:url('/frontend/images/banner-bg.png');">
-    <div class="container">
-        <div class="page-title text-center">
-            <h1>faq</h1>
+
+<section class="football-course-sec" style="background: url(http://49.249.236.30:8654/dominic-new/public/uploads/1584684865tennis_course_banner_image.png);">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="football-course-content">
+              <h2 class="f-course-heading">FAQ</h2>
+            </div>
+          </div>
         </div>
-    </div>    
-</section>
+      </div>
+    </section>
  <section class="faq-sec"> 
  	<div class="container"> 
  		<div class="sec-card"> 
-	      <div class="faq-content"> 
+	      <!-- <div class="faq-content"> 
 	      	<div class="sec-heading dark-sec-heading text-center">
          <h2>Frequently Asked Questions</h2>
-      </div>
+      </div> -->
   <div class="faq-tab-wrap">
-  <ul class="nav nav-tabs faq-tabs" role="tablist">
+<!--   <ul class="nav nav-tabs faq-tabs" role="tablist">
 	<li class="nav-item">
 		<a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"><span class="tab-icon"><img src="/frontend/images/user-img.png"></span> User</a>
 	</li>
 	<li class="nav-item">
 		<a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"><span class="tab-icon"><img src="/frontend/images/user-img.png"></span> Vendor</a>
 	</li>
-</ul><!-- Tab panes -->
+</ul> --><!-- Tab panes -->
 <div class="tab-content">
 	<div class="tab-pane active" id="tabs-1" role="tabpanel">
         <div class="faq-acc-wrap">
@@ -43,10 +48,10 @@
 				      <h2 class="mb-0">
 				        <button class="d-flex align-items-center justify-content-between btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{$key}}" aria-expanded="false" aria-controls="collapse{{$key}}">
 				          {{ $faq->question }}
-				          <span class="fa-stack fa-2x">
-				              <i class="fas fa-circle fa-stack-2x"></i>
+				         <!--  <span class="icon_wrapss">
+				              
 				            <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
-				          </span>
+				          </span> -->
 				        </button>
 				      </h2>
 				    </div>
@@ -78,10 +83,10 @@
 					      <h2 class="mb-0">
 					        <button class="d-flex align-items-center justify-content-between btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-vendor-{{$key}}" aria-expanded="false" aria-controls="collapse-vendor-{{$key}}">
 					          {{ $faq->question }}
-					          <span class="fa-stack fa-2x">
-					            <i class="fas fa-circle fa-stack-2x"></i>
+					         <!--  <span class="icon_wrapss">
+					            
 					            <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
-					          </span>
+					          </span> -->
 					        </button>
 					      </h2>
 					    </div>

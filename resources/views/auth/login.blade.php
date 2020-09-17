@@ -72,12 +72,12 @@
 
                         <div class="form-group row mb-0 ">
                             <div class="col-md-12 login-form-btn">
-                                <button type="submit" class="cstm-btn login">
+                                <button type="submit" class="cstm-btn login main_button">
                                     {{ __('Login') }}
                                 </button>
 
                                 @if (Route::has('password.request'))
-                                    <a class="cstm-btn forgt" href="{{ route('password.request') }}">
+                                    <a class="cstm-btn forgt main_button" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif

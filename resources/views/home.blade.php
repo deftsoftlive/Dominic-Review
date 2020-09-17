@@ -58,7 +58,7 @@
             <div class="about-us-left">
               <p>{{$section1_tagline}}</p>
               <div class="know-more-btn-wrap">
-                <a href="{{$section1_button_url}}" class="cstm-btn"><span></span>{{$section1_button_title}}</a>
+                <a href="{{$section1_button_url}}" class="cstm-btn main_button"><span></span>{{$section1_button_title}}</a>
               </div>
             </div>  
           </div>
@@ -181,7 +181,8 @@
               <div class="item">
                 <div class="testimonial-card">
                   <figure class="testimonial-img-wrap">
-                    <img src="{{ URL::asset('images/testimonial-card-img-1.png')}}">
+                   <img class="nb-icon" src="{{ URL::asset('images/nb-icon.png')}}">
+                    <img class="b-icon" src="{{ URL::asset('images/b-icon.png')}}"> 
                   </figure>
                   <figcaption class="testimonial-caption">
                     <p>{{$test->description}}</p>
@@ -226,7 +227,7 @@
                       </figure>
                     </li>
                     <li>
-                        <a href="{{$section2_button_url}}" class="cstm-btn">{{$section2_button_title}}</a>
+                        <a href="{{$section2_button_url}}" class="cstm-btn main_button">{{$section2_button_title}}</a>
                     </li>
                     <li>
                       <figure>

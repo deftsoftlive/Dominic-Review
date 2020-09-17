@@ -71,7 +71,7 @@
                                 </div> -->
                                 
                                  <div class="action btn-wrap mt-3"> 
-                                    <button class="cstm-btn solid-btn cartButton" type="submit">add to cart</button>  
+                                    <button class="cstm-btn solid-btn cartButton main_button" type="submit">add to cart</button>  
                                  </div>
                               </form>
                            </div>

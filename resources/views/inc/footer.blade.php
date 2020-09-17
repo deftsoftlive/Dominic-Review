@@ -134,7 +134,7 @@ $(document).ready(function(){
 
         var mainHtml='<tr class="timeslots slots'+newnumber+'" value="'+newnumber+'"><td><input type="file" name="match_chart['+newnumber+']"></td>';
 
-        mainHtml+='<td class="remove_game_chart"><a href="javascript:void(0);" onclick="removeSection('+newnumber+');" class="cstm-btn">Delete</a></td></tr>';
+        mainHtml+='<td class="remove_game_chart"><a href="javascript:void(0);" onclick="removeSection('+newnumber+');" class="cstm-btn main_button">Delete</a></td></tr>';
 
         $(".add_on_services").append(mainHtml);
     }
@@ -150,6 +150,92 @@ $(document).ready(function(){
 
 <script type="text/javascript">
 $(document).ready(function($){
+
+    $(".medical_cond").change(function(){
+       var result = $('input[name="med_cond"]:checked').val();
+
+       if(result == 'no')
+       {
+          $('#medical_cond1').css('display','none');
+          $('.another_medical').css('display','none');
+       }
+       else if(result == 'yes') 
+       {
+          $('#medical_cond1').css('display','block');
+          $('.another_medical').css('display','block');
+       }
+
+       var result1 = $('input[name="med_cond1"]:checked').val();
+
+       if(result1 == 'no')
+       {
+          $('#medical_cond').css('display','none');
+          $('.another_medical').css('display','none');
+       }
+       else if(result1 == 'yes') 
+       {
+          $('#medical_cond').css('display','block');
+          $('.another_medical').css('display','block');
+       }
+    });
+
+    $(".allergy_cond").change(function(){
+       var result = $('input[name="allergies"]:checked').val();
+
+       if(result == 'no')
+       {
+          $('#sec_all').css('display','none');
+          $('.another_allergy').css('display','none');
+       }
+       else if(result == 'yes') 
+       {
+          $('#sec_all').css('display','block');
+          $('.another_allergy').css('display','block');
+       }
+    });
+
+
+    $(".beh_cond").change(function(){
+       var result = $('input[name="beh_need"]:checked').val();
+
+       if(result == 'no')
+       {
+          $('.beh_info').css('display','none');
+       }
+       else if(result == 'yes') 
+       {
+          $('.beh_info').css('display','block');
+       }
+    });
+
+
+    $(".eng_que").change(function(){
+       var result = $('input[name="language1"]:checked').val();
+
+       if(result == 'yes')
+       {
+          $('.pri_lang').css('display','none');
+       }
+       else if(result == 'no') 
+       {
+          $('.pri_lang').css('display','block');
+       }
+    });
+
+    $(".eng_que1").change(function(){
+       var result = $('input[name="language"]:checked').val();
+
+       if(result == 'yes')
+       {
+          $('.pri_lang1').css('display','none');
+       }
+       else if(result == 'no') 
+       {
+          $('.pri_lang1').css('display','block');
+       }
+    });
+
+
     $("input[type='radio']").click(function(){
       
         var radioValue = $("input[type='radio']:checked").val();
@@ -1130,8 +1216,10 @@ $('#inputPlayer-3').on('change', function()
         $('.banner-slider').owlCarousel({
         loop:true,
         margin:0,
-    nav:true,
+        nav:true,
         dots:true,
+        autoplay:true,
+        autoplayTimeout:5000,
         responsiveClass:true,
         navText: ["<img src='{{ URL::asset('images/slider-prev-img.png')}}'>","<img src='{{ URL::asset('images/slider-next-img.png')}}'>"],
         responsive:{
@@ -1279,7 +1367,7 @@ $('.search-icon').click(function(){
    
         $('.owl-carousel3').owlCarousel({
             loop:true,
-            margin: 7,
+            margin:0,
             nav: true,
             autoplay:true,
             dots:false,

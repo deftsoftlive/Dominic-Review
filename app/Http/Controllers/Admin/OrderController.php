@@ -486,6 +486,7 @@ class OrderController extends Controller
 
     function convert_order_data_to_html($order_id)
     {
+        $base_url = \URL::to('/'); 
         $orders = $this->get_order_data($order_id); 
         $extra = getAllValueWithMeta('service_fee_amount', 'global-settings');
         $order_price = $orders->amount - $extra;
@@ -516,7 +517,7 @@ class OrderController extends Controller
                 <table style="table-layout: fixed;width: 100%;border-collapse: collapse;"">
 
                         <tr>
-                            <td  align="center"><img src="http://49.249.236.30:8654/dominic-new/public/uploads/1584078701website_logo.png" width="130px;" style="margin-bottom: 15px;">
+                            <td  align="center"><img src="'.$base_url.'/public/images/pdf-logo.png" width="130px;" style="margin-bottom: 15px;">
                             </td>
                         </tr>
                 </table>

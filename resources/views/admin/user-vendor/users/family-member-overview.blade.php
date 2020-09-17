@@ -1,6 +1,7 @@
 @extends('layouts.admin')
  
 @section('content')
+
 @php $country_code = DB::table('country_code')->get(); @endphp
 
 @if(Session::has('success'))
@@ -8,10 +9,16 @@
     <p>{{ Session::get('success') }} </p>
 </div>
 @endif
-
 <section class="register-acc overview-sec">
     <div class="container">
-        <div class="outer-wrap">
+        <div class="inner-cont">
+            @if(!empty($user_id) && !empty($user))
+            <div class="back-to-family">
+                <h4 class="pl_name">Player Name : <p>{{$user->name}}</p></h4>
+                <a href="{{url('/admin/my-family')}}" class="btn btn-primary">Back to my family</a>
+            </div>
+            @endif
+            <br/>
             <div id="accordion" class="parent_fam_mem">
                 <div class="card">
                     <div class="card-header family-tabs" id="headingo-One">
@@ -27,126 +34,62 @@
                             <div class="register-sec form-register-sec family_mem ">
                                 <div class="form-partition">
                                     <div class="col-md-12 report_row">
-                                        <div class="table_wrap">
-                                            <div class="report-table-wrap">
-                                                <table class="stats table table-bordered cst-reports">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th>
-                                                                <p><b>First Name </b></p>
-                                                            </th>
-                                                            <td>
-                                                                <h5><b>{{isset($user->first_name) ? $user->first_name : ''}}</b></h5>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>
-                                                                <p><b>Last Name </b></p>
-                                                            </th>
-                                                            <td>
-                                                                <h5><b>{{isset($user->last_name) ? $user->last_name : ''}}</b></h5>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>
-                                                                <p><b>Gender </b></p>
-                                                            </th>
-                                                            <td>
-                                                                <h5><b>{{isset($user->gender) ? $user->gender : ''}}</b></h5>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>
-                                                                <p><b>Date of birth </b></p>
-                                                            </th>
-                                                            <td>
-                                                                <h5><b>{{isset($user->date_of_birth) ? date("d/m/Y", strtotime($user->date_of_birth)) : ''}}</b></h5>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>
-                                                                <p><b>Address </b></p>
-                                                            </th>
-                                                            <td>
-                                                                <h5><b>{{isset($user->address) ? $user->address : ''}} </b></h5>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>
-                                                                <p><b>Town </b></p>
-                                                            </th>
-                                                            <td>
-                                                                <h5><b>{{isset($user->town) ? $user->town : ''}} </b></h5>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>
-                                                                <p><b>Postcode </b></p>
-                                                            </th>
-                                                            <td>
-                                                                <h5><b>{{isset($user->postcode) ? $user->postcode : ''}} </b></h5>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>
-                                                                <p><b>County </b></p>
-                                                            </th>
-                                                            <td>
-                                                                <h5><b>{{isset($user->county) ? $user->county : ''}} </b></h5>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>
-                                                                <p><b>Country </b></p>
-                                                            </th>
-                                                            <td>
-                                                                <h5><b>{{isset($user->country) ? $user->country : ''}} </b></h5>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>
-                                                                <p><b>What Is The Relationship Of The Account Holder To This Person? </b></p>
-                                                            </th>
-                                                            <td>
-                                                                <h5><b>{{isset($user->relation) ? $user->relation : ''}} </b></h5>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>
-                                                                <p><b>Is English your child's primary language? </b></p>
-                                                            </th>
-                                                            <td>
-                                                                <h5><b>{{isset($user_details->core_lang) ? $user_details->core_lang : ''}} </b></h5>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>
-                                                                <p><b>What Is Their Primary Language? </b></p>
-                                                            </th>
-                                                            <td>
-                                                                <h5><b>{{isset($user_details->primary_language) ? $user_details->primary_language : ''}} </b></h5>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>
-                                                                <p><b>Will this person be booking onto a DRH coaching course or holiday camp ?</b></p>
-                                                            </th>
-                                                            <td>
-                                                                <h5><b>{{isset($user->book_person) ? $user->book_person : ''}} </b></h5>
-                                                            </td>
-                                                        </tr>
-                                                        <!-- <tr>
-                                                            <th>
-                                                                <p><b>Do You Want To Show Player Name In Leaderboard? </b></p>
-                                                            </th>
-                                                            <td>
-                                                                <h5><b>@if(!empty($user->show_name == 1)) yes @else no @endif</b></h5>
-                                                            </td>
-                                                        </tr> -->
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                        <div class="text-wrap">
+                                            <ul>
+                                                <li>
+                                                    <p>First Name -
+                                                        <span>{{isset($user->first_name) ? $user->first_name : ''}}</span></p>
+                                                </li>
+                                                <li>
+                                                    <p>Last Name -
+                                                        <span>{{isset($user->last_name) ? $user->last_name : ''}}</span></p>
+                                                </li>
+                                                <li>
+                                                    <p>Gender -
+                                                        <span>{{isset($user->gender) ? $user->gender : ''}}</span></p>
+                                                </li>
+                                                <li>
+                                                    <p>Date of Birth -
+                                                        <span>{{isset($user->date_of_birth) ? date("d/m/Y", strtotime($user->date_of_birth)) : ''}}</span></p>
+                                                </li>
+                                                <li>
+                                                    <p>Address -
+                                                        <span>{{isset($user->address) ? $user->address : ''}}</span></p>
+                                                </li>
+                                                <li>
+                                                    <p>Town -
+                                                        <span>{{isset($user->town) ? $user->town : ''}} </span></p>
+                                                </li>
+                                                <li>
+                                                    <p>Postcode -
+                                                        <span>{{isset($user->postcode) ? $user->postcode : ''}}</span></p>
+                                                </li>
+                                                <li>
+                                                    <p>County -
+                                                        <span>{{isset($user->county) ? $user->county : ''}}</span></p>
+                                                </li>
+                                                <li>
+                                                    <p>Country -
+                                                        <span>{{isset($user->country) ? $user->country : ''}}</span></p>
+                                                </li>
+                                                <li>
+                                                    <p>What Is The Relationship Of The Account Holder To This Person? -
+                                                        <span>{{isset($user->relation) ? $user->relation : ''}} </span></p>
+                                                </li>
+                                                <li>
+                                                    <p>Is English this person’s primary language? - <span>{{isset($user_details->core_lang) ? $user_details->core_lang : ''}} </span></p>
+                                                </li>
+                                                <li>
+                                                    <p>Will this person be booking onto a DRH coaching course or holiday camp ? - 
+                                                        <span>{{isset($user->book_person) ? $user->book_person : ''}}</span></p>
+                                                </li>
+                                                <!-- <li>
+                                                    <p>Do You Want To Show Player Name In Leaderboard? - 
+                                                        <span>@if(!empty($user->show_name == 1)) yes @else no @endif</span></p>
+                                                </li> -->
+                                            </ul>
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -167,70 +110,73 @@
                             <div class="register-sec form-register-sec family_mem ">
                                 <div class="form-partition fam-mem-contact">
                                     <div class="col-md-12 report_row">
-                                        <div class="table_wrap">
-                                            <div class="report-table-wrap">
-                                                <table class="stats table table-bordered cst-reports">
-                                                    <tbody>
-                                                        <tr>
-                                                        	<th>
-                                                        		<p><b>Contact No.</b></p>
-                                                        	</th>
-                                                            <th>
-                                                                <p><b>First Name</b></p>
-                                                            </th>
-                                                            <th>
-                                                                <p><b>Last Name</b></p>
-                                                            </th>
-                                                            <th>
-                                                                <p><b>Phone</b></p>
-                                                            </th>
-                                                            <th>
-                                                                <p><b>Email</b></p>
-                                                            </th>
-                                                            <th>
-                                                                <p class="text_split"><b>What is the relationship to the participant?</b></p>
-                                                            </th>
-                                                            <th>
-                                                                <p class="text_split"><b>If you chose other who are they?</b></p>
-                                                            </th>
-                                                        </tr>
-
-                                                        @php $i = 1; @endphp
-
-                                                        @if(count($user_contacts)>0)
-                            							@foreach($user_contacts as $us)
-                                                        <tr>
-                                                        	<td>
-                                                                <h5>{{$i}}</h5>
-                                                            </td>
-                                                            <td>
-                                                                <h5>{{isset($us->first_name) ? $us->first_name : ''}}</h5>
-                                                            </td>
-                                                            <td>
-                                                                <h5>{{isset($us->surname) ? $us->surname : ''}}</h5>
-                                                            </td>
-                                                            <td>
-                                                                <h5>{{isset($us->phone) ? $us->phone : ''}}</h5>
-                                                            </td>
-                                                            <td>
-                                                                <h5>{{isset($us->email) ? $us->email : ''}}</h5>
-                                                            </td>                                                          
-                                                            <td>
-                                                                <h5>{{isset($us->relationship) ? $us->relationship : ''}}</h5>
-                                                            </td>
-                                                            <td>
-                                                                <h5>{{isset($us->who_are_they) ? $us->who_are_they : ''}}</h5>
-                                                            </td>
-                                                        </tr>
-                                                        @php $i++; @endphp
-                                                        @endforeach
-                                                        @else
-                                                        	<tr><td colspan="7"><h2>No Data Found</h2></td></tr>
-                                                        @endif
-                                                    </tbody>
-                                                </table>
+                                      
+                                        @php $i = 1; @endphp
+                                        @if(count($user_contacts)>0)
+                                        @foreach($user_contacts as $us)
+                                        <div id="accordion{{$us->id}}" class="parent_fam_mem">
+                                            <div class="card">
+                                                <div class="card-header family-tabs conatct-inner-tab" id="headingo-{{$us->id}}">
+                                                    <h5 class="mb-0 edit-family-member">
+                                                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$us->id}}" aria-expanded="false" aria-controls="collapse{{$us->id}}">
+                                                            contact - {{$i}}
+                                                        </button>
+                                                        <a href="{{url('/admin/remove-contact')}}/{{$us->id}}" onclick="return confirm('Are you sure you want to remove this contact?')" class="btn btn-primary">Remove</a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse{{$us->id}}" class="collapse" aria-labelledby="headingo-{{$us->id}}" data-parent="#accordion{{$us->id}}">
+                                                    <div class="card-body">
+                                                        <div class="register-sec form-register-sec family_mem ">
+                                                            <div class="form-partition fam-mem-contact">
+                                                                <div class="col-md-12 report_row">
+                                                                    <div class="table_wrap">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <p>First Name -
+                                                                                    <span>{{isset($us->first_name) ? $us->first_name : ''}}</span>
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <p>Last Name -
+                                                                                    <span> {{isset($us->surname) ? $us->surname : ''}}
+                                                                                    </span>
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <p>Phone -
+                                                                                    <span>{{isset($us->phone) ? $us->phone : ''}}
+                                                                                    </span>
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <p>Email -
+                                                                                    <span>{{isset($us->email) ? $us->email : ''}}
+                                                                                    </span>
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <p class="text_split">What is the relationship to the participant? - 
+                                                                                    <span>{{isset($us->relationship) ? $us->relationship : ''}}</span>
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <p class="text_split">If you chose other who are they? - 
+                                                                                    <span>{{isset($us->who_are_they) ? $us->who_are_they : ''}}</span>
+                                                                                </p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+                                        @php $i++; @endphp
+                                        @endforeach
+                                        @endif
+
                                     </div>
                                 </div>
                             </div>
@@ -248,114 +194,154 @@
                     </div>
                     <div id="collapsethree" class="collapse" aria-labelledby="headingo-three" data-parent="#accordion">
                         <div class="card-body">
-                             <div class="register-sec form-register-sec family_mem ">
+                            <div class="register-sec form-register-sec family_mem ">
                                 <div class="form-partition fam-mem-contact">
                                     <div class="col-md-12 report_row">
                                         <div class="table_wrap">
-                                            
-                                            	@if($user->type == 'Adult')
-                                            	<div class="report-table-wrap">
-                                            	<table class="stats table table-bordered cst-reports">
-                                                    <tbody>
-                                                        <tr>
-                                                        	<th>
-                                                        		<p><b>Medical Condition No.</b></p>
-                                                        	</th>
-                                                            <th>
-                                                                <p class="text_split"><b>State the name of the medical condition and describe how it affects this child</b></p>
-                                                            </th>
-                                                        </tr>
+                                        <h3>Medical Conditions -</h3><br/>
 
-                                                        @php $i = 1; @endphp
+                                        @if($user->type == 'Adult')
 
-                                                        @if(!empty($user_details->med_cond_info))
+                                        @php $i = 1; @endphp
+                                        @if(count($user_medicals)>0)
+                                        @foreach($user_medicals as $cond)
 
-                            							@php 
-                            								$med_cond = json_decode($user_details->med_cond_info);
-                            							@endphp
 
-                            							@foreach($med_cond as $cond)
-                                                        <tr>
-                                                        	<td>
-                                                                <h5>{{$i}}</h5>
-                                                            </td>
-                                                            <td>
-                                                                <h5>{{$cond}}</h5>
-                                                            </td>
-                                                        </tr>
-                                                        @php $i++; @endphp
-                                                        @endforeach
+                                        <div id="accordion{{$i}}-11" class="parent_fam_mem">
+                                            <div class="card">
+                                                <div class="card-header family-tabs conatct-inner-tab" id="headingo-{{$i}}-11">
+                                                    <h5 class="mb-0 edit-family-member">
+                                                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$i}}-11" aria-expanded="false" aria-controls="collapse{{$i}}-11">
+                                                            Medical Condition - {{$i}}
+                                                        </button>
+                                                        <a href="{{url('/admin/remove-medical')}}/{{$cond->id}}" onclick="return confirm('Are you sure you want to remove this medical condition?')" class="btn btn-primary">Remove</a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse{{$i}}-11" class="collapse" aria-labelledby="headingo-{{$i}}-11" data-parent="#accordion{{$i}}-11">
+                                                    <div class="card-body">
+                                                        <div class="register-sec form-register-sec family_mem ">
+                                                            <div class="form-partition fam-mem-contact">
+                                                                <div class="col-md-12 report_row">
+                                                                    <div class="table_wrap">
+                                                                        <ul>
 
-                                                        @else
-                                                        	<tr><td colspan="2"><h2>No Data Found</h2></td></tr>
-                                                        @endif
-                                                    </tbody>
-                                                </table>
-                                            	</div>
-
-                                            	@elseif($user->type == 'Child')
-                                            	<div class="report-table-wrap">
-                                            	<table class="stats table table-bordered cst-reports">
-                                                    <tbody>
-                                                        <tr>
-                                                        	<th>
-                                                        		<p><b>Medical Condition No.</b></p>
-                                                        	</th>
-                                                            <th>
-                                                                <p class="text_split"><b>Name of the medical condition and describe how it affects this child.</b></p>
-                                                            </th>
-                                                        </tr>
-
-                                                        @php $i = 1; @endphp
-
-                                                        @if(!empty($user_details->med_cond_info))
-
-                            							@php 
-                            								$med_cond = json_decode($user_details->med_cond_info);
-                            							@endphp
-
-                            							@foreach($med_cond as $cond)
-                                                        <tr>
-                                                        	<td>
-                                                                <h5>{{$i}}</h5>
-                                                            </td>
-                                                            <td>
-                                                                <h5>{{$cond}}</h5>
-                                                            </td>
-                                                        </tr>
-                                                        @php $i++; @endphp
-                                                        @endforeach
-
-                                                        @else
-                                                        	<tr><td colspan="2"><h2>No Data Found</h2></td></tr>
-                                                        @endif
-                                                    </tbody>
-                                                </table>
-                                            	</div>
-                                                
-                                            	<div class="report-table-wrap">
+                                                                            <li>
+                                                                                <p>State the name of the medical condition and describe how it affects this child -
+                                                                                    <span> {{$cond->medical}}
+                                                                                    </span>
+                                                                                </p>
+                                                                            </li>
+                                                                            
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @php $i++; @endphp
+                                        @endforeach
+                                        @endif
+                                            <!-- <div class="report-table-wrap">
                                                 <table class="stats table table-bordered cst-reports">
                                                     <tbody>
                                                         <tr>
-                                                        	<th>
-                                                        		<p><b>Allergy No.</b></p>
-                                                        	</th>
+                                                            <th>
+                                                                <p><b>Medical Condition No.</b></p>
+                                                            </th>
+                                                            <th>
+                                                                <p class="text_split"><b>Will this person be booking onto a DRH coaching courses or holiday camp?</b></p>
+                                                            </th>
+                                                        </tr>
+                                                        @php $i = 1; @endphp
+                                                        @if(!empty($user_details->med_cond_info))
+                                                        @php
+                                                        $med_cond = json_decode($user_details->med_cond_info);
+                                                        @endphp
+                                                        @foreach($med_cond as $cond)
+                                                        <tr>
+                                                            <td>
+                                                                <h5>{{$i}}</h5>
+                                                            </td>
+                                                            <td>
+                                                                <h5>{{$cond}}</h5>
+                                                            </td>
+                                                        </tr>
+                                                        @php $i++; @endphp
+                                                        @endforeach
+                                                        @else
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <h2>No Data Found</h2>
+                                                            </td>
+                                                        </tr>
+                                                        @endif
+                                                    </tbody>
+                                                </table>
+                                            </div> -->
+                                            @elseif($user->type == 'Child')
+                                            @php $i = 1; @endphp
+                                            @if(count($user_medicals)>0)
+                                            @foreach($user_medicals as $cond)
+                                            <div id="accordion{{$i}}-11" class="parent_fam_mem">
+                                                <div class="card">
+                                                    <div class="card-header family-tabs conatct-inner-tab" id="headingo-{{$i}}-11">
+                                                        <h5 class="mb-0 edit-family-member">
+                                                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$i}}-11" aria-expanded="false" aria-controls="collapse{{$i}}-11">
+                                                                Medical Condition - {{$i}}
+                                                            </button>
+
+                                                            <a href="{{url('/admin/remove-medical')}}/{{$cond->id}}" onclick="return confirm('Are you sure you want to remove this medical condition?')" class="btn btn-primary">Remove</a>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapse{{$i}}-11" class="collapse" aria-labelledby="headingo-{{$i}}-11" data-parent="#accordion{{$i}}-11">
+                                                        <div class="card-body">
+                                                            <div class="register-sec form-register-sec family_mem ">
+                                                                <div class="form-partition fam-mem-contact">
+                                                                    <div class="col-md-12 report_row">
+                                                                        <div class="table_wrap">
+                                                                            <ul>
+
+                                                                                <li>
+                                                                                    <p>State the name of the medical condition and describe how it affects this child -
+                                                                                        <span> {{$cond->medical}}
+                                                                                        </span>
+                                                                                    </p>
+                                                                                </li>
+                                                                                
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @php $i++; @endphp
+                                            @endforeach
+                                            @endif
+                                            <!-- <div class="report-table-wrap">
+                                                <table class="stats table table-bordered cst-reports">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>
+                                                                <p><b>Allergy No.</b></p>
+                                                            </th>
                                                             <th>
                                                                 <p class="text_split"><b>Name of the allergy and describe how it affects this child</b></p>
                                                             </th>
                                                         </tr>
-
                                                         @php $i = 1; @endphp
-
                                                         @if(!empty($user_details->allergies_info))
-
-                            							@php 
-                            								$allergies_info = json_decode($user_details->allergies_info);
-                            							@endphp
-
-                            							@foreach($allergies_info as $cond)
+                                                        @php
+                                                        $allergies_info = json_decode($user_details->allergies_info);
+                                                        @endphp
+                                                        @foreach($allergies_info as $cond)
                                                         <tr>
-                                                        	<td>
+                                                            <td>
                                                                 <h5>{{$i}}</h5>
                                                             </td>
                                                             <td>
@@ -364,16 +350,102 @@
                                                         </tr>
                                                         @php $i++; @endphp
                                                         @endforeach
-
                                                         @else
-                                                        	<tr><td colspan="2"><h2>No Data Found</h2></td></tr>
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <h2>No Data Found</h2>
+                                                            </td>
+                                                        </tr>
                                                         @endif
                                                     </tbody>
                                                 </table>
-                                            	</div>
+                                            </div> -->
+                                            @php $i = 1; @endphp
+                                            @if(count($user_allergies)>0)
+                                            <br/><h3>Allergies -</h3><br/>
+                                            @foreach($user_allergies as $cond)
+                                            <div id="accordion{{$i}}-22" class="parent_fam_mem">
+                                                <div class="card">
+                                                    <div class="card-header family-tabs conatct-inner-tab" id="headingo-{{$i}}-22">
+                                                        <h5 class="mb-0 edit-family-member">
+                                                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$i}}-22" aria-expanded="false" aria-controls="collapse{{$i}}-22">
+                                                                Allergy - {{$i}}
+                                                            </button>
 
-                                                <div class="report-table-wrap">
-                                            	<table class="stats table table-bordered cst-reports">
+                                                            <a href="{{url('/admin/remove-allergy')}}/{{$cond->id}}" onclick="return confirm('Are you sure you want to remove this allergy condition?')" class="btn btn-primary">Remove</a>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapse{{$i}}-22" class="collapse" aria-labelledby="headingo-{{$i}}-22" data-parent="#accordion{{$i}}-22">
+                                                        <div class="card-body">
+                                                            <div class="register-sec form-register-sec family_mem ">
+                                                                <div class="form-partition fam-mem-contact">
+                                                                    <div class="col-md-12 report_row">
+                                                                        <div class="table_wrap">
+                                                                            <ul>
+
+                                                                                <li>
+                                                                                    <p>Name of the allergy and describe how it affects this child -
+                                                                                        <span> {{$cond->allergy}}
+                                                                                        </span>
+                                                                                    </p>
+                                                                                </li>
+                                                                                
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @php $i++; @endphp
+                                            @endforeach
+                                            @endif
+
+                                            <br/><h3>Medical & Behavioural Information -</h3><br/>
+                                            <ul>
+                                                <li>
+                                                    <p>1) Does this person have any medical conditions that we should be aware of? - <span>{{isset($user_details->med_cond) ? $user_details->med_cond : ''}} </span></p>
+                                                </li>
+                                                <li>
+                                                    <p>2) Does your child have any allergies that we should be aware of? - 
+                                                        <span>{{isset($user_details->allergies) ? $user_details->allergies : ''}}</span></p>
+                                                </li>
+                                                <li>
+                                                    <p>3) Does this person have any medical conditions that we should be aware of? - <span>{{isset($user_details->med_cond) ? $user_details->med_cond : ''}} </span></p>
+                                                </li>
+                                                <li>
+                                                    <p>4) Will your child need to take any prescribed medication during the coaching course or holiday camp? - 
+                                                        <span>{{isset($user_details->pres_med) ? $user_details->pres_med : ''}}</span></p>
+                                                </li>
+                                                <li>
+                                                    <p>5) Please state the name of the medication along with how and when this might be administered. - 
+                                                        <span>{{isset($user_details->pres_med_info) ? $user_details->pres_med_info : ''}}</span></p>
+                                                </li>
+                                                <li>
+                                                    <p>6) Does the child have any additional medical requirements that we may need be aware of? - <span>{{isset($user_details-> med_req) ? $user_details-> med_req : ''}} </span></p>
+                                                </li>
+                                                <li>
+                                                    <p>7) Please state the name of the medical requirements along with how and when this might be administered. - 
+                                                        <span>{{isset($user_details->med_req_info) ? $user_details->med_req_info : ''}}</span></p>
+                                                </li>
+                                                <li>
+                                                    <p>8) Is this child toilet trained and able to go to the toilet without any assitance form an adult? - 
+                                                        <span>{{isset($user_details->toilet) ? $user_details->toilet : ''}}</span></p>
+                                                </li>
+
+                                                <li>
+                                                    <p>9) Are there any behavioural and/or special needs we need to consider to help your child to settel,participate in ans enjoy their activity? - 
+                                                        <span>{{isset($user_details->beh_need) ? $user_details->beh_need : ''}}</span></p>
+                                                </li>
+                                                <li>
+                                                    <p>10) Please provide more information on behavioural and/or special needs. - 
+                                                        <span>{{isset($user_details->beh_need_info) ? $user_details->beh_need_info : ''}}</span></p>
+                                                </li>
+                                            </ul>
+                                            <!-- <div class="report-table-wrap">
+                                                <table class="stats table table-bordered cst-reports">
                                                     <tbody>
                                                         <tr>
                                                             <th>
@@ -412,12 +484,12 @@
                                                                 <p><b>Does the child have any additional medical requirements that we may need be aware of? </b></p>
                                                             </th>
                                                             <td>
-                                                                <h5><b>{{isset($user_details->	med_req) ? $user_details->	med_req : ''}} </b></h5>
+                                                                <h5><b>{{isset($user_details-> med_req) ? $user_details-> med_req : ''}} </b></h5>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th>
-                                                                <p><b>Please state the name of the medical requirements along with how and when this might be administered.  </b></p>
+                                                                <p><b>Please state the name of the medical requirements along with how and when this might be administered. </b></p>
                                                             </th>
                                                             <td>
                                                                 <h5><b>{{isset($user_details->med_req_info) ? $user_details->med_req_info : ''}} </b></h5>
@@ -433,7 +505,7 @@
                                                         </tr>
                                                         <tr>
                                                             <th>
-                                                                <p><b>Are there any behavioural and/or special needs we need to consider to help your child to settel,participate in ans enjoy their activity? </b></p>
+                                                                <p><b>Are there any behavioural and/or special needs we need to consider to help your child to settel,<br />participate in ans enjoy their activity? </b></p>
                                                             </th>
                                                             <td>
                                                                 <h5><b>{{isset($user_details->beh_need) ? $user_details->beh_need : ''}} </b></h5>
@@ -449,8 +521,8 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                                </div>
-                                               @endif
+                                            </div> -->
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -469,16 +541,16 @@
                     </div>
                     <div id="collapsefour" class="collapse" aria-labelledby="headingo-four" data-parent="#accordion">
                         <div class="card-body">
-                             <div class="register-sec form-register-sec family_mem ">
+                            <div class="register-sec form-register-sec family_mem ">
                                 <div class="form-partition">
                                     <div class="col-md-12 report_row">
-                                        <div class="table_wrap">
-                                            <div class="report-table-wrap">
+                                        <!-- <div class="table_wrap"> -->
+                                           <!--  <div class="report-table-wrap">
                                                 <table class="stats table table-bordered cst-reports">
                                                     <tbody>
                                                         <tr>
                                                             <th>
-                                                                <p><b>Do you give consent for this participant to be included in photos and videos to be used for promotional purposes such as social media or marketing material? </b></p>
+                                                                <p><b>Do you give consent for this participant to be included in photos and videos to be <br />used for promotional purposes such as social media or marketing material? </b></p>
                                                             </th>
                                                             <td>
                                                                 <h5><b>{{isset($user_details->media) ? $user_details->media : ''}}</b></h5>
@@ -486,17 +558,28 @@
                                                         </tr>
                                                         <tr>
                                                             <th>
-                                                                <p><b>I confirm that the information given above is accurate and correct to the best of my knowledge at the time of registration. I also confirm that if any of the details change, I will amend the form to reflect these changes. </b></p>
+                                                                <p><b>I confirm that the information given above is accurate and correct to the best of my<br /> knowledge at the time of registration. <br />I also confirm that if any of the details change, I will amend the form to reflect these changes. </b></p>
                                                             </th>
                                                             <td>
                                                                 <h5><b>{{isset($user_details->confirm) ? $user_details->confirm : ''}}</b></h5>
                                                             </td>
-                                                        </tr>                                                      
+                                                        </tr>
                                                     </tbody>
                                                 </table>
-                                            </div>
+                                            </div> -->
 
+                                            <div class="text-wrap">
+                                            <ul>
+                                                <li>
+                                                    <p>1) Do you give consent for this participant to be included in photos and videos to be used for promotional purposes such as social media or marketing material? - <span>{{isset($user_details->media) ? $user_details->media : ''}} </span></p>
+                                                </li>
+                                                <li>
+                                                    <p>2) I confirm that the information given above is accurate and correct to the best of my knowledge at the time of registration. I also confirm that if any of the details change, I will amend the form to reflect these changes. - 
+                                                        <span>{{isset($user_details->confirm) ? $user_details->confirm : ''}}</span></p>
+                                                </li>
+                                            </ul>
                                         </div>
+                                        <!-- </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -505,7 +588,7 @@
                 </div>
             </div>
         </div>
-        <br/>
-        <a href="{{url('user/family-member/add?user=')}}{{$user->id}}" class="btn btn-primary">Edit {{$user->type}} Information</a>
+        <br />
+        <!-- <a href="{{url('user/family-member/add?user=')}}{{$user->id}}" class="btn btn-primary">Edit {{$user->type}} Information</a> -->
 </section>
 @endsection

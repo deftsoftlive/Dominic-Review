@@ -53,7 +53,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-12 reset-form-btn ">
-                                <button type="submit" class="cstm-btn">
+                                <button type="submit" class="cstm-btn main_button">
                                     {{ __('Send Password Reset Link') }}
                                 </button>
                             </div>

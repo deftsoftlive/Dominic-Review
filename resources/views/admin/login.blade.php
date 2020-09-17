@@ -36,7 +36,7 @@
   <div class="login-logo">
 
     <a href="{{url('/')}}">
-      <span class="dashboard-logo"><img src="{{URL::asset('/images/DRH-SPORT1.png')}}" width="100%"></span>
+      <span class="dashboard-logo"><img src="{{URL::asset('/images/logo.png')}}" width="100%"></span>
       <b>DRH Sports</b></a>
   </div>  
   <!-- /.login-logo -->

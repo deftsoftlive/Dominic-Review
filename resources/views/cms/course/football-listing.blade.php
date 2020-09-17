@@ -101,10 +101,10 @@
                           <div class="col-md-12 det-gender-opt">
                                 <label for="gender" class="col-form-label text-md-right">{{ __('Gender  ') }} </label>
                           
-                              <input type="radio" id="male" name="participant_gender" value="male">
-                              <label for="male">Male</label>
-                              <input type="radio" id="female" name="participant_gender" value="female">
-                              <label for="female">Female</label>  
+                              <input type="radio" id="male3" name="participant_gender" value="male">
+                              <label for="male3">Male</label>
+                              <input type="radio" id="female3" name="participant_gender" value="female">
+                              <label for="female3">Female</label>  
                              
 
                               <div id="gender"></div>
@@ -129,7 +129,7 @@
                       <div class="form-group cont-feedback">
                         <textarea class="form-control demo-textarea" name="class" rows="3" placeholder="Class you’d like to try "></textarea>
                       </div>
-                      <button type="submit" id="disable_contact_us_btnn" class="cstm-btn">Request Taster Class</button>
+                      <button type="submit" id="disable_contact_us_btnn" class="cstm-btn main_button">Request Taster Class</button>
                     </form>
             </div>
           </div>
@@ -230,10 +230,10 @@
                     </div>
                   
                   <div class="form-group col-lg-1 col-md-2 col-sm-6 col-6">
-                    <button type="submit" class="cstm-btn" id="course_search_submit">Submit</button>
+                    <button type="submit" class="cstm-btn main_button" id="course_search_submit">Submit</button>
                   </div>
                   <div class="form-group col-lg-1 col-md-2 col-sm-6 col-6">
-                    <button type="submit" id="course_search_submit" onclick="myFunction();" class="cstm-btn">Reset</button>
+                    <button type="submit" id="course_search_submit" onclick="myFunction();" class="cstm-btn main_button">Reset</button>
                   </div>
                   </div>
                   </form>
@@ -327,7 +327,7 @@
                       @endif
                     @endif
                     </h1>
-                    <a href="{{url('course-detail')}}/@php echo base64_encode($cour->id); @endphp" class="cstm-btn">More Info</a>
+                    <a href="{{url('course-detail')}}/@php echo base64_encode($cour->id); @endphp" class="cstm-btn main_button">More Info</a>
                   </div>
                   </div>
                 </li>
@@ -415,7 +415,7 @@
                 </figure>
                 </li>
                 <li>
-                  <a href="{{ getAllValueWithMeta('section4_button_url', 'football-course-listing') }}" class="cstm-btn">{{ getAllValueWithMeta('football_course_section4_button_title', 'football-course-listing') }}</a>
+                  <a href="{{ getAllValueWithMeta('section4_button_url', 'football-course-listing') }}" class="cstm-btn main_button">{{ getAllValueWithMeta('football_course_section4_button_title', 'football-course-listing') }}</a>
                 </li>
                 <li>
                     <figure>

@@ -42,20 +42,33 @@
     .contact-gender label {
         margin: 0 30px 0 7px;
     }
-    .media_cont_wrap
-    {
+
+    .media_cont_wrap {
         margin-bottom: 10px;
     }
+
     .register-acc p.media_cont {
-    width: 12.5%;
+        width: 12.5%;
+    }
+
+    .card-header.view-card-header .view_stats {
+        width: 12% !important;
+        padding: 10px 10px !important;
+    }
+
+    .card-header.view-card-header a {
+        width: 80%;
+    }
+    .checkout-step-sec.check_out_none table.cart__table.cart-table .container_lable .checkmark:after {
+    left: 5px;
+    top: 1px;
+    width: 6px;
+    height: 13px;
+  
+    border-width: 0 3px 3px 0;
+    
 }
-   .card-header.view-card-header .view_stats {
-    width: 12%!important;
-    padding: 10px 10px!important;
-}
-.card-header.view-card-header a {
-    width: 80%;
-}
+
     #save_goal {
         margin-right: 15px;
     }
@@ -180,8 +193,9 @@
     }
 
     .login-sec button.cstm-btn.login {
-        margin-right: 13px;
-    }
+    margin-right: 4.8px;
+    margin-bottom: 15px;
+}
 
     .cstm-btn {
 
@@ -299,8 +313,10 @@
     main.products-layout-wrap .product-listing-wrap .products-head {
         display: none;
     }
-    
-   
+
+
+
+
     .account-menu nav li+li {
         margin-left: 3px;
     }
@@ -316,53 +332,161 @@
     padding: 10px 4px;
     font-size: 13px;
     }*/
-    .outer-slt {
-  
-    min-width: 320px;
+    .member .inner_back_wrap h2 {
+    /*text-align: left;*/
+    width: 78%;
 }
+    .checkout-step-sec.check_out_none table.cart__table.cart-table .container_lable .checkmark:after {
+    left: 3px;
+    top: 0px;
+    width: 5px;
+    height: 9px;
+   
+    border-width: 0 2px 2px 0;
+    
+}
+    section.account-menu-sec.player-badge-sec .activity-tab
+    {
+    	display: inline-flex!important;
+    	justify-content: unset;
+    	align-items: unset;
+    }
+    section.account-menu-sec.player-badge-sec .activity-tab a {
+    margin-right: 5.3px;
+}
+section.account-menu-sec.player-badge-sec .activity-tab a:last-child {
+    margin-right: 0;
+}
+    h2.comp_and_match {
+    text-align: left;
+    font-size: 30px;
+}
+      .login-sec button.cstm-btn.login {
+    margin-right: 12px;
+    
+}
+    .drh-activity-sec .owl-dots .active span {
+    background-color: #00afef;
+    border-color: #00afef;
+}
+.drh-activity-sec .owl-dots span{
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    background-color: transparent;
+    border-radius: 100px;
+    border: 1px solid #fff;
+}
+.drh-activity-sec .owl-dots{
+    text-align: center;
+    margin-top: 20px;
+    display: block!important;
+}
+
+
+
+
+
+
+
+
+
+
+
+      .main-header .navbar-light .navbar-nav .nav-link.active {
+    color: #001642;
+}
+.navbar-light .navbar-toggler-icon
+{
+    background-image:url(../images/menu.png)!important; 
+}
+/* button.navbar-toggler {
+    position: relative;
+}
+ button.navbar-toggler::after {
+    position: absolute;
+    font-family: "Font Awesome 5 Free";
+    content: "\f0c9";
+    display: inline-block;
+    padding-right: 3px;
+    vertical-align: middle;
+    font-weight: 900;
+    color: #fff;
+    font-size: 24px;
+    top: 4px;
+    right: 4px;
+}*/
+    #navbarSupportedContent .serch-login-signup a.cart-btn {
+    color: #001642;
+   
+}
+    .main-header .navbar-light .navbar-nav .nav-link {
+
+        color: #001642;
+        font-weight: 500;
+
+    }
+
+    .header-right ul.navbar-nav li.nav-item.dropdown span i {
+        color: #001642;
+    }
+
+    .outer-slt {
+
+        min-width: 320px;
+    }
+
     .event-info p.detail-cont {
         min-height: 72px;
     }
+
     .person_attend {
-    min-height: 56px;
-}
-p.pry-lang,
-p.holiday_camps {
-    margin: 0!important;
-}
+        min-height: 56px;
+    }
+
+    p.pry-lang,
+    p.holiday_camps {
+        margin: 0 !important;
+    }
+
     .register-acc p.media_cont {
-    width: 24%;
-}
+        width: 24%;
+    }
+
     .card-header.view-card-header a {
         width: 65%;
     }
-    .report-tab-one .inner-form-box
-    {
+
+    .report-tab-one .inner-form-box {
         height: 174px;
     }
-     .player-report-row {
-    padding: 0 0 0 15px;
-}
-.card-header.view-card-header .view_stats {
-    width: 16%!important;
-    padding: 10px!important;
-}
-.form-head form { 
-    min-width: 57%;  
-}
 
-.form-head form .form-group {
-    width: 40%;
-    margin-bottom: 0;
-}
-.form-head form p {
-    width: 45%;
-    white-space: nowrap;
-}
-.report-tab-sec button.cstm-btn
-{
-    margin-right: 10px;
-}
+    .player-report-row {
+        padding: 0 0 0 15px;
+    }
+
+    .card-header.view-card-header .view_stats {
+        width: 16% !important;
+        padding: 10px !important;
+    }
+
+    .form-head form {
+        min-width: 57%;
+    }
+
+    .form-head form .form-group {
+        width: 40%;
+        margin-bottom: 0;
+    }
+
+    .form-head form p {
+        width: 45%;
+        white-space: nowrap;
+    }
+
+    .report-tab-sec button.cstm-btn {
+        margin-right: 10px;
+    }
 
 
     form.register-form .option_row .form-group.row .form-radios {
@@ -566,7 +690,7 @@ p.holiday_camps {
     .show .navbar .navbar-toggler span.icon-bar.rotate_cross {
         height: 22px;
         width: 2px;
-        background: #7f7f7f;
+        background: #fff;
         display: block;
         transform: rotate(-45deg);
         position: relative;
@@ -578,7 +702,7 @@ p.holiday_camps {
     .show .navbar .navbar-toggler span.icon-bar.rotate_cross_2 {
         height: 22px;
         width: 2px;
-        background: #7f7f7f;
+        background: #fff;
         display: block;
         transform: rotate(45deg);
         position: relative;
@@ -875,7 +999,7 @@ p.holiday_camps {
     }
 
     #FilterCategoryToggle:hover {
-        color: #be298d !important;
+        color: #001642  !important;
     }
 
     div#filters-sidebar .filters-sidebar>a {
@@ -986,63 +1110,104 @@ p.holiday_camps {
 @media(max-width: 767px) {
     .about-us-sec>.container>.row>div.col-md-6:nth-of-type(odd) {
         order: 1;
-    }.card-header.view-card-header .view_stats {
-    width: 27%!important;
-   
+    }
+    .faq-sec .card h2 button {
+    font-size: 16px;
+    color: #fff;
+	}
+	.checkout-step-sec.check_out_none table.cart__table.cart-table .container_lable .checkmark:after {
+    left: 6px;
+    top: 0px;
+    width: 5px;
+    height: 14px;
+    border-width: 0 2px 2px 0;
 }
-.event-card-form .form-group p {
-    font-weight: 500;
-    margin-bottom: 10px;
+	.faq-sec .card .card-body h2 {
+    font-size: 16px;
 }
+	form.cstm-cont-page .upper-input-row {
+	    width: 100%!important;
+	}
+    .card-header.view-card-header .view_stats {
+        width: 27% !important;
 
-.event-card-form .form-group {   
-     align-items: unset;     
-    flex-direction: column;
-}
-.event-card-form .form-group p.cst-fees {
- 
-    text-align: center;
-    margin: 10px 0 20px;
-}
-.outer-slt {
-    min-width: 320px;
-    margin-bottom: 10px;
-}
-.outer-slt .error {
-  
-    top: 30px!important;
-   
-}
-.media_cont_wrap {
-    
-    flex-direction: column;
- 
+    }
+  .member .pink-heading h2.text-left,
+  .member .inner_back_wrap h2 {
+    font-size: 26px;
     
 }
-.report-sec .form-head
+.member .inner_back_wrap h2 {
+    /* text-align: left; */
+    width: 71%;
+}
+  .member .match_edit .inner_wrap_icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 65%;}
 
-{
-    flex-direction: column;
-}
-.course-list-detail .event-card-form .form-group label span {
-    font-size: 18px;
-}
 
-.course-list-detail .event-card-form .form-group label {
-   
-    font-size: 20px;
-}
-.form-head form {
-    min-width: 100%;
-}
-.form-head form {
-    min-width: 100%;
-    margin: 15px 0;
-}
-.form-head form p {
-    width: 57%;
-    white-space: nowrap;
-}
+    .event-card-form .form-group p {
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+
+    .event-card-form .form-group {
+        align-items: unset;
+        flex-direction: column;
+    }
+
+    .event-card-form .form-group p.cst-fees {
+
+        text-align: center;
+        margin: 10px 0 20px;
+    }
+
+    .outer-slt {
+        min-width: 320px;
+        margin-bottom: 10px;
+    }
+
+    .outer-slt .error {
+
+        top: 30px !important;
+
+    }
+
+    .media_cont_wrap {
+
+        flex-direction: column;
+
+
+    }
+
+    .report-sec .form-head {
+        flex-direction: column;
+    }
+
+    .course-list-detail .event-card-form .form-group label span {
+        font-size: 18px;
+    }
+
+    .course-list-detail .event-card-form .form-group label {
+
+        font-size: 20px;
+    }
+
+    .form-head form {
+        min-width: 100%;
+    }
+
+    .form-head form {
+        min-width: 100%;
+        margin: 15px 0;
+    }
+
+    .form-head form p {
+        width: 57%;
+        white-space: nowrap;
+    }
 
     .report-sec ul#myTab li {
 
@@ -1050,13 +1215,13 @@ p.holiday_camps {
     }
 
     .goal-filter .form-group {
-        margin-bottom: 20px!important;
-        justify-content: center!important;
-        margin-right: 0!important;
+        margin-bottom: 20px !important;
+        justify-content: center !important;
+        margin-right: 0 !important;
     }
-    .report-tab-one .inner-form-box
-    {
-        height:auto;
+
+    .report-tab-one .inner-form-box {
+        height: auto;
     }
 
 
@@ -1173,7 +1338,7 @@ p.holiday_camps {
         top: 5px;
         width: 18px;
         height: 18px;
-        border: 2px solid #be298d;
+        border: 2px solid #001642 ;
     }
 
     .main-radio label::after {
@@ -1183,8 +1348,8 @@ p.holiday_camps {
         top: 8px;
         width: 5px;
         height: 11px;
-        border-right: 2px solid #be298d;
-        border-bottom: 2px solid #be298d;
+        border-right: 2px solid #001642 ;
+        border-bottom: 2px solid #001642 ;
         transform: rotate(45deg);
         opacity: 0;
     }
@@ -1287,16 +1452,18 @@ p.holiday_camps {
     }
 
     .course-list-detail .event-card-form .form-group label {
-    width: 100%;
-    margin: 15px 0;
-}
+        width: 100%;
+        margin: 15px 0;
+    }
 
     .course-list-detail .form-control {
         width: 100%;
     }
-button#course_book {
-    margin: 0 auto;
-}
+
+    button#course_book {
+        margin: 0 auto;
+    }
+
     .event-card-form .form-group {
         flex-wrap: wrap;
 
@@ -1361,8 +1528,8 @@ button#course_book {
     }
 
     .activity-slider .owl-dots .owl-dot {
-        height: 12px;
-        width: 12px;
+        /*height: 12px;
+        width: 12px;*/
         background: transparent;
         border-radius: 50%;
         border: 2px solid #95948f;
@@ -1374,8 +1541,8 @@ button#course_book {
     }
 
     .activity-slider .owl-dots .owl-dot.active {
-        border: 2px solid #be298d;
-        background: #be298d;
+        border: 2px solid #001642 ;
+        background: #001642 ;
     }
 
     .activity-slider .owl-next {
@@ -1778,7 +1945,7 @@ button#course_book {
     }
 
     .services-sec {
-        padding: 60px 0;
+        padding: 60px 0 115px;
         margin-bottom: -100px;
     }
 
@@ -1858,49 +2025,77 @@ button#course_book {
 @media(max-width: 480px) {
     .checkout-step-sec .cart.block {
 
-    margin-top: 20px;
-}
+        margin-top: 20px;
+    }
+
+    .outer_wrap_row {
+        margin: 0 15px;
+    }
+
+    .member .inner_back_wrap h2 {
+  
+    width:55%;
+   }
+
     .login-sec button.cstm-btn.login {
-   
+
+        margin-bottom: 15px;
+    }
+    .member .match_edit .inner_wrap_icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
     margin-bottom: 15px;
 }
+.member .pink-heading.comp_match.match_edit {
+    
+    flex-direction: column;
+}
+
     ul.day-list li {
         width: 33%;
 
     }
 
     .form-head form {
-    flex-direction: column;
-    width: 100%;
-}
-.form-head form p {
-    width: 100%;
-    white-space: nowrap;
-    text-align: center;
-    margin: 15px 0;
-}
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .form-head form p {
+        width: 100%;
+        white-space: nowrap;
+        text-align: center;
+        margin: 15px 0;
+    }
+
     .card-header.view-card-header .view_stats {
-    width: 40%!important;
-   
-}
-.card-header.view-card-header {
-    
-    align-items:flex-start;
-    flex-direction: column;
-}
-.form-head form .form-group {
-    width: 62%;
-    margin-bottom: 0;
-}
-.card-header.view-card-header a {
-    width: 100%;
-    margin-bottom: 15px;
-}
-.card-header.view-card-header .view_stats {
-    width: 100%!important;
-    margin: 0 0 10px 0!important;
-    margin: 0 auto;
-}
+        width: 40% !important;
+
+    }
+
+    .card-header.view-card-header {
+
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .form-head form .form-group {
+        width: 62%;
+        margin-bottom: 0;
+    }
+
+    .card-header.view-card-header a {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .card-header.view-card-header .view_stats {
+        width: 100% !important;
+        margin: 0 0 10px 0 !important;
+        margin: 0 auto;
+    }
 
 
 
@@ -1927,11 +2122,11 @@ button#course_book {
 
 
 
-   .radio-outer-wrap {
-    position: relative;
-    left: -26px;
-    display: block;
-}
+    .radio-outer-wrap {
+        position: relative;
+        left: -26px;
+        display: block;
+    }
 
     .main-radio input {
         right: -75px;
@@ -1997,10 +2192,10 @@ button#course_book {
         width: 100%;
         margin-bottom: 8px;
 
-      
+
     }
 
-     
+
 
     .event-text {
 
@@ -2409,7 +2604,7 @@ button#course_book {
     }
 
     .login-sec button.cstm-btn.login {
-        margin-right: 11px;
+        margin-right: 2px;
     }
 
     .cstm-btn {

@@ -45,7 +45,7 @@ figure.product-specification-img img {
 
                             <div class="action btn-wrap mt-3">
 
-                                <button class="cstm-btn solid-btn cartButton" type="submit">add to cart</button>
+                                <button class="cstm-btn solid-btn cartButton main_button" type="submit">add to cart</button>
                                 <!-- <a href="javascript:void(0)" class="wishlist {{$product->hasInWishlist()}} cstm-wishlist-btn" data-url="{{url(route('shop.wishlist.create',$product->id))}}"><span class="fa fa-heart"></span> -->
                                 <!-- </a> -->
                                 <div id="errorMessageBox"></div>
@@ -125,7 +125,7 @@ figure.product-specification-img img {
 
                             <div class="action btn-wrap mt-3">
 
-                                <button class="cstm-btn solid-btn cartButton" type="submit">add to cart</button>
+                                <button class="cstm-btn solid-btn cartButton main_button" type="submit">add to cart</button>
                                 <!-- <a href="javascript:void(0)" class="wishlist {{$product->hasInWishlist()}} cstm-wishlist-btn" data-url="{{url(route('shop.wishlist.create',$product->id))}}"><span class="fa fa-heart"></span> -->
                                 <!-- </a> -->
                                 <div id="errorMessageBox"></div>

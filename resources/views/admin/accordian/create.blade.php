@@ -80,8 +80,8 @@
 
                   <label class="control-label">Color of the Accordian<span class="cst-upper-star">*</span></label>
                   <select class="form-control" name="color">
-                        <option value="#be298d">Pink</option>
-                        <option value="#00afef">Blue</option>
+                        <option value="#001642">Blue</option>
+                        <option value="#00afef">Sky Blue</option>
                         <option value="#bea029">Yellow</option>
                   </select><br/>
 

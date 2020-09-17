@@ -36,7 +36,7 @@ table.stats.table.table-bordered.cst-reports th {
    <div class="container">
       <div class="pink-heading comp_match btn-right">
          <h2 class="text-left">Match Stats&nbsp; </h2>
-          <button class="cstm-btn d-print-none" onclick="window.print();" >Print</button>
+          <button class="cstm-btn main_button d-print-none" onclick="window.print();" >Print</button>
       </div>
       @php $competition = DB::table('competitions')->where('id',$comp_id)->first(); @endphp
       <div class="player-report-table tbl_shadow matches-wrap">

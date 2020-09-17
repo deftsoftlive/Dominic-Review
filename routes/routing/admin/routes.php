@@ -157,6 +157,10 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 	    Route::any('media-consent','Admin\UserController@media_consent')->name('admin_media_consent');
 	    Route::any('family-member/delete/{id}','Admin\UserController@delete_family_member')->name('admin_delete_family_member');
 
+	    Route::any('remove-contact/{id}','HomeController@remove_contact')->name('contact_remove_contact');
+    	Route::any('remove-medical/{id}','HomeController@remove_medical')->name('contact_remove_medical');
+    	Route::any('remove-allergy/{id}','HomeController@remove_allergy')->name('contact_remove_allergy');
+
 		#----------------------------------------------------------------
 		#  Change Course of Player
 		#----------------------------------------------------------------
@@ -454,6 +458,9 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		#----------------------------------------------------------------
 		Route::any('/register-template/course/{id}','Admin\RegisterTemplateController@course_reg_temp')->name('course_reg_temp');
 		Route::any('/register-template/camp/{id}','Admin\RegisterTemplateController@camp_reg_temp')->name('camp_reg_temp');
+
+		// Save register template dates
+		Route::any('/save-course-reg-dates','Admin\RegisterTemplateController@save_course_reg_dates')->name('save_course_reg_dates');
 
 
         #------------------------------------------------------------------------------------

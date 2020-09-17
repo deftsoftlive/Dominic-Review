@@ -243,7 +243,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                      </figure>
                   </li>
                   <li>
-                     <a href="{{ getAllValueWithMeta('tennis_pro_sec_button_url', 'tennis-pro') }}" class="cstm-btn">{{ getAllValueWithMeta('tennis_pro_sec_button_title', 'tennis-pro') }}</a>
+                     <a href="{{ getAllValueWithMeta('tennis_pro_sec_button_url', 'tennis-pro') }}" class="cstm-btn main_button">{{ getAllValueWithMeta('tennis_pro_sec_button_title', 'tennis-pro') }}</a>
                   </li>
                   <li>
                      <figure>

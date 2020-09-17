@@ -138,7 +138,13 @@
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
                                                 <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                    <a href="{{url('admin/users/edit')}}/{{$user->id}}" class="dropdown-item">Edit</a>
+                                                    <!-- <a href="{{url('admin/users/edit')}}/{{$user->id}}" class="dropdown-item">Edit</a> -->
+
+                                                    @if(!empty($user->type))
+                                                      	<a href="{{url('admin/family-member/overview')}}/{{$user->id}}" class="dropdown-item">View</a>
+                                                    @else
+                                                      	<a href="{{url('admin/users/edit')}}/{{$user->id}}" class="dropdown-item">Edit</a>
+                                                    @endif
                                                     <a onclick="return confirm('Are you sure you want to delete this user?')" href="{{url('admin/user/delete')}}/{{$user->id}}" class="dropdown-item">Delete</a>
                                                 </div>
                                             </div>
@@ -221,7 +227,12 @@
                                                      <td>
                                                         <div class="btn-group">
                                                            <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-                                                           <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/users/edit')}}/{{$ch->id}}" class="dropdown-item">Edit</a>
+                                                           <!-- <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/users/edit')}}/{{$ch->id}}" class="dropdown-item">Edit</a> -->
+                                                           	@if(!empty($ch->type))
+		                                                      <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/family-member/overview')}}/{{$ch->id}}" class="dropdown-item">View</a>
+		                                                    @else
+		                                                      <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/users/edit')}}/{{$ch->id}}" class="dropdown-item">Edit</a>
+		                                                    @endif
                                                            </div>
                                                         </div>
                                                      </td>
@@ -267,7 +278,15 @@
                                                      <td>
                                                         <div class="btn-group">
                                                            <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-                                                           <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/users/edit')}}/{{$ch->id}}" class="dropdown-item">Edit</a>
+
+                                                           <!-- <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/users/edit')}}/{{$ch->id}}" class="dropdown-item">Edit</a> -->
+
+                                                           	@if(!empty($ch->type))
+		                                                      <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/family-member/overview')}}/{{$ch->id}}" class="dropdown-item">View</a>
+		                                                    @else
+		                                                      <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/users/edit')}}/{{$ch->id}}" class="dropdown-item">Edit</a>
+		                                                    @endif
+
                                                             <a onclick="return confirm('Are you sure you want to delete this child?')" href="{{url('admin/user/delete')}}/{{$ch->id}}" class="dropdown-item">Delete</a>
                                                            </div>
                                                         </div>

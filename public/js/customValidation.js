@@ -1127,14 +1127,12 @@ $(document).ready(function (){
       first_name: {
           required: true,
           maxlength:25,
-          noSpace: true,
-          lettersonly:true
+          noSpace: true
       },
       last_name: {
           required: true,
           maxlength:25,
-          noSpace: true,
-          lettersonly:true
+          noSpace: true
       },
       gender: {
           required: true,      

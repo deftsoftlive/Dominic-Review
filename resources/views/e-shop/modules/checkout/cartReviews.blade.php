@@ -122,7 +122,8 @@ header.Eshop-header {
                     <div class="col-lg-12">
                             <div class="multistep-footer mt-4 text-right"> 
                                <!--  <a href="{{$backward}}" type="submit" class="cstm-btn">Back</a> -->
-                                <a href="{{$farward}}" type="submit" class="cstm-btn solid-btn">Save &amp; Continue</a>
+                                <a href="{{url('/shop/cart')}}" type="submit" class="cstm-btn main_button solid-btn">Back to basket</a>
+                                <a href="{{$farward}}" type="submit" class="cstm-btn main_button solid-btn">Save &amp; Continue</a>
                               </div>            
                      </div>
                    </div>

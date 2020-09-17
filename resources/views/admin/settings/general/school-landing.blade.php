@@ -58,7 +58,7 @@
             <h5 class="card-title">Camp Go</h5>
 
              <div class="form-group">
-              <label class="label-file control-label">Camp go - Logo<span class="cst-upper-star">*</span></label>
+              <label class="label-file control-label">Camp go - Logo (250 X 130) <span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'sch_lan_camp_go_logo_src')" class="form-control" name="sch_lan_camp_go_logo">
              </div>
              <img id="sch_lan_camp_go_logo_src" src="{{ URL::asset('/uploads').'/'.$sch_lan_camp_go_logo }}" style="width: 100px;" />
@@ -74,7 +74,7 @@
              {{textbox($errors,'Banner Title <span class="cst-upper-star">*</span>','sch_lan_camp_page_title',$sch_lan_camp_page_title)}}
 
              <div class="form-group">
-              <label class="label-file control-label">Banner Image  (1920 X 350)<span class="cst-upper-star">*</span></label>
+              <label class="label-file control-label">Banner Image  (1349 X 438)<span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'sch_lan_camp_banner_image_src')" class="form-control" name="sch_lan_camp_banner_image">
              </div>
              <img id="sch_lan_camp_banner_image_src" src="{{ URL::asset('/uploads').'/'.$sch_lan_camp_banner_image }}" style="width: 100px;" />
@@ -114,19 +114,19 @@
                 {{ textbox($errors,'Tab Title','sch_lan_tab_title1', $sch_lan_tab_title1) }}
 
                  <div class="form-group">
-                  <label class="label-file control-label">Slider Image - 1<span class="cst-upper-star">*</span></label>
+                  <label class="label-file control-label">Slider Image - 1 (1110 X 400) <span class="cst-upper-star">*</span></label>
                   <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'sch_lan_camp_tab1_image1_src')" class="form-control" name="sch_lan_camp_tab1_image1">
                  </div>
                  <img id="sch_lan_camp_tab1_image1_src" src="{{ URL::asset('/uploads').'/'.$sch_lan_camp_tab1_image1 }}" style="width: 100px;" />
 
                  <div class="form-group">
-                  <label class="label-file control-label">Slider Image - 2<span class="cst-upper-star">*</span></label>
+                  <label class="label-file control-label">Slider Image - 2 (1110 X 400) <span class="cst-upper-star">*</span></label>
                   <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'sch_lan_camp_tab1_image2_src')" class="form-control" name="sch_lan_camp_tab1_image2">
                  </div>
                  <img id="sch_lan_camp_tab1_image2_src" src="{{ URL::asset('/uploads').'/'.$sch_lan_camp_tab1_image2 }}" style="width: 100px;" />
 
                  <div class="form-group">
-                  <label class="label-file control-label">Slider Image - 3<span class="cst-upper-star">*</span></label>
+                  <label class="label-file control-label">Slider Image - 3 (1110 X 400) <span class="cst-upper-star">*</span></label>
                   <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'sch_lan_camp_tab1_image3_src')" class="form-control" name="sch_lan_camp_tab1_image3">
                  </div>
                  <img id="sch_lan_camp_tab1_image3_src" src="{{ URL::asset('/uploads').'/'.$sch_lan_camp_tab1_image3 }}" style="width: 100px;" />
@@ -141,7 +141,7 @@
                  {{ textbox($errors,'Tab Title','sch_lan_tab_title2', $sch_lan_tab_title2) }}
 
                  <div class="form-group">
-                  <label class="label-file control-label">Image<span class="cst-upper-star">*</span></label>
+                  <label class="label-file control-label">Image (1110 X 400) <span class="cst-upper-star">*</span></label>
                   <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'sch_lan_camp_tab2_image_src')" class="form-control" name="sch_lan_camp_tab2_image">
                  </div>
                  <img id="sch_lan_camp_tab2_image_src" src="{{ URL::asset('/uploads').'/'.$sch_lan_camp_tab2_image }}" style="width: 100px;" />
@@ -189,7 +189,7 @@
              
              <h5 class="card-title"><u>Activity - 1</u></h5>
              <div class="form-group">
-              <label class="label-file control-label">Image<span class="cst-upper-star">*</span></label>
+              <label class="label-file control-label">Image (314 X 352)<span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'sch_lan_act1_image_src')" class="form-control" name="sch_lan_act1_image">
              </div>
              <img id="sch_lan_act1_image_src" src="{{ URL::asset('/uploads').'/'.$sch_lan_act1_image }}" style="width: 100px;" />
@@ -200,7 +200,7 @@
 
              <h5 class="card-title"><u>Activity - 2</u></h5>
              <div class="form-group">
-              <label class="label-file control-label">Image<span class="cst-upper-star">*</span></label>
+              <label class="label-file control-label">Image (314 X 352)<span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'sch_lan_act2_image_src')" class="form-control" name="sch_lan_act2_image">
              </div>
              <img id="sch_lan_act2_image_src" src="{{ URL::asset('/uploads').'/'.$sch_lan_act2_image }}" style="width: 100px;" />
@@ -211,7 +211,7 @@
 
              <h5 class="card-title"><u>Activity - 3</u></h5>
              <div class="form-group">
-              <label class="label-file control-label">Image<span class="cst-upper-star">*</span></label>
+              <label class="label-file control-label">Image (314 X 352)<span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'sch_lan_act3_image_src')" class="form-control" name="sch_lan_act3_image">
              </div>
              <img id="sch_lan_act3_image_src" src="{{ URL::asset('/uploads').'/'.$sch_lan_act3_image }}" style="width: 100px;" />
@@ -222,7 +222,7 @@
 
              <h5 class="card-title"><u>Activity - 4</u></h5>
              <div class="form-group">
-              <label class="label-file control-label">Image<span class="cst-upper-star">*</span></label>
+              <label class="label-file control-label">Image (314 X 352)<span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'sch_lan_act4_image_src')" class="form-control" name="sch_lan_act4_image">
              </div>
              <img id="sch_lan_act4_image_src" src="{{ URL::asset('/uploads').'/'.$sch_lan_act4_image }}" style="width: 100px;" />
@@ -233,7 +233,7 @@
 
              <h5 class="card-title"><u>Activity - 5</u></h5>
              <div class="form-group">
-              <label class="label-file control-label">Image<span class="cst-upper-star">*</span></label>
+              <label class="label-file control-label">Image (314 X 352)<span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'sch_lan_act5_image_src')" class="form-control" name="sch_lan_act5_image">
              </div>
              <img id="sch_lan_act2_image_src" src="{{ URL::asset('/uploads').'/'.$sch_lan_act5_image }}" style="width: 100px;" />

@@ -35,7 +35,7 @@
     </div>
 @endif
 
-<section class="member section-padding c-d-book-now">
+<section class="member section-padding c-d-book-now family_members">
 
 <div class="container">
     <div class="text-center">
@@ -110,12 +110,12 @@
                 |   Linkings - Start
                 |***************************** -->
         		<div class="member-book">
-        			<a target="_blank" href="{{url('/shop')}}" class="cstm-btn">Go To Shop</a>
-            		<a target="_blank" href="{{url('/coach-listing')}}" class="cstm-btn">Coach Connect</a>
-            		<a target="_blank" href="{{url('/tennis-landing')}}" class="cstm-btn">Book Tennis Coaching</a>
-            		<a target="_blank" href="{{url('camp-listing')}}" class="cstm-btn">Book A Holiday Camp</a>
-            		<a target="_blank" href="{{url('/football-landing')}}" class="cstm-btn">Book Football Coaching</a>
-            		<a target="_blank" href="{{url('/school-landing')}}" class="cstm-btn">Book A School Club</a>
+        			<a target="_blank" href="{{url('/shop')}}" class="cstm-btn main_button">Go To Shop</a>
+            		<a target="_blank" href="{{url('/coach-listing')}}" class="cstm-btn main_button">Coach Connect</a>
+            		<a target="_blank" href="{{url('/tennis-landing')}}" class="cstm-btn main_button">Book Tennis Coaching</a>
+            		<a target="_blank" href="{{url('camp-listing')}}" class="cstm-btn main_button">Book A Holiday Camp</a>
+            		<a target="_blank" href="{{url('/football-landing')}}" class="cstm-btn main_button">Book Football Coaching</a>
+            		<a target="_blank" href="{{url('/school-landing')}}" class="cstm-btn main_button">Book A School Club</a>
         		</div>
                 <!-- *************************
                 |   Linkings - End
@@ -128,7 +128,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
+            <div class="card acc_card">
                 <div class="card-header">{{ __('Account Settings') }}</div>
 
                 <div class="card-body">
@@ -323,7 +323,7 @@
                     <div class="form-button">
                         <div class="form-group row mb-0">
                             <div class="col-md-12 form-btn">
-                                <button type="submit" class="cstm-btn">
+                                <button type="submit" class="cstm-btn main_button">
                                     {{ __('Update') }}
                                 </button>
                             </div>
@@ -348,15 +348,15 @@
                 <ul class="click-btn-content">
                   <li>
                     <figure>
-                    <img src="http://49.249.236.30:8654/dominic-new/public/images/click-btn-img.png">
+                    <img src="{{url('/')}}/public/images/click-btn-img.png">
                 </figure>
                 </li>
                 <li>
-                  <a href="" class="cstm-btn">Click Here</a>
+                  <a href="" class="cstm-btn main_button">Click Here</a>
                 </li>
                 <li>
                     <figure>
-                    <img src="http://49.249.236.30:8654/dominic-new/public/images/click-btn-img.png">
+                    <img src="{{url('/')}}/public/images/click-btn-img.png">
                 </figure>
                 </li>
                 </ul>

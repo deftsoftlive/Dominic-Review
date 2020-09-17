@@ -8,7 +8,7 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
 @endphp
 <style>
 div#report_detail_cont {
-    border: 3px solid #be298d;
+    border: 3px solid #001642;
     padding: 20px;
 }
 .cst_active{
@@ -47,9 +47,13 @@ div#report_detail_cont {
     <div class="container">
         <div class="pink-heading print_logo_image">
             <div class="print_logo print-logo-design">
-                <img height="70px;" width="120px;" src="{{url('')}}/public/uploads/1584078701website_logo.png">
+                <img height="70px;" width="120px;" src="{{url('')}}/public/images/pdf-logo.png">
             </div>
-            <h2>Your Report</h2>
+
+            <div class="inner_back_wrap">
+                <h2>Your Report</h2>
+                <a href="{{url('/user/badges')}}" class="cstm-btn main_button d-print-none">Back to menu</a>
+            </div>
         </div>
         <div class="col-md-12">
             @if(!empty($report)> 0)
@@ -61,7 +65,7 @@ div#report_detail_cont {
                     @if($report->type == 'simple')
                     <div class="col-md-12 report_row">
                      
-                        <table class="table table-bordered  cst-reports" style="width:100%">
+                        <table class="table table-bordered cst-reports" style="width:100%">
                           <tr>
                             <th><p><b>Date</b></p></th>
                             <th><p><b>Player Name</b></p></th> 
@@ -330,7 +334,7 @@ div#report_detail_cont {
                     @endif
                     
                 </div>
-                <button onclick="window.print();" style="float:right;" class="cstm-btn d-print-none">Print</button>
+                <button onclick="window.print();" style="float:right;" class="cstm-btn main_button d-print-none">Print</button>
 
             </div>
             @else

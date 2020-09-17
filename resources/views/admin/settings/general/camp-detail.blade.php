@@ -58,7 +58,7 @@
             <h5 class="card-title">LOGO SECTION</h5>
 
              <div class="form-group">
-              <label class="label-file control-label">Camp go Logo<span class="cst-upper-star">*</span></label>
+              <label class="label-file control-label">Camp go Logo (250 X 130)<span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'camp_detail_logo_src')" class="form-control" name="camp_detail_logo">
              </div>
              <img id="camp_detail_logo_src" src="{{ URL::asset('/uploads').'/'.$camp_detail_logo }}" style="width: 100px;" />
@@ -72,7 +72,7 @@
              {{textbox($errors,'Banner Title <span class="cst-upper-star">*</span>','camp_detail_title',$camp_detail_title)}}
 
              <div class="form-group">
-              <label class="label-file control-label">Banner Image  (1920 X 350)<span class="cst-upper-star">*</span></label>
+              <label class="label-file control-label">Banner Image  (1349 X 438)<span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'camp_detail_banner_image_src')" class="form-control" name="camp_detail_banner_image">
              </div>
              <img id="camp_detail_banner_image_src" src="{{ URL::asset('/uploads').'/'.$camp_detail_banner_image }}" style="width: 100px;" />

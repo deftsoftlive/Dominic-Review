@@ -59,7 +59,7 @@
              {{textbox($errors,'Banner Title <span class="cst-upper-star">*</span>','page_title',$page_title)}}
 
              <div class="form-group">
-              <label class="label-file control-label">Banner Image (1920 X 350)<span class="cst-upper-star">*</span></label>
+              <label class="label-file control-label">Banner Image (1349 X 438)<span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'banner_image_src')" class="form-control" name="banner_image">
              </div>
              <img id="banner_image_src" src="{{ URL::asset('/uploads').'/'.$banner_image }}" style="width: 100px;" />

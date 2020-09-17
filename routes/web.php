@@ -101,6 +101,8 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     Route::any('medical-information','HomeController@medical_information')->name('medical_information');
     Route::any('media-consent','HomeController@media_consent')->name('media_consent');
     Route::any('remove-contact/{id}','HomeController@remove_contact')->name('remove_contact');
+    Route::any('remove-medical/{id}','HomeController@remove_medical')->name('remove_medical');
+    Route::any('remove-allergy/{id}','HomeController@remove_allergy')->name('remove_allergy');
 
     // Route::any('medical_info_to_next','HomeController@medical_info_to_next')->name('medical_info_to_next');
     // Route::any('child_cont_to_next','HomeController@child_cont_to_next')->name('child_cont_to_next');

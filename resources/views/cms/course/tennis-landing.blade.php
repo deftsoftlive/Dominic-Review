@@ -1,14 +1,10 @@
 @extends('inc.homelayout')
-
 @section('title', 'DRH|Listing')
-
 @section('content')
-
-@php 
-$base_url = \URL::to('/'); 
-$custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc')->get(); 
+@php
+$base_url = \URL::to('/');
+$custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc')->get();
 @endphp
-
 <section class="football-course-sec" style="z-index:9; background: url({{$base_url}}/public/uploads/{{ getAllValueWithMeta('ten_lan_camp_banner_image', 'tennis-landing') }});">
     <div class="container">
         <div class="row">
@@ -20,11 +16,10 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
         </div>
     </div>
 </section>
-
 <section class="account-menu-sec multi-activities-sec">
     <div class="container">
         <div class="camp-logo-section">
-            <div class="container"> 
+            <div class="container">
                 <div class="camp-logo-section c-l-s-camp-listing">
                     <div class="container">
                         <div class="row">
@@ -33,14 +28,14 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                             </div>
                             <div class="col-sm-8">
                                 <div class="camp_list_title camp-logo-section">
-                                {!! getAllValueWithMeta('ten_lan_camp_go_title', 'tennis-landing') !!}
+                                    {!! getAllValueWithMeta('ten_lan_camp_go_title', 'tennis-landing') !!}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <nav>
@@ -57,30 +52,29 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="slider-and-info-wrap">
-                                        <div class="owl-carousel owl-carousel3 owl-theme owl-loaded owl-drag"> 
-                                                <div class="item">
-                                                    <div class="inner-content">
-                                                        <figure>
-                                                            <img src="{{URL::asset('/uploads')}}/{{ getAllValueWithMeta('ten_lan_camp_tab1_image1', 'tennis-landing') }}" alt="">
-                                                        </figure>
-                                                    </div>
+                                        <div class="owl-carousel owl-carousel3 owl-theme owl-loaded owl-drag">
+                                            <div class="item">
+                                                <div class="inner-content">
+                                                    <figure>
+                                                        <img src="{{URL::asset('/uploads')}}/{{ getAllValueWithMeta('ten_lan_camp_tab1_image1', 'tennis-landing') }}" alt="">
+                                                    </figure>
                                                 </div>
-                                                <div class="item">
-                                                    <div class="inner-content">
-                                                        <figure>
-                                                            <img src="{{URL::asset('/uploads')}}/{{ getAllValueWithMeta('ten_lan_camp_tab1_image2', 'tennis-landing') }}" alt="">
-                                                        </figure>
-                                                    </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="inner-content">
+                                                    <figure>
+                                                        <img src="{{URL::asset('/uploads')}}/{{ getAllValueWithMeta('ten_lan_camp_tab1_image2', 'tennis-landing') }}" alt="">
+                                                    </figure>
                                                 </div>
-                                                <div class="item">
-                                                    <div class="inner-content">
-                                                        <figure>
-                                                            <img src="{{URL::asset('/uploads')}}/{{ getAllValueWithMeta('ten_lan_camp_tab1_image3', 'tennis-landing') }}" alt="">
-                                                        </figure>
-                                                    </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="inner-content">
+                                                    <figure>
+                                                        <img src="{{URL::asset('/uploads')}}/{{ getAllValueWithMeta('ten_lan_camp_tab1_image3', 'tennis-landing') }}" alt="">
+                                                    </figure>
                                                 </div>
-                                            </div> 
-
+                                            </div>
+                                        </div>
                                         <div class="activitiy-info-content">
                                             {!! getAllValueWithMeta('ten_lan_camp_tab1_description', 'tennis-landing') !!}
                                         </div>
@@ -88,32 +82,32 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="tab-points-wrap">
-                                      @foreach($custom_box as $box)
-                                      @if($box->type == 'tennis-landing-home')
-                                      <div class="tab-points-content @if($box->position == 1) inverted @endif">
-                                         <div class="tab-points-container">
-                                            <div class="row">
-                                               <div class="col-sm-7">
-                                                  <div class="t-p-text">
-                                                     <h2>{{$box->title}}</h2>
-                                                     <p>{!! $box->description !!}</p>
-                                                     <a class="more-about-camp read-more-less" id="{{$box->id}}" href="javascript:void(0);">Read more</a>
-                                                  </div>
-                                               </div>
-                                               <div class="col-sm-5">
-                                                  <div class="t-p-img">
-                                                     <img src="{{url('/public/uploads')}}/{{$box->image}}" alt="" />
-                                                  </div>
-                                               </div>
+                                        @foreach($custom_box as $box)
+                                        @if($box->type == 'tennis-landing-home')
+                                        <div class="tab-points-content @if($box->position == 1) inverted @endif">
+                                            <div class="tab-points-container">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <div class="t-p-text">
+                                                            <h2>{{$box->title}}</h2>
+                                                            <p>{!! $box->description !!}</p>
+                                                            <a class="more-about-camp read-more-less" id="{{$box->id}}" href="javascript:void(0);">Read more</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <div class="t-p-img">
+                                                            <img src="{{url('/public/uploads')}}/{{$box->image}}" alt="" />
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                         </div>
-                                         <div class="tab-points-container t-p-c-more">
-                                            <p>{!! $box->more_text !!}</p>
-                                            <a class="read-more-less less-about-camp box-{{$box->id}}" id="{{$box->id}}" href="javascript:void(0);">Read less</a>
-                                         </div>
-                                      </div>
-                                      @endif
-                                      @endforeach
+                                            <div class="tab-points-container t-p-c-more">
+                                                <p>{!! $box->more_text !!}</p>
+                                                <a class="read-more-less less-about-camp box-{{$box->id}}" id="{{$box->id}}" href="javascript:void(0);">Read less</a>
+                                            </div>
+                                        </div>
+                                        @endif
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -132,41 +126,37 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                             </div>
                                         </div>
                                         <div class="activitiy-info-content">
-                                            <h4>{!! getAllValueWithMeta('ten_lan_camp_tab2_description', 'tennis-landing') !!}</h4> 
+                                            <h4>{!! getAllValueWithMeta('ten_lan_camp_tab2_description', 'tennis-landing') !!}</h4>
                                         </div>
-                                    </div> 
-                                    
-                                        <div class="tab-points-wrap">
-
-                                            @foreach($custom_box as $box)
-                                              @if($box->type == 'tennis-landing-club-info')
-                                              <div class="tab-points-content @if($box->position == 1) inverted @endif">
-                                                 <div class="tab-points-container">
-                                                    <div class="row">
-                                                       <div class="col-sm-7">
-                                                          <div class="t-p-text">
-                                                             <h2>{{$box->title}}</h2>
-                                                             <p>{!! $box->description !!}</p>
-                                                             <a class="more-about-camp read-more-less" id="{{$box->id}}" href="javascript:void(0);">Read more</a>
-                                                          </div>
-                                                       </div>
-                                                       <div class="col-sm-5">
-                                                          <div class="t-p-img">
-                                                             <img src="{{url('/public/uploads')}}/{{$box->image}}" alt="" />
-                                                          </div>
-                                                       </div>
+                                    </div>
+                                    <div class="tab-points-wrap">
+                                        @foreach($custom_box as $box)
+                                        @if($box->type == 'tennis-landing-club-info')
+                                        <div class="tab-points-content @if($box->position == 1) inverted @endif">
+                                            <div class="tab-points-container">
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <div class="t-p-text">
+                                                            <h2>{{$box->title}}</h2>
+                                                            <p>{!! $box->description !!}</p>
+                                                            <a class="more-about-camp read-more-less" id="{{$box->id}}" href="javascript:void(0);">Read more</a>
+                                                        </div>
                                                     </div>
-                                                 </div>
-                                                 <div class="tab-points-container t-p-c-more">
-                                                    <p>{!! $box->more_text !!}</p>
-                                                    <a class="read-more-less less-about-camp box-{{$box->id}}" id="{{$box->id}}" href="javascript:void(0);">Read less</a>
-                                                 </div>
-                                              </div>
-                                              @endif
-                                            @endforeach
-                                            
+                                                    <div class="col-sm-5">
+                                                        <div class="t-p-img">
+                                                            <img src="{{url('/public/uploads')}}/{{$box->image}}" alt="" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-points-container t-p-c-more">
+                                                <p>{!! $box->more_text !!}</p>
+                                                <a class="read-more-less less-about-camp box-{{$box->id}}" id="{{$box->id}}" href="javascript:void(0);">Read less</a>
+                                            </div>
                                         </div>
-
+                                        @endif
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -184,7 +174,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('ten_lan_act1_title', 'tennis-landing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('ten_lan_act1_description', 'tennis-landing') }}</p>
+                                                    <p>{!! getAllValueWithMeta('ten_lan_act1_description', 'tennis-landing') !!}</p>
                                                 </li>
                                             </ul>
                                         </div>
@@ -195,7 +185,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('ten_lan_act2_title', 'tennis-landing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('ten_lan_act2_description', 'tennis-landing') }}</p>
+                                                    <p>{!! getAllValueWithMeta('ten_lan_act2_description', 'tennis-landing') !!}</p>
                                                 </li>
                                             </ul>
                                         </div>
@@ -206,7 +196,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('ten_lan_act3_title', 'tennis-landing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('ten_lan_act3_description', 'tennis-landing') }}</p>
+                                                    <p>{!! getAllValueWithMeta('ten_lan_act3_description', 'tennis-landing') !!}</p>
                                                 </li>
                                             </ul>
                                         </div>
@@ -217,7 +207,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('ten_lan_act4_title', 'tennis-landing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('ten_lan_act4_description', 'tennis-landing') }}</p>
+                                                    <p>{!! getAllValueWithMeta('ten_lan_act4_description', 'tennis-landing') !!}</p>
                                                 </li>
                                             </ul>
                                         </div>
@@ -228,48 +218,44 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('ten_lan_act5_title', 'tennis-landing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('ten_lan_act5_description', 'tennis-landing') }}</p>
+                                                    <p>{!! getAllValueWithMeta('ten_lan_act5_description', 'tennis-landing') !!}</p>
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="tab-points-wrap">
-
                                             @foreach($custom_box as $box)
-                                              @if($box->type == 'tennis-landing-home')
-                                              <div class="tab-points-content @if($box->position == 1) inverted @endif">
-                                                 <div class="tab-points-container">
+                                            @if($box->type == 'tennis-landing-home')
+                                            <div class="tab-points-content @if($box->position == 1) inverted @endif">
+                                                <div class="tab-points-container">
                                                     <div class="row">
-                                                       <div class="col-sm-7">
-                                                          <div class="t-p-text">
-                                                             <h2>{{$box->title}}</h2>
-                                                             <p>{!! $box->description !!}</p>
-                                                             <a class="more-about-camp read-more-less" id="{{$box->id}}" href="javascript:void(0);">Read more</a>
-                                                          </div>
-                                                       </div>
-                                                       <div class="col-sm-5">
-                                                          <div class="t-p-img">
-                                                             <img src="{{url('/public/uploads')}}/{{$box->image}}" alt="" />
-                                                          </div>
-                                                       </div>
+                                                        <div class="col-sm-7">
+                                                            <div class="t-p-text">
+                                                                <h2>{{$box->title}}</h2>
+                                                                <p>{!! $box->description !!}</p>
+                                                                <a class="more-about-camp read-more-less" id="{{$box->id}}" href="javascript:void(0);">Read more</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-5">
+                                                            <div class="t-p-img">
+                                                                <img src="{{url('/public/uploads')}}/{{$box->image}}" alt="" />
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                 </div>
-                                                 <div class="tab-points-container t-p-c-more">
+                                                </div>
+                                                <div class="tab-points-container t-p-c-more">
                                                     <p>{!! $box->more_text !!}</p>
                                                     <a class="read-more-less less-about-camp box-{{$box->id}}" id="{{$box->id}}" href="javascript:void(0);">Read less</a>
-                                                 </div>
-                                              </div>
-                                              @endif
+                                                </div>
+                                            </div>
+                                            @endif
                                             @endforeach
-                                            
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </section>
                         <!-- Activities - End Here -->
@@ -278,76 +264,74 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                         <div class="o-i-tab">
                             {!! getAllValueWithMeta('ten_lan_camp_tab3_description', 'tennis-landing') !!}
                         </div>
-                        <br/>
-                        <a style="float:right;" href="{{ getAllValueWithMeta('ten_lan_btn_link', 'tennis-landing') }}" class="cstm-btn">{{ getAllValueWithMeta('ten_lan_btn', 'tennis-landing') }}</a>
+                        <br />
+                        <a style="float:right;" href="{{ getAllValueWithMeta('ten_lan_btn_link', 'tennis-landing') }}" class="cstm-btn main_button">{{ getAllValueWithMeta('ten_lan_btn', 'tennis-landing') }}</a>
                     </div>
                     <div class="tab-pane fade" id="nav-family" role="tabpanel" aria-labelledby="nav-family-tab">
-                        <div class="o-i-tab"> 
+                        <div class="o-i-tab">
                             <div class="row">
                                 <div class="col-sm-7">
                                     <div class="o-i-accordion">
                                         <h2>{{ getAllValueWithMeta('ten_lan_camp_tab4_title', 'tennis-landing') }}</h2>
                                         <div id="accordion">
                                             @foreach($accordian as $acc)
-                                             <div class="card @if($acc->color == '#be298d')pink @elseif($acc->color == '#00afef')blue @elseif($acc->color == '#bea029')yellow @endif">
+                                            <div class="card @if($acc->color == '#be298d')pink @elseif($acc->color == '#00afef')blue @elseif($acc->color == '#bea029')yellow @endif">
                                                 <div class="card-header" id="headingOne">
-                                                   <h5 class="mb-0">
-                                                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$acc->id}}" aria-expanded="false" aria-controls="collapse{{$acc->id}}">
-                                                      {{$acc->title}}
-                                                      </button>
-                                                   </h5>
+                                                    <h5 class="mb-0">
+                                                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$acc->id}}" aria-expanded="false" aria-controls="collapse{{$acc->id}}">
+                                                            {{$acc->title}}
+                                                        </button>
+                                                    </h5>
                                                 </div>
                                                 <div id="collapse{{$acc->id}}" class="collapse" aria-labelledby="heading{{$acc->id}}" data-parent="#accordion">
-                                                   <div class="card-body">
-                                                      {!! $acc->description !!}
-                                                      @php 
-                                                      $acc_id = $acc->id;
-                                                      $accor_pdfs = DB::table('accordian_pdfs')->where('accordian_id','=', $acc_id)->get(); 
-                                                      @endphp
-                                                      @if(count($accor_pdfs)> 0)
-                                                      @foreach($accor_pdfs as $pdf)
-                                                      <a target="_blank" href="{{URL::asset('/uploads/accordian')}}/{{$pdf->pdf}}" class="course-pdf-icon"><i class="fa fa-file-pdf"></i>{{$pdf->accordian_title}}</a>
-                                                      @endforeach
-                                                      @endif
-                                                   </div>
+                                                    <div class="card-body">
+                                                        {!! $acc->description !!}
+                                                        @php
+                                                        $acc_id = $acc->id;
+                                                        $accor_pdfs = DB::table('accordian_pdfs')->where('accordian_id','=', $acc_id)->get();
+                                                        @endphp
+                                                        @if(count($accor_pdfs)> 0)
+                                                        @foreach($accor_pdfs as $pdf)
+                                                        <a target="_blank" href="{{URL::asset('/uploads/accordian')}}/{{$pdf->pdf}}" class="course-pdf-icon"><i class="fa fa-file-pdf"></i>{{$pdf->accordian_title}}</a>
+                                                        @endforeach
+                                                        @endif
+                                                    </div>
                                                 </div>
-                                             </div>
+                                            </div>
                                             @endforeach
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-5">
                                     <div class="o-i-testimonials multi-testimonial">
-
-                                    <div class="owl-carousel owl-carousel12 owl-theme">
-                                    @foreach($testimonial as $test)
-                                    <div class="item">
-                                        <div class="testimonial-card">
-                                         <figure class="testimonial-img-wrap">
-                                            <img src="http://49.249.236.30:8654/dominic-new/public/images/testimonial-card-img-1.png">
-                                         </figure>
-                                         <figcaption class="testimonial-caption">
-                                            <p>{{$test->description}}</p>
-                                            <div class="t-user">
-                                               <div class="round-arrow">
-                                                  <img src="http://49.249.236.30:8654/dominic-new/public/images/round-arrow-img.png">
-                                               </div>
-                                               <h3>{{$test->title}}</h3>
-                                               <span>
-                                               @if($test->image)
-                                               <img src="{{ URL::asset('uploads')}}/{{$test->image}}">
-                                               @else
-                                               <img src="{{ URL::asset('images/default.jpg')}}">
-                                               @endif
-                                               </span>   
+                                        <div class="owl-carousel owl-carousel12 owl-theme">
+                                            @foreach($testimonial as $test)
+                                            <div class="item">
+                                                <div class="testimonial-card">
+                                                    <figure class="testimonial-img-wrap">
+                                                        <img class="nb-icon" src="{{ URL::asset('images/nb-icon.png')}}">
+                                                        <img class="b-icon" src="{{ URL::asset('images/b-icon.png')}}">
+                                                    </figure>
+                                                    <figcaption class="testimonial-caption">
+                                                        <p>{{$test->description}}</p>
+                                                        <div class="t-user">
+                                                            <div class="round-arrow">
+                                                                <img src="http://49.249.236.30:8654/dominic-new/public/images/round-arrow-img.png">
+                                                            </div>
+                                                            <h3>{{$test->title}}</h3>
+                                                            <span>
+                                                                @if($test->image)
+                                                                <img src="{{ URL::asset('uploads')}}/{{$test->image}}">
+                                                                @else
+                                                                <img src="{{ URL::asset('images/default.jpg')}}">
+                                                                @endif
+                                                            </span>
+                                                        </div>
+                                                    </figcaption>
+                                                </div>
                                             </div>
-                                         </figcaption>
-                                      </div>
-                                    </div>
-                                    @endforeach
-
-                                    </div>
-                                       
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -355,36 +339,33 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="tab-points-wrap">
-
                                     @foreach($custom_box as $box)
-                                      @if($box->type == 'tennis-landing-parent-info')
-                                      <div class="tab-points-content @if($box->position == 1) inverted @endif">
-                                         <div class="tab-points-container">
+                                    @if($box->type == 'tennis-landing-parent-info')
+                                    <div class="tab-points-content @if($box->position == 1) inverted @endif">
+                                        <div class="tab-points-container">
                                             <div class="row">
-                                               <div class="col-sm-7">
-                                                  <div class="t-p-text">
-                                                     <h2>{{$box->title}}</h2>
-                                                     <p>{!! $box->description !!}</p>
-                                                     <a class="more-about-camp read-more-less" id="{{$box->id}}" href="javascript:void(0);">Read more</a>
-                                                  </div>
-                                               </div>
-                                               <div class="col-sm-5">
-                                                  <div class="t-p-img">
-                                                     <img src="{{url('/public/uploads')}}/{{$box->image}}" alt="" />
-                                                  </div>
-                                               </div>
+                                                <div class="col-sm-7">
+                                                    <div class="t-p-text">
+                                                        <h2>{{$box->title}}</h2>
+                                                        <p>{!! $box->description !!}</p>
+                                                        <a class="more-about-camp read-more-less" id="{{$box->id}}" href="javascript:void(0);">Read more</a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <div class="t-p-img">
+                                                        <img src="{{url('/public/uploads')}}/{{$box->image}}" alt="" />
+                                                    </div>
+                                                </div>
                                             </div>
-                                         </div>
-                                         <div class="tab-points-container t-p-c-more">
+                                        </div>
+                                        <div class="tab-points-container t-p-c-more">
                                             <p>{!! $box->more_text !!}</p>
                                             <a class="read-more-less less-about-camp box-{{$box->id}}" id="{{$box->id}}" href="javascript:void(0);">Read less</a>
-                                         </div>
-                                      </div>
-                                      @endif
+                                        </div>
+                                    </div>
+                                    @endif
                                     @endforeach
-
                                     <br><br>
-                                    
                                 </div>
                             </div>
                         </div>
@@ -394,7 +375,6 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
         </div>
     </div>
 </section>
-
 <section class="camp-down-sec">
     <div class="container">
         <div class="outer-wrap">
@@ -405,70 +385,68 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
             <div class="left-side-content">
                 <h4>Download</h4>
                 <ul>
-                @foreach($accordian_download as $acc)
-                   @if(isset($acc->description))
-                   <li><a target="_blank" href="{!!$acc->description!!}">{{$acc->title}}</a></li>
-                   @endif
-                   @php 
-                   $acc_id = $acc->id;
-                   $pdf = DB::table('accordian_pdfs')->where('accordian_id','=', $acc_id)->get(); 
-                   @endphp
-                   @if(isset($pdf))
-                   @foreach($pdf as $p)
-                   <li><a target="_blank" href="{{URL::asset('/uploads/accordian')}}/{{$p->pdf}}">{{$p->accordian_title}}</a></li>
-                   @endforeach
-                   @endif
-                @endforeach
+                    @foreach($accordian_download as $acc)
+                    @if(isset($acc->description))
+                    <li><a target="_blank" href="{!!$acc->description!!}">{{$acc->title}}</a></li>
+                    @endif
+                    @php
+                    $acc_id = $acc->id;
+                    $pdf = DB::table('accordian_pdfs')->where('accordian_id','=', $acc_id)->get();
+                    @endphp
+                    @if(isset($pdf))
+                    @foreach($pdf as $p)
+                    <li><a target="_blank" href="{{URL::asset('/uploads/accordian')}}/{{$p->pdf}}">{{$p->accordian_title}}</a></li>
+                    @endforeach
+                    @endif
+                    @endforeach
                 </ul>
             </div>
             <div class="right-side-content">
                 <h4>Parents information</h4>
                 <ul>
-                @foreach($accordian_parent_info as $acc)
-                   @if(isset($acc->description))
-                   <li><a target="_blank" href="{!!$acc->description!!}">{{$acc->title}}</a></li>
-                   @endif
-                   @php 
-                   $acc_id = $acc->id;
-                   $pdf1 = DB::table('accordian_pdfs')->where('accordian_id','=', $acc_id)->get(); 
-                   @endphp
-                   @if(isset($pdf1))
-                   @foreach($pdf1 as $p)
-                   <li><a target="_blank" href="{{URL::asset('/uploads/accordian')}}/{{$p->pdf}}">{{$p->accordian_title}}</a></li>
-                   @endforeach
-                   @endif
-                @endforeach
+                    @foreach($accordian_parent_info as $acc)
+                    @if(isset($acc->description))
+                    <li><a target="_blank" href="{!!$acc->description!!}">{{$acc->title}}</a></li>
+                    @endif
+                    @php
+                    $acc_id = $acc->id;
+                    $pdf1 = DB::table('accordian_pdfs')->where('accordian_id','=', $acc_id)->get();
+                    @endphp
+                    @if(isset($pdf1))
+                    @foreach($pdf1 as $p)
+                    <li><a target="_blank" href="{{URL::asset('/uploads/accordian')}}/{{$p->pdf}}">{{$p->accordian_title}}</a></li>
+                    @endforeach
+                    @endif
+                    @endforeach
                 </ul>
             </div>
         </div>
     </div>
 </section>
-
 <section class="click-here-sec">
-   <div class="container">
-      <div class="row">
-         <div class="col-md-8 offset-md-2">
-            <div class="click-sec-content">
-               <h2 class="click-sec-tagline">{{ getAllValueWithMeta('ten_lan_camp_title', 'tennis-landing') }}</h2>
-               <ul class="click-btn-content">
-                  <li>
-                     <figure>
-                        <img src="http://49.249.236.30:8654/dominic-new/public/images/click-btn-img.png" alt="">
-                     </figure>
-                  </li>
-                  <li>
-                     <a href="{{ getAllValueWithMeta('ten_lan_camp_button_url', 'tennis-landing') }}" class="cstm-btn">{{ getAllValueWithMeta('ten_lan_camp_button_title', 'tennis-landing') }}</a>
-                  </li>
-                  <li>
-                     <figure>
-                        <img src="http://49.249.236.30:8654/dominic-new/public/images/click-btn-img.png" alt="">
-                     </figure>
-                  </li>
-               </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="click-sec-content">
+                    <h2 class="click-sec-tagline">{{ getAllValueWithMeta('ten_lan_camp_title', 'tennis-landing') }}</h2>
+                    <ul class="click-btn-content">
+                        <li>
+                            <figure>
+                                <img src="http://49.249.236.30:8654/dominic-new/public/images/click-btn-img.png" alt="">
+                            </figure>
+                        </li>
+                        <li>
+                            <a href="{{ getAllValueWithMeta('ten_lan_camp_button_url', 'tennis-landing') }}" class="cstm-btn main_button">{{ getAllValueWithMeta('ten_lan_camp_button_title', 'tennis-landing') }}</a>
+                        </li>
+                        <li>
+                            <figure>
+                                <img src="http://49.249.236.30:8654/dominic-new/public/images/click-btn-img.png" alt="">
+                            </figure>
+                        </li>
+                    </ul>
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
+        </div>
+    </div>
 </section>
-
 @endsection
