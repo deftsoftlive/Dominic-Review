@@ -291,7 +291,45 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
                                                 </div>
                                             </div>
 
-                                            <!-- 14) Total points won when rally 4 shots or less -->
+                                            <!-- 14) Total points played when rally 4 shots or less -->
+                                            <div class="form-group row f-g-full">
+                                                <div class="col-md-12">
+                                                    <div class="row ques_rows">
+                                                        <div class="col-md-8 ques-row">
+                                                            <label for="tp_played_rally_4shots" class="col-md-12 col-form-label text-md-right"><span>14) </span>{{ __('Total points played when rally 4 shots or less') }}</label>
+                                                        </div>
+                                                        <div class="col-md-4 ques-row">
+                                                            <input id="tp_played_rally_4shots" type="text" class="form-control{{ $errors->has('tp_played_rally_4shots') ? ' is-invalid' : '' }}" name="tp_played_rally_4shots" value="{{ isset($stats_calculation->tp_played_rally_4shots) ? $stats_calculation->tp_played_rally_4shots : '' }}" required autofocus >
+                                                            @if ($errors->has('tp_played_rally_4shots'))
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $errors->first('tp_played_rally_4shots') }}</strong>
+                                                            </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 15) Total points played when rally 5+ shots -->
+                                            <div class="form-group row f-g-full">
+                                                <div class="col-md-12">
+                                                    <div class="row ques_rows">
+                                                        <div class="col-md-8 ques-row">
+                                                            <label for="tp_played_rally_5shots" class="col-md-12 col-form-label text-md-right"><span>15) </span>{{ __('Total points played when rally 5+ shots') }}</label>
+                                                        </div>
+                                                        <div class="col-md-4 ques-row">
+                                                            <input id="tp_played_rally_5shots" type="text" class="form-control{{ $errors->has('tp_played_rally_5shots') ? ' is-invalid' : '' }}" name="tp_played_rally_5shots" value="{{ isset($stats_calculation->tp_played_rally_5shots) ? $stats_calculation->tp_played_rally_5shots : '' }}" required autofocus >
+                                                            @if ($errors->has('tp_played_rally_5shots'))
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $errors->first('tp_played_rally_5shots') }}</strong>
+                                                            </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 16) Total points won when rally 4 shots or less -->
                                             <div class="form-group row f-g-full">
                                                 <div class="col-md-12">
                                                     <div class="row ques_rows">
@@ -310,7 +348,7 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
                                                 </div>
                                             </div>
 
-                                            <!-- 15) Total points won when rally 5+ shots -->
+                                            <!-- 17) Total points won when rally 5+ shots -->
                                             <div class="form-group row f-g-full">
                                                 <div class="col-md-12">
                                                     <div class="row ques_rows">
@@ -329,7 +367,7 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
                                                 </div>
                                             </div>
 
-                                            <!-- 16) Total number of shots played in match -->
+                                            <!-- 18) Total number of shots played in match -->
                                             <div class="form-group row f-g-full">
                                                 <div class="col-md-12">
                                                     <div class="row ques_rows">

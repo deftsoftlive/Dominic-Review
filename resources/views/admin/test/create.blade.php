@@ -45,6 +45,7 @@ div#selectator_multiple {
                     $testcategory = DB::table('test_categories')->orderBy('id','asc')->get();
                    @endphp
                     <select class="select-player" name="test_cat_id">
+                      <option selected="" disabled="">Please Select</option>
                       @foreach($testcategory as $te)
                       <option value="{{$te->id}}">{{$te->title}}</option>
                       @endforeach

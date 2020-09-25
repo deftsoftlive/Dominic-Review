@@ -74,9 +74,9 @@
                    	@if($go->finalize == 1)
                    		<td><p>Finalized</p></td>
                    	@else
-                    	<td><a onclick="return confirm('Are you sure you want to finalise this goal? Finalised goals cannot be changed.')" href="{{url('/user/goal/finalize')}}/@php echo base64_encode($go->id); @endphp" class="cstm-btn">Finalize</a></td> 
+                    	<td><a onclick="return confirm('Are you sure you want to finalise this goal? Finalised goals cannot be changed.')" href="{{url('/user/goal/finalize')}}/@php echo base64_encode($go->id); @endphp" class="cstm-btn main_button">Finalize</a></td> 
                     @endif
-                    <td><p><a class="cstm-btn" href="{{url('/user/goal')}}/{{$go->goal_type}}/{{$go->id}}/add-comment">View</a></p></td>
+                    <td><p><a class="cstm-btn main_button" href="{{url('/user/goal')}}/{{$go->goal_type}}/{{$go->id}}/add-comment">View</a></p></td>
                   </tr>
                 @endforeach
 

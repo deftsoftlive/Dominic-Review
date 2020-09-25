@@ -84,6 +84,7 @@ label.confirm_msg.form-check-label {
                                                 <p>{{ Session::get('error') }} </p>
                                             </div>
                                             @endif
+
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <form id="goals" action="{{route('badges')}}" method="POST" class="select-player-goal-form goal-filter">
@@ -181,21 +182,26 @@ label.confirm_msg.form-check-label {
                                                         </div>
                                                     </div>
 
-                                                    @endforeach
+                                                    @endforeach 
+                                                    <div class="col-md-12" >
                                                     <div class="form-group form-check">
 													    <input type="checkbox" class="form-check-input" name="confirmation" id="confirmation_msg">
 													    <label class="confirm_msg form-check-label" for="exampleCheck1">{{ getAllValueWithMeta('confirmation_msg', 'badges') }}</label>
 													</div>
+                                                </div>
 													<br/>
+                                                      <div class="col-md-12" >
 													<div class="player-goal-date">
 													    <p><span>Date :</span> {{ date('d F Y') }} </p>
 													</div>
 
                                                     <button type="submit" class="cstm-btn main_button">set goal</button>
+                                                </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="tab-pane fade" id="advance" role="tabpanel" aria-labelledby="advance">
                                         <div class="player-goal-level-advance">
                                             <div class="row">
@@ -475,12 +481,15 @@ label.confirm_msg.form-check-label {
                                                                 $user_badges = DB::table('user_badges')->orderBy('id','asc')->get();
                                                                 $season = DB::table('seasons')->orderBy('id','asc')->get();
                                                                 @endphp
-                                                                @foreach($user_badges as $bd)
-                                                                @php
-                                                                $user = DB::table('users')->where('id',$bd->user_id)->first();
-                                                                @endphp
-                                                                <option @if($user_id==$bd->user_id) selected @else @endif value="{{$bd->user_id}}">{{$user->name}}</option>
-                                                                @endforeach
+
+                                                                @if(!empty($user_badges))
+                                                                    @foreach($user_badges as $bd)
+                                                                    @php
+                                                                    $user = DB::table('users')->where('id',$bd->user_id)->first();
+                                                                    @endphp
+                                                                    <option @if($user_id==$bd->user_id) selected @else @endif value="{{$bd->user_id}}">{{isset($user->name) ? $user->name : ''}}</option>
+                                                                    @endforeach
+                                                                @endif
                                                             </select>
                                                         </div>
                                                     </div>
@@ -632,7 +641,7 @@ label.confirm_msg.form-check-label {
                                                         </figure>
                                                         <div class="player-name-points">
                                                             @if(!empty($user_id))
-                                                            @php
+                                                            @php 
                                                             $user = DB::table('users')->where('id',$user_id)->first();
                                                             $course = DB::table('courses')->where('id',$course_id)->where('season',$season_id)->first();
                                                             $badges_data = DB::table('user_badges')->where('user_id',$user_id)->first();
@@ -668,6 +677,10 @@ label.confirm_msg.form-check-label {
                                                         <ul class="achievement-medals">
                                                             @php
                                                             $badges_data = DB::table('user_badges')->where('user_id',$shop->child_id)->first();
+                                                            @endphp
+
+                                                            @if(!empty($badges_data))
+                                                            @php
                                                             $selected_badges = explode(',',$badges_data->badges);
                                                             $all_badges = DB::table('badges')->get()->toArray();
                                                             @endphp
@@ -677,18 +690,22 @@ label.confirm_msg.form-check-label {
                                                             </li>
                                                             @endif
                                                             @endforeach
+                                                            @endif
                                                         </ul>
                                                     </div>
+
                                                     <div class="player-achie-disable-list">
                                                         <div class="inner-wrap">
                                                             <p class="custom-heading">Still to achieve – Click to see what you need to do</p>
                                                             <ul class="achievement-medals">
+                                                                @if(!empty($badges_data))
                                                                 @foreach($all_badges as $badge)
                                                                 @if(in_array($badge->id,$selected_badges))
                                                                 @else
                                                                 <li title="{!! $badge->description !!}"><img class="disable-badge" src="{{URL::asset('/uploads')}}/{{$badge->image}}"></li>
                                                                 @endif
                                                                 @endforeach
+                                                                @endif
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -709,6 +726,10 @@ label.confirm_msg.form-check-label {
                                             </div>
                                             @php
                                             $badges_data = DB::table('user_badges')->where('user_id',$shop->child_id)->first();
+                                            @endphp
+
+                                            @if(!empty($selected_badges))
+                                            @php
                                             $selected_badges = explode(',',$badges_data->badges);
                                             $all_badges = DB::table('badges')->get()->toArray();
                                             @endphp
@@ -746,6 +767,7 @@ label.confirm_msg.form-check-label {
                                             </div><br />
                                             @endif
                                             @endforeach
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -857,6 +879,8 @@ label.confirm_msg.form-check-label {
                                                         $course_subcategory[] = getProductCatname($course->subtype);
                                                         @endphp
                                                         @endforeach
+
+                                                        @if(!empty($user))
                                                         @php
                                                         $selected_badges = explode(',',$bd->badges);
                                                         $user_age = strtotime($user->date_of_birth);
@@ -864,14 +888,15 @@ label.confirm_msg.form-check-label {
                                                         $age_diff = abs($current_date - $user_age);
                                                         $years = floor($age_diff / (365*60*60*24));
                                                         @endphp
+                                                        @endif
                                                         <tr>
                                                             <td>
                                                                 <p>@php echo $i++; @endphp</p>
                                                             </td>
                                                             <td>
-                                                                @if($user->show_name == 1)
+                                                                @if(!empty($user->show_name) && $user->show_name == 1)
                                                                     <p>{{$user->name}}</p>
-                                                                @elseif($user->show_name == 0)
+                                                                @elseif(!empty($user->show_name) && $user->show_name == 0)
                                                                     <p>Anonymous</p>
                                                                 @endif
                                                             </td>
@@ -882,7 +907,7 @@ label.confirm_msg.form-check-label {
                                                                 <p>{{implode(',',$course_subcategory)}}</p>
                                                             </td>
                                                             <td>
-                                                                <p>{{$user->tennis_club}}</p>
+                                                                <p>{{isset($user->tennis_club) ? $user->tennis_club : ''}}</p>
                                                             </td>
                                                             <td>
                                                                 <p>
@@ -1021,7 +1046,7 @@ label.confirm_msg.form-check-label {
 
                         	<section class="member section-padding">
 							   <div class="container">
-							    <div class="pink-heading">
+							    <div class="pink-heading comp_matches">
 							        <h2 class="comp_and_match">My Competitions & Matches</h2>
                                     <a class="add_competition cstm-btn main_button" href="{{ route('coach_report') }}">Add Competition</a>
 							    </div>

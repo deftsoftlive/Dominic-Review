@@ -49,7 +49,7 @@ public function ShopProductOrderPlacedForVendorSendEmail($order,$template_id)
                                      ->where('order_id',$order->id)
                                      ->get();
 
-            $template = EmailTemplate::find($template_id);
+            $template = EmailTemplate::find($template_id); 
             $view= 'emails.customEmail';
             $arr = [
                    'title' => $template->title,

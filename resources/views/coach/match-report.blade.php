@@ -13,8 +13,8 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
 }
 #add_new_match{ display: none; }
 div#add_new_match {
-    padding: 20px;
-    border: 2px solid #be298d;
+padding: 20px;
+border: 4px solid #001642;
 }
 </style>
 <div class="account-menu">
@@ -88,7 +88,7 @@ div#add_new_match {
                                                 @if($comp->player_id == $bd->child_id) 
                                                     selected 
                                                 @endif
-                                            @endif>{{$user->name}}</option>
+                                            @endif>{{isset($user->name) ? $user->name : ''}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -249,8 +249,8 @@ div#add_new_match {
                                                             @endphp
 
                                                             @if(!empty($check_stats))
-                                                                <a class="cstm-btn" href="{{url('/user/competition')}}/{{$comp->id}}/match/{{$ma->id}}/stats/view">View Stats</a>
-                                                                <a class="cstm-btn" href="{{url('/user/competition')}}/{{$comp->id}}/match/{{$ma->id}}/stats">Edit Stats</a>
+                                                                <a class="cstm-btn main_button" href="{{url('/user/competition')}}/{{$comp->id}}/match/{{$ma->id}}/stats/view">View Stats</a>
+                                                                <a class="cstm-btn main_button" href="{{url('/user/competition')}}/{{$comp->id}}/match/{{$ma->id}}/stats">Edit Stats</a>
                                                             @else
                                                             <div class="form-group">
                                                                 <label>Add Match Stats</label>
@@ -285,7 +285,7 @@ div#add_new_match {
                                                                 @foreach($check_game_chart as $time => $number)
                                                                     <tr class="timeslots slots{{$time+1}}" value={{$time+1}}>
                                                                       <td><a target="_blank" href="{{URL::asset('/uploads/game-charts')}}/{{$number->image}}"><img style="width:20%" src="{{URL::asset('/uploads/game-charts')}}/{{$number->image}}"></a></td>
-                                                                      <td class="remove_game_chart"><a class="cstm-btn" onclick="return confirm('Are you sure you want to delete this game chart?')" href="{{url('/user/competition')}}/@php echo base64_encode($comp->id); @endphp/match/@php echo base64_encode($ma->id); @endphp/player/@php echo base64_encode($comp->player_id); @endphp/game-chart/remove/@php echo base64_encode($number->id); @endphp">Delete</a></td>
+                                                                      <td class="remove_game_chart"><a class="cstm-btn main_button" onclick="return confirm('Are you sure you want to delete this game chart?')" href="{{url('/user/competition')}}/@php echo base64_encode($comp->id); @endphp/match/@php echo base64_encode($ma->id); @endphp/player/@php echo base64_encode($comp->player_id); @endphp/game-chart/remove/@php echo base64_encode($number->id); @endphp">Delete</a></td>
                                                                     </tr>
                                                                 @endforeach  
 

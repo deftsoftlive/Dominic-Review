@@ -209,6 +209,34 @@ $(document).ready(function($){
     });
 
 
+    $(".pre_med").change(function(){
+       var result = $('input[name="pres_med"]:checked').val();
+
+       if(result == 'no')
+       {
+          $('.pre_info').css('display','none');
+       }
+       else if(result == 'yes') 
+       {
+          $('.pre_info').css('display','block');
+       }
+    });
+
+
+    $(".med_req").change(function(){
+       var result = $('input[name="med_req"]:checked').val();
+
+       if(result == 'no')
+       {
+          $('.med_req_info').css('display','none');
+       }
+       else if(result == 'yes') 
+       {
+          $('.med_req_info').css('display','block');
+       }
+    });
+
+
     $(".eng_que").change(function(){
        var result = $('input[name="language1"]:checked').val();
 
@@ -277,17 +305,17 @@ $(document).ready(function(){
 $("#money_amount").change(function(){
 
   var amt = $('#money_amount').val();
-  $base_url = "http://49.249.236.30:8654/dominic-new/user";
+  $base_url = $("#base_url").val();
 
   $.ajax({
-      url:$base_url+"/stripe-wallet",
+      url:$base_url+"/user/stripe-wallet",
       method:'GET',
       data:{wallet_amount:amt},
       dataType:'json',
       success:function(data)
       {   
         $('#add_money_btn').css('display','none');
-        $('.add_stripe_btn').append(data.output);
+        $('.add_stripe_btn').html(data.output);
       },      
   });
 });
@@ -331,10 +359,10 @@ $(document).ready(function($){
         var player_id = $('#playerID').val();
         var report_type = $('#report_type').val();
 
-        $base_url = "http://49.249.236.30:8654/dominic-new/user";
+        $base_url = $("#base_url").val();
 
         $.ajax({
-            url:$base_url+"/report_popup",
+            url:$base_url+"/user/report_popup",
             method:'GET',
             data:{exist_player_id:exist_player_id,player_id:player_id,report_type:report_type},
             dataType:'json',
@@ -443,7 +471,7 @@ $('.upload-image').on('click', function (ev) {
   |*****************************/
     function fetch_tennis_club_data(tennis_club = '', user_id = '', shop_id = '')
     {
-        $base_url = "http://49.249.236.30:8654/dominic-new";
+        $base_url = $("#base_url").val();
 
         $.ajax({
             url:$base_url+"/user/update_tennis_club/"+tennis_club+"/"+user_id+"/"+shop_id,
@@ -505,7 +533,7 @@ $('.upload-image').on('click', function (ev) {
         $("select#season").change(function(){
             var selectedSeason = $(this).children("option:selected").val(); 
            
-            $base_url = "http://49.249.236.30:8654/dominic-new";
+            $base_url = $("#base_url").val();
             $.ajax({
                 url:$base_url+"/user/selectedSeason/",
                 method:'GET',
@@ -535,7 +563,7 @@ $('.upload-image').on('click', function (ev) {
         $("select#people").change(function(){
             var selectedCat = $(this).children("option:selected").val();  
            
-            $base_url = "http://49.249.236.30:8654/dominic-new";
+            $base_url = $("#base_url").val();
             $.ajax({
                 url:$base_url+"/selectedCat/",
                 method:'GET',
@@ -573,7 +601,7 @@ $('.upload-image').on('click', function (ev) {
 
         $("body").addClass("modal-open");
 
-        var base_url = 'http://49.249.236.30:8654/dominic-new';
+        $base_url = $("#base_url").val();
         
         $.ajax({
           url: base_url+"/shop/product/view/"+id,
@@ -883,251 +911,6 @@ $('.upload-image').on('click', function (ev) {
 
       });
 
-      // $('#med_beh_to_next').click(function(){
-      //     $('#media_consent').css('display','block');
-      // });
-
-      // Save first section of add family member form
-      // $('#add-family-mem').on('submit',function(event){ 
-      //   event.preventDefault();
-
-        // Common form
-        // user_id = $('#user_id_data').val();
-        // child_id = $('#child_id').val();
-        // role_id = $('#role_id').val();
-        // form_type = $('#form_type').val();  
-        // first_name = $('#first_name').val();
-        // last_name = $('#last_name').val();
-        // gender = $('#gen').val();
-        // date_of_birth = $('#date_of_birth').val();
-        // address = $('#address').val();
-        // town = $('#town').val();
-        // postcode = $('#postcode').val();
-        // county = $('#county').val();
-        // country = $('#country').val();
-        // relation = $('#relation').val();
-        // book_person = $('#book_person').val();
-        // tennis_club = $('#tennis_club').val();
-
-        // Child form
-        // core_lang = $('#core_lang').val();
-        // primary_language = $('#primary_language').val();
-        // school = $('#school').val();
-        // preferences = $('#preferences').val();
-
-        // Adult form
-      //   beh_need = $('#beh_need').val();
-      //   beh_info = $('#beh_info_data').val();
-      //   em_first_name = $('#em_first_name').val();
-      //   em_last_name = $('#em_last_name').val();
-      //   em_phone = $('#em_phone').val();
-      //   em_email = $('#em_email').val();
-      //   correct_info = $('#correct_info').val();
-
-      //   $.ajax({
-      //     url: "/dominic-new/user/medical_info_to_next",
-      //     type:"POST",
-      //     data:{
-      //       "_token": "{{ csrf_token() }}",
-      //       child_id:child_id,
-      //       user_id:user_id,
-      //       role_id:role_id,
-      //       form_type:form_type,
-      //       first_name:first_name,
-      //       last_name:last_name,
-      //       gender:gender,
-      //       date_of_birth:date_of_birth,
-      //       address:address,
-      //       town:town,
-      //       postcode:postcode,
-      //       county:county,
-      //       country:country,
-      //       relation:relation,
-      //       book_person:book_person,
-      //       tennis_club:tennis_club,
-
-      //       core_lang:core_lang,
-      //       primary_language:primary_language,
-      //       school:school,
-      //       preferences:preferences,
-
-      //       beh_need:beh_need,
-      //       beh_info:beh_info,
-      //       em_first_name:em_first_name,
-      //       em_last_name:em_last_name,
-      //       em_phone:em_phone,
-      //       em_email:em_email,
-      //       correct_info:correct_info,
-      //     },
-      //     success:function(data){
-      //       $('#mem_id').val(data.mem_detail_id);
-      //       $('#child_contacts').css('display','block');
-      //     }
-
-      //     });
-      // });
-
-      // Save child contacts
-      $('#child-contacts').on('submit',function(event){ 
-        event.preventDefault();
-
-        mem_id = $('#mem_id').val();
-        child_id = $('#child_id').val();
-        con_first_name = $('#con_first_name').val();
-        con_last_name = $('#con_last_name').val();
-        con_phone = $('#con_phone').val();
-        con_email = $('#con_email').val();
-        con_relation = $('#con_relation').val();
-        con_if_other = $('#con_if_other').val();
-
-        // var con_first_name = $("input[name='con_first_name[]']") .map(function(){
-        //   return $(this).val();
-        // }).get();
-
-        // var con_last_name = $("input[name='con_last_name[]']") .map(function(){
-        //   return $(this).val();
-        // }).get();
-
-        // var con_phone = $("input[name='con_phone[]']") .map(function(){
-        //   return $(this).val();
-        // }).get();
-
-        // var con_email = $("input[name='con_email[]']") .map(function(){
-        //   return $(this).val();
-        // }).get();
-
-        // var con_relation = $("input[name='con_relation[]']") .map(function(){
-        //   return $(this).val();
-        // }).get();
-
-        // var con_if_other = $("input[name='con_if_other[]']") .map(function(){
-        //   return $(this).val();
-        // }).get();
-
-
-        // console.log(con_first_name);
-        // console.log(con_last_name);
-        // console.log(con_phone);
-        // console.log(con_email);
-        // console.log(con_relation);
-        // console.log(con_if_other);
-
-        $.ajax({
-          url: "/dominic-new/user/child_cont_to_next",
-          type:"POST",
-          dataType: 'JSON',
-          data:{
-            "_token": "{{ csrf_token() }}",
-            mem_id:mem_id,
-            child_id:child_id,
-            con_first_name:con_first_name,
-            con_last_name:con_last_name,
-            con_phone:con_phone,
-            con_email:con_email,
-            con_relation:con_relation,
-            con_if_other:con_if_other,
-          },
-          success:function(data){
-            $('#medical_beh').css('display','block');
-          }
-
-          });
-      });
-
-      // Save medical beh
-      $('#med-beh').on('submit',function(event){ 
-        event.preventDefault();
-
-        mem_id = $('#mem_id').val();
-        child_id = $('#child_id').val();
-        med_cond = $('#med_cond').val();
-        med_cond_info = $('#med_con_data').val();
-        allergies = $('#allergies').val();
-        allergies_info = $('#allergies_data').val();
-        pres_med = $('#pres_med').val();
-        pres_med_info = $('#pres_med_data').val();
-        med_req = $('#med_req').val();
-        med_req_info = $('#med_req_data').val();
-        toilet = $('#toilet').val();
-        special_needs = $('#special_needs').val();
-        special_needs_info = $('#special_needs_data').val();
-        situation = $('#situation').val();
-
-        $.ajax({
-          url: "/dominic-new/user/med_beh_to_next",
-          type:"POST",
-          data:{
-            "_token": "{{ csrf_token() }}",
-            mem_id:mem_id,
-            child_id:child_id,
-            med_cond:med_cond,
-            med_cond_info:med_cond_info,
-            allergies:allergies,
-            allergies_info:allergies_info,
-            pres_med:pres_med,
-            pres_med_info:pres_med_info,  
-            med_req:med_req,
-            med_req_info:med_req_info,
-            toilet:toilet,
-            special_needs:special_needs,
-            special_needs_info:special_needs_info,
-            situation:situation,
-          },
-          success:function(data){
-            $('#media_consent').css('display','block');
-          }
-
-          });
-      });
-
-      // Save media consent
-      $('#media-consent').on('submit',function(event){ 
-        event.preventDefault();
-
-        mem_id = $('#mem_id').val();
-        child_id = $('#child_id').val();
-        media = $('#media').val();
-        confirm = $('#confirm').val();
-
-        console.log(mem_id, media, confirm);
-
-        $.ajax({
-          url: "/dominic-new/user/complete_registration",
-          type:"POST",
-          data:{
-            "_token": "{{ csrf_token() }}",
-            mem_id:mem_id,
-            child_id:child_id,
-            media:media,
-            confirm:confirm,
-          },
-          success:function(data){
-            console.log(data.confirm);
-
-            setTimeout(function(){
-              window.location.href="http://49.249.236.30:8654/dominic-new/user/my-family";
-            },1000);
-            
-          }
-
-          });
-      });
-
-      // $('#child_info_to_next').click(function(){
-      //     $('#child_contacts').css('display','block');
-      // });
-
-      // $('#medical_info_to_next').click(function(){
-      //     $('#child_contacts').css('display','block');
-      // });
-
-      // $('#child_cont_to_next').click(function(){
-      //     $('#medical_beh').css('display','block');
-      // });
-
-      // $('#med_beh_to_next').click(function(){
-      //     $('#media_consent').css('display','block');
-      // });
     </script>
     <!-- Add/Edit Family Member Form JS - Start Here -->
 

@@ -1730,6 +1730,7 @@ ul {
 }
 .Payment-block .nav-tabs li a.active:after {
     background: #03163b;
+    z-index: 999;
 }
 .Payment-block .tab-content {
     margin-top: 30px;

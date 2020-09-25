@@ -19,14 +19,16 @@ class RegisterTemplateController extends Controller
         
     	$camp = Camp::where('id',$id)->first();
     	$shop = \DB::table('shop_cart_items')->where('shop_type','camp')->where('product_id',$id)->where('type','order')->where('orderID','!=',NULL)->get();
-    	return view('admin.register-template.camp-template',compact('camp','shop','week_value'));
+        $shop1 = \DB::table('shop_cart_items')->where('shop_type','camp')->where('product_id',$id)->where('type','order')->where('orderID','!=',NULL)->groupBy('child_id')->get();
+    	return view('admin.register-template.camp-template',compact('camp','shop', 'shop1', 'week_value'));
     }
 
     public function course_reg_temp($id)
     {	
     	$course = Course::where('id',$id)->first();
     	$shop = \DB::table('shop_cart_items')->where('shop_type','course')->where('product_id',$id)->where('type','order')->where('orderID','!=',NULL)->get();
-    	return view('admin.register-template.course-template',compact('course','shop'));
+        $shop1 = \DB::table('shop_cart_items')->where('shop_type','course')->where('product_id',$id)->where('type','order')->where('orderID','!=',NULL)->groupBy('child_id')->get();
+    	return view('admin.register-template.course-template',compact('course','shop','shop1'));
     }
 
     public function save_course_reg_dates(Request $request)

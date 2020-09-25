@@ -95,8 +95,8 @@
                       <input type="hidden" name="id" value="{{$req->id}}">
                       <span class="parent-req-close"><button type="submit">x</button></span>
                     </form>
-                     <p>Child Name: <span class="request-name">{{$details->name}}</span></p>
-                     <p>Parent Name: <span class="request-name">{{$par_details->name}}</span></p>
+                     <p>Child Name: <span class="request-name">{{isset($details->name) ? $details->name : ''}}</span></p>
+                     <p>Parent Name: <span class="request-name">{{isset($par_details->name) ? $par_details->name : ''}}</span></p>
                      <p>Date: <span class="request-name">@php echo date("d/m/Y (H:i)",strtotime($req->updated_at)); @endphp</span></p>
                      <!-- <p>Parent Email: <span class="request-name">{{$par_details->email}}</span></p> -->
                      <!-- <p>Phone Number: <span class="request-name">{{$par_details->phone_number}}</span></p> -->

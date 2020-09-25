@@ -1322,7 +1322,7 @@ function addmedical() {
     var newnumber = number + 1;
     $("#noOfMed").val(newnumber);
 
-    var mainHtml = '<div class="form-group col-md-12 f-g-full label-textarea" id="med_cond_info" style="display:block;"><label>Please state the name of the medical condition and describe how it affects this person.</label><textarea spellcheck="false" name="med_cond_info[' + newnumber + ']" id="med_con_data"></textarea></div>';
+    var mainHtml = '<div class="form-group col-md-12 f-g-full label-textarea" id="med_cond_info" style="display:block;"><label>Please state the name of the medical or behavioural condition and describe how it affects this person.</label><textarea spellcheck="false" name="med_cond_info[' + newnumber + ']" id="med_con_data"></textarea></div>';
 
     $("#sec_med_con").append(mainHtml);
 }

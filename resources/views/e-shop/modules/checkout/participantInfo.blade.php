@@ -39,17 +39,41 @@ $shop = \DB::table('shop_cart_items')->where('user_id',$login_user)->where('orde
                         <td class="cart-table__column cart-table__column--image" data-title="Participant Name"><b>{{$child->name}} </b></td>
                         <td class="cart-table__column cart-table__column--product" data-title="Medical/Behavioural">
                            <p id="med_beha">Medical/Behavioural:</p>
-                           <p><b>Medical</b> - {{!empty($child_details->med_cond_info) ? $child_details->med_cond_info : 'N/A'}}</p>
-                           <p><b>Behavioural</b> - {{!empty($child_details->situation) ? $child_details->situation : 'N/A'}}</p>
+
+                           @php 
+                              $medicals = DB::table('child_medicals')->where('child_id',$sh->child_id)->get(); 
+                              $med_cond = [];
+                           @endphp
+
+                           @if(!empty($child_details->med_cond) && $child_details->med_cond == 'yes')
+                              @if(count($medicals)>0)
+
+                                 @foreach($medicals as $med)
+                                    @php $med_cond[] = $med->medical; @endphp
+                                 @endforeach
+
+                                 @php $medical_conditions = implode(', ',$med_cond); @endphp
+
+                              @else
+                              
+                              @endif 
+                           @endif
+
+                           <p><b>Medical</b> - {{isset($medical_conditions) ? $medical_conditions : 'N/A'}}</p>
+                           <p><b>Behavioural</b> - {{!empty($child_details->beh_need_info) ? $child_details->beh_need_info : 'N/A'}}</p>
                            <p><b>Media Consent</b> - 
-                              @if(!empty($child_details->media))
-                              	@if($child_details->media == 'consent-yes')
-                              		Yes
-                              	@elseif($child_details->media == 'consent-no')
-                              		No
-                              	@else
-                              		N/A
-                              	@endif
+                              @if(!empty($child_details))
+                                 @if(!empty($child_details->media))
+                                 	@if($child_details->media == 'yes')
+                                 		Yes
+                                 	@elseif($child_details->media == 'no')
+                                 		No
+                                 	@else
+                                 		N/A
+                                 	@endif
+                                 @endif
+                              @else
+                                 N/A
                               @endif
                            </p>
                         </td>
@@ -60,11 +84,14 @@ $shop = \DB::table('shop_cart_items')->where('user_id',$login_user)->where('orde
                         </div>
                         @endif
 
-                        
+                        @php
+                           $child_contacts = DB::table('child_contacts')->where('child_id',$child->id)->first();
+                        @endphp
                         <td class="cart-table__column cart-table__column--quantity" data-title="Contact">
-                        <p><b>Name</b> - <span>{{isset($child_details->con_first_name) ? $child_details->con_first_name : ''}} {{isset($child_details->con_last_name) ? $child_details->con_last_name : ''}}</span></p>
-                        <p><b>Email</b> - <span>{{isset($child_details->con_email) ? $child_details->con_email : ''}}</span></p>
-                        <p><b>Phone Number</b> - <span>{{isset($child_details->con_phone) ? $child_details->con_phone : ''}}</span></p>
+                        <p><b>First Name</b> - <span>{{isset($child_contacts->first_name) ? $child_contacts->first_name : ''}}</span></p> 
+                        <p><b>Last Name</b> - <span>{{isset($child_contacts->surname) ? $child_contacts->surname : ''}}</span></p>
+                        <p><b>Email</b> - <span>{{isset($child_contacts->email) ? $child_contacts->email : ''}}</span></p>
+                        <p><b>Phone Number</b> - <span>{{isset($child_contacts->phone) ? $child_contacts->phone : ''}}</span></p>
                         </td>
 
                         <td class="cart-table__column">
@@ -76,7 +103,7 @@ $shop = \DB::table('shop_cart_items')->where('user_id',$login_user)->where('orde
                                  <span class="checkmark"></span>
                                  </label>
                               </div>
-                              <a target="_blank" href="{{url('/user/family-member/edit')}}/@php echo base64_encode($sh->child_id); @endphp" class="cstm-btn main_button checkout_update">Update</a>
+                              <a target="_blank" href="{{url('/user/family-member/add?user=')}}{{$sh->child_id}}" class="cstm-btn main_button checkout_update">Update</a>
                            
                         </td>
                      </tr>

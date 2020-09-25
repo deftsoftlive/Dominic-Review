@@ -85,7 +85,7 @@
 
                                         @if($re->status == 0)
                                         <div class="reject-view" data-toggle="modal" data-target="#reject-detail-{{$re->id}}">
-                                          <a href="javascript:void(0);" class="cstm-btn">Add Comment</a>
+                                          <a href="javascript:void(0);" class="btn btn-primary">Add Comment</a>
                                 </div>
                                 @endif
 

@@ -12,7 +12,7 @@
         <a class="mobile-menu" id="mobile-header" href="javascript:">
             <i class="feather icon-more-horizontal"></i>
         </a>
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse d-print-none">
             <ul class="navbar-nav mr-auto">
                 <li><a href="javascript:" class="full-screen" onclick="javascript:toggleFullScreen()"><i class="feather icon-maximize"></i></a></li>
                 <!-- <li class="nav-item dropdown">

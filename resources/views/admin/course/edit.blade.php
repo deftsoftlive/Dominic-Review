@@ -68,7 +68,7 @@
                     </select>
                   </div>
 
-                  {{textbox($errors,'Age Group (i.e. 3-7)<span class="cst-upper-star">*</span>','age_group', $venue->age_group)}}
+                  {{textbox($errors,'Age Group (i.e. 3 - 7)<span class="cst-upper-star">*</span>','age_group', $venue->age_group)}}
                   
                  <!--  {{textbox($errors,'Age<span class="cst-upper-star">*</span>','age', $venue->age)}}-->
                   {{textbox($errors,'Course dates <span class="cst-upper-star">*</span>','session_date', $venue->session_date)}}
@@ -96,12 +96,12 @@
                       </select>
                   </div>
 
-                  {{textbox($errors,'Coach Cost','coach_cost', $venue->coach_cost)}}
+                  {{textbox($errors,'Coach Cost<span class="cst-upper-star">*</span>','coach_cost', $venue->coach_cost)}}
                   
-                  {{textbox($errors,'Court/Venue Cost','venue_cost', $venue->venue_cost)}}
-                  {{textbox($errors,'Equipment Cost','equipment_cost', $venue->equipment_cost)}}
-                  {{textbox($errors,'Other Cost','other_cost', $venue->other_cost)}}
-                  {{textbox($errors,'Tax/Vat Cost','tax_cost', $venue->tax_cost)}}
+                  {{textbox($errors,'Court/Venue Cost<span class="cst-upper-star">*</span>','venue_cost', $venue->venue_cost)}}
+                  {{textbox($errors,'Equipment Cost<span class="cst-upper-star">*</span>','equipment_cost', $venue->equipment_cost)}}
+                  {{textbox($errors,'Other Cost<span class="cst-upper-star">*</span>','other_cost', $venue->other_cost)}}
+                  {{textbox($errors,'Tax/Vat Cost<span class="cst-upper-star">*</span>','tax_cost', $venue->tax_cost)}}
 
                   <div class="form-group">
                         <label class="control-label" for="timelsots">Dates of course</label>

@@ -8,6 +8,7 @@
 }
 </style>
 
+
 <div class="page-header">
     <div class="page-block">
         <div class="row align-items-center">
@@ -101,7 +102,7 @@
         <table class="table table-hover">
 
             @php   
-                $product_price = [];
+                $product_price = []; 
             @endphp
 
             @foreach($purchased_product as $co)
@@ -121,10 +122,10 @@
             </thead>
             <tbody>
             @foreach($purchased_product as $co)
-                @php $product = DB::table('products')->where('id',$co->product_id)->first(); @endphp
+                @php $product = DB::table('products')->where('id',$co->product_id)->first();  @endphp
                 <tr>
                     <td>@php echo getUsername($co->user_id); @endphp</td>
-                    <td>{{$product->name}}</td>
+                    <td>{{isset($product->name) ? $product->name : ''}}</td>
                     <td>&pound{{$co->total}}</td>
                 </tr>
             @endforeach
@@ -169,7 +170,7 @@
                     <tr>
                         <!-- <td>@php echo date('d-m-Y',strtotime($co->updated_at)); @endphp</td> -->
                         <td>@php echo getUsername($co->user_id); @endphp</td>
-                        <td>{{$product->name}}</td>
+                        <td>{{isset($product->name) ? $product->name : ''}}</td>
                         <td>&pound{{$co->total}}</td>
                         <form action="{{route('generate_product_report')}}" method="POST">
                         @csrf

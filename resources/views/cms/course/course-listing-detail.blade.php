@@ -5,26 +5,60 @@
 
 @section('content')
 
-<section class="football-course-sec" style="background: url(http://49.249.236.30:8654/dominic-new/public/uploads/1583997335banner_image.png);">
-    	<div class="container">
-    		<div class="row">
-    			<div class="col-md-12">
-    				<div class="football-course-content">
-    					<h2 class="f-course-heading">{{$course->title}}</h2>
-    				</div>
-    			</div>
-    		</div>
-    	</div>
-    </section>
-<section class="course-list-detail  course-inner-page">
+
+@php 
+    $cour_id = $course->id; 
+    $purchased_courses = DB::table('shop_cart_items')->where('shop_type','course')->where('product_id',$cour_id)->count();  
+    $booked_courses = !empty($purchased_courses) ? $purchased_courses : '0';
+@endphp
+
+@php $base_url = \URL::to('/'); @endphp
+
+<section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/1583997335banner_image.png);">
 	<div class="container">
 		<div class="row">
+			<div class="col-md-12">
+				<div class="football-course-content">
+					<h2 class="f-course-heading">{{$course->title}}</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+<section class="course-list-detail  course-inner-page">
+
+  
+	<div class="container">
+
+    @if(Session::has('success'))
+      <div class="alert_msg alert alert-success">
+          <p>{{ Session::get('success') }} </p>
+      </div>
+      @endif
+      @if(Session::has('error'))
+      <div class="alert_msg alert alert-danger">
+          <p>{{ Session::get('error') }} </p>
+      </div>
+      @endif
+
+		  <div class="row">
+
           <div class="col-md-12 sports-text">
+
+            @if($booked_courses >= $course->booking_slot)
+              <div class="alert_msg alert alert-danger">
+                 <p><b>"{{$course->title}}"</b> - course is fully booked. </p>
+              </div>
+            @endif
+
             <ul class="events-wrap">
               <li>
                 <div class="event-card ul_course_design">
                   <div class="event-card-heading">
-                      <h3>{{$course->term}} - {{$course->day_time}}</h3>
+                      <h3>@php echo getSeasonname($course->season); @endphp - {{$course->day_time}}</h3>
                                 </div>
                                 
                                 <div class="event-outer-wrap">
@@ -89,6 +123,10 @@
                                 </div>
                               </div>
                             </div>
+
+                          @if($booked_courses >= $course->booking_slot)
+
+                          @else
                           <div class="event-card-form">
                             <form id="course-booking" action="{{route('course_booking')}}" method="POST">
                               @csrf
@@ -108,6 +146,7 @@
                                     }
                                   }
                                   @endphp
+
                                  <!--  <select id="inputPlayer-3" class="form-control event-dropdown">
                                     <option value="" selected="" disabled="">Select Child</option>
                                     @if(Auth::check() && !empty($children))
@@ -120,6 +159,7 @@
                                       @endforeach
                                     @endif
                                   </select> --> 
+                                   
 
                                   <div class="outer-slt">
                                     <select id="child" name="child" class="form-control event-dropdown">
@@ -135,13 +175,17 @@
                                             $user_diff = abs($current_date1 - $user_age);
                                             $years1 = floor($user_diff / (365*60*60*24));
 
-                                            $course_range1 = $course->age_group;
-                                            
+                                            $course_range1 = $course->age_group; 
+
                                             if(!empty($course_range1))
                                             {
-                                              $range_arr1 = explode('-',$course_range1);
-                                              $start_value1 = $range_arr1[0];
-                                              $end_value1 = $range_arr1[1];
+                                              $range_arr1 = explode(' ',$course_range1);  
+
+                                              if($range_arr1[1] == '-')
+                                              {
+                                                $start_value1 = $range_arr1[0];
+                                                $end_value1 = $range_arr1[2];
+                                              }
                                             }
 
                                           @endphp
@@ -161,11 +205,16 @@
                                         @php 
                                             $course_range = $course->age_group;
                                             
+
                                             if(!empty($course_range))
                                             {
-                                              $range_arr = explode('-',$course_range);
-                                              $start_value = $range_arr[0];
-                                              $end_value = $range_arr[1];
+                                              $range_arr = explode(' ',$course_range);  
+
+                                              if($range_arr[1] == '-')
+                                              {
+                                                $start_value = $range_arr[0];
+                                                $end_value = $range_arr[2];
+                                              }
                                             }
                                             
                                             $child_age = strtotime($child->date_of_birth);
@@ -189,6 +238,12 @@
 
                                   @php 
                                     $course_cat = $course->type; 
+
+                                  @endphp
+
+                                  @if($course_cat != 0)
+
+                                  @php
                                     $cat = DB::table('product_categories')->where('id',$course_cat)->first();
                                     $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
                                     $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).' 23:59:00'); 
@@ -211,6 +266,8 @@
                                       $percentage = getAllValueWithMeta('school_percentage', 'early-bird');
                                     @endphp
                                   @endif
+
+
                               
                                   <input type="hidden" name="course_id" id="course_id" value="{{$course->id}}">
                                   <!-- <input type="hidden" name="child_id" id="child_id" value=""> -->
@@ -231,18 +288,22 @@
                                     @endif
                                   </p>
 
+                                  @endif
+
                                 @if(Auth::check())
-                                  <button type="submit" id="course_book" class="cstm-btn event-booking-btn">Book Now</button>
+                                  <button type="submit" id="course_book" class="cstm-btn event-booking-btn main_button">Book Now</button>
                                 @else
-                                  <a href="{{url('/login')}}" class="cstm-btn event-booking-btn">Book Now</a>
+                                  <a href="{{url('/login')}}" class="cstm-btn event-booking-btn main_button">Book Now</a>
                                 @endif 
+
+                                
                                                                                               
                                 </div>   
                                                        
                             </form>
 
                           </div>
-
+                          @endif
                     <!-- <div class="event-booking">
                       <h1 class="event-booking-price"><span>£</span>{{$course->price}}</h1> 
                       <a href="javascript:void(0);" class="cstm-btn">Book Now</a>
@@ -271,7 +332,7 @@
         	  	  <ul class="click-btn-content">
         	  	    <li>
         	          <figure>
-        		   	    <img src="http://49.249.236.30:8654/dominic-new/public/images/click-btn-img.png">
+        		   	    <img src="{{url('/')}}/public/images/click-btn-img.png">
         			  </figure>
         		  	</li>
         		  	<li>
@@ -279,7 +340,7 @@
         		  	</li>
         		  	<li>
         	          <figure>
-        		   	    <img src="http://49.249.236.30:8654/dominic-new/public/images/click-btn-img.png">
+        		   	    <img src="{{url('/')}}/public/images/click-btn-img.png">
         			  </figure>
         		  	</li>
         		    </ul>

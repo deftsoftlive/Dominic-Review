@@ -1,6 +1,6 @@
 @php
     $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->first();
-    $notification = DB::table('parent_coach_reqs')->where('coach_id',Auth::user()->id)->where('status',NULL)->count();
+    $notification = DB::table('parent_coach_reqs')->where('coach_id',Auth::user()->id)->where('dismiss_by_coach',NULL)->count();
 @endphp
 <li><a href="{{ route('coach_profile') }}" class="{{ \Request::route()->getName() === 'coach_profile' ? 'active' : '' }}">My Profile</a></li>
 

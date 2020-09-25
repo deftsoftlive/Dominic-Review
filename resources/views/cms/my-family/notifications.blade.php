@@ -83,8 +83,8 @@
                           <tr>
                             <td><p>{{$re->updated_at}}</p></td>
                            <!--  <td><p>{{$parent->name}}</p></td> -->
-                            <td><p>{{$child->name}}</p></td>
-                            <td><p>{{$coach->name}}</p></td>
+                            <td><p>{{isset($child->name) ? $child->name : ''}}</p></td>
+                            <td><p>{{isset($coach->name) ? $coach->name : ''}}</p></td>
                             <td><p>
                               @if($re->status == 1)
                                   <h6 style="color:green;"><b>Accepted</b></h6>
@@ -166,7 +166,7 @@
 
                               <tr>
                                   <td><p>{{$bd->updated_at}}</p></td>
-                                  <td><p>{{$user->name}}</p></td>
+                                  <td><p>{{isset($user->name) ? $user->name : ''}}</p></td>
                                   <td>
                                      @php $course = array(); @endphp
                                      @foreach($shop as $sh)

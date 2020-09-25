@@ -270,7 +270,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                     @endphp
                                     @foreach($test_score1 as $arr)
                                     <tr>
-                                        <td>@php $user = DB::table('users')->where('id',$arr->user_id)->first(); @endphp {{$user->name}}</td>
+                                        <td>@php $user = DB::table('users')->where('id',$arr->user_id)->first(); @endphp {{isset($user->name) ? $user->name : ''}}</td>
                                         @php
                                           $test_score12 = DB::table('test_scores')->where('user_id',$user->id)->where('course_id',$course_id)->where('test_cat_id','!=',NULL)->where('season_id',$season_id)->groupBy('test_id')->get(); 
                                         @endphp
@@ -370,7 +370,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                                     @php
                                                     $user = DB::table('users')->where('id',$bd->child_id)->first();
                                                     @endphp
-                                                    <option value="{{$bd->child_id}}" @if(!empty($player_rep)) @if($player_rep->player_id == $bd->child_id) selected @endif @endif>{{$user->name}}</option>
+                                                    <option value="{{$bd->child_id}}" @if(!empty($player_rep)) @if($player_rep->player_id == $bd->child_id) selected @endif @endif>{{isset($user->name) ? $user->name : ''}}</option>
                                                     @endforeach
                                                 </select>
                                                 @endif
@@ -482,7 +482,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                     @endphp
                                     @foreach($players as $bd)
                                         @php $user = DB::table('users')->where('id',$bd->child_id)->first(); @endphp
-                                        <option value="{{$bd->child_id}}" @if(!empty($player_rep)) @if($player_rep->player_id == $bd->child_id) selected @endif @endif>{{$user->name}}</option>
+                                        <option value="{{$bd->child_id}}" @if(!empty($player_rep)) @if($player_rep->player_id == $bd->child_id) selected @endif @endif>{{isset($user->name) ? $user->name : ''}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -614,7 +614,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                         |     Upload Match Chart
                                         |
                                         | ********************************* -->
-                                      
+                                      <div class="table_outer_wrap">
                                         <table class="add_on_services match_game_chart">
                                             <thead>
                                                 <tr>
@@ -640,7 +640,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                           
                                             </tbody>
                                         </table>
-
+                                        </div>
 
                                     </div>
                                 </div>

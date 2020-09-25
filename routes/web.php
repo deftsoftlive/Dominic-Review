@@ -122,6 +122,7 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     Route::any('competitions/{id}','HomeController@matches_under_comp')->name('matches_under_comp');
     Route::any('competition/{comp_id}/match/{match_id}/stats','HomeController@match_stats')->name('match_stats');
     Route::any('competition/stats/save','HomeController@save_match_stats')->name('save_match_stats');
+    Route::any('competition/{comp_id}/match/{match_id}/game-charts','HomeController@view_game_charts')->name('view_game_charts');
     Route::any('competition/{comp_id}/match/{match_id}/stats/view','HomeController@view_match_stats')->name('view_match_stats');
     Route::any('competition/{comp_id}/match/{match_id}/player/{player_id}/game-chart/remove/{chart_id}','HomeController@remove_game_chart')->name('remove_game_chart');
 
@@ -141,6 +142,8 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     Route::any('badge/timeline/{id}','HomeController@playerBadge')->name('playerBadge');
 
     Route::post('/show-name','HomeController@show_name_in_leaderboard')->name('show_name_in_leaderboard');
+
+    Route::any('/game-chart','HomeController@game_chart')->name('game_chart');
 });
 
 // Coupon code

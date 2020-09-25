@@ -50,6 +50,7 @@ use App\WalletHistory;
 use App\MatchStats;
 use App\MatchGameChart;
 use App\UserBadge;
+use App\DrhActivity;
 use App\NewsletterSubscription;
 use App\Models\Shop\ShopCartItems;
 use App\Models\Products\ProductCategory;
@@ -846,72 +847,78 @@ public function tennis_pro()
 /* Course Booking */
 public function course_booking(Request $request)
 {
+  $check_course = \DB::table('shop_cart_items')->where('child_id',$request->child)->where('shop_type','course')->where('product_id',$request->course_id)->where('type','order')->first();
 
-  // dd($request->all());
-  $course_id = $request->course_id;
-  $child_id  = $request->child;
-  $course    = Course::where('id',$course_id)->first(); 
+  if(empty($check_course))
+  {
+        $course_id = $request->course_id;
+        $child_id  = $request->child;
+        $course    = Course::where('id',$course_id)->first(); 
 
-  $course_cat = $course->type; 
-  $course_season = $course->season;
-  $cat = \DB::table('product_categories')->where('id',$course_cat)->first(); 
+        $course_cat = $course->type; 
+        $course_season = $course->season;
+        $cat = \DB::table('product_categories')->where('id',$course_cat)->first(); 
 
-  if($cat->slug == 'tennis'){
-      $early_bird_enable = getAllValueWithMeta('check_tennis_percentage', 'early-bird');
-      $percentage = getAllValueWithMeta('tennis_percentage', 'early-bird');
-  }elseif($cat->slug == 'football'){
-      $early_bird_enable = getAllValueWithMeta('check_football_percentage', 'early-bird');
-      $percentage = getAllValueWithMeta('football_percentage', 'early-bird');
-  }elseif($cat->slug == 'schools'){
-      $early_bird_enable = getAllValueWithMeta('check_school_percentage', 'early-bird');
-      $percentage = getAllValueWithMeta('school_percentage', 'early-bird');
+        if($cat->slug == 'tennis'){
+            $early_bird_enable = getAllValueWithMeta('check_tennis_percentage', 'early-bird');
+            $percentage = getAllValueWithMeta('tennis_percentage', 'early-bird');
+        }elseif($cat->slug == 'football'){
+            $early_bird_enable = getAllValueWithMeta('check_football_percentage', 'early-bird');
+            $percentage = getAllValueWithMeta('football_percentage', 'early-bird');
+        }elseif($cat->slug == 'schools'){
+            $early_bird_enable = getAllValueWithMeta('check_school_percentage', 'early-bird');
+            $percentage = getAllValueWithMeta('school_percentage', 'early-bird');
+        }
+
+          $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
+          $early_bird_time = getAllValueWithMeta('early_bird_time', 'early-bird');
+          $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).' 23:59:00');
+          $currntD = strtotime(date('Y-m-d H:i:s'));
+
+        $add_course = new ShopCartItems;
+        $add_course->shop_type  = 'course';
+        $add_course->quantity   = 1;
+        $add_course->vendor_id  = 1;
+        $add_course->product_id = $course_id;
+        $add_course->user_id    = \Auth::user()->id;
+        $add_course->course_season = $course_season;
+
+      if($currntD >= $endDate)
+      {   
+          $add_course->price  = $course->price;
+          $add_course->total  = $course->price;
+      }else{
+        if($early_bird_enable == '1'){
+          $cour_price = $course->price;
+          $dis_price = $cour_price - (($cour_price) * ($percentage/100));
+
+          $add_course->price  = $dis_price;
+          $add_course->total  = $dis_price;
+        }else{
+          $add_course->price  = $course->price;
+          $add_course->total  = $course->price;
+        }
+      }
+
+        $add_course->child_id = $child_id;
+
+        if($add_course->save()){
+          $output = 1;
+        }else{
+          $output = 0;
+        }
+
+          // $data = array(
+          //             'output'   => $output,
+          //         );
+
+          // return response()->json($data);
+
+          return redirect('shop/cart');
   }
-
-    $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
-    $early_bird_time = getAllValueWithMeta('early_bird_time', 'early-bird');
-    $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).' 23:59:00');
-    $currntD = strtotime(date('Y-m-d H:i:s'));
-
-  $add_course = new ShopCartItems;
-  $add_course->shop_type  = 'course';
-  $add_course->quantity   = 1;
-  $add_course->vendor_id  = 1;
-  $add_course->product_id = $course_id;
-  $add_course->user_id    = \Auth::user()->id;
-  $add_course->course_season = $course_season;
-
-if($currntD >= $endDate)
-{   
-    $add_course->price  = $course->price;
-    $add_course->total  = $course->price;
-}else{
-  if($early_bird_enable == '1'){
-    $cour_price = $course->price;
-    $dis_price = $cour_price - (($cour_price) * ($percentage/100));
-
-    $add_course->price  = $dis_price;
-    $add_course->total  = $dis_price;
-  }else{
-    $add_course->price  = $course->price;
-    $add_course->total  = $course->price;
+  else{
+    return \Redirect::back()->with('error','This person is already booked on this course.');
   }
-}
-
-  $add_course->child_id = $child_id;
-
-  if($add_course->save()){
-    $output = 1;
-  }else{
-    $output = 0;
-  }
-
-    // $data = array(
-    //             'output'   => $output,
-    //         );
-
-    // return response()->json($data);
-
-    return redirect('shop/cart');
   
 } 
 
@@ -1250,13 +1257,35 @@ public function parent_coach(Request $request)
     return \Redirect::back()->with('error',$msg);
   }else{
 
+    // dd($request->all());
+
     $coach_parent = new ParentCoachReq;
     $coach_parent->coach_id = $request->coach_id;
     $coach_parent->parent_id = $request->parent_id;
     $coach_parent->child_id = $request->child;
     $coach_parent->status = 0;
-    if($coach_parent->save()){
-      return \Redirect::back()->with('success','Your request has been sent successfully!');
+  
+  if($coach_parent->save()){
+
+    $coach_name = getUsername($request->coach_id);
+    $coach_email = getUseremail($request->coach_id);
+    $parent_name = getUsername($request->parent_id);
+    $parent_email = getUseremail($request->parent_id);
+
+  $emaiData = [
+          'parent_name' => $parent_name,
+          'parent_email' => $parent_email,
+          'coach_name' => $coach_name,
+          'coach_email' => $coach_email
+       ];
+  
+  // dd($emaiData);
+
+  $rr = $this->ParentRequestToCoach($emaiData);
+
+  // dd($rr);
+
+      return \Redirect::back()->with('success','Your request has been sent sucessfully! The coach will review and respond soon. Thank you!');
     }
   }
 } 
@@ -1345,7 +1374,7 @@ public function stripe_wallet(Request $request)
     $pk = $stripe['pk'];
     $amount = $request->wallet_amount*100;
     $output = '
-    <p>Add funds to your wallet with your payment card.</p>
+    <p></p>
     <script
          src="https://checkout.stripe.com/checkout.js" class="stripe-button new-main-button"
          data-key="'.$pk.'"
@@ -1655,6 +1684,7 @@ public function get_player_from_course($course_id)
 |----------------------------------------------------------*/
 public function get_course_from_season($season_id)
 {
+  // dd($season_id);
     $course = \DB::table('courses')
             ->leftjoin('shop_cart_items', 'courses.id', '=', 'shop_cart_items.product_id')
             ->select('courses.*', 'shop_cart_items.product_id')
@@ -1664,7 +1694,9 @@ public function get_course_from_season($season_id)
             ->groupBy('shop_cart_items.product_id')
             ->get(); 
 
-    // $course = Course::where('season',$season_id)->get();
+            // dd($course);
+
+     $course = Course::where('season',$season_id)->get();
 
     if(count($course) > 0)
     {
@@ -1888,7 +1920,7 @@ public function copy_address() {
 |-------------------------------------------*/
 public function participants_details(Request $request)
 {   
-    // dd($request->all());
+    //dd($request->all());
     
     if($request->type == 'Adult')
     {
@@ -1925,6 +1957,21 @@ public function participants_details(Request $request)
       $primary_language = $request->primary_language1;
       $school = $request->school1;
       // $show_name = $request->show_name1;
+    }else{
+      $first_name = $request->first_name1;
+      $last_name = $request->last_name1;
+      $gender = $request->gender1;
+      $date_of_birth = $request->date_of_birth1;
+      $address = $request->address1;
+      $town = $request->town1;
+      $postcode = $request->postcode1;
+      $county = $request->county1;
+      $country = $request->country1;
+      $relation = $request->relation1;
+      $book_person = $request->book_person1;
+      $language = $request->language1;
+      $primary_language = $request->primary_language1;
+      $school = $request->school1;
     }
 
     // dd($first_name,$book_person,$language,$primary_language);
@@ -2047,37 +2094,54 @@ if(!empty($request->contact))
 
       foreach($request->contact as $key=>$value)
       {
-        $child_con = new ChildContact;
-        $child_con->child_id = $request->child_id;
-        $child_con->type = $request->type;
-        $child_con->first_name = $value['con_first_name'];
-        $child_con->surname = $value['con_last_name'];
-        $child_con->phone = $value['con_phone'];
-        $child_con->email = $value['con_email'];
-        $child_con->relationship = $value['con_relation'];
-        $child_con->who_are_they = $value['who_are_they'];
-        $child_con->save();
+        if($value['con_first_name'] == NULL || $value['con_last_name'] == NULL || $value['con_phone'] == NULL)
+        {
+          $last_user_id = $request->child_id;
+          return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','No contact information exist.');
+        }else{
+          $child_con = new ChildContact;
+          $child_con->child_id = $request->child_id;
+          $child_con->type = $request->type;
+          $child_con->first_name = isset($value['con_first_name']) ? $value['con_first_name'] : '';
+          $child_con->surname = isset($value['con_last_name']) ? $value['con_last_name'] : '';
+          $child_con->phone = isset($value['con_phone']) ? $value['con_phone'] : '';
+          $child_con->email = isset($value['con_email']) ? $value['con_email'] : '';
+          $child_con->relationship = isset($value['con_relation']) ? $value['con_relation'] : '';
+          $child_con->who_are_they = isset($value['who_are_they']) ? $value['who_are_they'] : '';
+          $child_con->save();
+        }
+        
       }
     }
   }elseif($request->type == 'Adult')
   {
-    if(count($request->contact)>0)
+    if(isset($request->contact1) && count($request->contact1)>0)
     {
       ChildContact::where('child_id',$request->child_id)->delete();
 
       foreach($request->contact1 as $key1=>$value1)
       {
-        $child_con = new ChildContact;
-        $child_con->child_id = $request->child_id;
-        $child_con->type = $request->type;
-        $child_con->first_name = $value1['con_first_name1'];
-        $child_con->surname = $value1['con_last_name1'];
-        $child_con->phone = $value1['con_phone1'];
-        $child_con->email = $value1['con_email1'];
-        $child_con->relationship = $value1['con_relation1'];
-        $child_con->who_are_they = $value1['who_are_they1'];
-        $child_con->save();
+
+        if($value1['con_first_name1'] == NULL || $value1['con_last_name1'] == NULL || $value1['con_phone1'] == NULL)
+        {
+          $last_user_id = $request->child_id;
+          return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','No contact information exist.');
+        }else{
+          $child_con = new ChildContact;
+          $child_con->child_id = $request->child_id;
+          $child_con->type = $request->type;
+          $child_con->first_name = isset($value1['con_first_name1']) ? $value1['con_first_name1'] : '';
+          $child_con->surname = isset($value1['con_last_name1']) ? $value1['con_last_name1'] : '';
+          $child_con->phone = isset($value1['con_phone1']) ? $value1['con_phone1'] : '';
+          $child_con->email = isset($value1['con_email1']) ? $value1['con_email1'] : '';
+          $child_con->relationship = isset($value1['con_relation1']) ? $value1['con_relation1'] : '';
+          $child_con->who_are_they = isset($value1['who_are_they1']) ? $value1['who_are_they1'] : '';
+          $child_con->save();
+        }
       }
+    }else if(isset($request->contact) && count($request->contact)>0){
+      $last_user_id = $request->child_id;
+          return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','No contact information exist.');
     }
   }
 
@@ -2099,7 +2163,7 @@ else
 |---------------------------------------------------*/
 public function medical_information(Request $request)
 {
-  // dd($request->all());
+  //dd($request->all());
 
   if($request->type == 'Adult')
   {
@@ -2114,56 +2178,77 @@ public function medical_information(Request $request)
   {
     $med_cond_info = json_encode($request->med_cond_info); 
 
-    if(count($request->med_cond_info)>0)
+    if(isset($request->med_cond_info) && !empty($request->med_cond_info))
     {
-      ChildMedical::where('child_id',$request->child_id)->delete();
-
-      foreach($request->med_cond_info as $key=>$value)
+      if(count($request->med_cond_info)>0)
       {
-        $child_med = new ChildMedical;
-        $child_med->child_id = $request->child_id;
-        $child_med->type = $request->type;
-        $child_med->medical = $value; 
-        $child_med->save();
-      }
-    }
+        ChildMedical::where('child_id',$request->child_id)->delete();
 
-    ChildrenDetail::where('child_id',$request->child_id)->update(array('med_cond' => $med_cond, 'med_cond_info' => $med_cond_info)); 
+        foreach($request->med_cond_info as $key=>$value)
+        {
+          $child_med = new ChildMedical;
+          $child_med->child_id = $request->child_id;
+          $child_med->type = $request->type;
+          $child_med->medical = $value; 
+          $child_med->save();
+        }
+      }
+
+      ChildrenDetail::where('child_id',$request->child_id)->update(array('med_cond' => $med_cond, 'med_cond_info' => $med_cond_info)); 
+    }
+    else
+    {
+      $last_user_id = $request->child_id;
+
+      return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','No medical information exist.');
+    }
+    
   }
   elseif($request->type == 'Child')
   {
-    $med_cond_info = json_encode($request->med_cond_info); 
+    $med_cond_info = json_encode($request->med_cond_info1); 
     $allergies_info = json_encode($request->allergies_info); 
 
-    if(count($request->med_cond_info)>0)
+    if(isset($request->pres_med) && isset($request->beh_need) && isset($request->allergies) && isset($med_cond) && isset($request->med_req))
     {
-      ChildMedical::where('child_id',$request->child_id)->delete();
-
-      foreach($request->med_cond_info as $key=>$value)
+      if(count($request->med_cond_info)>0)
       {
-        $child_med = new ChildMedical;
-        $child_med->child_id = $request->child_id;
-        $child_med->type = $request->type;
-        $child_med->medical = $value; 
-        $child_med->save();
-      }
-    }
+        ChildMedical::where('child_id',$request->child_id)->delete();
 
-    if(count($request->allergies_info)>0)
+        foreach($request->med_cond_info1 as $key=>$value)
+        {
+          $child_med = new ChildMedical;
+          $child_med->child_id = $request->child_id;
+          $child_med->type = $request->type;
+          $child_med->medical = $value; 
+          $child_med->save();
+        }
+      }
+
+      if(count($request->allergies_info)>0)
+      {
+        ChildAllergy::where('child_id',$request->child_id)->delete();
+
+        foreach($request->allergies_info as $key1=>$value1)
+        {
+          $child_all = new ChildAllergy;
+          $child_all->child_id = $request->child_id;
+          $child_all->type = $request->type;
+          $child_all->allergy = $value1; 
+          $child_all->save();
+        }
+      }
+
+      ChildrenDetail::where('child_id',$request->child_id)->update(array('med_cond' => $med_cond, 'allergies' => $request->allergies, 'allergies_info' => $allergies_info, 'med_cond_info' => $med_cond_info, 'pres_med' => $request->pres_med, 'pres_med_info' => $request->pres_med_info, 'med_req' => $request->med_req, 'med_req_info' => $request->med_req_info, 'toilet' => $request->toilet, 'beh_need' => $request->beh_need, 'beh_need_info' => $request->beh_need_info)); 
+    
+    }
+    else
     {
-      ChildAllergy::where('child_id',$request->child_id)->delete();
+      $last_user_id = $request->child_id;
 
-      foreach($request->allergies_info as $key1=>$value1)
-      {
-        $child_all = new ChildAllergy;
-        $child_all->child_id = $request->child_id;
-        $child_all->type = $request->type;
-        $child_all->allergy = $value1; 
-        $child_all->save();
-      }
+      return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','No medical information exist.');
     }
-
-    ChildrenDetail::where('child_id',$request->child_id)->update(array('med_cond' => $med_cond, 'allergies' => $request->allergies, 'allergies_info' => $allergies_info, 'med_cond_info' => $med_cond_info, 'pres_med' => $request->pres_med, 'pres_med_info' => $request->pres_med_info, 'med_req' => $request->med_req, 'med_req_info' => $request->med_req_info, 'toilet' => $request->toilet, 'beh_need' => $request->beh_need, 'beh_need_info' => $request->beh_need_info)); 
+  
   }
   
   $last_user_id = $request->child_id;
@@ -2176,12 +2261,20 @@ public function medical_information(Request $request)
 | Add Family Member - Media Consents
 |---------------------------------------------------*/
 public function media_consent(Request $request)
-{
+{   
+  if(!empty($request->confirm) && isset($request->confirm))
+  {
     ChildrenDetail::where('child_id',$request->child_id)->update(array('media' => $request->media_consent, 'confirm' => $request->confirm)); 
 
     $last_user_id = $request->child_id;
 
     return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Media Consents added successfully.');
+  }else{
+    $last_user_id = $request->child_id;
+
+    return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','Please confirm the details you');
+  }
+    
 }
 /* medical_info_to_next */
 // public function medical_info_to_next(Request $request) {
@@ -3546,7 +3639,7 @@ public function save_childcare_voucher(Request $request)
 
                     $this->ShopProductOrderPlacedForVendorSuccess($so->id);
                     $this->ShopProductOrderPlacedSuccess($so->id);
-                    //$this->AdminOrderSuccessOrderSuccess($o->id);
+                    // $this->AdminOrderSuccessOrderSuccess($o->id);
 
                 }
         }
@@ -3614,7 +3707,7 @@ public function save_wallet(Request $request)
 
                         $this->ShopProductOrderPlacedForVendorSuccess($so->id);
                         $this->ShopProductOrderPlacedSuccess($so->id);
-                        //$this->AdminOrderSuccessOrderSuccess($o->id);
+                        // $this->AdminOrderSuccessOrderSuccess($o->id);
 
                     }
             }
@@ -3663,7 +3756,7 @@ public function save_wallet(Request $request)
 
                         $this->ShopProductOrderPlacedForVendorSuccess($so->id);
                         $this->ShopProductOrderPlacedSuccess($so->id);
-                        //$this->AdminOrderSuccessOrderSuccess($o->id);
+                        // $this->AdminOrderSuccessOrderSuccess($o->id);
 
                     }
             }
@@ -3731,68 +3824,75 @@ public function unsubscribe_newsletter($id)
 |---------------------------------*/
 public function add_competition(Request $request)
 { 
+  
     $user_role = Auth::user()->role_id;
     $comp_id = isset($request->comp_id) ? $request->comp_id : '';
 
     $coach_user = User::where('id',$request->coach_id)->first(); 
-    if(!empty($coach_user))
+
+    if(!empty($request->comp_name) && !empty($request->comp_venue) && !empty($request->comp_date) && !empty($request->comp_type))
     {
-      if($coach_user->role_id == 2)
-      {
-        $parent_id = $request->coach_id;
-      }elseif($coach_user->role_id == 3)
-      {
-        $coach_id = $request->coach_id;
-      }
-    }
 
-    $parent_user = User::where('id',$request->parent_id)->first(); 
-    if(!empty($parent_user))
-    {
-      if($parent_user->role_id == 2)
-      {
-        $parent_id = $request->parent_id;
-      }elseif($parent_user->role_id == 3)
-      {
-        $coach_id = $request->parent_id;
-      }
-    }
-
-    if(!empty($comp_id))
-    {
-        $comp = Competition::find($comp_id);
-        $comp->player_id = $request->player_id;
-        $comp->comp_type = $request->comp_type;
-        $comp->comp_date = $request->comp_date;
-        $comp->comp_venue = $request->comp_venue;
-        $comp->comp_name = $request->comp_name;
-        $comp->parent_id = isset($parent_id) ? $parent_id : '0';
-        $comp->coach_id = isset($coach_id) ? $coach_id : '0';
-        $comp->save();
-
-        $comp_id = base64_encode($comp->id);
-
-        return redirect('/user/reports/comp/'.$comp_id)->with('success',' Competition updated successfully!');
-
-    }else{
-
-        if(!empty($request->player_id))
+        if(!empty($coach_user))
         {
-            $comp = Competition::create($request->all()); 
+          if($coach_user->role_id == 2)
+          {
+            $parent_id = $request->coach_id;
+          }elseif($coach_user->role_id == 3)
+          {
+            $coach_id = $request->coach_id;
+          }
+        }
+
+        $parent_user = User::where('id',$request->parent_id)->first(); 
+        if(!empty($parent_user))
+        {
+          if($parent_user->role_id == 2)
+          {
+            $parent_id = $request->parent_id;
+          }elseif($parent_user->role_id == 3)
+          {
+            $coach_id = $request->parent_id;
+          }
+        }
+
+        if(!empty($comp_id))
+        {
+            $comp = Competition::find($comp_id);
+            $comp->player_id = $request->player_id;
+            $comp->comp_type = $request->comp_type;
+            $comp->comp_date = $request->comp_date;
+            $comp->comp_venue = $request->comp_venue;
+            $comp->comp_name = $request->comp_name;
             $comp->parent_id = isset($parent_id) ? $parent_id : '0';
             $comp->coach_id = isset($coach_id) ? $coach_id : '0';
             $comp->save();
 
             $comp_id = base64_encode($comp->id);
 
-            return redirect('/user/reports/comp/'.$comp_id)->with('success',' Competition added successfully!');
-        }else{
-            return \Redirect::back()->with('error',' Please select player!');
-        } 
-    }
+            return redirect('/user/reports/comp/'.$comp_id)->with('success',' Competition updated successfully!');
 
+        }else{
+
+            if(!empty($request->player_id))
+            {
+                $comp = Competition::create($request->all()); 
+                $comp->parent_id = isset($parent_id) ? $parent_id : '0';
+                $comp->coach_id = isset($coach_id) ? $coach_id : '0';
+                $comp->save();
+
+                $comp_id = base64_encode($comp->id);
+
+                return redirect('/user/reports/comp/'.$comp_id)->with('success',' Competition added successfully!');
+            }else{
+                return \Redirect::back()->with('error',' Please select player!');
+            } 
+        }
+
+      }else{
+        return \Redirect::back()->with('error',' Please fill the competition data!');
+      }
         
-    
 }
 
 public function comp_data($id)
@@ -3808,6 +3908,8 @@ public function add_match(Request $request)
 {
   $data = $request->all();  
 
+  if(!empty($request->opponent_name) && !empty($request->start_date) && !empty($request->surface_type) && !empty($request->condition) && !empty($request->result) && !empty($request->score))
+  {
     if(!empty($request->match_id))
     {
         if(!empty($request->player_id) && !empty($request->comp_id))
@@ -3889,6 +3991,9 @@ public function add_match(Request $request)
             return \Redirect::back()->with('error',' Please add competition first!');
         }
     }
+  }else{
+    return \Redirect::back()->with('error',' No match data exist!');
+  }
     
 }
 
@@ -3964,22 +4069,24 @@ public function save_match_stats(Request $request)
     if(!empty($match_stats))
     {
       $match_stats = MatchStats::find($match_stats->id); 
-      $match_stats->tp_in_match = $request->tp_in_match;
-      $match_stats->tp_won = $request->tp_won;
-      $match_stats->total_1serves_in = $request->total_1serves_in;
-      $match_stats->total_2serves_in = $request->total_2serves_in;
-      $match_stats->total_double_faults = $request->total_double_faults;
-      $match_stats->total_aces = $request->total_aces;
-      $match_stats->total_1serve_by_op = $request->total_1serve_by_op;
-      $match_stats->total_2serve_by_op = $request->total_2serve_by_op;
-      $match_stats->total_double_fault_by_op = $request->total_double_fault_by_op;
-      $match_stats->tp_won_in_1serve = $request->tp_won_in_1serve;
-      $match_stats->tp_won_in_2serve = $request->tp_won_in_2serve;
-      $match_stats->tp_won_ops_1sereve = $request->tp_won_ops_1sereve;
-      $match_stats->tp_won_ops_2sereve = $request->tp_won_ops_2sereve;
-      $match_stats->tp_won_rally_4shots = $request->tp_won_rally_4shots;
-      $match_stats->tp_won_rally_5shots = $request->tp_won_rally_5shots;
-      $match_stats->total_shots_match = $request->total_shots_match;
+      $match_stats->tp_in_match = $request->tp_in_match; //1
+      $match_stats->tp_won = $request->tp_won;  //2
+      $match_stats->total_1serves_in = $request->total_1serves_in; //3
+      $match_stats->total_2serves_in = $request->total_2serves_in; //4  
+      $match_stats->total_double_faults = $request->total_double_faults;  //5
+      $match_stats->total_aces = $request->total_aces;  //6   
+      $match_stats->total_1serve_by_op = $request->total_1serve_by_op;  //7 
+      $match_stats->total_2serve_by_op = $request->total_2serve_by_op;  //8 
+      $match_stats->total_double_fault_by_op = $request->total_double_fault_by_op;  //9
+      $match_stats->tp_won_in_1serve = $request->tp_won_in_1serve;  //10
+      $match_stats->tp_won_in_2serve = $request->tp_won_in_2serve;  //11
+      $match_stats->tp_won_ops_1sereve = $request->tp_won_ops_1sereve;  //12  
+      $match_stats->tp_won_ops_2sereve = $request->tp_won_ops_2sereve;  //13
+      $match_stats->tp_played_rally_4shots = $request->tp_played_rally_4shots;  //14
+      $match_stats->tp_played_rally_5shots = $request->tp_played_rally_5shots;  //15
+      $match_stats->tp_won_rally_4shots = $request->tp_won_rally_4shots;  //16
+      $match_stats->tp_won_rally_5shots = $request->tp_won_rally_5shots;  //17
+      $match_stats->total_shots_match = $request->total_shots_match;  //18
       $match_stats->save();
 
       $data = json_encode($request->all());
@@ -4018,6 +4125,17 @@ public function view_match_stats($comp_id,$match_id)
         $stats_calculation = '';
     }
     return view('matches.view-stats',compact('stats_calculation','comp_id','match_id'));
+}
+
+/*--------------------------------------
+| View Game Charts
+|---------------------------------------*/
+public function view_game_charts($comp_id,$match_id)
+{
+    $charts = MatchGameChart::where('comp_id',$comp_id)->where('match_id',$match_id)->get();
+    $competition = Competition::where('id',$comp_id)->first();
+    $match = MatchReport::where('id',$match_id)->first(); 
+    return view('matches.game-chart',compact('charts','competition','match'));
 }
 
 /*-------------------------------------
@@ -4106,5 +4224,13 @@ public function remove_allergy($id)
 
   return \Redirect::back()->with('success',' Allergy condition removed successfully!');
 } 
+
+/*------------------------------------------
+| Game Charts
+|-------------------------------------------*/
+public function game_chart()
+{
+  return view('matches.game-chart');
+}
 
 }

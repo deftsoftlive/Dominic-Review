@@ -39,7 +39,7 @@
                     <div class="card-header">
                         <h5>Courses</h5>
                         <div class="print_logo">
-                            <img height="70px;" width="120px;" src="http://49.249.236.30:8654/dominic-new/public/uploads/1584078701website_logo.png">
+                            <img height="70px;" width="120px;" src="{{url('/')}}/public/uploads/pdf-logo.png">
                         </div>
                         <!-- <button class="btn btn-primary d-print-none" onclick="window.print();" id="print_btn">Print</button> -->
                         <!-- <button class="btn btn-primary d-print-none" id="print_btn">Print</button> -->

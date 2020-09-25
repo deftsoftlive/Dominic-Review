@@ -38,8 +38,8 @@
                   $count=1;  
                 @endphp
                   
-                  {{textbox($errors,'Title*','title')}}
-                  {{textarea($errors,'Description*','description')}}
+                  {{textbox($errors,'Title<span class="cst-upper-star">*</span>','title')}}
+                  {{textarea($errors,'Description<span class="cst-upper-star">*</span>','description')}}
 
                   <div class="form-group">
                     <label class="label-file control-label">Type</label>
@@ -73,16 +73,16 @@
                     </select>
                   </div>
 
-                  {{textbox($errors,'Age Group (i.e. 3-7)*','age_group')}}
+                  {{textbox($errors,'Age Group (i.e. 3 - 7)<span class="cst-upper-star">*</span>','age_group')}}
                   
                   <!-- {{textbox($errors,'Age*','age')}}-->
-                  {{textbox($errors,'Course dates*','session_date')}}
-                  {{textbox($errors,'Location*','location')}}
-                  {{textbox($errors,'Day Time*','day_time')}}
-                  {{textbox($errors,'Booking Slot*','booking_slot')}}
-                  {{textarea($errors,'More Info*','more_info')}}
-                  {{textbox($errors,'Price*','price')}}
-                  {{textarea($errors,'Bottom Section*','bottom_section')}}
+                  {{textbox($errors,'Course dates<span class="cst-upper-star">*</span>','session_date')}}
+                  {{textbox($errors,'Location<span class="cst-upper-star">*</span>','location')}}
+                  {{textbox($errors,'Day Time<span class="cst-upper-star">*</span>','day_time')}}
+                  {{textbox($errors,'Booking Slot<span class="cst-upper-star">*</span>','booking_slot')}}
+                  {{textarea($errors,'More Info<span class="cst-upper-star">*</span>','more_info')}}
+                  {{textbox($errors,'Price<span class="cst-upper-star">*</span>','price')}}
+                  {{textarea($errors,'Bottom Section<span class="cst-upper-star">*</span>','bottom_section')}}
                   <!-- {{textbox($errors,'Early Birth Price*','early_birth_price')}} -->
 
                   <div class="form-group">
@@ -98,12 +98,12 @@
                     </select>
                   </div>
 
-                  {{textbox($errors,'Coach Cost','coach_cost')}}
+                  {{textbox($errors,'Coach Cost<span class="cst-upper-star">*</span>','coach_cost')}}
 
-                  {{textbox($errors,'Court/Venue Cost','venue_cost')}}
-                  {{textbox($errors,'Equipment Cost','equipment_cost')}}
-                  {{textbox($errors,'Other Cost','other_cost')}}
-                  {{textbox($errors,'Tax/Vat Cost','tax_cost')}}
+                  {{textbox($errors,'Court/Venue Cost<span class="cst-upper-star">*</span>','venue_cost')}}
+                  {{textbox($errors,'Equipment Cost<span class="cst-upper-star">*</span>','equipment_cost')}}
+                  {{textbox($errors,'Other Cost<span class="cst-upper-star">*</span>','other_cost')}}
+                  {{textbox($errors,'Tax/Vat Cost<span class="cst-upper-star">*</span>','tax_cost')}}
 
                   <table class="add_on_services">
                     <thead>

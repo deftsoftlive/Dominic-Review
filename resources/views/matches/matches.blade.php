@@ -72,13 +72,23 @@
                <a class="collapsed card-link" data-toggle="collapse" href="#Personal-{{$match->id}}">
                <span>{{$i}}</span> {{isset($match->opponent_name) ? $match->opponent_name : ''}} - {{isset($match->result) ? $match->result : ''}} - {{isset($match->score) ? $match->score : ''}}
                </a>
+
                @php 
                   $check_stats = DB::table('match_stats')->where('competition_id',$competition->id)->where('match_id',$match->id)->first();
+                  $check_game_charts = DB::table('match_game_charts')->where('comp_id',$competition->id)->where('match_id',$match->id)->first();
                @endphp
+
+               <div class="match_btn">
                @if(!empty($check_stats))
                   <a class="cstm-btn view_stats" href="{{url('/user/competition')}}/{{$competition->id}}/match/{{$match->id}}/stats">Edit Stats</a>
                   <a class="cstm-btn view_stats" href="{{url('/user/competition')}}/{{$competition->id}}/match/{{$match->id}}/stats/view">View Stats</a>
                @endif
+
+               @if(!empty($check_game_charts))
+                  <a class="cstm-btn view_stats" href="{{url('/user/competition')}}/{{$competition->id}}/match/{{$match->id}}/game-charts">View Charts</a>
+               @endif
+               </div>
+               
             </div>
             <div id="Personal-{{$match->id}}" class="collapse" >
                <div class="card-body">

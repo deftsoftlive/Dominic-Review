@@ -82,7 +82,7 @@ class TestController extends Controller
     |----------------------------------------*/ 
     public function test_create(Request $request) {
     	$validatedData = $request->validate([
-            'title' => ['required', 'string', 'max:20'],
+            'title' => ['required', 'string', 'max:50'],
             'description' => ['required', 'string']
         ]);
 
@@ -119,7 +119,7 @@ class TestController extends Controller
     |----------------------------------------*/ 
     public function test_update(Request $request, $slug) {	//dd($request->all());
     	$validatedData = $request->validate([
-            'title' => ['required', 'string', 'max:20'],
+            'title' => ['required', 'string', 'max:50'],
             'description' => ['required', 'string'],
         ]);
 

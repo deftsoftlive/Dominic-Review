@@ -35,12 +35,13 @@ public function NewVendorEmailSuccess($user)
 public function NewVendorEmailSendEmail($user,$template_id)
 {
 	  $template = EmailTemplate::find($template_id);
+    $admin_email = getAllValueWithMeta('admin_email', 'general-setting'); 
     $view= 'emails.customEmail';
     $arr = [
            'title' => $template->title,
            'subject' => $template->subject,
            'name' => 'Admin',
-           'email' => 'bajwa9876470491@gmail.com'
+           'email' => $admin_email
     ];
 
     $data = $this->NewVendorEmailHtml($user,$template);

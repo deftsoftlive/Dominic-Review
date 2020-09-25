@@ -77,6 +77,7 @@
                       <option value="{{$co->id}}">{{$co->title}}</option>
                     @endforeach
                   </select>
+
                   <br/>
                   
                   <label class="control-label">Payment Method<span class="cst-upper-star">*</span></label>

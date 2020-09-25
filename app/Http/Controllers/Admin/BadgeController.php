@@ -55,12 +55,11 @@ class BadgeController extends Controller
     /*----------------------------------------
     |   Add badge 
     |----------------------------------------*/ 
-    public function badge_create(Request $request) {
+    public function badge_create(Request $request) {    
     	$validatedData = $request->validate([
-            'name' => ['required', 'string', 'max:30'],
-            'description' => ['required', 'string'],
-            'image' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
-            'end_date' => ['required','date','after:tomorrow'],
+            'name' => ['required', 'max:50'],
+            'description' => ['required'],
+            'end_date' => ['required','date'],
             'points' => ['required','numeric']
         ]);
 
@@ -93,12 +92,11 @@ class BadgeController extends Controller
     /*----------------------------------------
     |   Update badge content
     |----------------------------------------*/ 
-    public function badge_update(Request $request, $slug) { 
+    public function badge_update(Request $request, $slug) {    
     	$validatedData = $request->validate([
-            'name' => ['required', 'string', 'max:30'],
-            'description' => ['required', 'string'],
-            // 'image' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
-            'end_date' => ['required','date','after:tomorrow'],
+            'name' => ['required', 'max:50'],
+            'description' => ['required'],
+            'end_date' => ['required','date'],
             'points' => ['required','numeric']
         ]);
 
@@ -109,9 +107,9 @@ class BadgeController extends Controller
 	        $filename = time().'.'.$image->getClientOriginalExtension();
 	        $destinationPath = public_path('/uploads');
 	        $img_path = public_path().'/uploads/'.$venue->image;
-	        if (file_exists($img_path)) {
-		        unlink($img_path);
-		    }
+	     //    if (file_exists($img_path)) {
+		    //     unlink($img_path);
+		    // }
 	        $image->move($destinationPath, $filename);
     	}
     	$venue->update([
@@ -152,7 +150,7 @@ class BadgeController extends Controller
     |   List of players who purchased courses
     |----------------------------------------*/
     public function players_listing()
-    {
+    {   
         $user_id = request()->get('user_id');
         $season = request()->get('season'); 
         // $age_group = request()->get('age_group');
@@ -211,53 +209,61 @@ class BadgeController extends Controller
 
     public function save_assign_badge(Request $request){  
 
-        $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('child_id',$request->child_id)->where('orderID','!=',NULL)->where('order_id','!=',NULL)->groupBy('child_id')->first();
-
-        // All selected badges
-        $co_data = $request->badges;  
-        if(!empty($co_data)){
-            $badges = implode(',', $request->badges); 
-        }else{
-            $badges ="";
-        }
-
-        $selected_badges = explode(',',$badges);
-        $points = array();
-
-        foreach($selected_badges as $data=>$value){
-            $badge =Badge::where('id',$value)->first(); 
-            $points[] = $badge->points;
-        }
-
-        $total_points = array_sum($points);       
-
-        $user_badge = UserBadge::where('user_id',$request->child_id)->first(); 
-
-        if(!empty($user_badge))
+        if(!empty($request->badges))
         {
-            // dd($user_badge);
-            // if($user_badge->user_id == $request->child_id && $user_badge->season_id == $request->season_id)
-            // {
-                $ca = UserBadge::find($user_badge->id);
-                $ca->user_id = $request->child_id;
-                $ca->season_id = $request->season_id; 
-                $ca->badges = $badges;
-                $ca->badges_points = $total_points;
-                $ca->save();
+            $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('child_id',$request->child_id)->where('orderID','!=',NULL)->where('order_id','!=',NULL)->groupBy('child_id')->first();
 
-               // UserBadge::where('season_id', $request->season_id)->where('user_id', $request->child_id)->update(array('badges' => $badges, 'badges_points' => $total_points));    
-            // }
-        }else{
-
-                $ca = new UserBadge;
-                $ca->user_id = $request->child_id;
-                $ca->season_id = $request->season_id; 
-                $ca->badges = $badges;
-                $ca->badges_points = $total_points;
-                $ca->save();
+            // All selected badges
+            $co_data = $request->badges;  
+            if(!empty($co_data)){
+                $badges = implode(',', $request->badges); 
+            }else{
+                $badges ="";
             }
 
-        return redirect()->route('players_list',compact('purchase_course'))->with('flash_message','Badges assigned successfully.');
+            $selected_badges = explode(',',$badges);
+            $points = array();
+
+            foreach($selected_badges as $data=>$value){
+                $badge =Badge::where('id',$value)->first(); 
+                $points[] = $badge->points;
+            }
+
+            $total_points = array_sum($points);       
+
+            $user_badge = UserBadge::where('user_id',$request->child_id)->first(); 
+
+            if(!empty($user_badge))
+            {
+                // dd($user_badge);
+                // if($user_badge->user_id == $request->child_id && $user_badge->season_id == $request->season_id)
+                // {
+                    $ca = UserBadge::find($user_badge->id);
+                    $ca->user_id = $request->child_id;
+                    $ca->season_id = $request->season_id; 
+                    $ca->badges = $badges;
+                    $ca->badges_points = $total_points;
+                    $ca->save();
+
+                   // UserBadge::where('season_id', $request->season_id)->where('user_id', $request->child_id)->update(array('badges' => $badges, 'badges_points' => $total_points));    
+                // }
+            }else{
+
+                    $ca = new UserBadge;
+                    $ca->user_id = $request->child_id;
+                    $ca->season_id = $request->season_id; 
+                    $ca->badges = $badges;
+                    $ca->badges_points = $total_points;
+                    $ca->save();
+                }
+
+            return redirect()->route('players_list',compact('purchase_course'))->with('flash_message','Badges assigned successfully.');
+        }
+        else
+        {
+           return \Redirect::back()->with('error','Badges field is required.'); 
+        }
+        
     }
     
     /*----------------------------------------

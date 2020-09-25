@@ -5,8 +5,10 @@
 header.Eshop-header,footer.site-footerss {display:none;}
 </style>
 
+@php $base_url = \URL::to('/'); @endphp
+
  <!-- banner section starts here here -->
-    <section class="football-course-sec" style="background: url(http://49.249.236.30:8654/dominic-new/public/uploads/1584684865tennis_course_banner_image.png);">
+    <section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/1584684865tennis_course_banner_image.png);">
       <div class="container">
         <div class="row">
           <div class="col-md-12">

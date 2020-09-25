@@ -43,6 +43,7 @@ p.vou_prod_type {
                   <div class="row"> 
                       <div class="col-xl-12">
                           <div class="card">
+                            @include('admin.error_message')
                               <div class="card-header"> 
                                   <h5>Shop :: Products</h5>
                                   <div class="cst-admin-filter">
@@ -269,7 +270,8 @@ function myFunction() {
 $(document).ready(function(){
     $("select#people").change(function(){
         var selectedCat = $(this).children("option:selected").val();
-        $base_url = "http://49.249.236.30:8654/dominic-new";
+        
+        $base_url = $("#base_url").val();
         $.ajax({
             url:$base_url+"/selectedCat/",
             method:'GET',

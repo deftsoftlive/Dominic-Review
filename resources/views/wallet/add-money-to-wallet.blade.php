@@ -86,11 +86,15 @@ $wallet_amt = DB::table('wallets')->where('user_id',Auth::user()->id)->first();
                                 </div>
                         </form>
                     </div>
+                    <p> Add funds to your wallet with your payment card.</p>
                 </div>
+
             </div>
+
         </div>
     </div>
 </section>
+
 @php
 $walletHistory = DB::table('wallet_histories')->where('user_id',Auth::user()->id)->orderBy('id','desc')->paginate(5);
 @endphp

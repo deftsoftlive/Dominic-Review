@@ -8,18 +8,26 @@
 @php $base_url = \URL::to('/'); @endphp
     <section class="site-banner">   
       <div class="banner-slider owl-carousel owl-theme">
-        <div class="item" style="background: url({{$base_url}}/public/uploads/{{$slider_image1}});">
+
+        @php 
+          $home_slides = DB::table('home_sliders')->where('status',1)->get();
+        @endphp
+
+        @foreach($home_slides as $slides)
+        <div class="item" style="background: url({{$base_url}}/public/uploads/{{$slides->image}});">
           <div class="container">
             <div class="banner-content">
-                <p class="banner-tag-line">{{$slider_title1}}</p>
-              <h1 class="banner-heading">{{$slider_heading1}}</h1>
-              <h1 class="banner-sub-heading">{{$slider_subheading1}}</h1>
-              <p class="banner-text">{{$slider_description1}}</p>
-              <a href="{{$slider_button_url1}}" class="cstm-btn">{{$slider_button_title1}}</a>
+                <p class="banner-tag-line">{{$slides->title}}</p>
+              <h1 class="banner-heading">{{$slides->heading}}</h1>
+              <h1 class="banner-sub-heading">{{$slides->subheading}}</h1>
+              <p class="banner-text">{{$slides->description}}</p>
+              <a href="{{$slides->button_link}}" class="cstm-btn">{{$slides->button_text}}</a>
             </div>
           </div>
         </div>
-        <div class="item" style="background: url({{$base_url}}/public/uploads/{{$slider_image2}});">
+        @endforeach
+
+        <!-- <div class="item" style="background: url({{$base_url}}/public/uploads/{{$slider_image2}});">
           <div class="container">
             <div class="banner-content">
                 <p class="banner-tag-line">{{$slider_title2}}</p>
@@ -40,7 +48,7 @@
               <a href="{{$slider_button_url3}}" class="cstm-btn">{{$slider_button_title3}}</a>
             </div>
           </div>
-        </div>            
+        </div>   -->          
       </div>
     </section>
     <section class="about-us-sec">
@@ -82,78 +90,28 @@
           </div>
           <div class="col-md-12">
             <div class="activity-slider owl-carousel owl-theme">
+
+              <!-- DRH Activity - Tennis Coaching -->
+
+              @php $drh_activity = DB::table('drh_activities')->where('status',1)->get(); @endphp
+              @foreach($drh_activity as $activity)
               <div class="item">
                 <div class="activity-card text-center">
                   <figure class="activity-card-img">
-                    <img src="{{ URL::asset('images/drh-activity-img-1.png')}}">
+                    <img src="{{ URL::asset('/uploads')}}/{{$activity->image}}">
                   </figure>
-                  <figcaption class="activity-caption"> 
-                    <h2>Tennis Coaching Courses</h2>
-                    <p>Courses for all ages & abilities</p>
-                    <a href="javascript:void(0);" class="book-now-link">Book Now</a>    
-                  </figcaption>
+                  <a href="{{$activity->button_link}}" class="book-now-link">
+                    <figcaption class="activity-caption"> 
+                      <h2>{{$activity->title}}</h2>
+                      <p>{{$activity->subtitle}}</p>
+
+                      <span>{{$activity->button_text}}</span>   
+                    </figcaption>
+                  </a> 
                 </div>
               </div>
-              <div class="item">
-                <div class="activity-card text-center">
-                  <figure class="activity-card-img">
-                    <img src="{{ URL::asset('images/drh-activity-img-2.png')}}">
-                  </figure>
-                  <figcaption class="activity-caption"> 
-                    <h2>Football coaching</h2>
-                    <p>Coming soon!</p>
-                    <a href="javascript:void(0);" class="book-now-link">Book Now</a>    
-                  </figcaption>
-                </div>
-              </div>
-              <div class="item">
-                <div class="activity-card text-center">
-                  <figure class="activity-card-img">
-                    <img src="{{ URL::asset('images/drh-activity-img-3.png')}}">
-                  </figure>
-                  <figcaption class="activity-caption"> 
-                    <h2>Camp Go!</h2>
-                    <p>Holidays camps for kids</p>
-                    <a href="javascript:void(0);" class="book-now-link">Book Now</a>    
-                  </figcaption>
-                </div>
-              </div>
-              <div class="item">
-                <div class="activity-card text-center">
-                  <figure class="activity-card-img">
-                    <img src="{{ URL::asset('images/drh-activity-img-1.png')}}">
-                  </figure>
-                  <figcaption class="activity-caption"> 
-                    <h2>Tennis Coaching Courses</h2>
-                    <p>Courses for all ages & abilities</p>
-                    <a href="javascript:void(0);" class="book-now-link">Book Now</a>    
-                  </figcaption>
-                </div>
-              </div>
-              <div class="item">
-                <div class="activity-card text-center">
-                  <figure class="activity-card-img">
-                    <img src="{{ URL::asset('images/drh-activity-img-2.png')}}">
-                  </figure>
-                  <figcaption class="activity-caption"> 
-                    <h2>Football coaching</h2>
-                    <p>Coming soon!</p>
-                    <a href="javascript:void(0);" class="book-now-link">Book Now</a>    
-                  </figcaption>
-                </div>
-              </div>
-              <div class="item">
-                <div class="activity-card text-center">
-                  <figure class="activity-card-img">
-                    <img src="{{ URL::asset('images/drh-activity-img-3.png')}}">
-                  </figure>
-                  <figcaption class="activity-caption"> 
-                    <h2>Camp Go!</h2>
-                    <p>Holidays camps for kids</p>
-                    <a href="javascript:void(0);" class="book-now-link">Book Now</a>    
-                  </figcaption>
-                </div>
-              </div>
+              @endforeach
+
             </div>
           </div>
         </div>

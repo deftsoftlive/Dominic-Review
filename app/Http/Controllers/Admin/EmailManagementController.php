@@ -17,7 +17,7 @@ class EmailManagementController extends Controller
 
 
     public function index() {
-    	$emails = EmailTemplate::all();
+    	$emails = EmailTemplate::where('id', '!=', '15')->where('id', '!=', '5')->get();
     	return view('admin.emails.index')->with(['title'=> 'Email Management', 'emails' => $emails]);
     }
 

@@ -28,7 +28,7 @@
         </div>
       </div>
     </section>
-<section class="c-d-slider section-padding">
+<section class="c-d-slider section-padding ">
   <div class="container">
   <div class="camp-logo-section">
 	  <div class="container">
@@ -45,14 +45,14 @@
 		</div>
 	  </div>
 	</div>
-	<div class="c-d-img-text">
+	<div class="c-d-img-text upper_text_wrap">
     <div class="row">
-  <div class="col-sm-5">
+  <div class="col-lg-5 col-md-12 col-sm-12 left_text-wrap ">
     <div class="c-d-description">
       {!! $camp_category->description !!}
     </div>
   </div>
-    <div class="col-sm-7">
+    <div class="col-lg-7 col-md-12 col-sm-12 right_text-wrap">
       <div class="owl-carousel owl-theme owl-c-d">
       <div class="item">
         <img src="{{URL::asset('/uploads')}}/{{$camp_category->slider_image1}}" alt="" />
@@ -120,11 +120,11 @@
                   </figure>
                   <figcaption class="testimonial-caption">
                     <p>{{$test->description}}</p>
-                    <div class="t-user">
-                      <div class="round-arrow">
+                    <div class="t-user main_t_user">
+                     <!--  <div class="round-arrow">
                          <img class="nb-icon" src="{{ URL::asset('images/nb-icon.png')}}">
                     <img class="b-icon" src="{{ URL::asset('images/b-icon.png')}}"> 
-                      </div>
+                      </div> -->
                       <h3>{{$test->title}}</h3>
                       <span>
                         @if($test->image)
@@ -183,7 +183,7 @@
                   <ul class="click-btn-content">
                     <li>
                       <figure>
-                        <img src="http://49.249.236.30:8654/dominic-new/public/images/click-btn-img.png">
+                        <img src="{{url('/')}}/public/images/click-btn-img.png">
                       </figure>
                     </li>
                     <li>
@@ -191,7 +191,7 @@
                     </li>
                     <li>
                       <figure>
-                        <img src="http://49.249.236.30:8654/dominic-new/public/images/click-btn-img.png">
+                        <img src="{{url('/')}}/public/images/click-btn-img.png">
                       </figure>
                     </li>
                     </ul>

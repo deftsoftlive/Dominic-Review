@@ -34,12 +34,14 @@ public function VendorRejectionNotification($vendor,$detail)
 public function VendorRejectionNotificationSendEmail($vendor,$template_id,$detail)
 {
 	$template = EmailTemplate::find($template_id);
+  $admin_email = getAllValueWithMeta('admin_email', 'general-setting'); 
+
     $view= 'emails.custom_email';
     $arr = [
            'title' => $template->title,
            'subject' => $template->subject,
            'name' => $vendor->name,
-           'email' => 'bajwa8360854880@gmail.com',//$vendor->email
+           'email' => $admin_email
     ];
     $data = $this->VendorRejectionNotificationHtml($vendor,$template,$detail);
 

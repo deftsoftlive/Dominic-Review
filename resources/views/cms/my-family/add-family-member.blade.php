@@ -144,12 +144,12 @@ $count = 1;
                                                     <label for="gender" class="col-md-12 col-form-label text-md-right ">Gender</label>
                                                     <div class="col-md-12 ">
                                                         <div class="cstm-radio">
-                                                            <input type="radio" value="male" name="gender1" id="1male" @if(!empty($user_data)) @if($user_data->gender == 'male') checked @endif @endif>
-                                                            <label for="1male">Male</label>
+                                                            <input type="radio" value="male" name="gender1" id="onemale" @if(!empty($user_data)) @if($user_data->gender == 'male') checked @endif @endif>
+                                                            <label for="onemale">Male</label>
                                                         </div>
                                                         <div class="cstm-radio">
-                                                            <input type="radio" value="female" name="gender1" id="1female" @if(!empty($user_data)) @if($user_data->gender == 'female') checked @endif @endif>
-                                                            <label for="1female">Female</label>
+                                                            <input type="radio" value="female" name="gender1" id="onefemale" @if(!empty($user_data)) @if($user_data->gender == 'female') checked @endif @endif>
+                                                            <label for="onefemale">Female</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -229,14 +229,21 @@ $count = 1;
                                                         <div class="form-group row" style="display: none;"> 
                                                             <label for="tennis_club" class="col-md-12 col-form-label text-md-right person_attend">Which school does this person attend</label>
                                                             <div class="col-md-12">
-                                                                <input id="school" type="text" class="form-control" name="school1" value="{{isset($children_details->school) ? $children_details->school : ''}}" required="">
+                                                                <input id="school" type="text" class="form-control" name="school1" value="{{isset($children_details->school) ? $children_details->school : ''}}">
                                                             </div>
                                                         </div>
                                                     @elseif($user_data->type == 'Child')
                                                         <div class="form-group row" style="display: block;"> 
                                                             <label for="school" class="col-md-12 col-form-label text-md-right person_attend">Which school does this person attend</label>
                                                             <div class="col-md-12">
-                                                                <input id="school" type="text" class="form-control" name="school1" value="{{isset($children_details->school) ? $children_details->school : ''}}" required="">
+                                                                <input id="school" type="text" class="form-control" name="school1" value="{{isset($children_details->school) ? $children_details->school : ''}}">
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <div class="form-group row"> 
+                                                            <label for="school" class="col-md-12 col-form-label text-md-right person_attend">Which school does this person attend</label>
+                                                            <div class="col-md-12">
+                                                                <input id="school" type="text" class="form-control" name="school1" value="{{isset($children_details->school) ? $children_details->school : ''}}" >
                                                             </div>
                                                         </div>
                                                     @endif 
@@ -251,9 +258,9 @@ $count = 1;
                                                    </div> -->
                                                 <!-- Selection Section - Start -->
                                                 <div class="form-group row">
-                                                    <div class="form-radios" style="margin: 10px 0;">
+                                                    <div class="form-radios" >
                                                         <div class="col-sm-12">
-                                                            <p class="pry-lang" style="display: inline-block; font-weight: 500; margin-right: 15px;">Is English this person’s primary language?</p>
+                                                            <p class="pry-lang" style="display: inline-block; font-weight: 500; margin-right: 15px; font-size:14px;color: #464646;">Is English this person’s primary language?</p>
                                                             <div class="cstm-radio">
                                                                 <input type="radio" class="eng_que" name="language1" id="p-l-english-yes" value="yes" @if(isset($children_details->core_lang)) @if($children_details->core_lang == 'yes') checked @endif @endif>
                                                                 <label for="p-l-english-yes">Yes</label>
@@ -337,7 +344,7 @@ $count = 1;
                                                     </div>
                                                     <!-- Address -->
                                                     <div class="form-group row address-detail">
-                                                        <label for="address" class="col-md-12 col-form-label text-md-right">aaAddress (Number &amp; Street)</label>
+                                                        <label for="address" class="col-md-12 col-form-label text-md-right">Address (Number &amp; Street)</label>
                                                         <div class="col-md-12">
                                                             <input id="address" type="text" class="paste_address form-control" name="address" value="{{isset($user_data->address) ? $user_data->address : ''}}" required="">
                                                             <div class="copy_address">
@@ -400,9 +407,9 @@ $count = 1;
                                                     </div>
                                                     <!-- Selection Section - Start -->
                                                     <div class="form-group row">
-                                                        <div class="form-radios" style="margin: 10px 0;">
+                                                        <div class="form-radios" >
                                                             <div class="col-sm-12">
-                                                                <p style="display: inline-block; font-weight: 500; margin-right: 15px;">Is English this person’s primary language?</p>
+                                                                <p style="display: inline-block; font-weight: 500;font-size:14px;color: #464646; margin-right: 15px;">Is English this person’s primary language?</p>
                                                                 <div class="cstm-radio">
                                                                     <input type="radio" class="eng_que1" name="language" id="p-l-eng-yes" value="yes" @if(isset($children_details->core_lang)) @if($children_details->core_lang == 'yes') checked @endif @endif>
                                                                     <label for="p-l-eng-yes">Yes</label>
@@ -423,9 +430,11 @@ $count = 1;
                                                     </div>
                                                             
                                                         <div class="col-md-6 option_row coach_option">
-                                                            <div class="form-group row ">
+                                                            <div class="form-group row " style="padding-top: 0;
+    position: relative;
+    top:7px;">
                                                                 <div class="form-radios">
-                                                                    <p style="display: inline-block; font-weight: 500; margin-right: 15px;">Will this person be booking onto a DRH coaching course or holiday camp?</p>
+                                                                    <p style="display: inline-block; font-weight: 500; margin-right: 15px;font-size:14px;color: #464646;">Will this person be booking onto a DRH coaching course or holiday camp?</p>
                                                                 </div>
                                                                 <div class="cstm-radio">
                                                                     <input type="radio" name="book_person" id="book_person_yes1" value="yes" @if(isset($user_data->book_person)) @if($user_data->book_person == 'yes') checked @endif @endif>
@@ -505,11 +514,15 @@ $count = 1;
                                                                 @foreach($child_contacts as $contacts)
 
                                                                 <div class="col-sm-12">
-                                                                    <p style="font-weight: 500; margin-right: 15px;margin-bottom: 0;color: #000;">Contact {{$i}}</p>
+                                                                    <p style="font-weight: 500; margin-right: 15px;margin-bottom: 0;color: #000;">Contact {{$i}} - </p>
                                                                 </div>
+                                                                @if($i == 1)
                                                                 <div class="col-sm-12">
-                                                                    <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p>
+                                                                    <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;"><b>PLEASE NOTE</b> : This contact's details will be added to our registers for any classes that are booked for this participant. This is also the adult we expect to be the main person picking up and dropping off the participant.</p>
                                                                 </div>
+                                                                @elseif($i == 2)
+                                                                    <br/><label class="col-md-12 col-form-label"><p>We will contact this individual if we cannot contact the main contact above. It is also an individual that may also pick up and drop off the participant from the activity.<p><label>
+                                                                @endif
                                                                 <div class="contact_wrap contact_section[{{$i}}]">
                                                                     <div class="form-group row">
                                                                         <label class="col-md-12 col-form-label text-md-right">contact {{$i}} - first name:</label>
@@ -550,7 +563,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
+                                                                        <label class="col-md-12 col-form-label text-md-right who_they">If you choose other who are they?</label>
                                                                         <div class="col-md-12">
                                                                             <input id="who_are_they" type="text" class="form-control" name="contact[{{$i}}][who_are_they]" value="{{isset($contacts->who_are_they) ? $contacts->who_are_they : ''}}">
                                                                         </div>
@@ -600,7 +613,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
+                                                                        <label class="col-md-12 col-form-label text-md-right who_they">If you choose other who are they?</label>
                                                                         <div class="col-md-12">
                                                                             <input id="who_are_they" type="text" class="form-control" name="contact[{{$count}}][who_are_they]" value="">
                                                                         </div>
@@ -610,10 +623,12 @@ $count = 1;
                                                             
                                                                 <div class="contact_wrap contact_section[{{$count+1}}]">
                                                                     <div class="col-sm-12">
-                                                                        <p style="font-weight: 500; margin-right: 15px;margin-bottom: 0;color: #000;">Contact {{$count+1}}</p>
+                                                                        <!-- <p style="font-weight: 500; margin-right: 15px;margin-bottom: 0;color: #000;">Contact {{$count+1}}</p> -->
+
+                                                                        <p style="font-weight: 500; margin-right: 15px;margin-bottom: 0;color: #000;">We will contact this individual if we cannot contact the main contact above. It is also an individual that may also pick up and drop off the participant from the activity.</p>
                                                                     </div>
                                                                     <div class="col-sm-12">
-                                                                        <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p>
+                                                                        <!-- <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p> -->
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <label class="col-md-12 col-form-label text-md-right">contact {{$count+1}} - first name:</label>
@@ -654,7 +669,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
+                                                                        <label class="col-md-12 col-form-label text-md-right who_they">If you choose other who are they?</label>
                                                                         <div class="col-md-12">
                                                                             <input id="who_are_they1" type="text" class="form-control" name="contact[{{$count+1}}][who_are_they]" value="">
                                                                         </div>
@@ -711,7 +726,7 @@ $count = 1;
                                                                     <p style="font-weight: 500; margin-right: 15px;margin-bottom: 0;color: #000;">Contact {{$i}}</p>
                                                                 </div>
                                                                 <div class="col-sm-12">
-                                                                    <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p>
+                                                                    <!-- <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p> -->
                                                                 </div>
                                                                 <div class="contact_wrap contact_section[{{$i}}]">
                                                                     <div class="form-group row">
@@ -753,7 +768,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
+                                                                        <label class="col-md-12 col-form-label text-md-right who_they">If you choose other who are they?</label>
                                                                         <div class="col-md-12">
                                                                             <input id="who_are_they" type="text" class="form-control" name="contact[{{$i}}][who_are_they]" value="{{isset($contacts->who_are_they) ? $contacts->who_are_they : ''}}">
                                                                         </div>
@@ -804,7 +819,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
+                                                                        <label class="col-md-12 col-form-label text-md-right who_they">If you choose other who are they?</label>
                                                                         <div class="col-md-12">
                                                                             <input id="who_are_they" type="text" class="form-control" name="contact[{{$count}}][who_are_they]" value="">
                                                                         </div>
@@ -817,7 +832,7 @@ $count = 1;
                                                                         <p style="font-weight: 500; margin-right: 15px;margin-bottom: 0;color: #000;">Contact {{$count+1}}</p>
                                                                     </div>
                                                                     <div class="col-sm-12">
-                                                                        <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p>
+                                                                        <!-- <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p> -->
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <label class="col-md-12 col-form-label text-md-right">contact {{$count+1}} - first name:</label>
@@ -858,7 +873,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
+                                                                        <label class="col-md-12 col-form-label text-md-right who_they">If you choose other who are they?</label>
                                                                         <div class="col-md-12">
                                                                             <input id="who_are_they1" type="text" class="form-control" name="contact[{{$count+1}}][who_are_they]" value="">
                                                                         </div>
@@ -914,7 +929,7 @@ $count = 1;
                                                                     <p style="font-weight: 500; margin-right: 15px;margin-bottom: 0;color: #000;">Contact {{$i}}</p>
                                                                 </div>
                                                                 <div class="col-sm-12">
-                                                                    <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p>
+                                                                    <!-- <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p> -->
                                                                 </div>
                                                                 <div class="contact_wrap contact_section[{{$i}}]">
                                                                     <div class="form-group row">
@@ -956,7 +971,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
+                                                                        <label class="col-md-12 col-form-label text-md-right who_they">If you choose other who are they?</label>
                                                                         <div class="col-md-12">
                                                                             <input id="who_are_they" type="text" class="form-control" name="contact[{{$i}}][who_are_they]" value="{{isset($contacts->who_are_they) ? $contacts->who_are_they : ''}}">
                                                                         </div>
@@ -1006,7 +1021,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
+                                                                        <label class="col-md-12 col-form-label text-md-right who_they">If you choose other who are they?</label>
                                                                         <div class="col-md-12">
                                                                             <input id="who_are_they" type="text" class="form-control" name="contact[{{$count}}][who_are_they]" value="">
                                                                         </div>
@@ -1019,7 +1034,7 @@ $count = 1;
                                                                         <p style="font-weight: 500; margin-right: 15px;margin-bottom: 0;color: #000;">Contact {{$count+1}}</p>
                                                                     </div>
                                                                     <div class="col-sm-12">
-                                                                        <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p>
+                                                                        <!-- <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p> -->
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <label class="col-md-12 col-form-label text-md-right">contact {{$count+1}} - first name:</label>
@@ -1060,7 +1075,7 @@ $count = 1;
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
+                                                                        <label class="col-md-12 col-form-label text-md-right who_they">If you choose other who are they?</label>
                                                                         <div class="col-md-12">
                                                                             <input id="who_are_they1" type="text" class="form-control" name="contact[{{$count+1}}][who_are_they]" value="">
                                                                         </div>
@@ -1150,7 +1165,7 @@ $count = 1;
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
-                                                                                <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
+                                                                                <label class="col-md-12 col-form-label text-md-right who_they">If you choose other who are they?</label>
                                                                                 <div class="col-md-12">
                                                                                     <input id="who_are_they1" type="text" class="form-control" name="contact1[{{$i}}][who_are_they1]" value="{{isset($contacts->who_are_they) ? $contacts->who_are_they : ''}}">
                                                                                 </div>
@@ -1206,7 +1221,7 @@ $count = 1;
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
-                                                                                <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
+                                                                                <label class="col-md-12 col-form-label text-md-right who_they">If you choose other who are they?</label>
                                                                                 <div class="col-md-12">
                                                                                     <input id="who_are_they1" type="text" class="form-control" name="contact1[{{$count}}][who_are_they1]" value="">
                                                                                 </div>
@@ -1305,7 +1320,7 @@ $count = 1;
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
-                                                                                <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
+                                                                                <label class="col-md-12 col-form-label text-md-right who_they">If you choose other who are they?</label>
                                                                                 <div class="col-md-12">
                                                                                     <input id="who_are_they1" type="text" class="form-control" name="contact1[{{$i}}][who_are_they1]" value="{{isset($contacts->who_are_they) ? $contacts->who_are_they : ''}}">
                                                                                 </div>
@@ -1360,7 +1375,7 @@ $count = 1;
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
-                                                                                <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
+                                                                                <label class="col-md-12 col-form-label text-md-right who_they">If you choose other who are they?</label>
                                                                                 <div class="col-md-12">
                                                                                     <input id="who_are_they1" type="text" class="form-control" name="contact1[{{$count}}][who_are_they1]" value="">
                                                                                 </div>
@@ -1445,7 +1460,7 @@ $count = 1;
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
-                                                                                <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
+                                                                                <label class="col-md-12 col-form-label text-md-right who_they">If you choose other who are they?</label>
                                                                                 <div class="col-md-12">
                                                                                     <input id="who_are_they1" type="text" class="form-control" name="contact1[{{$i}}][who_are_they1]" value="{{isset($contacts->who_are_they) ? $contacts->who_are_they : ''}}">
                                                                                 </div>
@@ -1501,7 +1516,7 @@ $count = 1;
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
-                                                                                <label class="col-md-12 col-form-label text-md-right">If you choose other who are they?</label>
+                                                                                <label class="col-md-12 col-form-label text-md-right who_they">If you choose other who are they?</label>
                                                                                 <div class="col-md-12">
                                                                                     <input id="who_are_they1" type="text" class="form-control" name="contact1[{{$count}}][who_are_they1]" value="">
                                                                                 </div>
@@ -1596,20 +1611,21 @@ $count = 1;
                                                                 @endforeach
                                                             
                                                             @php 
-                                                                $count_med_cond_arr = count($med_cond_arr); 
+                                                                $count_med_cond_arr = count($med_cond_arr);     
                                                             @endphp
                                                             @endif
 
+                                                            @if(count($child_medicals)>0)
                                                             @php $i=1; @endphp
-                                                            @foreach($med_cond_info as $con)
+                                                            @foreach($child_medicals as $con)
 
-                                                            <div class="child-contact-container slots{{$i}}" id="medical_cond[{{$i}}]">
+                                                            <div class="child-contact-container slots{{$i}}" id="sec_med_con1[{{$i}}]">
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
                                                                         <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea-wrap">
-                                                                        <textarea class="form-control" name="med_cond_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
+                                                                        <textarea class="form-control" name="med_cond_info1[{{$i}}]" class="form-control" rows="5">{{$con->medical}}</textarea>
 
                                                                         <!-- <a onclick="removeSection1({{$i}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a> -->
                                                                     </div>
@@ -1617,6 +1633,7 @@ $count = 1;
                                                             </div>
                                                             @php $i++; @endphp
                                                             @endforeach
+                                                            @endif
 
                                                             @else
 
@@ -1641,7 +1658,7 @@ $count = 1;
                                                         <div class="form-group row f-g-full" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') style="display:none;" @elseif($children_details->med_cond == 'yes') style="display:block;" @endif @endif>
                                                             <div class="col-sm-12 button-center another_medical" style="margin-top: 15px;">
                                                                 <!-- <button id="medical_info_to_next" class="cstm-btn" style="margin:0;">add another medical condition <i class="fas fa-plus"></i></button> -->
-                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact cstm-btn main_button">add another medical condition <i class="fas fa-plus"></i></a>
+                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact cstm-btn main_button">Add Another Medical Condition <i class="fas fa-plus"></i></a>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 option_row consent-option-row">
@@ -1684,18 +1701,21 @@ $count = 1;
                                                         @endphp
                                                         @endif
 
+                                                        @if(count($child_allergies)>0)
                                                         @php $i=1; @endphp
-                                                        @foreach($allergies_info as $con)
+                                                        @foreach($child_allergies as $con)
                                                         <div class="form-group row address-detail" id="aller[{{$i}}]">
                                                             <label for="address" class="col-md-12 col-form-label text-md-right">
                                                                 <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the allergy and describe how it affects this child</p>
                                                             </label>
                                                             <div class="col-md-12">
-                                                                <textarea class="form-control" name="allergies_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
+                                                                <textarea class="form-control" name="allergies_info[{{$i}}]" class="form-control" rows="5">{{$con->allergy}}</textarea>
                                                             </div>
                                                         </div>
                                                         @php $i++; @endphp
                                                         @endforeach
+                                                        @endif
+
                                                         @else
                                                         <input type="hidden" id="noOfAllergy" value="{{$count}}">
                                                         <div class="form-group row address-detail" id="aller[{{$count}}]">
@@ -1722,16 +1742,16 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="pres_med" id="pres_med-yes" value="yes" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'yes') checked @endif @endif>
+                                                                        <input type="radio" class="pre_med" name="pres_med" id="pres_med-yes" value="yes" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'yes') checked @endif @endif>
                                                                         <label for="pres_med-yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="pres_med" id="pres_med-no" value="no" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'no') checked @endif @endif> <label for="pres_med-no">No</label>
+                                                                        <input type="radio" class="pre_med" name="pres_med" id="pres_med-no" value="no" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'no') checked @endif @endif> <label for="pres_med-no">No</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row address-detail">
+                                                        <div class="form-group row address-detail pre_info" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'no') style="display:none;" @elseif($children_details->pres_med == 'yes') style="display:block;" @endif @endif>
                                                             <label for="address" class="col-md-12 col-form-label text-md-right">
                                                                 <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;>Please state the name of the medication along with how and when this might be administered.</p>
                                                             </label>
@@ -1746,17 +1766,17 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="med_req" id="med-req-yes" value="yes"  @if(isset($children_details->med_req)) @if($children_details->med_req == 'yes') checked @endif @endif>
+                                                                        <input type="radio" class="med_req" name="med_req" id="med-req-yes" value="yes"  @if(isset($children_details->med_req)) @if($children_details->med_req == 'yes') checked @endif @endif>
                                                                         <label for="med-req-yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="med_req" id="med-req-no" value="no" @if(isset($children_details->med_req)) @if($children_details->med_req == 'no') checked @endif @endif> 
+                                                                        <input type="radio" class="med_req" name="med_req" id="med-req-no" value="no" @if(isset($children_details->med_req)) @if($children_details->med_req == 'no') checked @endif @endif> 
                                                                         <label for="med-req-no">No</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row address-detail">
+                                                        <div class="form-group row address-detail med_req_info" @if(isset($children_details->med_req)) @if($children_details->med_req == 'no') style="display:none;" @elseif($children_details->med_req == 'yes') style="display:block;" @endif @endif>
                                                             <!-- <label for="address" class="col-md-12 col-form-label text-md-right"> -->
                                                                 <!-- <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the allergy and describe how it affects this child</p> -->
                                                             <!-- </label> -->
@@ -1820,7 +1840,7 @@ $count = 1;
                                                         <div class="col-md-12 option_row consent-option-row">
                                                             <div class="form-group row ">
                                                                 <div class="form-radios">
-                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical conditions that we should be aware of?</p>
+                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical or behavioural conditions that we should be aware of?</p>
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
@@ -1858,21 +1878,24 @@ $count = 1;
                                                             @endphp
                                                             @endif
 
+                                                            @if(count($child_medicals)>0)
                                                             @php $i=1; @endphp
-                                                            @foreach($med_cond_info as $con)
+                                                            @foreach($child_medicals as $con)
                                                             <div class="child-contact-container slots{{$i}}" id="sec_med_con1[{{$i}}]">
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical or behavioural condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea_wrap">
-                                                                        <textarea class="form-control" name="med_cond_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
+                                                                        <textarea class="form-control" name="med_cond_info[{{$i}}]" class="form-control" rows="5">{{$con->medical}}</textarea>
 
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             @php $i++; @endphp
                                                             @endforeach
+                                                            @endif
+
                                                             @else
 
                                                             <input type="hidden" id="noOfMed1" value="{{$count}}">
@@ -1881,7 +1904,7 @@ $count = 1;
                                                                 
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical or behavioural condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea_wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$count}}]" class="form-control" rows="5"></textarea>
@@ -1894,7 +1917,7 @@ $count = 1;
                                                         <div class="form-group row f-g-full" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') style="display:none;" @elseif($children_details->med_cond == 'yes') style="display:block;" @endif @endif>
                                                             <div class="col-sm-12 button-center another_medical" style="margin-top: 15px;">
                                                                 <!-- <button id="medical_info_to_next" class="cstm-btn" style="margin:0;">add another medical condition <i class="fas fa-plus"></i></button> -->
-                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact cstm-btn main_button">add another medical condition <i class="fas fa-plus"></i></a>
+                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact cstm-btn main_button">Add Another Medical or Behavioural Condition <i class="fas fa-plus"></i></a>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 option_row consent-option-row">
@@ -1920,18 +1943,21 @@ $count = 1;
                                                         @if(!empty($count_child_allergies))
                                                         <input type="hidden" id="noOfAllergy" value="{{$count_child_allergies}}">
 
+                                                        @if(count($child_allergies)>0)
                                                         @php $i=1; @endphp
-                                                        @foreach($allergies_info as $con)
+                                                        @foreach($child_allergies as $con)
                                                         <div class="form-group row address-detail" id="aller[{{$i}}]">
                                                             <label for="address" class="col-md-12 col-form-label text-md-right">
                                                                 <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the allergy and describe how it affects this child</p>
                                                             </label>
                                                             <div class="col-md-12">
-                                                                <textarea class="form-control" name="allergies_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
+                                                                <textarea class="form-control" name="allergies_info[{{$i}}]" class="form-control" rows="5">{{$con->allergy}}</textarea>
                                                             </div>
                                                         </div>
                                                         @php $i++; @endphp
                                                         @endforeach
+                                                        @endif
+
                                                         @else
                                                         <input type="hidden" id="noOfAllergy" value="{{$count}}">
                                                         <div class="form-group row address-detail" id="aller[{{$count}}]">
@@ -1958,16 +1984,16 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="pres_med" id="pres_med-yes" value="yes" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'yes') checked @endif @endif>
+                                                                        <input type="radio" class="pre_med"  name="pres_med" id="pres_med-yes" value="yes" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'yes') checked @endif @endif>
                                                                         <label for="pres_med-yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="pres_med" id="pres_med-no" value="no" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'no') checked @endif @endif> <label for="pres_med-no">No</label>
+                                                                        <input type="radio" class="pre_med" name="pres_med" id="pres_med-no" value="no" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'no') checked @endif @endif> <label for="pres_med-no">No</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row address-detail">
+                                                        <div class="form-group row address-detail pre_info" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'no') style="display:none;" @elseif($children_details->pres_med == 'yes') style="display:block;" @endif @endif>
                                                             <label for="address" class="col-md-12 col-form-label text-md-right">
                                                                 <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;>Please state the name of the medication along with how and when this might be administered.</p>
                                                             </label>
@@ -1982,17 +2008,17 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="med_req" id="med-req-yes" value="yes"  @if(isset($children_details->med_req)) @if($children_details->med_req == 'yes') checked @endif @endif>
+                                                                        <input type="radio" class="med_req" name="med_req" id="med-req-yes" value="yes"  @if(isset($children_details->med_req)) @if($children_details->med_req == 'yes') checked @endif @endif>
                                                                         <label for="med-req-yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="med_req" id="med-req-no" value="no" @if(isset($children_details->med_req)) @if($children_details->med_req == 'no') checked @endif @endif> 
+                                                                        <input type="radio" class="med_req" name="med_req" id="med-req-no" value="no" @if(isset($children_details->med_req)) @if($children_details->med_req == 'no') checked @endif @endif> 
                                                                         <label for="med-req-no">No</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row address-detail">
+                                                        <div class="form-group row address-detail med_req_info" @if(isset($children_details->med_req)) @if($children_details->med_req == 'no') style="display:none;" @elseif($children_details->med_req == 'yes') style="display:block;" @endif @endif>
                                                             <!-- <label for="address" class="col-md-12 col-form-label text-md-right"> -->
                                                                 <!-- <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the allergy and describe how it affects this child</p> -->
                                                             <!-- </label> -->
@@ -2057,7 +2083,7 @@ $count = 1;
                                                         <div class="col-md-12 option_row consent-option-row">
                                                             <div class="form-group row ">
                                                                 <div class="form-radios">
-                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical conditions that we should be aware of?</p>
+                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical or behavioural conditions that we should be aware of?</p>
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
@@ -2084,7 +2110,7 @@ $count = 1;
                                                             <div class="child-contact-container slots{{$i}}" id="sec_med_con1[{{$i}}]">
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical or behavioural condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea-wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
@@ -2103,7 +2129,7 @@ $count = 1;
                                                                 
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical or behavioural condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea_wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$count}}]" class="form-control" rows="5"></textarea>
@@ -2118,7 +2144,7 @@ $count = 1;
                                                         <div class="form-group row f-g-full" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') style="display:none;" @elseif($children_details->med_cond == 'yes') style="display:block;" @endif @endif>
                                                             <div class="col-sm-12 button-center another_medical" style="margin-top: 15px;">
                                                                 <!-- <button id="medical_info_to_next" class="cstm-btn" style="margin:0;">add another medical condition <i class="fas fa-plus"></i></button> -->
-                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact cstm-btn main_button">add another medical condition <i class="fas fa-plus"></i></a>
+                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact cstm-btn main_button">Add Another Medical or Behavioural Condition <i class="fas fa-plus"></i></a>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 option_row consent-option-row">
@@ -2145,18 +2171,21 @@ $count = 1;
                                                         @if(!empty($count_child_allergies))
                                                         <input type="hidden" id="noOfAllergy" value="{{$count_child_allergies}}">
                                                         
+                                                        @if(count($child_allergies)>0)
                                                         @php $i=1; @endphp
-                                                        @foreach($allergies_info as $con)
+                                                        @foreach($child_allergies as $con)
                                                         <div class="form-group row address-detail" id="aller[{{$i}}]">
                                                             <label for="address" class="col-md-12 col-form-label text-md-right">
                                                                 <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the allergy and describe how it affects this child</p>
                                                             </label>
                                                             <div class="col-md-12">
-                                                                <textarea class="form-control" name="allergies_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
+                                                                <textarea class="form-control" name="allergies_info[{{$i}}]" class="form-control" rows="5">{{$con->allergy}}</textarea>
                                                             </div>
                                                         </div>
                                                         @php $i++; @endphp
                                                         @endforeach
+                                                        @endif
+
                                                         @else
                                                         <input type="hidden" id="noOfAllergy" value="{{$count}}">
                                                         <div class="form-group row address-detail" id="aller[{{$count}}]">
@@ -2183,16 +2212,16 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="pres_med" id="pres_med-yes" value="yes" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'yes') checked @endif @endif>
+                                                                        <input type="radio" class="pre_med" name="pres_med" id="pres_med-yes" value="yes" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'yes') checked @endif @endif>
                                                                         <label for="pres_med-yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="pres_med" id="pres_med-no" value="no" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'no') checked @endif @endif> <label for="pres_med-no">No</label>
+                                                                        <input type="radio" class="pre_med" name="pres_med" id="pres_med-no" value="no" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'no') checked @endif @endif> <label for="pres_med-no">No</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row address-detail">
+                                                        <div class="form-group row address-detail pre_info" @if(isset($children_details->pres_med)) @if($children_details->pres_med == 'no') style="display:none;" @elseif($children_details->pres_med == 'yes') style="display:block;" @endif @endif>
                                                             <label for="address" class="col-md-12 col-form-label text-md-right">
                                                                 <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;>Please state the name of the medication along with how and when this might be administered.</p>
                                                             </label>
@@ -2207,17 +2236,17 @@ $count = 1;
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="med_req" id="med-req-yes" value="yes"  @if(isset($children_details->med_req)) @if($children_details->med_req == 'yes') checked @endif @endif>
+                                                                        <input type="radio" class="med_req" name="med_req" id="med-req-yes" value="yes"  @if(isset($children_details->med_req)) @if($children_details->med_req == 'yes') checked @endif @endif>
                                                                         <label for="med-req-yes">Yes</label>
                                                                     </div>
                                                                     <div class="cstm-radio">
-                                                                        <input type="radio" name="med_req" id="med-req-no" value="no" @if(isset($children_details->med_req)) @if($children_details->med_req == 'no') checked @endif @endif> 
+                                                                        <input type="radio" class="med_req" name="med_req" id="med-req-no" value="no" @if(isset($children_details->med_req)) @if($children_details->med_req == 'no') checked @endif @endif> 
                                                                         <label for="med-req-no">No</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row address-detail">
+                                                        <div class="form-group row address-detail med_req_info" @if(isset($children_details->med_req)) @if($children_details->med_req == 'no') style="display:none;" @elseif($children_details->med_req == 'yes') style="display:block;" @endif @endif>
                                                             <!-- <label for="address" class="col-md-12 col-form-label text-md-right"> -->
                                                                 <!-- <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the allergy and describe how it affects this child</p> -->
                                                             <!-- </label> -->
@@ -2290,7 +2319,7 @@ $count = 1;
                                                                 <div class="col-md-12 option_row consent-option-row">
                                                                     <div class="form-group row ">
                                                                         <div class="form-radios">
-                                                                            <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical conditions that we should be aware of?</p>
+                                                                            <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical or behavioural conditions that we should be aware of?</p>
                                                                         </div>
                                                                         <div class="radio-wrap">
                                                                             <div class="cstm-radio">
@@ -2312,16 +2341,17 @@ $count = 1;
                                                                 <input type="hidden" id="noOfMed" value="{{$count_child_medicals}}">
 
 
+                                                                @if(count($child_medicals)>0)
                                                                 @php $i=1; @endphp
-                                                                @foreach($med_cond_info as $con)
+                                                                @foreach($child_medicals as $con)
                                                                 <div class="child-contact-container slot{{$i}}" id="sec_med_con[{{$i}}]">
                                                                     
                                                                     <div class="form-group row address-detail">
                                                                         <label for="address" class=" col-form-label text-md-right">
-                                                                            <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
+                                                                            <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical or behavioural condition and describe how it affects this person.</p>
                                                                         </label>
                                                                         <div class="col-md-12 textarea_wrap">
-                                                                            <textarea class="form-control" name="med_cond_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
+                                                                            <textarea class="form-control" name="med_cond_info[{{$i}}]" class="form-control" rows="5">{{$con->medical}}</textarea>
 
                                                                             <!-- <a onclick="removeSection11({{$i}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a> -->
                                                                         </div>
@@ -2329,6 +2359,7 @@ $count = 1;
                                                                 </div>
                                                                 @php $i++; @endphp
                                                                 @endforeach
+                                                                @endif
 
                                                                 @else
 
@@ -2338,7 +2369,7 @@ $count = 1;
                                                                     
                                                                     <div class="form-group row address-detail">
                                                                         <label for="address" class=" col-form-label text-md-right">
-                                                                            <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
+                                                                            <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical or behavioural condition and describe how it affects this person.</p>
                                                                         </label>
                                                                         <div class="col-md-12 textarea_wrap">
                                                                             <textarea class="form-control" name="med_cond_info[{{$count}}]" class="form-control" rows="5"></textarea>
@@ -2351,7 +2382,7 @@ $count = 1;
                                                                 </div>
                                                                 <div class="form-group row f-g-full" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') style="display:none;" @elseif($children_details->med_cond == 'yes') style="display:block;" @endif @endif>
                                                                     <div class="col-sm-12 button-center another_medical" style="margin-top: 15px;">
-                                                                        <a href="javascript:void(0);" style="margin:0;" onclick="addmedical();" class="additional_contact cstm-btn main_button">add another medical condition <i class="fas fa-plus"></i></a>
+                                                                        <a href="javascript:void(0);" style="margin:0;" onclick="addmedical();" class="additional_contact cstm-btn main_button">Add Another Medical or Behavioural Condition <i class="fas fa-plus"></i></a>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row f-g-full ">
@@ -2456,7 +2487,7 @@ function addmedical() {
     var newnumber = number + 1;
     $("#noOfMed").val(newnumber);
 
-    var mainHtml = '<div class="child-contact-container slot'+newnumber+'" id="sec_med_con['+newnumber+']"><div class="form-group row address-detail"><label for="address" class="col-form-label text-md-right"><p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p></label><div class="col-md-12 textarea_wrap"><textarea class="form-control" name="med_cond_info[' + newnumber + ']" class="form-control" rows="5"></textarea></div></div></div>';
+    var mainHtml = '<div class="child-contact-container slot'+newnumber+'" id="sec_med_con['+newnumber+']"><div class="form-group row address-detail"><label for="address" class="col-form-label text-md-right"><p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical or behavioural condition and describe how it affects this person.</p></label><div class="col-md-12 textarea_wrap"><textarea class="form-control" name="med_cond_info[' + newnumber + ']" class="form-control" rows="5"></textarea></div></div></div>';
 
     $("#medical_cond1").append(mainHtml);
 }
@@ -2471,7 +2502,7 @@ function addmedical1() {
     var newnumber = number + 1;
     $("#noOfMed1").val(newnumber);
 
-    var mainHtml = '<div class="child-contact-container slots'+newnumber+'" id="sec_med_con1['+newnumber+']"><div class="form-group row address-detail"><label for="address" class="col-form-label text-md-right"><p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p></label><div class="col-md-12 textarea_wrap"><textarea class="form-control" name="med_cond_info[' + newnumber + ']" class="form-control" rows="5"></textarea></div></div></div>';
+    var mainHtml = '<div class="child-contact-container slots'+newnumber+'" id="sec_med_con1['+newnumber+']"><div class="form-group row address-detail"><label for="address" class="col-form-label text-md-right"><p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p></label><div class="col-md-12 textarea_wrap"><textarea class="form-control" name="med_cond_info1[' + newnumber + ']" class="form-control" rows="5"></textarea></div></div></div>';
 
     $("#medical_cond").append(mainHtml);
 }
@@ -2497,7 +2528,17 @@ function addcontact() {
     var newnum = num + 1;
     $("#noOfContact").val(newnum); 
 
-    var mainHtml = '<div id="contact_section" class="contact_section[' + newnum + ']"><div class="col-sm-12"><h5 style="width: 100%;">Contact ' + newnum + ':</h5><p>This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p></div><div class="form-group row"><label class="col-md-12 col-form-label text-md-right">contact ' + newnum + ' - first name:</label><div class="col-md-12"><input id="con_first_name" type="text" class="form-control" name="contact[' + newnum + '][con_first_name]" value=""></div></div>';
+    var contact_count = $("#noOfContact").val();
+    if (contact_count == '2') {
+
+        var mainHtml = '<br/><label class="col-md-12 col-form-label"><p>We will contact this individual if we cannot contact the main contact above. It is also an individual that may also pick up and drop off the participant from the activity.<p><label>';
+    }
+    else
+    {
+        var mainHtml = '';
+    }
+
+    mainHtml += '<div id="contact_section" class="contact_section[' + newnum + ']"><div class="col-sm-12"><h5 style="width: 100%;">Contact ' + newnum + ':</h5></div><div class="form-group row"><label class="col-md-12 col-form-label text-md-right">contact ' + newnum + ' - first name:</label><div class="col-md-12"><input id="con_first_name" type="text" class="form-control" name="contact[' + newnum + '][con_first_name]" value=""></div></div>';
 
     mainHtml += '<div class="form-group row"><label class="col-md-12 col-form-label text-md-right">contact ' + newnum + ' - surname:</label><div class="col-md-12"><input id="con_last_name" type="text" class="form-control" name="contact[' + newnum + '][con_last_name]" value=""></div></div>';
 
@@ -2523,7 +2564,17 @@ function addcontact1() {
     var newnum = num + 1;
     $("#noOfContact1").val(newnum);
 
-    var mainHtml = '<div id="contact_section" class="contact_section1[' + newnum + ']"><div class="col-sm-12"><h5 style="width: 100%;">Contact ' + newnum + ':</h5><p>This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p></div><div class="form-group row"><label class="col-md-12 col-form-label text-md-right">contact ' + newnum + ' - first name:</label><div class="col-md-12"><input id="con_first_name1" type="text" class="form-control" name="contact1[' + newnum + '][con_first_name1]" value=""></div></div>';
+    // var contact_count = $("#noOfContact1").val();
+    // if (contact_count == '2') {
+
+    //     var mainHtml = '<label class="col-md-12 col-form-label text-md-right"><p>We will contact this individual if we cannot contact the main contact above. It is also an individual that may also pick up and drop off the participant from the activity.<p><label>';
+    // }
+    // else
+    // {
+    //     var mainHtml = '';
+    // }
+
+   var mainHtml = '<div id="contact_section" class="contact_section1[' + newnum + ']"><div class="col-sm-12"><h5 style="width: 100%;">Contact ' + newnum + ':</h5></div><div class="form-group row"><label class="col-md-12 col-form-label text-md-right">contact ' + newnum + ' - first name:</label><div class="col-md-12"><input id="con_first_name1" type="text" class="form-control" name="contact1[' + newnum + '][con_first_name1]" value=""></div></div>';
 
     mainHtml += '<div class="form-group row"><label class="col-md-12 col-form-label text-md-right">contact ' + newnum + ' - surname:</label><div class="col-md-12"><input id="con_last_name1" type="text" class="form-control" name="contact1[' + newnum + '][con_last_name1]" value=""></div></div>';
 

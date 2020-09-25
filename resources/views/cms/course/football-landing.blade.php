@@ -289,7 +289,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                         <h2>{{ getAllValueWithMeta('foot_lan_camp_tab4_title', 'football-landing') }}</h2>
                                         <div id="accordion">
                                             @foreach($accordian as $acc)
-                                             <div class="card @if($acc->color == '#be298d')pink @elseif($acc->color == '#00afef')blue @elseif($acc->color == '#bea029')yellow @endif">
+                                             <div class="card @if($acc->color == '#001642')blue @elseif($acc->color == '#00afef')sky-blue @elseif($acc->color == '#bea029')yellow @endif">
                                                 <div class="card-header" id="headingOne">
                                                    <h5 class="mb-0">
                                                       <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$acc->id}}" aria-expanded="false" aria-controls="collapse{{$acc->id}}">
@@ -331,7 +331,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                             <p>{{$test->description}}</p>
                                             <div class="t-user">
                                                <div class="round-arrow">
-                                                  <img src="http://49.249.236.30:8654/dominic-new/public/images/round-arrow-img.png">
+                                                  <img src="{{url('/')}}/public/images/round-arrow-img.png">
                                                </div>
                                                <h3>{{$test->title}}</h3>
                                                <span>
@@ -454,7 +454,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                <ul class="click-btn-content">
                   <li>
                      <figure>
-                        <img src="http://49.249.236.30:8654/dominic-new/public/images/click-btn-img.png" alt="">
+                        <img src="{{url('/')}}/public/images/click-btn-img.png" alt="">
                      </figure>
                   </li>
                   <li>
@@ -462,7 +462,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                   </li>
                   <li>
                      <figure>
-                        <img src="http://49.249.236.30:8654/dominic-new/public/images/click-btn-img.png" alt="">
+                        <img src="{{url('/')}}/public/images/click-btn-img.png" alt="">
                      </figure>
                   </li>
                </ul>

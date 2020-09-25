@@ -29,11 +29,11 @@
     <div class="container">
       <div class="pink-heading btn-right">
         <div class="print_logo print-logo-design">
-            <img height="70px;" width="120px;" src="{{url('')}}/public/uploads/1584078701website_logo.png">
+            <img height="70px;" width="120px;" src="{{url('/')}}/public/images/pdf-logo.png">
         </div>
         
         <h2>Update Your Goals</h2>
-        <a class="cstm-btn d-print-none main_button" href="{{url('/user/badges')}}">Back to menu</a>
+        <a class="cstm-btn d-print-none main_button" href="{{url('/user/goals/list')}}">Back to menu</a>
         <button class="cstm-btn d-print-none main_button" id="goal_print">Print</button>
         <br/><br/>
       </div>
@@ -124,13 +124,13 @@
                         <div class="goal-reciew-feedback">
                             <p>Linked Coach Feedback</p>
                                 <div class="form-group">
-                                    <textarea @if($user_goal->finalize == 1) readonly="" @endif class="form-control goal-textarea" name="goal[{{$go->id}}]" rows="3">@if(!empty($user_goal)){{$user_goal->coach_comment}}@endif</textarea>
+                                    <textarea @if(isset($user_goal->finalize) && $user_goal->finalize == 1) readonly="" @endif class="form-control goal-textarea" name="goal[{{$go->id}}]" rows="3">@if(!empty($user_goal)){{$user_goal->coach_comment}}@endif</textarea>
                                 </div>
                         </div>
                     </div>
                     @endforeach
 
-                    @if($user_goal->finalize == '')<button type="submit" class="cstm-btn main_button">Submit</button>@endif
+                    @if(isset($user_goal) && $user_goal->finalize == 1) @else<button type="submit" class="cstm-btn main_button">Submit</button>@endif
                 </form>
             </div>
         </div>
@@ -217,7 +217,7 @@
                             </div> -->
                         </div>
                         <div class="set-goal-btn-wrap">
-                           @if($user_goal->finalize == '') <button type="submit" href="javascript:void(0);" class="cstm-btn main_button">Submit</button> @endif
+                           @if(isset($user_goal->finalize) &&  $user_goal->finalize == '') <button type="submit" href="javascript:void(0);" class="cstm-btn main_button">Submit</button> @endif
                         </div>
                     </form>
                     </div>

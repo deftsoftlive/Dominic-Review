@@ -76,7 +76,7 @@ class CourseController extends Controller
           $course = Course::orderBy('sort','asc')->paginate(10);
         }
     
-        $course_cat = ProductCategory::where('parent','0')->where('subparent','0')->get();
+        $course_cat = ProductCategory::where('parent','0')->where('subparent','0')->where('type','Course')->get();
         $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->get();
     	return view('admin.course.index',compact('course','subtype','course_cat'))
     	->with(['title' => 'Course Management', 'addLink' => 'admin.course.showCreate']);
@@ -110,7 +110,7 @@ class CourseController extends Controller
           $course = Course::select(['id','title','type','season','description','status','slug','price','booking_slot','sort'])->where('status',1)->paginate(10);
         }
         
-        $course_cat = ProductCategory::where('parent','0')->where('subparent','0')->get();
+        $course_cat = ProductCategory::where('parent','0')->where('subparent','0')->where('type','Course')->get();
         $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->get();
         return view('admin.course.active-course',compact('course','course_cat','subtype'))
         ->with(['title' => 'Course Management', 'addLink' => 'admin.course.showCreate']);
@@ -144,7 +144,7 @@ class CourseController extends Controller
           $course = Course::select(['id','title','type','season','description','status','slug','price','booking_slot','sort'])->where('status', '=', '0')->paginate(10);
         }
 
-        $course_cat = ProductCategory::where('parent','0')->where('subparent','0')->get();
+        $course_cat = ProductCategory::where('parent','0')->where('subparent','0')->where('type','Course')->get();
         $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->get();
         return view('admin.course.inactive-course',compact('course','course_cat','subtype'))
         ->with(['title' => 'Course Management', 'addLink' => 'admin.course.showCreate']);

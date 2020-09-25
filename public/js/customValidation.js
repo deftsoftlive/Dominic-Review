@@ -530,7 +530,7 @@ $(document).ready(function (){
            reason_of_rejection: {
                 required: true,
                 maxlength:255,
-                noSpace: true 
+                noSpace: true
             },
         },
         messages:{
@@ -1073,6 +1073,14 @@ $(document).ready(function (){
                 required: true,
                 digits: true
             },
+            tp_played_rally_4shots: {
+                required: true,
+                digits: true
+            },
+            tp_played_rally_5shots: {
+                required: true,
+                digits: true
+            },
             tp_won_rally_4shots: {
                 required: true,
                 digits: true
@@ -1126,13 +1134,21 @@ $(document).ready(function (){
 
       first_name: {
           required: true,
+          noSpace: true,
           maxlength:25,
-          noSpace: true
+          
+      },
+      first_name1: {
+        noSpace: true,
+      },
+      last_name1: {
+        noSpace: true,
       },
       last_name: {
           required: true,
+          noSpace: true,
           maxlength:25,
-          noSpace: true
+          
       },
       gender: {
           required: true,      

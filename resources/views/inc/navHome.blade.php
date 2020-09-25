@@ -79,13 +79,13 @@
 
                   <ul class="serch-login-signup">
                     <li>
-                        <div class="search-icon">
+                      <!--   <div class="search-icon">
                 <i class="fas fa-search"></i>
-              </div>
-              <input type="text" class="form-control search-field" placeholder="Search">
+              </div> -->
+              <!-- <input type="text" class="form-control search-field" placeholder="Search">
               <div class="responsive-search-icon">
                 <input type="text" class="form-control search-field" placeholder="Search">
-              </div>
+              </div> -->
                     </li>
                     
                     @if( Auth::user() && Auth::user()->role_id == '1')

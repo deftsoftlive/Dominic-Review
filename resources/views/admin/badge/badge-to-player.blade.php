@@ -34,6 +34,12 @@
     </div>
   @endif
 
+    @if(Session::has('error'))
+    <div class="alert_msg alert alert-danger">
+      <p>{{ Session::get('error') }} </p>
+    </div>
+  @endif
+
 <div class="col-md-12">
 
   <form role="form" action="{{route('save_assign_badge')}}" method="post" id="venueForm" enctype="multipart/form-data">
@@ -55,7 +61,7 @@
                 $user = DB::table('users')->where('id',$child_id)->first(); 
               @endphp
 
-                   <b>Child Name</b> - {{$user->name}}<br/><br/>
+                   <b>Child Name</b> - {{isset($user->name) ? $user->name : ''}}<br/><br/>
                    <b>Course Name</b> - <br/>
 
                    <div class="table-layout">

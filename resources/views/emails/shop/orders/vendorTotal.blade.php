@@ -75,7 +75,7 @@
                                  		<table align="center" cellpadding="0" cellspacing="0" width="100%" style= "border-collapse: collapse;">
                                  			<tr>
                                  				<td style="vertical-align: middle; padding-top: 10px; padding-bottom: 10px; padding-right: 10px; width: 40px;">
-                                                <img style="width: 50px; " src="{{url('/email-template/images/approved.png')}}"></td>
+                                               </td>
                                  				<td style="font-family: Verdana, 'Times New Roman', Arial; padding-top: 10px; padding-bottom: 10px; vertical-align:middle; font-size: 16px; color: #fff;">Thanks for purchasing this Package </td>
                                  			</tr>
                                  		</table>

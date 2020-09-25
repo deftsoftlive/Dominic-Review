@@ -9,7 +9,7 @@
                                              <tbody>
                                                 <tr>
                                                 	<td style="text-align: center;">
-                                                      <img style="width:100%;" src="{{url('/email-template/images/cart-img.png')}}">
+                                                      <!-- <img style="width:100%;" src="{{url('/email-template/images/cart-img.png')}}"> -->
                                                    </td>
                                                 </tr>
                                              </tbody>

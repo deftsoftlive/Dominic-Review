@@ -121,20 +121,30 @@
                 |       COURSES MANAGEMENT
                 |
                 |********************************* -->
-                <li class="nav-item pcoded-hasmenu <?= ActiveMenu(['admin.course.list','admin.course.showCreate','admin.seasons.list','admin.seasons.showCreate','purchased_course'], 'pcoded-trigger') ?> {{ request()->is('admin/settings/general/edit/early-bird') ? 'active' : '' || \Request::route()->getName() === 'admin.course.list' ? 'active' : '' || \Request::route()->getName() === 'admin.seasons.list' ? 'active' : '' }} {{ request()->is('admin/course/create') ? 'active' : '' || request()->is('admin/course/*') ? 'active' : '' || request()->is('admin/seasons/create') ? 'active' : '' || request()->is('admin/seasons/*') ? 'active' : '' || request()->is('admin/purchased-course') ? 'active' : ''}} " >
+                <li class="nav-item pcoded-hasmenu <?= ActiveMenu(['admin.course.list','admin.course.showCreate','admin.seasons.list','admin.seasons.showCreate'], 'pcoded-trigger') ?> {{ request()->is('admin/settings/general/edit/early-bird') ? 'active' : '' || \Request::route()->getName() === 'admin.course.list' ? 'active' : '' || \Request::route()->getName() === 'admin.seasons.list' ? 'active' : '' }} {{ request()->is('admin/course/create') ? 'active' : '' || request()->is('admin/course/*') ? 'active' : '' || request()->is('admin/seasons/create') ? 'active' : '' || request()->is('admin/seasons/*') ? 'active' : ''  ? 'active' : ''}} " >
 
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon">
                     <i class="fas fa-cubes"></i></span><span class="pcoded-mtext">Courses Management</span></a>
-                    <ul class="pcoded-submenu" style="display: <?= request()->is('admin/settings/general/edit/early-bird') ? 'block' : '' || request()->is('admin/course') ? 'block' : '' || request()->is('admin/course/create') ? 'block' : '' || request()->is('admin/course/*') ? 'block' : '' || request()->is('admin/purchased-course') ? 'block' : '' ?>;">
+                    <ul class="pcoded-submenu" style="display: <?= request()->is('admin/settings/general/edit/early-bird') ? 'block' : '' || request()->is('admin/course') ? 'block' : '' || request()->is('admin/course/create') ? 'block' : '' || request()->is('admin/course/*') ? 'block' : ''  ? 'block' : '' ?>;">
 
                         <li class="{{ \Request::route()->getName() === 'admin.course.list' ? 'active' : '' || request()->is('admin/course/create') ? 'active' : '' || request()->is('admin/course/*') ? 'active' : '' }}"><a href="{{url(route('admin.course.list'))}}" class="">Courses</a></li>
 
                         <li class="{{ \Request::route()->getName() === 'admin.seasons.list' ? 'active' : '' || request()->is('admin/seasons/create') ? 'active' : '' || request()->is('admin/seasons/*') ? 'active' : '' }}"><a href="{{url(route('admin.seasons.list'))}}" class="">Seasons</a></li>
 
                         <li class="{{ request()->is('admin/settings/general/edit/early-bird') ? 'active' : ''}} "><a href="{{url('admin/settings/general/edit/early-bird')}}" class="">Early Bird Management</a></li>
-
-                        <li class="{{ request()->is('admin/purchased-course') ? 'active' : ''}} "><a href="{{route('purchased_course_data')}}" class="">Manage Courses</a></li>
                     </ul>
+                </li>
+
+
+                <!-- ****************************
+                |
+                |       Manage Course
+                |
+                |********************************* -->
+                <!-- <li class="{{ request()->is('admin/purchased-course') ? 'active' : ''}} "><a href="{{route('purchased_course_data')}}" class="">Manage Courses</a></li> -->
+
+                <li class="nav-item {{ \Request::route()->getName() === 'admin/purchased-course' ? 'nav-item active' : 'nav-item' }}">
+                <a href="{{url(route('purchased_course_data'))}}" class="nav-link "><span class="pcoded-micon"><i class="fas fa-list-alt"></i></span><span class="pcoded-mtext">Manage Courses</span></a>
                 </li>
 
 
@@ -223,6 +233,28 @@
                 <li class="nav-item <?= ActiveMenu(['admin.custombox.list', 'admin.custombox.showCreate', 'admin.custombox.showEdit'],'active') ?>">
                     <a href="{{url(route('admin.custombox.list'))}}" class="nav-link "><span class="pcoded-micon"><i class="fas fa-th"></i></span><span class="pcoded-mtext">Custom Box</span></a>
                 </li>
+
+
+                <!-- ****************************
+                |
+                |       Home Slider 
+                |
+                |********************************* -->
+                <li class="nav-item <?= ActiveMenu(['admin.HomeSlider.list', 'admin.HomeSlider.showCreate', 'admin.HomeSlider.showEdit'],'active') ?>">
+                    <a href="{{url(route('admin.HomeSlider.list'))}}" class="nav-link "><span class="pcoded-micon"><i class="fas fa-th"></i></span><span class="pcoded-mtext">Home Page Slider</span></a>
+                </li>
+
+
+
+                <!-- ****************************
+                |
+                |       DRH Actitivity 
+                |
+                |********************************* -->
+                <li class="nav-item <?= ActiveMenu(['admin.drhactivity.list', 'admin.drhactivity.showCreate', 'admin.drhactivity.showEdit'],'active') ?>">
+                    <a href="{{url(route('admin.drhactivity.list'))}}" class="nav-link "><span class="pcoded-micon"><i class="fas fa-bars"></i></span><span class="pcoded-mtext">DRH Activities</span></a>
+                </li>
+
 
                 <!-- ****************************
                 |

@@ -2,6 +2,7 @@
 
 @section('content')
 
+
 <div class="page-header">
                         <div class="page-block">
                             <div class="row align-items-center">
@@ -51,7 +52,7 @@
                                                           @php
                                                             $user = DB::table('users')->where('id',$bd->user_id)->first();
                                                           @endphp
-                                                          <option value="{{$bd->user_id}}">{{$user->name}}</option>
+                                                          <option value="{{$bd->user_id}}">{{isset($user->name) ? $user->name : ''}}</option>
                                                         @endforeach
                                                         </select>
                                                         </div>
@@ -138,7 +139,7 @@
                                                  
 
                                                     <tr>
-                                                        <td>{{$user->name}}</td>
+                                                        <td>{{isset($user->name) ? $user->name : ''}}</td>
                                                         <td>
                                                            @php $course = array(); @endphp
                                                            @foreach($shop as $sh)
@@ -153,7 +154,7 @@
                                                                 @php 
                                                                     $badge = DB::table('badges')->where('id',$se)->first();
                                                                 @endphp
-                                                                    <img width="50px;" height="50px;" src="{{URL::asset('/uploads')}}/{{$badge->image}}">
+                                                                    <img width="50px;" height="50px;" src="{{URL::asset('/uploads')}}/{{isset($badge->image) ? $badge->image : ''}}">
                                                             @endforeach
                                                             @endif
                                                         </td>

@@ -406,14 +406,14 @@
                                             <br/><h3>Medical & Behavioural Information -</h3><br/>
                                             <ul>
                                                 <li>
-                                                    <p>1) Does this person have any medical conditions that we should be aware of? - <span>{{isset($user_details->med_cond) ? $user_details->med_cond : ''}} </span></p>
+                                                    <p>1) Does this person have any medical or behavioural conditions that we should be aware of? - <span>{{isset($user_details->med_cond) ? $user_details->med_cond : ''}} </span></p>
                                                 </li>
                                                 <li>
                                                     <p>2) Does your child have any allergies that we should be aware of? - 
                                                         <span>{{isset($user_details->allergies) ? $user_details->allergies : ''}}</span></p>
                                                 </li>
                                                 <li>
-                                                    <p>3) Does this person have any medical conditions that we should be aware of? - <span>{{isset($user_details->med_cond) ? $user_details->med_cond : ''}} </span></p>
+                                                    <p>3) Does this person have any medical or behavioural conditions that we should be aware of? - <span>{{isset($user_details->med_cond) ? $user_details->med_cond : ''}} </span></p>
                                                 </li>
                                                 <li>
                                                     <p>4) Will your child need to take any prescribed medication during the coaching course or holiday camp? - 

@@ -23,7 +23,10 @@ trait AdminOrderSuccess {
 public function AdminOrderSuccessOrderSuccess($order_id)
 {
 	$template_id = $this->emailTemplate['AdminOrderSuccessFullNotification'];
-  $order = Order::with('orderItems','orderItems.vendor','orderItems.vendor.vendors')->where('id',$order_id)->first();
+  // $order = Order::with('orderItems','orderItems.vendor','orderItems.vendor.vendors')->where('id',$order_id)->first();
+
+  $order = \DB::table('shop_orders')->where('id',$order_id)->first();
+
 	return $this->AdminOrderSuccessSendEmail($order,$template_id);
 }
 
@@ -36,13 +39,15 @@ public function AdminOrderSuccessOrderSuccess($order_id)
 
 public function AdminOrderSuccessSendEmail($order,$template_id)
 {
-	$template = EmailTemplate::find($template_id);
+	  $template = EmailTemplate::find($template_id);
+    $admin_email = getAllValueWithMeta('admin_email', 'general-setting'); 
+    
     $view= 'emails.customEmail';
     $arr = [
            'title' => $template->title,
            'subject' => $template->subject,
            'name' => 'Admin',
-           'email' => 'bajwa9876470491@gmail.com'
+           'email' => $admin_email
     ];
 
     $data = $this->AdminOrderSuccessHtml($order,$template);
@@ -59,14 +64,14 @@ public function AdminOrderSuccessSendEmail($order,$template_id)
 
 public function AdminOrderSuccessHtml($order,$template)
 { 
-    $banner = view('emails.order.shoppingBanner')->render();
+    $banner = view('emails.order.shoppingBanner')->render();  
 		$text2 = $template->body;
 		$orderDetail = $this->AdminOrderSuccessDetail($order);
     $total = $this->AdminOrderSuccessTotals($order);
 
 		$text = str_replace("{OrderDetail}",$orderDetail,$text2);
-		$text = str_replace("{name}",$order->user->name,$text);
- return $banner.$text.$total;
+		$text = str_replace("{name}",$order->user->name,$text); 
+    return $banner.$text.$total;
 }
 
 #---------------------------------------------------------------------------------------------------

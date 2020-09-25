@@ -1,7 +1,16 @@
+$base_url = $("#base_url").val();
+
 /*****************************
 | Print Test Scores
 |*****************************/
 $(document).ready(function() {
+    $('#print_course').click(function() {
+        window.print();
+    });
+
+/*****************************
+| Print Test Scores
+|*****************************/
     $('#print_test_score').click(function() {
         window.print();
     });
@@ -11,8 +20,6 @@ $(document).ready(function() {
 |*****************************/
     function fetch_course_price_data(price = '', course_id = '')
     {
-        $base_url = "http://49.249.236.30:8654/dominic-new";
-
         $.ajax({
             url:$base_url+"/admin/update_course_price/"+price+"/"+course_id,
             method:'GET',
@@ -37,7 +44,6 @@ $(document).ready(function() {
 |*****************************/
     function fetch_course_sort_data(sort_no = '', course_id = '')
     {
-        $base_url = "http://49.249.236.30:8654/dominic-new";
 
         $.ajax({
             url:$base_url+"/admin/update_course_sort/"+sort_no+"/"+course_id,
@@ -63,7 +69,6 @@ $(document).ready(function() {
 |*****************************/
     function fetch_menu_sort_data(sort_no = '', menu_id = '')
     {
-        $base_url = "http://49.249.236.30:8654/dominic-new";
 
         $.ajax({
             url:$base_url+"/admin/update_menu_sort/"+sort_no+"/"+menu_id,
@@ -90,8 +95,7 @@ $(document).ready(function() {
 $(document).ready(function(){
     $("select#season_id").change(function(){ 
         var selectedSeason = $(this).children("option:selected").val(); 
-       
-        $base_url = "http://49.249.236.30:8654/dominic-new";
+
         $.ajax({
             url:$base_url+"/admin/selectedSeason/",
             method:'GET',
@@ -120,8 +124,7 @@ $(document).ready(function(){
 $(document).ready(function(){
     $("select#parent_id").change(function(){ 
         var parent = $(this).children("option:selected").val(); 
-       
-        $base_url = "http://49.249.236.30:8654/dominic-new";
+
         $.ajax({
             url:$base_url+"/admin/parent-player-linking/",
             method:'GET',
@@ -149,7 +152,6 @@ $(document).ready(function(){
 |*****************************/
     function fetch_badge_sort_data(sort_no = '', badge_id = '')
     {
-        $base_url = "http://49.249.236.30:8654/dominic-new";
 
         $.ajax({
             url:$base_url+"/admin/update_badge_sort/"+sort_no+"/"+badge_id,
@@ -176,7 +178,6 @@ $(document).ready(function(){
 |*****************************/
     function fetch_product_sort_data(sort_no = '', product_id = '')
     {
-        $base_url = "http://49.249.236.30:8654/dominic-new";
 
         $.ajax({
             url:$base_url+"/admins/shop/products/update_product_sort/"+sort_no+"/"+product_id,
@@ -203,7 +204,6 @@ $(document).ready(function(){
 |*****************************/
     function fetch_acc_sort_data(sort_no = '', accordian_id = '')
     {
-        $base_url = "http://49.249.236.30:8654/dominic-new";
 
         $.ajax({
             url:$base_url+"/admin/update_acc_sort/"+sort_no+"/"+accordian_id,
@@ -229,7 +229,6 @@ $(document).ready(function(){
 |*****************************/
     function fetch_custombox_sort_data(sort_no = '', custombox_id = '')
     {
-        $base_url = "http://49.249.236.30:8654/dominic-new";
 
         $.ajax({
             url:$base_url+"/admin/update_custombox_sort/"+sort_no+"/"+custombox_id,
@@ -270,7 +269,6 @@ $(document).ready(function(){
 |*****************************/ 
     function remove_pdf_data(acc_id = '')
     {
-        $base_url = "http://49.249.236.30:8654/dominic-new";
 
         $.ajax({
             url:$base_url+"/admin/remove_pdf_data/"+acc_id,

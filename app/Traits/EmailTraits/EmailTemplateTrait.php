@@ -14,6 +14,10 @@ trait EmailTemplateTrait {
 
 
 protected $emailTemplate = [
+
+      // Parent request
+      'parentRequestToCoach' => 3,
+
       'UserOrderSuccessFullNotification' => 4,
       'AdminOrderSuccessFullNotification' => 5,
       'VendorOrderSuccessFullNotification' => 6,
@@ -24,6 +28,7 @@ protected $emailTemplate = [
       'NewVendorEmailJoinNotificationFullNotification' => 11,
       'PricingRequestEmailNotificationFullNotification' => 12,
       'CustomPackageRequestEmailNotificationFullNotification' => 13,
+      
       //shop
       'ShopOrderPlacedNotification' => 14,
       'ShopOrderPlacedVendorNotification' => 15,
@@ -34,16 +39,11 @@ protected $emailTemplate = [
       'ShopApprovedEmailTraitFullNotification' => 20,
       'ProductApprovedEmailTraitFullNotification' => 21,
 
-
 ];
 
 
-public $adminEmail = 'bajwa9876470491@gmail.com';
-
-
-
+public $adminEmail = 'monika27@yopmail.com';
 
 
 
 }
-

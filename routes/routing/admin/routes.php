@@ -190,6 +190,32 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::get('/testimonial/status/{slug}','Admin\TestimonialController@testimonial_Status')->name('admin.testimonial.status');
 		Route::any('/testimonial/delete/{id}','Admin\TestimonialController@delete_testimonial')->name('delete_testimonial');
 
+
+		#----------------------------------------------------------------
+		#  DRH Activity Management
+		#----------------------------------------------------------------
+		Route::get('/drh-activity','Admin\DrhActivityController@drhactivity_index')->name('admin.drhactivity.list');
+		Route::get('/drh-activity/create','Admin\DrhActivityController@drhactivity_showCreate')->name('admin.drhactivity.showCreate');
+		Route::post('/drh-activity/create','Admin\DrhActivityController@drhactivity_create')->name('admin.drhactivity.create');
+		Route::get('/drh-activity/{slug}','Admin\DrhActivityController@drhactivity_showEdit')->name('admin.drhactivity.showEdit');
+		Route::post('/drh-activity/{slug}','Admin\DrhActivityController@drhactivity_update')->name('admin.drhactivity.update');
+		Route::get('/drh-activity/status/{id}','Admin\DrhActivityController@drhactivity_Status')->name('admin.drhactivity.status');
+		Route::any('/drh-activity/delete/{id}','Admin\DrhActivityController@delete_drhactivity')->name('delete_drhactivity');
+
+
+		#----------------------------------------------------------------
+		#  Home Slider Management
+		#----------------------------------------------------------------
+		Route::get('/home-slider','Admin\HomeSliderController@HomeSlider_index')->name('admin.HomeSlider.list');
+		Route::get('/home-slider/create','Admin\HomeSliderController@HomeSlider_showCreate')->name('admin.HomeSlider.showCreate');
+		Route::post('/home-slider/create','Admin\HomeSliderController@HomeSlider_create')->name('admin.HomeSlider.create');
+		Route::get('/home-slider/{slug}','Admin\HomeSliderController@HomeSlider_showEdit')->name('admin.HomeSlider.showEdit');
+		Route::post('/home-slider/{slug}','Admin\HomeSliderController@HomeSlider_update')->name('admin.HomeSlider.update');
+		Route::get('/home-slider/status/{id}','Admin\HomeSliderController@HomeSlider_Status')->name('admin.HomeSlider.status');
+		Route::any('/home-slider/delete/{id}','Admin\HomeSliderController@delete_HomeSlider')->name('delete_HomeSlider');
+
+
+
 		#----------------------------------------------------------------
 		#  Badge Management
 		#----------------------------------------------------------------

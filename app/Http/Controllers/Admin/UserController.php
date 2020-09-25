@@ -492,69 +492,68 @@ class UserController extends Controller
     |********************************/
     public function save_course_for_player(Request $request)
     {
-
-        $validatedData = $request->validate([
-            'parent' => ['required'],
-            'cost_type' => ['required'],
-            'course' => ['required']
-        ]);
-
-        $course = Course::where('id',$request->course)->first();
-
-        if($request->cost_type == 'No Cost')
+        if(!empty($request->parent) && !empty($request->course) && !empty($request->cost_type))    
         {
-            $price = 0;
-            $total = 0;
-            $payment_method = '-';
-        }
-        else{
-            $price = $course->price;
-            $total = $course->price;
-            $payment_method = $request->payment_method;
-        }
+            $course = Course::where('id',$request->course)->first();
 
-
-        $check_shop = ShopCartItems::where('product_id',$request->course)->where('user_id',$request->parent)->where('child_id',$request->player)->where('shop_type','course')->where('type','order')->first();
-
-        if(!empty($check_shop))
-        {
-            $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('orderID','!=',NULL)->where('type','order')->paginate(10);
-            return \Redirect::back()->with('error',$course->title.' cousrse is already assigned to this child.'); 
-        }else{
-
-            if(!empty($request->player))
+            if($request->cost_type == 'No Cost')
             {
-                $player = $request->player;
-            }else{
-                $player = $request->parent;
+                $price = 0;
+                $total = 0;
+                $payment_method = '-';
+            }
+            else{
+                $price = $course->price;
+                $total = $course->price;
+                $payment_method = $request->payment_method;
             }
 
-            $shop                =  new ShopCartItems;
-            $shop->shop_type     =  'course';
-            $shop->product_id    =  $request->course;
-            $shop->child_id      =  $player;
-            $shop->user_id       =  $request->parent;
-            $shop->quantity      =  1;
-            $shop->price         =  $price;
-            $shop->total         =  $price;
-            $shop->course_season =  $course->season;
-            $shop->vendor_id     =  1;
-            $shop->orderID       =  '#DRHSHOP'.strtotime(date('y-m-d h:i:s'));
-            $shop->type          =  'order';
-            $shop->manual        =  1;
-            $shop->save();
 
-            $order               =  new ShopOrder;
-            $order->orderID      =  $shop->orderID;
-            $order->user_id      =  $shop->user_id;
-            $order->amount       =  $shop->price;
-            $order->payment_by   =  $payment_method;
-            $order->status       =  1;
-            $order->manual       =  1;
-            $order->save();
+            $check_shop = ShopCartItems::where('product_id',$request->course)->where('user_id',$request->parent)->where('child_id',$request->player)->where('shop_type','course')->where('type','order')->first();
 
-            ShopCartItems::where('orderID',$order->orderID)->update(array('order_id' => $order->id));
-            return \Redirect::back()->with('success','Course has been assigned to player successfully.'); 
+            if(!empty($check_shop))
+            {
+                $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('orderID','!=',NULL)->where('type','order')->paginate(10);
+                return \Redirect::back()->with('error',$course->title.' cousrse is already assigned to this child.'); 
+            }else{
+
+                if(!empty($request->player))
+                {
+                    $player = $request->player;
+                }else{
+                    $player = $request->parent;
+                }
+
+                $shop                =  new ShopCartItems;
+                $shop->shop_type     =  'course';
+                $shop->product_id    =  $request->course;
+                $shop->child_id      =  $player;
+                $shop->user_id       =  $request->parent;
+                $shop->quantity      =  1;
+                $shop->price         =  $price;
+                $shop->total         =  $price;
+                $shop->course_season =  $course->season;
+                $shop->vendor_id     =  1;
+                $shop->orderID       =  '#DRHSHOP'.strtotime(date('y-m-d h:i:s'));
+                $shop->type          =  'order';
+                $shop->manual        =  1;
+                $shop->save();
+
+                $order               =  new ShopOrder;
+                $order->orderID      =  $shop->orderID;
+                $order->user_id      =  $shop->user_id;
+                $order->amount       =  $shop->price;
+                $order->payment_by   =  $payment_method;
+                $order->status       =  1;
+                $order->manual       =  1;
+                $order->save();
+
+                ShopCartItems::where('orderID',$order->orderID)->update(array('order_id' => $order->id));
+                return \Redirect::back()->with('success','Course has been assigned to player successfully.'); 
+            }
+
+        }else{
+            return \Redirect::back()->with('error','Please fill the required fields.'); 
         }
         
     }

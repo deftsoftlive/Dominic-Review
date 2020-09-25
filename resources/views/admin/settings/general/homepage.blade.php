@@ -55,7 +55,7 @@
         |************************************ -->
 
         <!-- Slide - 1 -->
-        <div class="card">
+        <!-- <div class="card">
           <div class="card-body">
             <h5 class="card-title"><u>SLIDER - 1</u></h5>
              {{textbox($errors,'Slider Title <span class="cst-upper-star">*</span>','slider_title1',$slider_title1)}}
@@ -71,10 +71,10 @@
              </div>
              <img id="slider_image1_src" src="{{ URL::asset('/uploads').'/'.$slider_image1 }}" style="width: 100px;" />
           </div>
-        </div>
+        </div> -->
 
         <!-- Slide - 2 -->
-        <div class="card">
+       <!--  <div class="card">
           <div class="card-body">
             <h5 class="card-title"><u>SLIDER - 2</u></h5>
              {{textbox($errors,'Slider Title <span class="cst-upper-star">*</span>','slider_title2',$slider_title2)}}
@@ -90,10 +90,10 @@
              </div>
              <img id="slider_image2_src" src="{{ URL::asset('/uploads').'/'.$slider_image2 }}" style="width: 100px;" />
           </div>
-        </div>
+        </div> -->
 
         <!-- Slide - 3 -->
-        <div class="card">
+       <!--  <div class="card">
           <div class="card-body">
             <h5 class="card-title"><u>SLIDER - 3</u></h5>
              {{textbox($errors,'Slider Title <span class="cst-upper-star">*</span>','slider_title3',$slider_title3)}}
@@ -109,7 +109,7 @@
              </div>
              <img id="slider_image3_src" src="{{ URL::asset('/uploads').'/'.$slider_image3 }}" style="width: 100px;" />
           </div>
-        </div>
+        </div> -->
 
         <!-- About Us Section -->
         <div class="card">
@@ -119,7 +119,7 @@
              {{textarea($errors,'Description <span class="cst-upper-star">*</span>', 'section1_tagline', $section1_tagline)}}
 
              <div class="form-group">
-              <label class="label-file">Section2 Image (540 X 455) <span class="cst-upper-star">*</span></label>
+              <label class="label-file">Section2 Image (540 X 360) <span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'aboutus_image_src')" class="form-control" name="aboutus_image">
              </div>
              <img id="aboutus_image_src" src="{{ URL::asset('/uploads').'/'.$aboutus_image }}" style="width: 100px;" />

@@ -475,7 +475,7 @@ $count = 1;
                         </h5>
                     </div>
                     <div id="collapseTwo" class="collapse @if($sec == 2) show @endif" aria-labelledby="headingTwo" data-parent="#accordion">
-                        <div class="card-body">
+                       
                             <div class="card-body">
                                 <div class="register-sec form-register-sec family_mem ">
                                     <div class="form-partition">
@@ -513,7 +513,7 @@ $count = 1;
                                                                     <p style="font-weight: 500; margin-right: 15px;margin-bottom: 0;color: #000;">Contact {{$i}}</p>
                                                                 </div>
                                                                 <div class="col-sm-12">
-                                                                    <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p>
+                                                                    <!-- <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p> -->
                                                                 </div>
                                                                 <div class="contact_wrap contact_section[{{$i}}]">
                                                                     <div class="form-group row">
@@ -618,7 +618,7 @@ $count = 1;
                                                                         <p style="font-weight: 500; margin-right: 15px;margin-bottom: 0;color: #000;">Contact {{$count+1}}</p>
                                                                     </div>
                                                                     <div class="col-sm-12">
-                                                                        <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p>
+                                                                        <!-- <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p> -->
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <label class="col-md-12 col-form-label text-md-right">contact {{$count+1}} - first name:</label>
@@ -707,7 +707,7 @@ $count = 1;
                                                                     <p style="font-weight: 500; margin-right: 15px;margin-bottom: 0;color: #000;">Contact {{$i}}</p>
                                                                 </div>
                                                                 <div class="col-sm-12">
-                                                                    <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p>
+                                                                    <!-- <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p> -->
                                                                 </div>
                                                                 <div class="contact_wrap contact_section[{{$i}}]">
                                                                     <div class="form-group row">
@@ -812,7 +812,7 @@ $count = 1;
                                                                         <p style="font-weight: 500; margin-right: 15px;margin-bottom: 0;color: #000;">Contact {{$count+1}}</p>
                                                                     </div>
                                                                     <div class="col-sm-12">
-                                                                        <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p>
+                                                                        <!-- <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p> -->
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <label class="col-md-12 col-form-label text-md-right">contact {{$count+1}} - first name:</label>
@@ -902,7 +902,7 @@ $count = 1;
                                                                     <p style="font-weight: 500; margin-right: 15px;margin-bottom: 0;color: #000;">Contact {{$i}}</p>
                                                                 </div>
                                                                 <div class="col-sm-12">
-                                                                    <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p>
+                                                                    <!-- <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p> -->
                                                                 </div>
                                                                 <div class="contact_wrap contact_section[{{$i}}]">
                                                                     <div class="form-group row">
@@ -1007,7 +1007,7 @@ $count = 1;
                                                                         <p style="font-weight: 500; margin-right: 15px;margin-bottom: 0;color: #000;">Contact {{$count+1}}</p>
                                                                     </div>
                                                                     <div class="col-sm-12">
-                                                                        <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p>
+                                                                        <!-- <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p> -->
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <label class="col-md-12 col-form-label text-md-right">contact {{$count+1}} - first name:</label>
@@ -1499,7 +1499,7 @@ $count = 1;
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                      
                     </div>
                 </div>
                 <div class="card @if(!empty($user_id)) @else disable_tab @endif">
@@ -1531,7 +1531,7 @@ $count = 1;
                                                         <div class="col-md-12 option_row consent-option-row">
                                                             <div class="form-group row ">
                                                                 <div class="form-radios">
-                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical conditions that we should be aware of?</p>
+                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical or behavioural conditions that we should be aware of?</p>
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
@@ -1573,7 +1573,7 @@ $count = 1;
                                                             <div class="child-contact-container slots{{$i}}" id="sec_med_con1[{{$i}}]">
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical or behavioural condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea-wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
@@ -1593,7 +1593,7 @@ $count = 1;
                                                                 
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical or behavioural condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea_wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$count}}]" class="form-control" rows="5"></textarea>
@@ -1608,7 +1608,7 @@ $count = 1;
                                                         <div class="form-group row f-g-full">
                                                             <div class="col-sm-12 button-center" style="margin-top: 15px;">
                                                                 <!-- <button id="medical_info_to_next" class="btn btn-primary" style="margin:0;">add another medical condition <i class="fas fa-plus"></i></button> -->
-                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact btn btn-primary">add another medical condition <i class="fas fa-plus"></i></a>
+                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact btn btn-primary">Add Another Medical or Behavioural Condition <i class="fas fa-plus"></i></a>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 option_row consent-option-row">
@@ -1786,7 +1786,7 @@ $count = 1;
                                                         <div class="col-md-12 option_row consent-option-row">
                                                             <div class="form-group row ">
                                                                 <div class="form-radios">
-                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical conditions that we should be aware of?</p>
+                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical or behavioural conditions that we should be aware of?</p>
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
@@ -1827,7 +1827,7 @@ $count = 1;
                                                             <div class="child-contact-container slots{{$i}}" id="sec_med_con1[{{$i}}]">
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical or behavioural condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea_wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
@@ -1846,7 +1846,7 @@ $count = 1;
                                                                 
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical or behavioural condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea_wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$count}}]" class="form-control" rows="5"></textarea>
@@ -1861,7 +1861,7 @@ $count = 1;
                                                         <div class="form-group row f-g-full">
                                                             <div class="col-sm-12 button-center" style="margin-top: 15px;">
                                                                 <!-- <button id="medical_info_to_next" class="btn btn-primary" style="margin:0;">add another medical condition <i class="fas fa-plus"></i></button> -->
-                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact btn btn-primary">add another medical condition <i class="fas fa-plus"></i></a>
+                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact btn btn-primary">Add Another Medical or Behavioural Condition <i class="fas fa-plus"></i></a>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 option_row consent-option-row">
@@ -2040,7 +2040,7 @@ $count = 1;
                                                         <div class="col-md-12 option_row consent-option-row">
                                                             <div class="form-group row ">
                                                                 <div class="form-radios">
-                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical conditions that we should be aware of?</p>
+                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical or behavioural conditions that we should be aware of?</p>
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio">
@@ -2081,7 +2081,7 @@ $count = 1;
                                                             <div class="child-contact-container slots{{$i}}" id="sec_med_con1[{{$i}}]">
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical or behavioural condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea-wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
@@ -2100,7 +2100,7 @@ $count = 1;
                                                                 
                                                                 <div class="form-group row address-detail">
                                                                     <label for="address" class=" col-form-label text-md-right">
-                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
+                                                                        <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical or behavioural condition and describe how it affects this person.</p>
                                                                     </label>
                                                                     <div class="col-md-12 textarea_wrap">
                                                                         <textarea class="form-control" name="med_cond_info[{{$count}}]" class="form-control" rows="5"></textarea>
@@ -2115,7 +2115,7 @@ $count = 1;
                                                         <div class="form-group row f-g-full">
                                                             <div class="col-sm-12 button-center" style="margin-top: 15px;">
                                                                 <!-- <button id="medical_info_to_next" class="btn btn-primary" style="margin:0;">add another medical condition <i class="fas fa-plus"></i></button> -->
-                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact btn btn-primary">add another medical condition <i class="fas fa-plus"></i></a>
+                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addmedical1();" class="additional_contact btn btn-primary">Add Another Medical or Behavioural Condition <i class="fas fa-plus"></i></a>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 option_row consent-option-row">
@@ -2302,7 +2302,7 @@ $count = 1;
                                                                 <div class="col-md-12 option_row consent-option-row">
                                                                     <div class="form-group row ">
                                                                         <div class="form-radios">
-                                                                            <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical conditions that we should be aware of?</p>
+                                                                            <p style="display: inline-block; font-weight: 400; margin-right: 15px;">Does this person have any medical or behavioural conditions that we should be aware of?</p>
                                                                         </div>
                                                                         <div class="radio-wrap">
                                                                             <div class="cstm-radio">
@@ -2345,7 +2345,7 @@ $count = 1;
                                                                     
                                                                     <div class="form-group row address-detail">
                                                                         <label for="address" class=" col-form-label text-md-right">
-                                                                            <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
+                                                                            <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical or behavioural condition and describe how it affects this person.</p>
                                                                         </label>
                                                                         <div class="col-md-12 textarea_wrap">
                                                                             <textarea class="form-control" name="med_cond_info[{{$i}}]" class="form-control" rows="5">{{$con}}</textarea>
@@ -2365,7 +2365,7 @@ $count = 1;
                                                                     
                                                                     <div class="form-group row address-detail">
                                                                         <label for="address" class=" col-form-label text-md-right">
-                                                                            <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p>
+                                                                            <p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical or behavioural condition and describe how it affects this person.</p>
                                                                         </label>
                                                                         <div class="col-md-12 textarea_wrap">
                                                                             <textarea class="form-control" name="med_cond_info[{{$count}}]" class="form-control" rows="5"></textarea>
@@ -2379,7 +2379,7 @@ $count = 1;
                                                                 </div>
                                                                 <div class="form-group row f-g-full">
                                                                     <div class="col-sm-12 button-center" style="margin-top: 15px;">
-                                                                        <a href="javascript:void(0);" style="margin:0;" onclick="addmedical();" class="additional_contact btn btn-primary">add another medical condition <i class="fas fa-plus"></i></a>
+                                                                        <a href="javascript:void(0);" style="margin:0;" onclick="addmedical();" class="additional_contact btn btn-primary">Add Another Medical or Behavioural Condition <i class="fas fa-plus"></i></a>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row f-g-full ">
@@ -2484,7 +2484,7 @@ function addmedical() {
     var newnumber = number + 1;
     $("#noOfMed").val(newnumber);
 
-    var mainHtml = '<div class="child-contact-container slot'+newnumber+'" id="sec_med_con['+newnumber+']"><div class="form-group row address-detail"><label for="address" class="col-form-label text-md-right"><p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p></label><div class="col-md-12 textarea_wrap"><textarea class="form-control" name="med_cond_info[' + newnumber + ']" class="form-control" rows="5"></textarea></div></div></div>';
+    var mainHtml = '<div class="child-contact-container slot'+newnumber+'" id="sec_med_con['+newnumber+']"><div class="form-group row address-detail"><label for="address" class="col-form-label text-md-right"><p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical or behavioural condition and describe how it affects this person.</p></label><div class="col-md-12 textarea_wrap"><textarea class="form-control" name="med_cond_info[' + newnumber + ']" class="form-control" rows="5"></textarea></div></div></div>';
 
     $("#medical_cond1").append(mainHtml);
 }
@@ -2499,7 +2499,7 @@ function addmedical1() {
     var newnumber = number + 1;
     $("#noOfMed1").val(newnumber);
 
-    var mainHtml = '<div class="child-contact-container slots'+newnumber+'" id="sec_med_con1['+newnumber+']"><div class="form-group row address-detail"><label for="address" class="col-form-label text-md-right"><p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical condition and describe how it affects this person.</p></label><div class="col-md-12 textarea_wrap"><textarea class="form-control" name="med_cond_info[' + newnumber + ']" class="form-control" rows="5"></textarea></div></div></div>';
+    var mainHtml = '<div class="child-contact-container slots'+newnumber+'" id="sec_med_con1['+newnumber+']"><div class="form-group row address-detail"><label for="address" class="col-form-label text-md-right"><p style="margin-bottom:0;display: inline-block;font-weight: 400;margin-right: 15px;" ;> Please state the name of the medical or behavioural condition and describe how it affects this person.</p></label><div class="col-md-12 textarea_wrap"><textarea class="form-control" name="med_cond_info[' + newnumber + ']" class="form-control" rows="5"></textarea></div></div></div>';
 
     $("#medical_cond").append(mainHtml);
 }
@@ -2525,7 +2525,7 @@ function addcontact() {
     var newnum = num + 1;
     $("#noOfContact").val(newnum); 
 
-    var mainHtml = '<div id="contact_section" class="contact_section[' + newnum + ']"><div class="col-sm-12"><h5 style="width: 100%;">Contact ' + newnum + ':</h5><p>This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p></div><div class="form-group row"><label class="col-md-12 col-form-label text-md-right">contact ' + newnum + ' - first name:</label><div class="col-md-12"><input id="con_first_name" type="text" class="form-control" name="contact[' + newnum + '][con_first_name]" value=""></div></div>';
+    var mainHtml = '<div id="contact_section" class="contact_section[' + newnum + ']"><div class="col-sm-12"><h5 style="width: 100%;">Contact ' + newnum + ':</h5></div><div class="form-group row"><label class="col-md-12 col-form-label text-md-right">contact ' + newnum + ' - first name:</label><div class="col-md-12"><input id="con_first_name" type="text" class="form-control" name="contact[' + newnum + '][con_first_name]" value=""></div></div>';
 
     mainHtml += '<div class="form-group row"><label class="col-md-12 col-form-label text-md-right">contact ' + newnum + ' - surname:</label><div class="col-md-12"><input id="con_last_name" type="text" class="form-control" name="contact[' + newnum + '][con_last_name]" value=""></div></div>';
 
@@ -2551,7 +2551,7 @@ function addcontact1() {
     var newnum = num + 1;
     $("#noOfContact1").val(newnum);
 
-    var mainHtml = '<div id="contact_section" class="contact_section1[' + newnum + ']"><div class="col-sm-12"><h5 style="width: 100%;">Contact ' + newnum + ':</h5><p>This is the adult we expect to be the main person picking up and dropping off this child from the activity.</p></div><div class="form-group row"><label class="col-md-12 col-form-label text-md-right">contact ' + newnum + ' - first name:</label><div class="col-md-12"><input id="con_first_name1" type="text" class="form-control" name="contact1[' + newnum + '][con_first_name1]" value=""></div></div>';
+    var mainHtml = '<div id="contact_section" class="contact_section1[' + newnum + ']"><div class="col-sm-12"><h5 style="width: 100%;">Contact ' + newnum + ':</h5></div><div class="form-group row"><label class="col-md-12 col-form-label text-md-right">contact ' + newnum + ' - first name:</label><div class="col-md-12"><input id="con_first_name1" type="text" class="form-control" name="contact1[' + newnum + '][con_first_name1]" value=""></div></div>';
 
     mainHtml += '<div class="form-group row"><label class="col-md-12 col-form-label text-md-right">contact ' + newnum + ' - surname:</label><div class="col-md-12"><input id="con_last_name1" type="text" class="form-control" name="contact1[' + newnum + '][con_last_name1]" value=""></div></div>';
 

@@ -89,6 +89,7 @@ header.Eshop-header {
                                           $camp_id = $item->product_id;
                                           $camp = DB::table('camps')->where('id',$camp_id)->first(); 
                                           $child = DB::table('users')->where('id',$item->child_id)->first();
+                                          $week = json_decode($item->week); 
                                         @endphp
                                           <tr class="cart-table__row">
                                                 <td class="cart-table__column cart-table__column--image"><b>Camp </b></td>
@@ -99,7 +100,37 @@ header.Eshop-header {
                                                       <b class="bText">{{isset($child->name) ? $child->name : 'No child selected'}}</b>
                                                     </li>                 
                                                   </ul>
-                                                </td>
+                                               
+                                                <br/>
+                                                
+                                                  @foreach($week as $number=>$number_array)
+
+                                                      @foreach($number_array as $data=>$user_data)
+
+                                                        @foreach($user_data as $data1=>$user_data1)
+                                                          @php 
+                                                            $split = explode('-',$user_data1);
+                                                            $get_session = $split[2];
+                                                          @endphp
+                                                          @if($get_session == 'early')
+                                                            <li>{{$number}} - {{$data1}} - Early Drop Off<br/></li>
+                                                          @elseif($get_session == 'mor')
+                                                            <li>{{$number}} - {{$data1}} - Morning<br/></li>
+                                                          @elseif($get_session == 'noon')
+                                                            <li>{{$number}} - {{$data1}} - Afternoon<br/></li>
+                                                          @elseif($get_session == 'lunch')
+                                                            <li>{{$number}} - {{$data1}} - Lunch Club<br/></li>
+                                                          @elseif($get_session == 'late')
+                                                            <li>{{$number}} - {{$data1}} - Late Pickup<br/></li>
+                                                          @elseif($get_session == 'full')
+                                                            <li>{{$number}} - {{$data1}} - Full Day<br/></li>
+                                                          @endif
+                                                        @endforeach
+                                                      
+                                                        @endforeach
+
+                                                    @endforeach
+                                              </td>
                                                 
                                                 <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
                                                     <span class="Quantity_number">{{$item->quantity}}</span>

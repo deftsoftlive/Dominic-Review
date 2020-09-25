@@ -43,4 +43,11 @@ $total = $userCartContent->sum('total');
         </table>
 
         <!-- <a class="cstm-btn solid-btn btn-xl btn-block cart__checkout-button" href="{{url(route('shop.checkout.index'))}}">Proceed to checkout</a> -->
-        <a class="cstm-btn solid-btn btn-xl btn-block cart__checkout-button main_button" href="{{url(route('shop.checkout.reviewCart'))}}">Proceed to checkout</a>
+        
+        @php 
+            $cart_items = DB::table('shop_cart_items')->where('user_id', Auth::user()->id)->where('type','cart')->get(); 
+        @endphp
+
+        @if(count($cart_items)>0)
+            <a class="cstm-btn solid-btn btn-xl btn-block cart__checkout-button main_button" href="{{url(route('shop.checkout.reviewCart'))}}">Proceed to checkout</a>
+        @endif

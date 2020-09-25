@@ -260,7 +260,8 @@
 $(document).ready(function(){
     $("select#people").change(function(){
         var selectedCat = $(this).children("option:selected").val();
-        $base_url = "http://49.249.236.30:8654/dominic-new";
+        
+        $base_url = $("#base_url").val();
         $.ajax({
             url:$base_url+"/admin/selectedCat/",
             method:'GET',

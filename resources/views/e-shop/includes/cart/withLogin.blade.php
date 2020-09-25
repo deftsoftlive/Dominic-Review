@@ -20,7 +20,7 @@
               <a href=""><img src="{{url($product->thumbnail)}}" alt=""></a>
           </td>
           <td class="cart-table__column cart-table__column--product">
-              <a href="" class="cart-table__product-name">{{$product->name}}</a>
+              <a href="{{url('/shop/product')}}/{{$product->slug}}" class="cart-table__product-name">{{$product->name}}</a>
               <!-- <h4>Product Type: {{$product->product_type == 1 ? 'Variable' : 'Simple'}}</h4> -->
              
             @if($product->product_type == 1)
@@ -96,7 +96,7 @@
               <b>Course </b>
           </td>
           <td class="cart-table__column cart-table__column--product">
-              <a href="" class="cart-table__product-name">{{$course->title}}</a>
+              <a href="{{url('/course-detail')}}/@php echo base64_encode($course->id); @endphp" class="cart-table__product-name">{{$course->title}}</a>
 
               <ul class="cart-table__options">
                 <li>@if($item->child_id == $login_user) Account Holder @else Child @endif:  
@@ -137,7 +137,7 @@
               <b>Camp </b>
           </td>
           <td class="cart-table__column cart-table__column--product">
-              <a href="" class="cart-table__product-name">{{$camp->title}}</a>
+              <a href="{{url('/book-a-camp')}}/{{$camp->slug}}" class="cart-table__product-name">{{$camp->title}}</a>
 
               <ul class="cart-table__options">
                 <li>Child: 

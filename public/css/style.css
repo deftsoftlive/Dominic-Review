@@ -14,6 +14,9 @@ select
     background-position: top 50% right 12px;
     z-index: 9;
 }
+b,strong{
+    font-weight:700;
+}
 p,
 h1,
 h2,
@@ -301,6 +304,7 @@ p {
     background-position: center !important;
     background-repeat: no-repeat !important;
     padding: 266px 0 215px !important;
+    position: relative;
 }
 
 .banner-content .banner-tag-line {
@@ -562,7 +566,7 @@ section.coach_listing figcaption.dsgn-coach-box:hover {
     transition: all linear 0.3s;
 }
 
-.activity-caption:hover, .activity-caption:focus {
+section.drh-activity-sec .activity-caption:hover,  section.drh-activity-sec .activity-caption:focus {
     background: #00afef !important;
     transition: all linear 0.3s;
 }
@@ -706,7 +710,7 @@ section.coach_listing figcaption.dsgn-coach-box:hover {
     background: transparent;
     border-radius: 50%;
     border: 2px solid #95948f;
-    margin-right: 8px;
+    margin-right: 0;
 }
 
 .testimonial-slider .owl-dots .owl-dot:last-child {
@@ -936,6 +940,18 @@ section.coach_listing figcaption.dsgn-coach-box:hover {
     margin-bottom: -59px;
     z-index: 1;
     position: relative;
+}
+
+.football-course-sec:after,.banner-slider .item:after {
+    position: absolute;
+    content: '';
+    bottom: 0;
+    background: url(../images/pattern-1.png);
+    left: 0;
+    right: 0;
+    height: 80px;
+    width:100%;
+    z-index:9999;
 }
 
 .football-course-content .f-course-heading,
@@ -5375,11 +5391,11 @@ table th {
 }
 
 .product-price {
-    font-size: 18px;
+    font-size: 22px;
     color: #001642;
     font-weight: 600;
     float: left;
-    width: 50%;
+    width: 70%;
 }
 
 .product-price small {
@@ -6914,7 +6930,7 @@ body {
 
 .modal-open,
 .modal-open .main-header {
-    padding-right: 17px !important;
+    padding-right:0px !important;
 }
 
 .register-acc .inner-cont .pl_name {
@@ -9284,12 +9300,12 @@ select#child_id:focus {
 }
 
 .card-header.view-card-header a {
-    width: 85%;
+    width:59%;
 }
 
 .card-header.view-card-header .view_stats {
 
-    width: 12% !important;
+    width: 100% !important;
     font-size: 14px !important;
     text-transform: uppercase;
     text-decoration: none;
@@ -9689,7 +9705,11 @@ button:focus {
 .outer-slt select#child {
     width: 100%;
 }
+.main_t_user
 
+{
+	margin-bottom:13px;
+}
 .outer-slt .error {
     width: 100% !important;
     position: absolute !important;
@@ -9801,7 +9821,9 @@ div#sec_all {
     display: flex;
     flex-direction: column;
 }
-
+input#onemale, input#onefemale {
+    display: none;
+}
 form#newsletter .error {
     top: 55px;
     left: 0;
@@ -9813,12 +9835,12 @@ form#newsletter .error {
     padding: 7px 15px 7px 0;
 }
 
-.wallet_form label#money_amount-error {
+/*.wallet_form label#money_amount-error {
     position: absolute;
     top: 76px;
     left: 15px;
     font-weight: 500 !important;
-}
+}*/
 
 .cart.block .alert_msg.alert.alert-danger:nth-child(2),
 .cart.block .alert_msg.alert.alert-danger:nth-child(3),
@@ -10264,4 +10286,159 @@ h2.comp_and_match {
 .coach-goal-comment-sec .player-report-table.tbl_shadow {
   
     overflow: auto!important;
+}
+.match-form-wrap form a {
+    color: #00afef;
+}
+.game-chart
+{
+    padding: 100px 0 70px;
+}
+.game-chart figure {
+    margin-bottom: 30px;
+    border: 2px solid #001642;
+    padding: 5px;
+    box-shadow: 6px 6px 25px -4px rgba(0, 0, 0, 0.2);
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.game-chart figure img
+{
+    height: 100%;
+    width:100%;
+    object-fit: contain;
+}
+.game-chart .outer-wrap {
+    margin-top: 15px;
+}
+.game-chart ul.cart-list
+{
+     margin-bottom: 25px;
+}
+.game-chart ul.cart-list li p {
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+ text-transform: capitalize;
+}
+.game-chart .outer-wrap h4 {
+    font-size: 26px;
+    color: #001642;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+    line-height: 20px;
+}
+ul.cart-list li span {
+    font-size: 18px;
+    font-weight: 300;
+    color: #666;
+    padding-left: 3px; text-transform: capitalize;
+
+}
+figure.about-us-img-wrap {
+    position: relative;
+    margin-top: 50px;
+    z-index: 99;
+}
+figure.about-us-img-wrap::after {
+    position: absolute;
+    content: '';
+    background:#00afef;
+    height: 433px;
+    width: 503px;
+    left: 70px;
+    top: -37px;
+    z-index: -1;
+}figure.about-us-img-wrap img {
+    box-shadow: 6px 6px 25px -4px rgba(0, 0, 0, 0.2);
+}
+.match_btn {
+    flex-direction: row;
+    display: flex;
+    width: 41%;
+    /* align-items: end; */
+    float: right;
+    justify-content: flex-end;
+}
+.match_btn a {
+    width: 100%;
+    max-width: 132px;
+}
+.drh-activity-sec figcaption.activity-caption span {
+    color: #666666;
+}
+.drh-activity-sec figcaption.activity-caption:hover span
+{
+    color: #fff;
+}
+.event-book {
+    padding: 5px 10px;
+    background: #00afef;
+    text-align: center;
+}
+
+.event-book  p{
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.wallet_form input.form-control.input--error
+{
+    position: relative;
+}
+.wallet_form input.form-control.input--error label#money_amount-error
+{
+    top:96px!important;
+}
+.testimonial-slider .owl-dots .owl-dot:first-child {
+    margin: 0;
+}
+@-moz-document url-prefix() {
+    #date_of_birth {
+    padding: 0 5px 3px;
+}
+input[type="date"]:before {
+    color: transparent;
+    background: none;
+    display: block;
+    font-family: "Font Awesome 5 Free";
+    content: '\f073';
+    width: 15px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 6px;
+    color: #999;
+    font-weight: bold;
+}
+}
+
+div#upload_doc select {    
+    background-position: top 50% right 5px; 
+}
+div#upload_doc input, div#upload_doc select {
+    padding:3px 6px;
+}
+div#upload_doc input:hover, div#upload_doc select:focus,
+div#upload_doc input:hover, div#upload_doc select:focus
+{
+    outline: none;
+    border-color:#ced4da;
+}
+.upper_text_wrap .item img {
+    height: 450px;
+    width: 100%;
+    object-fit: cover;
+}
+.col-md-12.det-gender-opt input {
+    margin: 0px 5px 0 5px!important;
+}
+.col-md-12.det-gender-opt label {
+    padding-right: 5px;
+}
+.match-form-wrap .table_outer_wrap {
+    overflow: auto;
 }

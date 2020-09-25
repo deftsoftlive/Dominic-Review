@@ -483,6 +483,10 @@ form.cst-selection select.select_player
     
 }
 
+.slimScrollBar {
+    width: 10px!important;
+}
+
 /*11-10-20*/
 .register-acc .card-header.family-tabs {
     padding: 10px 15px;
@@ -518,10 +522,17 @@ form.cst-selection select.select_player
 }.register-acc h5.mb-0 {
     display: flex;
     justify-content: space-between;
-    flex-direction: row;
+   
     flex-wrap: nowrap;width: 100%;
+      flex-direction: row-reverse;
 }
-
+.adult-selection-content h4 {
+    padding: 0 15px;
+}
+.child-selection-content button ,.adult-selection-content button 
+{
+  padding: 10px 5px;
+}
 .register-acc .card .card-header h5::after
 {
   display: none!important;
@@ -685,14 +696,21 @@ form.cst-selection select.select_player
     width: 100%;
 }
 
+table#coach_player a {
+    margin: 0;
+    padding: 10px;
+}
+
+form#inventoryFormSubmit .error {
+    
+    left: 15px;
+    top: 45px;}
 
 
 
-
-
-
-
-
+@page {
+  size: auto;
+}
 
 
 
@@ -711,10 +729,15 @@ form.cst-selection select.select_player
         display: block!important;
     }
 }
+.pcoded-main-container
+{
+  margin-left: 0;
+}
 .page-wrapper .accordian_summary
 {
   padding:0 25px; 
 }
+
 .page-wrapper .accordian_summary .card .card-header {
     background: #3f4d67;
     padding: 10px 15px!important;
@@ -749,6 +772,7 @@ form.cst-selection select.select_player
     border: 2px solid #3f4d67;
     margin-bottom: 5px;
 }
+
 table.table.table-bordered.cst-reports th, table.table.table-bordered.cst-reports td {
     width: 50%;
 }
@@ -12146,22 +12170,100 @@ span.notification-icon {
   margin:0;
 }
 
-/*media query*/
 
+.inner-cont {
+    display: flex;
+    flex-direction: column;
+}
+.inner-cont .outer-wrap.camp-person-detail {
+    order: 1
+}
+.inner-cont table.table.table-bordered.camp-table {
+  order: 2
+}
+.inner-cont button {
+    order: 3;
+    width: 100px;
+}
+/*media query*/
+.row.align-items-center img
+{
+  display: none;
+}
+
+
+
+@media print{
+              /*{
+                  -webkit-print-color-adjust: exact;
+              }*/
+              .camp-detail-table .camp-table th {
+    background: #a4c3e3!important;
+}
+.course-detail-table table .even-name-row {
+    background-color: #ffcef1!important;
+}
+.course-detail-table table .odd-name-row {
+    background-color: #ced5ff!important;
+}
+.pcoded-main-container
+{
+  width: 100%;
+  margin-left: 0!important;
+}
+.course-detail-table {
+    overflow: auto;
+    margin-right: auto;
+}
 @media print { 
+  .course-detail-table table .even-name-row {
+    background-color: #ffcef1;
+}
+
   .pcoded-main-container
   {
    
     margin-left: 0!important;
   }
+.row.align-items-center img {
+  display: block;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: 100%; */
+    text-align: center;
+}
 
+body {
+ 
+    color: #f4f7fa;
+}
 }
 
 .print_data, .print_logo{
     display: none!important;
 }
 @media print {
+    body{
+      -webkit-print-color-adjust: exact;
+    }
     .page-wrapper .print_logo  {
         display: block!important;
     }
+    .course-detail-table{
+      width: 100%;
+      overflow: hidden;  
+    }
+    .course-detail-table .container{
+      max-width: 100%!important;
+    }
+    .course-detail-table .inner-cont{ 
+      width: 100%!important;
+    }
+    .pcoded-main-container{
+      margin-left: 0px;
+    } 
+   
 }

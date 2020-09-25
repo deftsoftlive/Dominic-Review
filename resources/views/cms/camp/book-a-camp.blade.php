@@ -410,17 +410,22 @@
 
                       @php 
                         $camp_data = DB::table('camp_prices')->where('camp_id',$camp->id)->first();  
-                        $morning_seats = $camp_data->morning_seats;
-                        $afternoon_seats = $camp_data->afternoon_seats; 
-
-                        $shop_data = DB::table('shop_cart_items')->where('shop_type','camp')->where('type','order')->where('product_id',$camp->camp_id)->get();
-                        $selected_week_data = [];
                       @endphp
 
-                      @foreach($shop_data as $sh)
-                        @php $selected_week_data[] = json_decode($sh->week); @endphp
-                      @endforeach
-                      @php $week = $selected_week_data; @endphp
+                      @if(!empty($camp_data))
+                          @php
+                            $morning_seats = $camp_data->morning_seats;
+                            $afternoon_seats = $camp_data->afternoon_seats; 
+
+                            $shop_data = DB::table('shop_cart_items')->where('shop_type','camp')->where('type','order')->where('product_id',$camp->camp_id)->get();
+                            $selected_week_data = [];
+                          @endphp
+
+                          @foreach($shop_data as $sh)
+                            @php $selected_week_data[] = json_decode($sh->week); @endphp
+                          @endforeach
+                          @php $week = $selected_week_data; @endphp
+                      @endif
 
                       <td class="active">&nbsp;</td>
                     </tr>
@@ -464,7 +469,7 @@
           <ul class="click-btn-content">
             <li>
               <figure>
-                <img src="http://49.249.236.30:8654/dominic-new/public/images/click-btn-img.png">
+                <img src="{{url('/')}}/public/images/click-btn-img.png">
               </figure>
             </li>
             <li>
@@ -472,7 +477,7 @@
             </li>
             <li>
               <figure>
-                <img src="http://49.249.236.30:8654/dominic-new/public/images/click-btn-img.png">
+                <img src="{{url('/')}}/public/images/click-btn-img.png">
               </figure>
             </li>
           </ul>
@@ -504,11 +509,11 @@
             @endphp
             @foreach($products as $pro=>$data) 
               <tbody>
-                @php $prod_data = DB::table('products')->where('id',$data)->first(); @endphp
-                <td><img src="{{url('/')}}/{{$prod_data->thumbnail}}" alt="" /></td>
-                <td>{{$prod_data->name}}</td>
-                <td>&pound;{{$prod_data->price}}</td>
-                <td><a class="pop-view-item" target="_blank" href="{{url('/shop/product')}}/{{$prod_data->slug}}">View Item</a></td>
+                @php $prod_data = DB::table('products')->where('id',$data)->first();  @endphp
+                <td><img src="{{url('/')}}/{{isset($prod_data->thumbnail) ? $prod_data->thumbnail : ''}}" alt="" /></td>
+                <td>{{isset($prod_data->name) ? $prod_data->name : ''}}</td>
+                <td>&pound;{{isset($prod_data->price) ? $prod_data->price : ''}}</td>
+                <td><a class="pop-view-item" target="_blank" href="{{url('/shop/product')}}/{{isset($prod_data->slug) ? $prod_data->slug : ''}}">View Item</a></td>
               </tbody>
             @endforeach       
         </table>

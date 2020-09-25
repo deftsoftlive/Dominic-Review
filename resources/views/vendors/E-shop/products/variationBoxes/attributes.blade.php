@@ -6,7 +6,7 @@
 <div class="row">
      <div class="col-sm-6">
                 <select name="variation" class="v-cstm-select form-control" id="loadAllVariationOfProduct">
-	                <option value="">choose</option>  
+	                <option value="">Choose</option>  
 
 	                @if(!empty($allTypAlreadySaved))
 	                  	@foreach($product->subcategory->ProductVariations as $v)

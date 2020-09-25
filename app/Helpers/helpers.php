@@ -23,6 +23,11 @@ function getUsername($id){
   return $user['name'];
 }
 
+function getUseremail($id){
+  $user = App\User::where('id',$id)->first();
+  return $user['email'];
+}
+
 /*-------------------------------------
 | Camp Category name using category ID 
 |-------------------------------------*/
@@ -102,7 +107,7 @@ function statsCalculation($jsonData){
   $percent_pts_won = ($data->tp_won)/($data->tp_in_match)*100;
 
   // 3 - Your percentage of 1st serevs in
-  $percent_1serves_in = ($data->total_1serves_in / ($data->total_1serves_in + $data->total_2serves_in + $data->total_double_faults)*100); 
+  $percent_1serves_in = ($data->total_1serves_in / ($data->total_1serves_in + $data->total_2serves_in + $data->total_double_faults + $data->total_aces)*100); 
 
   // 4 - Your opponent's percentage of points in match
   $op_percent_pts_won = (($data->tp_in_match - $data->tp_won)/$data->tp_in_match * 100); 
@@ -123,13 +128,13 @@ function statsCalculation($jsonData){
   $percent_pts_won_op_2serve = $data->tp_won_ops_2sereve / $data->total_2serve_by_op * 100;
 
   // 10 - Your percentage of points won when rally was 1-4 shots
-  $percent_pts_won_rally_1shots = $data->tp_won_rally_4shots / $data->total_shots_match * 100;
+  $percent_pts_won_rally_1shots = $data->tp_won_rally_4shots / $data->tp_played_rally_4shots * 100;
 
   // 11 - Your percentage of points won when rally was 5+ shots
-  $percent_pts_won_rally_5shots = $data->tp_won_rally_5shots / $data->total_shots_match * 100;
+  $percent_pts_won_rally_5shots = $data->tp_won_rally_5shots / $data->tp_played_rally_5shots * 100;
 
   // 12 - Average rally length
-  $average_rally_length = $data->total_shots_match / $data->tp_in_match * 100;
+  $average_rally_length = $data->total_shots_match / $data->tp_in_match;
 
   // 13 - Your total aces
   $total_aces = $data->total_aces;
@@ -1381,27 +1386,20 @@ function sendEmail($templateID,$userID,$orderID=0,$preview='',$data_array='')
 {
    $email = \App\EmailTemplate::find($templateID);
 
-
-
    if(!empty($email)){
            
             if(get_email_subscribe_status($templateID,$userID,'email')==0){
               return 0;
             }
            
-            
-
+          
             $user = \App\User::find($userID);
             $orders= \App\Order::find($orderID);
             $order = listOrderlist($orders);
 
 
-
           $arr = getEmailDetailIfGuestOrNot($user,$orderID,$email);
 
-
-
-           
 
             $orderID = !empty($orders) ? $orders->orderID : '';
 

@@ -38,7 +38,7 @@
 
                         <div class="game-icon-circle">
                              <figure>
-                                <img src="http://49.249.236.30:8654/dominic-new/public/images/marker-new.png">
+                                <img src="{{url('/')}}/public/images/marker-new.png">
                             </figure>
                             <span class="game-icon"><i class="fas fa-file-invoice"></i></span>
                         </div>
@@ -57,7 +57,7 @@
                     <div class="game-card">
                         <div class="game-icon-circle">
                             <figure>
-                                <img src="http://49.249.236.30:8654/dominic-new/public/images/marker-new.png">
+                                <img src="{{url('/')}}/public/images/marker-new.png">
                             </figure>
                             <span class="game-icon">
                             <i class="fas fa-file-invoice"></i>
@@ -78,7 +78,7 @@
                     <div class="game-card">
                         <div class="game-icon-circle">
                              <figure>
-                                <img src="http://49.249.236.30:8654/dominic-new/public/images/marker-new.png">
+                                <img src="{{url('/')}}/public/images/marker-new.png">
                             </figure>
                             <span class="game-icon"><i class="fas fa-file-invoice"></i></span>
                         </div>
@@ -97,7 +97,7 @@
                     <div class="game-card">
                         <div class="game-icon-circle">
                              <figure>
-                                <img src="http://49.249.236.30:8654/dominic-new/public/images/marker-new.png">
+                                <img src="{{url('/')}}/public/images/marker-new.png">
                             </figure>
                             <span class="game-icon"><i class="fas fa-file-invoice"></i></span>
                         </div>

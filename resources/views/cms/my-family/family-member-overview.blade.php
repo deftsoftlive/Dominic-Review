@@ -439,43 +439,51 @@
                                             <br/><h3>Medical & Behavioural Information -</h3><br/>
                                             <ul>
                                                 <li>
-                                                    <p>1) Does this person have any medical conditions that we should be aware of? - <span>{{isset($user_details->med_cond) ? $user_details->med_cond : ''}} </span></p>
+                                                    <p>- Does this person have any medical or behavioural conditions that we should be aware of? - <span>{{isset($user_details->med_cond) ? $user_details->med_cond : ''}} </span></p>
                                                 </li>
                                                 <li>
-                                                    <p>2) Does your child have any allergies that we should be aware of? - 
+                                                    <p> Does your child have any allergies that we should be aware of? - 
                                                         <span>{{isset($user_details->allergies) ? $user_details->allergies : ''}}</span></p>
                                                 </li>
                                                 <li>
-                                                    <p>3) Does this person have any medical conditions that we should be aware of? - <span>{{isset($user_details->med_cond) ? $user_details->med_cond : ''}} </span></p>
+                                                    <p>- Does this person have any medical or behavioural conditions that we should be aware of? - <span>{{isset($user_details->med_cond) ? $user_details->med_cond : ''}} </span></p>
                                                 </li>
                                                 <li>
-                                                    <p>4) Will your child need to take any prescribed medication during the coaching course or holiday camp? - 
+                                                    <p>- Will your child need to take any prescribed medication during the coaching course or holiday camp? - 
                                                         <span>{{isset($user_details->pres_med) ? $user_details->pres_med : ''}}</span></p>
                                                 </li>
+
+                                                @if($user_details->pres_med == 'yes')
                                                 <li>
-                                                    <p>5) Please state the name of the medication along with how and when this might be administered. - 
+                                                    <p>- Please state the name of the medication along with how and when this might be administered. - 
                                                         <span>{{isset($user_details->pres_med_info) ? $user_details->pres_med_info : ''}}</span></p>
                                                 </li>
+                                                @endif
+
                                                 <li>
-                                                    <p>6) Does the child have any additional medical requirements that we may need be aware of? - <span>{{isset($user_details-> med_req) ? $user_details-> med_req : ''}} </span></p>
+                                                    <p>- Does the child have any additional medical requirements that we may need be aware of? - <span>{{isset($user_details->med_req) ? $user_details->med_req : ''}} </span></p>
                                                 </li>
+
+                                                @if($user_details->med_req == 'yes')
                                                 <li>
-                                                    <p>7) Please state the name of the medical requirements along with how and when this might be administered. - 
+                                                    <p>- Please state the name of the medical requirements along with how and when this might be administered. - 
                                                         <span>{{isset($user_details->med_req_info) ? $user_details->med_req_info : ''}}</span></p>
                                                 </li>
+                                                @endif
+
                                                 <li>
-                                                    <p>8) Is this child toilet trained and able to go to the toilet without any assitance form an adult? - 
+                                                    <p>- Is this child toilet trained and able to go to the toilet without any assitance form an adult? - 
                                                         <span>{{isset($user_details->toilet) ? $user_details->toilet : ''}}</span></p>
                                                 </li>
 
                                                 <li>
-                                                    <p>9) Are there any behavioural and/or special needs we need to consider to help your child to settel,participate in ans enjoy their activity? - 
+                                                    <p>- Are there any behavioural and/or special needs we need to consider to help your child to settel,participate in ans enjoy their activity? - 
                                                         <span>{{isset($user_details->beh_need) ? $user_details->beh_need : ''}}</span></p>
                                                 </li>
 
                                                 @if($user_details->beh_need == 'yes')
                                                 <li>
-                                                    <p>10) Please provide more information on behavioural and/or special needs. - 
+                                                    <p>- Please provide more information on behavioural and/or special needs. - 
                                                         <span>{{isset($user_details->beh_need_info) ? $user_details->beh_need_info : ''}}</span></p>
                                                 </li>
                                                 @endif

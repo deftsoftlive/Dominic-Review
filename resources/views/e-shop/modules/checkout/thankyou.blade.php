@@ -52,7 +52,7 @@
                    </tr>
                 </table>
                 <div class="btn-wrap mt-4 text-center">
-                   <a href="{{url(route('shop.index'))}}" class="cstm-btn solid-btn">Countinue Shopping</a>
+                   <a href="{{url(route('shop.index'))}}" class="cstm-btn solid-btn">Continue Shopping</a>
                 </div>
               </div>
             </div>
@@ -96,7 +96,7 @@
                    </tr>
                 </table>
                 <div class="btn-wrap mt-4 text-center">
-                   <a href="{{url(route('shop.index'))}}" class="cstm-btn solid-btn">Countinue Shopping</a>
+                   <a href="{{url(route('shop.index'))}}" class="cstm-btn solid-btn">Continue Shopping</a>
                 </div>
               </div>
             </div>

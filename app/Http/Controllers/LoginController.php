@@ -52,7 +52,7 @@ class LoginController extends Controller
             }
 
         }else{
-        	return redirect('/login')->with('messages','Invalid Email | Password');
+        	return redirect('/login')->with('error','Invalid Email | Password');
         }
 	 
     }

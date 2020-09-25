@@ -36,11 +36,13 @@
                   
                    {{textbox($errors,'Coupon Code<span class="cst-upper-star">*</span>','coupon_code', $venue->coupon_code)}}
 
+                   @php $current_date = date("Y-m-d"); @endphp
+
                    <label class="control-label">Start Date<span class="cst-upper-star">*</span></label>
-                   <input type="date" class="form-control" name="start_date" value="{{$venue->start_date}}"><br/>
+                   <input type="date" class="form-control" name="start_date" min="{{$current_date}}" value="{{$venue->start_date}}"><br/>
 
                    <label class="control-label">End Date<span class="cst-upper-star">*</span></label>
-                   <input type="date" class="form-control" name="end_date" value="{{$venue->end_date}}"><br/>
+                   <input type="date" class="form-control" name="end_date" min="{{$current_date}}" value="{{$venue->end_date}}"><br/>
 
                    <label class="control-label">Discount Type<span class="cst-upper-star">*</span></label>
                     <select class="form-control" name="discount_type">

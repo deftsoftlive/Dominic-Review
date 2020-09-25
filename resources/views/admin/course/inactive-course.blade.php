@@ -102,6 +102,13 @@
                                                 <tbody>
                                                 
                                                 @foreach($course as $test)
+
+                                                @php 
+                                                    $cour_id = $test->id; 
+                                                    $purchased_courses = DB::table('shop_cart_items')->where('shop_type','course')->where('product_id',$cour_id)->count();
+                                                    $booked_courses = !empty($purchased_courses) ? $purchased_courses : '0';
+                                                @endphp
+
                                                     <tr>
                                                     @if(count($course)> 0)
                                                         <td><input type="text" id="update_course_sort" data-id="{{$test->id}}" value="{{$test->sort}}" style="width:
@@ -119,7 +126,7 @@
                                                         <td>£ <input type="text" id="update_course_price" data-id="{{$test->id}}" value="{{$test->price}}" style="width:
                                                         50px"></td> 
                                                         
-                                                        <td>0/{{$test->booking_slot}}</td>
+                                                        <td>{{$booked_courses}}/{{$test->booking_slot}}</td>
                                                         <td>
                                                             <div class="btn-group">
                                                                 <button type="button" class="btn btn-primary">Action</button>
@@ -141,7 +148,7 @@
                                                                     <a href="{{url('admin/register-template/course')}}/{{$test->id}}" class="dropdown-item">View Register</a>
                                                                     
                                                                     <!-- <a href="#" class="dropdown-item">View Register</a> -->
-                                                                    <a href="#" class="dropdown-item">Manage Course</a>
+                                                                    <!-- <a href="#" class="dropdown-item">Manage Course</a> -->
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -178,7 +185,7 @@ function myFunction() {
 $(document).ready(function(){
     $("select#people").change(function(){
         var selectedCat = $(this).children("option:selected").val();
-        $base_url = "http://49.249.236.30:8654/dominic-new";
+        $base_url = $("#base_url").val();
         $.ajax({
             url:$base_url+"/admin/selectedCat/",
             method:'GET',

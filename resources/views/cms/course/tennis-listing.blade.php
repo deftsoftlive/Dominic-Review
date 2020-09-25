@@ -95,14 +95,16 @@
                    <div class="form-group row gender-opt contact-gender courses-gender">  
                       
                           <div class="col-md-12 det-gender-opt">
+                                <div class="cstm-gender">
                                 <label for="gender" class="col-form-label text-md-right">{{ __('Gender  ') }} </label>
                           
                               <input type="radio" id="male1" name="participant_gender" value="male">
-                              <label for="male1">Male</label>
+                              <label for="male1">Male</label></div>
+                              <div class="cstm-gender">
                               <input type="radio" id="female1" name="participant_gender" value="female">
                               <label for="female1">Female</label>  
                              
-
+</div>
                               <div id="gender"></div>
                               @if ($errors->has('gender'))
                                   <span class="invalid-feedback" role="alert">
@@ -270,10 +272,10 @@
                   <div class="Countdown-timer-wrap">
                     <div id="clockDiv_{{$early_bird_enable}}" class="Countdown-timer">
 
-                          <span class="Cdays ">{{$days}} </span>Days: 
-                          <span class="Chr ">{{$hours}} </span>Hours: 
-                          <span class="Cmin ">{{$minutes}} </span>Mins:
-                          <span class="Csec seconds_time " >{{$seconds}} </span>Secs
+                          <span class="Cdays "> &nbsp;{{$days}} </span>&nbsp; Days : &nbsp;
+                          <span class="Chr "> &nbsp;{{$hours}} </span>&nbsp; Hours : &nbsp;
+                          <span class="Cmin "> &nbsp;{{$minutes}} </span>&nbsp; Mins : &nbsp;
+                          <span class="Csec seconds_time " > &nbsp;{{$seconds}} </span>&nbsp; Secs
 
                       @php     
                         echo'<script>
@@ -300,6 +302,18 @@
                     <div class="event-card-heading">
                       <h3>{{$cour->title}}</h3>
                     </div>
+
+                    @php 
+                        $purchased_courses = DB::table('shop_cart_items')->where('shop_type','course')->where('product_id',$cour->id)->count();
+                        $booked_courses = !empty($purchased_courses) ? $purchased_courses : '0';
+                    @endphp
+
+                    @if($booked_courses >= $cour->booking_slot)
+                      <div class="event-book">
+                        <p>Fully Booked</p>
+                      </div>
+                    @endif
+                    
                     <div class="event-info">
                       <ul class="course-inner-list">
                         <li><p>Age :</p><span>{{$cour->age_group}} Years</span></li>

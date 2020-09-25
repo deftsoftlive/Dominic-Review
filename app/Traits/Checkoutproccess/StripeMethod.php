@@ -115,7 +115,7 @@ public function CreateOrder($charge,$OrderID,$type)
       if($this->updateToOrderItemToOrder($type,$charge,$paymentDetails,$o,$order) && $this->userOrderSuccessOrderSuccess($o->id) == 1){
              Session::forget('billingAddress');
              $this->VendorOrderSuccessOrderSuccess($o->id);
-             $this->AdminOrderSuccessOrderSuccess($o->id);
+             // $this->AdminOrderSuccessOrderSuccess($o->id);
              return redirect()->route('thank-you', ['order_id' => $o->id]);
        }
 

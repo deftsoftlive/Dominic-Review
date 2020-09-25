@@ -17,6 +17,17 @@
         </div>
     </section>
 
+@if(Session::has('success'))
+<div class="alert_msg alert alert-success">
+    <p>{{ Session::get('success') }} </p>
+</div>
+@endif
+@if(Session::has('error'))
+<div class="alert_msg alert alert-danger">
+    <p>{{ Session::get('error') }} </p>
+</div>
+@endif
+                                            
 <section class="login-sec">
 <div class="container">
     <div class="row justify-content-center">

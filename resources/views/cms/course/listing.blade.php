@@ -98,13 +98,17 @@
                       <div class="form-group row gender-opt contact-gender courses-gender">  
                       
                           <div class="col-md-12 det-gender-opt">
-                                <label for="gender" class="col-form-label text-md-right">{{ __('Gender  ') }} </label>
-                          
-                              <input type="radio" id="male" name="participant_gender" value="male">
-                              <label for="male">Male</label>
-                              <input type="radio" id="female" name="participant_gender" value="female">
-                              <label for="female">Female</label>  
-                             
+
+                            <div class="cstm-gender">
+                              <label for="gender" class="col-form-label text-md-right">{{ __('Gender  ') }} </label>
+                              <input type="radio" id="male111" name="participant_gender" value="male">
+                              <label for="male111">Male</label>
+                            </div>
+
+                            <div class="cstm-gender">
+                              <input type="radio" id="female111" name="participant_gender" value="female">
+                              <label for="female111">Female</label>  
+                            </div>
 
                               <div id="gender"></div>
                               @if ($errors->has('gender'))

@@ -415,7 +415,7 @@
                 <ul class="click-btn-content">
                   <li>
                     <figure>
-                    <img src="http://49.249.236.30:8654/dominic-new/public/images/click-btn-img.png">
+                    <img src="{{url('/')}}/public/images/click-btn-img.png">
                 </figure>
                 </li>
                 <li>
@@ -423,7 +423,7 @@
                 </li>
                 <li>
                     <figure>
-                    <img src="http://49.249.236.30:8654/dominic-new/public/images/click-btn-img.png">
+                    <img src="{{url('/')}}/public/images/click-btn-img.png">
                 </figure>
                 </li>
                 </ul>
