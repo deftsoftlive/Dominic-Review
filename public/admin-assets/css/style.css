@@ -273,6 +273,140 @@ tr.child-row.expanded {
 .table-hover .child-container tr:hover {
     background-color: transparent;
 }
+
+
+
+
+.session-time-table table {
+    width: 100%;
+}
+.session-time-table table th
+{
+  text-align: center;
+  color: #fff;
+  background-color:#3f4d67 ;
+}
+.session-time-table table th,
+.session-time-table table td
+{
+    border: 2px solid #3f4d67;
+    padding: 5px;
+}
+div#b-c-table-accordion .card
+{
+  margin-bottom: 16px;
+}
+div#b-c-table-accordion .card-header {
+    padding: 0;
+    background: #3f4d67;
+    border-color: #3f4d67;
+}
+div#b-c-table-accordion .card-header h2
+{
+  line-height:21px ;
+  width: 100%
+}
+div#b-c-table-accordion .card-header button.btn.btn-link {
+    margin: 0;
+    color: #fff;
+  
+    text-align: center;
+    font-weight: 700;
+    font-size: 17px;
+    text-align: center;
+    width: 100%;
+    padding: 10px 19px;
+}
+div#b-c-table-accordion .card-header button.btn.btn-link:hover,
+div#b-c-table-accordion .card-header button.btn.btn-link:focus {
+    text-decoration: none;
+}
+
+
+#b-c-table-accordion .cstm-check label::before {
+    width: 24px;
+    height: 24px;
+}
+.cstm-check label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #001642;
+    left: -23px;
+    top: -10px;
+}
+#b-c-table-accordion .cstm-check label::after {
+    height: 15px;
+    width: 6px;
+    left: -14px;
+}
+.cstm-check label::after {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 10px;
+    border-bottom: 2px solid #001642;
+    border-right: 2px solid #001642;
+    left: -16px;
+    top: -7px;
+    transform: rotate(45deg);
+    opacity: 0;
+}
+
+#b-c-table-accordion .cstm-check input {
+    width: 24px;
+    height: 24px;
+}
+.cstm-check input {
+    width: 18px;
+    height: 18px;
+    opacity: 0;
+}section.book-camp.section-padding .b-c-table-container .accordion .card-body table .cstm-check input:checked+label::before {
+    border-color: #ffffff;
+    background-color: #00afef;
+}
+section.book-camp.section-padding .b-c-table-container .accordion .card-body table .cstm-check input:checked+label::after {
+    border-color: #fff !important;
+    opacity: 1;
+}
+
+
+.cstm-check label {
+    position: relative;
+}
+section.book-camp.section-padding .b-c-table-container .accordion .card-body
+{
+  padding: 0;
+}
+section.book-camp.section-padding .b-c-table-container .accordion .card-body table
+{
+  width: 100%;
+}
+section.book-camp.section-padding .b-c-table-container .accordion .card-body table th,
+section.book-camp.section-padding .b-c-table-container .accordion .card-body table td
+{
+  padding: 12px;
+}
+section.book-camp.section-padding .b-c-table-container .accordion .card-body table thead * {
+    color: #fff;
+    font-weight: 600;
+    background: #00afef;
+}
+section.book-camp.section-padding .b-c-table-container .accordion .card-body table td
+{
+  color: #212529;
+  border-right: 1px solid #fff;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.b-c-table-container table tbody tr[class^="week"]:nth-of-type(odd) {
+    background-color: #bfe5f6;
+}
+
 @media only screen and (max-width: 575px) {
   .card .card-header .card-header-right {
     display: none;
@@ -776,10 +910,24 @@ form#inventoryFormSubmit .error {
 table.table.table-bordered.cst-reports th, table.table.table-bordered.cst-reports td {
     width: 50%;
 }
+.pcoded-inner-content .admin_notify {
+    padding: 5px 10px!important;
+    background: #3f4d67;
+    border-color: #3f4d67;
+}
+.pcoded-inner-content .admin_notify p
+{
+  color: #fff;
+}
+.pcoded-inner-content .admin_notify p,
+.pcoded-inner-content .admin_notify a
+{
+  margin: 0;
+}
 
 
 .player-goal-card {
-    border: 2px solid #be298d;
+    border: 2px solid #001642;
     padding: 0 36px 20px;
     border-radius: 7px;
     margin-bottom: 23px;
@@ -818,7 +966,7 @@ table.table.table-bordered.cst-reports th, table.table.table-bordered.cst-report
 }
 .cstm-btn:hover {
     background: #ffffff;
-    color: #be298d;
+    color: #001642;
     text-decoration: none;
 }
 .player-goal-inner-text-wrap {
@@ -873,7 +1021,7 @@ table.table.table-bordered.cst-reports th, table.table.table-bordered.cst-report
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
 .outer-wrap-player-goal .accordian_summary .card .card-header {
-    border: 3px solid #be298d!important;
+    border: 3px solid #001642!important;
     text-align: center;
     background: #fff;
     padding: 8px 15px;
@@ -896,7 +1044,7 @@ table.table.table-bordered.cst-reports th, table.table.table-bordered.cst-report
 }
 
 .outer-wrap-player-goal .collapse.show, .outer-wrap-player-goal .collapsing {
-    border: 3px solid #be298d;
+    border: 3px solid #001642;
     margin-bottom: 5px;
     margin-top: -7px;
     box-shadow: inset 7px 7px 20px 0px rgba(0, 0, 0, 0.1);
@@ -3439,7 +3587,7 @@ input#checkbox1{
 
 .report-tab-one .inner-form-box {
     padding: 0 15px;
-    border: 2px solid #be298d;
+    border: 2px solid #001642;
     border-radius: 8px;
     position: relative;
     box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
@@ -3476,7 +3624,7 @@ input#checkbox1{
     padding: 0 25px 30px;
 }
 div#report_detail_cont {
-    border: 3px solid #be298d;
+    border: 3px solid #001642;
     padding: 20px;
 }
 .report-tab-sec button.cstm-btn {
@@ -3484,15 +3632,15 @@ div#report_detail_cont {
 }
 .cstm-btn:hover {
     background: #ffffff;
-    color: #be298d;
+    color: #001642;
     text-decoration: none;
 }.cstm-btn {
     font-size: 14px;
     color: #ffffff;
     font-weight: 500;
-    background: #be298d;
+    background: #001642;
     padding: 10px 18px;
-    border: 2px solid #be298d;
+    border: 2px solid #001642;
     text-transform: uppercase;
     display: inline-block;
     text-decoration: none;
@@ -3501,7 +3649,7 @@ div#report_detail_cont {
 }
 .cstm-btn:hover {
     background: #ffffff;
-    color: #be298d;
+    color: #001642;
     text-decoration: none;
 
 }
@@ -8172,6 +8320,13 @@ select.form-control-lg:not([size]):not([multiple]) {
   top: 10px;
   left: 2px;
 }
+div#attributeBox {
+    padding: 0;
+}
+form#inventoryFormSubmit .form-check {
+    position: relative;
+    top: 8px;
+}
 .radio.radio-primary input[type=radio]:checked + .cr:before {
   border-color: #04a9f5;
 }
@@ -8272,7 +8427,10 @@ select.form-control-lg:not([size]):not([multiple]) {
 .table-bordered th {
   border: 1px solid #eaeaea;
 }
-
+table.table.table-bordered.camp_reg_table th, 
+table.table.table-bordered.camp_reg_table td {
+    border: 1px solid #3f4d67;
+}
 /* Zebra-striping */
 .table-striped tbody tr:nth-of-type(2n+1) {
   background-color: rgba(4, 169, 245, 0.05);
@@ -11715,6 +11873,12 @@ ul{
 .modal-header .close{
   color: #fff;
 }
+form#venueForm label span.symbol {
+    color: red;
+}
+.contact_form_row button {
+    padding: 10px 5px;
+}
 .custom-control-label::after {
     position: absolute;
     left: 0px;
@@ -12181,9 +12345,37 @@ span.notification-icon {
 .inner-cont table.table.table-bordered.camp-table {
   order: 2
 }
+input#agree {
+    display: block!important;
+}
+.image_icon {
+    width: 50%!important;
+}
+
+table.add_on_services th a i {
+    padding-left: 5px;
+}
+table.add_on_services th a
+{
+  margin:0;
+}
+.image_icon th,
+.image_icon td {
+
+   border:2px solid #3f4d67 ;
+   padding:10px 20px;
+   text-align: center;
+   text-transform: capitalize;
+}
 .inner-cont button {
     order: 3;
-    width: 100px;
+    width: 130px;
+}
+.conform_wrap {
+    width: calc(100% - 98%)!important;
+}
+.conform_radios {
+    width: 97%!important;
 }
 /*media query*/
 .row.align-items-center img

@@ -61,10 +61,12 @@
 
                    {{textarea($errors,'Description<span class="cst-upper-star">*</span>','description', $venue->description)}}
                    {{textarea($errors,'Usefull Information<span class="cst-upper-star">*</span>','usefull_info', $venue->usefull_info)}}
+                   {{textarea($errors,'Information Email Content<span class="cst-upper-star">*</span>','info_email_content', $venue->info_email_content)}}
+
                    {{textbox($errors,'Camp Date<span class="cst-upper-star">*</span>','camp_date', $venue->camp_date)}}
                    <!-- {{textbox($errors,'Price<span class="cst-upper-star">*</span>','price', $venue->price)}} -->
 
-                  <div class="form-group">
+            <!--       <div class="form-group">
                     <label class="control-label">Image</label>
                     <input type="file" name="image" id="selImage" accept="image/*" onchange="ValidateSingleInput(this, 'image_src')">
                     @if ($errors->has('image'))
@@ -72,7 +74,7 @@
                     @endif
                   </div>
 
-                  <img id="image_src" style="width: 100px; height: 100px;" src="{{ URL::asset('/uploads').'/'.$venue->image }}" />
+                  <img id="image_src" style="width: 100px; height: 100px;" src="{{ URL::asset('/uploads').'/'.$venue->image }}" /> -->
 
                   {{textbox($errors,'Coach Cost<span class="cst-upper-star">*</span>','coach_cost', $venue->coach_cost)}}
                   {{textbox($errors,'Court/Venue Cost<span class="cst-upper-star">*</span>','venue_cost', $venue->venue_cost)}}
@@ -513,5 +515,6 @@
 <script type="text/javascript">
    CKEDITOR.replace('description', options);
    CKEDITOR.replace('usefull_info', options);
+   CKEDITOR.replace('info_email_content', options);
 </script>
 @endsection

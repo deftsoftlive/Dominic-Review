@@ -9,7 +9,9 @@
                 <h1>Thank You</h1>
                 <br/><br/>
                 @if($order->payment_by == 'Childcare')
+                <div class="childcare_message">
                   <p>{!! getAllValueWithMeta('thanku_page_text', 'general-setting') !!}</p>
+                </div>
                 @endif
             </div>
         </div>
@@ -40,7 +42,7 @@
                    </tr>
                    <tr>
                      <th>Date</th>
-                     <td>{{$order->created_at}}</td>
+                     <td>@php echo date('d/m/Y (h:i:s)',strtotime($order->created_at)); @endphp</td>
                    </tr>
                    <tr>
                      <th>Total</th>
@@ -48,11 +50,13 @@
                    </tr>
                    <tr>
                      <th>Payment Method</th>
-                     <td>{{$order->payment_by}}</td>
+                     <td>@if($order->payment_by == 'Childcare') Childcare Vouchers / Tax-Free Childcare @else {{$order->payment_by}} @endif</td>
                    </tr>
                 </table>
                 <div class="btn-wrap mt-4 text-center">
-                   <a href="{{url(route('shop.index'))}}" class="cstm-btn solid-btn">Continue Shopping</a>
+                   <p>A confirmation email has been sent to <b>@php echo getUseremail($order->user_id); @endphp</b></p>
+                   <br/>
+                   <a href="{{url('/user/my-bookings')}}" class="cstm-btn solid-btn">Go to My Bookings</a>
                 </div>
               </div>
             </div>
@@ -84,7 +88,7 @@
                    </tr>
                    <tr>
                      <th>Date</th>
-                     <td>{{$order->created_at}}</td>
+                     <td>@php echo date('d/m/Y (h:i:s)',strtotime($order->created_at)); @endphp</td>
                    </tr>
                    <tr>
                      <th>Total</th>
@@ -96,7 +100,9 @@
                    </tr>
                 </table>
                 <div class="btn-wrap mt-4 text-center">
-                   <a href="{{url(route('shop.index'))}}" class="cstm-btn solid-btn">Continue Shopping</a>
+                   <p>A confirmation email has been sent to <b>@php echo getUseremail($order->user_id); @endphp</b></p>
+                   <br/>
+                   <a href="{{url('/user/my-bookings')}}" class="cstm-btn solid-btn">Go to My Bookings</a>
                 </div>
               </div>
             </div>

@@ -12,13 +12,13 @@
                 <p class="ftr-text">{{ getAllValueWithMeta('footer_section1', 'general-setting') }}</p>
                 <ul class="social-media">
                   <li>
-                    <a href="{{ getAllValueWithMeta('facebook_link', 'general-setting') }}" class="s-link"><i class="fab fa-facebook-f"></i></a>
+                    <a target="_blank" href="{{ getAllValueWithMeta('facebook_link', 'general-setting') }}" class="s-link"><i class="fab fa-facebook-f"></i></a>
                   </li>
                   <li>
-                    <a href="{{ getAllValueWithMeta('instagram_link', 'general-setting') }}" class="s-link"><i class="fab fa-instagram"></i></a>
+                    <a target="_blank" href="{{ getAllValueWithMeta('instagram_link', 'general-setting') }}" class="s-link"><i class="fab fa-instagram"></i></a>
                   </li>
                   <li>
-                    <a href="{{ getAllValueWithMeta('google_link', 'general-setting') }}" class="s-link"><i class="fab fa-google-plus"></i></a>
+                    <a target="_blank" href="{{ getAllValueWithMeta('google_link', 'general-setting') }}" class="s-link"><i class="fab fa-google-plus"></i></a>
                   </li>
                 </ul>
               </div>
@@ -121,6 +121,31 @@ $(document).ready(function(){
   if(!$(".alert_msg").hasClass("shop_items") && !$(".alert_msg").hasClass("course_items") && !$(".alert_msg").hasClass("camp_items")){
       $("#childcare_btn").css('display','block');
   }
+
+// Upload profile & icon images
+  $('input[name=profile_image]').change(function(){
+    var value = $( 'input[name=profile_image]:checked' ).val();
+
+    $('#icon').val(value);
+
+    if(value != 'no')
+    {
+      $('.upload_profile').addClass('collapsed');
+      $(".upload_profile").attr("aria-expanded","false");
+      $('.collapse.cropper_form').removeClass('show');
+      $('.upload_profile').prop("disabled", true);
+      $('.profile_pic_save').css('display','block');
+      $('.user_profile').css('display','none');
+    }else{
+      $('.upload_profile').removeClass('collapsed');
+      $(".upload_profile").attr("aria-expanded","true");
+      $('.collapse.cropper_form').addClass('show');
+      $('.upload_profile').prop("disabled", false);
+      $('.profile_pic_save').css('display','none');
+      $('.user_profile').css('display','block');
+    }
+  });
+
 });
 </script> 
 
@@ -153,16 +178,28 @@ $(document).ready(function($){
 
     $(".medical_cond").change(function(){
        var result = $('input[name="med_cond"]:checked').val();
+       var u_type = $('#u_type').val();   
 
        if(result == 'no')
-       {
+       {  
           $('#medical_cond1').css('display','none');
-          $('.another_medical').css('display','none');
+          $('.medi').css('display','none');
+          $('.medi_button').css('display','none');
+          $('.another_medical').parent().css('display','none');
        }
-       else if(result == 'yes') 
-       {
+       else if(result == 'yes' && u_type == 'Child') 
+       {  
           $('#medical_cond1').css('display','block');
-          $('.another_medical').css('display','block');
+          $('.medi1').css('display','block');
+          $('.medi_button').css('display','block');
+          $('.another_medical').parent().css('display','block');
+       }
+       else if(result == 'yes' && u_type == 'Adult') 
+       {  
+          $('#medical_cond1').css('display','block');
+          $('.medi').css('display','block');
+          $('.medi_button').css('display','block');
+          $('.another_medical').parent().css('display','block');
        }
 
        var result1 = $('input[name="med_cond1"]:checked').val();
@@ -170,12 +207,16 @@ $(document).ready(function($){
        if(result1 == 'no')
        {
           $('#medical_cond').css('display','none');
-          $('.another_medical').css('display','none');
+          $('.medi').css('display','none');
+          $('.medi_button').css('display','none');
+          $('.another_medical').parent().css('display','none');
        }
        else if(result1 == 'yes') 
        {
           $('#medical_cond').css('display','block');
-          $('.another_medical').css('display','block');
+          $('.medi').css('display','block');
+          $('.medi_button').css('display','block');
+          $('.another_medical').parent().css('display','block');
        }
     });
 
@@ -185,12 +226,14 @@ $(document).ready(function($){
        if(result == 'no')
        {
           $('#sec_all').css('display','none');
-          $('.another_allergy').css('display','none');
+          $('.aller').css('display','none');
+          $('.another_allergy').parent().css('display','none');
        }
        else if(result == 'yes') 
        {
           $('#sec_all').css('display','block');
-          $('.another_allergy').css('display','block');
+          $('.aller').css('display','block');
+          $('.another_allergy').parent().css('display','block');
        }
     });
 
@@ -305,10 +348,9 @@ $(document).ready(function(){
 $("#money_amount").change(function(){
 
   var amt = $('#money_amount').val();
-  $base_url = $("#base_url").val();
 
   $.ajax({
-      url:$base_url+"/user/stripe-wallet",
+      url:"http://49.249.236.30:8654/dominic-new/user/stripe-wallet",
       method:'GET',
       data:{wallet_amount:amt},
       dataType:'json',
@@ -359,10 +401,8 @@ $(document).ready(function($){
         var player_id = $('#playerID').val();
         var report_type = $('#report_type').val();
 
-        $base_url = $("#base_url").val();
-
         $.ajax({
-            url:$base_url+"/user/report_popup",
+            url:"http://49.249.236.30:8654/dominic-new/user/report_popup",
             method:'GET',
             data:{exist_player_id:exist_player_id,player_id:player_id,report_type:report_type},
             dataType:'json',
@@ -435,22 +475,25 @@ $('#image_file').on('change', function () {
     reader.readAsDataURL(this.files[0]);
 });
 $('.upload-image').on('click', function (ev) {
+
+  var profile_user = $('#profile_user').val();
+  var icon = $('#icon').val(); 
   resize.croppie('result', {
     type: 'canvas',
     size: 'viewport'
   }).then(function (img) {
     html = '<img src="' + img + '" />';
     $("#preview-crop-image").html(html);
-    $("#upload-success").html("Images cropped and uploaded successfully.");
+    $("#upload-success").html("Profile picture uploaded successfully.");
     $("#upload-success").show();
-    // $.ajax({
-    //   url: "{{route('croppie.upload-image')}}",
-    //   type: "POST",
-    //   data: {"image":img},
-    //   success: function (data) {
-        
-    //   }
-    // });
+    $.ajax({
+      url: "{{route('croppie.upload-image')}}",
+      type: "POST",
+      data: {"image":img,"user_id":profile_user,"icon":icon},
+      success: function (data) {
+          setTimeout(function(){ window.location = "http://49.249.236.30:8654/dominic-new/user/badges"; }, 800);
+      }
+    });
   });
 });
 </script>
@@ -471,10 +514,8 @@ $('.upload-image').on('click', function (ev) {
   |*****************************/
     function fetch_tennis_club_data(tennis_club = '', user_id = '', shop_id = '')
     {
-        $base_url = $("#base_url").val();
-
         $.ajax({
-            url:$base_url+"/user/update_tennis_club/"+tennis_club+"/"+user_id+"/"+shop_id,
+            url:"http://49.249.236.30:8654/dominic-new"+"/user/update_tennis_club/"+tennis_club+"/"+user_id+"/"+shop_id,
             method:'GET',
             data:{tennis_club:tennis_club, user_id:user_id, shop_id:shop_id},
             dataType:'json',
@@ -532,10 +573,9 @@ $('.upload-image').on('click', function (ev) {
     $(document).ready(function(){
         $("select#season").change(function(){
             var selectedSeason = $(this).children("option:selected").val(); 
-           
-            $base_url = $("#base_url").val();
+
             $.ajax({
-                url:$base_url+"/user/selectedSeason/",
+                url:"http://49.249.236.30:8654/dominic-new/user/selectedSeason/",
                 method:'GET',
                 data:{selectedSeason:selectedSeason},
                 dataType:'json',
@@ -562,10 +602,9 @@ $('.upload-image').on('click', function (ev) {
     $(document).ready(function(){
         $("select#people").change(function(){
             var selectedCat = $(this).children("option:selected").val();  
-           
-            $base_url = $("#base_url").val();
+
             $.ajax({
-                url:$base_url+"/selectedCat/",
+                url:"http://49.249.236.30:8654/dominic-new/selectedCat/",
                 method:'GET',
                 data:{selectedCat:selectedCat},
                 dataType:'json',
@@ -600,11 +639,9 @@ $('.upload-image').on('click', function (ev) {
        function quickview(id) {  
 
         $("body").addClass("modal-open");
-
-        $base_url = $("#base_url").val();
         
         $.ajax({
-          url: base_url+"/shop/product/view/"+id,
+          url: "http://49.249.236.30:8654/dominic-new/shop/product/view/"+id,
           type: "get",
           success: function (response) {
            // console.log(response);
@@ -904,9 +941,50 @@ $('.upload-image').on('click', function (ev) {
         });
 
         // Toilet
-        $('input[name=toilet_type]:radio').click(function(){
+        $('input[name=toilet]:radio').click(function(){
            var toilet_type = $(this).attr("id");
            $('#toilet').val(toilet_type);
+        });
+
+        $("input[name=toilet]:radio").change(function(){
+           var result = $('input[name="toilet"]:checked').val();
+
+           if(result == 'no')
+           {
+              $('#toilet').addClass('show');
+              $('.modal.fade.show').css('padding-right', '15px');
+              $('.modal.fade.show').css('display', 'block');
+              $('body').addClass('modal-open');
+              $('.modal-open').addClass('toilet-modal-open');
+              $('.toilet_modal_back').addClass('show');
+           }
+           else if(result == 'yes') 
+           {
+              $('#toilet').removeClass('show');
+              $('.modal.fade.show').css('padding-right', '0px');
+              $('.modal.fade.show').css('display', 'none');
+              $('.modal-open').removeClass('toilet-modal-open');
+              $('body').removeClass('modal-open');
+              $('.toilet_modal_back').removeClass('show');
+           }
+        });
+
+        $('.close_toilet').click(function(){
+              $('.modal.fade.show').css('padding-right', '0px');
+              $('.modal.fade.show').css('display', 'none');
+              $('#toilet').removeClass('show');
+              $('.modal-open').removeClass('toilet-modal-open');
+              $('body').removeClass('modal-open');
+              $('.toilet_modal_back').removeClass('show');
+        });
+
+        $('.toilet_modal_back').click(function(){
+              $('.modal.fade.show').css('padding-right', '0px');
+              $('.modal.fade.show').css('display', 'none');
+              $('#toilet').removeClass('show');
+              $('.modal-open').removeClass('toilet-modal-open');
+              $('body').removeClass('modal-open');
+              $('.toilet_modal_back').removeClass('show');
         });
 
       });
@@ -1175,6 +1253,8 @@ $('.search-icon').click(function(){
         loop:true,
         margin:0,
     nav:true,
+    autoplay:true,
+    autoplayTimeout: 5000,  
         dots:false,
         responsiveClass:true,
         navText: ["<img src='http://49.249.236.30:8654/dominic-new/public/images/slider-prev-img.png'>","<img src='http://49.249.236.30:8654/dominic-new/public/images/slider-next-img.png'>"],
@@ -1205,7 +1285,7 @@ $('.search-icon').click(function(){
                 items:1
             },
             1000:{
-                items:2
+                items:1
             }
         }
     })

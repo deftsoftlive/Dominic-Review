@@ -18,9 +18,9 @@ class MyFirstNotification extends Notification
      *
      * @return void
      */
-    public function __construct($details)
+    public function __construct()
     {
-        $this->details = $details;
+        // $this->details = $details;
     }
    
     /**
@@ -31,7 +31,7 @@ class MyFirstNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail','database'];
+        return ['mail'];
     }
    
     /**
@@ -57,8 +57,9 @@ class MyFirstNotification extends Notification
      */
     public function toDatabase($notifiable)
     {
+        
         return [
-            'order_id' => $this->details['order_id']
+            // 'data' => 'New Notification'
         ];
     }
 }

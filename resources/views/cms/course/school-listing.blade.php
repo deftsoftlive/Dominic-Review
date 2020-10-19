@@ -5,17 +5,22 @@
 
 @section('content')
 
-@php $base_url = \URL::to('/'); @endphp
+@php 
+  $base_url = \URL::to('/'); 
+  $cat = \Request::get('cat'); 
+  $url = 'course-listing/schools?&cat='.$cat;  
+  $course_cat = DB::table('link_course_and_categories')->where('id',$cat)->first();
+@endphp
 
 <!-- ***********************************
 |   School Courses Banner Section
 |*************************************** -->
-    <section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/{{ getAllValueWithMeta('school_course_banner_image', 'school-course-listing') }});">
+    <section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/{{ $course_cat->image }});">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
             <div class="football-course-content">
-              <h2 class="f-course-heading">{{ getAllValueWithMeta('school_course_page_title', 'school-course-listing') }}</h2>
+              <h2 class="f-course-heading">{{ getAllValueWithMeta('school_course_page_title', 'school-course-listing') }} - {{$course_cat->title}}</h2>
             </div>
           </div>
         </div>
@@ -23,6 +28,13 @@
     </section>
     <section class="services-sec">
       <div class="container">
+
+        @if(Session::has('success'))
+        <div class="alert_msg alert alert-success">
+            <p>{{ Session::get('success') }} </p>
+        </div>
+        @endif
+        
         <div class="row">
 
          <!-- ***********************************
@@ -31,7 +43,11 @@
           <div class="col-lg-6 col-md-12">
             <ul class="services-description">
 
-              @foreach($accordian as $accor)
+              @php 
+                $accordian1 = DB::table('accordians')->where('page_title',$url)->get(); 
+              @endphp
+
+              @foreach($accordian1 as $accor)
                 <li>
                   <div id="accordion-1" class="myaccordion">
                       <div class="card cd-one">
@@ -90,7 +106,8 @@
                           <input type="text" class="form-control" name="participant_name" placeholder="Enter Participant Name">
                       </div>
                       <div class="form-group">
-                          <input type="date" id="date_of_birth" class="form-control" name="participant_dob" placeholder="Enter Participant DOB">
+                          <!-- <input type="date" id="date_of_birth" class="form-control" name="participant_dob" placeholder="Enter Participant DOB"> -->
+                          <input type="text" class="form-control textbox-n" name="participant_dob" placeholder="D.O.B - dd/mm/yyy" onfocus="(this.type='date')" id="date">
                       </div>
                       <div class="form-group row gender-opt contact-gender courses-gender">  
                       

@@ -46,9 +46,9 @@
                   <img src="" id="logo_src" style="width: 100px; height: 100px; display: none"/>
                   <br/><br/>
 
-                   {{textbox($errors,'Camp Title*','title')}}
-                   {{textbox($errors,'Location*','location')}}
-                   {{textbox($errors,'Season*','term')}}
+                   {{textbox($errors,'Camp Title<span class="cst-upper-star">*</span>','title')}}
+                   {{textbox($errors,'Location<span class="cst-upper-star">*</span>','location')}}
+                   {{textbox($errors,'Season<span class="cst-upper-star">*</span>','term')}}
 
                    <div class="form-group">
                     <label class="label-file control-label">Category</label>
@@ -59,12 +59,13 @@
                     </select>             
                    </div> 
 
-                   {{textarea($errors,'Description*','description')}}
-                   {{textarea($errors,'Usefull Information*','usefull_info')}}
-                   {{textbox($errors,'Camp Date*','camp_date')}}
+                   {{textarea($errors,'Description<span class="cst-upper-star">*</span>','description')}}
+                   {{textarea($errors,'Usefull Information<span class="cst-upper-star">*</span>','usefull_info')}}
+                   {{textarea($errors,'Information Email Content<span class="cst-upper-star">*</span>','info_email_content')}}
+                   {{textbox($errors,'Camp Date<span class="cst-upper-star">*</span>','camp_date')}}
                    <!-- {{textbox($errors,'Price*','price')}} -->
 
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <label class="control-label">Image</label>
                     <input type="file" required accept="image/*" onchange="ValidateSingleInput(this, 'image_src')" name="image" id="selImage">
                     @if ($errors->has('image'))
@@ -72,7 +73,7 @@
                     @endif
                   </div>
                   <img src="" id="image_src" style="width: 100px; height: 100px; display: none"/>
-                  <br/><br/>
+                  <br/><br/> -->
 
                   {{textbox($errors,'Coach Cost<span class="cst-upper-star">*</span>','coach_cost')}}
                   {{textbox($errors,'Court/Venue Cost<span class="cst-upper-star">*</span>','venue_cost')}}
@@ -425,5 +426,6 @@
 <script type="text/javascript">
    CKEDITOR.replace('description', options);
    CKEDITOR.replace('usefull_info', options);
+   CKEDITOR.replace('info_email_content', options);
 </script>
 @endsection

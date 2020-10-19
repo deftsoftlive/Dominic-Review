@@ -290,7 +290,13 @@ a.wishlist.active {
 }
 
 
-
+.childcare_message {
+border: 3px solid #001642;
+padding: 30px;
+margin: 0 10px;
+box-shadow: 6px 6px 25px -4px rgba(0, 0, 0, 0.2);
+text-align: left;
+}
 
 /*responsive css*/
 @media(max-width: 1199px){

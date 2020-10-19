@@ -7,34 +7,24 @@
 @section('content')
 
 @php $base_url = \URL::to('/'); @endphp
-
-<section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/1584684865tennis_course_banner_image.png);">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="football-course-content">
-              <h2 class="f-course-heading">FAQ</h2>
-            </div>
-          </div>
+<section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/{{ getAllValueWithMeta('faq_banner', 'banners') }});">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="football-course-content">
+          <h2 class="f-course-heading">FAQ's</h2>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
+
  <section class="faq-sec"> 
  	<div class="container"> 
  		<div class="sec-card"> 
-	      <!-- <div class="faq-content"> 
-	      	<div class="sec-heading dark-sec-heading text-center">
-         <h2>Frequently Asked Questions</h2>
-      </div> -->
+
   <div class="faq-tab-wrap">
-<!--   <ul class="nav nav-tabs faq-tabs" role="tablist">
-	<li class="nav-item">
-		<a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"><span class="tab-icon"><img src="/frontend/images/user-img.png"></span> User</a>
-	</li>
-	<li class="nav-item">
-		<a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"><span class="tab-icon"><img src="/frontend/images/user-img.png"></span> Vendor</a>
-	</li>
-</ul> --><!-- Tab panes -->
+
 <div class="tab-content">
 	<div class="tab-pane active" id="tabs-1" role="tabpanel">
         <div class="faq-acc-wrap">
@@ -50,10 +40,7 @@
 				      <h2 class="mb-0">
 				        <button class="d-flex align-items-center justify-content-between btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{$key}}" aria-expanded="false" aria-controls="collapse{{$key}}">
 				          {{ $faq->question }}
-				         <!--  <span class="icon_wrapss">
-				              
-				            <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
-				          </span> -->
+
 				        </button>
 				      </h2>
 				    </div>

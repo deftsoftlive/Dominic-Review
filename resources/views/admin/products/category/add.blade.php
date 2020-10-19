@@ -42,7 +42,7 @@
          {{select3($errors,'SubParent','subparent','label','0',array())}}
        </div>
         <div class="col-md-6"> 
-        {{textbox($errors,'Name*','label')}}
+        {{textbox($errors,'Name<span class="cst-upper-star">*</span>','label')}}
       </div>
 
             <div class="col-md-6">
@@ -75,16 +75,16 @@
 
 
 
-<div class="col-md-6">   {{textbox($errors,'Meta Title*','meta_title')}}</div>
-  <div class="col-md-6">  {{textbox($errors,'Meta Tags*','meta_tag')}}</div>
-  <div class="col-md-12">  {{textarea($errors,'Meta description*','meta_description')}}</div>
+<div class="col-md-6">   {{textbox($errors,'Meta Title<span class="cst-upper-star">*</span>','meta_title')}}</div>
+  <div class="col-md-6">  {{textbox($errors,'Meta Tags<span class="cst-upper-star">*</span>','meta_tag')}}</div>
+  <div class="col-md-12">  {{textarea($errors,'Meta description<span class="cst-upper-star">*</span>','meta_description')}}</div>
  <div class="col-md-12">
                      <!-- {{choosefilemultiple($errors,'Category Icon','image')}} -->
                     
          <img src="" id="image_src" style="width: 100px; height: 100px; display: none"/>
 
             <div class="form-group">
-            <label class="label-file control-label">Image*</label>
+            <label class="label-file control-label">Image</label>
             <input type="file" accept="image/*" id="cat_image" onchange="ValidateSingleInput(this, 'image_src')" class="form-control" name="image">
            </div>
 

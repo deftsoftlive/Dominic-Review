@@ -496,6 +496,10 @@ class OrderController extends Controller
         $user_id = $orders->user_id;
         $user_details = User::where('id',$user_id)->first();
 
+        $user_name  = isset($user_details->name) ? $user_details->name : 'No user found';
+        $user_email = isset($user_details->email) ? $user_details->email : '';
+        $user_phone = isset($user_details->phone_number) ? $user_details->phone_number : '';
+
         if(!empty($orders->provider_id))
         {
           $provider = ChildcareVoucher::where('id',$orders->provider_id)->first();
@@ -591,13 +595,13 @@ class OrderController extends Controller
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="padding: 10px;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Name : </strong>'.$user_details->name.' </p>
+                                    <p style="padding: 10px;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Name : </strong>'.$user_name.' </p>
                                 </td>
                                 <td>
-                                    <p style="padding: 10px;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Email : </strong>'.$user_details->email.' </p>
+                                    <p style="padding: 10px;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Email : </strong>'.$user_email.' </p>
                                 </td>
                                 <td>
-                                    <p style="padding: 10px;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Phone No. : </strong>'.$user_details->phone_number.' </p>
+                                    <p style="padding: 10px;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Phone No. : </strong>'.$user_phone.' </p>
                                 </td>
                             </tr>
                         </tbody>
@@ -627,13 +631,13 @@ class OrderController extends Controller
                                 <td style="border:1px solid #011c49;">
                                     <p style="padding:15px 10px 5px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Name : </strong>'.$shipping_address->name.'</p>
                                     <p style="padding: 5px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Email : </strong>'.$shipping_address->email.'</p>
-                                    <p style="padding: 5px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Phone : Number</strong>'.$shipping_address->phone_number.'</p>
+                                    <p style="padding: 5px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Phone Number :</strong>'.$shipping_address->phone_number.'</p>
                                     <p style="padding: 5px 10px 25px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Address : </strong>'.$shipping_address->address.', '.$shipping_address->country.', '.$shipping_address->state.', '.$shipping_address->city.', Zipcode- '.$shipping_address->zipcode.'</p>
                                 </td>
                                 <td style="border:1px solid #011c49;">
                                     <p style="padding:15px 10px 5px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Name : </strong>'.$billing_address->name.'</p>
                                     <p style="padding: 5px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Email : </strong>'.$billing_address->email.'</p>
-                                    <p style="padding: 5px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Phone : Number</strong>'.$billing_address->phone_number.'</p>
+                                    <p style="padding: 5px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Phone Number :</strong>'.$billing_address->phone_number.'</p>
                                     <p style="padding:  5px 10px 25px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Address : </strong>'.$billing_address->address.', '.$billing_address->country.', '.$billing_address->country.', '.$billing_address->state.', Zipcode- '.$billing_address->zipcode.'</p>
                                 </td>
                             </tr>
@@ -711,42 +715,47 @@ class OrderController extends Controller
                                 $week = json_decode($ca->week);
 
                             $output .= '<tr><td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$ca->shop_type.'</td>
-                                <td style="padding:  10px;color: #000;border-bottom:1px solid #3f4d67;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$camp->title.'</td>
-                                <td style="padding:  10px;color: #000;border-bottom:1px solid #3f4d67;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$user->name.'</td>';
+                                        <td style="padding:  10px;color: #000;border-bottom:1px solid #3f4d67;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$camp->title.'</td>
+                                        <td style="padding:  10px;color: #000;border-bottom:1px solid #3f4d67;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$user->name.'</td>';
 
-                            $output .='<td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">';   
+                            $output .='<td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">';  
+
 
                             foreach($week as $number=>$number_array)
                             {
+
                                 foreach($number_array as $data=>$user_data)
                                 {
+
                                   foreach($user_data as $data1=>$user_data1){
                                    
                                       $split = explode('-',$user_data1);
                                       $get_session = $split[2];
                                     
                                     if($get_session == 'early'){
-                                    $output .= '<p>'.$number.' - '.$data1.' - Early Drop Off<br/>';
+                                    $output .= '<p>'.$number.' - '.$data1.' - Early Drop Off</p>';
                                     }
                                     elseif($get_session == 'mor'){
-                                    $output .= '<p>'.$number.' - '.$data1.' - Morning<br/>';
+                                    $output .= '<p>'.$number.' - '.$data1.' - Morning</p>';
                                     }
                                     elseif($get_session == 'noon'){
-                                    $output .= '<p>'.$number.' - '.$data1.' - Afternoon<br/>';
+                                    $output .= '<p>'.$number.' - '.$data1.' - Afternoon</p>';
                                     }
                                     elseif($get_session == 'lunch'){
-                                    $output .= '<p>'.$number.' - '.$data1.' - Lunch Club<br/>';
+                                    $output .= '<p>'.$number.' - '.$data1.' - Lunch Club</p>';
                                     }
                                     elseif($get_session == 'late'){
-                                    $output .= '<p>'.$number.' - '.$data1.' - Late Pickup<br/>';
+                                    $output .= '<p>'.$number.' - '.$data1.' - Late Pickup</p>';
                                     }
                                     elseif($get_session == 'full'){
-                                    $output .= '<p>'.$number.' - '.$data1.' - Full Day<br/>';
+                                    $output .= '<p>'.$number.' - '.$data1.' - Full Day</p>';
                                     }
                                     
                                   }
                                 
                                 }
+
+                                
 
                               }
 

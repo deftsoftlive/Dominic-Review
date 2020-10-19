@@ -213,35 +213,16 @@ td.checkbox_course {
 
 			                        @php $medical_conditions = implode(', ',$med_cond); @endphp
 
-			                        <td>{{$player->name}}</td>
-			                        <td>{{$medical_conditions}}</td>
+			                        <td>{{isset($player->name) ? $player->name : ''}}</td>
+			                        <td>{{isset($medical_conditions) ? $medical_conditions : ''}}</td>
 			                    @else
 			                    	
 			                    @endif 
 			                @endif   
 		                </tr>
 
-                   <!--      @if(!empty($child_details->med_cond_info))
-                        <tr>
-                            <td>{{$player->name}}</td>
-                            <td>@if(!empty($child_details->med_cond_info)) 
-                                    @php 
-                                        $med_cond = json_decode($child_details->med_cond_info);
-                                        $conditions = [];
-                                    @endphp
 
-                                    @foreach($med_cond as $cond)
-                                       @php $conditions[] = $cond; @endphp
-                                    @endforeach
 
-                                    @php $cond = implode(' , ',$conditions); @endphp
-                                    {{$cond}}
-                                @else 
-                                    -  
-                                @endif</td>
-                        </tr>
-                        @else
-                        @endif -->
                     @endforeach
 
                 </tbody>

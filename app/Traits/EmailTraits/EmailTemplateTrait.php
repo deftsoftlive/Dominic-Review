@@ -15,6 +15,7 @@ trait EmailTemplateTrait {
 
 protected $emailTemplate = [
 
+
       // Parent request
       'parentRequestToCoach' => 3,
 
@@ -39,6 +40,49 @@ protected $emailTemplate = [
       'ShopApprovedEmailTraitFullNotification' => 20,
       'ProductApprovedEmailTraitFullNotification' => 21,
 
+      // Information Email
+      'OrderPlacedInformation' => 22, 
+
+      // Registration Email
+      'UserRegistration' => 23,
+
+      // Coach submit a report
+      'CoachSubmitReport' => 24,
+
+      // Coach accept/denied link request
+      'CoachLinkRequest' => 25,
+
+      // New coach request
+      'NewCoachRequest' => 26,
+
+      // Admin - New Order
+      'AdminOrderPlaced' => 27,
+
+      // Verify Coach Account
+      'VerifyCoachAccount' => 28,
+
+      // Linked Player Upload Goal
+      'LinkedPlayerUploadGoal' => 29,
+
+      // Invoice Approved/Not Approved
+      'InvoiceStatus' => 30,
+
+      // New Invoice By Coach
+      'NewInvoiceByCoach' => 31,
+
+      // Book a Taster Class - Admin
+      'BookATasterClass' =>32,
+
+      // Coach Qualification Expired
+      'CoachQualificationExpired' => 33,
+
+      // Book a Taster Class - User
+      'BookATasterUserClass' =>34,
+
+      // Coach submit a report
+      'CoachSubmitEndOfTermReport' =>35,
+      'CoachSubmitPlayerReport' =>36,
+      'CoachSubmitMatchReport' =>37
 ];
 
 

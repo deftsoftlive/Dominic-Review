@@ -42,28 +42,28 @@
                     <form action="{{route('list_users')}}" method="POST" class="cst-selection">
                     @csrf
                         <div class="container">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" name="search_first_name" id="search_first_name" placeholder="Enter First Name">
-                                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" name="search_first_name" id="search_first_name" placeholder="Enter First Name">
+                                </div>
 
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" name="search_last_name" id="search_last_name" placeholder="Enter Last Name">
-                                            </div>
-                                                
-                                            <div class="col-sm-3" >
-                                                <input type="email" class="form-control" name="search_email" id="search_email" placeholder="Enter User Email">
-                                            </div>
-                                            
-                                            <div class="col-sm-1" style="margin-right: 10px;">
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                            </div>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" name="search_last_name" id="search_last_name" placeholder="Enter Last Name">
+                                </div>
+                                    
+                                <div class="col-sm-3" >
+                                    <input type="email" class="form-control" name="search_email" id="search_email" placeholder="Enter User Email">
+                                </div>
+                                
+                                <div class="col-sm-1" style="margin-right: 10px;">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
 
-                                            <div class="col-sm-1" style="margin-left: 10px;">
-                                                <a href="" onclick="myFunction();" class="btn btn-primary">Reset</a>
-                                            </div>
-                                        </div><br/>
-                                    </div>
+                                <div class="col-sm-1" style="margin-left: 10px;">
+                                    <a href="" onclick="myFunction();" class="btn btn-primary">Reset</a>
+                                </div>
+                            </div><br/>
+                        </div>
                     </form>
                     <!-- Filter Section - End -->
                     
@@ -87,7 +87,7 @@
                                 @php 
                                     $dob = date("d-m-Y", strtotime($user->date_of_birth)); 
                                     $parent = DB::table('users')->where('role_id',2)->where('id',$user->parent_id)->get();
-                                    $linked_users = DB::table('users')->where('parent_id',$user->parent_id)->where('id','!=',$user->id)->get(); 
+                                    $linked_users = DB::table('users')->where('parent_id',$user->parent_id)->where('id','!=',$user->id)->where('id','!=',$user->parent_id)->get(); 
                                 @endphp
                                     <tr class="parent-row">
                                         <td>@if($user->gender == 'male')
@@ -114,104 +114,104 @@
                                             </div>
                                         </td>
                                     </tr>
-                            <tr class="child-row">
-                                <td colspan="5">
-                                 <div class="child-container">
-                                    <table>
-                                       <thead>
-                                          <tr>
-                                             <th>Name</th>
-                                             <th>Linked Users</th>
-                                             <th>DOB</th>
-                                             <th>Address</th>
-                                             <th>Action</th>
-                                          </tr>
-                                       </thead>
+                                    <tr class="child-row">
+                                        <td colspan="5">
+                                         <div class="child-container">
+                                            <table>
+                                               <thead>
+                                                  <tr>
+                                                     <th>Name</th>
+                                                     <th>Linked Users</th>
+                                                     <th>DOB</th>
+                                                     <th>Address</th>
+                                                     <th>Action</th>
+                                                  </tr>
+                                               </thead>
 
-                                       <!-- Parent User -->
-                                        @if(count($parent)> 0)
-                                        @foreach($parent as $ch)
-                                        @php $dob = date("d-m-Y", strtotime($ch->date_of_birth)); @endphp
-                                        <tbody>
-                                          <tr>
-                                             <td>                                                
-                                                @if($ch->gender == 'male')
-                                                 <i class="gender_icon fas fa-male"></i>
-                                                @else
-                                                 <i class="gender_icon fas fa-female"></i>
-                                                @endif
-                                                &nbsp; {{$ch->first_name}} {{$ch->last_name}}
-                                             </td>
-                                             <td>
-                                                @if(!empty($ch->type))
-                                                    {{$ch->type}}
-                                                @else
-                                                    Parent
-                                                @endif
-                                             </td>
-                                             <td>{{$dob}}</td>
-                                             <td>{{$ch->address}}, {{$ch->town}}<br/>{{$ch->postcode}}, {{$ch->country}}</td>
-                                             <td>
-                                                <div class="btn-group">
-                                                   <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+                                               <!-- Parent User -->
+                                                @if(count($parent)> 0)
+                                                @foreach($parent as $ch)
+                                                @php $dob = date("d-m-Y", strtotime($ch->date_of_birth)); @endphp
+                                                <tbody>
+                                                  <tr>
+                                                     <td>                                                
+                                                        @if($ch->gender == 'male')
+                                                         <i class="gender_icon fas fa-male"></i>
+                                                        @else
+                                                         <i class="gender_icon fas fa-female"></i>
+                                                        @endif
+                                                        &nbsp; {{$ch->first_name}} {{$ch->last_name}}
+                                                     </td>
+                                                     <td>
+                                                        @if(!empty($ch->type))
+                                                            {{$ch->type}}
+                                                        @else
+                                                            Parent
+                                                        @endif
+                                                     </td>
+                                                     <td>{{$dob}}</td>
+                                                     <td>{{$ch->address}}, {{$ch->town}}<br/>{{$ch->postcode}}, {{$ch->country}}</td>
+                                                     <td>
+                                                        <div class="btn-group">
+                                                           <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
 
-                                                    @if(!empty($ch->type))
-                                                      <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/family-member/overview')}}/{{$ch->id}}" class="dropdown-item">View</a>
-                                                    @else
-                                                      <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/users/edit')}}/{{$ch->id}}" class="dropdown-item">Edit</a>
-                                                    @endif
-                                                   
-                                                   </div>
-                                                </div>
-                                             </td>
-                                          </tr>
-                                        </tbody>
-                                        @endforeach
-                                        @endif
-
-                                        <!-- Linked Users -->
-                                        @if(count($linked_users)> 0)
-                                        @foreach($linked_users as $ch)
-                                        @php $dob = date("d-m-Y", strtotime($ch->date_of_birth)); @endphp
-                                        <tbody>
-                                          <tr>
-                                             <td>                                                
-                                                @if($ch->gender == 'male')
-                                                 <i class="gender_icon fas fa-male"></i>
-                                                @else
-                                                 <i class="gender_icon fas fa-female"></i>
+                                                            @if(!empty($ch->type))
+                                                              <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/family-member/overview')}}/{{$ch->id}}" class="dropdown-item">View</a>
+                                                            @else
+                                                              <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/family-member/overview')}}/{{$ch->id}}" class="dropdown-item">View</a>
+                                                            @endif
+                                                           
+                                                           </div>
+                                                        </div>
+                                                     </td>
+                                                  </tr>
+                                                </tbody>
+                                                @endforeach
                                                 @endif
-                                                &nbsp; {{$ch->first_name}} {{$ch->last_name}}
-                                             </td>
-                                             <td>
-                                                @if(!empty($ch->type))
-                                                    {{$ch->type}}
-                                                @else
-                                                    Parent
-                                                @endif
-                                             </td>
-                                             <td>{{$dob}}</td>
-                                             <td>{{$ch->address}}, {{$ch->town}}<br/>{{$ch->postcode}}, {{$ch->country}}</td>
-                                             <td>
-                                                <div class="btn-group">
-                                                   <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
 
-                                                    @if(!empty($ch->type))
-                                                      <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/family-member/overview')}}/{{$ch->id}}" class="dropdown-item">View</a>
-                                                    @else
-                                                      <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/users/edit')}}/{{$ch->id}}" class="dropdown-item">Edit</a>
-                                                    @endif
-                                                    
-                                                </div>
-                                             </td>
-                                          </tr>
-                                        </tbody>
-                                        @endforeach
-                                        @endif
-                                    </table>
-                                 </div>
-                              </td>
-                            </tr>
+                                                <!-- Linked Users -->
+                                                @if(count($linked_users)> 0)
+                                                @foreach($linked_users as $ch)
+                                                @php $dob = date("d-m-Y", strtotime($ch->date_of_birth)); @endphp
+                                                <tbody>
+                                                  <tr>
+                                                     <td>                                                
+                                                        @if($ch->gender == 'male')
+                                                         <i class="gender_icon fas fa-male"></i>
+                                                        @else
+                                                         <i class="gender_icon fas fa-female"></i>
+                                                        @endif
+                                                        &nbsp; {{$ch->first_name}} {{$ch->last_name}}
+                                                     </td>
+                                                     <td>
+                                                        @if(!empty($ch->type))
+                                                            {{$ch->type}}
+                                                        @else
+                                                            Parent
+                                                        @endif
+                                                     </td>
+                                                     <td>{{$dob}}</td>
+                                                     <td>{{$ch->address}}, {{$ch->town}}<br/>{{$ch->postcode}}, {{$ch->country}}</td>
+                                                     <td>
+                                                        <div class="btn-group">
+                                                           <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+
+                                                            @if(!empty($ch->type))
+                                                              <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/family-member/overview')}}/{{$ch->id}}" class="dropdown-item">View</a>
+                                                            @else
+                                                              <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('/admin/family-member/overview')}}/{{$user->id}}" class="dropdown-item">Edit</a>
+                                                            @endif
+                                                            
+                                                        </div>
+                                                     </td>
+                                                  </tr>
+                                                </tbody>
+                                                @endforeach
+                                                @endif
+                                            </table>
+                                         </div>
+                                      </td>
+                                    </tr>
                                 @endforeach
 
                                 </tbody>

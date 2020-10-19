@@ -69,7 +69,7 @@
                                                         @endif
                                                         {{$bd->name}}</td>
                                                         <td><img width="50px;" height="50px;" src="{{URL::asset('/uploads')}}/{{$bd->image}}"></td>
-                                                        <td>{{$bd->end_date}}</td>
+                                                        <td>@php echo date('d/m/Y',strtotime($bd->end_date)); @endphp</td>
                                                         <td>{{$bd->points}}</td>
                                                         <td>
                                                             <div class="btn-group">

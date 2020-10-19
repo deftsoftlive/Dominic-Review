@@ -33,7 +33,7 @@
                   
                   <label class="control-label">Page Title<span class="cst-upper-star">*</span></label>
                   <select class="select-player" name="page_title">
-                      <option value="course-listing" {{ $venue->page_title == 'course-listing' ?  'selected' : '' }}>Courses Page</option>
+                      <!-- <option value="course-listing" {{ $venue->page_title == 'course-listing' ?  'selected' : '' }}>Courses Page</option> -->
                       <option value="course-listing/football" {{ $venue->page_title == 'course-listing/football' ?  'selected' : '' }}>Football Courses Page</option>
                       <option value="course-listing/tennis" {{ $venue->page_title == 'course-listing/tennis' ?  'selected' : '' }}>Tennis Courses Page</option>
                       <option value="course-listing/school" {{ $venue->page_title == 'course-listing/school' ?  'selected' : '' }}>School Courses Page</option>
@@ -57,6 +57,20 @@
                       @foreach($camp_cat as $cat)
                         <option {{ $venue->page_title == 'camp-detail/'.$cat->slug ? 'selected' : '' }} value="camp-detail/{{$cat->slug}}">Camp Category - {{$cat->title}}</option>
                       @endforeach
+
+
+
+                      @php $linked_course_cat = DB::table('link_course_and_categories')->where('status',1)->get(); @endphp
+
+                      @foreach($linked_course_cat as $cat)
+
+                      @php $selected = isset($cat->linked_course_cat) ? 'course-listing/'.getProductCatslug($cat->linked_course_cat).'?&cat='.$cat->id : ''; @endphp
+
+                        <option value="course-listing/@php echo getProductCatslug($cat->linked_course_cat); @endphp?&cat={{$cat->id}}" {{ $selected == $venue->page_title ? 'selected' : '' }}>Course Category - @php echo getProductCatname($cat->linked_course_cat); @endphp - {{$cat->title}}</option>
+
+                      @endforeach
+
+
                   </select><br/>
 
                    {{textbox($errors,'Title<span class="cst-upper-star">*</span>','title', $venue->title)}}

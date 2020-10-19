@@ -201,13 +201,11 @@ function myFunction() {
         $("#all_course_listing")[0].click();
       }
 
-$base_url = $("#base_url").val();
-
 $(document).ready(function(){
     $("select#people").change(function(){
         var selectedCat = $(this).children("option:selected").val();
         $.ajax({
-            url:$base_url+"/admin/selectedCat/",
+            url:"http://49.249.236.30:8654/dominic-new/admin/selectedCat/",
             method:'GET',
             data:{selectedCat:selectedCat},
             dataType:'json',

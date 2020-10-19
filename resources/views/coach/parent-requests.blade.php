@@ -58,11 +58,83 @@
 </div>
 @endif
 
+<!-- Coach Notifications -->
+<section class="member section-padding">
+    <div class="container">
+        <div class="pink-heading">
+            <h2>Notifications</h2>
+        </div>
+        <div class="col-md-12">
+            <!-- <h2 class="cst_sub_heading">Player Name</h2> -->
+            <div class="player-report-table tbl_shadow">
+                <div class="report-table-wrap">
+                    <div class="m-b-table">
+                        <table class="notifictaion-timeline">
+                            <thead>
+                                <tr>
+                                    <th width="23%">Date</th>
+                                    <!-- <th>Parent Name</th> -->
+                                    <th width="53%">Type</th>
+                                    <th width="23%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @if($user->role_id == '3')
+
+                                    @php 
+                                        $notifications = DB::table('notifications')->orderBy('created_at','desc')->get();  
+                                        $children = DB::table('users')->where('parent_id',Auth::user()->id)->get();
+                                        $child_id = [];
+                                    @endphp
+
+                                    @foreach($children as $child)
+                                        @php $child_id[] = $child->id; @endphp
+                                    @endforeach
+
+
+                                    @foreach ($notifications as $notification)
+
+                                    @php 
+                                        $notification_arr = json_decode($notification->data); 
+                                    @endphp
+
+                                    @if($notification_arr->send_to == Auth::user()->id)
+
+                                        <tr>
+                                            <td>
+                                                <p>@php echo date('d-m-Y',strtotime($notification->created_at)); @endphp </p>
+                                            </td>
+                                            <td>
+                                                <p>{{ $notification_arr->data }}</p>
+                                            </td>
+                                            <td class="view_option">
+                                               <p> <a style="" href="{{url('/admin/mark_as_read')}}/{{$notification->id}}" >Mark as Read</a></p>
+                                            </td>
+                                        </tr>
+
+                                    @endif
+
+                                    @endforeach
+
+                                @endif
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+    </div>
+</section>
+
+<!-- Parent Coach Requests - Notifications -->
 <section class="my-players section-padding coach_listing request-parent">
    <div class="container">
-      <div class="pink-heading">
-         <h2>Notifications</h2>
-      </div>
+      <!-- <div class="pink-heading">
+         <h2>Link Request Notifications</h2>
+      </div> -->
       @php 
       	$requests = DB::table('parent_coach_reqs')->where('coach_id',Auth::user()->id)->where('dismiss_by_coach',NULL)->get();  
       @endphp
@@ -82,11 +154,21 @@
             <div class="col-lg-4 col-md-6">
                <div class="activity-card text-center">
                   <figure class="activity-card-img">
-                     @if(!empty($details->profile_image))
-                         <img id="image_src" style="width: 100px; height: 100px;" src="{{ URL::asset('/uploads').'/'.$details->profile_image }}" />
-                     @else
-                         <img id="image_src" style="width: 100px; height: 100px;" src="{{ URL::asset('/images').'/default.jpg' }}" />
-                     @endif
+          
+                  @if(!empty($details->profile_image))
+                    @php 
+                        $check_icon = DB::table('icon_images')->where('icon_image',$details->profile_image)->first(); 
+                    @endphp
+                  @endif
+                    
+                    @if(!empty($details->profile_image))
+                    @if(!empty($check_icon))
+                        <img id="image_src" style="width: 100px; height: 100px;" src="{{URL::asset('/uploads/icons')}}/{{$details->profile_image}}" id="Image_Preview" alt="">
+                    @else
+                        <img id="image_src" style="width: 100px; height: 100px;" src="{{URL::asset('/uploads')}}/{{$details->profile_image}}" id="Image_Preview" alt="">
+                    @endif
+                    @endif
+
                   </figure>
 
                   <figcaption class="activity-caption">
@@ -98,8 +180,7 @@
                      <p>Child Name: <span class="request-name">{{isset($details->name) ? $details->name : ''}}</span></p>
                      <p>Parent Name: <span class="request-name">{{isset($par_details->name) ? $par_details->name : ''}}</span></p>
                      <p>Date: <span class="request-name">@php echo date("d/m/Y (H:i)",strtotime($req->updated_at)); @endphp</span></p>
-                     <!-- <p>Parent Email: <span class="request-name">{{$par_details->email}}</span></p> -->
-                     <!-- <p>Phone Number: <span class="request-name">{{$par_details->phone_number}}</span></p> -->
+                   
 
                       @if($req->status == '0')
                         <div id="parent_request" class="request-actions par-req-{{$child_id}}">
@@ -145,14 +226,14 @@
                       @csrf
                       <input type="hidden" name="request_id" value="{{$req->id}}">
                       <div class="form-group">
-                       <h4>Reason you are enable to accept :</h4>
+                       <h4>Reason you are unable to accept :</h4>
                         <textarea name="reason_of_rejection" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                       </div>
                       <div class="form-group">
                         <p>The player will be able to see this message so please ensure that your are professional and respectful when stating your reasoning - Thank you</p>
                       </div>
                      
-                      <button type="submit" id="rej_req" class="cstm-btn">Submit</button>
+                      <button type="submit" id="rej_req" class="cstm-btn main_button">Submit</button>
                       
                     </form>
                     </div>

@@ -5,17 +5,18 @@
 
 @section('content')
 
-<section class="account-sec">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="account-sec-content">
-                        <h2 class="account-sec-heading">Login</h2>
-                    </div>
-                </div>
-            </div>
+@php $base_url = \URL::to('/'); @endphp
+<section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/{{ getAllValueWithMeta('login_banner', 'banners') }});">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="football-course-content">
+          <h2 class="f-course-heading">Login</h2>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
 @if(Session::has('success'))
 <div class="alert_msg alert alert-success">

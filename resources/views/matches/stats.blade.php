@@ -334,7 +334,7 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
                                                 <div class="col-md-12">
                                                     <div class="row ques_rows">
                                                         <div class="col-md-8 ques-row">
-                                                            <label for="tp_won_rally_4shots" class="col-md-12 col-form-label text-md-right"><span>14) </span>{{ __('Total points won when rally 4 shots or less') }}</label>
+                                                            <label for="tp_won_rally_4shots" class="col-md-12 col-form-label text-md-right"><span>16) </span>{{ __('Total points won when rally 4 shots or less') }}</label>
                                                         </div>
                                                         <div class="col-md-4 ques-row">
                                                             <input id="tp_won_rally_4shots" type="text" class="form-control{{ $errors->has('tp_won_rally_4shots') ? ' is-invalid' : '' }}" name="tp_won_rally_4shots" value="{{ isset($stats_calculation->tp_won_rally_4shots) ? $stats_calculation->tp_won_rally_4shots : '' }}" required autofocus >
@@ -353,7 +353,7 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
                                                 <div class="col-md-12">
                                                     <div class="row ques_rows">
                                                         <div class="col-md-8 ques-row">
-                                                            <label for="tp_won_rally_5shots" class="col-md-12 col-form-label text-md-right"><span>15) </span>{{ __('Total points won when rally 5+ shots') }}</label>
+                                                            <label for="tp_won_rally_5shots" class="col-md-12 col-form-label text-md-right"><span>17) </span>{{ __('Total points won when rally 5+ shots') }}</label>
                                                         </div>
                                                         <div class="col-md-4 ques-row">
                                                             <input id="tp_won_rally_5shots" type="text" class="form-control{{ $errors->has('tp_won_rally_5shots') ? ' is-invalid' : '' }}" name="tp_won_rally_5shots" value="{{ isset($stats_calculation->tp_won_rally_5shots) ? $stats_calculation->tp_won_rally_5shots : '' }}" required autofocus >
@@ -372,7 +372,7 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
                                                 <div class="col-md-12">
                                                     <div class="row ques_rows">
                                                         <div class="col-md-8 ques-row">
-                                                            <label for="total_shots_match" class="col-md-12 col-form-label text-md-right"><span>16) </span>{{ __('Total number of shots played in match') }}</label>
+                                                            <label for="total_shots_match" class="col-md-12 col-form-label text-md-right"><span>18) </span>{{ __('Total number of shots played in match') }}</label>
                                                         </div>
                                                         <div class="col-md-4 ques-row">
                                                             <input id="total_shots_match" type="text" class="form-control{{ $errors->has('total_shots_match') ? ' is-invalid' : '' }}" name="total_shots_match" value="{{ isset($stats_calculation->total_shots_match) ? $stats_calculation->total_shots_match : '' }}" required autofocus >

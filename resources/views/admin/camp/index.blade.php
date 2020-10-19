@@ -81,7 +81,8 @@
 
                                                 <!-- <a href="{{url('admin/camp')}}/register/{{$test->id}}" class="dropdown-item">View Register</a> -->
 
-                                                <a href="{{url('admin/register-template/camp')}}/{{$test->id}}" class="dropdown-item">View Register</a>
+                                                <a href="{{url('/admin/register-template/camp')}}/{{$test->id}}?&week=W1" class="dropdown-item">View Register</a>
+                                                <a href="{{url('/admin/book-a-camp')}}/{{$test->slug}}" class="dropdown-item">Book A Camp</a>
                                             </div>
                                         </div>
                                     </td>

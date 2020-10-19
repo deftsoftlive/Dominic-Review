@@ -61,7 +61,7 @@
                 $user = DB::table('users')->where('id',$child_id)->first(); 
               @endphp
 
-                   <b>Child Name</b> - {{isset($user->name) ? $user->name : ''}}<br/><br/>
+                   <b>Child Name</b> - {{isset($user->name) ? $user->name : 'User not exist'}}<br/><br/>
                    <b>Course Name</b> - <br/>
 
                    <div class="table-layout">

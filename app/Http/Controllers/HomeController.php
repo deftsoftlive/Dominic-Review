@@ -51,6 +51,7 @@ use App\MatchStats;
 use App\MatchGameChart;
 use App\UserBadge;
 use App\DrhActivity;
+use App\IconImage;
 use App\NewsletterSubscription;
 use App\Models\Shop\ShopCartItems;
 use App\Models\Products\ProductCategory;
@@ -58,6 +59,7 @@ use App\Traits\ProductCart\UserCartTrait;
 use App\Traits\EmailTraits\EmailNotificationTrait;
 use Notification;
 use App\Notifications\MyFirstNotification;
+use App\Notifications\WalletMoneyNotification;
 
 class HomeController extends Controller
 {
@@ -79,17 +81,17 @@ class HomeController extends Controller
       return view('crop_image');
     }
 
-    public function imageCrop(Request $request){
-      $image_file = $request->image;
-      list($type, $image_file) = explode(';', $image_file);
-        list(, $image_file)      = explode(',', $image_file);
-        $image_file = base64_decode($image_file);
-        $image_name= time().'_'.rand(100,999).'.png';
-        $path = public_path('uploads/'.$image_name);
+    // public function imageCrop(Request $request){
+    //   $image_file = $request->image;
+    //   list($type, $image_file) = explode(';', $image_file);
+    //     list(, $image_file)      = explode(',', $image_file);
+    //     $image_file = base64_decode($image_file);
+    //     $image_name= time().'_'.rand(100,999).'.png';
+    //     $path = public_path('uploads/'.$image_name);
 
-        file_put_contents($path, $image_file);
-        return response()->json(['status'=>true]);
-    }
+    //     file_put_contents($path, $image_file);
+    //     return response()->json(['status'=>true]);
+    // }
 
 
     public function register()
@@ -741,6 +743,8 @@ public function tennis_listing(Request $request)
 {
     $slug = 'course-listing/tennis';
 
+    $cat_id = $request->input('cat'); 
+
     if(!empty(request()->get('course'))){
       $course_name = request()->get('selected_course_name');
       $subtype = request()->get('subtype');
@@ -751,13 +755,16 @@ public function tennis_listing(Request $request)
                  ->where('subtype', '=', $subtype)
                  // ->where('subtype', '=', $level)
                  ->where('status',1)
+                 ->where('course_category',$cat_id)
                  ->where('type','156')
                  ->orderBy('sort','asc')->get();
 
     }else{
-        $course = Course::orderBy('sort','asc')->where('status',1)->where('type','156')->get();
+        $course = Course::orderBy('sort','asc')->where('status',1)->where('type','156')->where('course_category',$cat_id)->get();
     }
     $accordian = Accordian::where('page_title',$slug)->where('status','1')->orderBy('sort','asc')->get();  
+
+    // dd($course);
 
     // Get subtype for tennis courses
     $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->get();
@@ -1143,7 +1150,20 @@ public function submit_book_a_camp(Request $request)
         $add_course->child_id   = $child;
 
         if($add_course->save()){
-          return \Redirect::back()->with('success',' Camp added to cart successfully!');
+
+          $camp = Camp::where('id',$camp_id)->first();
+
+         // dd($camp);
+
+          if($camp->popup_enable == 0)
+          {
+            return redirect('shop/cart')->with('success',' Camp added to cart successfully!');
+          }
+          else
+          {
+            return \Redirect::back()->with('success',' Camp added to cart successfully!');
+          }
+          
         }else{
           return \Redirect::back()->with('error',' Something went wrong!');
         }
@@ -1271,15 +1291,17 @@ public function parent_coach(Request $request)
     $coach_email = getUseremail($request->coach_id);
     $parent_name = getUsername($request->parent_id);
     $parent_email = getUseremail($request->parent_id);
+    $player_name = getUsername($request->child);
 
   $emaiData = [
           'parent_name' => $parent_name,
           'parent_email' => $parent_email,
           'coach_name' => $coach_name,
-          'coach_email' => $coach_email
+          'coach_email' => $coach_email,
+          'player_name' => $player_name
        ];
   
-  // dd($emaiData);
+  //dd($emaiData);
 
   $rr = $this->ParentRequestToCoach($emaiData);
 
@@ -1320,6 +1342,7 @@ public function update_coach_profile(Request $request) {
     $acc                        =    CoachProfile::findOrNew($request->coach_profile_id);
     $acc->coach_id              =    isset($request->coach_id) ? $request->coach_id : '';
     $acc->profile_name          =    isset($request->profile_name) ? $request->profile_name : '';
+    $acc->profile_last_name          =    isset($request->profile_last_name) ? $request->profile_last_name : '';
     $acc->qualified_clubs       =    isset($request->qualified_clubs) ? $request->qualified_clubs : '';
     $acc->qualifications        =    isset($request->qualifications) ? $request->qualifications : '';
     $acc->personal_statement    =    isset($request->personal_statement) ? $request->personal_statement : '';
@@ -1329,6 +1352,13 @@ public function update_coach_profile(Request $request) {
       $acc->image                 =    isset($filename) ? $filename : '';
     }
     $acc->save(); 
+
+    $u = User::find($request->coach_id);
+    $u->name = $acc->profile_name.' '.$acc->profile_last_name;
+    $u->first_name = $acc->profile_name;
+    $u->last_name = $request->profile_last_name;
+    $u->save();
+
     return \Redirect::back()->with('success','Coach Profile has been updated successfully!');
 }
 
@@ -1344,7 +1374,7 @@ public function updatePassword(Request $request) {
         }
         else
         {  
-          return \Redirect::back()->with('success','Please enter correct current password');
+          return \Redirect::back()->with('error','Please enter correct current password');
         }
     }
 
@@ -1403,7 +1433,13 @@ public function add_wallet_amt(Request $request)
 
     $walletHistory = WalletHistory::create($request->all()); 
     $walletHistory->type = 'credit';
-    $walletHistory->save();
+    // $walletHistory->save();
+
+    if($walletHistory->save())
+    {
+        $walletHistory->notify(new \App\Notifications\WalletMoneyNotification($walletHistory));
+    }
+
 
     if(!empty($check_wallet))
     {
@@ -1439,6 +1475,7 @@ public function add_wallet_amt(Request $request)
 |---------------------------------*/
 public function coach_report() 
 {
+  // dd(request()->get('coach_player_id'));
     $player_id = request()->get('coach_player_id');  
 
     $season_id = request()->get('season_id');
@@ -1451,19 +1488,28 @@ public function coach_report()
     if(!empty($player_id))
     {   
         $player_rep = PlayerReport::where('type','complex')->where('player_id',$player_id)->where('status',1)->orderBy('id','desc')->first();
+
+        if(empty($player_rep))
+        {
+          return \Redirect::back()->with('user_id',$user_id)->with('season_id',$season_id)->with('course_id',$course_id)->with('error','No report exist for this player');
+        }
+
     }else{
-        $player_rep = '';
+        return view('coach.report',compact('player_rep','player_report','season_id','course_id','user_id'));
     }
 
     // Filter for simple report
     if(!empty($season_id) && !empty($course_id) && !empty($user_id))
     {
         $player_report = PlayerReport::where('type','simple')->where('season_id',$season_id)->where('course_id',$course_id)->where('player_id',$user_id)->where('status',1)->orderBy('id','desc')->first();
-    }else{
+        return view('coach.report',compact('player_id','player_rep','player_report','season_id','course_id','user_id'));
+    }
+    else
+    {
         $player_report = '';
+        return view('coach.report',compact('player_id','player_rep','player_report','season_id','course_id','user_id'));
     }
 
-    return view('coach.report',compact('player_rep','player_report','season_id','course_id','user_id'));
 }
 
 /*---------------------------------
@@ -1504,7 +1550,13 @@ public function save_simple_report(Request $request)
             $report->feedback = isset($request->feedback) ? $request->feedback : '';
             $report->selected_options = isset($request->selected_options) ? json_encode($request->selected_options) : '';
             $report->status = 0;
-            $report->save();
+
+            if($report->save())
+            {
+              // $this->CoachSubmitReportSuccess($report->id);
+              $this->CoachSubmitEndOfTermReportSuccess($report->id);
+              $report->notify(new \App\Notifications\User\ReportNotification());
+            }
 
             $override_url = url()->current().'?rp='.$report->id;
             
@@ -1524,7 +1576,13 @@ public function save_simple_report(Request $request)
                 $report->feedback = isset($request->feedback) ? $request->feedback : '';
                 $report->selected_options = isset($request->selected_options) ? json_encode($request->selected_options) : '';
                 $report->status = 1;
-                $report->save();
+
+                if($report->save())
+                {
+                  // $this->CoachSubmitReportSuccess($report->id);
+                  $this->CoachSubmitEndOfTermReportSuccess($report->id);
+                  $report->notify(new \App\Notifications\User\ReportNotification());
+                }
 
             return \Redirect::back()->with('success','Report generated successfully for '.getUsername($request->player_id).' under '.getCourseName($request->course_id).' course'); 
             
@@ -1570,7 +1628,13 @@ public function save_complex_report(Request $request)
           $report->feedback = isset($request->feedback) ? $request->feedback : '';
           $report->selected_options = isset($request->selected_options) ? json_encode($request->selected_options) : '';
 
-          $report->save();
+          if($report->save())
+          {
+            $this->CoachSubmitPlayerReportSuccess($report->id);
+            $report->notify(new \App\Notifications\User\ReportNotification());
+          }
+
+          $report->notify(new \App\Notifications\User\ReportNotification());
 
           $override_url = url()->current().'?rp='.$report->id;
                 
@@ -1586,7 +1650,12 @@ public function save_complex_report(Request $request)
           $report->status = 1;
           $report->feedback = isset($request->feedback) ? $request->feedback : '';
           $report->selected_options = isset($request->selected_options) ? json_encode($request->selected_options) : '';  
-          $report->save();
+         
+          if($report->save())
+          {
+            $this->CoachSubmitPlayerReportSuccess($report->id);
+            $report->notify(new \App\Notifications\User\ReportNotification());
+          }
 
           return \Redirect::back()->with('success','Report generated successfully for '.getUsername($request->player_id)); 
         } 
@@ -1696,7 +1765,7 @@ public function get_course_from_season($season_id)
 
             // dd($course);
 
-     $course = Course::where('season',$season_id)->get();
+     // $course = Course::where('season',$season_id)->get();
 
     if(count($course) > 0)
     {
@@ -1725,25 +1794,25 @@ public function get_course_from_season($season_id)
 |--------------------------------------------*/
 public function upload_inv_index() 
 {
-  $req = CoachUploadPdf::where('coach_id',Auth::user()->id)->get();
+  $req = CoachUploadPdf::where('coach_id',Auth::user()->id)->orderBy('id','desc')->paginate(10);
   return view('coach.upload-invoice.index',compact('req'));
 }
 
 public function upload_inv_accept() 
 {
-  $req = CoachUploadPdf::where('coach_id',Auth::user()->id)->where('status',1)->get();
+  $req = CoachUploadPdf::where('coach_id',Auth::user()->id)->where('status',1)->orderBy('id','desc')->paginate(10);
   return view('coach.upload-invoice.index',compact('req'));
 }
 
 public function upload_inv_not_approve() 
 {
-  $req = CoachUploadPdf::where('coach_id',Auth::user()->id)->where('status',0)->get(); 
+  $req = CoachUploadPdf::where('coach_id',Auth::user()->id)->where('status',0)->orderBy('id','desc')->paginate(10);
   return view('coach.upload-invoice.index',compact('req'));
 }
 
 public function upload_inv_pending() 
 {
-  $req = CoachUploadPdf::where('coach_id',Auth::user()->id)->where('status',2)->get();
+  $req = CoachUploadPdf::where('coach_id',Auth::user()->id)->where('status',2)->orderBy('id','desc')->paginate(10);
   return view('coach.upload-invoice.index',compact('req'));
 }
 
@@ -1781,7 +1850,12 @@ public function upload_inv_save(Request $request)
     {
       $acc->invoice_document = isset($filename) ? $filename : '';
     }
-    $acc->save();
+
+    if($acc->save())
+    {
+      $this->NewInvoiceSuccess($acc->id);
+      $acc->notify(new \App\Notifications\NewInvoiceNotification());
+    }
 
   return redirect('user/upload-invoice')->with('success','Invoice PDF uploaded successfully.');
 }
@@ -1812,7 +1886,8 @@ public function save_qualifications(Request $request)
  
     if($request->hasFile('upload_document'))
     {
-        foreach ($data['document_name'] as $number => $value){    
+        foreach ($data['document_name'] as $number => $value)
+        {    
         
         $string = str_random(5);
         $image[$number] = request()->upload_document[$number];  
@@ -1829,7 +1904,12 @@ public function save_qualifications(Request $request)
           $co['upload_document'] = isset($filename[$number]) ? $filename[$number] : '';
           $co->save(); 
 
+          $co->notify(new \App\Notifications\NewDocumentNotification());
+
         }
+
+        
+        
     }
 
   return \Redirect::back()->with('flash_message','Document uploaded successfully. Please wait for admin approval.');
@@ -1881,7 +1961,7 @@ public function add_family_member() {
 
 /* Overview - Family Member */
 public function family_member_overview($id) {
-    $user = User::where('id',$id)->first();  
+    $user = User::where('id',$id)->first(); // dd($user);
     $user_details = ChildrenDetail::where('child_id',$id)->first();
     $user_contacts = ChildContact::where('child_id',$id)->get();
     $user_medicals = ChildMedical::where('child_id',$id)->get();
@@ -1889,7 +1969,7 @@ public function family_member_overview($id) {
 
     $user_id = $id;
 
-    // dd($user,$user_details,$user_contacts); 
+    // dd($user,$user_medicals); 
 
     return view('cms.my-family.family-member-overview',compact('user','user_id','user_details','user_contacts','user_medicals','user_allergies'));
 } 
@@ -1920,20 +2000,20 @@ public function copy_address() {
 |-------------------------------------------*/
 public function participants_details(Request $request)
 {   
-    //dd($request->all());
+    // dd($request->all());
     
     if($request->type == 'Adult')
     {
       $first_name = $request->first_name;
       $last_name = $request->last_name;
-      $gender = $request->gender;
-      $date_of_birth = $request->date_of_birth;
+      $gender = $request->gender1;
+      $date_of_birth = $request->date_of_birth1;
       $address = $request->address;
       $town = $request->town;
       $postcode = $request->postcode;
       $county = $request->county;
       $country = $request->country;
-      $relation = $request->relation;
+      $relation = $request->relation1;
       $book_person = $request->book_person;
       $language = $request->language1;
       $primary_language = $request->primary_language1;
@@ -1994,7 +2074,7 @@ public function participants_details(Request $request)
       $add_family->country      =    $country;
       $add_family->parent_id    =    \Auth::user()->id; 
       $add_family->relation     =    $relation;
-      $add_family->type         =    $request->type;
+      // $add_family->type         =    $request->type;
       $add_family->book_person  =    $book_person;
       // $add_family->show_name    =    $show_name;
       $add_family->tennis_club  =    isset($request->tennis_club) ? $request->tennis_club : '';
@@ -2006,34 +2086,41 @@ public function participants_details(Request $request)
       ChildrenDetail::where('child_id',$request->user_id)->update(array('core_lang' => $language, 'school' => $school, 'primary_language' => $primary_language));
 
     }else{
-      $add_family               =    new User;
-      $add_family->role_id      =    $request->role_id;
-      $add_family->name         =    $first_name.' '.$last_name;
-      $add_family->first_name   =    $first_name;
-      $add_family->last_name    =    $last_name;
-      $add_family->gender       =    $gender;
-      $add_family->date_of_birth=    $date_of_birth;
-      $add_family->address      =    $address;
-      $add_family->town         =    $town;
-      $add_family->postcode     =    $postcode;
-      $add_family->county       =    $county;
-      $add_family->country      =    $country;
-      $add_family->parent_id    =    \Auth::user()->id; 
-      $add_family->relation     =    $relation;
-      $add_family->type         =    $request->type;
-      $add_family->book_person  =    $book_person;
-      // $add_family->show_name    =    $show_name;
-      $add_family->tennis_club  =    isset($request->tennis_club) ? $request->tennis_club : '';
-      $add_family->email_verified_at = '';
-      $add_family->save(); 
 
-      $mem_detail = ChildrenDetail::create($request->all()); 
-      $mem_detail->parent_id = $add_family->parent_id;
-      $mem_detail->child_id = $add_family->id;
-      $mem_detail->core_lang = $language;
-      $mem_detail->school = $school;
-      $mem_detail->primary_language = $primary_language;
-      $mem_detail->save();
+      if(!empty($request->type))
+      {
+        $add_family               =    new User;
+        $add_family->role_id      =    $request->role_id;
+        $add_family->name         =    $first_name.' '.$last_name;
+        $add_family->first_name   =    $first_name;
+        $add_family->last_name    =    $last_name;
+        $add_family->gender       =    $gender;
+        $add_family->date_of_birth=    $date_of_birth;
+        $add_family->address      =    $address;
+        $add_family->town         =    $town;
+        $add_family->postcode     =    $postcode;
+        $add_family->county       =    $county;
+        $add_family->country      =    $country;
+        $add_family->parent_id    =    \Auth::user()->id; 
+        $add_family->relation     =    $relation;
+        $add_family->type         =    $request->type;
+        $add_family->book_person  =    $book_person;
+        // $add_family->show_name    =    $show_name;
+        $add_family->tennis_club  =    isset($request->tennis_club) ? $request->tennis_club : '';
+        $add_family->email_verified_at = '';
+        $add_family->save(); 
+
+        $mem_detail = ChildrenDetail::create($request->all()); 
+        $mem_detail->parent_id = $add_family->parent_id;
+        $mem_detail->child_id = $add_family->id;
+        $mem_detail->core_lang = $language;
+        $mem_detail->school = $school;
+        $mem_detail->primary_language = $primary_language;
+        $mem_detail->save();
+
+      }else{
+        return \Redirect::back()->with('error',"Please select person's type.");
+      }
     }
     
     $last_user_id = $add_family->id;
@@ -2163,7 +2250,7 @@ else
 |---------------------------------------------------*/
 public function medical_information(Request $request)
 {
-  //dd($request->all());
+  // dd($request->med_cond_info,$request->all());
 
   if($request->type == 'Adult')
   {
@@ -2184,13 +2271,16 @@ public function medical_information(Request $request)
       {
         ChildMedical::where('child_id',$request->child_id)->delete();
 
-        foreach($request->med_cond_info as $key=>$value)
+        if($request->med_cond == 'yes' && $request->med_cond_info != null)
         {
-          $child_med = new ChildMedical;
-          $child_med->child_id = $request->child_id;
-          $child_med->type = $request->type;
-          $child_med->medical = $value; 
-          $child_med->save();
+          foreach($request->med_cond_info as $key=>$value)
+          {
+            $child_med = new ChildMedical;
+            $child_med->child_id = $request->child_id;
+            $child_med->type = $request->type;
+            $child_med->medical = $value; 
+            $child_med->save();
+          }
         }
       }
 
@@ -2206,22 +2296,27 @@ public function medical_information(Request $request)
   }
   elseif($request->type == 'Child')
   {
+    // dd('1');
     $med_cond_info = json_encode($request->med_cond_info1); 
     $allergies_info = json_encode($request->allergies_info); 
 
-    if(isset($request->pres_med) && isset($request->beh_need) && isset($request->allergies) && isset($med_cond) && isset($request->med_req))
+
+    if(isset($request->med_cond1) && isset($request->med_cond_info1))
     {
-      if(count($request->med_cond_info)>0)
+      if(count($request->med_cond_info1)>0)
       {
         ChildMedical::where('child_id',$request->child_id)->delete();
 
-        foreach($request->med_cond_info1 as $key=>$value)
+        if($request->med_cond1 == 'yes' && $request->med_cond_info1 != null)
         {
-          $child_med = new ChildMedical;
-          $child_med->child_id = $request->child_id;
-          $child_med->type = $request->type;
-          $child_med->medical = $value; 
-          $child_med->save();
+          foreach($request->med_cond_info1 as $key=>$value)
+          {
+            $child_med = new ChildMedical;
+            $child_med->child_id = $request->child_id;
+            $child_med->type = $request->type;
+            $child_med->medical = $value; 
+            $child_med->save();
+          }
         }
       }
 
@@ -2229,13 +2324,16 @@ public function medical_information(Request $request)
       {
         ChildAllergy::where('child_id',$request->child_id)->delete();
 
-        foreach($request->allergies_info as $key1=>$value1)
+        if($request->allergies_info != null)
         {
-          $child_all = new ChildAllergy;
-          $child_all->child_id = $request->child_id;
-          $child_all->type = $request->type;
-          $child_all->allergy = $value1; 
-          $child_all->save();
+          foreach($request->allergies_info as $key1=>$value1)
+          {
+            $child_all = new ChildAllergy;
+            $child_all->child_id = $request->child_id;
+            $child_all->type = $request->type;
+            $child_all->allergy = $value1; 
+            $child_all->save();
+          }
         }
       }
 
@@ -2264,11 +2362,20 @@ public function media_consent(Request $request)
 {   
   if(!empty($request->confirm) && isset($request->confirm))
   {
-    ChildrenDetail::where('child_id',$request->child_id)->update(array('media' => $request->media_consent, 'confirm' => $request->confirm)); 
+    if($request->confirm == 'yes')
+    {
+      ChildrenDetail::where('child_id',$request->child_id)->update(array('media' => $request->media_consent, 'confirm' => $request->confirm)); 
 
-    $last_user_id = $request->child_id;
+      $last_user_id = $request->child_id;
+      return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Media Consents added successfully.');
+    }
+    else{
+      ChildrenDetail::where('child_id',$request->child_id)->update(array('media' => $request->media_consent, 'confirm' => $request->confirm)); 
 
-    return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Media Consents added successfully.');
+      $last_user_id = $request->child_id;
+      return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','You will not be able to book this participant onto any DRH Sports activity if you select NO to this question.');
+    }
+    
   }else{
     $last_user_id = $request->child_id;
 
@@ -2523,7 +2630,7 @@ public function parent_notifications(){
 
 /* Coach Listing Page */
 public function coach_listing(){
-  $coach = User::where('role_id',3)->where('updated_status', 1)->get();
+  $coach = User::where('role_id',3)->where('updated_status', 1)->get(); 
   return view('cms.my-family.coach-listing',compact('coach'));
 }
 
@@ -2542,7 +2649,12 @@ public function reject_request(Request $request)
   $req = ParentCoachReq::find($id);
   $req->status = 2;
   $req->reason_of_rejection = $request->reason_of_rejection;
-  $req->save();
+
+  if($req->save())
+  {
+    $this->CoachLinkRequestSuccess($req->id);
+    $req->notify(new \App\Notifications\User\LinkRequestNotification());
+  }
 
   return \Redirect::back()->with('success','Parent request has been rejected successfully!');
 } 
@@ -2566,8 +2678,14 @@ public function parent_req_status(Request $request)
   
   $req_data = ParentCoachReq::find($req->id);
   $req_data->status = $request->status;
-  $req_data->save();
+  // $req_data->save();
 
+  if($req_data->save())
+  {
+    $this->CoachLinkRequestSuccess($req_data->id);
+    $req_data->notify(new \App\Notifications\User\LinkRequestNotification());
+  }
+  
   $parent_id = $request->parent_id;
   $user = User::where('id',$parent_id)->first();
   $parent_name = $user['name'];
@@ -2580,11 +2698,11 @@ public function parent_req_status(Request $request)
   $status = ($req_data->status == 1) ? 'Accepted' : 'Rejected';
 
   // Mail to parent
-    \Mail::send('emails.coach.parent-request', ['parent_name' => $parent_name,'parent_email' => $parent_email,'coach_name' => $coach_name,'coach_email' => $coach_email,'status'=>$status] , 
-             function($message) use($parent_email){
-                 $message->to($parent_email);
-                 $message->subject('Subject : '.'Request to Coach');
-               });
+    // \Mail::send('emails.coach.parent-request', ['parent_name' => $parent_name,'parent_email' => $parent_email,'coach_name' => $coach_name,'coach_email' => $coach_email,'status'=>$status] , 
+    //          function($message) use($parent_email){
+    //              $message->to($parent_email);
+    //              $message->subject('Subject : '.'Request to Coach');
+    //            });
 
   $data = array(
       'output'   => $req_data,
@@ -2603,7 +2721,7 @@ public function unlink_coach(Request $request)
 /* My Bookings Page */
 public function my_bookings(){
   $logined_user_id = \Auth::user()->id; 
-  $shop = \DB::table('shop_orders')->where('user_id',$logined_user_id)->orderBy('id','desc')->get();
+  $shop = \DB::table('shop_orders')->where('user_id',$logined_user_id)->orderBy('id','desc')->paginate(10);
   return view('cms.my-family.my-booking',compact('shop'));
 } 
 
@@ -2794,13 +2912,13 @@ function convert_order_data_to_html($order_id)
                                 <td style="border:1px solid #011c49;">
                                     <p style="padding:15px 10px 5px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Name : </strong>'.$shipping_address->name.'</p>
                                     <p style="padding: 5px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Email : </strong>'.$shipping_address->email.'</p>
-                                    <p style="padding: 5px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Phone : Number</strong>'.$shipping_address->phone_number.'</p>
+                                    <p style="padding: 5px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Phone Number :</strong>'.$shipping_address->phone_number.'</p>
                                     <p style="padding: 5px 10px 25px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Address : </strong>'.$shipping_address->address.', '.$shipping_address->country.', '.$shipping_address->state.', '.$shipping_address->city.', Zipcode- '.$shipping_address->zipcode.'</p>
                                 </td>
                                 <td style="border:1px solid #011c49;">
                                     <p style="padding:15px 10px 5px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Name : </strong>'.$billing_address->name.'</p>
                                     <p style="padding: 5px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Email : </strong>'.$billing_address->email.'</p>
-                                    <p style="padding: 5px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Phone : Number</strong>'.$billing_address->phone_number.'</p>
+                                    <p style="padding: 5px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Phone Number :</strong>'.$billing_address->phone_number.'</p>
                                     <p style="padding:  5px 10px 25px 10px;margin:0;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"><strong>Address : </strong>'.$billing_address->address.', '.$billing_address->country.', '.$billing_address->country.', '.$billing_address->state.', Zipcode- '.$billing_address->zipcode.'</p>
                                 </td>
                             </tr>
@@ -2833,8 +2951,10 @@ function convert_order_data_to_html($order_id)
 
                                 $variation = \App\Models\Products\ProductAssignedVariation::find($ca->variant_id);
 
+                                $ShopType = "Product";
+
                             $output .= '<tr>
-                                <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$ca->shop_type.'</td>
+                                <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$ShopType.'</td>
                                 <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$product->name.'</td>
                                 <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;"></td>
                                 <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">';
@@ -2860,8 +2980,10 @@ function convert_order_data_to_html($order_id)
                                 $course = \DB::table('courses')->where('id',$ca->product_id)->first();
                                 $season = getSeasonname($course->season);
 
+                                $ShopType = "Course";
+
                             $output .= '<tr>
-                                <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$ca->shop_type.'</td>
+                                <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$ShopType.'</td>
                                 <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$course->title.'</td>
                                 <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$user->name.'</td>
                                 <td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$season;   
@@ -2876,7 +2998,9 @@ function convert_order_data_to_html($order_id)
                                 $camp = \DB::table('camps')->where('id',$ca->product_id)->first();
                                 $week = json_decode($ca->week);
 
-                            $output .= '<tr><td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$ca->shop_type.'</td>
+                                $ShopType = "Camp";
+
+                            $output .= '<tr><td style="padding:  10px;border-bottom:1px solid #3f4d67;color: #000;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$ShopType.'</td>
                                 <td style="padding:  10px;color: #000;border-bottom:1px solid #3f4d67;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$camp->title.'</td>
                                 <td style="padding:  10px;color: #000;border-bottom:1px solid #3f4d67;font-size: 15px;font-family: "Open Sans", sans-serif;">'.$user->name.'</td>';
 
@@ -3003,9 +3127,11 @@ public function badges()
     }
     else
     {
-      $user_badge = \DB::table('user_badges')->orderBy('user_id','desc')->first();
+      $user_badge = \DB::table('user_badges')->orderBy('user_id','desc')->where('user_id',Auth::user()->id)->first();
       $shop = \DB::table('shop_cart_items')->where('shop_type','course')->where('child_id','!=',NULL)->where('orderID','!=',NULL)->where('order_id','!=',NULL)->orderBy('id','asc')->first();
     }
+
+    // dd($user_badge);
 
     if(!empty($term) && empty($stage) || !empty($term) && $stage==NULL){
         $user_badge1 = \DB::table('user_badges')->where('season_id',$term)->paginate(1);
@@ -3080,7 +3206,7 @@ public function show_name_in_leaderboard(Request $request)
 public function selectedSeason(Request $request)
 { 
     $season = $request->selectedSeason; 
-    $shop = ShopCartItems::where('course_season',$request->selectedSeason)->where('orderID','!=',NULL)->get(); 
+    $shop = ShopCartItems::where('course_season',$request->selectedSeason)->where('orderID','!=',NULL)->groupBy('product_id')->get(); 
 
     if(count($shop) > 0)
     {
@@ -3156,11 +3282,24 @@ public function save_goal(Request $request)
               $set_goal->coach_id = isset($get_coach_id) ? $get_coach_id->coach_id : '';
               $set_goal->goal_date = date("d F Y",strtotime("tomorrow"));
               $set_goal->save();
+
             }
               
           }
           
         }
+
+        if(!empty($set_goal))
+        {
+          // $this->LinkedPlayerUploadGoalSuccess($set_goal->id);
+
+          if(Auth::user()->id == $set_goal->parent_id)
+          {
+              $set_goal->notify(new \App\Notifications\Coach\NewGoalNotification());
+          }
+        }
+        
+
         return \Redirect::back()->with('success','Goal data added successfully.');
       }
     }
@@ -3239,6 +3378,13 @@ public function advanced_goal(Request $request)
           }
           
         }
+        // $this->LinkedPlayerUploadGoalSuccess($set_goal->id);
+
+        if(Auth::user()->id == $set_goal->parent_id)
+        {
+            $set_goal->notify(new \App\Notifications\Coach\NewGoalNotification());
+        }
+
         return \Redirect::back()->with('success','Goal data added successfully.');
       }
     }
@@ -3264,7 +3410,7 @@ public function save_ad_coach_comment(Request $request)
 |-----------------------------------------------------*/
 public function goal_list()
 {
-  $goals = SetGoal::where('coach_id',Auth::user()->id)->groupBy(['player_id', 'goal_type','finalize'])->get();
+  $goals = SetGoal::where('coach_id',Auth::user()->id)->groupBy(['player_id', 'goal_type','finalize'])->orderBy('id','desc')->get();
   return view('coach.goals.goal-listing',compact('goals'));
 }
 
@@ -3339,39 +3485,20 @@ public function contact_us()
 public function save_contact_us(Request $request)
 {
     $contact = ContactDetail::create($request->all()); 
-    $contact->save;
 
-    $participant_name = isset($contact->participant_name) ? $contact->participant_name : '';
-    $participant_dob = isset($contact->participant_dob) ? $contact->participant_dob : '';
-    $participant_gender = isset($contact->participant_gender) ? $contact->participant_gender : '';
-    $parent_name = isset($contact->parent_name) ? $contact->parent_name : '';
-    $parent_email = isset($contact->parent_email) ? $contact->parent_email : '';
-    $parent_telephone = isset($contact->parent_telephone) ? $contact->parent_telephone : '';
-    $class = isset($contact->class) ? $contact->class : '';
-    $type = isset($contact->type) ? $contact->type : '';
-    $subject = isset($contact->subject) ? $contact->subject : '';
-    $contact_message = isset($contact->message) ? $contact->message : '';
+    $this->BookATasterClassSuccess($contact->id);   // Email to Admin
+    $this->BookATasterUserClassSuccess($contact->id);   // Email to User
 
-    // Admin Email
-    $admin_email = getAllValueWithMeta('admin_email', 'general-setting'); 
+    $contact->notify(new \App\Notifications\ContactUsNotification());
 
-    // Mail to admin
-    \Mail::send('emails.courses.admin', ['participant_name'=>$participant_name, 'participant_dob'=>$participant_dob, 'participant_gender'=>$participant_gender, 'parent_name'=>$parent_name, 'parent_email'=>$parent_email, 'parent_telephone'=>$parent_telephone, 'class'=>$class, 'type'=>$type, 'contact_message'=>$contact_message, 'subject'=>$subject] , 
-
-         function($message) use($admin_email){
-            $message->to($admin_email);
-            $message->subject('Subject : Book a Free Taster Class');
-    });
-
-    // Mail to parent
-    \Mail::send('emails.contact-us.parent', ['name' => $contact->parent_email] , 
-             function($message) use($contact){
-                 $message->to($contact->parent_email);
-                 $message->subject('Subject : '.'Book a Free Taster Class');
-               });
-
-
-    return view('cms.success');
+    if($contact->type == 'contact')
+    {
+      return \Redirect::back()->with('success','Thank you for sending us a message. We will respond to your enquiry soon.');
+    }
+    else{
+      return \Redirect::back()->with('success','Thank you for filling out the taster class request form. DRH Sports will contact you soon to confirm the details.');
+    }
+    
 } 
 
   /* Success Page */
@@ -3628,6 +3755,10 @@ public function save_childcare_voucher(Request $request)
         
         if($so->save()){
 
+          $this->ShopProductOrderPlacedForVendorSuccess($so->id);
+          $this->ShopProductOrderPlacedSuccess($so->id);
+          $this->ShopProductOrderPlacedInfo($so->id);
+
             ShopCartItems::where('orderID', $so->orderID)->update(array('orderID' => $so->orderID));
 
               if(Auth::user()->createOrderFromCart($so))
@@ -3637,9 +3768,7 @@ public function save_childcare_voucher(Request $request)
 
                     return redirect()->route('shop.checkout.thankyou', ['order_id' => $so->id]);  
 
-                    $this->ShopProductOrderPlacedForVendorSuccess($so->id);
-                    $this->ShopProductOrderPlacedSuccess($so->id);
-                    // $this->AdminOrderSuccessOrderSuccess($o->id);
+                    // $this->AdminOrderSuccessOrderSuccess($so->id);
 
                 }
         }
@@ -3652,6 +3781,7 @@ public function save_childcare_voucher(Request $request)
 |---------------------------------*/ 
 public function save_wallet(Request $request)
 {
+    //dd($request->all());
     $wallet = Wallet::where('user_id',Auth::user()->id)->first(); 
     $wallet_amount = $wallet->money_amount; 
 
@@ -3687,6 +3817,10 @@ public function save_wallet(Request $request)
 
             if($so->save()){
 
+                $this->ShopProductOrderPlacedForVendorSuccess($so->id);
+                $this->ShopProductOrderPlacedSuccess($so->id);
+                $this->ShopProductOrderPlacedInfo($so->id);
+
                 $remaining_wallet_money = $wallet_amount - $total_amount;
                 Wallet::where('user_id',Auth::user()->id)->update(array('money_amount' => $remaining_wallet_money));
 
@@ -3705,9 +3839,7 @@ public function save_wallet(Request $request)
 
                         return redirect()->route('shop.checkout.thankyou', ['order_id' => $so->id]);  
 
-                        $this->ShopProductOrderPlacedForVendorSuccess($so->id);
-                        $this->ShopProductOrderPlacedSuccess($so->id);
-                        // $this->AdminOrderSuccessOrderSuccess($o->id);
+                        // $this->AdminOrderSuccessOrderSuccess($so->id);
 
                     }
             }
@@ -3736,6 +3868,10 @@ public function save_wallet(Request $request)
 
             if($so->save()){
 
+                $this->ShopProductOrderPlacedForVendorSuccess($so->id);
+                $this->ShopProductOrderPlacedSuccess($so->id);
+                $this->ShopProductOrderPlacedInfo($so->id);
+
                 $remaining_wallet_money = $wallet_amount - $total_amount;
                 Wallet::where('user_id',Auth::user()->id)->update(array('money_amount' => $remaining_wallet_money));
 
@@ -3754,9 +3890,8 @@ public function save_wallet(Request $request)
 
                         return redirect()->route('shop.checkout.thankyou', ['order_id' => $so->id]);  
 
-                        $this->ShopProductOrderPlacedForVendorSuccess($so->id);
-                        $this->ShopProductOrderPlacedSuccess($so->id);
-                        // $this->AdminOrderSuccessOrderSuccess($o->id);
+                        
+                        // $this->AdminOrderSuccessOrderSuccess($so->id);
 
                     }
             }
@@ -3914,9 +4049,11 @@ public function add_match(Request $request)
     {
         if(!empty($request->player_id) && !empty($request->comp_id))
         {
+            // dd($data,1);
             $match = MatchReport::find($request->match_id); 
             $match->comp_id = $request->comp_id;
             $match->player_id = $request->player_id;
+            $match->coach_id = Auth::user()->id;
             $match->opponent_name = $request->opponent_name;
             $match->start_date = $request->start_date;
             $match->surface_type = $request->surface_type;
@@ -3926,7 +4063,13 @@ public function add_match(Request $request)
             $match->wht_went_well = $request->wht_went_well;
             $match->wht_could_better = $request->wht_could_better;
             $match->other_comments = $request->other_comments;
-            $match->save();
+
+            if($match->save())
+            {
+              $this->CoachSubmitMatchReportSuccess($match->id);
+              $match->notify(new \App\Notifications\User\MatchReportNotification());
+              // $match->notify(new \App\Notifications\Coach\NewMatchReportNotification());
+            }
 
             if($request->hasFile('match_chart'))
             {
@@ -3957,8 +4100,16 @@ public function add_match(Request $request)
 
         if(!empty($request->player_id) && !empty($request->comp_id))
         {
+            //dd($data,1);
             $match = MatchReport::create($request->all());
-            $match->save();
+            $match->coach_id = Auth::user()->id;
+            
+            if($match->save())
+            {
+              $this->CoachSubmitMatchReportSuccess($match->id);
+              $match->notify(new \App\Notifications\User\MatchReportNotification());
+              // $match->notify(new \App\Notifications\Coach\NewMatchReportNotification());
+            }
    
             if(isset($data) && !(empty($data['match_chart'])))
             {
@@ -4231,6 +4382,258 @@ public function remove_allergy($id)
 public function game_chart()
 {
   return view('matches.game-chart');
+}
+
+/*------------------------------------------
+| Notification Timeline
+|-------------------------------------------*/
+public function notification_timeline()
+{
+  return view('cms.notifications-timeline');
+}
+
+/*------------------------------------------
+| Mark as read - Notifications
+|------------------------------------------*/
+public function mark_as_read($id)
+{
+  $notifications = \DB::table('notifications')->where('id',$id)->delete();
+
+  return \Redirect::back();
+}
+
+/*------------------------------------------
+| Account Holder Details
+|-------------------------------------------*/
+public function account_holder() {
+    $user = User::where('id',Auth::user()->id)->first();
+    return view('cms.my-family.account-holder',compact('user'));
+} 
+
+/*------------------------------------------
+| Account Holder - Participant Details
+|-------------------------------------------*/
+public function ah_participant_details(Request $request)
+{   
+    // dd($request->all());
+
+    $check_child = User::where('id',$request->user_id)->first();
+
+    if(!empty($check_child))
+    {
+      $add_family               =    User::find($request->user_id);
+      $add_family->role_id      =    $request->role_id;
+      $add_family->name         =    $request->first_name.' '.$request->last_name;
+      $add_family->first_name   =    $request->first_name;
+      $add_family->last_name    =    $request->last_name;
+      $add_family->gender       =    $request->gender;
+      $add_family->date_of_birth=    $request->date_of_birth;
+      $add_family->address      =    $request->address;
+      $add_family->town         =    $request->town;
+      $add_family->postcode     =    $request->postcode;
+      $add_family->county       =    $request->county;
+      $add_family->country      =    $request->country;
+      $add_family->parent_id    =    \Auth::user()->id; 
+      $add_family->relation     =    $request->relation;
+      $add_family->type         =    $request->type;
+      $add_family->book_person  =    $request->book_person;
+      // $add_family->show_name    =    $show_name;
+      $add_family->tennis_club  =    isset($request->tennis_club) ? $request->tennis_club : '';
+      $add_family->email_verified_at = '';
+
+      //dd($add_family);
+      $add_family->save(); 
+
+      // ChildrenDetail::where('child_id',$request->user_id)->update(array('core_lang' => $language, 'school' => $school, 'primary_language' => $primary_language));
+
+    }
+    
+    $last_user_id = $add_family->id;
+
+    return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Participant Details upd successfully.');
+}
+
+/*------------------------------------------
+| Account Holder - Contact Details
+|-------------------------------------------*/
+public function ah_contact_information(Request $request)
+{
+  //dd($request->all());
+
+  if(!empty($request->contact1))
+  {
+    if(isset($request->contact1) && count($request->contact1)>0)
+    {
+      ChildContact::where('child_id',$request->child_id)->delete();
+
+      foreach($request->contact1 as $key1=>$value1)
+      {
+        if($value1['con_first_name1'] == NULL || $value1['con_last_name1'] == NULL || $value1['con_phone1'] == NULL)
+        {
+          $last_user_id = $request->child_id;
+          return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','No contact information exist.');
+        }else{
+          $child_con = new ChildContact;
+          $child_con->child_id = $request->child_id;
+          $child_con->type = $request->type;
+          $child_con->first_name = isset($value1['con_first_name1']) ? $value1['con_first_name1'] : '';
+          $child_con->surname = isset($value1['con_last_name1']) ? $value1['con_last_name1'] : '';
+          $child_con->phone = isset($value1['con_phone1']) ? $value1['con_phone1'] : '';
+          $child_con->email = isset($value1['con_email1']) ? $value1['con_email1'] : '';
+          $child_con->relationship = isset($value1['con_relation1']) ? $value1['con_relation1'] : '';
+          $child_con->who_are_they = isset($value1['who_are_they1']) ? $value1['who_are_they1'] : '';
+          $child_con->save();
+        }
+      }
+
+    }
+    else if(isset($request->contact) && count($request->contact)>0)
+    {
+      $last_user_id = $request->child_id;
+          return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','No contact information exist.');
+    }
+
+    $ch = new ChildrenDetail;
+    $ch->parent_id = Auth::user()->id;
+    $ch->child_id = Auth::user()->id;
+    $ch->save();
+
+    $last_user_id = $request->child_id;
+
+    return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Contact Information added successfully.');
+  }
+  else
+  {
+    $last_user_id = $request->child_id;
+    return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','No contact information exist.');
+  }  
+}
+
+/*--------------------------------------------------
+| Account Holder - Media Consents
+|---------------------------------------------------*/
+public function ah_media_consent(Request $request)
+{   
+  if(!empty($request->confirm) && isset($request->confirm))
+  {
+    if($request->confirm == 'yes')
+    {
+      ChildrenDetail::where('child_id',$request->child_id)->update(array('media' => $request->media_consent, 'confirm' => $request->confirm)); 
+
+      $last_user_id = $request->child_id;
+      return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Media Consents added successfully.');
+    }
+    else{
+      ChildrenDetail::where('child_id',$request->child_id)->update(array('media' => $request->media_consent, 'confirm' => $request->confirm)); 
+
+      $last_user_id = $request->child_id;
+      return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','You will not be able to book this participant onto any DRH Sports activity if you select NO to this question.');
+    }
+    
+  }else{
+    $last_user_id = $request->child_id;
+
+    return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','Please confirm the details you');
+  }
+    
+}
+
+/*--------------------------------------------------
+| Account Holder - Medical & Behavioural Details
+|---------------------------------------------------*/
+public function ah_medical_information(Request $request)
+{
+  // dd($request->all());
+
+    $med_cond_info = json_encode($request->med_cond_info); 
+
+    if(isset($request->med_cond_info) && !empty($request->med_cond_info))
+    {
+      if(count($request->med_cond_info)>0)
+      {
+        ChildMedical::where('child_id',$request->child_id)->delete();
+
+        if($request->med_cond_info != null)
+        {
+          foreach($request->med_cond_info as $key=>$value)
+          {
+            $child_med = new ChildMedical;
+            $child_med->child_id = $request->child_id;
+            $child_med->type = $request->type;
+            $child_med->medical = $value; 
+            $child_med->save();
+          }
+        }
+      }
+
+      ChildrenDetail::where('child_id',$request->child_id)->update(array('med_cond' => $request->med_cond, 'med_cond_info' => $med_cond_info)); 
+    }
+    else
+    {
+      $last_user_id = $request->child_id;
+
+      return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','No medical information exist.');
+    }
+  
+  $last_user_id = $request->child_id;
+
+  return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Medical & Behavioural Information added successfully.');
+
+}
+
+/*--------------------------------------------------
+| Profile image & icon upload 
+|---------------------------------------------------*/
+public function upload_profile_image($id)
+{
+  $user_id = $id;
+  $icons = IconImage::all();
+  return view('cms.profile-picture',compact('user_id','icons'));
+}
+
+/*--------------------------------------------------
+| Save profile image & icon upload 
+|---------------------------------------------------*/
+public function save_profile_image(Request $request)
+{
+    // dd($request->icon,$request->image);
+
+    $user_id = base64_decode($request->user_id);
+
+    if($request->icon != 'no' && $request->image == 'data:,')
+    {
+      // dd('1');
+      $u = User::find($user_id);
+      $u->profile_image = $request->icon;
+
+      if($u->save()){
+          return redirect('/user/badges')->with('success','Profile picture uploaded successfully.');
+      }
+    }
+    elseif(!empty($request->image) && $request->image != 'data:,')
+    {
+      // dd('2');
+      $image_file = $request->image;
+      list($type, $image_file) = explode(';', $image_file); 
+      list(, $image_file)      = explode(',', $image_file);
+
+      $image_file = base64_decode($image_file);
+      $image_name= time().'_'.rand(100,999).'.png'; 
+      $path = public_path('uploads/'.$image_name);
+
+      file_put_contents($path, $image_file);
+
+      $u = User::find($user_id);
+      $u->profile_image = $image_name;
+
+      // dd($image_file,$image_name);
+      
+      // return response()->json(['status'=>true]);
+      if($u->save()){
+          return redirect('/user/badges')->with('success','Profile picture uploaded successfully.');
+      }
+    } 
+    
 }
 
 }

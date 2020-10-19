@@ -17,13 +17,13 @@
                   <li>
                     <ul class="social-meadia-icons">
                       <li>
-                        <a href="{{ getAllValueWithMeta('facebook_link', 'general-setting') }}" class="social-icon-link"><i class="fab fa-facebook-f"></i></a>
+                        <a target="_blank" href="{{ getAllValueWithMeta('facebook_link', 'general-setting') }}" class="social-icon-link"><i class="fab fa-facebook-f"></i></a>
                       </li>
                       <li>
-                        <a href="{{ getAllValueWithMeta('instagram_link', 'general-setting') }}" class="social-icon-link"><i class="fab fa-instagram"></i></a>
+                        <a target="_blank" href="{{ getAllValueWithMeta('instagram_link', 'general-setting') }}" class="social-icon-link"><i class="fab fa-instagram"></i></a>
                       </li>
                       <li>
-                        <a href="{{ getAllValueWithMeta('google_link', 'general-setting') }}" class="social-icon-link"><i class="fab fa-google-plus"></i></a>
+                        <a target="_blank" href="{{ getAllValueWithMeta('google_link', 'general-setting') }}" class="social-icon-link"><i class="fab fa-google-plus"></i></a>
                       </li>
                     </ul>
                   </li>
@@ -187,7 +187,7 @@
                                 $course = DB::table('courses')->where('id',$item->product_id)->first();
                                 $child = DB::table('users')->where('id',$item->child_id)->first();
                               @endphp
-                                <a href="javascript:void(0);">{{$child->name}} : {{$course->title}}</a>
+                                <a href="javascript:void(0);">{{isset($child->name) ? $child->name : ''}} : {{isset($course->title) ? $course->title : ''}}</a>
                               @elseif($item->shop_type == 'camp')
                               @php 
                                 $camp = DB::table('camps')->where('id',$item->product_id)->first();

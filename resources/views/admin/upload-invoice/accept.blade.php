@@ -120,7 +120,7 @@ input:checked + .slider:before {
                                 @foreach($req as $re)
                                     <tr>
                                     @php $user = DB::table('users')->where('id',$re->coach_id)->first(); @endphp
-                                        <td>{{$user->updated_at}}</td>
+                                        <td>@php echo date('d/m/Y',strtotime($user->updated_at)); @endphp</td>
                                         <td>{{$user->name}}</td>
                                         <td>{{$re->invoice_name}}</td>
                                         <td>{{$re->invoice_document}}</td>
@@ -128,7 +128,7 @@ input:checked + .slider:before {
                                         @if($re->status == 1)
                                             <h6 style="color:green;"><b>Accepted</b></h6>
                                         @elseif($re->status == 0)
-                                            <h6 style="color:red;"><b>Rejected</b></h6>
+                                            <h6 style="color:red;"><b>Not Accepted</b></h6>
                                         @elseif($re->status == 2)
                                             <h6 style="color:green;"><b>Requested</b></h6>
                                         @endif

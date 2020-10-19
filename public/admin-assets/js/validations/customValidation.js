@@ -44,7 +44,7 @@ $.validator.addMethod("alphanumeric", function (value, element) {
 // letters only 
 $.validator.addMethod("lettersonly", function(value, element) {
   return this.optional(element) || /^[a-z ]+$/i.test(value);
-}, "Please enter alphabets only");
+}, "Please enter letters only.");
 
 // greater than equals to
 

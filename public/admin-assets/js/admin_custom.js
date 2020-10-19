@@ -1,4 +1,4 @@
-$base_url = $("#base_url").val();
+$base_url = 'http://49.249.236.30:8654/dominic-new';
 
 /*****************************
 | Print Test Scores
@@ -297,12 +297,12 @@ $(document).ready(function(){
       first_name: {
           required: true,
           maxlength:25,
-          lettersonly:true,
+          // lettersonly:true,
       },
       last_name: {
           required: true,
           maxlength:25,
-          lettersonly:true,
+          // lettersonly:true,
       },
       },
 

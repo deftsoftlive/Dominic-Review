@@ -46,14 +46,31 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
                         {!! getAllValueWithMeta('form_head_content', 'my-profile') !!}
                      </div>
                      <div class="row">
-                        <!-- Profile Name -->
+
+                        @php 
+                           $coach = DB::table('users')->where('id',Auth::user()->id)->first();
+                        @endphp
+                        <!-- Profile First Name -->
                         <div class="form-group row f-g-full">
-                           <label for="profile_name" class="col-md-12 col-form-label text-md-right">{{ __('My Profile Name') }}</label>
+                           <label for="profile_name" class="col-md-12 col-form-label text-md-right">{{ __('My Profile First Name') }}</label>
                            <div class="col-md-12">
-                              <input id="profile_name" type="text" class="form-control{{ $errors->has('profile_name') ? ' is-invalid' : '' }}" name="profile_name" value="{{ isset($user->profile_name) ? $user->profile_name : '' }}" required autofocus placeholder="Please enter profile name">
+                              <input id="profile_name" type="text" class="form-control{{ $errors->has('profile_name') ? ' is-invalid' : '' }}" name="profile_name" value="{{ isset($coach->first_name) ? $coach->first_name : '' }}" required autofocus placeholder="Please enter profile name">
                               @if ($errors->has('profile_name'))
                               <span class="invalid-feedback" role="alert">
                               <strong>{{ $errors->first('profile_name') }}</strong>
+                              </span>
+                              @endif
+                           </div>
+                        </div>
+
+                        <!-- Profile Last Name -->
+                        <div class="form-group row f-g-full">
+                           <label for="profile_last_name" class="col-md-12 col-form-label text-md-right">{{ __('My Profile Last Name') }}</label>
+                           <div class="col-md-12">
+                              <input id="profile_last_name" type="text" class="form-control{{ $errors->has('profile_last_name') ? ' is-invalid' : '' }}" name="profile_last_name" value="{{ isset($coach->last_name) ? $coach->last_name : '' }}" required autofocus placeholder="Please enter profile name">
+                              @if ($errors->has('profile_last_name'))
+                              <span class="invalid-feedback" role="alert">
+                              <strong>{{ $errors->first('profile_last_name') }}</strong>
                               </span>
                               @endif
                            </div>

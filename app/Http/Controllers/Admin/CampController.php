@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Camp;
+use App\Session;
 use App\CampPrice;
 use App\CampCategory;
+use App\Models\Shop\ShopOrder;
+use App\Models\Shop\ShopCartItems;
 
 class CampController extends Controller
 {
@@ -21,7 +24,7 @@ class CampController extends Controller
     |   Listing of camps
     |----------------------------------------*/ 
     public function camp_index() {
-        $camp = Camp::select(['id','title','category','description','status','slug'])->paginate(10);
+        $camp = Camp::select(['id','title','category','description','status','slug'])->orderBy('id','desc')->paginate(10);
     	return view('admin.camp.index',compact('camp'))
     	->with(['title' => 'Camp Management', 'addLink' => 'admin.camp.showCreate']);
     }
@@ -39,6 +42,8 @@ class CampController extends Controller
     	$validatedData = $request->validate([
             'title' => ['required', 'string', 'max:50'],
             'description' => ['required', 'string'],
+            'location' => ['required'],
+            'term' => ['required'],
             // 'image' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
             'category' => ['required', 'string'],
             'camp_date' => ['required'],
@@ -122,7 +127,8 @@ class CampController extends Controller
             'term' => $request['term'],
     		'description' => $request['description'],
             'usefull_info' => $request['usefull_info'],
-    		'image' => $filename,
+            'info_email_content' => $request['info_email_content'],
+    		// 'image' => $filename,
     		'category' => $request['category'],
             'coach_cost' => $request['coach_cost'],
             'venue_cost' => $request['venue_cost'],
@@ -163,6 +169,8 @@ class CampController extends Controller
     	$validatedData = $request->validate([
             'title' => ['required', 'string', 'max:50'],
             'description' => ['required', 'string'],
+            'location' => ['required'],
+            'term' => ['required'],
             // 'image' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
             'category' => ['required', 'string'],
             'camp_date' => ['required'],
@@ -254,7 +262,8 @@ class CampController extends Controller
             'term' => $request['term'],
             'description' => $request['description'],
             'usefull_info' => $request['usefull_info'],
-            'image' => $filename,
+            'info_email_content' => $request['info_email_content'],
+            // 'image' => $filename,
             'category' => $request['category'],
             'camp_date' => $request['camp_date'],
             'coach_cost' => $request['coach_cost'],
@@ -320,5 +329,150 @@ class CampController extends Controller
         $camp_id = $id;
         $shop = \DB::table('shop_cart_items')->where('shop_type','camp')->where('product_id',$camp_id)->where('orderID',NULL)->orderBy('id','desc')->get();
         return view('admin.camp.view-register',compact('shop'));
+    }
+
+    /*---------------------------------------
+    |   Book a camp
+    |---------------------------------------*/
+    public function admin_book_a_camp($slug) 
+    {
+        $camp = Camp::FindBySlugOrFail($slug); 
+        // $accordian_book_a_camp = Accordian::where('page_title','book-a-camp')->where('status',1)->orderBy('sort','asc')->get(); 
+        $session = Session::where('status',1)->get();
+        return view('admin.camp.book-a-camp',compact('camp','session'));
+    }
+
+    /*---------------------------------------
+    |   Save book a camp
+    |---------------------------------------*/
+    public function submit_book_a_camp(Request $request) 
+    {  
+        $child = $request->parent;  
+
+        if(!empty($child))
+        {
+            $camp_id = $request->camp_id; 
+            $week = $request->week; 
+            $child = $request->player;   
+
+            $camp_price = CampPrice::where('camp_id',$camp_id)->first();
+
+            $early_price = $camp_price->early_price; 
+            $early_percent = $camp_price->early_percent;
+
+            $lunch_price = $camp_price->lunch_price;
+            $lunch_percent = $camp_price->lunch_price;
+
+            $fullday_price = $camp_price->fullday_price;
+            $fullday_percent = $camp_price->fullday_percent;
+
+            $latepickup_price = $camp_price->latepickup_price;
+            $latepickup_percent = $camp_price->latepickup_price;
+
+            $morning_price = $camp_price->morning_price;
+            $morning_seats = $camp_price->morning_seats;
+            $morning_percent = $camp_price->morning_percent;
+
+            $afternoon_price = $camp_price->afternoon_price;
+            $afternoon_seats = $camp_price->afternoon_seats;
+            $afternoon_percent = $camp_price->afternoon_percent;
+
+            $arrNewSku = array();
+            $incI = 0;
+            $count_early = array();
+            $count_late_pickup = array();
+            $count_lunch_club = array();
+
+            $camp_morning = array();
+            $camp_noon = array();
+            $camp_full = array();
+
+              if(isset($week))
+              {
+                foreach($week as $arrKey => $arrData){ 
+
+                  if(isset($arrData['early_drop'])){  
+                    $arrNewSku[$incI]['early_drop'] = isset($arrData['early_drop']) ? $arrData['early_drop'] : '';
+                    $count_early[] = count($arrData['early_drop'])*$early_price;
+                  }
+
+                  if(isset($arrData['late_pickup'])){  
+                    $arrNewSku[$incI]['late_pickup'] = isset($arrData['late_pickup']) ? $arrData['late_pickup'] : '';
+                    $count_late_pickup[] = count($arrData['late_pickup'])*$latepickup_price;
+                  }
+
+                  if(isset($arrData['lunch'])){  
+                    $arrNewSku[$incI]['lunch'] = isset($arrData['lunch']) ? $arrData['lunch'] : '';
+                    $count_lunch_club[] = count($arrData['lunch'])*$lunch_price;
+                  }
+
+                  if(isset($arrData['camp']))
+                  {  
+                    $camp_data = array();;
+                    foreach ($arrData['camp'] as $sku){ 
+                      $camp_array = explode('-',$sku);
+                      $camp_data[] = $camp_array[2];
+                    }
+                    $camp_counts = array_count_values($camp_data);
+                    $camp_morning[] = (isset($camp_counts['mor']) ? $camp_counts['mor'] : 0)*$morning_price;
+                    $camp_noon[] = (isset($camp_counts['noon']) ? $camp_counts['noon'] : 0)*$afternoon_price;
+                    $camp_full[] = (isset($camp_counts['full']) ? $camp_counts['full'] : 0)*$fullday_price;
+                  }
+
+                    $incI++;
+                }
+
+                // dd($request->all(), $camp_morning,$camp_noon,$camp_full);
+
+                $early_drop_price = isset($count_early) ? array_sum($count_early) : '';
+                $late_pickup_price = isset($count_late_pickup) ? array_sum($count_late_pickup) : '';
+                $lunch_club_price = isset($count_lunch_club) ? array_sum($count_lunch_club) : '';
+
+                $morning_price = isset($camp_morning) ? array_sum($camp_morning) : '';
+                $afternoon_price = isset($camp_noon) ? array_sum($camp_noon) : '';
+                $fullweek_price = isset($camp_full) ? array_sum($camp_full) : '';
+
+                // Add Prices 
+                $add_price = $early_drop_price+$late_pickup_price+$lunch_club_price+$morning_price+$afternoon_price+$fullweek_price;
+
+                $sel_week = json_encode($request->week);
+
+
+                $add_course = new ShopCartItems;
+                $add_course->shop_type  = 'camp';
+                $add_course->quantity   = 1;
+                $add_course->vendor_id  = 1;
+                $add_course->product_id = $camp_id;
+                $add_course->user_id    = $request->parent;
+                $add_course->price      = $add_price;
+                $add_course->total      = $add_price;
+                $add_course->week       = $sel_week;
+                $add_course->camp_price = $add_price;
+                $add_course->child_id   = $child;
+                $add_course->type       = 'order';
+                $add_course->orderID    = '#DRHSHOP'.strtotime(date('y-m-d h:i:s'));
+                $add_course->manual     = '1';
+                $add_course->save();
+
+
+                $so = new ShopOrder;
+                $so->user_id = $add_course->user_id;
+                $so->payment_by = isset($request->payment_method) ? $request->payment_method : '';
+                $so->amount = $add_price;
+                $so->orderID = $add_course->orderID;
+                $so->status = 1;
+                // $so->billing_address = $billing_address;
+                // $so->shipping_address = $shipping_address;
+
+                if($so->save()){
+                  return \Redirect::back()->with('success',' Camp booked successfully!');
+                }else{
+                  return \Redirect::back()->with('error',' Something went wrong!');
+                }
+            }
+        
+        }else{
+           return \Redirect::back()->with('error',' Please select player.'); 
+        }
     }
 }

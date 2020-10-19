@@ -170,8 +170,7 @@ label.confirm_msg.form-check-label {
                                                             <legend>{{$go->goal_title}}</legend>
                                                             <p>{{$go->goal_subtitle}}</p>
                                                                 <div class="form-group">
-                                                                    <textarea name="goal[][{{$go->id}}]" class="form-control goal-textarea" rows="3">@if(!empty($goal_player) && !empty($user_goal)){{$user_goal->parent_comment}}@endif
-                                                                    </textarea>
+                                                                    <textarea name="goal[][{{$go->id}}]" class="form-control goal-textarea" rows="3">@if(!empty($goal_player) && !empty($user_goal)){{$user_goal->parent_comment}}@endif</textarea>
                                                                 </div>
                                                         </fieldset>
                                                         <div class="goal-reciew-feedback">
@@ -216,6 +215,7 @@ label.confirm_msg.form-check-label {
                                                 <p>{{ Session::get('success') }} </p>
                                             </div>
                                             @endif
+
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <form id="goals1" action="{{route('badges')}}" method="POST" class="select-player-goal-form goal-filter">
@@ -419,29 +419,7 @@ label.confirm_msg.form-check-label {
 
 
 
-                            <!-- Crop Functionality - Start -->
-                            <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css">
-                      <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.js"></script>
-                      <div class="panel panel-info">
-                        <div class="panel-heading"></div>
-                        <div class="panel-body">
-                          <div class="row">
-                            <div class="col-md-4 text-center">
-                            <div id="upload-demo"></div>
-                            </div>
-                            <div class="col-md-4" style="padding:5%;">
-                            <strong>Choose image to crop:</strong>
-                            <input type="file" id="image_file">
-                            <button class="btn btn-primary btn-block upload-image" style="margin-top:2%">Upload Image</button>
-                            <div class="alert alert-success" id="upload-success" style="display: none;margin-top:10px;"></div>
-                            </div>
-                            <div class="col-md-4">
-                            <div id="preview-crop-image" style="background:#9d9d9d;width:300px;padding:50px 50px;height:300px;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </div> -->
-                            <!-- Crop Functionality - End -->
+                 
                         
                             <div class="tab-pane fade" id="nav-badges" role="tabpanel" aria-labelledby="nav-badges-tab">
                                 <div class="row">
@@ -542,6 +520,29 @@ label.confirm_msg.form-check-label {
                                         </form>
                                     </div>
                                 </div>
+                                <!-- Crop Functionality - Start -->
+                                    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css">
+                                      <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.js"></script>
+                                      <div class="panel panel-info">
+                                        <div class="panel-heading"></div>
+                                        <div class="panel-body">
+                                          <div class="row">
+                                            <div class="col-md-4 text-center">
+                                            <div id="upload-demo"></div>
+                                            </div>
+                                            <div class="col-md-4" style="padding:5% 0;">
+                                            <strong>Profile Image:</strong>
+                                            <input type="file" id="image_file">
+                                            <button class="btn btn-primary btn-block upload-image main_button" style="margin-top:5%">Upload Image</button>
+                                            <div class="alert alert-success" id="upload-success" style="display: none;margin-top:10px;"></div>
+                                            </div>
+                                            <div class="col-md-4">
+                                            <div id="preview-crop-image" style="background:#9d9d9d;width:300px;padding:50px 50px;height:300px;"></div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div> -->
+                                <!-- Crop Functionality - End -->
 
                                 @if(!empty($user_id))
 
@@ -591,48 +592,35 @@ label.confirm_msg.form-check-label {
                                                             @php $user = DB::table('users')->where('id',$shop->child_id)->first();
                                                             @endphp
                                                             @endif
-                                                            <form enctype="multipart/form-data" action="{{route('update_user_profile')}}" method="POST">
-                                                                @csrf
-                                                                <input type="hidden" name="user_id" value="{{$user->id}}">
+                                                            <!-- <form enctype="multipart/form-data" action="{{route('update_user_profile')}}" method="POST"> -->
+                                                               
+                                                                <!-- <input type="hidden" name="user_id" value="{{$user->id}}"> -->
                                                                 <div class="profile--img pt-20">
                                                                     @if(!empty($user->profile_image))
-                                                                    <!-- Crop Functionality - Start -->
-                                                                    <!--   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css">
-                                          <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.js"></script>
-                                          <div class="panel panel-info">
-                                            <div class="panel-heading"></div>
-                                            <div class="panel-body">
-                                              <div class="row">
-                                                <div class="col-md-4 text-center">
-                                                <div id="upload-demo"></div>
-                                                </div>
-                                                <div class="col-md-4" style="padding:5%;">
-                                                <strong>Choose image to crop:</strong>
-                                                <input type="file" id="image_file">
-                                                <button class="btn btn-primary btn-block upload-image" style="margin-top:2%">Upload Image</button>
-                                                <div class="alert alert-success" id="upload-success" style="display: none;margin-top:10px;"></div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                <div id="preview-crop-image" style="background:#9d9d9d;width:300px;padding:50px 50px;height:300px;"></div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div> -->
-                                                                    <!-- Crop Functionality - End -->
-                                                                    <img style="width:50%;" src="{{URL::asset('/uploads')}}/{{$user->profile_image}}" id="Image_Preview" alt="">
-                                                                    <label for="upload_img" class="select-file"><i class="fas fa-pencil-alt"></i></label>
-                                                                    <input id="upload_img" type="file" name="image" class="upload--profile-image" accept="image/*" onchange="ImagePreviewURL(this);">
-                                                                    <input type="hidden" name="oldimage" value="{{URL::asset('/uploads')}}/{{$user->profile_image}}">
+
+                                                                    @php 
+                                                                        $check_icon = DB::table('icon_images')->where('icon_image',$user->profile_image)->first();  
+                                                                    @endphp
+                                                                    
+                                                                    @if(!empty($check_icon))
+                                                                        <img style="width:50%;" src="{{URL::asset('/uploads/icons')}}/{{$user->profile_image}}" id="Image_Preview" alt="">
+                                                                        <a href="{{url('/user/upload-profile-image')}}/@php echo base64_encode($user->id); @endphp"><label for="upload_img" class="select-file"><i class="fas fa-pencil-alt"></i></label></a>
+                                                                    @else
+                                                                        <img style="width:50%;" src="{{URL::asset('/uploads')}}/{{$user->profile_image}}" id="Image_Preview" alt="">
+                                                                        <a href="{{url('/user/upload-profile-image')}}/@php echo base64_encode($user->id); @endphp"><label for="upload_img" class="select-file"><i class="fas fa-pencil-alt"></i></label></a>
+                                                                    @endif
+                                                                   <!--  <input id="upload_img" name="image" class="upload--profile-image" accept="image/*" onchange="ImagePreviewURL(this);">
+                                                                    <input type="hidden" name="oldimage" value="{{URL::asset('/uploads')}}/{{$user->profile_image}}"> -->
                                                                     @else
                                                                     <img style="width:50%;" src="{{ URL::asset('images/default.jpg')}}" id="Image_Preview" alt="">
-                                                                    <label for="upload_img" class="select-file"><i class="fas fa-pencil-alt"></i></label>
-                                                                    <input id="upload_img" type="file" name="image" class="upload--profile-image" accept="image/*" onchange="ImagePreviewURL(this);">
-                                                                    <input type="hidden" name="oldimage" value="{{URL::asset('/uploads')}}/{{$user->profile_image}}">
+                                                                    <a href="{{url('/user/upload-profile-image')}}/@php echo base64_encode($user->id); @endphp"><label for="upload_img" class="select-file"><i class="fas fa-pencil-alt"></i></label></a>
+                                                                   <!--  <input id="upload_img" name="image" class="upload--profile-image" accept="image/*" onchange="ImagePreviewURL(this);">
+                                                                    <input type="hidden" name="oldimage" value="{{URL::asset('/uploads')}}/{{$user->profile_image}}"> -->
                                                                     @endif
                                                                 </div>
                                                                 <br />
-                                                                <button type="submit" class="cstm-btn main_button">Update</button>
-                                                            </form>
+                                                                <!-- <button type="submit" class="cstm-btn main_button">Update</button> -->
+                                                            <!-- </form> -->
                                                             <!-- @if(isset($user->profile_image))
                                       <img class="upload--profile-image" accept="image/*" onchange="ImagePreviewURL(this);" src="{{URL::asset('/uploads')}}/{{$user->profile_image}}">
                                       @else
@@ -814,6 +802,7 @@ label.confirm_msg.form-check-label {
                                                                 </a>
                                                             </li>
                                                         </ul>
+                                                   
                                                         <select id="stage" name="stage" class="form-control">
                                                             <option selected="" disabled="">Select Stage</option>
                                                             <option value="">All Age Groups</option>
@@ -822,16 +811,17 @@ label.confirm_msg.form-check-label {
                                                             @endphp
                                                             @foreach($user_badges as $bd)
                                                             @php
-                                                            $shop = DB::table('shop_cart_items')->where('shop_type','course')->where('orderID','!=',NULL)->where('child_id',$bd->user_id)->where('course_season',$bd->season_id)->get();
+                                                            $shop11 = DB::table('shop_cart_items')->where('shop_type','course')->where('orderID','!=',NULL)->where('child_id',$bd->user_id)->where('course_season',$bd->season_id)->get();
                                                             $course = DB::table('courses')->where('season',$bd->season_id)->first();
                                                             $subcat = [];
                                                             @endphp
-                                                            @foreach($shop as $sh)
+
+                                                            @foreach($shop11 as $sh)
                                                             @php
-                                                            $course = DB::table('courses')->where('id',$sh->product_id)->first();
-                                                            $subcat = getProductCatname($course->subtype);
+                                                            $course = DB::table('courses')->where('id',$sh->product_id)->first(); 
+                                                            $subcat = !empty($course->subtype) ? getProductCatname($course->subtype) : '';		
                                                             @endphp
-                                                            <option value="{{$course->subtype}}">{{$subcat}}</option>
+                                                            <option value="{{!empty($course->subtype) ? $course->subtype : ''}}">{{!empty($subcat) ? $subcat : ''}}</option>
                                                             @endforeach
                                                             @endforeach
                                                         </select>
@@ -876,7 +866,7 @@ label.confirm_msg.form-check-label {
                                                         @foreach($shop as $sh)
                                                         @php
                                                         $course = DB::table('courses')->where('id',$sh->product_id)->first();
-                                                        $course_subcategory[] = getProductCatname($course->subtype);
+                                                        $course_subcategory[] = !empty($course->subtype) ? getProductCatname($course->subtype) : '';
                                                         @endphp
                                                         @endforeach
 
@@ -901,7 +891,7 @@ label.confirm_msg.form-check-label {
                                                                 @endif
                                                             </td>
                                                             <td>
-                                                                <p>{{$years}} Years</p>
+                                                                <p>{{isset($years) ? $years : ''}} Years</p>
                                                             </td>
                                                             <td>
                                                                 <p>{{implode(',',$course_subcategory)}}</p>
@@ -1124,6 +1114,11 @@ label.confirm_msg.form-check-label {
 
                             </div>
                             <div class="tab-pane fade" id="nav-schedule" role="tabpanel" aria-labelledby="nav-schedule-tab">
+                                <div class="inner-content">
+                                    <figure class="schedule-img-wrap">
+                                      <img class="b-icon" src="{{ URL::asset('images/coming-soon.png')}}">
+                                    </figure>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab">
                             </div>

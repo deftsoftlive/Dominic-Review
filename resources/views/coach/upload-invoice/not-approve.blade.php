@@ -60,7 +60,7 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
                         @foreach($req as $re)
 
                           <tr>
-                            <td><p>{{$re->created_at}}</p></td>
+                            <td><p>@php echo date("d/m/Y", strtotime($re->created_at)); @endphp</p></td>
                             <td><p>{{$re->invoice_name}}</p></td>
                             <td><p>{{$re->invoice_document}}</p></td>
                             <td><p>
@@ -80,10 +80,14 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
                         </tbody>
                       </table>
 
-					  </div>
+					      </div>
 
             </div>
           </div>
+
+            @if(!empty($req))
+                {{$req->render()}}
+            @endif
 
             @else
               <div class="noData offset-md-4 col-md-4 sorry_msg">

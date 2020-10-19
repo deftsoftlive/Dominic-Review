@@ -2,7 +2,7 @@
  
 @section('content')
 
-@php $country_code = DB::table('country_code')->get(); @endphp
+@php $country_code = DB::table('country_code')->orderBy('countryname','asc')->get(); @endphp
 
 @if(Session::has('success'))
 <div class="alert_msg alert alert-success">
@@ -12,10 +12,9 @@
 <section class="register-acc overview-sec">
     <div class="container">
         <div class="inner-cont">
-            @if(!empty($user_id) && !empty($user))
+            @if(!empty($user) && !empty($user))
             <div class="back-to-family">
-                <h4 class="pl_name">Player Name : <p>{{$user->name}}</p></h4>
-                <a href="{{url('/admin/my-family')}}" class="btn btn-primary">Back to my family</a>
+                <h5 style="color:#404e67;"><b>Player Name</b> : {{$user->name}}</h5>
             </div>
             @endif
             <br/>
@@ -26,7 +25,11 @@
                             <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                 <span>1</span> Participant Details
                             </button>
-                            <a class="btn btn-primary" href="{{URL('/admin/family-member/add?user=')}}{{$user->id}}&sec=1">Edit</a>
+                            @if($user->type != '')
+                                <a class="btn btn-primary" href="{{URL('/admin/family-member/add?user=')}}{{$user->id}}?&sec=1">Edit</a>
+                            @else
+                                <a class="btn btn-primary" href="{{url('/admin/account-holder/overview')}}/{{$user->id}}?&sec=1">Edit</a>
+                            @endif
                         </h5>
                     </div>
                     <div id="collapseOne" class="collapse" aria-labelledby="headingo-One" data-parent="#accordion">
@@ -102,7 +105,12 @@
                             <button class="btn btn-link" data-toggle="collapse" data-target="#collapsetwo" aria-expanded="false" aria-controls="collapsetwo">
                                 <span>2</span> contact
                             </button>
-                            <a class="btn btn-primary" href="{{URL('/admin/family-member/add?user=')}}{{$user->id}}&sec=2">Edit</a>
+                            @if($user->type != '')
+                                <a class="btn btn-primary" href="{{URL('/admin/family-member/add?user=')}}{{$user->id}}?&sec=2">Edit</a>
+                            @else
+                                <a class="btn btn-primary" href="{{url('/admin/account-holder/overview')}}/{{$user->id}}?&sec=2">Edit</a>
+                            @endif
+                            <!-- <a class="btn btn-primary" href="{{URL('/admin/family-member/add?user=')}}{{$user->id}}&sec=2">Edit</a> -->
                         </h5>
                     </div>
                     <div id="collapsetwo" class="collapse" aria-labelledby="headingo-tow" data-parent="#accordion">
@@ -189,7 +197,12 @@
                             <button class="btn btn-link" data-toggle="collapse" data-target="#collapsethree" aria-expanded="false" aria-controls="collapsethree">
                                 <span>3</span> Medical and behavioural
                             </button>
-                            <a class="btn btn-primary" href="{{URL('/admin/family-member/add?user=')}}{{$user->id}}&sec=3">Edit</a>
+                            <!-- <a class="btn btn-primary" href="{{URL('/admin/family-member/add?user=')}}{{$user->id}}&sec=3">Edit</a> -->
+                            @if($user->type != '')
+                                <a class="btn btn-primary" href="{{URL('/admin/family-member/add?user=')}}{{$user->id}}?&sec=3">Edit</a>
+                            @else
+                                <a class="btn btn-primary" href="{{url('/admin/account-holder/overview')}}/{{$user->id}}?&sec=3">Edit</a>
+                            @endif
                         </h5>
                     </div>
                     <div id="collapsethree" class="collapse" aria-labelledby="headingo-three" data-parent="#accordion">
@@ -536,7 +549,12 @@
                             <button class="btn btn-link" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
                                 <span>4</span> consents
                             </button>
-                            <a class="btn btn-primary" href="{{URL('/admin/family-member/add?user=')}}{{$user->id}}&sec=4">Edit</a>
+                            <!-- <a class="btn btn-primary" href="{{URL('/admin/family-member/add?user=')}}{{$user->id}}&sec=4">Edit</a> -->
+                            @if($user->type != '')
+                                <a class="btn btn-primary" href="{{URL('/admin/family-member/add?user=')}}{{$user->id}}?&sec=4">Edit</a>
+                            @else
+                                <a class="btn btn-primary" href="{{url('/admin/account-holder/overview')}}/{{$user->id}}?&sec=4">Edit</a>
+                            @endif
                         </h5>
                     </div>
                     <div id="collapsefour" class="collapse" aria-labelledby="headingo-four" data-parent="#accordion">

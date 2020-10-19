@@ -23,7 +23,7 @@ Route::get('/register/coach','Auth\RegisterController@regsiter_coach')->name('re
 Route::any('selectedCat','HomeController@selectedCat')->name('selectedCat');
 
 Route::get('crop-image', 'HomeController@index_crop');
-Route::post('crop-image', ['as'=>'croppie.upload-image','uses'=>'HomeController@imageCrop']);
+// Route::post('crop-image', ['as'=>'croppie.upload-image','uses'=>'HomeController@imageCrop']);
 
 
 error_reporting(E_ALL);
@@ -104,6 +104,14 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     Route::any('remove-medical/{id}','HomeController@remove_medical')->name('remove_medical');
     Route::any('remove-allergy/{id}','HomeController@remove_allergy')->name('remove_allergy');
 
+
+    // Add Family Mamber
+    Route::any('/account-holder/details','HomeController@account_holder')->name('account_holder');
+    Route::any('/account-holder-details','HomeController@ah_participant_details')->name('ah_participant_details');
+    Route::any('/contact/information','HomeController@ah_contact_information')->name('ah_contact_information');
+    Route::any('/medical/information','HomeController@ah_medical_information')->name('ah_medical_information');
+    Route::any('/media/consent','HomeController@ah_media_consent')->name('ah_media_consent');
+
     // Route::any('medical_info_to_next','HomeController@medical_info_to_next')->name('medical_info_to_next');
     // Route::any('child_cont_to_next','HomeController@child_cont_to_next')->name('child_cont_to_next');
     // Route::any('med_beh_to_next','HomeController@med_beh_to_next')->name('med_beh_to_next');
@@ -144,6 +152,16 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     Route::post('/show-name','HomeController@show_name_in_leaderboard')->name('show_name_in_leaderboard');
 
     Route::any('/game-chart','HomeController@game_chart')->name('game_chart');
+
+    // Notifications
+    Route::any('/timeline/notification','HomeController@notification_timeline')->name('notification_timeline');
+    Route::any('/mark_as_read/{id}','HomeController@mark_as_read')->name('fr_mark_as_read');
+
+    // Profile picture
+    Route::any('/upload-profile-image/{id}','HomeController@upload_profile_image')->name('upload_profile_image');
+    // Route::any('/upload-profile-image/save','HomeController@save_profile_image')->name('save_profile_image');
+
+    Route::any('crop-image', ['as'=>'croppie.upload-image','uses'=>'HomeController@save_profile_image']);
 });
 
 // Coupon code

@@ -99,7 +99,7 @@
               <a href="{{url('/course-detail')}}/@php echo base64_encode($course->id); @endphp" class="cart-table__product-name">{{$course->title}}</a>
 
               <ul class="cart-table__options">
-                <li>@if($item->child_id == $login_user) Account Holder @else Child @endif:  
+                <li>@if($item->child_id == $login_user) Account Holder @else {{$child->type}} : @endif  
                   <b class="bText">{{isset($child->name) ? $child->name : 'No child selected'}}</b>
                 </li>                 
               </ul>
@@ -140,8 +140,8 @@
               <a href="{{url('/book-a-camp')}}/{{$camp->slug}}" class="cart-table__product-name">{{$camp->title}}</a>
 
               <ul class="cart-table__options">
-                <li>Child: 
-                  <b class="bText">{{isset($child->name) ? $child->name : 'No child selected'}}</b>
+                <li>@if($item->child_id == $item->user_id) Account Holder : @else {{$child->type}} : @endif 
+                    <b class="bText">{{isset($child->name) ? $child->name : 'No child selected'}}</b>
                 </li>                 
               </ul>
 

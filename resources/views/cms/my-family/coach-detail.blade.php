@@ -56,7 +56,7 @@
                         		<ul>
                         			<li>
                         				<strong>Profile Name <span>:</span> </strong>
-                        				<span>{{isset($coach_profile->profile_name) ? $coach_profile->profile_name : '-'}}</span>
+                        				<span>{{isset($coach_profile->profile_name) ? $coach_profile->profile_name.' '.$coach_profile->profile_last_name : '-'}}</span>
                         			</li>
                         			<li>
                         				<strong>Tennis Club <span>:</span> </strong>

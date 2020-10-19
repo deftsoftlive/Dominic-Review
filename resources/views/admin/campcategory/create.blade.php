@@ -36,7 +36,7 @@
                   
                    {{textbox($errors,'Title*','title')}}
                    {{textarea($errors,'Description*','description')}}
-                   {{textarea($errors,'Description - More Text*','description_more')}}
+                   <!-- {{textarea($errors,'Description - More Text*','description_more')}} -->
 
                   <div class="form-group">
                     <label class="control-label">Image</label>

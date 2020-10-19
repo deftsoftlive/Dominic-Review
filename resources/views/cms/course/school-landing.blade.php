@@ -277,9 +277,28 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                     <div class="tab-pane fade" id="nav-reports" role="tabpanel" aria-labelledby="nav-reports-tab">
                         <div class="o-i-tab">
                             {!! getAllValueWithMeta('ten_lan_camp_tab3_description', 'tennis-landing') !!}
+
+                            <br/><br/>
+
+                            @php 
+                                $course_cat = DB::table('link_course_and_categories')->where('linked_course_cat',158)->where('status',1)->get();
+                            @endphp
+                            <div class="we-run-wrap images_back_wrap d-f">
+                                @foreach($course_cat as $cat)
+                                <div class="col-sm-4">
+                                    <a href="{{url('/course-listing/school')}}?&cat={{$cat->id}}" class="we-run-container">
+                                        <img src="{{URL::asset('/uploads')}}/{{$cat->image}}" alt="" />
+                                        <div class="we-run-overlay">
+                                            <p>{{$cat->title}}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                @endforeach
+                            </div>
+                            
                         </div>
                         <br/>
-                        <a style="float:right;" href="{{ getAllValueWithMeta('sch_lan_btn_link', 'school-landing') }}" class="cstm-btn main_button">{{ getAllValueWithMeta('sch_lan_btn', 'school-landing') }}</a>
+                        <!-- <a style="float:right;" href="{{ getAllValueWithMeta('sch_lan_btn_link', 'school-landing') }}" class="cstm-btn main_button">{{ getAllValueWithMeta('sch_lan_btn', 'school-landing') }}</a> -->
                     </div>
                     <div class="tab-pane fade" id="nav-family" role="tabpanel" aria-labelledby="nav-family-tab">
                         <div class="o-i-tab"> 

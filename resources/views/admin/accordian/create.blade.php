@@ -40,7 +40,7 @@
                     
                   <label class="control-label">Page Title<span class="cst-upper-star">*</span></label>
                   <select class="select-player" name="page_title">
-                        <option value="course-listing">Courses Page</option>
+                        <!-- <option value="course-listing">Courses Page</option> -->
                         <option value="course-listing/football">Football Courses Page</option>
                         <option value="course-listing/tennis">Tennis Courses Page</option>
                         <option value="course-listing/school">School Courses Page</option>
@@ -62,13 +62,20 @@
                         <option value="school-landing-parent-info">School Coaching - Parent Info</option>
 
                         <option value="book-a-camp">Book A Camp Page</option>
+
                         @foreach($camp_cat as $cat)
                           <option value="camp-detail/{{$cat->slug}}">Camp Category - {{$cat->title}}</option>
                         @endforeach
+
+                        @php $linked_course_cat = DB::table('link_course_and_categories')->where('status',1)->get(); @endphp
+                        @foreach($linked_course_cat as $cat)
+                          <option value="course-listing/@php echo getProductCatslug($cat->linked_course_cat); @endphp?&cat={{$cat->id}}">Course Category - @php echo getProductCatname($cat->linked_course_cat); @endphp - {{$cat->title}}</option>
+                        @endforeach
+
                   </select><br/>
 
-                   {{textbox($errors,'Title*','title')}}
-                   {{textarea($errors,'Description*','description')}}
+                   {{textbox($errors,'Title<span class="cst-upper-star">*</span>','title')}}
+                   {{textarea($errors,'Description<span class="cst-upper-star">*</span>','description')}}
 
                <!--    <div class="form-group">
                     <label class="control-label">PDF UPLOAD<span class="cst-upper-star">*</span></label><br/>
@@ -154,7 +161,7 @@
             var newnumber =number+1;                        
             $("#noOfQuetion").val(newnumber);
 
-            var mainHtml='<tr class="timeslots slots'+newnumber+'" value="'+newnumber+'"><td><input type="text" name="accordian_title['+newnumber+']" class="form-control"></td><td><input type="file" name="pdf['+newnumber+']" class="form-control" required></td></td><td>';
+            var mainHtml='<tr class="timeslots slots'+newnumber+'" value="'+newnumber+'"><td><input type="text" name="accordian_title['+newnumber+']" class="form-control"></td><td><input type="file" name="pdf['+newnumber+']" class="form-control" required></td></td>';
 
             mainHtml+='<td><a href="javascript:void(0);" onclick="removeSection('+newnumber+');"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></td></tr>';
 

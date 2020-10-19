@@ -51,6 +51,8 @@ $wallet_amt = DB::table('wallets')->where('user_id',Auth::user()->id)->first();
                 <div class="wallet_amt">
                     @if(!empty($wallet_amt))
                     <h4>Total Wallet Money : &pound;{{$wallet_amt->money_amount}}</h4>
+                    @else
+                    <h4>Total Wallet Money : &pound;0</h4>
                     @endif
                 </div>
             </div>

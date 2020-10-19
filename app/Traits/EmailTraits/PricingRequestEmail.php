@@ -131,6 +131,7 @@ public function ParentRequestToCoachHtml($data,$template)
     $text = str_replace("{coach_email}",$data['coach_email'],$text);  
     $text = str_replace("{parent_name}",$data['parent_name'],$text);
     $text = str_replace("{parent_email}",$data['parent_email'],$text);
+    $text = str_replace("{player_name}",$data['player_name'],$text);
 
     return $text;
 }

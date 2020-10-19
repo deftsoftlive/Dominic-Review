@@ -79,7 +79,7 @@
                                                                         @endif
                                                                     </a>
 
-                                                                    <a onclick="return confirm('Are you sure you want to delete this testimonial?')" href="{{url('admin/custombox/delete')}}/{{$test->id}}" class="dropdown-item">Delete</a>
+                                                                    <a onclick="return confirm('Are you sure you want to delete this custom box?')" href="{{url('admin/custombox/delete')}}/{{$test->id}}" class="dropdown-item">Delete</a>
                                                                 </div>
                                                             </div>
                                                         </td>

@@ -59,13 +59,13 @@
               <li>
                 <ul class="social-meadia-icons">
                   <li>
-                    <a href="{{ getAllValueWithMeta('facebook_link', 'general-setting') }}" class="social-icon-link"><i class="fab fa-facebook-f"></i></a>
+                    <a target="_blank" href="{{ getAllValueWithMeta('facebook_link', 'general-setting') }}" class="social-icon-link"><i class="fab fa-facebook-f"></i></a>
                   </li>
                   <li>
-                    <a href="{{ getAllValueWithMeta('instagram_link', 'general-setting') }}" class="social-icon-link"><i class="fab fa-instagram"></i></a>
+                    <a target="_blank" href="{{ getAllValueWithMeta('instagram_link', 'general-setting') }}" class="social-icon-link"><i class="fab fa-instagram"></i></a>
                   </li>
                   <li>
-                    <a href="{{ getAllValueWithMeta('google_link', 'general-setting') }}" class="social-icon-link"><i class="fab fa-google-plus"></i></a>
+                    <a target="_blank" href="{{ getAllValueWithMeta('google_link', 'general-setting') }}" class="social-icon-link"><i class="fab fa-google-plus"></i></a>
                   </li>
                 </ul>
               </li>
@@ -73,5 +73,3 @@
 
             <!-- Nav menu section -->
            <!-- /.container-->
-
-<!-- Header section end here

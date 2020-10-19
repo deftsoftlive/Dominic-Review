@@ -62,7 +62,7 @@
 
                   <label class="control-label">Country<span class="cst-upper-star">*</span></label>
                   <select class="select-player" name="country">
-                    @php $country_code = DB::table('country_code')->get(); @endphp
+                    @php $country_code = DB::table('country_code')->orderBy('countryname','asc')->get(); @endphp
                     @foreach($country_code as $name)
                         <option @if($name->countryname == $user->country) selected @endif value="{{$name->countryname}}">{{$name->countryname}}</option>
                     @endforeach

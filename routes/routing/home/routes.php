@@ -8,7 +8,8 @@ Route::get('/logout', function () {
 \Auth::logout();
 return redirect('/login');
 });
-Auth::routes(['verify' => true]);
+// Auth::routes(['verify' => true]);
+Auth::routes();
 
 
 Route::post('/login', 'LoginController@check')->name('post_login');

@@ -206,7 +206,7 @@ $(document).ready(function(){
     $('#submit_contact_form').click(function(){
         $(this).attr('disabled', true);
         if($('#contact_form').valid()){
-            $('#contact_form').submit();
+            // $('#contact_form').submit();
         }else{
             $(this).attr('disabled', false);
             return false;

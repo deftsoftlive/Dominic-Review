@@ -245,6 +245,10 @@ class BadgeController extends Controller
                     $ca->badges_points = $total_points;
                     $ca->save();
 
+                    // dd($ca);
+
+                    $ca->notify(new \App\Notifications\User\BadgeNotification());
+
                    // UserBadge::where('season_id', $request->season_id)->where('user_id', $request->child_id)->update(array('badges' => $badges, 'badges_points' => $total_points));    
                 // }
             }else{
@@ -255,7 +259,13 @@ class BadgeController extends Controller
                     $ca->badges = $badges;
                     $ca->badges_points = $total_points;
                     $ca->save();
+
+                    // dd($ca);
+
+                    $ca->notify(new \App\Notifications\User\BadgeNotification());
                 }
+
+
 
             return redirect()->route('players_list',compact('purchase_course'))->with('flash_message','Badges assigned successfully.');
         }
@@ -288,7 +298,7 @@ class BadgeController extends Controller
     public function selectedSeason(Request $request)
     {
         $season = $request->selectedSeason; 
-        $shop = ShopCartItems::where('course_season',$request->selectedSeason)->where('orderID','!=',NULL)->get(); 
+        $shop = ShopCartItems::where('course_season',$request->selectedSeason)->where('orderID','!=',NULL)->groupBy('product_id')->get(); 
 
         if(count($shop) > 0)
         {

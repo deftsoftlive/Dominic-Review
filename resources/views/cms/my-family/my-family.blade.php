@@ -51,7 +51,8 @@
                 |*************************** -->
 				<div class="col-sm-12">
 				  <div class="type-parent">
-                        <a href="#register-sec" id="parent_detail" class="member-container">
+                        <!-- <a href="#register-sec" id="parent_detail" class="member-container"> -->
+                        <a href="{{url('/user/family-member/overview')}}/{{Auth::user()->id}}" class="member-container">
                           <div class="member-icon">
                             <i>{{$user->first_name}}</i>
                           </div>

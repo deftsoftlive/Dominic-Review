@@ -42,8 +42,10 @@
                                     <th><p><b>Course</b></p></th>
                                   </tr>
                                   <tr>
+                                    @php $player_name = getUsername($report->player_id); @endphp 
+                                    
                                     <td>@php echo date("d/m/Y", strtotime($report->date)); @endphp</td>
-                                    <td>@php echo getUsername($report->player_id); @endphp</td>
+                                    <td>{{isset($player_name) ? $player_name : 'User not exist'}}</td>
                                     <td>@if($report->type == 'simple') End of term report @elseif($report->type == 'complex') Player report @endif</td>
                                     <td>@php echo getUsername($report->coach_id); @endphp</td>
                                     <td>@if($report->type == 'simple') @php echo getSeasonname($report->season_id); @endphp @else - @endif</td>
@@ -54,7 +56,7 @@
                             @elseif($report->type == 'complex')
 
                                 <p><label class="control-label">Date</label> - @php echo date("d/m/Y", strtotime($report->date)); @endphp</p>
-                                <p><label class="control-label">Player Name</label> - @php echo getUsername($report->player_id); @endphp</p>
+                                <p><label class="control-label">Player Name</label> - {{isset($player_name) ? $player_name : 'User not exist'}}</p>
                                 <p><label class="control-label">Report Type</label> - @if($report->type == 'simple') End of term report @elseif($report->type == 'complex') Player report @endif</p>
                                 <p><label class="control-label">Coach Name</label> - @php echo getUsername($report->coach_id); @endphp</p>
                                 @if($report->type == 'simple')

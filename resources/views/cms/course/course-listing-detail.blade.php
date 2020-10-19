@@ -159,7 +159,6 @@
                                       @endforeach
                                     @endif
                                   </select> --> 
-                                   
 
                                   <div class="outer-slt">
                                     <select id="child" name="child" class="form-control event-dropdown">
@@ -177,16 +176,22 @@
 
                                             $course_range1 = $course->age_group; 
 
-                                            if(!empty($course_range1))
-                                            {
-                                              $range_arr1 = explode(' ',$course_range1);  
+                                            $check_age_group = substr_count($course->age_group, ' - '); 
 
-                                              if($range_arr1[1] == '-')
+                                            if($check_age_group > 0)
+                                            {
+                                              if(!empty($course_range1))
                                               {
-                                                $start_value1 = $range_arr1[0];
-                                                $end_value1 = $range_arr1[2];
+                                                $range_arr1 = explode(' ',$course_range1);  
+
+                                                if($range_arr1[1] == '-')
+                                                {
+                                                  $start_value1 = $range_arr1[0];
+                                                  $end_value1 = $range_arr1[2];
+                                                }
                                               }
                                             }
+                                            
 
                                           @endphp
                                         @endif
@@ -206,14 +211,19 @@
                                             $course_range = $course->age_group;
                                             
 
-                                            if(!empty($course_range))
-                                            {
-                                              $range_arr = explode(' ',$course_range);  
+                                            $check_age_group1 = substr_count($course->age_group, ' - '); 
 
-                                              if($range_arr[1] == '-')
+                                            if($check_age_group1 > 0)
+                                            {
+                                              if(!empty($course_range))
                                               {
-                                                $start_value = $range_arr[0];
-                                                $end_value = $range_arr[2];
+                                                $range_arr = explode(' ',$course_range);  
+
+                                                if($range_arr[1] == '-')
+                                                {
+                                                  $start_value = $range_arr[0];
+                                                  $end_value = $range_arr[2];
+                                                }
                                               }
                                             }
                                             
@@ -336,7 +346,7 @@
         			  </figure>
         		  	</li>
         		  	<li>
-        		  		<a href="" class="cstm-btn">Click Here</a>
+        		  		<a href="" class="cstm-btn main_button">Click Here</a>
         		  	</li>
         		  	<li>
         	          <figure>

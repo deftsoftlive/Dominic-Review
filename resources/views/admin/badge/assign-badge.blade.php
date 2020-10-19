@@ -52,7 +52,7 @@
                                                           @php
                                                             $user = DB::table('users')->where('id',$bd->user_id)->first();
                                                           @endphp
-                                                          <option value="{{$bd->user_id}}">{{isset($user->name) ? $user->name : ''}}</option>
+                                                          <option value="{{$bd->user_id}}">{{isset($user->name) ? $user->name : 'User not exist'}}</option>
                                                         @endforeach
                                                         </select>
                                                         </div>
@@ -68,33 +68,6 @@
                                                               @endforeach
                                                             </select>
                                                         </div>
-
-                                                        <!-- <div class="col-sm-3">
-                                                            <select id="course" class="form-control" name="age_group">
-                                                              <option disabled="" selected>Select Age Group</option>
-
-                                                              @php
-                                                                  $user_badges = DB::table('user_badges')->orderBy('id','asc')->get();
-                                                              @endphp 
-                                                              @foreach($user_badges as $bd)
-                                                                @php
-                                                                  $shop = DB::table('shop_cart_items')->where('shop_type','course')->where('orderID','!=',NULL)->where('child_id',$bd->user_id)->where('course_season',$bd->season_id)->get(); 
-                                                                  $course = DB::table('courses')->where('season',$bd->season_id)->first();
-                                                                  $subcat = [];  
-                                                                @endphp
-
-                                                                @foreach($shop as $sh)
-                                                                  @php 
-                                                                    $course = DB::table('courses')->where('id',$sh->product_id)->first();
-                                                                    $subcat = getProductCatname($course->subtype);
-                                                                  @endphp
-                                                                  <option value="{{$course->subtype}}">{{$subcat}}</option>
-                                                                @endforeach
-                                                                  
-                                                              @endforeach
-                                                            </select>
-                                                        </div> -->
-                                                        
 
                                                         <div class="col-sm-1" style="margin-right: 15px;">
                                                             <button type="submit" class="btn btn-primary">Submit</button>

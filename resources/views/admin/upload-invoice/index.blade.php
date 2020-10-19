@@ -70,15 +70,15 @@
                                 @foreach($req as $re)
                                     <tr>
                                     @php $user = DB::table('users')->where('id',$re->coach_id)->first();  @endphp
-                                        <td>{{$user->updated_at}}</td>
-                                        <td>{{$user->name}}</td>
-                                        <td>{{$re->invoice_name}}</td>
-                                        <td>{{$re->invoice_document}}</td>
+                                        <td>@if(!empty($user->updated_at)) @php echo date('d/m/Y',strtotime($user->updated_at)); @endphp @endif</td>
+                                        <td>{{isset($user->name) ? $user->name : ''}}</td>
+                                        <td>{{isset($re->invoice_name) ? $re->invoice_name : ''}}</td>
+                                        <td>{{isset($re->invoice_document) ? $re->invoice_document : ''}}</td>
                                         <td>
                                         @if($re->status == 1)
                                             <h6 style="color:green;"><b>Accepted</b></h6>
                                         @elseif($re->status == 0)
-                                            <h6 style="color:red;"><b>Rejected</b></h6>
+                                            <h6 style="color:red;"><b>Not Accepted</b></h6>
                                         @elseif($re->status == 2)
                                             <h6 style="color:green;"><b>Requested</b></h6>
                                         @endif
@@ -94,11 +94,14 @@
                                             </label>
                                         </form>
 
-                                        @if($re->status == 0)
                                         <div class="reject-view" data-toggle="modal" data-target="#reject-detail-{{$re->id}}">
+                                            <a href="javascript:void(0);" >Reject</a>
+                                        </div>
+                                        <!-- @if($re->status == 0) -->
+                                        <!-- <div class="reject-view" data-toggle="modal" data-target="#reject-detail-{{$re->id}}">
                                         	<a href="javascript:void(0);" >Add Comment</a>
-				                        </div>
-				                        @endif
+				                        </div> -->
+				                        <!-- @endif -->
 
 				                        <div class="modal fade" id="reject-detail-{{$re->id}}" role="dialog">
 								           <div class="modal-dialog">
@@ -167,7 +170,7 @@ jQuery(document).ready(function() {
     {
       $base_url = $("#base_url").val();
       $.ajax({
-        url:$base_url+"/admin/coach_search/",
+        url:"http://49.249.236.30:8654/dominic-new/admin/coach_search/",
         method:'GET',
         data:{query:query},
         dataType:'json',

@@ -9,9 +9,13 @@ use App\User;
 use App\ChildActivity;
 use App\CoachUploadPdf;
 use App\SetGoal;
+use App\Notifications\NewUserNotification;
+use App\Models\Admin\EmailTemplate;
+use App\Traits\EmailTraits\EmailNotificationTrait;
+
 class AdminController extends Controller
 {
-    
+    use EmailNotificationTrait;
 
 #----------------------------------------------------------------------
 # Admin Login
@@ -201,23 +205,23 @@ public function changeProfileImage(Request $request) {
     |
     |******************************************/
     public function uploaded_invoice(){
-      $req = CoachUploadPdf::orderBy('id','ASC')->paginate(10);
+      $req = CoachUploadPdf::orderBy('id','desc')->paginate(10);
       return view('admin.upload-invoice.index',compact('req'));
     }
 
     public function new_uploaded_invoice(){
-      $req = CoachUploadPdf::orderBy('id','ASC')->where('status',2)->paginate(10);
+      $req = CoachUploadPdf::orderBy('id','desc')->where('status',2)->paginate(10);
       $req_count = count($req);
       return view('admin.upload-invoice.new-invoice',compact('req','req_count'));
     }
 
     public function accept_uploaded_invoice(){
-      $req = CoachUploadPdf::where('status',1)->orderBy('id','ASC')->paginate(10);
+      $req = CoachUploadPdf::where('status',1)->orderBy('id','desc')->paginate(10);
       return view('admin.upload-invoice.accept',compact('req'));
     }
 
     public function reject_uploaded_invoice(){
-      $req = CoachUploadPdf::where('status',0)->orderBy('id','ASC')->paginate(10); 
+      $req = CoachUploadPdf::where('status',0)->orderBy('id','desc')->paginate(10); 
       return view('admin.upload-invoice.reject',compact('req'));
     }
 
@@ -225,7 +229,13 @@ public function changeProfileImage(Request $request) {
       $id = $request->id;
       $st = CoachUploadPdf::find($id);
       $st->status = $request->status;
-      $st->save();
+      // $st->save();
+
+      if($st->save())
+      {
+        $this->InvoiceStatusSuccess($st->id);
+        $st->notify(new \App\Notifications\Coach\InvoiceNotification());
+      }
 
       return \Redirect::back()->with('success','Status updated successfully.');
     }
@@ -264,10 +274,10 @@ public function changeProfileImage(Request $request) {
                 {
                   $base_url = \URL::to('/');
                   $user = User::where('id',$row->coach_id)->first();
-                    $output .= '<tr><td>'.$user->updated_at.'</td><td>'.$user->name.'</td><td>'.$row->invoice_name.'</td><td>'.$row->invoice_document.'</td><td>';
+                    $output .= '<tr><td>'.date('d/m/Y',strtotime($user->updated_at)).'</td><td>'.$user->name.'</td><td>'.$row->invoice_name.'</td><td>'.$row->invoice_document.'</td><td>';
                       
                       if($row->status == 0){
-                        $output .= '<h6 style="color:red;"><b>Rejected</b></h6>';
+                        $output .= '<h6 style="color:red;"><b>Not Accepted</b></h6>';
                       }elseif($row->status == 1){
                         $output .= '<h6 style="color:green;"><b>Accepted</b></h6>';
                       }elseif($row->status == 2)
@@ -317,7 +327,12 @@ public function changeProfileImage(Request $request) {
       $req = CoachUploadPdf::find($id);
       $req->status = 0;
       $req->reason_of_rejection = $request->reason_of_rejection;
-      $req->save();
+      // $req->save();
+
+      if($req->save())
+      {
+        $this->InvoiceStatusSuccess($req->id);
+      }
 
       return \Redirect::back()->with('success','Parent request has been rejected successfully!');
     }
@@ -510,4 +525,18 @@ public function changeProfileImage(Request $request) {
       $goals_data = SetGoal::where('parent_id',$get_goal->parent_id)->where('player_id',$get_goal->player_id)->where('goal_type',$goal_type)->get();
       return view('admin.goals.goal-detail',compact('get_goal','goals_data'));
     }
+
+
+    /*****************************
+    | Mark as read - Notifications
+    |*****************************/
+    public function mark_as_read($id)
+    {
+      $notifications = \DB::table('notifications')->where('id',$id)->delete();
+
+      return \Redirect::back()->with('sucsess', "Notification successfully marked as read.");
+    }
+    
+
+
 }

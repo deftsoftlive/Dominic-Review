@@ -37,7 +37,7 @@
                    {{textbox($errors,'Title<span class="cst-upper-star">*</span>','title', $venue->title)}}
                    {{textarea($errors,'Description<span class="cst-upper-star">*</span>','description', $venue->description)}}
 
-                   {{textarea($errors,'Description - More Text<span class="cst-upper-star">*</span>','description_more', $venue->description_more)}}
+                   <!-- {{textarea($errors,'Description - More Text<span class="cst-upper-star">*</span>','description_more', $venue->description_more)}} -->
 
                     <div class="form-group">
                       <label class="control-label">Image</label>

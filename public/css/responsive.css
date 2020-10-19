@@ -11,6 +11,12 @@
         left: -25px;
     }
 
+    .we-run-overlay p {
+
+        font-size: 16px;
+    }
+
+
     .activity-slider .owl-next {
         right: -25px;
     }
@@ -42,22 +48,67 @@
     .contact-gender label {
         margin: 0 30px 0 7px;
     }
+
+    .we-run-container img {
+        min-height: 180px;
+    }
+
+    .table_wrap_my_family {
+        overflow: auto;
+    }
+
+    .panel input {
+        width: 100%;
+    }
+
+    .panel .croppie-container .cr-boundary {
+
+        height: 180px !important;
+        width: 180px !important;
+    }
+
+    .panel div#preview-crop-image {
+
+        height: 180px !important;
+        width: 180px !important;
+        margin: 0 auto;
+
+
+        border: 3px solid #001642;
+    }
+
+    .panel .cr-viewport.cr-vp-circle {
+
+        height: 130px !important;
+        width: 130px !important;
+    }
+
+
     .Payment-block .nav-tabs li a {
-    min-height: 107px;
-}
-.det-gender-opt label {
-    margin: 0;
-    padding: 0 0 0 0;
-}
-.left_text-wrap {
-    max-width: 100%;
-    flex: 0 0 100%;
-    margin-bottom: 30px;
-}
-.right_text-wrap {
-    max-width: 100%;
-    flex: 0 0 100%;
-}
+        min-height: 107px;
+    }
+
+    div#upload_doc input,
+    div#upload_doc select {
+        font-size: 12px;
+    }
+
+    .det-gender-opt label {
+        margin: 0;
+        padding: 0 0 0 0;
+    }
+
+    .left_text-wrap {
+        max-width: 100%;
+        flex: 0 0 100%;
+        margin-bottom: 30px;
+    }
+
+    .right_text-wrap {
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+
     figure.about-us-img-wrap::after {
         position: absolute;
         content: '';
@@ -195,9 +246,10 @@
     }
 
     .cst_course_form .contact-gender label {
-        margin: 0 5px 0 7px!important;
+        margin: 0 5px 0 7px !important;
     }
-   .cst_course_form .det-gender-opt label {
+
+    .cst_course_form .det-gender-opt label {
         margin: 0 5px 0 0 !important;
     }
 
@@ -377,6 +429,10 @@
 
 
 
+
+
+
+
     .account-menu nav li+li {
         margin-left: 3px;
     }
@@ -396,13 +452,32 @@
         /*text-align: left;*/
         width: 78%;
     }
-.form-head .pink-heading h2 {
-    font-size: 26px;
-}
-.upper-form form .cstm-btn
-{
-    padding: 10px 12px;
-}
+
+    .we-run-container img {
+        min-height: auto;
+    }
+
+    .conform_radios {
+        width: 95% !important;
+    }
+
+    div#upload_doc input,
+    div#upload_doc select {
+        font-size: 16px;
+    }
+
+    .form-head .pink-heading h2 {
+        font-size: 26px;
+    }
+
+    img.badge-img {
+        width: 20% !important;
+    }
+
+    .upper-form form .cstm-btn {
+        padding: 10px 11px;
+    }
+
     figure.about-us-img-wrap::after {
 
         height: 265px;
@@ -411,12 +486,14 @@
         top: -21px;
 
     }
+
+
     .member .pink-heading a.add_competition.cstm-btn {
-    width: 220px;
-}
+        width: 220px;
+    }
 
     .card-header.view-card-header a {
-        width: 41%;
+        width: 45%;
     }
 
     .match_btn {
@@ -1209,48 +1286,98 @@
     }
 
 }
-@media(max-width: 812px) 
 
-{ .Payment-block .nav-tabs li a
-
-    {
-            min-height: 107px;
+@media(max-width: 812px) {
+    .Payment-block .nav-tabs li a {
+        min-height: 107px;
     }
 
 }
+
 @media(max-width: 767px) {
     .about-us-sec>.container>.row>div.col-md-6:nth-of-type(odd) {
         order: 1;
     }
+
+    .profile_croper .inner-cont .img-wrap {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+
+    }
+
+    .dg_prod_sec img {
+        object-fit: scale-down;
+        height: 80px;
+        width: 50px;
+    }
+
+    .outer-table-wrap {
+        overflow: auto;
+    }
+
+    .we-run-overlay p {
+        font-size: 12px;
+    }
+
+    #b-c-modal .outer-table-wrap table {
+        table-layout: auto;
+    }
+
+    .conform_radios {
+        width: 93% !important;
+    }
+
+    .choose_pic {
+        padding: 0 20px 20px !important;
+    }
+
     .upper_text_wrap .item img {
-    height: 275px;
-   
-}
-h2.comp_and_match {
-    text-align: left;
-    font-size: 25px;
-    
-    margin-bottom: 0;
-}
-.member .pink-heading a.add_competition.cstm-btn {
-    width: 232px;
-}
-.det-gender-opt label
-{
-margin:0 10px 0 7px!important;
-}
-.who_they
-{
-    min-height: 56px;
-}
-.radio-outer-wrap .cstm-radio.main-radio {
-    margin-right: 10px!important;
-}
+        height: 275px;
 
-    .Payment-block .nav-tabs li a
+    }
 
-    {
-            min-height: 134px;
+    .cstm-radio.behv_radio {
+        position: relative;
+        top: 49px;
+    }
+
+    div#toilet {
+
+        padding: 25 !important;
+    }
+
+    div#confirmation-error {
+        left: 0;
+        top: 48px;
+    }
+
+    h2.comp_and_match {
+        text-align: left;
+        font-size: 25px;
+
+        margin-bottom: 0;
+    }
+
+    .member .pink-heading a.add_competition.cstm-btn {
+        width: 232px;
+    }
+
+    .det-gender-opt label {
+        margin: 0 10px 0 7px !important;
+    }
+
+    .who_they {
+        min-height: 56px;
+    }
+
+    .radio-outer-wrap .cstm-radio.main-radio {
+        margin-right: 10px !important;
+    }
+
+    .Payment-block .nav-tabs li a {
+        min-height: 134px;
     }
 
     .accordian_summary .card .card-header.view-card-header {
@@ -2140,12 +2267,12 @@ margin:0 10px 0 7px!important;
     }
 
     .banner-content .banner-sub-heading {
-        font-size: 60px;
+        font-size: 46px;
         line-height: 70px;
     }
 
     .banner-content .banner-heading {
-        font-size: 60px;
+        font-size: 52px;
         line-height: 70px;
     }
 
@@ -2204,45 +2331,82 @@ margin:0 10px 0 7px!important;
     .checkout-step-sec .cart.block {
 
         margin-top: 20px;
-    }.multistep-footer.mt-4.text-right a:first-child {
-    margin-bottom: 10px;
-        }
-        .who_they
-{
-    min-height:auto;
-}
-.comp_matches {
+    }
+    div#wallet_payment .tect-wrap {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-}
-.comp_matches h2
-{
-    text-align: center;
-    margin-bottom: 15px;
-}.member .pink-heading a.add_competition.cstm-btn {
-    width: auto;
+    justify-content: space-between;
+    flex-direction: column;
 }
 
-        .Payment-block .nav-tabs li a {
-    min-height: 78px;
-}
-.upper_text_wrap .item img {
-    height: 210px;
-   
-}
-a#childcare_btn
-{
-    white-space: break-spaces;
-}
-        .Payment-block .nav-tabs li {
-    width: 100%;
-    padding: 0px 4px;
-}
-        form#shippingForm h4 {
-    padding: 0 10px;
-}
+    ul.pagination li a,
+    ul.pagination li.active span,
+    ul.pagination li.disabled span {
+        padding: 7px;
+    }
+
+    #b-c-modal .modal-dialog {
+
+        max-width: 100%;
+
+    }
+
+    .multistep-footer.mt-4.text-right a:first-child {
+        margin-bottom: 10px;
+    }
+
+    .conform_radios {
+        width: 91% !important;
+    }
+
+    .who_they {
+        min-height: auto;
+    }
+
+    .cstm-radio.behv_radio {
+        position: relative;
+        top: unset;
+    }
+
+    .comp_matches {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .comp_matches h2 {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .member .pink-heading a.add_competition.cstm-btn {
+        width: auto;
+    }
+
+    .Payment-block .nav-tabs li a {
+        min-height: 78px;
+    }
+
+    .upper_text_wrap .item img {
+        height: 210px;
+
+    }
+
+    a#childcare_btn {
+        white-space: break-spaces;
+    }
+
+    .Payment-block .nav-tabs li {
+        width: 100%;
+        padding: 0px 4px;
+    }
+
+    form#shippingForm h4 {
+        padding: 0 10px;
+    }
+
     .match_btn {
 
         flex-direction: column;
@@ -2329,7 +2493,7 @@ a#childcare_btn
 
     .card-header.view-card-header a {
         width: 100%;
-        margin-bottom: 15px;
+        margin-bottom: 0px;
     }
 
     .card-header.view-card-header .view_stats {
@@ -2828,6 +2992,11 @@ a#childcare_btn
 @media(max-width:375px) {
     .select-player-goal-form .form-group label {
         width: 60%;
+    }
+
+    div#confirmation-error {
+        left: 0;
+        top: 65px;
     }
 }
 

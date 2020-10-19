@@ -27,7 +27,6 @@
             <div class="card-body">
 
 
-
 <div class="col-md-12">
 
   <form role="form" method="post" id="venueForm" enctype="multipart/form-data">
@@ -52,11 +51,52 @@
                         </select>
                   </div>
 
-                  <div class="form-group"> 
+                  <!-- <div class="form-group"> 
                       {{select3($errors,'Type','type','label','0',$category,$venue->type)}}
                   </div>
                   <div class="form-group">
                       {{select3($errors,'Sub Type','subtype','label','0',$subcategory,$venue->subtype)}}
+                  </div> -->
+
+                  <div class="form-group">
+                    <label class="label-file control-label">Parent</label>
+                        <select id="people11" name="type" class="form-control">
+                      
+                        @php $course_cat = DB::table('product_categories')->where('parent','0')->where('subparent','0')->where('type','Course')->get(); @endphp
+                        <option value="" disabled="" selected="">Select Parent Category</option>
+                        @foreach($course_cat as $cour)
+                          <option value="{{$cour->id}}" @if($venue->type == $cour->id) selected @endif>{{$cour->label}}</option>
+                        @endforeach
+                      </select>
+                  </div>
+
+                  @if(!empty($venue->subtype))
+                    <div class="form-group">
+                      <label class="label-file control-label">Selected Sub Panet</label> 
+                      <input type="text" class="form-control" value="@php echo getProductCatname($venue->subtype); @endphp" disabled="">
+                    </div>
+                  @endif
+
+                  <div class="form-group">
+                        <label class="label-file control-label">Change Sub Parent</label>
+                        <select id="inputAge11" name="subtype" class="form-control event-dropdown">
+                          <option value="1" selected="" disabled="">Select Age Group</option>
+                        </select>
+                  </div>
+
+                  @php 
+                    $course_category = DB::table('link_course_and_categories')->where('status',1)->get();
+                  @endphp 
+
+                  <div class="form-group">
+                      <label class="label-file control-label">Course Category</label>
+                      
+                      <select name="course_category" class="form-control event-dropdown">
+                          <option value="" disabled="" selected="">Select Course Category</option>
+                          @foreach($course_category as $course_cat)
+                            <option value="{{$course_cat->id}}" @if($venue->course_category == $course_cat->id) selected @endif>{{$course_cat->title}}</option>
+                          @endforeach
+                      </select>
                   </div>
 
                   <div class="form-group">
@@ -76,12 +116,13 @@
                   {{textbox($errors,'Day Time<span class="cst-upper-star">*</span>','day_time', $venue->day_time)}}
                   {{textbox($errors,'Booking Slot<span class="cst-upper-star">*</span>','booking_slot', $venue->booking_slot)}}
                   {!! textarea($errors,'More Info<span class="cst-upper-star">*</span>','more_info', $venue->more_info) !!}
+                  {!! textarea($errors,'Information Email Content<span class="cst-upper-star">*</span>','info_email_content', $venue->info_email_content) !!}
 
-                  {{textbox($errors,'Price<span class="cst-upper-star">*</span>','price', $venue->price)}}
+                  <!-- {{textbox($errors,'Price<span class="cst-upper-star">*</span>','price', $venue->price)}} -->
                   {!! textarea($errors,'Bottom Section<span class="cst-upper-star">*</span>','bottom_section', $venue->bottom_section) !!}
 
-                  <label>Linked Coach</label>
-                  <input type="text" disabled="" class="form-control" value="@php echo getUserName($venue->linked_coach); @endphp">
+                  <!-- <label>Linked Coach</label> -->
+                  <!-- <input type="text" disabled="" class="form-control" value="@php echo getUserName($venue->linked_coach); @endphp"> -->
                   <br/>
                   <div class="form-group">
                     <label class="label-file control-label">Change Linked Coach</label>
@@ -91,17 +132,32 @@
                           $coach = DB::table('users')->where('role_id',3)->get(); 
                         @endphp
                         @foreach($coach as $co)
-                        <option value="{{$co->id}}">{{$co->name}}</option>
+                        <option @if($co->id == $venue->linked_coach) selected @endif value="{{$co->id}}">{{$co->name}}</option>
                         @endforeach
                       </select>
                   </div>
 
-                  {{textbox($errors,'Coach Cost<span class="cst-upper-star">*</span>','coach_cost', $venue->coach_cost)}}
+                  <label class="control-label">Coach Cost<span class="cst-upper-star">*</span></label>
+                  <input class="form-control" type="text" name="coach_cost" value="{{$venue->coach_cost}}">
+
+                  <label class="control-label">Court/Venue Cost<span class="cst-upper-star">*</span></label>
+                  <input class="form-control" type="text" name="venue_cost" value="{{$venue->venue_cost}}">
+
+                  <label class="control-label">Equipment Cost<span class="cst-upper-star">*</span></label>
+                  <input class="form-control" type="text" name="equipment_cost" value="{{$venue->equipment_cost}}">
+
+                  <label class="control-label">Other Cost<span class="cst-upper-star">*</span></label>
+                  <input class="form-control" type="text" name="other_cost" value="{{$venue->other_cost}}">
+
+                  <label class="control-label">Tax/Vat Cost<span class="cst-upper-star">*</span></label>
+                  <input class="form-control" type="text" name="tax_cost" value="{{$venue->tax_cost}}">
+
+            <!--       {{textbox($errors,'Coach Cost<span class="cst-upper-star">*</span>','coach_cost', $venue->coach_cost)}}
                   
                   {{textbox($errors,'Court/Venue Cost<span class="cst-upper-star">*</span>','venue_cost', $venue->venue_cost)}}
                   {{textbox($errors,'Equipment Cost<span class="cst-upper-star">*</span>','equipment_cost', $venue->equipment_cost)}}
                   {{textbox($errors,'Other Cost<span class="cst-upper-star">*</span>','other_cost', $venue->other_cost)}}
-                  {{textbox($errors,'Tax/Vat Cost<span class="cst-upper-star">*</span>','tax_cost', $venue->tax_cost)}}
+                  {{textbox($errors,'Tax/Vat Cost<span class="cst-upper-star">*</span>','tax_cost', $venue->tax_cost)}} -->
 
                   <div class="form-group">
                         <label class="control-label" for="timelsots">Dates of course</label>
@@ -214,6 +270,7 @@
 <script type="text/javascript">
    CKEDITOR.replace('description', options);
    CKEDITOR.replace('more_info', options);
+   CKEDITOR.replace('info_email_content', options);
    CKEDITOR.replace('bottom_section', options);
 </script>
 
@@ -251,6 +308,28 @@
 <script src="{{url('/js/validations/imageShow.js')}}"></script>
 
 <script type="text/javascript">
+
+function myFunction() {
+        $("#all_course_listing")[0].click();
+      }
+
+
+$(document).ready(function(){
+    $("select#people11").change(function(){
+        var selectedCat = $(this).children("option:selected").val();
+        $.ajax({
+            url:"http://49.249.236.30:8654/dominic-new/admin/selectedCat/",
+            method:'GET',
+            data:{selectedCat:selectedCat},
+            dataType:'json',
+            success:function(data)
+            {   
+                $('#inputAge11').html(data.option);
+            },      
+        })
+    });
+    });
+
  
   $('#type').on('change',function(){
      var val = $( this ).val();

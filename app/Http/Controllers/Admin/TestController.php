@@ -145,7 +145,7 @@ class TestController extends Controller
     }
 
     /*----------------------------------------
-    |   Delete User Record
+    |   Delete Test Record
     |----------------------------------------*/
     public function delete_test($id) {  
         $user = Test::find($id);
@@ -224,7 +224,7 @@ class TestController extends Controller
         foreach($shop as $sh)
         {
             $user_detail = User::where('id',$sh->child_id)->first();  
-            $userData[$i]= $user_detail->name .'-'. $user_detail->id;
+            $userData[$i]= isset($user_detail) ? $user_detail->name .'-'. $user_detail->id : 'No user found';
             array_push($customer_array,$userData);      
         }
 

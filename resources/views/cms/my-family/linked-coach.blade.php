@@ -179,7 +179,7 @@
                       @csrf
                       <input type="hidden" name="id" value="{{$req->id}}">
                       <div class="form-group">
-                       <h4>Reason you are enable to accept :</h4>
+                       <h4>Reason you are unable to accept :</h4>
                         <textarea name="reason_of_rejection" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                       </div>
                       <div class="form-group">

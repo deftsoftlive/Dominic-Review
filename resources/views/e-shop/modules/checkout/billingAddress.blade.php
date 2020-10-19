@@ -101,7 +101,7 @@ if (in_array('product', $shop_type, TRUE)){ ?>
                   <!-- {{textbox($errors,'Zipcode','zipcode',$address->zipcode)}} -->
                   <div class="form-group">
                      <input type="text" id="zipcode" class="form-control" name="zipcode" 
-                        value="{{isset($user->town) ? $user->town : ''}}" 
+                        value="{{isset($user->postcode) ? $user->postcode : ''}}" 
                         placeholder="Enter Your Zipcode">
                      <span class="input-icon"><i class="fas fa-mail-bulk"></i></span>
                   </div>
@@ -199,7 +199,7 @@ if (in_array('product', $shop_type, TRUE)){ ?>
                   <!-- {{textbox($errors,'Zipcode','zipcode',$address->zipcode)}} -->
                   <div class="form-group">
                      <input type="text" id="zipcode" class="form-control" name="zipcode" 
-                        value="{{isset($user->town) ? $user->town : ''}}" 
+                        value="{{isset($user->postcode) ? $user->postcode : ''}}" 
                         placeholder="Enter Your Zipcode">
                      <span class="input-icon"><i class="fas fa-mail-bulk"></i></span>
                   </div>
@@ -308,7 +308,7 @@ if (in_array('product', $shop_type, TRUE)){ ?>
                   <!-- {{textbox($errors,'Zipcode','zipcode',$address->zipcode)}} -->
                   <div class="form-group">
                      <input type="text" id="zipcode" class="form-control" name="zipcode" 
-                        value="{{isset($user->town) ? $user->town : ''}}" 
+                        value="{{isset($user->postcode) ? $user->postcode : ''}}" 
                         placeholder="Enter Your Zipcode">
                      <span class="input-icon"><i class="fas fa-mail-bulk"></i></span>
                   </div>
@@ -407,7 +407,7 @@ if (in_array('product', $shop_type, TRUE)){ ?>
                   <!-- {{textbox($errors,'Zipcode','zipcode',$address->zipcode)}} -->
                   <div class="form-group">
                      <input type="text" id="zipcode" class="form-control" name="zipcode" 
-                        value="{{isset($user->town) ? $user->town : ''}}" 
+                        value="{{isset($user->postcode) ? $user->postcode : ''}}" 
                         placeholder="Enter Your Zipcode">
                      <span class="input-icon"><i class="fas fa-mail-bulk"></i></span>
                   </div>

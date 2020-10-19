@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Traits\EmailTraits\EmailNotificationTrait;
+
 
 class RegisterController extends Controller
 {
@@ -22,6 +24,7 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
+    use EmailNotificationTrait;
 
     /**
      * Where to redirect users after registration.
@@ -84,7 +87,11 @@ class RegisterController extends Controller
         $user->phone_number =    $data['phone_number'];
         $user->email        =    $data['email'];
         $user->password     =    Hash::make($data['password']);
-        $user->save(); 
+
+        if($user->save())
+        {
+            $user->notify(new \App\Notifications\NewUserNotification($user));
+        }
 
         $role_id = $user->role_id;
         $user_id = $user->id;
@@ -95,6 +102,20 @@ class RegisterController extends Controller
             $u->email_verified_at = '2020-03-18 11:10:38';
             $u->save();
         // }
+            $user_name = $user->name;
+
+            $this->RegisterUserSuccess($user->id);
+
+            if($user->role_id == '3')
+            {
+                $this->NewCoachRequestSuccess($user->id);
+            }
+            
+
+        // \Mail::send('emails.registration_email',['user_name' => $user_name], function($message) use($user) {
+        //         $message->to($user->email, $user->name)
+        //         ->subject('Registration Email');
+        // });
       
         return $user;
     }

@@ -34,14 +34,16 @@
     </div>
 @endif
 
-@if(!empty(Session::get('success')))
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-      <script>
-        $(function(){
-          $('#b-c-modal').modal('show');
-        });
-      </script>
+@if($camp->popup_enable == 1)
+  @if(!empty(Session::get('success')))
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script>
+          $(function(){
+            $('#b-c-modal').modal('show');
+          });
+        </script>
+  @endif
 @endif
 <section class="book-camp section-padding">
   <div class="container">
@@ -54,7 +56,8 @@
           <div class="col-sm-8">
             <div class="camp-logo-section">
               <h2>Camp Name</h2>
-              <p>{{$camp->title}} @ {{$camp->location}} – {{$camp->term}}</p>
+              <!-- <p>{{$camp->title}} @ {{$camp->location}} – {{$camp->term}}</p> -->
+              <p>{{$camp->title}}</p>
             </div>
           </div>
         </div>
@@ -237,7 +240,7 @@
                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#b-c-a-collapse-{{$arrKey+1}}" aria-expanded="false" aria-controls="b-c-a-collapse-one">
                 <!-- Week {{$arrKey+1}} -->
                 @if(isset($arrData->Selected))
-                  Week {{$arrKey+1}} : {{$arrData->StartDate}} - {{$arrData->EndDate}}
+                  Week {{$arrKey+1}} : {{isset($arrData->StartDate) ? $arrData->StartDate : ' - '}} {{isset($arrData->EndDate) ? $arrData->EndDate : ''}} 
                 @endif 
                 </button>
               </h2>
@@ -498,25 +501,35 @@
       </div>
       <div class="modal-body">
         <!-- <h2></h2> -->
-        <table>
-          <thead>
-            <th colspan="4">{{$camp_details->popup_subtitle}}</th>
-          </thead>
-          
 
-            @php 
-              $products = explode(',',$camp_details->products); 
-            @endphp
-            @foreach($products as $pro=>$data) 
-              <tbody>
-                @php $prod_data = DB::table('products')->where('id',$data)->first();  @endphp
-                <td><img src="{{url('/')}}/{{isset($prod_data->thumbnail) ? $prod_data->thumbnail : ''}}" alt="" /></td>
-                <td>{{isset($prod_data->name) ? $prod_data->name : ''}}</td>
-                <td>&pound;{{isset($prod_data->price) ? $prod_data->price : ''}}</td>
-                <td><a class="pop-view-item" target="_blank" href="{{url('/shop/product')}}/{{isset($prod_data->slug) ? $prod_data->slug : ''}}">View Item</a></td>
-              </tbody>
-            @endforeach       
-        </table>
+        @php 
+          $products = explode(',',$camp_details->products); 
+        @endphp
+
+        @if(count($products)>0 && !empty($products['0']))
+        <div class="outer-table-wrap">
+          <table>
+            <thead>
+              <th colspan="4">{{$camp_details->popup_subtitle}}</th>
+            </thead>
+       
+              @foreach($products as $pro=>$data) 
+                <tbody>
+                  @php $prod_data = DB::table('products')->where('id',$data)->first();  @endphp
+                  <td><img src="{{url('/')}}/{{isset($prod_data->thumbnail) ? $prod_data->thumbnail : ''}}" alt="" /></td>
+                  <td>{{isset($prod_data->name) ? $prod_data->name : ''}}</td>
+                  <td>&pound;{{isset($prod_data->price) ? $prod_data->price : ''}}</td>
+                  <td><a class="pop-view-item" target="_blank" href="{{url('/shop/product')}}/{{isset($prod_data->slug) ? $prod_data->slug : ''}}">View Item</a></td>
+                </tbody>
+              @endforeach       
+          </table>
+        </div>
+        @else
+        <br/>
+        <h5 style="text-align: center;">No shop product is linked with this camp.</h5>
+        <br/>
+      @endif
+
       </div>
       <div class="modal-footer">
         <a href="{{url('/shop')}}"><button type="button" class="cstm-btn main_button">Go to Shop</button></a>

@@ -35,9 +35,12 @@
                 <div class="card">
                     <div class="card-header">
                       <h5>
-                         Orders ({{$order->orderID}})  <a href="{{url('/admin/orders/download')}}/{{$order->id}}" target="_blank" class="new-booking  mt-0 mr-0 mb-10  ml-10 nw_btn_three" style="color: #35486b">
-                            <span class="des-view"> <i class="fa fa-download" aria-hidden="true"></i></span>
-                        </a>
+                         Orders ({{$order->orderID}}) 
+                          <a href="{{url('/admin/orders/download')}}/{{$order->id}}" target="_blank" class="new-booking  mt-0 mr-0 mb-10  ml-10 nw_btn_three" style="color: #35486b"><span class="des-view"> <i class="fa fa-download" aria-hidden="true"></i></span></a>
+                            
+                            <!-- <a onclick="window.print();" target="_blank" class="d-print-none new-booking  mt-0 mr-0 mb-10  ml-10 nw_btn_three" style="color: #35486b">
+                              <span class="des-view"> <i class="fa fa-download" aria-hidden="true"></i></span></a>
+                            </a> -->
                       </h5> 
                       <div class="text-right">
                           <h4 class="">Order Total Amount : <b>&pound; {{$order->amount}}</b></h4>
@@ -45,7 +48,12 @@
                 
                     </div> 
 
+                    @php $shop_data = DB::table('shop_cart_items')->where('orderID',$order->orderID)->first(); @endphp
+
                   <div class="card-block table-border-style"> 
+
+                      <p style="font-size: 16px; color: #3f4d67; font-weight: 400;"><b>Booked By</b> - @if($shop_data->manual == 1) Admin @else User @endif</p> 
+
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
@@ -71,9 +79,11 @@
                                     $pro_amt = $order->amount - $extra;
 
                                     $variation = \App\Models\Products\ProductAssignedVariation::find($cart->variant_id);
+
+                                    $product11 = $cart->variant_id > 0 ? App\Models\Products\Product::where('variant_id',$cart->variant_id)->first() : \App\Models\Products\Product::find($pro_id);
                                   @endphp
                                     <tr>           
-                                        <td><img src="{{url($product_detail->thumbnail)}}" width="100"></td>                               
+                                        <td><img src="{{url($product11->thumbnail)}}" width="100"></td>                               
                                         <td>
                                           @if(!empty($cart->voucher_details))
                                               
@@ -118,7 +128,7 @@
                                         <td>
                                           <h5>{{$course->title}}</h5>
                                           <p>@php echo getSeasonname($course->season); @endphp | {{$course->day_time}}</p>
-                                          <p><b>Child</b> :{{$child->name}}</p>
+                                          <p><b>Child</b> :{{isset($child->name) ? $child->name : ''}}</p>
                                         </td>                               
                                         <td>{{isset($cart->discount_code) ? $cart->discount_code : '-'}}
                                         <br/>
@@ -136,7 +146,7 @@
                                     $camp = DB::table('camps')->where('id',$camp_id)->first();  
                                     $child = DB::table('users')->where('id',$cart->child_id)->first();
                                   @endphp
-                                    <tr>           
+                                    <tr>          
                                         <td>Camp</td>                               
                                         <td>
                                           <h5>{{$camp->title}}</h5>
@@ -215,20 +225,20 @@
                                       <tr>
                                         <th>Name</th>
                                         <td>
-                                          <strong>{{$user_detail->name}}</strong>
+                                          <strong>{{isset($user_detail->name) ? $user_detail->name : 'No user found'}}</strong>
                                         </td>
                                       </tr>
                                        
                                       <tr>
                                         <th>Email</th>
                                         <td>
-                                          <strong>{{$user_detail->email}}</strong>
+                                          <strong>{{isset($user_detail->email) ? $user_detail->email : '-'}}</strong>
                                         </td>
                                       </tr>
                                        
                                       <tr>
                                         <th>Phone No.</th>
-                                        <td><strong>{{$user_detail->phone_number}}</strong></td>
+                                        <td><strong>{{isset($user_detail->phone_number) ? $user_detail->phone_number : '-'}}</strong></td>
                                       </tr>
                                                    
                                   </tbody>

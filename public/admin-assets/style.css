@@ -177,6 +177,18 @@ p {
     transition: all linear 0.3s;
 }
 
+
+.session-time-table table {
+    width: 100%;
+}
+
+.session-time-table table th,
+.session-time-table table td
+{
+    border: 2px solid #000;
+}
+
+
 .social-meadia-icons .social-icon-link {
     font-size: 14px;
     color: #666666;
@@ -8395,6 +8407,7 @@ form.reject_req {
 section.member.section-padding .player-report-table.tbl_shadow {
     overflow: auto;
 }
+
 
 @media print {
 

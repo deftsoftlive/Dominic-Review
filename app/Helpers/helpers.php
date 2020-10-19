@@ -76,6 +76,11 @@ function getProductCatname($id){
   return $category->label;  
 }
 
+function getProductCatslug($id){
+  $category = \DB::table('product_categories')->where('id',$id)->first();  
+  return $category->slug;  
+}
+
 /*-------------------------------------
 | Report Category Name
 |-------------------------------------*/
@@ -135,6 +140,7 @@ function statsCalculation($jsonData){
 
   // 12 - Average rally length
   $average_rally_length = $data->total_shots_match / $data->tp_in_match;
+  $rally_length = number_format((float)$average_rally_length, 2, '.', '');
 
   // 13 - Your total aces
   $total_aces = $data->total_aces;
@@ -154,7 +160,7 @@ function statsCalculation($jsonData){
       'percent_pts_won_op_2serve'     =>   round($percent_pts_won_op_2serve),
       'percent_pts_won_rally_1shots'  =>   round($percent_pts_won_rally_1shots),
       'percent_pts_won_rally_5shots'  =>   round($percent_pts_won_rally_5shots),
-      'average_rally_length'          =>   round($average_rally_length),
+      'average_rally_length'          =>   $rally_length,
       'total_aces'                    =>   round($total_aces),
       'total_double_faults'           =>   round($total_double_faults),
   ];

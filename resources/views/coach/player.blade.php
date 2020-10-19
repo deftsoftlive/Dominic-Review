@@ -41,16 +41,22 @@
                <div class="activity-card text-center">
                   <figure class="activity-card-img">
 
+                    @php 
+                        $check_icon = DB::table('icon_images')->where('icon_image',$child->profile_image)->first(); 
+                    @endphp
+                    
                     @if(!empty($child->profile_image))
-                      <img id="image_src" style="width: 100px; height: 100px;" src="{{URL::asset('/uploads')}}/{{$child->profile_image}}">
+                    @if(!empty($check_icon))
+                        <img id="image_src" style="width: 100px; height: 100px;" src="{{URL::asset('/uploads/icons')}}/{{$child->profile_image}}" id="Image_Preview" alt="">
                     @else
-                      <img id="image_src" style="width: 100px; height: 100px;" src="{{URL::asset('/images/default.jpg')}}">
+                        <img id="image_src" style="width: 100px; height: 100px;" src="{{URL::asset('/uploads')}}/{{$child->profile_image}}" id="Image_Preview" alt="">
+                    @endif
                     @endif
                     
                   </figure>
                   <figcaption class="activity-caption">
-                      <p>Child Name: <span class="request-name">{{$child->name}}</span></p>
-                      <p>Parent Name: <span class="request-name">{{$parent->name}}</span></p>
+                      <p>Child Name: <span class="request-name">{{isset($child->name) ? $child->name : ''}}</span></p>
+                      <p>Parent Name: <span class="request-name">{{isset($parent->name) ? $parent->name : ''}}</span></p>
 
                       <!-- @if($pl->status == '0')
                       <div class="profile-status">Request Status: <span class="p-s-not-verified"><i class="fas fa-times-circle"></i> Did not accept</span></div>
@@ -69,7 +75,7 @@
                           <form action="{{route('undo_reject_request')}}" class="reject_req" method="POST">
                           @csrf
                           <input type="hidden" name="id" value="{{$pl->id}}">
-                          <button type="submit" class="cstm-btn">Enable Link</button>
+                          <button type="submit" class="cstm-btn main_button">Enable Link</button>
                           </form>
                       @elseif($pl->status == '1')
                           <div class="profile-status">Request Status: <span class="p-s-verified"><i class="fas fa-check-circle"></i> Accepted</span></div> 
@@ -77,17 +83,17 @@
                           <form action="{{route('undo_reject_request')}}" class="reject_req" method="POST">
                           @csrf
                           <input type="hidden" name="id" value="{{$pl->id}}">
-                          <button type="submit" class="cstm-btn">Unlink</button>
+                          <button type="submit" class="cstm-btn main_button">Unlink</button>
                           </form>
                       @elseif($pl->status == '')
                           <div id="parent_request" class="request-actions par-req-{{$child_id}}">
                             <a href="javascript:void(0);" child="{{$child_id}}" parent="{{$parent_id}}" req="1" class="cstm-btn">Accept</a>
                             <div class="reject-view" data-toggle="modal" data-target="#reject-detail-{{$pl->id}}">
-                              <a href="javascript:void(0);" class="cstm-btn">Unable To Accept</a>
+                              <a href="javascript:void(0);" class="cstm-btn main_button">Unable To Accept</a>
                             </div>
                           </div>
                       @endif
-                      <a style="margin-top: 5px;" href="{{url('/user/timeline-view/player')}}/@php echo base64_encode($pl->child_id); @endphp" class="cstm-btn">View Details</a>
+                      <a style="margin-top: 5px;" href="{{url('/user/timeline-view/player')}}/@php echo base64_encode($pl->child_id); @endphp" class="cstm-btn main_button">View Details</a>
                     </figcaption>
 
                </div>

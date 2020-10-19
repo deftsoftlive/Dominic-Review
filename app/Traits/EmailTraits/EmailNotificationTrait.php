@@ -24,10 +24,21 @@ use UserNotificationTrait;
 
 public function sendNotification($emailTeplate,$data,$arr)
 {
-	//dd($emailTeplate,$data,$arr);
+	// dd($emailTeplate,$data,$arr);
 
     \Mail::send($emailTeplate,$data, function($message) use($arr) {
                $message->to($arr['email'], $arr['name'])
+               ->subject($arr['subject']);
+               
+    });
+    return 1;
+}
+
+
+public function sendNotificationInfo($emailTeplate,$data,$arr)
+{
+    \Mail::send($emailTeplate,$data, function($message) use($arr) {
+               $message->to($arr['email'], $arr['user_id'])
                ->subject($arr['subject']);
                
     });

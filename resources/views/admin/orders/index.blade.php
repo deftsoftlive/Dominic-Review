@@ -113,7 +113,7 @@
                                             -
                                           @endif
                                         </td>
-                                        <td>{{$ord->created_at}}</td>
+                                        <td>@php echo date('d/m/Y (h:i:s)',strtotime($ord->created_at)); @endphp</td>
                                         <td>&pound; {{$ord->amount}}</td>
                                         <td>{{$ord->payment_by}}</td>
                                         

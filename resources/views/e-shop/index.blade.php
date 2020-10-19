@@ -2,8 +2,9 @@
 @extends('e-shop.layouts.layout')
 
  @php $base_url = \URL::to('/'); @endphp
+ 
  <!-- banner section starts here here -->
-    <section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/1584684865tennis_course_banner_image.png);">
+    <section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/{{ getAllValueWithMeta('shop_banner', 'banners') }});">
       <div class="container">
         <div class="row">
           <div class="col-md-12">

@@ -92,14 +92,27 @@
                 </li> -->
                 <li>
                     <div class="dropdown drp-user">
-                        @php
-                            $req = DB::table('coach_upload_pdfs')->orderBy('id','ASC')->where('status',2)->paginate(10);
-                            $req_count = count($req);
+
+                        @php 
+                            $notifications = DB::table('notifications')->orderBy('created_at','desc')->get();
+                            $count = 0;
                         @endphp
-                        <a href="{{route('new_uploaded_invoice')}}">
+
+                        @foreach ($notifications as $notification)
+
+                            @php $notification_arr = json_decode($notification->data); @endphp
+
+                            @if($notification_arr->send_to == 1)
+                                @php $count++; @endphp
+                            @endif
+
+                        @endforeach
+
+                        <a href="{{url('/admin')}}">
                             <i class="fas fa-bell"></i> 
-                            <span class="notification-icon"> {{$req_count}}</span>
+                            <span class="notification-icon"> {{$count}}</span>
                         </a>
+
                         &nbsp;&nbsp;&nbsp;&nbsp;
 
                         <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">

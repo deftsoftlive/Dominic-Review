@@ -100,11 +100,13 @@ p.rep_type {
                                                 <tbody>
                                                 @if(count($reports)>0)
                                                 @foreach($reports as $sh)
+
+                                                @php $player_name = getUsername($sh->player_id); @endphp 
                                                   <tr>
                                                     <td><p>@php echo date("d/m/Y", strtotime($sh->date)); @endphp</p></td>
                                                     <td><p>@if($sh->type == 'simple') End of term report @elseif($sh->type == 'complex') Player report @endif</p></td>
                                                     <td>@php echo getUsername($sh->coach_id); @endphp</td>
-                                                    <td><p>@php echo getUsername($sh->player_id); @endphp</p></td>
+                                                    <td><p>{{isset($player_name) ? $player_name : 'User not exist'}}</p></td>
                                                     <td><p>@if(!empty($sh->season_id)) @php echo getSeasonname($sh->season_id); @endphp @else - @endif</p></td>
                                                     <td><p>@if(!empty($sh->course_id)) @php echo getCourseName($sh->course_id); @endphp @else - @endif</p></td>
                                                     <!-- <td><p>{!! Illuminate\Support\Str::words($sh->feedback, 6, ' ...') !!}</p></td> -->

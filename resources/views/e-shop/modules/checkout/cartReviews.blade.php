@@ -28,13 +28,14 @@ header.Eshop-header {
 
                                         @if($item->shop_type == 'product')
                                         @php 
-                                            $product = $item->product;
-                                            $variation = \App\Models\Products\ProductAssignedVariation::find($item->variant_id);
+                                            $product = $item->product; 
+                                            $variation = \App\Models\Products\ProductAssignedVariation::find($item->variant_id);  
+                                            $product11 = $item->variant_id > 0 ? App\Models\Products\Product::where('variant_id',$item->variant_id)->first() : \App\Models\Products\Product::find($product->id);
                                         @endphp
     
                                             <tr class="cart-table__row">
                                                 <td class="cart-table__column cart-table__column--image">
-                                                    <a href=""><img src="{{url($product->thumbnail)}}" alt=""></a>
+                                                    <a href=""><img src="{{url($product11->thumbnail)}}" alt=""></a>
                                                 </td>
                                                 <td class="cart-table__column cart-table__column--product"><a href="" class="cart-table__product-name">{{$item->product->name}}</a>
                                                   @if(!empty($item->voucher_details))

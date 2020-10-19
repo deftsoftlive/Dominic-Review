@@ -47,12 +47,12 @@
 	</div>
 	<div class="c-d-img-text upper_text_wrap">
     <div class="row">
-  <div class="col-lg-5 col-md-12 col-sm-12 left_text-wrap ">
+  <div class="col-lg-7 col-md-12 col-sm-12 left_text-wrap ">
     <div class="c-d-description">
       {!! $camp_category->description !!}
     </div>
   </div>
-    <div class="col-lg-7 col-md-12 col-sm-12 right_text-wrap">
+    <div class="col-lg-5 col-md-12 col-sm-12 right_text-wrap">
       <div class="owl-carousel owl-theme owl-c-d">
       <div class="item">
         <img src="{{URL::asset('/uploads')}}/{{$camp_category->slider_image1}}" alt="" />
@@ -72,7 +72,7 @@
   </div>
   <div class="c-d-accordion-slider">
   <div class="row">
-  <div class="col-sm-5 @if(count($accordian)> 0) @else accord_nt_exist @endif">
+  <div class="col-sm-8 @if(count($accordian)> 0) @else accord_nt_exist @endif">
   <div class="c-d-accordion">
   <div id="accordion">
 
@@ -108,7 +108,7 @@
 </div>
     </div>
     </div>
-    <div class="col-sm-7">
+    <div class="col-sm-4">
       <div class="c-d-testimonials">
       <div class="owl-carousel owl-theme owl-c-d-testimonials">
         @foreach($testimonial as $test)

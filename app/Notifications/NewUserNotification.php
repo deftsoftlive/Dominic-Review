@@ -16,9 +16,10 @@ class NewUserNotification extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user)
     {
-        //
+        // dd($user);
+        $email = $user->email;
     }
 
     /**
@@ -29,7 +30,8 @@ class NewUserNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        // dd($notifiable);
+        return ['database'];
     }
 
     /**
@@ -41,9 +43,9 @@ class NewUserNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                     ->line('The introduction to the notification.')
+                     ->action('Notification Action', url('/'))
+                     ->line('The new user email is '.$notifiable->email);
     }
 
     /**
@@ -54,8 +56,10 @@ class NewUserNotification extends Notification
      */
     public function toArray($notifiable)
     {
+        //dd($notifiable);
         return [
-            //
+            'send_to' => 1,
+            'data' => 'New User is registered with email - '.$notifiable->email
         ];
     }
 }

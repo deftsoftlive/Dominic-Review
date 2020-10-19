@@ -23,6 +23,13 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::any('/activities/child/save','Admin\AdminController@save_child_activities')->name('save_child_activities');
 
 		#----------------------------------------------------------------
+		#  Image Icon Management
+		#----------------------------------------------------------------
+		Route::any('/image-icon','Admin\ImageIconController@image_icons')->name('image_icons');
+		Route::any('/image-icon/save','Admin\ImageIconController@save_image_icons')->name('save_image_icons');
+		Route::any('/image-icon/remove/{id}','Admin\ImageIconController@remove_image_icons')->name('remove_image_icons');
+
+		#----------------------------------------------------------------
 		#  Coach - Invoice PDF's Management
 		#----------------------------------------------------------------
 		Route::any('/uploaded-invoice','Admin\AdminController@uploaded_invoice')->name('uploaded_invoice');
@@ -32,6 +39,7 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::any('/update_inv_status','Admin\AdminController@update_inv_status')->name('update_inv_status');
 		Route::any('coach_search','Admin\AdminController@coach_search')->name('coach_search');
 		Route::any('reject_invoice','Admin\AdminController@reject_invoice')->name('reject_invoice');
+		
 
 		#----------------------------------------------------------------
 		#  Category Management
@@ -61,6 +69,10 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 
         Route::get('/category/tasks/edit/{id}','Admin\CategoryController@editTask')->name('admin.category.tasks.edit');
         Route::post('/category/tasks/edit/{id}','Admin\CategoryController@updateTask')->name('admin.category.tasks.edit');
+
+        // Mark Notifications as read 
+        Route::any('/mark_as_read/{id}','Admin\AdminController@mark_as_read')->name('mark_as_read');
+
 
 		#----------------------------------------------------------------
 		#  Event/Celebration Management
@@ -157,6 +169,14 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 	    Route::any('media-consent','Admin\UserController@media_consent')->name('admin_media_consent');
 	    Route::any('family-member/delete/{id}','Admin\UserController@delete_family_member')->name('admin_delete_family_member');
 
+	    // Add Family Mamber
+	    Route::any('/account-holder/overview/{id}','Admin\UserController@ah_account_holder')->name('ah_account_holder');
+	    Route::any('participant/details','Admin\UserController@ah_participants_details')->name('ah_admin_participants_details');
+	    Route::any('contact/information','Admin\UserController@ah_contact_information')->name('ah_admin_contact_information');
+	    Route::any('medical/information','Admin\UserController@ah_medical_information')->name('ah_admin_medical_information');
+	    Route::any('media/consent','Admin\UserController@ah_media_consent')->name('ah_admin_media_consent');
+	    // Route::any('family-member/delete/{id}','Admin\UserController@ah_delete_family_member')->name('ah_admin_delete_family_member');
+
 	    Route::any('remove-contact/{id}','HomeController@remove_contact')->name('contact_remove_contact');
     	Route::any('remove-medical/{id}','HomeController@remove_medical')->name('contact_remove_medical');
     	Route::any('remove-allergy/{id}','HomeController@remove_allergy')->name('contact_remove_allergy');
@@ -171,6 +191,17 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::any('/purchased-course/add','Admin\UserController@add_course_for_player')->name('add_course_for_player');
 		Route::any('/purchased-course/save','Admin\UserController@save_course_for_player')->name('save_course_for_player');
 		Route::any('/parent-player-linking','Admin\UserController@parent_player_linking')->name('parent_player_linking');
+
+		#----------------------------------------------------------------
+		#  Change Camp of Player
+		#----------------------------------------------------------------
+		Route::any('/purchased-camp','Admin\UserController@change_camp_list')->name('purchased_camp_data');
+		Route::any('/shop/{id}/change-camp','Admin\UserController@change_camp')->name('change_camp');
+		Route::any('/shop/{id}/delete/player','Admin\UserController@delete_camp')->name('delete_camp');
+		Route::any('/change-camp/save','Admin\UserController@save_change_camp')->name('save_change_camp');
+		// Route::any('/purchased-camp/add','Admin\UserController@add_camp_for_player')->name('add_camp_for_player');
+		// Route::any('/purchased-camp/save','Admin\UserController@save_camp_for_player')->name('save_camp_for_player');
+		// Route::any('/parent-player-linking','Admin\UserController@parent_player_linking')->name('parent_player_linking');
 
 		#----------------------------------------------------------------
 		#  Parents/Children/Coach Management
@@ -288,6 +319,20 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::get('/camp-category/{slug}','Admin\CampCategoryController@camp_category_showEdit')->name('admin.campcategory.showEdit');
 		Route::post('/camp-category/{slug}','Admin\CampCategoryController@camp_category_update')->name('admin.campcategory.update');
 		Route::get('/camp-category/status/{slug}','Admin\CampCategoryController@camp_category_Status')->name('admin.campcategory.status');
+		Route::get('/camp-category/delete/{id}','Admin\CampCategoryController@delete_camp_category')->name('admin.campcategory.delete');
+
+
+		#----------------------------------------------------------------
+		#  Course Category Management
+		#----------------------------------------------------------------
+		Route::get('/course-category','Admin\CourseCategoryController@course_category_index')->name('admin.LinkCourseAndCategory.list');
+		Route::get('/course-category/create','Admin\CourseCategoryController@course_category_showCreate')->name('admin.LinkCourseAndCategory.showCreate');
+		Route::post('/course-category/create','Admin\CourseCategoryController@course_category_create')->name('admin.LinkCourseAndCategory.create');
+		Route::get('/course-category/{slug}','Admin\CourseCategoryController@course_category_showEdit')->name('admin.LinkCourseAndCategory.showEdit');
+		Route::post('/course-category/{slug}','Admin\CourseCategoryController@course_category_update')->name('admin.LinkCourseAndCategory.update');
+		Route::get('/course-category/status/{slug}','Admin\CourseCategoryController@course_category_Status')->name('admin.LinkCourseAndCategory.status');
+		Route::get('/course-category/delete/{id}','Admin\CourseCategoryController@delete_course_category')->name('admin.LinkCourseAndCategory.delete');
+
 
 		#----------------------------------------------------------------
 		#  Camp Management
@@ -299,6 +344,9 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::post('/camp/{slug}','Admin\CampController@camp_update')->name('admin.camp.update');
 		Route::get('/camp/status/{slug}','Admin\CampController@camp_Status')->name('admin.camp.status');
 		Route::any('/camp/register/{id}','Admin\CampController@camp_view_reg')->name('camp_view_reg');
+
+		Route::any('/book-a-camp/{slug}','Admin\CampController@admin_book_a_camp')->name('admin-book-a-camp');
+		Route::any('submit-book-a-camp','Admin\CampController@submit_book_a_camp')->name('admin-submit-book-a-camp');
 
 		#----------------------------------------------------------------
 		#  Test Category Management

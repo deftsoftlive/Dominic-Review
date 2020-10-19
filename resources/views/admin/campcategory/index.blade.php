@@ -78,6 +78,8 @@
                                                                             Active
                                                                         @endif
                                                                     </a>
+
+                                                                    <a onclick="return confirm('Are you sure you want to delete this camp category?')" href="{{url('admin/camp-category/delete')}}/{{$test->id}}" class="dropdown-item">Delete</a>
                                                                 </div>
                                                             </div>
                                                         </td>

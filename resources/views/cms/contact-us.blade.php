@@ -6,7 +6,7 @@
 @section('content')
 
 @php $base_url = \URL::to('/'); @endphp
-    <section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/{{ getAllValueWithMeta('banner_image', 'course-listing') }});">
+    <section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/{{ getAllValueWithMeta('banner_image', 'contact-us') }});">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -17,8 +17,18 @@
         </div>
       </div>
     </section>
+
+    
+
     <section class="services-sec contact_us_section">
       <div class="container">
+
+        @if(Session::has('success'))
+        <div class="alert_msg alert alert-success">
+            <p>{{ Session::get('success') }} </p>
+        </div>
+        @endif
+          
         <div class="row">
           
            <div class="col-lg-9 col-md-12">
@@ -28,7 +38,7 @@
                       @csrf
                       <input type="hidden" name="type" value="contact">
                       <div class="form-group upper-input-row">
-                          <input type="text" class="form-control" name="participant_name" placeholder="Enter Participant Name">
+                          <input type="text" class="form-control" name="participant_name" placeholder="Enter Name">
                       </div>
                       <!-- <div class="form-group">
                           <input type="date" class="form-control" name="participant_dob" placeholder="Enter Participant DOB">

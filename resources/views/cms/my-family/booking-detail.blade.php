@@ -10,7 +10,7 @@
   $user_detail = DB::table('users')->where('id',$user_id)->first();	
   $cart_items = DB::table('shop_cart_items')->where('orderID', $orderId)->get(); 
 
-  $country_code = DB::table('country_code')->get(); 
+  $country_code = DB::table('country_code')->orderBy('countryname','asc')->get();
   $notification = DB::table('parent_coach_reqs')->where('coach_id',Auth::user()->id)->where('status',NULL)->count();
 
   $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->first();
@@ -44,7 +44,7 @@
     </div>
 @endif
 
-<section class="member section-padding">   
+<section class="member section-padding order_dld">   
 	<div class="container"> 
 
       	<div class="pink-heading">
@@ -69,7 +69,7 @@
 									</tr>
 									<tr>
 									  <th scope="row">Order Date : </th>
-									  <td> {{$order->created_at}}</td>
+									  <td> @php echo date('d/m/Y',strtotime($order->created_at)); @endphp</td>
 									</tr>
 									<tr>
 									  <th scope="row">Order Total: </th>
@@ -167,6 +167,7 @@
 			                                    $pro_amt = $order->amount - $extra;
 
 			                                    $variation = \App\Models\Products\ProductAssignedVariation::find($cart->variant_id);
+                                            	$product11 = $cart->variant_id > 0 ? App\Models\Products\Product::where('variant_id',$cart->variant_id)->first() : \App\Models\Products\Product::find($product->id);
 			                                 @endphp
 
 										    <tr>
@@ -193,7 +194,7 @@
 			                                          </p>
 			                                    </div>
 			                                    <div class="col-sm-4">
-		                                        	<img src="{{url($product_detail->thumbnail)}}" alt="" />
+		                                        	<img src="{{url($product11->thumbnail)}}" alt="" />
 		                                        </div>
 		                                    	</div>
 		                                      </td>
@@ -330,15 +331,15 @@
 						  <thead>
 						    <tr>
 							  <th scope="row">Name :</th>
-							  <td>{{$user_detail->name}}</td>
+							  <td>{{isset($user_detail->name) ? $user_detail->name : ''}}</td>
 							</tr>
 							<tr>
 							  <th scope="row">Email Id :</th>
-							  <td>{{$user_detail->email}}</td>
+							  <td>{{isset($user_detail->email) ? $user_detail->email : ''}}</td>
 							</tr>
 							<tr>
 							  <th scope="row">Mobile No:</th>
-							  <td>{{$user_detail->phone_number}}</td>
+							  <td>{{isset($user_detail->phone_number) ? $user_detail->phone_number : ''}}</td>
 							</tr>
 						  </thead>
 						</table>

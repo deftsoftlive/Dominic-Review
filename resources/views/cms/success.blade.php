@@ -27,7 +27,7 @@
             <div class="succes-content">
             	
 			<p>You are succesfully registered on DRH sports. DRH Sports will contact you to oragnise taster class.</p>
-			<a class="cstm-btn forgt" href="{{url('/')}}">
+			<a class="cstm-btn forgt main_button" href="{{url('/')}}">
                                        Back to Website
                                     </a>			
 		</div>

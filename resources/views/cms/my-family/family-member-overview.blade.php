@@ -1,7 +1,9 @@
 @extends('inc.homelayout')
 @section('title', 'DRH|Register')
 @section('content')
-@php $country_code = DB::table('country_code')->get(); @endphp
+@php 
+$country_code = DB::table('country_code')->orderBy('countryname','asc')->get(); 
+@endphp
 <div class="account-menu acc_sub_menu">
     <div class="container">
         <div class="menu-title">
@@ -41,7 +43,11 @@
                             <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                 <span>1</span> Participant Details
                             </button>
-                            <a class="cst_tennis_btn" href="{{URL('/user/family-member/add?user=')}}{{$user->id}}&sec=1">Edit</a>
+                            @if(Auth::user()->id == $user->id)
+                                <a class="cst_tennis_btn" href="{{URL('/user/account-holder/details')}}?&sec=1">Edit</a>
+                            @else
+                                <a class="cst_tennis_btn" href="{{URL('/user/family-member/add?user=')}}{{$user->id}}&sec=1">Edit</a>
+                            @endif
                         </h5>
                     </div>
                     <div id="collapseOne" class="collapse" aria-labelledby="headingo-One" data-parent="#accordion">
@@ -117,7 +123,12 @@
                             <button class="btn btn-link" data-toggle="collapse" data-target="#collapsetwo" aria-expanded="false" aria-controls="collapsetwo">
                                 <span>2</span> contact
                             </button>
-                            <a class="cst_tennis_btn" href="{{URL('/user/family-member/add?user=')}}{{$user->id}}&sec=2">Edit</a>
+                            @if(Auth::user()->id == $user->id)
+                                <a class="cst_tennis_btn" href="{{URL('/user/account-holder/details')}}?&sec=2">Edit</a>
+                            @else
+                                <a class="cst_tennis_btn" href="{{URL('/user/family-member/add?user=')}}{{$user->id}}&sec=2">Edit</a>
+                            @endif
+                            <!-- <a class="cst_tennis_btn" href="{{URL('/user/family-member/add?user=')}}{{$user->id}}&sec=2">Edit</a> -->
                         </h5>
                     </div>
                     <div id="collapsetwo" class="collapse" aria-labelledby="headingo-tow" data-parent="#accordion">
@@ -204,7 +215,13 @@
                             <button class="btn btn-link" data-toggle="collapse" data-target="#collapsethree" aria-expanded="false" aria-controls="collapsethree">
                                 <span>3</span> Medical and behavioural
                             </button>
-                            <a class="cst_tennis_btn" href="{{URL('/user/family-member/add?user=')}}{{$user->id}}&sec=3">Edit</a>
+
+                            @if(Auth::user()->id == $user->id)
+                                <a class="cst_tennis_btn" href="{{URL('/user/account-holder/details')}}?&sec=3">Edit</a>
+                            @else
+                                <a class="cst_tennis_btn" href="{{URL('/user/family-member/add?user=')}}{{$user->id}}&sec=3">Edit</a>
+                            @endif
+                            <!-- <a class="cst_tennis_btn" href="{{URL('/user/family-member/add?user=')}}{{$user->id}}&sec=3">Edit</a> -->
                         </h5>
                     </div>
                     <div id="collapsethree" class="collapse" aria-labelledby="headingo-three" data-parent="#accordion">
@@ -213,45 +230,96 @@
                                 <div class="form-partition fam-mem-contact">
                                     <div class="col-md-12 report_row">
                                         <div class="table_wrap">
+
+
+                                        @if(!empty($user_details))
+
                                         @if($user_details->med_cond == 'yes')
                                             <h3>Medical Conditions -</h3><br/>
                                         @endif
 
+                                        @if($user->type == '')
+                                            @if($user_details->med_cond == 'yes')
+
+                                            @php $i = 1; @endphp
+                                            @if(count($user_medicals)>0)
+                                                @foreach($user_medicals as $cond)
+                                                    <div id="accordion{{$i}}-11" class="parent_fam_mem">
+                                                        <div class="card">
+                                                            <div class="card-header family-tabs conatct-inner-tab" id="headingo-{{$i}}-11">
+                                                                <h5 class="mb-0 edit-family-member">
+                                                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$i}}-11" aria-expanded="false" aria-controls="collapse{{$i}}-11">
+                                                                        Medical Condition - {{$i}}
+                                                                    </button>
+                                                                    <a href="{{url('/user/remove-medical')}}/{{$cond->id}}" onclick="return confirm('Are you sure you want to remove this medical condition?')" class="cstm-btn">Remove</a>
+                                                                </h5>
+                                                            </div>
+                                                            <div id="collapse{{$i}}-11" class="collapse" aria-labelledby="headingo-{{$i}}-11" data-parent="#accordion{{$i}}-11">
+                                                                <div class="card-body">
+                                                                    <div class="register-sec form-register-sec family_mem ">
+                                                                        <div class="form-partition fam-mem-contact">
+                                                                            <div class="col-md-12 report_row">
+                                                                                <div class="table_wrap">
+                                                                                    <ul>
+
+                                                                                        <li>
+                                                                                            <p>State the name of the medical condition and describe how it affects this child -
+                                                                                                <span> {{$cond->medical}}
+                                                                                                </span>
+                                                                                            </p>
+                                                                                        </li>
+                                                                                        
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @php $i++; @endphp
+                                                @endforeach
+                                            @endif
+                                            @endif
+                                        @endif
+
                                         @if($user->type == 'Adult')
 
-                                        @if($user_details->med_cond == 'yes')
+                                            @if($user_details->med_cond == 'yes')
 
-                                        @php $i = 1; @endphp
-                                        @if(count($user_medicals)>0)
-                                        @foreach($user_medicals as $cond)
+                                            @php $i = 1; @endphp
+                                            @if(count($user_medicals)>0)
+                                            @foreach($user_medicals as $cond)
 
 
-                                        <div id="accordion{{$i}}-11" class="parent_fam_mem">
-                                            <div class="card">
-                                                <div class="card-header family-tabs conatct-inner-tab" id="headingo-{{$i}}-11">
-                                                    <h5 class="mb-0 edit-family-member">
-                                                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$i}}-11" aria-expanded="false" aria-controls="collapse{{$i}}-11">
-                                                            Medical Condition - {{$i}}
-                                                        </button>
-                                                        <a href="{{url('/user/remove-medical')}}/{{$cond->id}}" onclick="return confirm('Are you sure you want to remove this medical condition?')" class="cstm-btn">Remove</a>
-                                                    </h5>
-                                                </div>
-                                                <div id="collapse{{$i}}-11" class="collapse" aria-labelledby="headingo-{{$i}}-11" data-parent="#accordion{{$i}}-11">
-                                                    <div class="card-body">
-                                                        <div class="register-sec form-register-sec family_mem ">
-                                                            <div class="form-partition fam-mem-contact">
-                                                                <div class="col-md-12 report_row">
-                                                                    <div class="table_wrap">
-                                                                        <ul>
+                                            <div id="accordion{{$i}}-11" class="parent_fam_mem">
+                                                <div class="card">
+                                                    <div class="card-header family-tabs conatct-inner-tab" id="headingo-{{$i}}-11">
+                                                        <h5 class="mb-0 edit-family-member">
+                                                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$i}}-11" aria-expanded="false" aria-controls="collapse{{$i}}-11">
+                                                                Medical Condition - {{$i}}
+                                                            </button>
+                                                            <a href="{{url('/user/remove-medical')}}/{{$cond->id}}" onclick="return confirm('Are you sure you want to remove this medical condition?')" class="cstm-btn">Remove</a>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapse{{$i}}-11" class="collapse" aria-labelledby="headingo-{{$i}}-11" data-parent="#accordion{{$i}}-11">
+                                                        <div class="card-body">
+                                                            <div class="register-sec form-register-sec family_mem ">
+                                                                <div class="form-partition fam-mem-contact">
+                                                                    <div class="col-md-12 report_row">
+                                                                        <div class="table_wrap">
+                                                                            <ul>
 
-                                                                            <li>
-                                                                                <p>State the name of the medical condition and describe how it affects this child -
-                                                                                    <span> {{$cond->medical}}
-                                                                                    </span>
-                                                                                </p>
-                                                                            </li>
-                                                                            
-                                                                        </ul>
+                                                                                <li>
+                                                                                    <p>State the name of the medical condition and describe how it affects this child -
+                                                                                        <span> {{$cond->medical}}
+                                                                                        </span>
+                                                                                    </p>
+                                                                                </li>
+                                                                                
+                                                                            </ul>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -259,50 +327,15 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        @php $i++; @endphp
-                                        @endforeach
-                                        @endif
+                                            @php $i++; @endphp
+                                            @endforeach
+                                            @endif
+
+                                            @endif
 
                                         @endif
-                                            <!-- <div class="report-table-wrap">
-                                                <table class="stats table table-bordered cst-reports">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th>
-                                                                <p><b>Medical Condition No.</b></p>
-                                                            </th>
-                                                            <th>
-                                                                <p class="text_split"><b>Will this person be booking onto a DRH coaching courses or holiday camp?</b></p>
-                                                            </th>
-                                                        </tr>
-                                                        @php $i = 1; @endphp
-                                                        @if(!empty($user_details->med_cond_info))
-                                                        @php
-                                                        $med_cond = json_decode($user_details->med_cond_info);
-                                                        @endphp
-                                                        @foreach($med_cond as $cond)
-                                                        <tr>
-                                                            <td>
-                                                                <h5>{{$i}}</h5>
-                                                            </td>
-                                                            <td>
-                                                                <h5>{{$cond}}</h5>
-                                                            </td>
-                                                        </tr>
-                                                        @php $i++; @endphp
-                                                        @endforeach
-                                                        @else
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <h2>No Data Found</h2>
-                                                            </td>
-                                                        </tr>
-                                                        @endif
-                                                    </tbody>
-                                                </table>
-                                            </div> -->
-                                            @elseif($user->type == 'Child')
+
+                                        @if($user->type == 'Child')
 
                                             @if($user_details->med_cond == 'yes')
 
@@ -349,6 +382,7 @@
                                             @endif
 
                                             @endif
+                                        @endif
 
 
                                             <!-- <div class="report-table-wrap">
@@ -445,9 +479,9 @@
                                                     <p> Does your child have any allergies that we should be aware of? - 
                                                         <span>{{isset($user_details->allergies) ? $user_details->allergies : ''}}</span></p>
                                                 </li>
-                                                <li>
+                                               <!--  <li>
                                                     <p>- Does this person have any medical or behavioural conditions that we should be aware of? - <span>{{isset($user_details->med_cond) ? $user_details->med_cond : ''}} </span></p>
-                                                </li>
+                                                </li> -->
                                                 <li>
                                                     <p>- Will your child need to take any prescribed medication during the coaching course or holiday camp? - 
                                                         <span>{{isset($user_details->pres_med) ? $user_details->pres_med : ''}}</span></p>
@@ -581,7 +615,12 @@
                             <button class="btn btn-link" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
                                 <span>4</span> consents
                             </button>
-                            <a class="cst_tennis_btn" href="{{URL('/user/family-member/add?user=')}}{{$user->id}}&sec=4">Edit</a>
+                            @if(Auth::user()->id == $user->id)
+                                <a class="cst_tennis_btn" href="{{URL('/user/account-holder/details')}}?&sec=4">Edit</a>
+                            @else
+                                <a class="cst_tennis_btn" href="{{URL('/user/family-member/add?user=')}}{{$user->id}}&sec=4">Edit</a>
+                            @endif
+                            <!-- <a class="cst_tennis_btn" href="{{URL('/user/family-member/add?user=')}}{{$user->id}}&sec=4">Edit</a> -->
                         </h5>
                     </div>
                     <div id="collapsefour" class="collapse" aria-labelledby="headingo-four" data-parent="#accordion">

@@ -8,7 +8,7 @@
 </style>
 @php 
 $login_user = Auth::user()->id;
-$shop = \DB::table('shop_cart_items')->where('user_id',$login_user)->where('orderID',NULL)->get();
+$shop = \DB::table('shop_cart_items')->where('user_id',$login_user)->where('orderID',NULL)->groupBy('child_id')->get();
 @endphp
 <fieldset class="step-content" >
    <div class="step-form-content">
@@ -27,7 +27,7 @@ $shop = \DB::table('shop_cart_items')->where('user_id',$login_user)->where('orde
                   </thead>
                   <tbody class="cart-table__body">
 
-
+                     @php //dd($shop); @endphp
                      @foreach($shop as $sh)  
                      @if($sh->shop_type != 'product')
 
@@ -41,23 +41,21 @@ $shop = \DB::table('shop_cart_items')->where('user_id',$login_user)->where('orde
                            <p id="med_beha">Medical/Behavioural:</p>
 
                            @php 
-                              $medicals = DB::table('child_medicals')->where('child_id',$sh->child_id)->get(); 
-                              $med_cond = [];
-                           @endphp
+                              $medicals11 = DB::table('child_medicals')->where('child_id',$sh->child_id)->get(); 
+                              $med_cond = []; //dd($medicals);
+                           @endphp        
 
-                           @if(!empty($child_details->med_cond) && $child_details->med_cond == 'yes')
-                              @if(count($medicals)>0)
+                           @if(count($medicals11)>0)
 
-                                 @foreach($medicals as $med)
-                                    @php $med_cond[] = $med->medical; @endphp
-                                 @endforeach
+                              @foreach($medicals11 as $med)
+                                 @php $med_cond[] = $med->medical; @endphp
+                              @endforeach
 
-                                 @php $medical_conditions = implode(', ',$med_cond); @endphp
+                              @php $medical_conditions = implode(', ',$med_cond); @endphp
 
-                              @else
-                              
-                              @endif 
-                           @endif
+                           @else
+                           
+                           @endif 
 
                            <p><b>Medical</b> - {{isset($medical_conditions) ? $medical_conditions : 'N/A'}}</p>
                            <p><b>Behavioural</b> - {{!empty($child_details->beh_need_info) ? $child_details->beh_need_info : 'N/A'}}</p>
@@ -103,7 +101,14 @@ $shop = \DB::table('shop_cart_items')->where('user_id',$login_user)->where('orde
                                  <span class="checkmark"></span>
                                  </label>
                               </div>
-                              <a target="_blank" href="{{url('/user/family-member/add?user=')}}{{$sh->child_id}}" class="cstm-btn main_button checkout_update">Update</a>
+
+                              @if(Auth::user()->id == $child->id)
+                                <a target="_blank" class="cstm-btn main_button checkout_update" href="{{URL('/user/account-holder/details')}}">Update</a>
+                              @else
+                                <a target="_blank" class="cstm-btn main_button checkout_update" href="{{URL('/user/family-member/add?user=')}}{{$child->id}}">Update</a>
+                              @endif
+
+                              <!-- <a target="_blank" href="{{url('/user/family-member/add?user=')}}{{$sh->child_id}}" class="cstm-btn main_button checkout_update">Update</a> -->
                            
                         </td>
                      </tr>

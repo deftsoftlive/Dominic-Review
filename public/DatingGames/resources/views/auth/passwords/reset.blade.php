@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-offset-2 col-md-8">
             <div class="card custm-card new-custm-card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+                <div class="card-header">{{ __('Reset22 Password') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('password.update') }}">

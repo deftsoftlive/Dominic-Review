@@ -78,7 +78,7 @@
                                         @if($re->status == 1)
                                             <h6 style="color:green;"><b>Accepted</b></h6>
                                         @elseif($re->status == 0)
-                                            <h6 style="color:red;"><b>Rejected</b></h6>
+                                            <h6 style="color:red;"><b>Not Accepted</b></h6>
                                         @elseif($re->status == 2)
                                             <h6 style="color:green;"><b>Requested</b></h6>
                                         @endif

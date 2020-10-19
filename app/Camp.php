@@ -13,7 +13,7 @@ class Camp extends Model
     
 
     protected $fillable = [
-        'slug', 'logo', 'title', 'location', 'term', 'category', 'image', 'description', 'usefull_info', 'camp_date', 'coach_cost', 'venue_cost', 'equipment_cost', 'other_cost', 'tax_cost', 'price', 'popup_title', 'popup_subtitle', 'popup_enable', 'products', 'status', 'created_at', 'updated_at'
+        'slug', 'logo', 'title', 'location', 'term', 'category', 'image', 'description', 'info_email_content', 'usefull_info', 'camp_date', 'coach_cost', 'venue_cost', 'equipment_cost', 'other_cost', 'tax_cost', 'price', 'popup_title', 'popup_subtitle', 'popup_enable', 'products', 'status', 'created_at', 'updated_at'
     ];
 
      public function sluggable() {

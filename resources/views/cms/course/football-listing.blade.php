@@ -26,6 +26,13 @@
 
     <section class="services-sec">
       <div class="container">
+
+        @if(Session::has('success'))
+        <div class="alert_msg alert alert-success">
+            <p>{{ Session::get('success') }} </p>
+        </div>
+        @endif
+        
         <div class="row">
 
           <!-- ***********************************
@@ -94,7 +101,7 @@
                           <input type="text" class="form-control" name="participant_name" placeholder="Enter Participant Name">
                       </div>
                       <div class="form-group">
-                          <input type="date" id="date_of_birth" class="form-control" name="participant_dob" placeholder="Enter Participant DOB">
+                          <input type="text" class="form-control textbox-n" name="participant_dob" placeholder="D.O.B - dd/mm/yyy" onfocus="(this.type='date')" id="date">
                       </div>
                       <div class="form-group row gender-opt contact-gender courses-gender">  
                       

@@ -1,3 +1,4 @@
+Y
 @extends('inc.homelayout')
 
 @section('title', 'DRH|Register')
@@ -23,7 +24,7 @@
 </div>
 
       <section class="content c-qualification cstm-qual">
-      <div class="container-fluid">
+      <div class="container">
       <div class="row">
         <div class="col-12">
           <div class="card">
@@ -58,7 +59,7 @@
                        </div>
                       <div class="col-sm-3">
                         <label><strong>Expiry Date</strong> - </label>
-                        {{$doc->expiry_date}}
+                        {{!empty($doc->expiry_date) ? $doc->expiry_date : 'No expiry date'}}
                       </div>
                       <div class="col-sm-3">
                         <label><strong>Notification</strong> - </label>
@@ -75,8 +76,10 @@
                       </div>
                       <div class="col-sm-3">
                         <label><strong>Upload Document</strong> - </label>
+                        <div class="doct-wrap">
                           <a target="_blank" href="{{URL::asset('/uploads/coach-document')}}/{{$doc->upload_document}}">{{ $doc->upload_document }}</a>
                           <a onclick="return confirm('After deleting this, the document is no more visible to admin. Are you sure you want to delete this document?')" href="{{url('/user/delete/coach/document')}}/{{$doc->id}}"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>
+                        </div>
                       </div>
                   
                     </div>
@@ -96,7 +99,7 @@
       |     COACH PROFILE - UPLOAD DOCUMENTS - Start Here 
       |
       |*************************************************** -->
-      <div class="container">
+     
 
         <form role="form" action="{{route('save-qualifications')}}" method="post" id="venueForm" enctype="multipart/form-data">
                       
@@ -110,7 +113,7 @@
                         <div class="form-group f-g-upload">
                               <label class="control-label" for="timelsots">Upload Documents To Complete Your Profile</label>
                               <br/>
-                              <a onclick="addnewsection();" href="javascript:void(0);"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                              <a onclick="addnewsection11();" href="javascript:void(0);"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
 
                       <!-- Upload Document Section - start -->
 							         <div class="upload-section" id="add_on_services">
@@ -131,13 +134,15 @@
                 								  <option value="DBS Certificate">DBS Certificate</option>
                 								  <option value="First Aid Certificate">First Aid Certificate</option>
                 								  <option value="Safeguarding Certificate">Safeguarding Certificate</option>
+                                  <option value="Insurance Document">Insurance Document</option>
+                                  <option value="LTA Accreditation">LTA Accreditation</option>
                                   <option value="Others">Others</option>
                 								</select>
                 							 </div>
               							  <div class="col-sm-3">
               							    <label>Expiry Date</label>
               							    <div class="calendar">
-              								  <input type="date" id="" class="form-control" name="expiry_date[{{$count}}]" placeholder="Expiry Date" required>
+              								  <input type="date" id="" class="form-control" name="expiry_date[{{$count}}]" placeholder="Expiry Date">
               								</div>
               							  </div>
                               <div class="col-sm-3">
@@ -151,7 +156,7 @@
                               </div>
                               <div class="col-sm-3">
                                 <label>Upload Document</label>
-                                <input type="file" name="upload_document[{{$count}}]" class="form-control" required=""><a onclick="removeSection({{$count}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>
+                                <input type="file" name="upload_document[{{$count}}]" class="form-control" required=""><a onclick="removeSection11({{$count}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>
                               </div>
                           
   							            </div>
@@ -166,7 +171,7 @@
        </form>
 
 
-      </div>
+     
 
 
             </div>
@@ -189,7 +194,7 @@
 <!-- Coach Profile Management -->
 <script type="text/javascript">
 
-        function addnewsection(){
+        function addnewsection11(){
             //noOfattribute
             var number = parseInt($("#noOfQuetion").val());  
             var newnumber =number+1;                        
@@ -197,20 +202,20 @@
 
             var mainHtml='<div id="upload_doc" class="upload_doc doc'+newnumber+'"><div class="row"><div class="col-sm-3"><div class="document-name"><input type="text" name="document_name['+newnumber+']" id="document_name" class="form-control" placeholder="Document name" required /></div></div>';
 
-            mainHtml+='<div class="col-sm-3"><select name="document_type['+newnumber+']" class="form-control"><option value="Coaching Qualification">Coaching Qualification</option><option value="DBS Certificate">DBS Certificate</option><option value="First Aid Certificate">First Aid Certificate</option><option value="Safeguarding Certificate">Safeguarding Certificate</option><option value="Others">Others</option></select></div>';
+            mainHtml+='<div class="col-sm-3"><select name="document_type['+newnumber+']" class="form-control"><option value="Coaching Qualification">Coaching Qualification</option><option value="DBS Certificate">DBS Certificate</option><option value="First Aid Certificate">First Aid Certificate</option><option value="Safeguarding Certificate">Safeguarding Certificate</option><option value="Insurance Document">Insurance Document</option><option value="LTA Accreditation">LTA Accreditation</option><option value="Others">Others</option></select></div>';
                               
-            mainHtml+='<div class="col-sm-3"><div class="calendar"><input type="date" id="" class="form-control" name="expiry_date['+newnumber+']" placeholder="Expiry date" required></div></div>';
+            mainHtml+='<div class="col-sm-3"><div class="calendar"><input type="date" id="" class="form-control" name="expiry_date['+newnumber+']" placeholder="Expiry date"></div></div>';
 
             mainHtml+='<div class="col-sm-3"><select name="notification[{{$count}}]" class="form-control"><option value="No Reminder">No Reminder</option><option value="1 Month">1 Month</option><option value="3 Months">3 Months</option><option value="6 Months">6 Months</option></select></div>';
                               
-            mainHtml+='<div class="col-sm-3"><input type="file" name="upload_document['+newnumber+']" class="form-control" required /><a onclick="removeSection('+newnumber+');" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>';
+            mainHtml+='<div class="col-sm-3"><input type="file" name="upload_document['+newnumber+']" class="form-control" required /><a onclick="removeSection11('+newnumber+');" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>';
 
 
             $("#add_on_services").append(mainHtml);
         }
 
 
-        function removeSection(counter){ 
+        function removeSection11(counter){ 
             //noOfattribute
             var number = parseInt($("#noOfQuetion").val()); 
             $

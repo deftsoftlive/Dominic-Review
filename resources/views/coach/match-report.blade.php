@@ -209,10 +209,10 @@ border: 4px solid #001642;
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
                                                                     <select name="result">
-                                                                        <option selected="" disabled="">Match Result</option>
-                                                                        <option value="Won">Won</option>
-                                                                        <option value="Lost">Lost</option>
-                                                                        <option value="Did Not Finish" >Did Not Finish</option>
+                                                                        <option disabled="">Match Result</option>
+                                                                        <option value="Won" @if($ma->result == 'Won') selected @endif>Won</option>
+                                                                        <option value="Lost" @if($ma->result == 'Lost') selected @endif>Lost</option>
+                                                                        <option value="Did Not Finish" @if($ma->result == 'Did Not Finish') selected @endif>Did Not Finish</option>
                                                                     </select>
                                                                 </div>
                                                             </div>

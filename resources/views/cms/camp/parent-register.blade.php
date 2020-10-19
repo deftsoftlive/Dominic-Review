@@ -5,7 +5,7 @@
 
 @section('content')
 
-@php $country_code = DB::table('country_code')->get(); @endphp
+@php $country_code = DB::table('country_code')->orderBy('countryname','asc')->get(); @endphp
 
 <section class="account-sec">
         <div class="container">

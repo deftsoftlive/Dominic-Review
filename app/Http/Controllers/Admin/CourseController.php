@@ -173,16 +173,17 @@ class CourseController extends Controller
             'age_group' => ['required','string'],
             // 'age' => ['required', 'string'],
             'session_date' => ['required', 'string'],
+            'course_category' => ['required'],
             'location' => ['required', 'string'],
             'day_time' => ['required', 'string'],
             'more_info' => ['required', 'string'],
             'booking_slot' => ['required', 'numeric', 'max:100'],
-            'price' => ['required', 'numeric', 'min:1', 'max:100'],
-            'coach_cost' => ['required', 'numeric', 'min:1', 'max:100'],
-            'venue_cost' => ['required', 'numeric', 'min:1', 'max:100'],
-            'equipment_cost' => ['required', 'numeric', 'min:1', 'max:100'],
-            'other_cost' => ['required', 'numeric', 'min:1', 'max:100'],
-            'tax_cost' => ['required', 'numeric', 'min:1', 'max:100']
+            'price' => ['required', 'numeric'],
+            'coach_cost' => ['required', 'numeric'],
+            'venue_cost' => ['required', 'numeric'],
+            'equipment_cost' => ['required', 'numeric'],
+            'other_cost' => ['required', 'numeric'],
+            'tax_cost' => ['required', 'numeric']
         ]);
 
     	$course = Course::create([
@@ -191,6 +192,7 @@ class CourseController extends Controller
             'season' => $request['season'],
             'type' => $request['type'],
             'subtype' => $request['subtype'],
+            'course_category' => $request['course_category'],
             'level' => $request['level'],
             'age_group' => $request['age_group'],
     		'age' => isset($request['age']) ? $request['age'] : '',
@@ -198,6 +200,7 @@ class CourseController extends Controller
     		'location' => $request['location'],
     		'day_time' => $request['day_time'],
     		'more_info' => $request['more_info'],
+            'info_email_content' => $request['info_email_content'],
             'booking_slot' => $request['booking_slot'],
             'price' => $request['price'],
             'linked_coach' => $request['linked_coach'],
@@ -256,7 +259,7 @@ class CourseController extends Controller
     |----------------------------------------*/ 
     public function course_update(Request $request, $slug) {
 
-        $data = $request->all();    
+        $data = $request->all();    //dd($data);
         
         // get course id using slug
         $course = Course::where('slug',$slug)->first();
@@ -274,14 +277,15 @@ class CourseController extends Controller
             'session_date' => ['required', 'string'],
             'location' => ['required', 'string'],
             'day_time' => ['required', 'string'],
-            'more_info' => ['required', 'string'],
+            'course_category' => ['required'],
+            // 'more_info' => ['required', 'string'],
             'booking_slot' => ['required', 'numeric', 'max:100'],
-            'price' => ['required', 'numeric', 'min:1', 'max:100'],
-            'coach_cost' => ['required', 'numeric', 'min:1', 'max:100'],
-            'venue_cost' => ['required', 'numeric', 'min:1', 'max:100'],
-            'equipment_cost' => ['required', 'numeric', 'min:1', 'max:100'],
-            'other_cost' => ['required', 'numeric', 'min:1', 'max:100'],
-            'tax_cost' => ['required', 'numeric', 'min:1', 'max:100']
+            // 'price' => ['required', 'numeric', 'min:1'],
+            'coach_cost' => ['required', 'numeric'],
+            'venue_cost' => ['required', 'numeric'],
+            'equipment_cost' => ['required', 'numeric'],
+            'other_cost' => ['required', 'numeric'],
+            'tax_cost' => ['required', 'numeric']
         ]);
 
     	$venue = Course::FindBySlugOrFail($slug);
@@ -292,14 +296,16 @@ class CourseController extends Controller
             'type' => $request['type'],
             'subtype' => $request['subtype'],
             'age_group' => $request['age_group'],
+            'course_category' => $request['course_category'],
             'level' => $request['level'],
     		'age' => isset($request['age']) ? $request['age'] : '',
     		'session_date' => $request['session_date'],
     		'location' => $request['location'],
     		'day_time' => $request['day_time'],
     		'more_info' => $request['more_info'],
+            'info_email_content' => $request['info_email_content'],
             'booking_slot' => $request['booking_slot'],
-            'price' => $request['price'],
+            // 'price' => $request['price'],
             'linked_coach' => $request['linked_coach'],
             'coach_cost' => $request['coach_cost'],
             'venue_cost' => $request['venue_cost'],

@@ -113,6 +113,7 @@ public function postPaymentStripe(Request $request)
 
                                         $this->ShopProductOrderPlacedForVendorSuccess($so->id);
                                         $this->ShopProductOrderPlacedSuccess($so->id);
+                                        // $this->AdminOrderSuccessOrderSuccess($so->id);
                                     }
                                 }
 
@@ -220,6 +221,7 @@ public function CreateOrder($charge,$OrderID,$type)
                    
                      $this->ShopProductOrderPlacedForVendorSuccess($o->id);
                      $this->ShopProductOrderPlacedSuccess($o->id);
+                     $this->ShopProductOrderPlacedInfo($o->id);
                      // $this->AdminOrderSuccessOrderSuccess($o->id);
                    return redirect()->route('shop.checkout.thankyou', ['order_id' => $o->id]);  
              }

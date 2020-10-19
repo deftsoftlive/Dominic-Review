@@ -7,7 +7,7 @@
 @php $base_url = \URL::to('/'); @endphp
 
  <!-- banner section starts here here -->
-    <section class="football-course-sec checkout_banner_none" style="background: url({{$base_url}}/public/uploads/1585129998camp_banner_image.png') }});">
+    <section class="football-course-sec checkout_banner_none" style="background: url({{$base_url}}/public/uploads/{{ getAllValueWithMeta('checkout_banner', 'banners') }});">
       <div class="container">
         <div class="row">
           <div class="col-md-12">

@@ -60,40 +60,46 @@
 
                           @foreach($shop as $sho)
                           @php 
-                            $user_id = $sho->user_id;
-                            $orderID = $sho->orderID;
-                            $cart_items = DB::table('shop_cart_items')->where('user_id',$user_id)->where('orderID',$orderID)->where('type','order')->get(); 
+                            $orderId = $sho->orderID; 
+                            $user_id = $sho->user_id; 
+                            $user_detail = DB::table('users')->where('id',$user_id)->first(); 
+
+                            $cart_items = DB::table('shop_cart_items')->where('orderID', $orderId)->get(); 
                           @endphp
 
-                          @foreach($cart_items as $items)
                           <tr>
-                            <td><p>{{$sho->created_at}}</p></td>
+                            <td><p>@php echo date('d/m/Y',strtotime($sho->created_at)); @endphp</p></td>
                             <td><p>&nbsp;{{$sho->orderID}}</p></td>
                             <td><p>
-                              @if(!empty($items->voucher_code))
-                                Voucher Product
-                              @elseif($items->shop_type == 'product') 
-                                Product 
-                              @elseif($items->shop_type == 'course')
-                                Course
-                              @elseif($items->shop_type == 'camp')
-                                Camp
-                              @endif
+
+                              @php 
+                                  $shop1 = DB::table('shop_cart_items')->where('orderID',$orderId)->get(); 
+                                  $shop_ty = [];
+                              @endphp
+
+                              @foreach($shop1 as $sh)
+                                  @php $shop_ty[] = $sh->shop_type; @endphp
+                              @endforeach
+                              @php $order_shop_type = implode(', ',$shop_ty); @endphp
+
+                              @php echo getShopType($orderId); @endphp
                             </p></td>
-                            <td><p>&pound;{{$items->total}}</p></td>
+                            <td><p>&pound;{{$sho->amount}}</p></td>
                             <td><p>{{$sho->payment_by}}</p></td>
                             <td><p><a href="{{url('user/booking/detail')}}/@php echo base64_encode($sho->id); @endphp">View Booking Detail</a></p></td> 
                           </tr>
-                          @endforeach
 
                           @endforeach
                         </tbody>
                       </table>
 
-					  </div>
+					         </div>
+                </div>
 
-            </div>
-          </div>
+              </div>
+
+              {{ $shop->links() }}
+
 
             @else
               <div class="noData offset-md-4 col-md-4 sorry_msg">

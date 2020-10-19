@@ -5,7 +5,7 @@ $(document).ready(function (){
   // letters only 
   $.validator.addMethod("lettersonly", function(value, element) {
     return this.optional(element) || /^[a-z ]+$/i.test(value);
-  }, "Please enter alphabets only");
+  }, "Please enter letters only");
 
   $.validator.addMethod("letterdigitsonly", function(value, element) {
     return this.optional(element) || /^[a-zA-Z0-9_.-]*$/i.test(value);
@@ -17,6 +17,14 @@ $(document).ready(function (){
        return /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(value);
       
   },'Please enter a valid email.');
+
+
+  // Custom Email
+  $.validator.addMethod("phonenumber", 
+  function(value, element) {
+       return /^[0-9 ]+$/.test(value);
+      
+  },'Please enter a valid phone number.');
 
  $.validator.addMethod("checkstrongpassword",function(value, element) {
     
@@ -45,14 +53,12 @@ $(document).ready(function (){
       first_name: {
           required: true,
           maxlength:25,
-          noSpace: true,
-          lettersonly:true
+          noSpace: true
       },
       last_name: {
           required: true,
           maxlength:25,
-          noSpace: true,
-          lettersonly:true
+          noSpace: true
       },
       gender: {
           required: true,      
@@ -73,8 +79,7 @@ $(document).ready(function (){
       },
       postcode: {
         required: true,
-        letterdigitsonly: true,
-        maxlength: 10,
+        maxlength: 10
       },
       county: {
         required: true,
@@ -88,7 +93,7 @@ $(document).ready(function (){
       },
       phone_number: {
           required: true,
-          digits: true,
+          phonenumber: true,
           minlength: 7,
           maxlength: 15,
       },
@@ -275,7 +280,7 @@ $(document).ready(function (){
           required: true,
           maxlength:25,
           noSpace: true,
-          lettersonly:true,
+          // lettersonly:true,
       },
       participant_dob: {
           required: true,
@@ -287,7 +292,7 @@ $(document).ready(function (){
           required: true,
           maxlength:25,
           noSpace: true,
-          lettersonly:true,
+          // lettersonly:true,
       },
       parent_email: { 
           required: true,
@@ -339,21 +344,6 @@ $(document).ready(function (){
           $(element).closest('.myForm').append('<i class="fa fa-check fa-lg form-control-feedback"></i>');
       } 
     },
-
-      errorElement : 'div',
-      errorPlacement: function(error, element) {
-       // $(element).next().remove();
-          var placement = $(element).data('error');
-          var placement1 = element.attr('name');
-
-          if (placement) {
-            $(placement).append(error)
-          }else if(placement1=="participant_gender"){
-              error.insertAfter("#gender");
-          }else {
-            error.insertAfter(element);
-          }
-        },
 
       submitHandler: function(form) {        
         $("#disable_contact_us_btnn").attr("disabled", true);
@@ -1169,7 +1159,6 @@ $(document).ready(function (){
       },
       postcode: {
         required: true,
-        letterdigitsonly: true,
         maxlength: 10,
       },
       county: {
@@ -1252,5 +1241,58 @@ $(document).ready(function (){
       }
 
   });
+
+//password-Validations Form
+  $('#changePasswordForm').validate({
+    onfocusout: function (valueToBeTested) {
+      $(valueToBeTested).valid();
+    },
+  
+    highlight: function(element) {
+      $('element').removeClass("error");
+    },
+  
+    rules: {
+      "oldpassword": {
+          required: true,
+          maxlength: 50,
+      },
+      "password": {
+        required: true,
+        minlength: 8,
+        maxlength: 25,
+        checkstrongpassword:true,
+    },
+    "conpassword": {
+      required: true,
+      minlength: 8,
+      maxlength: 25,
+      checkstrongpassword:true,
+      equalTo: "#password",
+  },
+  
+      valueToBeTested: {
+          required: true,
+      }
+    },
+    messages: {
+      conpassword: {
+        equalTo: "Password and Confirm Password do not match"
+    }
+   }
+    });   
+  
+    //Submitting Form 
+    $('#passwordSubmitButton').click(function()
+    { 
+      if($('#changePasswordForm').valid())
+      {
+        $('#passwordSubmitButton').prop('disabled', true);
+        $('#changePasswordForm').submit();
+      }else{
+        return false;
+      }
+    });
+
 
 });

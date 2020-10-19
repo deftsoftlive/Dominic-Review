@@ -5,7 +5,7 @@
         <div class="col-md-offset-2 col-md-8">
             <div class="card custm-card">
 <div class="form-box" id="login-box">
-        <div class="header">{{ __('Reset Password') }}</div>
+        <div class="header">{{ __('Reset11 Password') }}</div>
         <div class="body bg-gray">
                 @if (session('status'))
                 <div class="alert alert-success" role="alert">

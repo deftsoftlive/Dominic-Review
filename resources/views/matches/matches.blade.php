@@ -109,13 +109,13 @@
                                  <th>
                                     <p><b>Score : </b></p>
                                  </th>
-                                 <td>{{isset($match->start_date) ? $match->start_date : ''}}</td>
+                                 <td>{{isset($match->score) ? $match->score : ''}}</td>
                               </tr>
                               <tr>
                                  <th>
                                     <p><b>Start Date :</b></p>
                                  </th>
-                                 <td>{{isset($match->surface_type) ? $match->surface_type : ''}}</td>
+                                 <td>{{isset($match->start_date) ? date("d/m/Y", strtotime($match->start_date)) : ''}}</td>
                               </tr>
                               <tr>
                                  <th>

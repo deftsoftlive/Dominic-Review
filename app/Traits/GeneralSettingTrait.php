@@ -617,6 +617,15 @@ trait GeneralSettingTrait {
                        'section4_button_title' => getAllValueWithMeta('section4_button_title', $slug),
                        'section4_button_url' => getAllValueWithMeta('section4_button_url', $slug),
           ];
+        case 'banners': 
+          return [
+                        // Banner
+                       'login_banner' => getAllValueWithMeta('login_banner', $slug),
+                       'reset_pass_banner' => getAllValueWithMeta('reset_pass_banner', $slug),
+                       'shop_banner' => getAllValueWithMeta('shop_banner', $slug),
+                       'faq_banner' => getAllValueWithMeta('faq_banner', $slug),
+                       'checkout_banner' => getAllValueWithMeta('checkout_banner', $slug),
+          ];
         case 'early-bird': 
           return [    
                        // Early Bird Date & Time

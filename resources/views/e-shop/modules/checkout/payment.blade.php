@@ -93,12 +93,17 @@
                     <div class="tab-pane" id="tabs-3" role="tabpanel">
                         @php 
                             $wallet = DB::table('wallets')->where('user_id',Auth::user()->id)->first(); 
-                            $wallet_amount = $wallet->money_amount; 
 
                             $shop = DB::table('shop_cart_items')->where('user_id',Auth::user()->id)->where('type','cart')->where('orderID',NULL)->get();   
 
                             $cart_price = [];
                         @endphp
+
+                        @if(!empty($wallet))
+                        @php
+                            $wallet_amount = $wallet->money_amount; 
+                        @endphp
+                        @endif
 
                         @foreach($shop as $sh)
                             @php $cart_price[] = $sh->total; @endphp
@@ -108,46 +113,106 @@
                             $cart_total = array_sum($cart_price);
                         @endphp
 
+                        @if(!empty($wallet_amount))
+                        
                         @if(!empty($cart_total) && ($cart_total <= $wallet_amount))
-                            <form action="{{route('save_wallet')}}" method="POST">
+                            <!-- <form action="{{route('save_wallet')}}" method="POST">
                                 @csrf
                                 <button class="cstm-btn main_button" >Pay With Wallet</button>
-                            </form>
+                            </form> -->
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary cstm-btn main_button" data-toggle="modal" data-target="#wallet_payment">
+                              Confirm payment with wallet funds
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="wallet_payment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Pay with Wallet</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <ul>
+                                              <li><p>Wallet Amount:<span> &pound;{{isset($wallet_amount) ? $wallet_amount : ''}}</span></p></li>
+                                              <li><p>Cart Amount:<span> &pound;{{$cart_total}}</span></p></li>
+                                          </ul>
+                                        <div class="tect-wrap">
+                                          <p>Are you sure you wish to pay using wallet funds?</p>
+
+                                            <!-- <button type="button" class="btn btn-primary cstm-btn main_button">
+                                                Conform Order
+                                            </button> -->
+
+                                            <form action="{{route('save_wallet')}}" method="POST">
+                                                @csrf
+                                                <button class="cstm-btn main_button" >Confirm Order</button>
+                                            </form>
+                                        </div>
+                                  
+                                  </div>
+                                 
+                                </div>
+                              </div>
+                            </div>
+
                         @elseif($cart_total > $wallet_amount)
 
-                        <p>Wallet Amount - &pound;{{$wallet_amount}}</p>
-                        <p>Cart Total - &pound;{{$cart_total}}</p>
-                        <br/>
+                            <p>Wallet Amount - &pound;{{isset($wallet_amount) ? $wallet_amount : ''}}</p>
+                            <p>Cart Total - &pound;{{$cart_total}}</p>
+                            <br/>
+                            <div class="alert_msg alert alert-danger">
+                                <p>Your wallet has insufficient amount. You have to pay the rest amount from your card.</p><br/>
+                                <a target="_blank" href="{{url('/user/add-money-to-wallet')}}" class="cstm-btn main_button">Add Wallet Money</a>
+                            </div>
+                            <br/>
+                             <form action="{{url(route('shop.checkout.stripe.payment'))}}" method="POST">
+                                <?php 
+                                    $stripe = SripeAccount();
+                                    $pk = $stripe['pk'];  
+
+                                    if(!empty($wallet_amount))
+                                    {
+                                        $amount = ($cart_total - $wallet_amount)*100;
+                                    }else{
+                                        $amount = $cart_total * 100;
+                                    }
+                                    
+                                ?>
+                                @csrf
+                                <input type="hidden" name="type" value="wallet&stripe">
+                                <input type="hidden" name="total" value="{{$cart_total}}">
+                                <input type="hidden" name="amt" value="@if(!empty($wallet_amount)) @php echo $cart_total - $wallet_amount; @endphp @else @php echo $cart_total; @endphp @endif">
+                                <!-- <button class="cstm-btn" >Pay With Wallet</button> -->
+                                <script
+                                    src="https://checkout.stripe.com/checkout.js" class="stripe-button new-main-button"
+                                    data-key="{{$stripe['pk']}}"
+                                    data-amount="{{$amount}}"
+                                    data-name="DRH Panel"
+                                    data-class="DRH Panel"
+                                    data-description="Shopping"
+                                    data-email="{{Auth::user()->email}}"   
+                                    data-currency="gbp"                           
+                                    data-locale="auto">
+                                </script>
+                            </form>
+                        @else
+                        
+                        @endif
+                        
+                        @elseif(isset($wallet_amount) && $wallet_amount == 0)
                         <div class="alert_msg alert alert-danger">
-                            <p>Your wallet has insufficient amount. You have to pay the rest amount from your card.</p>
+                            <p>Your wallet has no money. Please use another payment gateway for purchase.</p><br/>
+                            <a target="_blank" href="{{url('/user/add-money-to-wallet')}}" class="cstm-btn main_button">Add Wallet Money</a>
                         </div>
-                        <br/>
-                         <form action="{{url(route('shop.checkout.stripe.payment'))}}" method="POST">
-                            <?php 
-                                $stripe = SripeAccount();
-                                $pk = $stripe['pk'];  
-                                $amount = ($cart_total - $wallet_amount)*100;
-                            ?>
-                            @csrf
-                            <input type="hidden" name="type" value="wallet&stripe">
-                            <input type="hidden" name="total" value="{{$cart_total}}">
-                            <input type="hidden" name="amt" value="@php echo $cart_total - $wallet_amount; @endphp">
-                            <!-- <button class="cstm-btn" >Pay With Wallet</button> -->
-                            <script
-                                src="https://checkout.stripe.com/checkout.js" class="stripe-button new-main-button"
-                                data-key="{{$stripe['pk']}}"
-                                data-amount="{{$amount}}"
-                                data-name="DRH Panel"
-                                data-class="DRH Panel"
-                                data-description="Shopping"
-                                data-email="{{Auth::user()->email}}"   
-                                data-currency="gbp"                           
-                                data-locale="auto">
-                            </script>
-                        </form>
-                        @elseif($wallet_amount == 0)
+                        @else($wallet_amount == '')
                         <div class="alert_msg alert alert-danger">
-                            <p>Your wallet has no money. Please use another payment gateway for purchase.</p>
+                            <p>Your wallet has no money. Please use another payment gateway for purchase.</p><br/>
+                            <a target="_blank" href="{{url('/user/add-money-to-wallet')}}" class="cstm-btn main_button">Add Wallet Money</a>
                         </div>
                         @endif
                     </div>
@@ -197,7 +262,7 @@
                                     
                                     
                                     <div class="form-check button-check">
-                                        <button id="submit-childcare" type="submit" class="cstm-btn main_button">Submit</button>
+                                        <button id="submit-childcare" type="submit" class="cstm-btn main_button">Confirm Order</button>
                                     </div>
                                 </div>
                             </form>

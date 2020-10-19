@@ -64,6 +64,8 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                 </li>
                 @else
                 <li class="nav-item">
+                    <a class="nav-link cstm-btn" href="{{ url()->previous() }}
+">Back to menu</a>
                     <a class="nav-link cstm-btn" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Match Report</a>
                 </li>
                 @endif

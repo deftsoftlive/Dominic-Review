@@ -57,11 +57,45 @@
                     
                   </div>
 
-                  <div class="form-group"> 
+                  <!-- <div class="form-group"> 
                       {{select3($errors,'Parent','parent','label','0',$category)}}
                   </div>
                   <div class="form-group">
                       {{select3($errors,'SubParent','subparent','label','0',array())}}
+                  </div> -->
+
+                  <div class="form-group">
+                    <label class="label-file control-label">Parent</label>
+                        <select id="people11" name="type" class="form-control">
+                      
+                        @php $course_cat = DB::table('product_categories')->where('parent','0')->where('subparent','0')->where('type','Course')->get(); @endphp
+                        <option value="" disabled="" selected="">Select Parent Category</option>
+                        @foreach($course_cat as $cour)
+                          <option value="{{$cour->id}}">{{$cour->label}}</option>
+                        @endforeach
+                      </select>
+                  </div>
+
+                  <div class="form-group">
+                        <label class="label-file control-label">Sub Parent</label>
+                        <select id="inputAge11" name="subtype" class="form-control event-dropdown">
+                          <option value="1" selected="" disabled="">Select Age Group</option>
+                        </select>
+                  </div>
+
+                  @php 
+                    $course_category = DB::table('link_course_and_categories')->where('status',1)->get();
+                  @endphp 
+
+                  <div class="form-group">
+                      <label class="label-file control-label">Course Category</label>
+                      
+                      <select name="course_category" class="form-control event-dropdown">
+                          <option value="" disabled="" selected="">Select Course Category</option>
+                          @foreach($course_category as $course_cat)
+                            <option value="{{$course_cat->id}}">{{$course_cat->title}}</option>
+                          @endforeach
+                      </select>
                   </div>
 
                   <div class="form-group">
@@ -81,6 +115,9 @@
                   {{textbox($errors,'Day Time<span class="cst-upper-star">*</span>','day_time')}}
                   {{textbox($errors,'Booking Slot<span class="cst-upper-star">*</span>','booking_slot')}}
                   {{textarea($errors,'More Info<span class="cst-upper-star">*</span>','more_info')}}
+
+                  {{textarea($errors,'Information Email Content<span class="cst-upper-star">*</span>','info_email_content')}}
+
                   {{textbox($errors,'Price<span class="cst-upper-star">*</span>','price')}}
                   {{textarea($errors,'Bottom Section<span class="cst-upper-star">*</span>','bottom_section')}}
                   <!-- {{textbox($errors,'Early Birth Price*','early_birth_price')}} -->
@@ -136,11 +173,13 @@
                             </div>
                             </tbody>
                         </table>
-                      </div>
 
-                <div class="card-footer pl-0">
+                        <div class="card-footer pl-0">
                   <button type="submit" id="btnVanue" class="btn btn-primary">Submit</button>
                 </div>
+                      </div>
+
+                
  </form>
 
 
@@ -168,6 +207,7 @@
 <script type="text/javascript">
    CKEDITOR.replace('description', options);
    CKEDITOR.replace('more_info', options);
+   CKEDITOR.replace('info_email_content', options);
    CKEDITOR.replace('bottom_section', options);
 </script>
 
@@ -244,5 +284,27 @@
      }});
 
   }
+
+function myFunction() {
+        $("#all_course_listing")[0].click();
+      }
+
+
+$(document).ready(function(){
+    $("select#people11").change(function(){
+        var selectedCat = $(this).children("option:selected").val();
+        $.ajax({
+            url:"http://49.249.236.30:8654/dominic-new/admin/selectedCat/",
+            method:'GET',
+            data:{selectedCat:selectedCat},
+            dataType:'json',
+            success:function(data)
+            {   
+                $('#inputAge11').html(data.option);
+            },      
+        })
+    });
+    });
+
 </script>
 @endsection

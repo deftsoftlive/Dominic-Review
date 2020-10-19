@@ -64,7 +64,7 @@ div#report_detail_cont {
 
                     @if($report->type == 'simple')
                     <div class="col-md-12 report_row">
-                     
+                     <div class="table_wrap_my_family">
                         <table class="table table-bordered cst-reports" style="width:100%">
                           <tr>
                             <th><p><b>Date</b></p></th>
@@ -83,6 +83,7 @@ div#report_detail_cont {
                             <td>@if($report->type == 'simple') @php echo getCourseName($report->course_id); @endphp @else - @endif</td>
                           </tr>
                         </table>
+                    </div>
                         
                     </div>
                     @endif
@@ -95,6 +96,8 @@ div#report_detail_cont {
                     @if($report->type == 'complex')
 
                     <div class="col-md-12 report_row">
+
+
                         <table class="table table-bordered  cst-reports">
                             <tbody>
                                 <tr>
@@ -130,6 +133,7 @@ div#report_detail_cont {
                                 </tr>
                             </tbody>
                         </table>
+
                     </div>
 
                     @endif
@@ -250,6 +254,7 @@ div#report_detail_cont {
                     </div>
                     <!-- <label>Test Score Data:</label> -->
                     <div class="table-layout">
+                         <div class="table_wrap_my_family">
                         <table class="table table-bordered rp_test_score">
                             <thead>
                               <tr>
@@ -291,6 +296,7 @@ div#report_detail_cont {
                             @endforeach
                             </tbody>
                         </table>
+                    </div>
                     </div>
                     @endif
                     @endif
