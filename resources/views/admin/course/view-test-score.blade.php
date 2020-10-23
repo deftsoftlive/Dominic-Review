@@ -81,15 +81,18 @@
                     @endphp
                     @foreach($test_score1 as $arr)
                     <tr>
-                        <td>@php $user = DB::table('users')->where('id',$arr->user_id)->first(); @endphp {{$user->name}}</td>
+                        <td>@php $user = DB::table('users')->where('id',$arr->user_id)->first(); @endphp {{isset($user->name) ? $user->name : ''}}</td>
                         <!-- <td>@php echo getTestCatname($arr->test_cat_id); @endphp</td> -->
                         <!-- <td>@php echo getTestname($arr->test_id); @endphp</td> -->
-                        @php
-                          $test_score12 = DB::table('test_scores')->where('user_id',$user->id)->where('course_id',$course)->where('test_cat_id','!=',NULL)->where('season_id',$season)->groupBy('test_id')->get(); 
-                        @endphp
-                        @foreach($test_score12 as $arr)
-                            <td>{{$arr->test_score}}</td>
-                        @endforeach
+
+                        @if(!empty($user))
+                          @php
+                            $test_score12 = DB::table('test_scores')->where('user_id',$user->id)->where('course_id',$course)->where('test_cat_id','!=',NULL)->where('season_id',$season)->groupBy('test_id')->get(); 
+                          @endphp
+                          @foreach($test_score12 as $arr)
+                              <td>{{$arr->test_score}}</td>
+                          @endforeach
+                        @endif
                     </tr>
                     @endforeach
                     </tbody>

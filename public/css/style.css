@@ -1987,6 +1987,10 @@ section.member.section-padding.report_detail_page .pink-heading h2 {
 
 }
 
+table.table.table-bordered.all_rps p {
+white-space: pre-line;
+}
+
 .player-addreport-form .form-row .form-group .report-textarea {
     height: 125px;
     resize: none;
@@ -3531,7 +3535,7 @@ div#nav-badges .activitiy-info-content p {
 }
 
 .section-padding {
-    padding: 100px 0;
+    padding: 50px 0;
 }
 
 .owl-c-d .item img {
@@ -5272,14 +5276,14 @@ table th {
     box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.1);
     border-radius: 0;
 }
-
+/*
 #upload_doc .col-sm-3 {
     width: 20%;
     flex: 0 0 20%;
     max-width: 20%;
     position: relative;
 }
-
+*/
 .f-g-upload #upload_doc {
     border-top: 1px solid #efefef;
     padding: 10px 0;
@@ -8591,7 +8595,9 @@ form.reject_req {
 
 @media print {
 
-
+    .accordian_summary .collapse {
+         display: block!important;
+    }
 
     .report_detail_page .cst-reports th,
     .player-report-table.tbl_shadow .rp_test_score th {
@@ -8852,7 +8858,7 @@ div#add_money_btn {
 }
 
 div#add_money_btn {
-    text-align: right;
+    text-align:left;
 
 }
 
@@ -8882,12 +8888,18 @@ form#wallet .form-group {
 form#wallet .form-group label {
     padding-left: 0;
 }
-
+form#wallet {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
 form#wallet .wallet_form {
     display: flex;
     align-items: flex-end;
+    width: 100%;
+    margin-bottom: 15px;
 }
-
 .report-table-wrap span.vou_prod_type {
     border-radius: 10px;
     padding: 5px 10px;
@@ -9087,7 +9099,8 @@ form#wallet .wallet_form {
 }
 
 .member .pink-heading {
-    margin-bottom: 50px;
+    /*margin-bottom: 50px;*/
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -10568,7 +10581,7 @@ div#toilet {
 div#upload_doc input,
 div#upload_doc select
 {
-    font-size: 15px;
+    font-size: 14.5px;
 }
 input#med_cond_no1,input#med_cond_yes1,
 input#allergies1,input#allergies,
@@ -10880,4 +10893,28 @@ div#wallet_payment .modal-dialog {
     max-width: 600px;
     top: 50%;
     transform: translateY(-50%);
+}
+.events-sec .chosen-container-single .chosen-single div b {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: url(../images/down-arrow.svg) no-repeat !important;
+    position: absolute;
+    top: 15px;
+    right: 5px;
+    height: 11px;
+}
+.demo-form.SchoolCat {
+    text-align: center;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    z-index: 1;
+    position: relative;
+}
+.player-lik-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

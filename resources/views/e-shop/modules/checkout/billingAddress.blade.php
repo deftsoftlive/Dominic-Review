@@ -84,7 +84,7 @@ if (in_array('product', $shop_type, TRUE)){ ?>
                   <div class="form-group">
                      <input type="text" id="state" class="form-control" name="state" 
                         value="{{isset($user->town) ? $user->town : ''}}" 
-                        placeholder="Enter your State">
+                        placeholder="Enter your Town">
                      <span class="input-icon"><i class="fas fa-map-marker-alt"></i></span>
                   </div>
                </div>
@@ -93,7 +93,7 @@ if (in_array('product', $shop_type, TRUE)){ ?>
                   <div class="form-group">
                      <input type="text" id="city" class="form-control" name="city" 
                         value="{{isset($user->county) ? $user->county : ''}}" 
-                        placeholder="Enter your City">
+                        placeholder="Enter your County">
                      <span class="input-icon"><i class="fas fa-city"></i></span>
                   </div>
                </div>
@@ -182,7 +182,7 @@ if (in_array('product', $shop_type, TRUE)){ ?>
                   <div class="form-group">
                      <input type="text" id="state" class="form-control" name="state" 
                         value="{{isset($user->town) ? $user->town : ''}}" 
-                        placeholder="Enter your State">
+                        placeholder="Enter your Town">
                      <span class="input-icon"><i class="fas fa-map-marker-alt"></i></span>
                   </div>
                </div>
@@ -191,7 +191,7 @@ if (in_array('product', $shop_type, TRUE)){ ?>
                   <div class="form-group">
                      <input type="text" id="city" class="form-control" name="city" 
                         value="{{isset($user->county) ? $user->county : ''}}" 
-                        placeholder="Enter your City">
+                        placeholder="Enter your County">
                      <span class="input-icon"><i class="fas fa-city"></i></span>
                   </div>
                </div>

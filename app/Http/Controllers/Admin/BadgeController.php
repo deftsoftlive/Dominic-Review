@@ -59,7 +59,7 @@ class BadgeController extends Controller
     	$validatedData = $request->validate([
             'name' => ['required', 'max:50'],
             'description' => ['required'],
-            'end_date' => ['required','date'],
+            // 'end_date' => ['required','date'],
             'points' => ['required','numeric']
         ]);
 
@@ -72,7 +72,7 @@ class BadgeController extends Controller
 
     	Badge::create([
     		'name' => $request['name'],
-            'end_date' => $request['end_date'],
+            // 'end_date' => $request['end_date'],
     		'description' => $request['description'],
     		'image' => isset($filename) ? $filename : '',
     		'points' => $request['points']
@@ -96,7 +96,7 @@ class BadgeController extends Controller
     	$validatedData = $request->validate([
             'name' => ['required', 'max:50'],
             'description' => ['required'],
-            'end_date' => ['required','date'],
+            // 'end_date' => ['required','date'],
             'points' => ['required','numeric']
         ]);
 
@@ -114,7 +114,7 @@ class BadgeController extends Controller
     	}
     	$venue->update([
     		'name' => $request['name'],
-            'end_date' => $request['end_date'],
+            // 'end_date' => $request['end_date'],
     		'description' => $request['description'],
     		'image' => isset($filename) ? $filename : '',
     		'points' => $request['points']
@@ -298,7 +298,9 @@ class BadgeController extends Controller
     public function selectedSeason(Request $request)
     {
         $season = $request->selectedSeason; 
-        $shop = ShopCartItems::where('course_season',$request->selectedSeason)->where('orderID','!=',NULL)->groupBy('product_id')->get(); 
+        // $shop = ShopCartItems::where('course_season',$request->selectedSeason)->where('orderID','!=',NULL)->groupBy('product_id')->get(); 
+
+        $shop = Course::where('season',$request->selectedSeason)->where('status',1)->get();
 
         if(count($shop) > 0)
         {
@@ -307,12 +309,12 @@ class BadgeController extends Controller
 
           foreach($shop as $sh)
           {
-            $course = Course::where('season',$sh->course_season)->where('id',$sh->product_id)->get();
+            // $course = Course::where('season',$sh->course_season)->where('id',$sh->product_id)->get();
 
-            foreach($course as $sh)
-            {
+            // foreach($course as $sh)
+            // {
               $output .= '<option value="'.$sh->id.'">'.$sh->title.'</option>';
-            }
+            // }
           }
         }else{
             $output = '<option value="">No data exists</option>';

@@ -251,7 +251,7 @@
                     @endphp
                     
                     <td>@php echo date('d-m-Y',strtotime($co->updated_at)); @endphp</td>
-                    <td>@php echo getUserName($co->child_id); @endphp</td>
+                    <td>@if(!empty(getUserName($co->child_id))) @php echo getUserName($co->child_id); @endphp @else - @endif</td>
                     <td>&pound;{{$co->total}}</td>
                 </tr>
             @endforeach

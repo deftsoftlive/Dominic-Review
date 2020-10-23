@@ -32,9 +32,49 @@
               @csrf
                 
                {{textbox($errors,'Title<span class="cst-upper-star">*</span>','title')}}
+
+                <label class="control-label">Title color<span class="cst-upper-star">*</span></label>
+                <select class="form-control" name="title_color">
+                      <option value="#ffffff">White</option>
+                      <option value="#000000">Black</option>
+                      <option value="#001642">Blue</option>
+                      <option value="#00afef">Sky Blue</option>
+                      <option value="#bea029">Yellow</option>
+                </select><br/>
+
                {{textbox($errors,'Heading<span class="cst-upper-star">*</span>','heading')}}
+
+                <label class="control-label">Heading color<span class="cst-upper-star">*</span></label>
+                <select class="form-control" name="heading_color">
+                      <option value="#ffffff">White</option>
+                      <option value="#000000">Black</option>
+                      <option value="#001642">Blue</option>
+                      <option value="#00afef">Sky Blue</option>
+                      <option value="#bea029">Yellow</option>
+                </select><br/>
+
                {{textbox($errors,'Subheading<span class="cst-upper-star">*</span>','subheading')}}
+
+                <label class="control-label">Sub-Heading color<span class="cst-upper-star">*</span></label>
+                <select class="form-control" name="sub_heading_color">
+                      <option value="#ffffff">White</option>
+                      <option value="#000000">Black</option>
+                      <option value="#001642">Blue</option>
+                      <option value="#00afef">Sky Blue</option>
+                      <option value="#bea029">Yellow</option>
+                </select><br/>
+
                {{textarea($errors,'Description<span class="cst-upper-star">*</span>','description')}}
+
+                <label class="control-label">Description color<span class="cst-upper-star">*</span></label>
+                <select class="form-control" name="description_color">
+                      <option value="#ffffff">White</option>
+                      <option value="#000000">Black</option>
+                      <option value="#001642">Blue</option>
+                      <option value="#00afef">Sky Blue</option>
+                      <option value="#bea029">Yellow</option>
+                </select><br/>
+
                {{textbox($errors,'Button Text<span class="cst-upper-star">*</span>','button_text')}}
                {{textbox($errors,'Button Link<span class="cst-upper-star">*</span>','button_link')}}
 

@@ -481,6 +481,12 @@ class UserController extends Controller
         return view('admin.user-vendor.subscribed-users.newsletter',compact('subscribed_users')); 
     }
 
+    public function active_subscribed_users()
+    {
+        $subscribed_users = NewsletterSubscription::orderBy('id','desc')->where('unsubscribed_by',NULL)->paginate(10);
+        return view('admin.user-vendor.subscribed-users.subscribers',compact('subscribed_users')); 
+    }
+
     /********************************
     |   Unsubscribe Users
     |********************************/
@@ -1092,7 +1098,7 @@ class UserController extends Controller
           }else{
             $last_user_id = $request->child_id;
 
-            return redirect('/admin/family-member/add?user='.$last_user_id)->with('last_user_id', $last_user_id)->with('error','Please confirm the details you');
+            return redirect('/admin/family-member/add?user='.$last_user_id)->with('last_user_id', $last_user_id)->with('error','Please confirm the details you have filled.');
         }
     }
 
@@ -1277,7 +1283,7 @@ class UserController extends Controller
       }else{
         $last_user_id = $request->child_id;
 
-        return redirect('/admin/account-holder/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','Please confirm the details you');
+        return redirect('/admin/account-holder/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','Please confirm the details you have filled.');
       }
         
     }

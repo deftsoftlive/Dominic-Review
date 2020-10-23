@@ -54,6 +54,17 @@
                   </div>
                   <img src="" id="image_src" style="width: 100px; height: 100px; display: none"/>
 
+
+
+                  <div class="form-group"><br/>
+                    <label class="control-label">Image for school listing page (If you didn't select school category then you can skip this section)</label><br/>
+                    <input type="file" required accept="image/*" onchange="ValidateSingleInput(this, 'school_image_src')" name="school_image" id="selImage">
+                    @if ($errors->has('school_image'))
+                        <div class="error">{{ $errors->first('school_image') }}</div>
+                    @endif
+                  </div>
+                  <img src="" id="school_image_src" style="width: 100px; height: 100px; display: none"/>
+
                 <div class="card-footer pl-0">
                   <button type="submit" id="btnVanue" class="btn btn-primary">Submit</button>
                 </div>

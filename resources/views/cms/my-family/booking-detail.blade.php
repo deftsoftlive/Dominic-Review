@@ -16,7 +16,7 @@
   $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->first();
 @endphp
 
-<div class="account-menu acc_sub_menu">
+<div class="account-menu acc_sub_menu d-print-none">
   <div class="container">
     <div class="menu-title">
 	  <span>Account</span> menu
@@ -114,7 +114,9 @@
 								</table>
 							</div>
 							<div class="download_order">
-								<a href="{{url('/user/order/invoice/download')}}/@php echo base64_encode($order->id); @endphp" target="_blank" class="new-booking  mr-0 mb-10  ml-10 nw_btn_three">
+								<a onclick="window.print();"  class="d-print-none new-booking  mt-0 mr-0 mb-10  ml-10 nw_btn_three" style="color: #35486b;cursor: pointer;">
+	                              
+								<!-- <a href="{{url('/user/order/invoice/download')}}/@php echo base64_encode($order->id); @endphp" target="_blank" class="new-booking  mr-0 mb-10  ml-10 nw_btn_three"> -->
 					    		<span class="des-view"> <i class="fa fa-download" aria-hidden="true"></i></span> Download Order
 								</a>
 								&nbsp;&nbsp;
@@ -157,7 +159,7 @@
 
 										  @if($cart->shop_type == 'product')
 			                                @php 
-			                                    $pro_id = $cart->product_id;
+			                                    $pro_id = $cart->product_id;	
 			                                    $user_id = DB::table('users')->where('id',$cart->user_id)->first();
 			                                    $product_detail = DB::table('products')->where('id',$pro_id)->first(); 
 			                                    $cat_id = getProductCatname($product_detail->category_id);
@@ -167,7 +169,7 @@
 			                                    $pro_amt = $order->amount - $extra;
 
 			                                    $variation = \App\Models\Products\ProductAssignedVariation::find($cart->variant_id);
-                                            	$product11 = $cart->variant_id > 0 ? App\Models\Products\Product::where('variant_id',$cart->variant_id)->first() : \App\Models\Products\Product::find($product->id);
+                                            	$product11 = $cart->variant_id > 0 ? App\Models\Products\Product::where('variant_id',$cart->variant_id)->first() : \App\Models\Products\Product::find($pro_id);
 			                                 @endphp
 
 										    <tr>
@@ -351,10 +353,10 @@
 	foreach($cart_items as $sh){
 		$shop_type[] = $sh->shop_type;
 	}
-	if(!empty($sh->voucher_code))
-	{
-	}else{
-		if (in_array('product', $shop_type, TRUE)){ ?>
+	// if(!empty($sh->voucher_code))
+	// {
+	// }else{
+		if (in_array('product', $shop_type, TRUE)){  ?>
 
 		    <div class="card">
 		      <div class="card-header">
@@ -389,25 +391,25 @@
                 @endphp
 
 		        <div class="card-body"> 
-			    <strong>Name</strong> : {{$billing_add->name}}<br>
-			    <strong>Email</strong> : {{$billing_add->email}}<br>
-			    <strong>Phone No.</strong> : {{$billing_add->phone_number}}<br/>
-			    <address><strong>Address</strong> : {{$billing_add->address}}, {{$billing_add->country}}, <br/>
-			    {{ $billing_add->state}}, {{ $billing_add->city}} <br>
-				<strong>Zipcode</strong> : {{$billing_add->zipcode}}</address>			 
+			    <strong>Name</strong> : {{!empty($billing_add->name) ? $billing_add->name : ''}}<br>
+			    <strong>Email</strong> : {{!empty($billing_add->email) ? $billing_add->email : ''}}<br>
+			    <strong>Phone No.</strong> : {{!empty($billing_add->phone_number) ? $billing_add->phone_number : ''}}<br/>
+			    <address><strong>Address</strong> : @if(!empty($billing_add->address) || !empty($billing_add->country)) {{$billing_add->address}}, {{$billing_add->country}}<br/> @endif 
+			    @if(!empty($billing_add->state) || !empty($billing_add->city)) {{ $billing_add->state}}, {{ !empty($billing_add->city) ? $billing_add->city : '' }} @endif<br>
+				<strong>Zipcode</strong> : {{ !empty($billing_add->zipcode) ? $billing_add->zipcode : '' }}</address>			 
 		        </div>
 		      </div>
 		    </div> 
 	
 
-	<?php } }?>
+	<?php } //}?>
 
 		  </div>
 		</div>
 	</section> 
 
 
-<section class="click-here-sec">
+<section class="click-here-sec d-print-none">
       <div class="container">
         <div class="row">
           <div class="col-md-8 offset-md-2">

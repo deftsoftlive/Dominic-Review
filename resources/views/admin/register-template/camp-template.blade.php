@@ -85,22 +85,24 @@
                                 @foreach($admin_selected as $key=>$we)
 
                                     @if($key == $week_key_value)
+
                                         @php $weekValue=['Monday','Tuesday','Wednesday','Thursday','Friday','Fullweek'];@endphp
+
                                         @foreach($weekValue as $weekDays)
-                                       @if(!empty($we->$weekDays))
-                                            @php 
-                                            $headerValue[$weekDays]=1;  
-                                            @endphp
-                                            <td class="">ED</td>
-                                            <td class="">AM</td>
-                                            <td class="">LC</td>
-                                            <td class="">PM</td>
-                                            <td class="">FD</td>
-                                            <td class="">LS</td> 
+                                            @if(!empty($we->$weekDays))
+
+                                                @php 
+                                                    $headerValue[$weekDays]=1;  
+                                                @endphp
+                                                <td class="">ED</td>
+                                                <td class="">AM</td>
+                                                <td class="">LC</td>
+                                                <td class="">PM</td>
+                                                <td class="">FD</td>
+                                                <td class="">LS</td> 
                                
-                                           @endif
-                                        @endforeach
-                                      
+                                            @endif
+                                        @endforeach 
 
                                     @endif
 
@@ -184,17 +186,22 @@
 
                     @endif
 
-                                     
+                                   
                     <tr>
-                        <td class="@if(!empty($player) && $player->gender == 'male') odd-name-row @elseif(!empty($player) && $player->gender == 'female') even-name-row @endif">{{isset($player->name) ? $player->name : ''}}</td>
+                        <td class="@if(!empty($player) && $player->gender == 'male') odd-name-row @elseif(!empty($player) && $player->gender == 'female') even-name-row @endif">{{isset($player->name) ? $player->name : '-'}}</td>
                         <td>{{isset($years1) ? $years1 : ''}}</td>
                         
                         @if(!empty($headerValue))
                         @foreach($headerValue as $currentday=>$currentdaySelected)
                             @php 
-                            $listOfHeaderItem=['early_drop','mor','lunch','noon','full','late_pickup'];
-
+                                $listOfHeaderItem=['early_drop','mor','lunch','noon','full','late_pickup'];
                             @endphp
+
+                            @if(!empty($player))
+                                @php
+                                    $ch_details = DB::table('children_details')->where('child_id',$player->id)->first();
+                                @endphp
+                            @endif
 
                             @foreach($listOfHeaderItem as $headItem)
                             
@@ -203,13 +210,11 @@
                                 $week_value = ''.$week_data.''; 
                             @endphp
 
-
-
                             @if(isset($userSelectedDataByWeek[$playerId][$week_value][$currentday][$headItem]))
-                            <td>X</td>
+                            <td style="text-align: center;">X</td>
                             @else
                             <td></td>
-                            @endif
+                            @endif  
                             
 
                             @endforeach
@@ -222,8 +227,8 @@
                         <td>{{isset($player->date_of_birth) ? date('d/m/Y',strtotime($player->date_of_birth)) : ''}}</td>
                         <td>{{!empty($parent) ? $parent->name : ''}}</td>
                         <td>{{!empty($parent) ? $parent->phone_number : ''}}</td>
-                        <td>@if($child_details['med_cond'] == 'confirm_accurate_no') N @else Y @endif</td>
-                        <td>@if(!empty($player->profile_image)) Y @else N @endif</td>
+                        <td>@if(isset($ch_details)) @if($ch_details->med_cond == 'confirm_accurate_no') N @else Y @endif @endif</td>
+                        <td>@if(isset($ch_details)) @if($ch_details->media == 'yes') Y @else N @endif @endif</td>
                         <td>{{!empty($parent) ? $parent->email : ''}}</td>
                     </tr>
 
@@ -246,13 +251,13 @@
                     @foreach($shop1 as $sh)
                         @php 
                             $player = DB::table('users')->where('id',$sh->child_id)->first();   
-                            $child_details = DB::table('children_details')->where('child_id',$sh->child_id)->first(); 
+                            $child_details = DB::table('children_details')->where('child_id',$sh->child_id)->first();
                             $medical_conditions = DB::table('child_medicals')->where('child_id',$sh->child_id)->get();
                         @endphp
 
                         @if(!empty($child_details->med_cond_info))
                         <tr>
-                            <td>{{isset($player->name) ? $player->name : ''}}</td>
+                            <td>{{isset($player->name) ? $player->name : '-'}}</td>
                             <td>
                                 @if(!empty($child_details->med_cond_info)) 
                                     @php $conditions = []; @endphp
@@ -308,6 +313,8 @@
                                 @endif
 
                             @endforeach
+
+                            <a class="d-print-none" target="_blank" href="{{ url('/admin/register-template/camp')}}/{{$camp->id}}/daily-signin?&week={{$week_value}}&day={{$day_filter}}">Daily Sign in / Sign out register</a>
                     @else
                       <td><a class="d-print-none" href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W1">Display Camp Week 1</a></td>
                       <td><a class="d-print-none" href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W2">Display Camp Week 2</a></td>

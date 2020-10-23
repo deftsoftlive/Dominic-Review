@@ -536,7 +536,27 @@ public function changeProfileImage(Request $request) {
 
       return \Redirect::back()->with('sucsess', "Notification successfully marked as read.");
     }
-    
+
+
+    /***************************************
+    | Send notifications to all subscribers
+    |***************************************/
+    public function send_subscriber_email()
+    {
+      $subscribed_users = \DB::table('newsletter_subscriptions')->where('unsubscribed_by',NULL)->get(); //dd($subscribed_users);
+      $emails = [];
+
+      foreach($subscribed_users as $users)
+      {
+        if(!empty($users->email))
+        {
+            $emails[] = $users->email;
+        }
+      }
+
+      $rr = $this->SubscribeUsersSuccess($emails);
+      return \Redirect::back()->with('success','Email send successfully to all subscribed users.');
+    }
 
 
 }

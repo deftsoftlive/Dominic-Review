@@ -16,9 +16,50 @@
 
 <li><a href="{{ route('linked_coaches') }}" class="{{ \Request::route()->getName() === 'linked_coaches' ? 'active' : '' }}">My Coaches</a></li>
 
-<li><a href="{{ route('notification_timeline') }}" class="{{ \Request::route()->getName() === 'notification_timeline' ? 'active' : '' }}">Timeline <span class="notification-icon"></span></a></li>
 
-<li><a href="{{ route('parent_notifications') }}" class="{{ \Request::route()->getName() === 'parent_notifications' ? 'active' : '' }}">Notifications <span class="notification-icon"></span></a></li>
+@if(Auth::user()->role_id == '2')
+
+	@php 
+	    $notifications = DB::table('notifications')->orderBy('created_at','desc')->get(); 	
+	    $children = DB::table('users')->where('parent_id',Auth::user()->id)->get();
+	    $child_id = [];
+
+	    $i = 0;
+	@endphp
+
+	@foreach($children as $child)
+        @php $child_id[] = $child->id; @endphp
+    @endforeach
+
+
+	@foreach ($notifications as $notification)
+
+	@php 
+	    $notification_arr = json_decode($notification->data);  
+	    
+	@endphp
+
+	@if(!empty($notification_arr))
+
+        @if(in_array($notification_arr->send_to,$child_id))
+
+            @php $i++; @endphp
+
+        @elseif($notification_arr->send_to == Auth::user()->id)
+
+            @php $i++; @endphp
+
+        @endif
+        
+    @endif
+
+	@endforeach
+
+@endif
+
+<li><a href="{{ route('notification_timeline') }}" class="{{ \Request::route()->getName() === 'notification_timeline' ? 'active' : '' }}">Notifications ({{isset($i) ? $i : '0'}}) <span class="notification-icon"></span></a></li>
+
+<!-- <li><a href="{{ route('parent_notifications') }}" class="{{ \Request::route()->getName() === 'parent_notifications' ? 'active' : '' }}">Notifications <span class="notification-icon"></span></a></li> -->
 
 <li><a href="{{ route('add_money_to_wallet') }}" class="{{ \Request::route()->getName() === 'add_money_to_wallet' ? 'active' : '' }}">Wallet </a></li>
 

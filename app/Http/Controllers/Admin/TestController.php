@@ -408,8 +408,9 @@ class TestController extends Controller
     /*----------------------------------------
     |   View Test Score
     |-----------------------------------------*/
-    public function view_test_score($season,$course){ 
-        
+    public function view_test_score($season,$course)
+    { 
+        // dd($season,$course);
         $test_score = TestScore::where('course_id',$course)->where('test_cat_id','!=',NULL)->where('season_id',$season)->get();    
 
         return view('admin.course.view-test-score',compact('test_score','season','course'));

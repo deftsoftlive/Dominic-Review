@@ -98,6 +98,40 @@ function getReportOptionName($id){
 }
 
 /*-------------------------------------
+| Convert UTC To UK timezone
+|-------------------------------------*/ 
+function utc_to_uk($id)
+{
+  $order_details = \DB::table('shop_orders')->where('id',$id)->first();
+
+  $received = $order_details->created_at;
+  $tz = new DateTimeZone('Europe/London');
+  $date = new DateTime($received);
+  $date->setTimezone($tz);
+  return $date->format('H:i:s');
+}
+
+function timeutc_to_uk($time)
+{
+  $received = $time;
+  $tz = new DateTimeZone('Europe/London');
+  $date = new DateTime($received);
+  $date->setTimezone($tz);
+  return $date->format('H:i:s');
+}
+
+function uk_to_utc($id)
+{
+  // $timestamp =  $order_details->created_at;
+  // $date = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $timestamp, 'Europe/London');
+  // $date->tz('BST');
+
+  // $bst =  $date->toDateTimeString();
+
+  // return $bst;
+}
+
+/*-------------------------------------
 | Matches - Stats calculation
 |-------------------------------------*/
 function statsCalculation($jsonData){

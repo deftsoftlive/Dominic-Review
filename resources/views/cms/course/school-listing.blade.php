@@ -9,7 +9,7 @@
   $base_url = \URL::to('/'); 
   $cat = \Request::get('cat'); 
   $url = 'course-listing/schools?&cat='.$cat;  
-  $course_cat = DB::table('link_course_and_categories')->where('id',$cat)->first();
+  $course_cat = DB::table('link_course_and_categories')->where('id',$cat)->first(); 
 @endphp
 
 <!-- ***********************************
@@ -97,16 +97,19 @@
           |   Taster Form - Start Here
           |*************************************** -->
           <div class="col-lg-6 col-md-12">
-            <div class="demo-form"> 
-              <h1 class="demo-form-heading">Book a Free Taster Class</h1>
-                 <form action="{{route('save-contact-us')}}" id="contact_form" method="POST" class="cstm-cont-page cst_course_form taster_form">
+            <div class="demo-form SchoolCat"> 
+
+              @if($course_cat->school_image)
+              <img src="{{$base_url}}/public/uploads/{{ $course_cat->school_image }}">
+              @endif
+              <!-- <h1 class="demo-form-heading">Book a Free Taster Class</h1> -->
+                <!--  <form action="{{route('save-contact-us')}}" id="contact_form" method="POST" class="cstm-cont-page cst_course_form taster_form">
                       @csrf
                       <input type="hidden" name="type" value="course">
                       <div class="form-group">
                           <input type="text" class="form-control" name="participant_name" placeholder="Enter Participant Name">
                       </div>
                       <div class="form-group">
-                          <!-- <input type="date" id="date_of_birth" class="form-control" name="participant_dob" placeholder="Enter Participant DOB"> -->
                           <input type="text" class="form-control textbox-n" name="participant_dob" placeholder="D.O.B - dd/mm/yyy" onfocus="(this.type='date')" id="date">
                       </div>
                       <div class="form-group row gender-opt contact-gender courses-gender">  
@@ -143,7 +146,7 @@
                         <textarea class="form-control demo-textarea" name="class" rows="3" placeholder="Class you’d like to try "></textarea>
                       </div>
                       <button type="submit" id="disable_contact_us_btnn" class="cstm-btn main_button">Request Taster Class</button>
-                    </form>
+                    </form> -->
             </div>
           </div>
           <!-- ***********************************

@@ -35,7 +35,11 @@
             <i style="font-size: 18px; color: #00a0d5; cursor: pointer;" class="fas fa-pen" aria-hidden="true"></i></a>
          </div>
 
-         <a href="{{url('/user/badges')}}" class="cstm-btn main_button">Back to menu</a>
+         @if(Auth::user()->role_id == '2')
+            <a href="{{url('/user/badges')}}" class="cstm-btn main_button">Back to menu</a>
+         @else(Auth::user()->role_id == '3')
+            <a href="{{url('/user/competitions')}}" class="cstm-btn main_button">Back to menu</a>
+         @endif
       </div>
       @php $competition = DB::table('competitions')->where('id',$comp_id)->first(); @endphp
       <div class="player-report-table tbl_shadow matches-wrap">

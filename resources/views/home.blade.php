@@ -17,11 +17,17 @@
         <div class="item" style="background: url({{$base_url}}/public/uploads/{{$slides->image}});">
           <div class="container">
             <div class="banner-content">
-                <p class="banner-tag-line">{{$slides->title}}</p>
-              <h1 class="banner-heading">{{$slides->heading}}</h1>
-              <h1 class="banner-sub-heading">{{$slides->subheading}}</h1>
-              <p class="banner-text">{{$slides->description}}</p>
+
+              <p class="banner-tag-line" style="color:{{isset($slides->title_color) ? $slides->title_color : ''}}">{{$slides->title}}</p>
+
+              <h1 class="banner-heading" style="color:{{isset($slides->heading_color) ? $slides->heading_color : ''}}">{{$slides->heading}}</h1>
+
+              <h1 class="banner-sub-heading" style="color:{{isset($slides->sub_heading_color) ? $slides->sub_heading_color : ''}}">{{$slides->subheading}}</h1>
+
+              <p class="banner-text" style="color:{{isset($slides->description_color) ? $slides->description_color : ''}}">{{$slides->description}}</p>
+
               <a href="{{$slides->button_link}}" class="cstm-btn">{{$slides->button_text}}</a>
+
             </div>
           </div>
         </div>

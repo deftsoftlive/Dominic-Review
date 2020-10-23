@@ -54,11 +54,20 @@ class MatchReportNotification extends Notification
      */
     public function toArray($notifiable)
     {
-        $child_name = getUsername($notifiable->player_id);
+        if($notifiable->parent_id == '' & $notifiable->coach_id != '')
+        {
+            $child_name = getUsername($notifiable->player_id);
 
+            return [
+                'send_to' => $notifiable->player_id,
+                'data' => 'Coach has uploaded a new match report for player - '.$child_name
+            ];
+        }
+        else
+        {
         return [
-            'send_to' => $notifiable->player_id,
-            'data' => 'Coach has uploads a new match report for player - '.$child_name
-        ];
+                //
+            ];
+        }
     }
 }

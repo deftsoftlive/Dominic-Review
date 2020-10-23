@@ -854,78 +854,89 @@ public function tennis_pro()
 /* Course Booking */
 public function course_booking(Request $request)
 {
-  $check_course = \DB::table('shop_cart_items')->where('child_id',$request->child)->where('shop_type','course')->where('product_id',$request->course_id)->where('type','order')->first();
+  $check_consents = ChildrenDetail::where('child_id', $request->child)->first();
+  $check_contacts = ChildContact::where('child_id', $request->child)->first(); 
 
-  if(empty($check_course))
-  {
-        $course_id = $request->course_id;
-        $child_id  = $request->child;
-        $course    = Course::where('id',$course_id)->first(); 
+ // dd($check_consents,$check_contacts,$check_consents->media,$check_consents->media,$check_consents->confirm,$check_consents->med_cond);
 
-        $course_cat = $course->type; 
-        $course_season = $course->season;
-        $cat = \DB::table('product_categories')->where('id',$course_cat)->first(); 
+  // if(isset($check_consents) && isset($check_contacts) && !empty($check_consents->media) && !empty($check_consents->confirm) && !empty($check_consents->med_cond))
+  // {
+      $check_course = \DB::table('shop_cart_items')->where('child_id',$request->child)->where('shop_type','course')->where('product_id',$request->course_id)->where('type','order')->first();
 
-        if($cat->slug == 'tennis'){
-            $early_bird_enable = getAllValueWithMeta('check_tennis_percentage', 'early-bird');
-            $percentage = getAllValueWithMeta('tennis_percentage', 'early-bird');
-        }elseif($cat->slug == 'football'){
-            $early_bird_enable = getAllValueWithMeta('check_football_percentage', 'early-bird');
-            $percentage = getAllValueWithMeta('football_percentage', 'early-bird');
-        }elseif($cat->slug == 'schools'){
-            $early_bird_enable = getAllValueWithMeta('check_school_percentage', 'early-bird');
-            $percentage = getAllValueWithMeta('school_percentage', 'early-bird');
-        }
+      if(empty($check_course))
+      {
+            $course_id = $request->course_id;
+            $child_id  = $request->child;
+            $course    = Course::where('id',$course_id)->first(); 
 
-          $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
-          $early_bird_time = getAllValueWithMeta('early_bird_time', 'early-bird');
-          $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).' 23:59:00');
-          $currntD = strtotime(date('Y-m-d H:i:s'));
+            $course_cat = $course->type; 
+            $course_season = $course->season;
+            $cat = \DB::table('product_categories')->where('id',$course_cat)->first(); 
 
-        $add_course = new ShopCartItems;
-        $add_course->shop_type  = 'course';
-        $add_course->quantity   = 1;
-        $add_course->vendor_id  = 1;
-        $add_course->product_id = $course_id;
-        $add_course->user_id    = \Auth::user()->id;
-        $add_course->course_season = $course_season;
+            if($cat->slug == 'tennis'){
+                $early_bird_enable = getAllValueWithMeta('check_tennis_percentage', 'early-bird');
+                $percentage = getAllValueWithMeta('tennis_percentage', 'early-bird');
+            }elseif($cat->slug == 'football'){
+                $early_bird_enable = getAllValueWithMeta('check_football_percentage', 'early-bird');
+                $percentage = getAllValueWithMeta('football_percentage', 'early-bird');
+            }elseif($cat->slug == 'schools'){
+                $early_bird_enable = getAllValueWithMeta('check_school_percentage', 'early-bird');
+                $percentage = getAllValueWithMeta('school_percentage', 'early-bird');
+            }
 
-      if($currntD >= $endDate)
-      {   
-          $add_course->price  = $course->price;
-          $add_course->total  = $course->price;
-      }else{
-        if($early_bird_enable == '1'){
-          $cour_price = $course->price;
-          $dis_price = $cour_price - (($cour_price) * ($percentage/100));
+              $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
+              $early_bird_time = getAllValueWithMeta('early_bird_time', 'early-bird');
+              $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).' 23:59:00');
+              $currntD = strtotime(date('Y-m-d H:i:s'));
 
-          $add_course->price  = $dis_price;
-          $add_course->total  = $dis_price;
-        }else{
-          $add_course->price  = $course->price;
-          $add_course->total  = $course->price;
-        }
+            $add_course = new ShopCartItems;
+            $add_course->shop_type  = 'course';
+            $add_course->quantity   = 1;
+            $add_course->vendor_id  = 1;
+            $add_course->product_id = $course_id;
+            $add_course->user_id    = \Auth::user()->id;
+            $add_course->course_season = $course_season;
+
+          if($currntD >= $endDate)
+          {   
+              $add_course->price  = $course->price;
+              $add_course->total  = $course->price;
+          }else{
+            if($early_bird_enable == '1'){
+              $cour_price = $course->price;
+              $dis_price = $cour_price - (($cour_price) * ($percentage/100));
+
+              $add_course->price  = $dis_price;
+              $add_course->total  = $dis_price;
+            }else{
+              $add_course->price  = $course->price;
+              $add_course->total  = $course->price;
+            }
+          }
+
+            $add_course->child_id = $child_id;
+
+            if($add_course->save()){
+              $output = 1;
+            }else{
+              $output = 0;
+            }
+
+              // $data = array(
+              //             'output'   => $output,
+              //         );
+
+              // return response()->json($data);
+
+              return redirect('shop/cart');
+      }
+      else{
+        return \Redirect::back()->with('error','This person is already booked on this course.');
       }
 
-        $add_course->child_id = $child_id;
-
-        if($add_course->save()){
-          $output = 1;
-        }else{
-          $output = 0;
-        }
-
-          // $data = array(
-          //             'output'   => $output,
-          //         );
-
-          // return response()->json($data);
-
-          return redirect('shop/cart');
-  }
-  else{
-    return \Redirect::back()->with('error','This person is already booked on this course.');
-  }
+  // }else{
+  //   return \Redirect::back()->with('error','User details are required in order to proceed.');
+  // }
   
 } 
 
@@ -1049,6 +1060,12 @@ public function book_a_camp($slug)
 /* Book a Camp Page */
 public function submit_book_a_camp(Request $request) 
 {  
+  $check_consents = ChildrenDetail::where('child_id', $request->child_id)->first();
+  $check_contacts = ChildContact::where('child_id', $request->child_id)->first();
+
+  // if(isset($check_consents) && isset($check_contacts) && !empty($check_consents->media) && !empty($check_consents->confirm) && !empty($check_consents->med_cond))
+  // {
+
     $camp_id = $request->camp_id; 
     $week = $request->week; 
     $child = $request->child_id;   
@@ -1120,7 +1137,7 @@ public function submit_book_a_camp(Request $request)
             $incI++;
         }
 
-        // dd($request->all(), $camp_morning,$camp_noon,$camp_full);
+        //dd($request->all(), $camp_morning,$camp_noon,$camp_full);
 
         $early_drop_price = isset($count_early) ? array_sum($count_early) : '';
         $late_pickup_price = isset($count_late_pickup) ? array_sum($count_late_pickup) : '';
@@ -1169,6 +1186,10 @@ public function submit_book_a_camp(Request $request)
         }
 
     }
+
+  // }else{
+  //   return \Redirect::back()->with('error','User details are required in order to proceed.');
+  // }
 }
 
 /********************************************
@@ -1182,7 +1203,6 @@ public function submit_book_a_camp(Request $request)
 /* Parent Register Form */
 public function parent_register() 
 {
-
     return view('cms.camp.parent-register');
 }
 
@@ -1517,8 +1537,8 @@ public function coach_report()
 |---------------------------------*/
 public function save_simple_report(Request $request)
 {
-  // if(!empty($request->season_id) && !empty($request->course_id) && !empty($request->player_id))
-  // {
+  if(!empty($request->season_id) && !empty($request->course_id) && !empty($request->player_id))
+  {
     $check_report = PlayerReport::where('type','simple')->where('season_id',$request->season_id)->where('player_id',$request->player_id)->where('course_id',$request->course_id)->get();
 
     $date = Carbon::now();
@@ -1550,13 +1570,11 @@ public function save_simple_report(Request $request)
             $report->feedback = isset($request->feedback) ? $request->feedback : '';
             $report->selected_options = isset($request->selected_options) ? json_encode($request->selected_options) : '';
             $report->status = 0;
-
-            if($report->save())
-            {
+            $report->save();
               // $this->CoachSubmitReportSuccess($report->id);
-              $this->CoachSubmitEndOfTermReportSuccess($report->id);
-              $report->notify(new \App\Notifications\User\ReportNotification());
-            }
+              // $this->CoachSubmitEndOfTermReportSuccess($report->id);
+              // $report->notify(new \App\Notifications\User\ReportNotification());
+            
 
             $override_url = url()->current().'?rp='.$report->id;
             
@@ -1580,7 +1598,7 @@ public function save_simple_report(Request $request)
                 if($report->save())
                 {
                   // $this->CoachSubmitReportSuccess($report->id);
-                  $this->CoachSubmitEndOfTermReportSuccess($report->id);
+                  // $this->CoachSubmitEndOfTermReportSuccess($report->id);
                   $report->notify(new \App\Notifications\User\ReportNotification());
                 }
 
@@ -1588,10 +1606,10 @@ public function save_simple_report(Request $request)
             
         }
     }
-  // }
-  // else{
-  //   return \Redirect::back()->with('error','Season, course & player are required fields & you missed one of those fields.'); 
-  // }
+  }
+  else{
+    return \Redirect::back()->with('error','Season, course & player are required fields & you missed one of those fields.'); 
+  }
 } 
 
 
@@ -1627,14 +1645,12 @@ public function save_complex_report(Request $request)
           $report->status = 0;
           $report->feedback = isset($request->feedback) ? $request->feedback : '';
           $report->selected_options = isset($request->selected_options) ? json_encode($request->selected_options) : '';
+          $report->save();
+            // $this->CoachSubmitPlayerReportSuccess($report->id);
+            // $report->notify(new \App\Notifications\User\ReportNotification());
+          
 
-          if($report->save())
-          {
-            $this->CoachSubmitPlayerReportSuccess($report->id);
-            $report->notify(new \App\Notifications\User\ReportNotification());
-          }
-
-          $report->notify(new \App\Notifications\User\ReportNotification());
+          // $report->notify(new \App\Notifications\User\ReportNotification());
 
           $override_url = url()->current().'?rp='.$report->id;
                 
@@ -1760,10 +1776,11 @@ public function get_course_from_season($season_id)
             ->where('shop_cart_items.shop_type','course')
             ->where('courses.linked_coach',Auth::user()->id)
             ->where('season',$season_id)
+            ->where('courses.status',1)
             ->groupBy('shop_cart_items.product_id')
             ->get(); 
 
-            // dd($course);
+            //dd($course);
 
      // $course = Course::where('season',$season_id)->get();
 
@@ -2379,7 +2396,7 @@ public function media_consent(Request $request)
   }else{
     $last_user_id = $request->child_id;
 
-    return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','Please confirm the details you');
+    return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','Please confirm the details you have filled.');
   }
     
 }
@@ -2624,8 +2641,14 @@ public function edit_family_member($id) {
 
 /* Parent Notifications */
 public function parent_notifications(){
-  $req = ParentCoachReq::where('parent_id',Auth::user()->id)->where('dismiss_by_parent',NULL)->get();
+  $req = ParentCoachReq::where('parent_id',Auth::user()->id)->where('dismiss_by_parent',NULL)->get(); 
   return view('cms.my-family.notifications',compact('req'));
+} 
+
+/* Dismissed Notifications by coach */ 
+public function coach_dismiss_notifi(){
+  $req = ParentCoachReq::where('coach_id',Auth::user()->id)->where('dismiss_by_coach',0)->get(); //dd($req);
+  return view('coach.dismiss-requests',compact('req'));
 } 
 
 /* Coach Listing Page */
@@ -3128,10 +3151,10 @@ public function badges()
     else
     {
       $user_badge = \DB::table('user_badges')->orderBy('user_id','desc')->where('user_id',Auth::user()->id)->first();
-      $shop = \DB::table('shop_cart_items')->where('shop_type','course')->where('child_id','!=',NULL)->where('orderID','!=',NULL)->where('order_id','!=',NULL)->orderBy('id','asc')->first();
+      $shop = \DB::table('shop_cart_items')->where('shop_type','course')->where('user_id',Auth::user()->id)->where('child_id','!=',NULL)->where('orderID','!=',NULL)->where('order_id','!=',NULL)->orderBy('id','asc')->first();
     }
 
-    // dd($user_badge);
+    // dd($shop);
 
     if(!empty($term) && empty($stage) || !empty($term) && $stage==NULL){
         $user_badge1 = \DB::table('user_badges')->where('season_id',$term)->paginate(1);
@@ -3295,7 +3318,7 @@ public function save_goal(Request $request)
 
           if(Auth::user()->id == $set_goal->parent_id)
           {
-              $set_goal->notify(new \App\Notifications\Coach\NewGoalNotification());
+              // $set_goal->notify(new \App\Notifications\Coach\NewGoalNotification());
           }
         }
         
@@ -3382,7 +3405,7 @@ public function advanced_goal(Request $request)
 
         if(Auth::user()->id == $set_goal->parent_id)
         {
-            $set_goal->notify(new \App\Notifications\Coach\NewGoalNotification());
+            // $set_goal->notify(new \App\Notifications\Coach\NewGoalNotification());
         }
 
         return \Redirect::back()->with('success','Goal data added successfully.');
@@ -3959,7 +3982,6 @@ public function unsubscribe_newsletter($id)
 |---------------------------------*/
 public function add_competition(Request $request)
 { 
-  
     $user_role = Auth::user()->role_id;
     $comp_id = isset($request->comp_id) ? $request->comp_id : '';
 
@@ -3967,7 +3989,6 @@ public function add_competition(Request $request)
 
     if(!empty($request->comp_name) && !empty($request->comp_venue) && !empty($request->comp_date) && !empty($request->comp_type))
     {
-
         if(!empty($coach_user))
         {
           if($coach_user->role_id == 2)
@@ -4037,11 +4058,39 @@ public function comp_data($id)
 }
 
 /*---------------------------------
+|	All match reports
+|----------------------------------*/
+public function all_match_reports()
+{
+	$check_role = Auth::user()->role_id;
+
+	if($check_role == '2')
+	{
+		$match_reports = MatchReport::where('coach_id',0)->paginate(10);
+	}
+	elseif($check_role == '3')
+	{
+		$match_reports = MatchReport::where('parent_id',0)->paginate(10);
+	}
+
+	return view('all-match-reports', compact('match_reports'));
+}
+
+/*---------------------------------
 |   Save Match Report
 |---------------------------------*/
 public function add_match(Request $request)
 {
-  $data = $request->all();  
+  $role_id = Auth::user()->role_id;
+
+  if($role_id == '2')
+  {
+  	$parent_id = Auth::user()->id;
+  }
+  elseif($role_id == '3')
+  {
+  	$coach_id = Auth::user()->id;
+  }
 
   if(!empty($request->opponent_name) && !empty($request->start_date) && !empty($request->surface_type) && !empty($request->condition) && !empty($request->result) && !empty($request->score))
   {
@@ -4053,7 +4102,8 @@ public function add_match(Request $request)
             $match = MatchReport::find($request->match_id); 
             $match->comp_id = $request->comp_id;
             $match->player_id = $request->player_id;
-            $match->coach_id = Auth::user()->id;
+            $match->coach_id = isset($coach_id) ? $coach_id: '';
+            $match->parent_id = isset($parent_id) ? $parent_id: '';
             $match->opponent_name = $request->opponent_name;
             $match->start_date = $request->start_date;
             $match->surface_type = $request->surface_type;
@@ -4102,7 +4152,8 @@ public function add_match(Request $request)
         {
             //dd($data,1);
             $match = MatchReport::create($request->all());
-            $match->coach_id = Auth::user()->id;
+            $match->coach_id = isset($coach_id) ? $coach_id: '';
+            $match->parent_id = isset($parent_id) ? $parent_id: '';
             
             if($match->save())
             {
@@ -4173,13 +4224,15 @@ public function remove_game_chart($comp_id,$match_id,$player_id,$chart_id)
 public function competition_list()
 {
     $user_role = \Auth::user()->role_id; 
-    if($user_role == '3')
-    {
-        $competitions = Competition::where('coach_id',Auth::user()->id)->paginate(10);
-    }
-    elseif($user_role == '2'){
-        $competitions = Competition::where('parent_id', Auth::user()->id)->paginate(10);
-    }
+    // if($user_role == '3')
+    // {
+    //     $competitions = Competition::where('coach_id',Auth::user()->id)->paginate(10);
+    // }
+    // elseif($user_role == '2'){
+    //     $competitions = Competition::where('parent_id', Auth::user()->id)->paginate(10);
+    //}
+
+    $competitions = Competition::orderBy('id','desc')->paginate(10);
 
     return view('matches.competition',compact('competitions'));
 }
@@ -4533,7 +4586,7 @@ public function ah_media_consent(Request $request)
   }else{
     $last_user_id = $request->child_id;
 
-    return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','Please confirm the details you');
+    return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','Please confirm the details you have filled.');
   }
     
 }

@@ -79,6 +79,7 @@ $(document).ready(function (){
       },
       postcode: {
         required: true,
+        noSpace: true,
         maxlength: 10
       },
       county: {
@@ -1159,6 +1160,7 @@ $(document).ready(function (){
       },
       postcode: {
         required: true,
+        noSpace: true,
         maxlength: 10,
       },
       county: {

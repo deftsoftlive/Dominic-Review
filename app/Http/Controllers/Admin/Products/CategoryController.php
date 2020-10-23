@@ -62,7 +62,8 @@ public function store(Request $request)
               'meta_title' => 'required',
               'meta_tag' => 'required',
               'meta_description' => 'required',
-              'label' => 'required|max:30|unique:product_categories',
+              'label' => 'required|max:30',
+              // 'label' => 'required|max:30|unique:product_categories',
               'image' => 'image',
        ]);
 

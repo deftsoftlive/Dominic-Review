@@ -65,8 +65,71 @@
                 </div>
               </div>
 
+            @php $cart_items = DB::table('shop_cart_items')->where('orderID', $shop_cart_items->orderID)->get(); @endphp
 
+            @foreach($cart_items as $cart)
 
+            @if($cart->shop_type == 'camp')
+
+              @php 
+                $week = json_decode($cart->week); 
+                $camp_id = $cart->product_id;
+                $camp = DB::table('camps')->where('id',$camp_id)->first();  
+                $child = DB::table('users')->where('id',$cart->child_id)->first();
+              @endphp
+              <br/>
+                <tr>          
+                    <!-- <td>Camp</td>                                -->
+                    <td>
+                      <h5>Already booked details - </h5>
+                      <!-- <h5>{{$camp->title}}</h5> -->
+                      <!-- <p><b>Child</b> :{{isset($child->name) ? $child->name : 'No Child Selected'}}</p> -->
+                      <p>
+                        @foreach($week as $number=>$number_array)
+
+                        @foreach($number_array as $data=>$user_data)
+
+                          @foreach($user_data as $data1=>$user_data1)
+                            @php 
+                              $split = explode('-',$user_data1);
+                              $get_session = $split[2];
+                            @endphp
+                            @if($get_session == 'early')
+                              {{$number}} - {{$data1}} - Early Drop Off<br/>
+                            @elseif($get_session == 'mor')
+                              {{$number}} - {{$data1}} - Morning<br/>
+                            @elseif($get_session == 'noon')
+                              {{$number}} - {{$data1}} - Afternoon<br/>
+                            @elseif($get_session == 'lunch')
+                              {{$number}} - {{$data1}} - Lunch Club<br/>
+                            @elseif($get_session == 'late')
+                              {{$number}} - {{$data1}} - Late Pickup<br/>
+                            @elseif($get_session == 'full')
+                              {{$number}} - {{$data1}} - Full Day<br/>
+                            @endif
+                          @endforeach
+                        
+                          @endforeach
+
+                      @endforeach
+                      </p>
+                      
+                    </td>                               
+                    <!-- <td>{{isset($cart->discount_code) ? $cart->discount_code : '-'}} -->
+                   
+                   <!--  @if(!empty($cart->discount_code))
+                      &pound;{{$cart->discount_price}} off on {{$camp->title}}
+                    @endif -->
+                    </td>                                
+                    <td><h5><b>Price</b> - &pound;{{$cart->price}}</h5></td>  
+                          
+                </tr> 
+
+            @endif
+
+            @endforeach
+
+            <br/>
 
       <form action="{{route('save_change_camp')}}" id="camp_booking_table" class="booking_table camp_grid" method="POST">
         @csrf    

@@ -45,17 +45,32 @@
                     </select>
                   </div>
 
-                    <div class="form-group">
-                      <label class="control-label">Image</label>
-                      <input type="file" name="image" id="selImage" accept="image/*" onchange="ValidateSingleInput(this, 'image_src')">
-                      @if ($errors->has('image'))
-                          <div class="error">{{ $errors->first('image') }}</div>
-                      @endif
-                    </div>
 
+                  <div class="form-group">
+                    <label class="control-label">Image</label>
+                    <input type="file" name="image" id="selImage" accept="image/*" onchange="ValidateSingleInput(this, 'image_src')">
+                    @if ($errors->has('image'))
+                        <div class="error">{{ $errors->first('image') }}</div>
+                    @endif
+                  </div>
+
+                  @if(!empty($venue->image))
                     <img id="image_src" style="width: 100px; height: 100px;" src="{{ URL::asset('/uploads').'/'.$venue->image }}" />
+                  @endif
 
-           
+
+                  <div class="form-group"><br/>
+                    <label class="control-label">Image for school listing page (If you didn't select school category then you can skip this section)</label><br/>
+                    <input type="file" name="school_image" id="selImage" accept="image/*" onchange="ValidateSingleInput(this, 'school_image_src')">
+                    @if ($errors->has('school_image'))
+                        <div class="error">{{ $errors->first('school_image') }}</div>
+                    @endif
+                  </div>
+
+                  @if(!empty($venue->school_image))
+                    <img id="school_image_src" style="width: 100px; height: 100px;" src="{{ URL::asset('/uploads').'/'.$venue->school_image }}" />
+                  @endif
+
 
                 <div class="card-footer pl-0">
                   <button type="submit" id="btnVanue" class="btn btn-primary">Submit</button>

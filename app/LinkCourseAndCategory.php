@@ -13,7 +13,7 @@ class LinkCourseAndCategory extends Model
     
 
     protected $fillable = [
-        'id', 'linked_course_cat', 'title', 'slug', 'description', 'image', 'status', 'created_at', 'updated_at'
+        'id', 'linked_course_cat', 'title', 'slug', 'description', 'image', 'school_image', 'status', 'created_at', 'updated_at'
     ];
 
      public function sluggable() {

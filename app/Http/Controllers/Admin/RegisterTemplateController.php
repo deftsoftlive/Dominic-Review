@@ -10,6 +10,7 @@ use App\Camp;
 
 class RegisterTemplateController extends Controller
 {
+    
     public function camp_reg_temp($id,Request $request)
     {
         if(isset($request->week))
@@ -22,6 +23,21 @@ class RegisterTemplateController extends Controller
         $shop1 = \DB::table('shop_cart_items')->where('shop_type','camp')->where('product_id',$id)->where('type','order')->where('orderID','!=',NULL)->groupBy('child_id')->get();
     	return view('admin.register-template.camp-template',compact('camp','shop', 'shop1', 'week_value'));
     }
+
+
+    public function daily_signin($id,Request $request)
+    {
+        if(isset($request->week))
+        {
+            $week_value = $request->week; 
+        }
+        
+        $camp = Camp::where('id',$id)->first();
+        $shop = \DB::table('shop_cart_items')->where('shop_type','camp')->where('product_id',$id)->where('type','order')->where('orderID','!=',NULL)->get();
+        $shop1 = \DB::table('shop_cart_items')->where('shop_type','camp')->where('product_id',$id)->where('type','order')->where('orderID','!=',NULL)->groupBy('child_id')->get();
+        return view('admin.register-template.daily-signin',compact('camp','shop', 'shop1', 'week_value'));
+    }
+
 
     public function course_reg_temp($id)
     {	

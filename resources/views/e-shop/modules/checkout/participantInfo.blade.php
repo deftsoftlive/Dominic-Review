@@ -95,6 +95,7 @@ $shop = \DB::table('shop_cart_items')->where('user_id',$login_user)->where('orde
                         <td class="cart-table__column">
                            <form method="POST" id="part_info" action="{{route('shop.checkout.saveParticipantInfo')}}">
                               @csrf
+                              <input type="hidden" name="user_id" value="{{$child->id}}">
                               <div class="form-group form-check">
                                  <label class="container_lable" >Confirm
                                  <input name="participant_info" type="checkbox" >
@@ -153,6 +154,10 @@ $shop = \DB::table('shop_cart_items')->where('user_id',$login_user)->where('orde
             </div>
             <a href="{{$backward}}" type="submit" class="cstm-btn main_button solid-btn">back</a>
             <a href="{{url('/shop/checkout/billing-address')}}" class="cstm-btn main_button">Save &amp; Continue</a>
+         @else
+         <!--  -->
+               <!-- <a href="{{$backward}}" type="submit" class="cstm-btn main_button solid-btn">back</a> -->
+               <!-- <button id="save_participant" class="cstm-btn main_button" type="submit">Save &amp; Continue</button> -->
          @endif
          </form>
          </div>            

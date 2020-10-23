@@ -203,6 +203,40 @@ public function InvoiceStatusHtml($data,$req,$template)
 }
 
 
+#---------------------------------------------------------------------------------------------------
+#  Subscribed Users
+#---------------------------------------------------------------------------------------------------
+
+public function SubscribeUsersSuccess($emails)
+{
+  $template_id = $this->emailTemplate['SubscribeUsers'];
+  return $this->SubscribeUsersSendEmail($emails,$template_id);
+}
+
+public function SubscribeUsersSendEmail($emails,$template_id)
+{
+    $template = EmailTemplate::find($template_id); 
+    $view= 'emails.customEmail';
+    $arr = [
+           'title' => $template->title,
+           'subject' => $template->subject,
+           'email' => $emails
+    ];
+    $data = $this->SubscribeUsersHtml($arr,$emails,$template); 
+
+    $ar= ['data' => $data];
+
+  return $this->send_subscribers_email($view,$ar,$arr);
+}
+
+public function SubscribeUsersHtml($data,$req,$template)
+{ 
+    $text = $template->body;  
+
+    return $text;
+}
+
+
 
 }
 

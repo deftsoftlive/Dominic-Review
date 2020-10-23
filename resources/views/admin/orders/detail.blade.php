@@ -36,11 +36,11 @@
                     <div class="card-header">
                       <h5>
                          Orders ({{$order->orderID}}) 
-                          <a href="{{url('/admin/orders/download')}}/{{$order->id}}" target="_blank" class="new-booking  mt-0 mr-0 mb-10  ml-10 nw_btn_three" style="color: #35486b"><span class="des-view"> <i class="fa fa-download" aria-hidden="true"></i></span></a>
+                          <!-- <a href="{{url('/admin/orders/download')}}/{{$order->id}}" target="_blank" class="new-booking  mt-0 mr-0 mb-10  ml-10 nw_btn_three" style="color: #35486b"><span class="des-view"> <i class="fa fa-download" aria-hidden="true"></i></span></a> -->
                             
-                            <!-- <a onclick="window.print();" target="_blank" class="d-print-none new-booking  mt-0 mr-0 mb-10  ml-10 nw_btn_three" style="color: #35486b">
+                            <a onclick="window.print();" target="_blank" class="d-print-none new-booking  mt-0 mr-0 mb-10  ml-10 nw_btn_three" style="color: #35486b">
                               <span class="des-view"> <i class="fa fa-download" aria-hidden="true"></i></span></a>
-                            </a> -->
+                            </a>
                       </h5> 
                       <div class="text-right">
                           <h4 class="">Order Total Amount : <b>&pound; {{$order->amount}}</b></h4>
@@ -128,7 +128,7 @@
                                         <td>
                                           <h5>{{$course->title}}</h5>
                                           <p>@php echo getSeasonname($course->season); @endphp | {{$course->day_time}}</p>
-                                          <p><b>Child</b> :{{isset($child->name) ? $child->name : ''}}</p>
+                                          <p><b>{{isset($child->type) ? $child->type : 'Account Holder'}}</b> :{{isset($child->name) ? $child->name : ''}}</p>
                                         </td>                               
                                         <td>{{isset($cart->discount_code) ? $cart->discount_code : '-'}}
                                         <br/>

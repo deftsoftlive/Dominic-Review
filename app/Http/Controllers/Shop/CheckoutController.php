@@ -71,14 +71,22 @@ public function participantInfo()
 /* Save participant info */
 public function saveParticipantInfo(Request $request)
 {
-	if(isset($request->participant_info)){
+	$check_consents = \DB::table('children_details')->where('child_id',$request->user_id)->first();
+    $check_contacts = \DB::table('child_contacts')->where('child_id', $request->user_id)->first();
 
-		if($request->participant_info == 'on'){
-			return redirect('/shop/checkout/billing-address');
+    if(isset($check_consents) && isset($check_contacts) && !empty($check_consents->media) && !empty($check_consents->confirm) && !empty($check_consents->med_cond))
+    {
+		if(isset($request->participant_info)){
+
+			if($request->participant_info == 'on'){
+				return redirect('/shop/checkout/billing-address');
+			}
+
+		}else{
+			return \Redirect::back()->with('error', 'Please confirm that the participant details are correct');
 		}
-
 	}else{
-		return \Redirect::back()->with('error', 'Please confirm that the participant details are correct');
+		return \Redirect::back()->with('error', 'Some details are missing. Please ensure each participant has complete details in order to proceed.');
 	}
 }
 

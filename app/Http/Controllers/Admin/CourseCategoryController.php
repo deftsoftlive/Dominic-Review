@@ -46,11 +46,20 @@ class CourseCategoryController extends Controller
 	        $image->move($destinationPath, $filename);
     	}
 
+        if ($request->hasFile('school_image')) {
+            $random = substr(str_shuffle("0123456789abcefghijkl"), 0, 5);
+            $school_image = $request->file('school_image');
+            $filename1 = time().'-'.$random.'.'.$school_image->getClientOriginalExtension();
+            $destinationPath = public_path('/uploads');
+            $school_image->move($destinationPath, $filename1);
+        }
+
     	LinkCourseAndCategory::create([
     		'title' => $request['title'],
     		'description' => $request['description'],
     		'linked_course_cat' => $request['linked_course_cat'],
     		'image' => $filename,
+            'school_image' => $filename1,
     	]);
     	return redirect()->route('admin.LinkCourseAndCategory.list')->with('flash_message', 'Course Category has been created successfully!');
     }
@@ -67,31 +76,55 @@ class CourseCategoryController extends Controller
     /*----------------------------------------
     |   Update Course category content
     |----------------------------------------*/ 
-    public function course_category_update(Request $request, $slug) {
-    	$validatedData = $request->validate([
+    public function course_category_update(Request $request, $slug) 
+    {   
+        //dd($request->all());
+    	
+        $validatedData = $request->validate([
             'title' => ['required', 'string', 'max:100'],
             // 'description' => ['required', 'string'],
             // 'image' => ['image','mimes:jpeg,png,jpg,gif,svg','max:2048']
         ]);
 
     	$venue = LinkCourseAndCategory::FindBySlugOrFail($slug);
+
     	$filename = $venue->image;
-    	if ($request->hasFile('image')) {
+    	if ($request->hasFile('image')) 
+        {
+            $string = str_random(5);
 	        $image = $request->file('image');
-	        $filename = time().'.'.$image->getClientOriginalExtension();
+	        $filename = time().$string.'.'.$image->getClientOriginalExtension();
 	        $destinationPath = public_path('/uploads');
 	        $img_path = public_path().'/uploads/'.$venue->image;
-	        if (file_exists($img_path)) {
-		        unlink($img_path);
-		    }
+	     //    if (file_exists($img_path)) {
+		    //     unlink($img_path);
+		    // }
 	        $image->move($destinationPath, $filename);
     	}
+
+
+        $filename1 = $venue->school_image;
+        if ($request->hasFile('school_image')) 
+        {
+            $string1 = str_random(5);
+            $school_image = $request->file('school_image');
+            $filename1 = time().$string1.'.'.$school_image->getClientOriginalExtension();
+            $destinationPath1 = public_path('/uploads');
+            $img_path = public_path().'/uploads/'.$venue->school_image;
+            // if (file_exists($img_path)) {
+            //     unlink($img_path);
+            // }
+            $school_image->move($destinationPath1, $filename1);
+        }
+
+        // dd($filename,$filename1);
 
     	$venue->update([
     		'title' => $request['title'],
     		'description' => $request['description'],
             'linked_course_cat' => $request['linked_course_cat'],
     		'image' => $filename,
+            'school_image' => $filename1,
     	]);
     	return redirect()->route('admin.LinkCourseAndCategory.list')->with('flash_message', 'Course Category has been updated successfully!');
     }

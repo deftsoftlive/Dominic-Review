@@ -45,11 +45,11 @@
                   </div>
                   <img src="" id="image_src" style="width: 100px; height: 100px; display: none"/>
                   
-                  <div class="form-group">
+                 <!--  <div class="form-group">
                     <label class="control-label">End Date</label>
                     <input type="date" id="txtDate" name="end_date" class="form-control" required>
                   </div>
-
+ -->
                   {{textbox($errors,'Points<span class="cst-upper-star">*</span>','points')}}
 
                 <div class="card-footer pl-0">

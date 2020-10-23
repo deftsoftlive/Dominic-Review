@@ -65,7 +65,7 @@ $wallet_amt = DB::table('wallets')->where('user_id',Auth::user()->id)->first();
                             <input type="hidden" name="user_id" value="{{\Auth::user()->id}}">
                             <div class="row wallet_form">
                                 <!-- Profile Name -->
-                                <div class="col-md-8 col-sm-12">
+                                <div class="col-md-12 col-sm-12">
                                     <div class="form-group row f-g-full">
                                         <p class="amt-money">Enter money amount</p>
                                        <!--  <label for="money_amount" class="col-md-12 col-form-label text-md-right">Enter money amount</label> -->
@@ -75,9 +75,10 @@ $wallet_amt = DB::table('wallets')->where('user_id',Auth::user()->id)->first();
                                             <strong>{{ $errors->first('money_amount') }}</strong>
                                         </span>
                                         @endif
+                                        <p style="margin-top: 5px;"> Add funds to your wallet with your payment card.</p>
                                     </div>
                                 </div>
-                                <div class="col-md-4 col-sm-12" id="add_money_btn"><a class="cstm-btn main_button">Add Money</a></div>
+                                <div class="col-md-12 col-sm-12" id="add_money_btn"><a class="cstm-btn main_button">Add Money</a></div>
                             </div>
                             <div class="form-button">
                                 <div class="form-group row mb-0">
@@ -88,7 +89,7 @@ $wallet_amt = DB::table('wallets')->where('user_id',Auth::user()->id)->first();
                                 </div>
                         </form>
                     </div>
-                    <p> Add funds to your wallet with your payment card.</p>
+                    
                 </div>
 
             </div>

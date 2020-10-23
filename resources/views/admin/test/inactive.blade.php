@@ -91,7 +91,7 @@
                                                             @php 
                                                                 $course_data = DB::table('courses')->where('id',$te->courses)->first(); 
                                                             @endphp
-                                                            {{isset($course_data->title) ? $course_data->title : ''}}
+                                                            {{isset($course_data->title) ? $course_data->title : ''}} - {{isset($course_data->season) ? getSeasonname($course_data->season) : ''}}
                                                             @endif
                                                             <!-- @php 
                                                                 $courses = explode(',',$te->courses); 

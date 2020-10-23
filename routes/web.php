@@ -85,6 +85,9 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     Route::any('parent-req-status','HomeController@parent_req_status')->name('parent_req_status');
     Route::any('course_booking','HomeController@course_booking')->name('course_booking');
 
+    // Dismiss notifications
+    Route::any('/parent-req/dismiss','HomeController@coach_dismiss_notifi')->name('dismiss-requests');
+
     // Goals Management
     Route::any('save-goal','HomeController@save_goal')->name('save_goal');
 
@@ -162,6 +165,9 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     // Route::any('/upload-profile-image/save','HomeController@save_profile_image')->name('save_profile_image');
 
     Route::any('crop-image', ['as'=>'croppie.upload-image','uses'=>'HomeController@save_profile_image']);
+
+    // All match reports
+    Route::any('all-match-reports','HomeController@all_match_reports')->name('all_match_reports');
 });
 
 // Coupon code

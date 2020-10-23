@@ -113,7 +113,10 @@
                                             -
                                           @endif
                                         </td>
-                                        <td>@php echo date('d/m/Y (h:i:s)',strtotime($ord->created_at)); @endphp</td>
+                                        @php 
+                                            $uk_time = utc_to_uk($ord->id);
+                                        @endphp
+                                        <td>@php echo date('d/m/Y (h:i:s)',strtotime($uk_time)); @endphp</td>
                                         <td>&pound; {{$ord->amount}}</td>
                                         <td>{{$ord->payment_by}}</td>
                                         

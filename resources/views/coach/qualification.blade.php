@@ -47,21 +47,21 @@ Y
                 @foreach($uploaded_documents as $doc)
                   <div id="upload_doc">
                     <div class="row">
-                      <div class="col-sm-3">
+                      <div class="col-lg-2 col-md-3 col-sm-3">
                         <div class="document-name">
                           <label><strong>Document Name</strong> - </label>
                           {{$doc->document_name}}
                         </div>
                       </div>
-                      <div class="col-sm-3">
+                      <div class="col-lg-3 col-md-3 col-sm-3">
                         <label><strong>Document Type</strong> - </label>
                         {{$doc->document_type}}
                        </div>
-                      <div class="col-sm-3">
+                      <div class="col-lg-2 col-md-3 col-sm-3">
                         <label><strong>Expiry Date</strong> - </label>
                         {{!empty($doc->expiry_date) ? $doc->expiry_date : 'No expiry date'}}
                       </div>
-                      <div class="col-sm-3">
+                      <div class="col-lg-2 col-md-3 col-sm-3">
                         <label><strong>Notification</strong> - </label>
                         @if($doc->notification == 'No Reminder')
                           @php $date = 'No Reminder'; @endphp
@@ -74,7 +74,7 @@ Y
                         @endif
                         {{$date}}
                       </div>
-                      <div class="col-sm-3">
+                      <div class="col-lg-3 col-md-3 col-sm-3 ">
                         <label><strong>Upload Document</strong> - </label>
                         <div class="doct-wrap">
                           <a target="_blank" href="{{URL::asset('/uploads/coach-document')}}/{{$doc->upload_document}}">{{ $doc->upload_document }}</a>
@@ -121,13 +121,13 @@ Y
 
                           <div id="upload_doc" class="upload_doc doc{{$count}}">
             							  <div class="row">
-              							  <div class="col-sm-3">
+              							  <div class="col-lg-2 col-md-4 qly-row">
               							    <div class="document-name">
                 								  <label>Document Name</label>
                 								  <input type="text" name="document_name[{{$count}}]" id="document_name" class="form-control" placeholder="Document Name" required/>
                 								</div>
               							  </div>
-              							  <div class="col-sm-3">
+              							  <div class="col-lg-3 col-md-4 qly-row">
                 							  <label>Document Type</label>
                 							  <select name="document_type[{{$count}}]" class="form-control">
                 								  <option value="Coaching Qualification">Coaching Qualification</option>
@@ -139,13 +139,13 @@ Y
                                   <option value="Others">Others</option>
                 								</select>
                 							 </div>
-              							  <div class="col-sm-3">
+              							  <div class="col-lg-2 col-md-4 qly-row">
               							    <label>Expiry Date</label>
               							    <div class="calendar">
               								  <input type="date" id="" class="form-control" name="expiry_date[{{$count}}]" placeholder="Expiry Date">
               								</div>
               							  </div>
-                              <div class="col-sm-3">
+                              <div class="col-lg-2 col-md-4 qly-row">
                                 <label>Notification</label>
                                 <select name="notification[{{$count}}]" class="form-control">
                                   <option value="No Reminder">No Reminder</option>
@@ -154,7 +154,7 @@ Y
                                   <option value="6 Months">6 Months</option>
                                 </select>
                               </div>
-                              <div class="col-sm-3">
+                              <div class="col-lg-3 col-md-5 qly-row">
                                 <label>Upload Document</label>
                                 <input type="file" name="upload_document[{{$count}}]" class="form-control" required=""><a onclick="removeSection11({{$count}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>
                               </div>
@@ -200,15 +200,15 @@ Y
             var newnumber =number+1;                        
             $("#noOfQuetion").val(newnumber);
 
-            var mainHtml='<div id="upload_doc" class="upload_doc doc'+newnumber+'"><div class="row"><div class="col-sm-3"><div class="document-name"><input type="text" name="document_name['+newnumber+']" id="document_name" class="form-control" placeholder="Document name" required /></div></div>';
+            var mainHtml='<div id="upload_doc" class="upload_doc doc'+newnumber+'"><div class="row"><div class="col-lg-2 col-md-4 qly-row"><div class="document-name"><input type="text" name="document_name['+newnumber+']" id="document_name" class="form-control" placeholder="Document name" required /></div></div>';
 
-            mainHtml+='<div class="col-sm-3"><select name="document_type['+newnumber+']" class="form-control"><option value="Coaching Qualification">Coaching Qualification</option><option value="DBS Certificate">DBS Certificate</option><option value="First Aid Certificate">First Aid Certificate</option><option value="Safeguarding Certificate">Safeguarding Certificate</option><option value="Insurance Document">Insurance Document</option><option value="LTA Accreditation">LTA Accreditation</option><option value="Others">Others</option></select></div>';
+            mainHtml+='<div class="col-lg-3 col-md-4 qly-row"><select name="document_type['+newnumber+']" class="form-control"><option value="Coaching Qualification">Coaching Qualification</option><option value="DBS Certificate">DBS Certificate</option><option value="First Aid Certificate">First Aid Certificate</option><option value="Safeguarding Certificate">Safeguarding Certificate</option><option value="Insurance Document">Insurance Document</option><option value="LTA Accreditation">LTA Accreditation</option><option value="Others">Others</option></select></div>';
                               
-            mainHtml+='<div class="col-sm-3"><div class="calendar"><input type="date" id="" class="form-control" name="expiry_date['+newnumber+']" placeholder="Expiry date"></div></div>';
+            mainHtml+='<div class="col-lg-2 col-md-4 qly-row"><div class="calendar"><input type="date" id="" class="form-control" name="expiry_date['+newnumber+']" placeholder="Expiry date"></div></div>';
 
-            mainHtml+='<div class="col-sm-3"><select name="notification[{{$count}}]" class="form-control"><option value="No Reminder">No Reminder</option><option value="1 Month">1 Month</option><option value="3 Months">3 Months</option><option value="6 Months">6 Months</option></select></div>';
+            mainHtml+='<div class="col-lg-2 col-md-4 qly-row"><select name="notification[{{$count}}]" class="form-control"><option value="No Reminder">No Reminder</option><option value="1 Month">1 Month</option><option value="3 Months">3 Months</option><option value="6 Months">6 Months</option></select></div>';
                               
-            mainHtml+='<div class="col-sm-3"><input type="file" name="upload_document['+newnumber+']" class="form-control" required /><a onclick="removeSection11('+newnumber+');" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>';
+            mainHtml+='<div class="col-lg-3 col-md-5 qly-row"><input type="file" name="upload_document['+newnumber+']" class="form-control" required /><a onclick="removeSection11('+newnumber+');" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>';
 
 
             $("#add_on_services").append(mainHtml);

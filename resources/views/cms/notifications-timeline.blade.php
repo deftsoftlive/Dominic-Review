@@ -33,6 +33,10 @@
         <div class="pink-heading">
             <h2>Notifications</h2>
         </div>
+
+        <p style="text-align: center;">{{ getAllValueWithMeta('notification_content', 'general-setting') }}</p>
+
+        <br/><br/>
         <div class="col-md-12">
             <!-- <h2 class="cst_sub_heading">Player Name</h2> -->
             <div class="player-report-table tbl_shadow">
@@ -65,10 +69,12 @@
 
                                     @php 
                                         $notification_arr = json_decode($notification->data); 
-                                        //dd($notification_arr->send_to,$child_id,Auth::user()->id);
+                                        //dd($notification_arr,$child_id,Auth::user()->id);
                                     @endphp
 
                                         <!-- <div style="display: flex; justify-content: space-between; align-items: center;" class="alert_msg alert alert-primary admin_notify"> -->
+
+                                            @if(!empty($notification_arr))
 
                                             @if($notification->notifiable_type = 'App\UserBadge' || $notification->notifiable_type = 'App\PlayerReport' || $notification->notifiable_type = 'App\MatchReport')
 
@@ -108,6 +114,8 @@
 
                                             @endif
 
+                                            @endif
+
                                         <!-- </div> -->
 
                                     @endforeach
@@ -116,11 +124,14 @@
                                 
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
         </div>
         <br><br>
+
+
     </div>
 </section>
 @endsection

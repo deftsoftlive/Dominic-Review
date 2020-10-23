@@ -684,6 +684,9 @@ trait GeneralSettingTrait {
                        'copyright_section' => getAllValueWithMeta('copyright_section', $slug),
                        'google_analytics' => getAllValueWithMeta('google_analytics', $slug),
 
+                       // Notification Text
+                       'notification_content' => getAllValueWithMeta('notification_content', $slug),
+
                        // Mailchimp API Key
                        'mailchimp_api_key' => getAllValueWithMeta('mailchimp_api_key', $slug),
 

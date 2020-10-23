@@ -4,7 +4,7 @@
 
 @section('content')
 
-@endsection
+
 
 <br/><br/>
 <br/><br/>
@@ -68,3 +68,4 @@
 	  
   </div>
 </section>
+@endsection

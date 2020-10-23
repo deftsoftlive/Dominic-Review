@@ -138,9 +138,10 @@
       @php 
       	$requests = DB::table('parent_coach_reqs')->where('coach_id',Auth::user()->id)->where('dismiss_by_coach',NULL)->get();  
       @endphp
-
+<div class="player-lik-wrap">
       <h5>Player Link Requests</h5>
-
+      <a style="float:right;margin-bottom: 10px;" class="cstm-btn main_button" href="{{url('/user/parent-req/dismiss')}}">All dismissed link requests</a>
+</div>
       @if(count($requests)> 0)
       <div class="all-members">
          <div class="row">
@@ -179,7 +180,12 @@
                     </form>
                      <p>Child Name: <span class="request-name">{{isset($details->name) ? $details->name : ''}}</span></p>
                      <p>Parent Name: <span class="request-name">{{isset($par_details->name) ? $par_details->name : ''}}</span></p>
-                     <p>Date: <span class="request-name">@php echo date("d/m/Y (H:i)",strtotime($req->updated_at)); @endphp</span></p>
+
+                      @php 
+                        $uk_time = timeutc_to_uk($req->updated_at); 
+                      @endphp
+                                        
+                     <p>Date: <span class="request-name">@php echo date('d/m/Y (h:i)',strtotime($uk_time)); @endphp</span></p>
                    
 
                       @if($req->status == '0')

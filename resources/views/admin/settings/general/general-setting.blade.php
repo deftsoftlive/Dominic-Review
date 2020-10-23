@@ -115,6 +115,14 @@
           </div>
         </div>
 
+        <!-- Google Analytics -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>NOTIFICATION TEXT</u></h5>
+             {{textarea($errors,'Notification Content <span class="cst-upper-star">*</span>','notification_content',$notification_content)}}
+          </div>
+        </div>
+
         <!-- Mailchimp Api Key -->
         <div class="card">
           <div class="card-body">

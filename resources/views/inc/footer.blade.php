@@ -116,6 +116,7 @@
     <script type="text/javascript" src="{{URL::asset('/e-shop/js/products/wishlist.js')}}"></script>
     <script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
     
+    
 <script type="text/javascript">
 $(document).ready(function(){
   if(!$(".alert_msg").hasClass("shop_items") && !$(".alert_msg").hasClass("course_items") && !$(".alert_msg").hasClass("camp_items")){
@@ -506,7 +507,13 @@ $('.upload-image').on('click', function (ev) {
     });
 
     $(window).on("load",function(){
-         $(".design-loader").fadeOut("slow");
+          $(".design-loader").fadeOut("slow");
+    });
+
+    $(document).ready(function(){
+      $("#childcare_form").on("submit", function(){
+          $("body").css('opacity',0.5);
+      });//submit
     });
     
   /*****************************
@@ -627,11 +634,11 @@ $('.upload-image').on('click', function (ev) {
 
     </script>
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
-  <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
   $( function() {
-    $( document ).tooltip();
+    $( '.player-achie-disable-list' ).tooltip();
   } );
   </script>
 

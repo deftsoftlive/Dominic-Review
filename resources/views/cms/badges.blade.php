@@ -453,11 +453,23 @@ label.confirm_msg.form-check-label {
                                                                     </a>
                                                                 </li>
                                                             </ul>
+                                                            
                                                             <select id="inputPlayer" name="user_id" class="form-control">
-                                                                <option selected="" disabled="">Select Player</option>
+                                                                <option 1111111111 selected="" disabled="">Select Player</option>
                                                                 @php
-                                                                $user_badges = DB::table('user_badges')->orderBy('id','asc')->get();
-                                                                $season = DB::table('seasons')->orderBy('id','asc')->get();
+                                                                    $children = DB::table('users')->where('parent_id',Auth::user()->id)->get();
+                                                                    $ids = [];
+                                                                @endphp
+
+                                                                @if(isset($children))
+                                                                    @foreach($children as $ch)
+                                                                        @php $ids[] = $ch->id; @endphp
+                                                                    @endforeach
+                                                                @endif
+
+                                                                @php 
+                                                                    $user_badges = DB::table('user_badges')->whereIn('user_id', $ids)->orderBy('id','asc')->get();
+                                                                    $season = DB::table('seasons')->orderBy('id','asc')->get();
                                                                 @endphp
 
                                                                 @if(!empty($user_badges))
@@ -629,18 +641,21 @@ label.confirm_msg.form-check-label {
                                                         </figure>
                                                         <div class="player-name-points">
                                                             @if(!empty($user_id))
+
                                                             @php 
-                                                            $user = DB::table('users')->where('id',$user_id)->first();
-                                                            $course = DB::table('courses')->where('id',$course_id)->where('season',$season_id)->first();
-                                                            $badges_data = DB::table('user_badges')->where('user_id',$user_id)->first();
+                                                                $user = DB::table('users')->where('id',$user_id)->first();
+                                                                $course = DB::table('courses')->where('id',$course_id)->where('season',$season_id)->first();
+                                                                $badges_data = DB::table('user_badges')->where('user_id',$user_id)->first();
                                                             @endphp
                                                             @else
                                                             @php
-                                                            $user = DB::table('users')->where('id',$shop->child_id)->first();
-                                                            $course = DB::table('courses')->where('id',$shop->product_id)->first(); 
-                                                            $badges_data = DB::table('user_badges')->where('user_id',$shop->child_id)->first();
+                                                                $user = DB::table('users')->where('id',$shop->child_id)->first();
+                                                                $course = DB::table('courses')->where('id',$shop->product_id)->first(); 
+                                                                $badges_data = DB::table('user_badges')->where('user_id',$shop->child_id)->first();
                                                             @endphp
+
                                                             @endif
+
                                                             @if(!empty($user_id))
                                                             <h2>{{$user->name}}</h2>
                                                             <h2>Points : <span>{{isset($user_badge->badges_points) ? $user_badge->badges_points : ''}} Points</span></h2>
@@ -657,27 +672,29 @@ label.confirm_msg.form-check-label {
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 
                                                 <div class="col-lg-5  col-md-5">
                                                     <div class="player-achievements">
                                                         <!-- <h2>achievements</h2> -->
                                                         <ul class="achievement-medals">
                                                             @php
-                                                            $badges_data = DB::table('user_badges')->where('user_id',$shop->child_id)->first();
+                                                            $badges_data = DB::table('user_badges')->where('user_id',$shop->child_id)->first();  
                                                             @endphp
 
-                                                            @if(!empty($badges_data))
-                                                            @php
-                                                            $selected_badges = explode(',',$badges_data->badges);
-                                                            $all_badges = DB::table('badges')->get()->toArray();
-                                                            @endphp
-                                                            @foreach($all_badges as $badge)
-                                                            @if(in_array($badge->id,$selected_badges))
-                                                            <li><img class="active-badge" src="{{URL::asset('/uploads')}}/{{$badge->image}}">
-                                                            </li>
-                                                            @endif
-                                                            @endforeach
+                                                            @if(!empty($badges_data) && $badges_data != null)
+                                                                @php 
+                                                                    $selected_badges = explode(',',$badges_data->badges);   
+                                                                    $all_badges = DB::table('badges')->get()->toArray();
+                                                                @endphp
+
+                                                                @if(isset($all_badges))
+                                                                    @foreach($all_badges as $badge)
+                                                                    @if(in_array($badge->id,$selected_badges))
+                                                                    <li><img class="active-badge" src="{{URL::asset('/uploads')}}/{{$badge->image}}">
+                                                                    </li>
+                                                                    @endif
+                                                                    @endforeach
+                                                                @endif
                                                             @endif
                                                         </ul>
                                                     </div>
@@ -686,7 +703,7 @@ label.confirm_msg.form-check-label {
                                                         <div class="inner-wrap">
                                                             <p class="custom-heading">Still to achieve – Click to see what you need to do</p>
                                                             <ul class="achievement-medals">
-                                                                @if(!empty($badges_data))
+                                                                @if(!empty($badges_data) && $badges_data != null)
                                                                 @foreach($all_badges as $badge)
                                                                 @if(in_array($badge->id,$selected_badges))
                                                                 @else
@@ -716,7 +733,7 @@ label.confirm_msg.form-check-label {
                                             $badges_data = DB::table('user_badges')->where('user_id',$shop->child_id)->first();
                                             @endphp
 
-                                            @if(!empty($selected_badges))
+                                            @if(!empty($selected_badges) && $badges_data != null)
                                             @php
                                             $selected_badges = explode(',',$badges_data->badges);
                                             $all_badges = DB::table('badges')->get()->toArray();
@@ -904,6 +921,8 @@ label.confirm_msg.form-check-label {
                                                                     @php
                                                                     $points = array();
                                                                     @endphp
+
+                                                                    @if(!empty($selected_badges))
                                                                     @foreach($selected_badges as $data=>$value)
                                                                     @php
                                                                     $badge = DB::table('badges')->where('id',$value)->first();
@@ -912,16 +931,21 @@ label.confirm_msg.form-check-label {
                                                                     @endforeach
                                                                     @php $total_points = array_sum($points); @endphp
                                                                     {{$total_points}}
+                                                                    @endif
                                                                 </p>
                                                             </td>
                                                             <td>
                                                                 <ul class="leader-bord-bages">
                                                                     <li>
                                                                         <figure>
+                                                                        @if(!empty($selected_badges))
                                                                             @foreach($selected_badges as $data=>$value)
                                                                             @php $badge = DB::table('badges')->where('id',$value)->first(); @endphp
-                                                                    <li title="{!! $badge->description !!}"><img style="width:40px;height:40px; object-fit:contain;" src="{{URL::asset('/uploads')}}/{{$badge->image}}"></li>
-                                                                    @endforeach
+
+                                                                            <li title="{!! $badge->description !!}"><img style="width:40px;height:40px; object-fit:contain;" src="{{URL::asset('/uploads')}}/{{$badge->image}}"></li>
+                                                                            @endforeach
+                                                                        @endif
+                                                                    
                                                                     </figure>
                                                                     </li>
                                                                 </ul>
@@ -954,9 +978,12 @@ label.confirm_msg.form-check-label {
                                     <div class="col-md-12">
                                         <div class="tab-page-heading">
                                             <h1>Player Reports</h1>
+                                           <!--  <a href="{{url('/user/coach-reports')}}" style="float: right;" class="cstm-btn main_button">Add Competition</a> -->
+                                           
                                         </div>
                                     </div>
                                 </div>
+                                <br/>
                                 <div class="col-md-12">
                                     @php
                                         $logined_user_id = \Auth::user()->id;
@@ -1078,7 +1105,7 @@ label.confirm_msg.form-check-label {
 							                              <p>{{$sho->comp_type}}</p>
 							                           </td>
 							                           <td>
-							                              <p>{{$sho->comp_date}}</p>
+							                              <p>@php echo date("d/m/Y", strtotime($sho->comp_date)); @endphp</p>
 							                           </td>
 							                           <td>
 							                              <p>{{$sho->comp_venue}}</p>

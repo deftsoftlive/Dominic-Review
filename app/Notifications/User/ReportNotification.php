@@ -71,7 +71,7 @@ class ReportNotification extends Notification
 
         return [
             'send_to' => $notifiable->player_id,
-            'data' => $coach_name.' has uploads a new report for player - '.$child_name
+            'data' => $coach_name.' has uploaded a new report for player - '.$child_name
         ];
     }
 }

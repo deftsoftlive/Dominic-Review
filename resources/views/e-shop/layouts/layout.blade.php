@@ -84,6 +84,23 @@
     <script>
         new WOW().init();
     </script>
+
+    <script type="text/javascript">
+    $(document).ready(function() 
+    {
+        if(window.location.origin+'/dominic-new/shop/thank-you')
+        {
+            window.history.pushState(null, "", window.location.href); 
+
+            window.onpopstate = function() 
+            {
+              window.history.pushState(null, "", window.location.href);
+            };
+
+        } 
+    });
+    </script>
+    
 </body>
 
 </html>

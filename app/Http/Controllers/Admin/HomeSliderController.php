@@ -33,12 +33,22 @@ class HomeSliderController extends Controller
     |----------------------------------------*/ 
     public function HomeSlider_create(Request $request) {
     	$validatedData = $request->validate([
+
             'title' => ['required', 'string'],
+            'title_color' => ['required'],
+
             'heading' => ['required', 'string'],
+            'heading_color' => ['required'],
+
             'subheading' => ['required', 'string'],
+            'sub_heading_color' => ['required'],
+
             'description' => ['required'],
+            'description_color' => ['required'],
+
             'button_text' => ['required', 'string'],
             'button_link' => ['required']
+
             // 'image' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048']
         ]);
 
@@ -50,13 +60,24 @@ class HomeSliderController extends Controller
     	}
 
     	HomeSlider::create([
+
     		'title' => $request['title'],
+            'title_color' => $request['title_color'],
+
     		'heading' => $request['heading'],
+            'heading_color' => $request['heading_color'],
+
             'subheading' => $request['subheading'],
+            'sub_heading_color' => $request['sub_heading_color'],
+
             'description' => $request['description'],
+            'description_color' => $request['description_color'],
+
     		'button_text' => $request['button_text'],
     		'button_link' => $request['button_link'],
+
     		'image' => isset($filename) ? $filename : '',
+
     	]);
     	return redirect()->route('admin.HomeSlider.list')->with('flash_message', 'Home Slider has been created successfully!');
     }
@@ -75,10 +96,19 @@ class HomeSliderController extends Controller
     |----------------------------------------*/ 
     public function HomeSlider_update(Request $request, $slug) {
     	$validatedData = $request->validate([
+  
             'title' => ['required'],
+            'title_color' => ['required'],
+
             'heading' => ['required'],
+            'heading_color' => ['required'],
+
             'subheading' => ['required'],
+            'sub_heading_color' => ['required'],
+
             'description' => ['required'],
+            'description_color' => ['required'],
+
             'button_text' => ['required'],
             'button_link' => ['required']
             // 'image' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048']
@@ -97,13 +127,24 @@ class HomeSliderController extends Controller
 	        $image->move($destinationPath, $filename);
     	}
     	$venue->update([
+
     		'title' => $request['title'],
-    		'heading' => $request['heading'],
+            'title_color' => $request['title_color'],
+
+            'heading' => $request['heading'],
+            'heading_color' => $request['heading_color'],
+
             'subheading' => $request['subheading'],
+            'sub_heading_color' => $request['sub_heading_color'],
+
             'description' => $request['description'],
+            'description_color' => $request['description_color'],
+
     		'button_text' => $request['button_text'],
     		'button_link' => $request['button_link'],
+            
     		'image' => isset($filename) ? $filename : '',
+
     	]);
     	return redirect()->route('admin.HomeSlider.list')->with('flash_message', 'Home Slider has been updated successfully!');
     }

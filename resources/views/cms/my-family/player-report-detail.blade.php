@@ -65,7 +65,7 @@ div#report_detail_cont {
                     @if($report->type == 'simple')
                     <div class="col-md-12 report_row">
                      <div class="table_wrap_my_family">
-                        <table class="table table-bordered cst-reports" style="width:100%">
+                        <table class="table table-bordered all_rps cst-reports" style="width:100%">
                           <tr>
                             <th><p><b>Date</b></p></th>
                             <th><p><b>Player Name</b></p></th> 
@@ -98,7 +98,7 @@ div#report_detail_cont {
                     <div class="col-md-12 report_row">
 
 
-                        <table class="table table-bordered  cst-reports">
+                        <table class="table table-bordered all_rps cst-reports">
                             <tbody>
                                 <tr>
                                     <th>
@@ -129,7 +129,7 @@ div#report_detail_cont {
                                     <th>
                                         <p><b>Coach Feedback</b></p>
                                     </th>
-                                    <td>{{isset($report->feedback) ? $report->feedback : ''}}</td>
+                                    <td><p>{{isset($report->feedback) ? $report->feedback : ''}}</p></td>
                                 </tr>
                             </tbody>
                         </table>

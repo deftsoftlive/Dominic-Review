@@ -50,27 +50,34 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
                      <tbody>
                         
                         @if(count($competitions)>0)
-                        @foreach($competitions as $sho)
-                        <tr>
-                           <td>
-                              <p>@php echo getUsername($sho->player_id); @endphp</p>
-                           </td>
-                           <td>
-                              <p>{{$sho->comp_type}}</p>
-                           </td>
-                           <td>
-                              <p>{{$sho->comp_date}}</p>
-                           </td>
-                           <td>
-                              <p>{{$sho->comp_venue}}</p>
-                           </td>
-                           <td>
-                              <p>{{$sho->comp_name}}</p>
-                           </td>
-                           <td>
-                              <p><a href="{{url('/user/competitions')}}/@php echo base64_encode($sho->id); @endphp">View Matches</a></p>
-                           </td>
-                        </tr>
+                        @foreach($competitions as $sho)  
+
+                        @php $link_req = DB::table('parent_coach_reqs')->where('child_id',$sho->player_id)->where('coach_id',Auth::user()->id)->where('status',1)->first(); @endphp
+
+
+                        @if(!empty($link_req))       
+                           <tr>
+                              <td>
+                                 <p>@if(!empty(getUsername($sho->player_id))) @php echo getUsername($sho->player_id); @endphp @else <b>User not found</b> @endif</p>
+                              </td>
+                              <td>
+                                 <p>{{$sho->comp_type}}</p>
+                              </td>
+                              <td>
+                                 <p>{{$sho->comp_date}}</p>
+                              </td>
+                              <td>
+                                 <p>{{$sho->comp_venue}}</p>
+                              </td>
+                              <td>
+                                 <p>{{$sho->comp_name}}</p>
+                              </td>
+                              <td>
+                                 <p><a href="{{url('/user/competitions')}}/@php echo base64_encode($sho->id); @endphp">View Matches</a></p>
+                              </td>
+                           </tr>
+                        @endif
+
                         @endforeach
                         @endif
                      </tbody>

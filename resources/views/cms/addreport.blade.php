@@ -1,768 +1,661 @@
-<!-- Header section -->
 @extends('inc.homelayout')
-
-@section('title', 'DRH|Report')
-
+@section('title', 'DRH|Register')
 @section('content')
+@php 
+$country_code = DB::table('country_code')->get();
+$notification = DB::table('parent_coach_reqs')->where('coach_id',Auth::user()->id)->where('status',NULL)->count();
+$user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->first(); 
+$count=1; 
+@endphp 
 
-    <section class="account-sec">
-    	<div class="container">
-    		<div class="row">
-    			<div class="col-md-12">
-    				<div class="account-sec-content">
-    					<h2 class="account-sec-heading">Account</h2>
-    				</div>
-    			</div>
-    		</div>
-    	</div>
-    </section>
-    <section class="account-menu-sec">
-    	<div class="container">
-    		<div class="row">
-    			<div class="col-md-12">
-    				<div class="account-menu-sec-heading">
-                      <h1>ACCOUNT menu</h1>
-    				</div>
-    			</div>
-    		</div>
-    		<div class="row">
-    		    <div class="col-md-12">
-    			    <nav>
-                      <div class="nav nav-tabs account-menu-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link menu-tab-link active" id="nav-goals-tab" data-toggle="tab" href="#nav-goals" role="tab" aria-controls="nav-home" aria-selected="true"><span><i class="fas fa-bullseye"></i></span>Player Goals</a>
-                        <a class="nav-item nav-link menu-tab-link" id="nav-badges-tab" data-toggle="tab" href="#nav-badges" role="tab" aria-controls="nav-profile" aria-selected="false"><span><i class="fas fa-trophy"></i></span>Player Badges</a>
-                        <a class="nav-item nav-link menu-tab-link" id="nav-reports-tab" data-toggle="tab" href="#nav-reports" role="tab" aria-controls="nav-contact" aria-selected="false"><span><i class="fas fa-clipboard-list"></i></span>Player Reports</a>
-                        <a class="nav-item nav-link menu-tab-link" id="nav-family-tab" data-toggle="tab" href="#nav-family" role="tab" aria-controls="nav-home" aria-selected="true"><span><i class="fas fa-users"></i></span>My Family</a>
-                        <a class="nav-item nav-link menu-tab-link" id="nav-bookings-tab" data-toggle="tab" href="#nav-bookings" role="tab" aria-controls="nav-bookings" aria-selected="false"><span><i class="fas fa-calendar-alt"></i></span>My Bookings</a>
-                        <a class="nav-item nav-link menu-tab-link" id="nav-settings-tab" data-toggle="tab" href="#nav-settings" role="tab" aria-controls="nav-settings" aria-selected="false"><span><i class="fas fa-cog"></i></span>Settings</a>
-                      </div>
-                    </nav>
-                    <div class="tab-content" id="nav-tabContent">
-                      <div class="tab-pane fade show active" id="nav-goals" role="tabpanel" aria-labelledby="nav-goals-tab">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="page-description">
-                              <p class="goal-setting-text">The above goal setting sheet is meant to help you start to have more control, become more accountable and be more motivated to work hard to
-achieve the things they want. It acts as just one of many elements that will be put in place over your tennis develop and improve. Don’t worry if you
-find it difficult to think of things to write down or you’re not sure what you want to achieve. You can ask your parent or coach to help you if you are notsure but they cannot do it for you. At the end of the term you need to review your goals and set new ones.</p> 
+
+
+<style>
+input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
+    background: white;
+    border:none;
+}
+
+</style>
+<div class="account-menu">
+    <div class="container">
+        <div class="menu-title">
+            <span>Account</span> menu
+        </div>
+        <nav>
+            <ul>
+            @php
+            $user_role = \Auth::user()->role_id;
+            @endphp
+            @if($user_role == '2')
+            @include('inc.parent-menu')
+            @elseif($user_role == 3)
+            @include('inc.coach-menu')
+            @endif
+            </ul>
+        </nav>
+    </div>
+</div>
+@if(Session::has('success'))
+<div class="alert_msg alert alert-success">
+    <p>{{ Session::get('success') }} </p>
+</div>
+@elseif(Session::has('error'))
+<div class="alert_msg alert alert-danger">
+    <p>{!! Session::get('error') !!} </p>
+</div>
+@endif
+
+
+<section class="report-sec">
+    <div class="container">
+        <div class="inner-cont">
+            <ul class="nav nav-tabs report-tab" id="myTab" role="tablist">
+
+                @if(Auth::user()->role_id == '3')
+                <li class="nav-item">
+                    <a class="nav-link cstm-btn active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">End of term report</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link cstm-btn" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Player Report</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link cstm-btn" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Match Report</a>
+                </li>
+                @else
+                <li class="nav-item">
+                    <a class="nav-link cstm-btn" href="{{ url()->previous() }}">Back to menu</a>
+                    <a class="nav-link cstm-btn" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Match Report</a>
+                </li>
+                @endif
+
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <!-- Report - 1 (Start Here)-->
+                <div class="tab-pane fade @if(Auth::user()->role_id == '3') show active @endif" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="upper-form report-tab-sec report-tab-one">
+                        <p class="sub-head">End of Term Report</p>
+                        <form id="simple_report_filter" action="{{route('coach_report')}}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-3 ">
+                                    <div class="form-group">
+                                        <h6>Term :</h6>
+                                        <select id="season_ID" name="season_id" >
+                                            <option selected="" disabled="">Select Term</option>
+                                            @php
+                                            $season = DB::table('seasons')->orderBy('id','asc')->get();
+                                            @endphp
+                                            @foreach($season as $se)
+                                            <option value="{{$se->id}}" @if(!empty($season_id) && $season_id == $se->id) selected @endif >{{$se->title}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 ">
+                                    <div class="form-group">
+                                        <h6>Course :</h6>
+                                                @if(!empty($course_id))
+                                                <input type="text" disabled="" name="" class="form-control" value="@php echo getCoursename($course_id); @endphp">
+                                                @else
+                                                <select id="course_ID" name="course_id" class="form-control">
+                                                    <option selected="" disabled="">Select Course</option>
+                                                </select>
+                                                @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-3 ">
+                                    <div class="form-group">
+                                        <h6>Select Player :</h6>
+                                            @if(!empty($user_id))
+                                            <input type="text" disabled="" name="" class="form-control" value="@php echo getUsername($user_id); @endphp">
+                                            @else
+                                            <select id="player_ID" name="player_id" class="player_data_ID form-control">
+                                                <option selected="" disabled="">Select Player</option>
+                                            </select>
+                                            @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-3 player-report-row">
+                                    <button type="submit" class="cstm-btn main_button">Submit</button>
+                                    <a href="{{route('coach_report')}}" class="cstm-btn main_button">Reset</a>
+                                </div>
                             </div>
-                          </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="report-2-cont">{!! getAllValueWithMeta('report1_content', 'report') !!}</p>
+                            </div>
                         </div>
-                  	    <div class="row">
-                  	      <div class="col-md-12">
-                  	      	<form class="select-player-goal-form">
-                  	      	  <div class="form-row">
-                                <div class="form-group col-md-4">
-                                  <label for="inputPlayer">Select Player :</label>
-                                  <select id="inputPlayer" class="form-control">
-                                    <option selected>Marbel Freytag</option>
-                                    <option>...</option>
-                                  </select>                                                               
-                                </div>   
-                                <div class="form-group col-md-4">
-                                  <label for="inputGoal">Select Goals :</label>
-                                  <select id="inputGoal" class="form-control">
-                                    <option selected>Level 1</option>
-                                    <option>...</option>
-                                  </select>                                                               
-                                </div>  
-                              </div>
-                            </form>                           
-                  	      </div>
-                  	      <div class="col-md-12">
-                              <div class="player-goal-heading">
-                              	<h1>All of your goals apart from your Big Dreams should follow the acronym S.M.A.R.T.</h1>
-                              </div>
-                  	      </div>
-                  	      <div class="col-md-12">
-                  	      	<fieldset class="player-goal-card">
-                  	      		<legend>MY BIG DREAMS</legend>
-                  	      		<p>What do you want to do or be when you are grown up? This doesn’t have to be tennis related</p>
-                  	      		<form>
-                  	      			<div class="form-group">
-                                      <textarea class="form-control goal-textarea" rows="3"></textarea>
+                        <br />
+                        <form id="simple_report" action="{{route('save_simple_report')}}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="sim_report_id" value="{{isset($player_report->id) ? $player_report->id : ''}}">
+                            <input type="hidden" name="type" value="simple">
+                            <input type="hidden" id="season_id" name="season_id" value="{{isset($season_id) ? $season_id : ''}}">
+                            <input type="hidden" id="course_id" name="course_id" value="{{isset($course_id) ? $course_id : ''}}">
+                            <input type="hidden" id="player_id" name="player_id" value="{{isset($user_id) ? $user_id : ''}}">
+                            <input type="hidden" id="rp_type" name="rp_type" value="simple">
+
+                            <div class="row">
+                                @php
+                                    $report_questions = DB::table('report_questions')->get(); 
+                                @endphp
+
+                                @foreach($report_questions as $ques)
+                                @php
+                                    $options = DB::table('report_question_options')->where('report_question_id',$ques->id)->get();
+                                    $player_rp = DB::table('player_reports')->where('player_id',$user_id)->where('season_id',$season_id)->where('course_id',$course_id)->first();
+                                @endphp
+
+                                @if($player_rp)
+
+                                @php 
+                                    $selected_options = json_decode($player_rp->selected_options);
+                                    $cat_option=[]; 
+                                @endphp
+
+                                @if(!empty($selected_options))
+                                @foreach($selected_options as $opt)
+                                @php 
+                                    $sel_data = explode('-',$opt);
+                                    $cat_option[] =  $sel_data[0].'-'.$sel_data[1];
+                                @endphp
+                                @endforeach
+                                @endif
+
+                                    <div class="col-md-6">
+                                    <div class="inner-form-box">
+                                        <p class="top-heading">{{$ques->title}}</p>
+                                        <div class="form-wrap">
+                                            @foreach($options as $op)
+                                            @php
+                                                $all_option = $ques->id.'-'.$op->id; 
+                                                $all_opt_arr = explode(' ',$all_option);
+                                            @endphp
+                                            
+
+                                            @if(in_array($all_option,$cat_option)) 
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="selected_options[]" type="checkbox" value="{{$ques->id}}-{{$op->id}}" checked id="defaultCheck">
+                                                    <label class="form-check-label" for="defaultCheck1">
+                                                        {{$op->option_title}}
+                                                    </label>
+                                                </div>
+                                            @else
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="selected_options[]" type="checkbox" value="{{$ques->id}}-{{$op->id}}"  id="defaultCheck">
+                                                    <label class="form-check-label" for="defaultCheck1">
+                                                        {{$op->option_title}}
+                                                    </label>
+                                                </div>
+                                            @endif
+
+                                            @endforeach
+                                        </div>
                                     </div>
-                  	      		</form>
-                  	      	</fieldset>
-                            <div class="goal-reciew-feedback">
-                              <p>Write goal review feedback</p>
-                              <form>
-                                <div class="form-group">
-                                  <textarea class="form-control goal-textarea" rows="3"></textarea>
                                 </div>
-                              </form>
-                            </div>
-                  	      </div>
-                  	      <div class="col-md-12">
-                  	      	<fieldset class="player-goal-card">
-                  	      		<legend>SHORT TERM TENNIS GOALS</legend>
-                  	      		<p>Between now and the end of the term</p>
-                  	      		<form>
-                  	      			<div class="form-group">
-                                      <textarea class="form-control goal-textarea" rows="3"></textarea>
+
+                                @else
+                                    
+                                <div class="col-md-6">
+                                    <div class="inner-form-box">
+                                        <p class="top-heading">{{$ques->title}}</p>
+                                        <div class="form-wrap">
+                                            @foreach($options as $op)
+                                        
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="selected_options[]" type="checkbox" value="{{$ques->id}}-{{$op->id}}"  id="defaultCheck">
+                                                <label class="form-check-label" for="defaultCheck1">
+                                                    {{$op->option_title}}
+                                                </label>
+                                            </div>
+
+                                            @endforeach
+                                        </div>
                                     </div>
-                  	      		</form>
-                  	      	</fieldset>
-                            <div class="goal-reciew-feedback">
-                              <p>Write goal review feedback</p>
-                              <form>
-                                <div class="form-group">
-                                  <textarea class="form-control goal-textarea" rows="3"></textarea>
                                 </div>
-                              </form>
+
+                                @endif
+
+                                @endforeach
                             </div>
-                  	      </div>
-                  	      <div class="col-md-12">
-                  	      	<fieldset class="player-goal-card">
-                  	      		<legend>MEDIUM TERM TENNIS GOALS</legend>
-                  	      		<p>3 to 6 months from now</p>
-                  	      		<form>
-                  	      			<div class="form-group">
-                                      <textarea class="form-control goal-textarea" rows="3"></textarea>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Coach Feedback:</label>
+                                        <textarea class="form-control" id="feedback" rows="5" name="feedback" placeholder="Comment here...">{{isset($player_report->feedback) ? $player_report->feedback : ''}}</textarea>
                                     </div>
-                  	      		</form>
-                  	      	</fieldset>
-                            <div class="goal-reciew-feedback">
-                              <p>Write goal review feedback</p>
-                              <form>
-                                <div class="form-group">
-                                  <textarea class="form-control goal-textarea" rows="3"></textarea>
                                 </div>
-                              </form>
                             </div>
-                  	      </div>
-                  	      <div class="col-md-12">
-                  	      	<fieldset class="player-goal-card">
-                  	      		<legend>LONG TERM TENNIS GOALS</legend>
-                  	      		<p>6 to 12 months from now</p>
-                  	      		<form>
-                  	      			<div class="form-group">
-                                      <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                    </div>
-                  	      		</form>
-                  	      	</fieldset>
-                            <div class="goal-reciew-feedback">
-                              <p>Write goal review feedback</p>
-                              <form>
-                                <div class="form-group">
-                                  <textarea class="form-control goal-textarea" rows="3"></textarea>
-                                </div>
-                              </form>
+                            
+
+                            @if(!empty($season_id) && !empty($user_id) && !empty($course_id))
+                            @php 
+                                $test_score = DB::table('test_scores')->where('test_cat_id','!=',NULL)->where('season_id',$season_id)->where('user_id',$user_id)->where('course_id',$course_id)->get();
+                            @endphp
+                            <br/>
+
+                            @if(count($test_score)>0)
+                            <div class="pink-heading">
+                                <h2>Test Score Data</h2>
                             </div>
-                  	      </div>
-                  	      <div class="col-md-12">
-                  	      	<div class="player-goal-info">
-                  	      	  <ul class="player-goal-inner-text-wrap">
-                  	      		<li>
-                  	      			<h2><span>S</span>pecific:</h2>
-                  	      			<p>Well defined, clear and unambiguous. What is the goal and how are you going to achieve it?</p>
-                  	      		</li>
-                  	      		<li>
-                  	      			<h2><span>M</span>easurable:</h2>
-                  	      			<p>With specific criteria that measure your progress towards the accomplishment of the goal. How will you know  if you’ve reached your goal?</p>
-                  	      		</li>
-                  	      		<li>
-                  	      			<h2><span>A</span>chievable:</h2>
-                  	      			<p>The achievability of the goal should be such that it makes you feel challenged, but defined well enough that you can actually achieve it. </p>
-                  	      		</li>
-                  	      		<li>
-                  	      			<h2><span>R</span>ealistic:</h2>
-                  	      			<p>Your SMART goal should be realistic and something you believe you can realistically achieve.</p>
-                  	      		</li>
-                  	      		<li>
-                  	      			<h2><span>T</span>imed:</h2>
-                  	      			<p>Your goal must be time-bound in that it has a start and finish date. If the goal is not time constrained, there will be no sense of urgency and motivation to achieve the goal.</p>
-                  	      		</li>
-                  	      	  </ul>
-                              <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">“I promise to work hard and do my best to achieve the goals that I have set for myself”</label>
-                              </div>
-                              <div class="player-goal-date">
-                            	  <p><span>Date :</span> 21 February 2020 </p>
-                              </div>
-                              <div class="set-goal-btn-wrap">
-                            	  <a href="javascript:void(0);" class="cstm-btn">set goals</a>
-                              </div>
-                            </div>                          
-                  	      </div>
-                  	    </div>
-                      </div>
-                      <div class="tab-pane fade" id="nav-badges" role="tabpanel" aria-labelledby="nav-badges-tab">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <form class="select-player-goal-form">
-                              <div class="form-row">
-                                <div class="form-group col-md-4">
-                                  <label for="inputPlayer">Select Player :</label>
-                                  <select id="inputPlayer" class="form-control">
-                                    <option selected>Marbel Freytag</option>
-                                    <option>...</option>
-                                  </select>                                                               
-                                </div> 
-                              </div>  
-                            </form>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="player-achievements-card">
-                              <div class="row">
+                            <!-- <label>Test Score Data:</label> -->
+                            <div class="table-layout">
+                                <table class="table table-bordered rp_test_score">
+                                    <thead>
+                                      <tr>
+                                          @if(count($test_score)> 0)
+                                            <th class="rp_player_name" rowspan="2">Player Name</th>
+                                          @endif
+
+                                          @if(count($test_score)> 0)
+                                          @foreach($test_score as $arr)
+                                            <th>@php echo getTestCatname($arr->test_cat_id); @endphp</th>
+                                          @endforeach
+                                          @endif
+                                          </tr>
+
+                                          <tr>
+                                          @if(count($test_score)> 0)
+                                          @foreach($test_score as $arr)
+                                            <th>@php echo getTestname($arr->test_id); @endphp</th>
+                                          @endforeach
+                                          @endif
+                                      </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                    @php
+                                      $test_score1 = DB::table('test_scores')->where('course_id',$course_id)->where('test_cat_id','!=',NULL)->where('season_id',$season_id)->where('user_id',$user_id)->groupBy('user_id')->get(); 
+                                    @endphp
+                                    @foreach($test_score1 as $arr)
+                                    <tr>
+                                        <td>@php $user = DB::table('users')->where('id',$arr->user_id)->first(); @endphp {{isset($user->name) ? $user->name : ''}}</td>
+                                        @php
+                                          $test_score12 = DB::table('test_scores')->where('user_id',$user->id)->where('course_id',$course_id)->where('test_cat_id','!=',NULL)->where('season_id',$season_id)->groupBy('test_id')->get(); 
+                                        @endphp
+                                        @foreach($test_score12 as $arr)
+                                            <td>{{$arr->test_score}}</td>
+                                        @endforeach
+                                    </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            @endif
+                            @endif
+
+                            <div class="row">
                                 <div class="col-md-4">
-                                  <div class="player-info">
-                                    <figure class="player-img-wrap">
-                                      <img src="{{ URL::asset('public/images/player-img.png')}}">
-                                    </figure>
-                                    <div class="player-name-points">
-                                      <h2>MARBEL FREYTAG</h2>
-                                      <h2>Points : 2000 Points</h2>
+                                    <div id="submit_sim_rep" class="form-group">
+                                        <!-- <a class="cstm-btn">submit report</a> -->
+                                        <!-- <button type="button" class="cstm-btn" data-toggle="modal" data-target="#sim_rp_popup">Submit Button</button> -->
+
+                                        <button type="submit" class="cstm-btn main_button">submit Report</button>
                                     </div>
-                                  </div> 
                                 </div>
-                                <div class="col-md-3">
-                                  <div class="player-group-season">
-                                    <p><span>Group :</span>xyz</p>
-                                    <p><span>Season :</span>xyz</p>
-                                  </div>
-                                </div>
-                                <div class="col-md-5">
-                                  <div class="player-achievements">
-                                    <h2>achievements</h2>
-                                    <ul class="achievement-medals">
-                                      <li>
-                                        <figure>
-                                          <img src="{{ URL::asset('public/images/achievement-medal-1.png')}}">
-                                        </figure>
-                                      </li>
-                                      <li>
-                                        <figure>
-                                          <img src="{{ URL::asset('public/images/achievement-medal-2.png')}}">
-                                        </figure>
-                                      </li>
-                                      <li>
-                                        <figure>
-                                          <img src="{{ URL::asset('public/images/achievement-medal-3.png')}}">
-                                        </figure>
-                                      </li>
-                                      <li>
-                                        <figure>
-                                          <img src="{{ URL::asset('public/images/achievement-medal-4.png')}}">
-                                        </figure>
-                                      </li>
-                                      <li>
-                                        <figure>
-                                          <img src="{{ URL::asset('public/images/achievement-medal-5.png')}}">
-                                        </figure>
-                                      </li>
-                                      <li>
-                                        <figure>
-                                          <img src="{{ URL::asset('public/images/achievement-medal-6.png')}}">
-                                        </figure>
-                                      </li>
-                                      <li>
-                                        <figure>
-                                         <img src="{{ URL::asset('public/images/achievement-medal-7.png')}}">
-                                        </figure>
-                                      </li>
-                                    </ul>
-                                  </div> 
-                                </div>
-                              </div>
                             </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="achievement-day">
-                              <!-- <h2>Day 1</h2> -->
-                            </div>
-                          </div>  
-                          <div class="col-md-12">
-                            <div class="school-bages-card">
-                              <div class="row">   
-                                <div class="col-md-3">
-                                  <div class="school-card">
-                                    <figure>
-                                      <img src=images/school-img-1.png>
-                                    </figure>
-                                    <p>RALLY WITH COACH</p>
-                                  </div>
-                                </div>
-                                <div class="col-md-6 offset-md-1">
-                                  <div class="school-details">
-                                    <p><span>Venu :</span> xyz school, uk</p>
-                                    <p><span>Date :</span> Mon 10 February 2020</p>
-                                    <p><span>Result :</span> Lorem Ipsum is simply dummy text of the printing</p>
-                                  </div>
-                                </div>
-                                <div class="col-md-2">
-                                  <div class="day-medal-wrap">
-                                   <figure ><img src="{{ URL::asset('public/images/achievement-medal-1.png')}}"></figure>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="achievement-day">
-                              <!-- <h2>Day 2</h2> -->
-                            </div>
-                          </div>  
-                          <div class="col-md-12">
-                            <div class="player-bages-card">
-                              <div class="row">   
-                                <div class="col-md-3">
-                                  <div class="school-card">
-                                    <figure>
-                                      <img src="{{ URL::asset('public/images/school-img-1.png')}}">
-                                    </figure>
-                                    <p>RALLY WITH COACH</p>
-                                  </div>
-                                </div>
-                                <div class="col-md-6 offset-md-1">
-                                  <div class="school-details">
-                                    <p><span>Venu :</span> xyz school, uk</p>
-                                    <p><span>Date :</span> Mon 10 February 2020</p>
-                                    <p><span>Result :</span> Lorem Ipsum is simply dummy text of the printing</p>
-                                  </div>
-                                </div>
-                                <div class="col-md-2">
-                                  <div class="day-medal-wrap">
-                                   <figure ><img src="{{ URL::asset('public/images/achievement-medal-6.png')}}"></figure>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="achievement-day">
-                              <!-- <h2>Day 3</h2> -->
-                            </div>
-                          </div>  
-                          <div class="col-md-12">
-                            <div class="player-bages-card">
-                              <div class="row">   
-                                <div class="col-md-3">
-                                  <div class="school-card">
-                                    <figure>
-                                      <img src="{{ URL::asset('public/images/school-img-1.png')}}">
-                                    </figure>
-                                    <p>RALLY WITH COACH</p>
-                                  </div>
-                                </div>
-                                <div class="col-md-6 offset-md-1">
-                                  <div class="school-details">
-                                    <p><span>Venu :</span> xyz school, uk</p>
-                                    <p><span>Date :</span> Mon 10 February 2020</p>
-                                    <p><span>Result :</span> Lorem Ipsum is simply dummy text of the printing</p>
-                                  </div>
-                                </div>
-                                <div class="col-md-2">
-                                  <div class="day-medal-wrap">
-                                   <figure ></figure>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="achievement-day">
-                              <!-- <h2>Day 4</h2> -->
-                            </div>
-                          </div>  
-                          <div class="col-md-12">
-                            <div class="player-bages-card">
-                              <div class="row">   
-                                <div class="col-md-3">
-                                  <div class="school-card">
-                                    <figure>
-                                      <img src="{{ URL::asset('public/images/school-img-1.png')}}">
-                                    </figure>
-                                    <p>RALLY WITH COACH</p>
-                                  </div>
-                                </div>
-                                <div class="col-md-6 offset-md-1">
-                                  <div class="school-details">
-                                    <p><span>Venu :</span> xyz school, uk</p>
-                                    <p><span>Date :</span> Mon 10 February 2020</p>
-                                    <p><span>Result :</span> Lorem Ipsum is simply dummy text of the printing</p>
-                                  </div>
-                                </div>
-                                <div class="col-md-2">
-                                  <div class="day-medal-wrap">
-                                   <figure ><img src="{{ URL::asset('public/images/achievement-medal-2.png')}}"></figure>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="achievement-day">
-                              <!-- <h2>Day 5</h2> -->
-                            </div>
-                          </div>  
-                          <div class="col-md-12">
-                            <div class="player-bages-card">
-                              <div class="row">   
-                                <div class="col-md-3">
-                                  <div class="school-card">
-                                    <figure>
-                                      <img src="{{ URL::asset('public/images/school-img-1.png')}}">
-                                    </figure>
-                                    <p>RALLY WITH COACH</p>
-                                  </div>
-                                </div>
-                                <div class="col-md-6 offset-md-1">
-                                  <div class="school-details">
-                                    <p><span>Venu :</span> xyz school, uk</p>
-                                    <p><span>Date :</span> Mon 10 February 2020</p>
-                                    <p><span>Result :</span> Lorem Ipsum is simply dummy text of the printing</p>
-                                  </div>
-                                </div>
-                                <div class="col-md-2">
-                                  <div class="day-medal-wrap">
-                                   <figure ><img src="{{ URL::asset('public/images/achievement-medal-1.png')}}"></figure>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="achievement-day">
-                              <!-- <h2>Day 6</h2> -->
-                            </div>
-                          </div>  
-                          <div class="col-md-12">
-                            <div class="player-bages-card">
-                              <div class="row">   
-                                <div class="col-md-3">
-                                  <div class="school-card">
-                                    <figure>
-                                      <img src="{{ URL::asset('public/images/school-img-1.png')}}">
-                                    </figure>
-                                    <p>RALLY WITH COACH</p>
-                                  </div>
-                                </div>
-                                <div class="col-md-6 offset-md-1">
-                                  <div class="school-details">
-                                    <p><span>Venu :</span> xyz school, uk</p>
-                                    <p><span>Date :</span> Mon 10 February 2020</p>
-                                    <p><span>Result :</span> Lorem Ipsum is simply dummy text of the printing</p>
-                                  </div>
-                                </div>
-                                <div class="col-md-2">
-                                  <div class="day-medal-wrap">
-                                   <figure ><img src="{{ URL::asset('public/images/achievement-medal-6.png')}}"></figure>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="achievement-day">
-                              <!-- <h2>Day 7</h2> -->
-                            </div>
-                          </div>  
-                          <div class="col-md-12">
-                            <div class="player-bages-card">
-                              <div class="row">   
-                                <div class="col-md-3">
-                                  <div class="school-card">
-                                    <figure>
-                                      <img src="{{ URL::asset('public/images/school-img-1.png')}}">
-                                    </figure>
-                                    <p>RALLY WITH COACH</p>
-                                  </div>
-                                </div>
-                                <div class="col-md-6 offset-md-1">
-                                  <div class="school-details">
-                                    <p><span>Venu :</span> xyz school, uk</p>
-                                    <p><span>Date :</span> Mon 10 February 2020</p>
-                                    <p><span>Result :</span> Lorem Ipsum is simply dummy text of the printing</p>
-                                  </div>
-                                </div>
-                                <div class="col-md-2">
-                                  <div class="day-medal-wrap">
-                                   <figure ></figure>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="leader-bord-heading-wrap">
-                              <h1>Leaderboard</h1>
-                            </div>
-                          </div>
-                          <div class="col-md-12">
-                            <div class="leader-board-table">
-                              <div class="leadertable-wrap">
-                              <table>
-                                <thead>
-                                  <tr>
-                                    <th>Sr. No.</th>
-                                    <th>Player Name</th>
-                                    <th>Points</th>
-                                    <th>Badges</th>
-                                  </tr>
-                                </thead>
-                                <tbody> 
-                                  <tr>
-                                    <td><p>1</p></td>
-                                    <td><p>Matteo</p></td>
-                                    <td><p>1200</p></td>
-                                    <td>
-                                      <ul class="leader-bord-bages">
-                                        <li>
-                                          <figure><img src="{{ URL::asset('public/images/leaderboard-bages-img-1.png')}}"></figure>
-                                        </li>
-                                      </ul>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td><p>2</p></td>
-                                    <td><p>Marbel Freytag</p></td>
-                                    <td><p>280</p></td>
-                                    <td>
-                                      <ul class="leader-bord-bages">
-                                        <li>
-                                          <figure><img src="{{ URL::asset('public/images/leaderboard-bages-img-2.png')}}"></figure>
-                                        </li>
-                                      </ul>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td><p>3</p></td>
-                                    <td><p>Francesco</p></td>
-                                    <td><p>103</p></td>
-                                    <td>
-                                      <ul class="leader-bord-bages">
-                                        <li>
-                                          <figure><img src="{{ URL::asset('public/images/leaderboard-bages-img-1.png')}}"></figure>
-                                        </li>
-                                       
-                                      </ul>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td><p>4</p></td>
-                                    <td><p>Khouma</p></td>
-                                    <td><p>1500</p></td>
-                                    <td>
-                                      <ul class="leader-bord-bages">
-                                        <li>
-                                          <figure><img src="{{ URL::asset('public/images/leaderboard-bages-img-2.png')}}"></figure>
-                                        </li>
-                                      </ul>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="tab-pane fade" id="nav-reports" role="tabpanel" aria-labelledby="nav-reports-tab">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <form class="select-created-by-form">
-                              <div class="form-row">
-                                <h1>Add Report</h1>
-                                <div class="form-group col-md-4">
-                                  <select id="inputPlayer-report" class="form-control">
-                                    <option selected>Created By</option>
-                                    <option>...</option>
-                                  </select>                                                               
-                                </div>
-                              </div>  
-                            </form>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="player-addreport-form">
 
-                                   <div class="competition-creation-form">
-                                     <form>
-                                       <h2>Competition Creation</h2>
-                                       <div class="form-row">                  
-                                         <div class="form-group col-md-4">
-                                           <select id="inputPlayer-report" class="form-control report-dropdwn">
-                                             <option selected>Created By</option>
-                                             <option>...</option>
-                                           </select>                                                               
-                                         </div>
-                                         <div class="form-group col-md-4">
-                                           <input type="text" class="form-control" id="datepicker" data-date-format="mm-dd-yyyy" placeholder="Competition Date">
-                                         </div>
-                                         <div class="form-group col-md-4">
-                                           <input type="text" class="form-control" placeholder="Competition Venue">
-                                         </div>
-                                         <div class="form-group col-md-4">
-                                           <select id="inputPlayer-report" class="form-control report-dropdwn">
-                                             <option selected>Age Group</option>
-                                             <option>...</option>
-                                           </select>                                                               
-                                         </div>
-                                       </div>  
-                                     </form>
-                                   </div>
-                                   <div class="match-creation-form">
-                                     <form>
-                                       <h2>Create a match</h2>
-                                       <div class="form-row"> 
-                                         <div class="form-group col-md-4">
-                                           <input type="text" class="form-control" placeholder="Match title">
-                                         </div>              
-                                         <div class="form-group col-md-4">
-                                           <input type="clock" class="form-control start-time" placeholder="Match start time">
-                                         </div>  
-                                         <div class="form-group col-md-4">
-                                           <select id="inputPlayer-report" class="form-control report-dropdwn">
-                                             <option selected>Match surface type</option>
-                                             <option>...</option>
-                                           </select>                                                               
-                                         </div>
-                                       </div>
-                                       <div class="form-row">
-                                         <div class="form-group col-md-4">
-                                           <select id="inputPlayer-report" class="form-control report-dropdwn">
-                                             <option selected>Match conditions</option>
-                                             <option>...</option>
-                                           </select>                                                               
-                                         </div>
-                                         <div class="form-group col-md-4">
-                                           <select id="inputPlayer-report" class="form-control report-dropdwn">
-                                             <option selected>Match Result</option>
-                                             <option>...</option>
-                                           </select>                                                               
-                                         </div>
-                                         <div class="form-group col-md-4">
-                                           <input type="text" class="form-control" placeholder="Match title">
-                                         </div>    
-
-                                       </div> 
-                                       <div class="form-row">
-                                         <div class="form-group col-md-12">
-                                           <textarea class="form-control report-textarea" rows="3" placeholder="Comment"></textarea>
-                                         </div>
-                                       </div>
-                                       <div class="add-another-match">
-                                         <a href="javascript:void(0);" class="add-match-btn"><span>Add Another Match</span><i class="fas fa-plus-square"></i></a>
-                                       </div>
-                                       <button  type="submit" class="cstm-btn">Submit</button>
-                                     </form>
-                                   </div>
-                              
+                            <div class="simple_rep modal fade term-report-modal" id="sim_rp_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" id="close_sim_rp_popup" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="inner-cont">
+                                                <div class="card coach_profile">
+                                                    <div class="row">
+                                                        <div class="col-md-12 coach">
+                                                            <ul>
+                                                                <li>
+                                                                    <span>You are about to sent Player Report to: </span>
+                                                                </li>
+                                                                <li>
+                                                                    <strong>Player Name : <input readonly type="text" class="popup form-control" name="pla_name" id="pla_name"></strong>
+                                                                    <span></span>
+                                                                </li>
+                                                                <li>
+                                                                    <strong>Player DOB : <input type="text" class="popup form-control" readonly name="pla_dob" id="pla_dob"></strong>
+                                                                    <span></span>
+                                                                </li>
+                                                                <br>
+                                                                <li>
+                                                                    <div class="cstm-radio">
+                                                                        <input type="checkbox" name="confirmation" id="report11">
+                                                                        <label for="report11">Please click confirm submission to send.</label> </div>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="form-group">
+                                                                <button type="submit" id="submit-simple-report" class="cstm-btn main_button">Submit Report</button>
+                                                            </div>
+                                                           
+                                                        </div>
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="tab-pane fade" id="nav-family" role="tabpanel" aria-labelledby="nav-family-tab">
-                      	
-                      </div>
-                      <div class="tab-pane fade" id="nav-booking" role="tabpanel" aria-labelledby="nav-bookings-tab">
-                      	
-                      </div>
-                      <div class="tab-pane fade" id="nav-settings" role="tabpanel" aria-labelledby="nav-settings-tab">
-                      	
-                      </div>
-                    </div>                
-    		    </div>
-    	    </div>
-        </div>
-    </section>
-    <section class="drh-activity-sec football-services-sec">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="drh-activity-heading text-center">
-              <div class="section-heading">
-                  <h1 class="sec-heading">DRH ACTIVITIES</h1>
+
+                        </form>
+                    </div>
                 </div>
-            </div>    
-          </div>
-            <div class="col-lg-4 col-md-6">
-              <div class="activity-card text-center">
-                  <figure class="activity-card-img">
-                    <img src="{{ URL::asset('public/images/drh-activity-img-1.png')}}">
-                  </figure>
-                  <figcaption class="activity-caption"> 
-                    <h2>Tennis Coaching Courses</h2>
-                    <p>Courses for all ages & abilities</p>
-                    <a href="javascript:void(0);" class="book-now-link">Book Now</a>  
-                  </figcaption>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-              <div class="activity-card text-center">
-                  <figure class="activity-card-img">
-                    <img src="{{ URL::asset('public/images/drh-activity-img-2.png')}}">
-                  </figure>
-                  <figcaption class="activity-caption"> 
-                    <h2>Football coaching</h2>
-                    <p>Coming soon!</p>
-                    <a href="javascript:void(0);" class="book-now-link">Book Now</a>  
-                  </figcaption>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-              <div class="activity-card text-center">
-                  <figure class="activity-card-img">
-                    <img src="{{ URL::asset('public/images/drh-activity-img-3.png')}}">
-                  </figure>
-                  <figcaption class="activity-caption"> 
-                    <h2>Camp Go!</h2>
-                    <p>Holidays camps for kids</p>
-                    <a href="javascript:void(0);" class="book-now-link">Book Now</a>  
-                  </figcaption>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="click-here-sec">
-      <div class="container">
-        <div class="row">
-        	<div class="col-md-8 offset-md-2">
-        		<div class="click-sec-content">
-        		  <h2 class="click-sec-tagline">Need help with kids camps or our coaching courses?</h2>
-        	  	  <ul class="click-btn-content">
-        	  	    <li>
-        	          <figure>
-        		   	    <img src="{{ URL::asset('public/images/click-btn-img.png')}}">
-        			  </figure>
-        		  	</li>
-        		  	<li>
-        		  		<a href="javascript:void(0);" class="cstm-btn">click here</a>
-        		  	</li>
-        		  	<li>
-        	          <figure>
-        		   	    <img src="{{ URL::asset('public/images/click-btn-img.png')}}">
-        			  </figure>
-        		  	</li>
-        		    </ul>
-        		</div>
-        	</div>
-        </div>
-      </div>
-    </section>
+                <!-- Report - 1 (End Here)-->
 
+
+                <!-- Report - 2 (Start Here)-->
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="upper-form report-tab-sec">
+                        <p class="sub-head">Player Report</p>
+                        <form id="complex_report_filter" action="{{route('coach_report')}}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <h6>Select Player :</h6>
+                                                @if(!empty($player_rep->player_id))
+                                                <input class="form-control" type="text" value="@php echo getUsername($player_rep->player_id); @endphp" disabled="">
+                                                @else
+                                                <select id="inputPlayer" name="coach_player_id" class="coach_player_id">
+                                                    <option selected="" disabled="">Select Player</option>
+                                                    @php
+                                                    $players = DB::table('parent_coach_reqs')->where('status',1)->orderBy('id','asc')->get();
+                                                    @endphp
+                                                    @foreach($players as $bd)
+                                                    @php
+                                                    $user = DB::table('users')->where('id',$bd->child_id)->first();
+                                                    @endphp
+                                                    <option value="{{$bd->child_id}}" @if(!empty($player_rep)) @if($player_rep->player_id == $bd->child_id) selected @endif @endif>{{isset($user->name) ? $user->name : ''}}</option>
+                                                    @endforeach
+                                                </select>
+                                                @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="cstm-btn main_button">Submit</button>
+                                    <a href="{{route('coach_report')}}" class="cstm-btn main_button">Reset</a>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- Complex Report -->
+                        <form id="complex_report" action="{{route('save_complex_report')}}" method="POST" enctype="multipart/form-data">
+                        
+                            @csrf
+                            <input type="hidden" name="report_id" value="{{ isset($player_rep->id) ? $player_rep->id : '' }}">
+                            <input type="hidden" id="exist_player_id" name="exist_player_id" value="{{ isset($player_rep->player_id) ? $player_rep->player_id : '' }}">
+                            <input type="hidden" id="report_type" name="type" value="complex">
+                            <input type="hidden" id="playerID" name="player_id" value="">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="report-2-cont">{!! getAllValueWithMeta('report2_content', 'report') !!}</p>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Coach Feedback:</label>
+                                        <textarea class="form-control" name="feedback" id="feedback" rows="5" placeholder="Comment here...">{{isset($player_rep->feedback) ? $player_rep->feedback : ''}}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div id="submit_rep" class="form-group">
+                                        <a class="cstm-btn main_button">submit report</a>
+                                        <!-- <button type="button" class="cstm-btn" data-toggle="modal" data-target="#exampleModal">Submit Button</button> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade term-report-modal" id="rp_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" id="close_rp_popup" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="inner-cont">
+                                                <div class="card coach_profile">
+                                                    <div class="row">
+                                                        <div class=" col-md-12 coach">
+                                                            <ul>
+                                                                <li>
+                                                                    <span>You are about to send this Player Report to: </span>
+                                                                </li>
+                                                                <li>
+                                                                    <strong>Player Name : <input readonly type="text" class="popup form-control" name="pl_name" id="pl_name"></strong>
+                                                                    <span></span>
+                                                                </li>
+                                                                <li>
+                                                                    <strong>Player DOB : <input type="text" class="popup form-control" readonly name="pl_dob" id="pl_dob"></strong>
+                                                                    <span></span>
+                                                                </li>
+                                                                <br>
+                                                                <!-- <li> -->
+                                                                  <!--   <div class="cstm-radio">
+                                                                        <input type="checkbox" name="confirmation" id="report">
+                                                                        <label for="report">Please click confirm submission to send.</label> </div> -->
+                                                                <!-- </li> -->
+                                                            </ul>
+                                                            <div class="form-group">
+                                                                <button type="submit" id="submit-complex-report" class="cstm-btn main_button">Submit Report</button>
+                                                            </div>
+                                                           
+                                                        </div>
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Report - 2 (End Here)-->
+
+                <!-- Match Report (Start Here)-->
+                <div class="tab-pane fade @if(Auth::user()->role_id == '2') show active @endif" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                    <div class="content-wrap">
+                        {!! getAllValueWithMeta('report3_content', 'report') !!}
+                    </div>
+                    <div class="form-head">
+                        <div class="pink-heading">
+                            <h2>Add Match Report</h2>
+                        </div>
+                        <form>
+                            <p>Who is this match report for?</p>
+                            <div class="form-group">
+                                <select id="child_id">
+                                    <option disabled="" selected="">Select Player</option>
+                                    @php 
+                                        $players = DB::table('parent_coach_reqs')->where('status',1)->orderBy('id','asc')->get();
+                                    @endphp
+                                    @foreach($players as $bd)
+                                        @php $user = DB::table('users')->where('id',$bd->child_id)->first(); @endphp
+                                        <option value="{{$bd->child_id}}" @if(!empty($player_rep)) @if($player_rep->player_id == $bd->child_id) selected @endif @endif>{{isset($user->name) ? $user->name : ''}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="outer-wrap">
+                        <div class="upper-form">
+                            <p class="sub-head">Create The Competition</p>
+                            <form action="{{route('add_competition')}}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="player_id" id="match_player_id" value="@if(!empty($comp->player_id)){{isset($comp->player_id) ? $comp->player_id : ''}}@endif">
+                                <input type="hidden" name="comp_id" value="@if(!empty($comp->id)){{isset($comp->id) ? $comp->id : ''}}@endif">
+                                <input type="hidden" name="coach_id" value="{{Auth::user()->id}}">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            
+                                            <select name="comp_type">
+                                                <option selected="" disabled="">Competition Type</option>
+                                                <option value="Tournament">Tournament</option>
+                                                <option value="Match Play">Match Play</option>
+                                                <option value="Club Event">Club Event</option>
+                                                <option value="Friendly">Friendly</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input class="form-control" placeholder="Competition Date - dd/mm/yyyy" name="comp_date" class="textbox-n" type="text" onfocus="(this.type='date')" id="date">
+
+                                            <!-- <input type="date" name="comp_date" value="" placeholder="Competition Date" onChange="this.setAttribute('value', this.value)" class="form-control"> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" name="comp_venue" placeholder="Competition Venue" value="" class="form-control" placeholder="Competition Venue">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <input type="text" name="comp_name" placeholder="Competition Name" class="form-control" placeholder="Competition Name" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <button type="submit" class="cstm-btn main_button">submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="outer-wrap">
+                        <div class="match-form-wrap">
+                            <p class="sub-head">Create The First Match</p>
+                            <form action="{{route('add_match')}}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="player_id" id="match_player_id" value="@if(!empty($comp->player_id)){{isset($comp->player_id) ? $comp->player_id : ''}}@endif">
+                                <input type="hidden" name="comp_id" value="@if(!empty($comp->id)){{isset($comp->id) ? $comp->id : ''}}@endif">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" name="opponent_name" placeholder="Opponent Name" class="form-control" placeholder="Opponent Name">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input class="form-control" placeholder="Match Date - dd/mm/yyyy" name="start_date" class="textbox-n" type="text" onfocus="(this.type='date')" id="date">
+                                            <!-- <input type="date" name="start_date" placeholder="Match Start Date" class="form-control"> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" name="surface_type" class="form-control" placeholder="Match Surface Type">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" name="condition" class="form-control" placeholder="Conditions">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <select name="result">
+                                                <option selected="" disabled="">Match Result</option>
+                                                <option value="Won">Won</option>
+                                                <option value="Lost">Lost</option>
+                                                <option value="Did Not Finish">Did Not Finish</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" placeholder="Score" name="score" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="textarea-wrap">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleFormControlTextarea1">What went well</label>
+                                                <textarea class="form-control" name="wht_went_well" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleFormControlTextarea1">What could've been better</label>
+                                                <textarea class="form-control" name="wht_could_better" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Other comments</label>
+                                        <textarea class="form-control" name="other_comments" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    </div>
+                                        <!-- <th><a onclick="addnewsection();" href="javascript:void(0);"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></th> -->
+
+
+                                        <!-- ******************************
+                                        |
+                                        |     Upload Match Chart
+                                        |
+                                        | ********************************* -->
+                                      <div class="table_outer_wrap">
+                                        <table class="add_on_services match_game_chart">
+                                            <thead>
+                                                <tr>
+                                                    <th>Upload Match Chart</th>
+                                                    <th><a onclick="addnewsection();" href="javascript:void(0);"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                          
+                                            <input type="hidden" id="noOfQuetion" value="{{$count}}">
+                                            <div class="mainQuestions" id="mainQuestions">
+
+                                                <tr class="timeslots slots{{$count}}" value={{$count}}>
+                                                <td><input type="file" name="match_chart[{{$count}}]"></td>
+                                                <td class="remove_game_chart">
+                                                    <!-- <a onclick="removeSection({{$count}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a> -->
+
+                                                    <a href="javascript:void(0);" onclick="removeSection({{$count}});" class="cstm-btn main_button">Delete</a>
+                                                </td>      
+                                                </tr>
+
+                                            </div>
+                                          
+                                            </tbody>
+                                        </table>
+                                        </div>
+
+                                    </div>
+                                <!-- </div> -->
+                                <button type="submit" class="cstm-btn main_button">submit</button>
+                            </form>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <!-- Match Report (End Here)-->
+                </div>
+            </div>
+        </div>
+</section>
 @endsection
-<!-- Footer Section-->

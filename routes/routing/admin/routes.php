@@ -73,6 +73,8 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
         // Mark Notifications as read 
         Route::any('/mark_as_read/{id}','Admin\AdminController@mark_as_read')->name('mark_as_read');
 
+        // Send email to all subscribers
+        Route::any('/send_subscriber_email','Admin\AdminController@send_subscriber_email')->name('send_subscriber_email');
 
 		#----------------------------------------------------------------
 		#  Event/Celebration Management
@@ -158,6 +160,7 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::any('enable_inv_status', 'Admin\UserController@enable_inv_status')->name('enable_inv_status');
 		Route::any('/linked-coaches', 'Admin\UserController@linked_coaches')->name('linked_coach_player');
 		Route::any('/subscribed-users', 'Admin\UserController@subscribed_users')->name('subscribed_users');
+		Route::any('/subscribed-users/active', 'Admin\UserController@active_subscribed_users')->name('active_subscribed_users');
 		Route::any('/unsubscribed-users/{id}', 'Admin\UserController@unsubscribed_users')->name('unsubscribed_users');
 		Route::any('/family-member/overview/{id}','Admin\UserController@family_member_overview')->name('admin_family_member_overview');
    		Route::any('family-member/add','Admin\UserController@admin_add_family_member')->name('admin-add-family-member');
@@ -532,6 +535,8 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		#----------------------------------------------------------------
 		Route::any('/register-template/course/{id}','Admin\RegisterTemplateController@course_reg_temp')->name('course_reg_temp');
 		Route::any('/register-template/camp/{id}','Admin\RegisterTemplateController@camp_reg_temp')->name('camp_reg_temp');
+		Route::any('/register-template/camp/{id}/daily-signin','Admin\RegisterTemplateController@daily_signin')->name('daily_signin');
+
 
 		// Save register template dates
 		Route::any('/save-course-reg-dates','Admin\RegisterTemplateController@save_course_reg_dates')->name('save_course_reg_dates');

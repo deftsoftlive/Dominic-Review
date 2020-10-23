@@ -61,14 +61,16 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                 </li>
                 <li class="nav-item">
                     <a class="nav-link cstm-btn" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Match Report</a>
+                    <!-- <a href="{{url('/user/all-match-reports')}}" class="cstm-btn main_button">All Match Reports</a> -->
                 </li>
                 @else
                 <li class="nav-item">
-                    <a class="nav-link cstm-btn" href="{{ url()->previous() }}
-">Back to menu</a>
+                    <a class="nav-link cstm-btn" href="{{ url()->previous() }}">Back to menu</a>
                     <a class="nav-link cstm-btn" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Match Report</a>
+                    <a href="{{url('/user/all-match-reports')}}" class="cstm-btn main_button">All Match Reports</a>
                 </li>
                 @endif
+
             </ul>
             <div class="tab-content" id="myTabContent">
                 <!-- Report - 1 (Start Here)-->
@@ -94,7 +96,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                 </div>
                                 <div class="col-md-3 ">
                                     <div class="form-group">
-                                        <h6>Course :<h6>
+                                        <h6>Course :</h6>
                                                 @if(!empty($course_id))
                                                 <input type="text" disabled="" name="" class="form-control" value="@php echo getCoursename($course_id); @endphp">
                                                 @else
@@ -106,7 +108,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                 </div>
                                 <div class="col-md-3 ">
                                     <div class="form-group">
-                                        <h6>Select Player :<h6>
+                                        <h6>Select Player :</h6>
                                             @if(!empty($user_id))
                                             <input type="text" disabled="" name="" class="form-control" value="@php echo getUsername($user_id); @endphp">
                                             @else
@@ -359,7 +361,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                             <div class="row">
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
-                                        <h6>Select Player :<h6>
+                                        <h6>Select Player :</h6>
                                                 @if(!empty($player_rep->player_id))
                                                 <input class="form-control" type="text" value="@php echo getUsername($player_rep->player_id); @endphp" disabled="">
                                                 @else
@@ -386,7 +388,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                         </form>
                         <!-- Complex Report -->
                         <form id="complex_report" action="{{route('save_complex_report')}}" method="POST" enctype="multipart/form-data">
-                        <!-- <form method="POST"> -->
+                        
                             @csrf
                             <input type="hidden" name="report_id" value="{{ isset($player_rep->id) ? $player_rep->id : '' }}">
                             <input type="hidden" id="exist_player_id" name="exist_player_id" value="{{ isset($player_rep->player_id) ? $player_rep->player_id : '' }}">
@@ -478,14 +480,30 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                             <p>Who is this match report for?</p>
                             <div class="form-group">
                                 <select id="child_id">
+
+                                @if(Auth::user()->role_id == '2')
+
+                                    <option disabled="" selected="">Select Player</option>
+                                    @php 
+                                        $players = DB::table('users')->where('parent_id',Auth::user()->id)->where('id', '!=', Auth::user()->id)->orderBy('id','asc')->get();
+                                    @endphp
+                                    @foreach($players as $bd)
+                                        <option value="{{$bd->id}}" @if(!empty($player_rep)) @if($player_rep->player_id == $bd->child_id) selected @endif @endif>{{isset($bd->name) ? $bd->name : ''}}</option>
+                                    @endforeach
+
+                                @elseif(Auth::user()->role_id == '3')
+
                                     <option disabled="" selected="">Select Player</option>
                                     @php 
                                         $players = DB::table('parent_coach_reqs')->where('status',1)->orderBy('id','asc')->get();
                                     @endphp
                                     @foreach($players as $bd)
                                         @php $user = DB::table('users')->where('id',$bd->child_id)->first(); @endphp
-                                        <option value="{{$bd->child_id}}" @if(!empty($player_rep)) @if($player_rep->player_id == $bd->child_id) selected @endif @endif>{{isset($user->name) ? $user->name : ''}}</option>
+                                        @if(!empty($user))
+                                            <option value="{{$bd->child_id}}" @if(!empty($player_rep)) @if($player_rep->player_id == $bd->child_id) selected @endif @endif>{{isset($user->name) ? $user->name : ''}}</option>
+                                        @endif
                                     @endforeach
+                                @endif
                                 </select>
                             </div>
                         </form>
@@ -645,14 +663,17 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                         </div>
 
                                     </div>
-                                </div>
+                                <!-- </div> -->
                                 <button type="submit" class="cstm-btn main_button">submit</button>
                             </form>
                         </div>
                         
                     </div>
                 </div>
+
                 <!-- Match Report (End Here)-->
+                </div>
             </div>
         </div>
 </section>
+@endsection

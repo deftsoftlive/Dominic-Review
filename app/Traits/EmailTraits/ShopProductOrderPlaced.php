@@ -751,18 +751,26 @@ public function CoachSubmitMatchReportSuccess($report_id)
 
 public function CoachSubmitMatchReportSendEmail($report,$template_id)
 {
-    // dd($report);
+    //dd($report);
 
     $parent = User::where('id',$report->player_id)->first();
-    $coach = User::where('id',$report->coach_id)->first();
+
+    if($report->coach_id == 0)
+    {
+      $user = User::where('id',$report->parent_id)->first();
+    }
+    elseif($report->parent_id == 0)
+    {
+      $user = User::where('id',$report->coach_id)->first();
+    }
 
     if(!empty($parent->parent_id))
     {
       $parent_name = getUsername($parent->parent_id);
       $parent_email = getUseremail($parent->parent_id);
     }else{
-      $parent_name = getUsername($parent->id);
-      $parent_email = getUseremail($parent->id);
+      $parent_name = $user->name;
+      $parent_email = $user->email;
     }
 
     $template = EmailTemplate::find($template_id); 
@@ -772,9 +780,9 @@ public function CoachSubmitMatchReportSendEmail($report,$template_id)
            'subject' => $template->subject,
            'name' => $parent_name,
            'email' => $parent_email,
-           'player' => $parent->name,
+           'player' => $parent_name,
            'type' => 'Match Report',
-           'coach' => $coach->name
+           'coach' => $user->name
     ];
     $data = $this->CoachSubmitMatchReportHtml($arr,$report,$template); 
 

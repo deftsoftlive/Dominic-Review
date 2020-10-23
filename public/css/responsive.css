@@ -52,6 +52,10 @@
     .we-run-container img {
         min-height: 180px;
     }
+    .upload-section label {
+    display: block;
+    white-space: nowrap;
+    }
 
     .table_wrap_my_family {
         overflow: auto;
@@ -452,6 +456,12 @@
         /*text-align: left;*/
         width: 78%;
     }
+     .upload-section .qly-row
+    {
+        margin-bottom: 15px
+    }
+    
+   
 
     .we-run-container img {
         min-height: auto;
@@ -1312,6 +1322,19 @@
         height: 80px;
         width: 50px;
     }
+    form#course-booking .form-group
+     {
+        flex-wrap: unset;
+     }
+    form#course-booking a.cstm-btn.event-booking-btn.main_button {
+        padding: 10px 14px;
+        max-width: 110px;
+        margin: 0 auto;
+    }
+    form#course-booking .outer-slt {
+        min-width: auto;
+      
+    }
 
     .outer-table-wrap {
         overflow: auto;
@@ -1775,9 +1798,9 @@
     }
 
     /*.course-list-detail .event-card-form .form-group label.cst-fees,*/
-    .course-list-detail .event-card-form .form-group a.cstm-btn.event-booking-btn {
+   /* .course-list-detail .event-card-form .form-group a.cstm-btn.event-booking-btn {
         display: none;
-    }
+    }*/
 
     form.register-form .option_row .form-group.row .form-radios p {
         margin-right: 0 !important;
@@ -2337,7 +2360,8 @@
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
-}
+    }
+     
 
     ul.pagination li a,
     ul.pagination li.active span,
@@ -2349,6 +2373,12 @@
 
         max-width: 100%;
 
+    }
+    .player-lik-wrap {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-direction: column;
     }
 
     .multistep-footer.mt-4.text-right a:first-child {

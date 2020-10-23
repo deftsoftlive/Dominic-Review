@@ -50,7 +50,7 @@
                                                     <th>Name</th>
                                                     <!-- <th>Description</th> -->
                                                     <th>Image</th> 
-                                                    <th>End date</th>
+                                                    <!-- <th>End date</th> -->
                                                     <th>Points</th>
                                                     <th>Action</th>
 
@@ -70,7 +70,7 @@
                                                         @endif
                                                         {{$bd->name}}</td>
                                                         <td><img width="50px;" height="50px;" src="{{URL::asset('/uploads')}}/{{$bd->image}}"></td>
-                                                        <td>{{$bd->end_date}}</td>
+                                                        <!-- <td>{{$bd->end_date}}</td> -->
                                                         <td>{{$bd->points}}</td>
                                                         <td>
                                                             <div class="btn-group">

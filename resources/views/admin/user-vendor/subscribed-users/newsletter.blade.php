@@ -17,6 +17,12 @@
     </div>
 </div>
 
+@if(Session::has('success'))
+<div class="alert_msg alert alert-success">
+    <p>{{ Session::get('success') }} </p>
+</div>
+@endif
+                                            
 <!-- [ breadcrumb ] end -->
 <div class="main-body">
     <div class="page-wrapper">
@@ -25,8 +31,10 @@
             <!-- [ Hover-table ] start -->
             <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header" style="justify-content: normal;float:right;">
                         <h5>Subscribed Users</h5>
+                        <a href="{{url('admin/subscribed-users/active')}}" class="btn btn-primary" style="color:white;">Active Subscribed Users</a>
+                        <a href="{{route('send_subscriber_email')}}" class="btn btn-primary" style="color:white;">Send Email</a>
                     </div>
 
                 <div class="card-block table-border-style">

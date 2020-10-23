@@ -51,11 +51,11 @@
                     <img id="image_src" style="width: 100px; height: 100px;" src="{{ URL::asset('/images').'/default.jpg' }}" />
                   @endif
                 
-                  <div class="form-group">
+                <!--   <div class="form-group">
                     <label class="control-label">End Date</label>
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
                     <input type="date" id="txtDate" name="end_date" value="{{$venue->end_date}}" class="form-control" required>
-                  </div>
+                  </div> -->
 
                   {{textbox($errors,'Points<span class="cst-upper-star">*</span>','points',$venue->points)}}
 
