@@ -17,6 +17,12 @@
     </div>
 </div>
 
+@if(Session::has('success'))
+<div class="alert_msg alert alert-success">
+    <p>{{ Session::get('success') }} </p>
+</div>
+@endif
+
 <!-- [ breadcrumb ] end -->
 <div class="main-body">
     <div class="page-wrapper">
@@ -86,7 +92,10 @@
                                     <td>-</td>
                                 @endif
                                 <td><p>@if(!empty($go->finalized_by)) @php echo getUsername($go->finalized_by); @endphp @else - @endif</p></td>
-                                <td><p><a href="{{url('/admin/goal')}}/{{$go->goal_type}}/{{$go->id}}">View</a></p></td> 
+                                <td>
+                                    <p><a href="{{url('/admin/goal')}}/{{$go->goal_type}}/{{$go->id}}">View</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a onclick="return confirm('Are you sure you want to delete this goal?')" href="{{url('/admin/goal')}}/delete/{{$go->goal_type}}/{{$go->id}}">Delete</a></p>
+                                </td> 
                             </tr>
                             @endforeach
                             @else

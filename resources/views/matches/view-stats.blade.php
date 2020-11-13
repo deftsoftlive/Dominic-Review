@@ -87,61 +87,61 @@ table.stats.table.table-bordered.cst-reports th {
                                  </tr>
                                  <tr>
                                     <th>
-                                       <p><b>2) Your percentage points won in match </b></p>
+                                       <p><b>2) Your % points won in match </b></p>
                                     </th>
                                     <td><h5><b>{{$stats_calculation['percent_pts_won']}}%</b></h5></td>
                                  </tr>
                                  <tr>
                                     <th>
-                                       <p><b>3) Your percentage of 1st serves in </b></p>
+                                       <p><b>3) Your % of 1st serves in </b></p>
                                     </th>
                                     <td><h5><b>{{$stats_calculation['percent_1serves_in']}}%</b></h5></td>
                                  </tr>
                                  <tr>
                                     <th>
-                                       <p><b>4) Your opponent’s percentage of points won in match </b></p>
+                                       <p><b>4) Your opponent’s % of points won in match </b></p>
                                     </th>
                                     <td><h5><b>{{$stats_calculation['op_percent_pts_won']}}%</b></h5></td>
                                  </tr>
                                  <tr>
                                     <th>
-                                       <p><b>5) Your opponent’s percentage of 1st serves in </b></p>
+                                       <p><b>5) Your opponent’s % of 1st serves in </b></p>
                                     </th>
                                     <td><h5><b>{{$stats_calculation['op_percent_1serves_in']}}%</b></h5></td>
                                  </tr>
                                  <tr>
                                     <th>
-                                       <p><b>6) Your percentage of points won from 1st serve </b></p>
+                                       <p><b>6) Your % of points won from 1st serve </b></p>
                                     </th>
                                     <td><h5><b>{{$stats_calculation['percent_pts_won_1serve']}}%</b></h5></td>
                                  </tr>
                                  <tr>
                                     <th>
-                                       <p><b>7) Your percentage of points won from 2nd serve </b></p>
+                                       <p><b>7) Your % of points won from 2nd serve </b></p>
                                     </th>
                                     <td><h5><b>{{$stats_calculation['percent_pts_won_2serve']}}%</b></h5></td>
                                  </tr>
                                  <tr>
                                     <th>
-                                       <p><b>8) Your percentage of points won on opponent’s 1st serve </b></p>
+                                       <p><b>8) Your % of points won on opponent’s 1st serve </b></p>
                                     </th>
                                     <td><h5><b>{{$stats_calculation['percent_pts_won_op_1serve']}}%</b></h5></td>
                                  </tr>
                                  <tr>
                                     <th>
-                                       <p><b>9) Your percentage of points won on opponent’s 2nd serve </b></p>
+                                       <p><b>9) Your % of points won on opponent’s 2nd serve </b></p>
                                     </th>
                                     <td><h5><b>{{$stats_calculation['percent_pts_won_op_2serve']}}%</b></h5></td>
                                  </tr>
                                  <tr>
                                     <th>
-                                       <p><b>10) Your percentage of points won when rally was 1-4 shots </b></p>
+                                       <p><b>10) Your % of points won when rally was 1-4 shots </b></p>
                                     </th>
                                     <td><h5><b>{{$stats_calculation['percent_pts_won_rally_1shots']}}%</b></h5></td>
                                  </tr>
                                  <tr>
                                     <th>
-                                       <p><b>11) Your percentage of points won when rally was 5+ shots </b></p>
+                                       <p><b>11) Your % of points won when rally was 5+ shots </b></p>
                                     </th>
                                     <td><h5><b>{{$stats_calculation['percent_pts_won_rally_5shots']}}%</b></h5></td>
                                  </tr>

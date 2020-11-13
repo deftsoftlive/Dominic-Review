@@ -57,6 +57,19 @@
           </div>
         </div>
 
+        <!-- Signup Banner -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>Signup Page - BANNER SECTION</u></h5>
+
+             <div class="form-group">
+              <label class="label-file control-label">Banner Image (1349 X 438)<span class="cst-upper-star">*</span></label>
+              <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'signup_banner_src')" class="form-control" name="signup_banner">
+             </div>
+             <img id="signup_banner_src" src="{{ URL::asset('/uploads').'/'.$signup_banner }}" style="width: 100px;" />
+          </div>
+        </div>
+
         <!-- Reset Password Banner -->
         <div class="card">
           <div class="card-body">

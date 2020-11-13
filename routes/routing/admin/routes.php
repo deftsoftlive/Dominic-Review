@@ -76,6 +76,10 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
         // Send email to all subscribers
         Route::any('/send_subscriber_email','Admin\AdminController@send_subscriber_email')->name('send_subscriber_email');
 
+        // Freeze coach account
+        Route::any('/freeze/coach-account/{id}','Admin\AdminController@freeze_coach_account')->name('freeze_coach_account');
+        Route::any('/freeze/account-details','Admin\AdminController@save_freeze_acc_details')->name('save_freeze_acc_details');
+
 		#----------------------------------------------------------------
 		#  Event/Celebration Management
 		#----------------------------------------------------------------
@@ -226,6 +230,30 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 
 
 		#----------------------------------------------------------------
+		#  Stripe Account Management
+		#----------------------------------------------------------------
+		Route::get('/stripe_account','Admin\StipeAccController@stripe_account_index')->name('admin.stripe_account.list');
+		Route::get('/stripe_account/create','Admin\StipeAccController@stripe_account_showCreate')->name('admin.stripe_account.showCreate');
+		Route::post('/stripe_account/create','Admin\StipeAccController@stripe_account_create')->name('admin.testimonial.create');
+		Route::get('/stripe_account/{slug}','Admin\StipeAccController@stripe_account_showEdit')->name('admin.stripe_account.showEdit');
+		Route::post('/stripe_account/{slug}','Admin\StipeAccController@stripe_account_update')->name('admin.testimonial.update');
+		Route::get('/stripe_account/status/{slug}','Admin\StipeAccController@stripe_account_Status')->name('admin.stripe_account.status');
+		Route::any('/stripe_account/delete/{id}','Admin\StipeAccController@delete_stripe_account')->name('delete_testimonial');
+
+
+		#----------------------------------------------------------------
+		#  Package Course Management
+		#----------------------------------------------------------------
+		Route::any('/package-course','Admin\PackageCourseController@package_course_index')->name('admin.packageCourse.list');
+		Route::get('/package-course/create','Admin\PackageCourseController@package_course_showCreate')->name('admin.packageCourse.showCreate');
+		Route::post('/package-course/create','Admin\PackageCourseController@package_course_create')->name('admin.packageCourse.create');
+		Route::any('/get-courses','Admin\PackageCourseController@get_courses')->name('get_courses');
+		Route::any('/package-course/delete/{booking_no}','Admin\PackageCourseController@delete_created_courses')->name('delete_created_courses');
+		Route::any('/package-course/detail/{booking_no}','Admin\PackageCourseController@package_course_detail')->name('admin.packageCourse.detail');
+		Route::any('/package-course/resend/{booking_no}','Admin\PackageCourseController@resend_course_link')->name('resend_course_link');
+
+
+		#----------------------------------------------------------------
 		#  DRH Activity Management
 		#----------------------------------------------------------------
 		Route::get('/drh-activity','Admin\DrhActivityController@drhactivity_index')->name('admin.drhactivity.list');
@@ -263,7 +291,7 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::get('/badge/status/{slug}','Admin\BadgeController@badge_Status')->name('admin.badge.status');
 		Route::any('/badge/delete/{id}','Admin\BadgeController@delete_badge')->name('delete_badge');
 		Route::any('/badge/players/list','Admin\BadgeController@players_listing')->name('players_list');
-		Route::any('/badge/assign_badge/season/{season}/player/{child_id}','Admin\BadgeController@assign_badge')->name('assign_badge');
+		Route::any('/badge/assign_badge/season/{season}/course/{course_id}/player/{child_id}','Admin\BadgeController@assign_badge')->name('assign_badge');
 		Route::any('/badge/players/save','Admin\BadgeController@save_assign_badge')->name('save_assign_badge');
 		Route::any('/update_badge_sort/{sort_no}/{badge_id}','Admin\BadgeController@update_badge_sort')->name('badge.sort');
 		Route::any('/selectedSeason','Admin\BadgeController@selectedSeason')->name('admin.selectedSeason');
@@ -381,6 +409,7 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		#----------------------------------------------------------------
 		Route::any('/goals','Admin\AdminController@goals')->name('admin.goal.list');
 		Route::any('/goal/{goal_type}/{id}','Admin\AdminController@goal_detail')->name('admin.goal.detail');
+		Route::any('/goal/delete/{goal_type}/{id}','Admin\AdminController@delete_goal')->name('admin.goal.delete');
 
 		#----------------------------------------------------------------
 		#  Report Question Management
@@ -402,6 +431,7 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 
 		Route::any('/player-reports','Admin\ReportQuestionController@player_reports')->name('admin.player_reports.listing');
 		Route::get('/player-report/{id}','Admin\ReportQuestionController@player_reports_detail')->name('admin.player_reports.detail');
+		Route::get('/player-report/delete/{id}','Admin\ReportQuestionController@player_reports_delete')->name('admin.player_reports.delete');
 
 		Route::any('/match-reports/competitions','Admin\ReportQuestionController@comp_list')->name('admin.matchReports.compList');
 		Route::any('/match-reports/competition/{id}','Admin\ReportQuestionController@comp_detail')->name('admin.matchReports.compDetail');

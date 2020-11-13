@@ -6,7 +6,7 @@
 
 @php $country_code = DB::table('country_code')->orderBy('countryname','asc')->get(); @endphp
 
-<section class="account-sec">
+<!-- <section class="account-sec">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -16,8 +16,22 @@
                 </div>
             </div>
         </div>
-    </section>
-    <section class="register-sec">
+    </section> -->
+
+@php $base_url = \URL::to('/'); @endphp
+<section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/{{ getAllValueWithMeta('signup_banner', 'banners') }});">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="football-course-content">
+          <h2 class="f-course-heading">Register As Parent Or Adult</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="register-sec">
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10">

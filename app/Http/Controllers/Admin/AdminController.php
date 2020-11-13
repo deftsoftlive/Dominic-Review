@@ -9,6 +9,7 @@ use App\User;
 use App\ChildActivity;
 use App\CoachUploadPdf;
 use App\SetGoal;
+use App\FreezeCoachAccount;
 use App\Notifications\NewUserNotification;
 use App\Models\Admin\EmailTemplate;
 use App\Traits\EmailTraits\EmailNotificationTrait;
@@ -526,6 +527,16 @@ public function changeProfileImage(Request $request) {
       return view('admin.goals.goal-detail',compact('get_goal','goals_data'));
     }
 
+    /******************************
+    | Delete goal 
+    |******************************/
+    public function delete_goal($goal_type,$id)
+    {
+      $get_goal = SetGoal::where('id',$id)->first();
+      $goals_data = SetGoal::where('parent_id',$get_goal->parent_id)->where('player_id',$get_goal->player_id)->where('goal_type',$goal_type)->delete();    
+      return \Redirect::back()->with('success','Goal deleted successfully.');
+    }
+
 
     /*****************************
     | Mark as read - Notifications
@@ -559,4 +570,69 @@ public function changeProfileImage(Request $request) {
     }
 
 
+    /***************************************
+    | Freeze coach account
+    |***************************************/
+    public function freeze_coach_account($id)
+    {
+      $coach_id = $id;
+      $freeze_details = FreezeCoachAccount::where('coach_id',$coach_id)->first(); 
+      return view('admin.user-vendor.users.freeze-coach-account',compact('coach_id','freeze_details'));
+    } 
+
+
+    /****************************************
+    | Save freeze account
+    |****************************************/
+    public function save_freeze_acc_details(Request $request)
+    {
+      //dd($request->all());
+
+      $this->validate($request,[
+
+          'profile' => 'required',
+          'reports' => 'required',
+          'matches' => 'required',
+          'invoices' => 'required',
+
+          'goals'   => 'required',
+          'players' => 'required',
+          'bookings'=> 'required',
+
+          'notifications' => 'required',
+          'wallet'        => 'required',
+          'settings'      => 'required'
+
+      ]);
+
+      $check_freeze_acc = FreezeCoachAccount::where('coach_id',$request->coach_id)->first(); 
+
+      if($check_freeze_acc == '')
+      {
+        $fr = new FreezeCoachAccount;
+      }
+      else
+      {
+        $fr = FreezeCoachAccount::find($check_freeze_acc->id);
+      }
+
+      //dd($check_freeze_acc);
+
+        $fr->coach_id       = $request->coach_id;
+        $fr->profile        = $request->profile;
+        $fr->reports        = $request->reports;
+        $fr->matches        = $request->matches;
+        $fr->invoices       = $request->invoices;
+        $fr->goals          = $request->goals;
+        $fr->players        = $request->players;
+        $fr->bookings       = $request->bookings;
+        $fr->notifications  = $request->notifications;
+        $fr->wallet         = $request->wallet;
+        $fr->settings       = $request->settings;
+
+        // dd($fr);
+        $fr->save();
+
+        return \Redirect::back()->with('success','Coach account is freezed successfully.');
+    }
 }

@@ -1,23 +1,22 @@
 @extends('inc.homelayout')
 @section('title', 'DRH|Register')
 @section('content')
+
 @php 
-$country_code = DB::table('country_code')->get();
-$notification = DB::table('parent_coach_reqs')->where('coach_id',Auth::user()->id)->where('status',NULL)->count();
-$user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->first(); 
-$count=1; 
+    $country_code = DB::table('country_code')->get();
+    $notification = DB::table('parent_coach_reqs')->where('coach_id',Auth::user()->id)->where('status',NULL)->count();
+    $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->first(); 
+    $count=1; 
 @endphp 
-
-
 
 <style>
 input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
     background: white;
     border:none;
 }
-
 </style>
-<div class="account-menu">
+
+<div class="account-menu d-print-none">
     <div class="container">
         <div class="menu-title">
             <span>Account</span> menu
@@ -50,7 +49,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
 <section class="report-sec">
     <div class="container">
         <div class="inner-cont">
-            <ul class="nav nav-tabs report-tab" id="myTab" role="tablist">
+            <ul class="nav nav-tabs report-tab d-print-none" id="myTab" role="tablist">
 
                 @if(Auth::user()->role_id == '3')
                 <li class="nav-item">
@@ -358,7 +357,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                         <p class="sub-head">Player Report</p>
                         <form id="complex_report_filter" action="{{route('coach_report')}}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <div class="row">
+                            <div class="row d-print-none">
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <h6>Select Player :</h6>
@@ -368,13 +367,18 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                                 <select id="inputPlayer" name="coach_player_id" class="coach_player_id">
                                                     <option selected="" disabled="">Select Player</option>
                                                     @php
-                                                    $players = DB::table('parent_coach_reqs')->where('status',1)->orderBy('id','asc')->get();
+                                                        $players = DB::table('parent_coach_reqs')->where('status',1)->orderBy('id','asc')->get();
                                                     @endphp
+                                                    
                                                     @foreach($players as $bd)
                                                     @php
-                                                    $user = DB::table('users')->where('id',$bd->child_id)->first();
+                                                        $user = DB::table('users')->where('id',$bd->child_id)->first();
                                                     @endphp
-                                                    <option value="{{$bd->child_id}}" @if(!empty($player_rep)) @if($player_rep->player_id == $bd->child_id) selected @endif @endif>{{isset($user->name) ? $user->name : ''}}</option>
+
+                                                    @if(!empty($user))
+                                                        <option value="{{$bd->child_id}}" @if(!empty($player_rep)) @if($player_rep->player_id == $bd->child_id) selected @endif @endif>{{isset($user->name) ? $user->name : ''}}</option>
+                                                    @endif
+
                                                     @endforeach
                                                 </select>
                                                 @endif
@@ -394,21 +398,23 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                             <input type="hidden" id="exist_player_id" name="exist_player_id" value="{{ isset($player_rep->player_id) ? $player_rep->player_id : '' }}">
                             <input type="hidden" id="report_type" name="type" value="complex">
                             <input type="hidden" id="playerID" name="player_id" value="">
-                            <div class="row">
+                            <div class="row d-print-none">
                                 <div class="col-md-12">
                                     <p class="report-2-cont">{!! getAllValueWithMeta('report2_content', 'report') !!}</p>
                                 </div>
                             </div>
                             <br />
-                            <div class="row">
+
+                            <div class="row d-print-none">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Coach Feedback:</label>
-                                        <textarea class="form-control" name="feedback" id="feedback" rows="5" placeholder="Comment here...">{{isset($player_rep->feedback) ? $player_rep->feedback : ''}}</textarea>
+                                        <textarea class="form-control" name="feedback" id="feedback" rows="5" placeholder="Comment here..."></textarea>
+                                        <!-- <textarea class="form-control" name="feedback" id="feedback" rows="5" placeholder="Comment here...">{{isset($player_rep->feedback) ? $player_rep->feedback : ''}}</textarea> -->
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row d-print-none">
                                 <div class="col-md-4">
                                     <div id="submit_rep" class="form-group">
                                         <a class="cstm-btn main_button">submit report</a>
@@ -416,6 +422,66 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                     </div>
                                 </div>
                             </div>
+
+
+
+                            @php 
+                                $i = 1; 
+                                $exist_player = isset($player_rep->player_id) ? $player_rep->player_id : '' ;
+                            @endphp
+
+                            @if(!empty($exist_player))
+                            @php
+                                $reports = DB::table('player_reports')->where('type','complex')->where('player_id',$exist_player)->get();
+                            @endphp
+
+                            <p class="sub-head">Previous player reports for {{getUsername($exist_player)}}</p>
+                            <!-- <a id="print_all_rps" target="_blank" class="d-print-none cstm-btn main_button">Print</a> -->
+                            
+
+                            <div class="m-b-table">
+                                <br/>
+
+                                <div class="player-report-table tbl_shadow records_wrap">
+                                    <div class="report-table-wrap">
+                             
+                                    <div class="m-b-table">
+
+                                        <table>
+                                        <thead>
+                                          <tr>
+                                            <th class="d-print-none">Report No.</th>
+                                            <th>Date</th>
+                                            <th>Feedback</th>
+                                            <th class="d-print-none">Action</th>
+                                          </tr>
+                                        </thead>
+                                            <tbody>
+                          
+                                            @php $i=1; @endphp
+                                            @foreach($reports as $re)
+                                              <tr class="pl_rp_data player-reports-{{$re->id}}">
+                                                <td class="d-print-none"><p>{{$i}}</p></td>
+                                                <td>{{ date('d/m/Y',strtotime($re->created_at)) }}</td>
+                                                <td width="70%"><p>{{$re->feedback}}</p></td> 
+                                                <td><a style="cursor: pointer;" target="_blank" data-id="{{$re->id}}" class="print_report d-print-none cstm-btn main_button">Print</a></td>
+                                              </tr>
+                                            @php $i++; @endphp
+                                            @endforeach
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+                                    </div>
+                                </div>
+                            
+                            </div>
+                            @endif
+
+
+                            <br/><br/>
 
                             <div class="modal fade term-report-modal" id="rp_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">

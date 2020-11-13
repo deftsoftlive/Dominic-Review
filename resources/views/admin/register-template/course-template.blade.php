@@ -63,6 +63,7 @@ td.checkbox_course {
                         <th>Category:</th>
                         <td>@php echo getProductCatname($course->type); @endphp</td>
                     </tr>
+
                     <tr>
                         <th>Group:</th>
                         <td>{{$course->age_group}}</td>
@@ -71,13 +72,15 @@ td.checkbox_course {
                     <tr>
                         <th>Location:</th>
                         <td>{{$course->location}}</td>
-                    </tr><tr>
-                          <th>Season:</th>
+                    </tr>
+
+                    <tr>
+                        <th>Season:</th>
                         <td>@php echo getSeasonname($course->season); @endphp</td>
                     </tr>
 
                     <tr>
-                          <th>Coach:</th>
+                        <th>Coach:</th>
                         <td>@php echo getUsername($course->linked_coach); @endphp</td>
                     </tr>
                 </thead>
@@ -91,7 +94,7 @@ td.checkbox_course {
                     <tr>
                         <th>Player Name</th>
                         <th>Player DOB</th>
-                        <th>Med</th>
+                        <th>Media</th>
                         <th>Parent Name</th>
                         <th>Parent Tel</th>
 
@@ -118,7 +121,7 @@ td.checkbox_course {
 
                     @php 
                         $player = DB::table('users')->where('id',$sh->child_id)->first();  
-                        $child_details = DB::table('children_details')->where('id',$sh->child_id)->first();
+                        $child_details = DB::table('children_details')->where('child_id',$sh->child_id)->first();
                     @endphp
 
                     @if(!empty($player))
@@ -129,11 +132,10 @@ td.checkbox_course {
                     
                     <input type="hidden" name="course_id" value="{{$course->id}}">
                     
-
                         <tr>
                             <td class="@if(!empty($player)) @if($player->gender == 'male') odd-name-row @elseif($player->gender == 'female') even-name-row @endif @endif"> {{isset($player->name) ? $player->name : ''}}</td>
                             <td>@if(isset($player->date_of_birth)) @php echo date('d/m/Y',strtotime($player->date_of_birth)); @endphp @endif</td>
-                            <td>@if($child_details['med_cond'] == 'confirm_accurate_no') N @else Y @endif</td>
+                            <td style="text-align:center;">@if(!empty($child_details->media) && ($child_details->media == 'yes')) Y @else N @endif</td>
                             <td>{{isset($parent->name) ? $parent->name : ''}}</td>                      
                             <td>{{isset($parent->phone_number) ? $parent->phone_number : ''}}</td>     
 

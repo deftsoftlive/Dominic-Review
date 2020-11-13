@@ -7,18 +7,19 @@
 
 @php $country_code = DB::table('country_code')->get(); @endphp
 
-<section class="account-sec">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="account-sec-content">
-                        <h2 class="account-sec-heading">Register As Coach</h2>
-                    </div>
-                </div>
-            </div>
+@php $base_url = \URL::to('/'); @endphp
+<section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/{{ getAllValueWithMeta('signup_banner', 'banners') }});">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="football-course-content">
+          <h2 class="f-course-heading">Register As Coach</h2>
         </div>
-    </section>
-    <section class="register-sec">
+      </div>
+    </div>
+  </div>
+</section>
+<section class="register-sec">
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10">

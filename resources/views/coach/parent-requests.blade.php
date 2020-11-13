@@ -109,7 +109,7 @@
                                                 <p>{{ $notification_arr->data }}</p>
                                             </td>
                                             <td class="view_option">
-                                               <p> <a style="" href="{{url('/admin/mark_as_read')}}/{{$notification->id}}" >Mark as Read</a></p>
+                                               <p> <a style="" href="{{url('/user/mark_as_read')}}/{{$notification->id}}" >Mark as Read</a></p>
                                             </td>
                                         </tr>
 
@@ -178,14 +178,15 @@
                       <input type="hidden" name="id" value="{{$req->id}}">
                       <span class="parent-req-close"><button type="submit">x</button></span>
                     </form>
-                     <p>Child Name: <span class="request-name">{{isset($details->name) ? $details->name : ''}}</span></p>
+                     <p>Player Name: <span class="request-name">{{isset($details->name) ? $details->name : ''}}</span></p>
                      <p>Parent Name: <span class="request-name">{{isset($par_details->name) ? $par_details->name : ''}}</span></p>
 
                       @php 
-                        $uk_time = timeutc_to_uk($req->updated_at); 
+                        $t1 = $req->updated_at;
+                        $uk_time = timeutc_to_uk($t1); 
                       @endphp
                                         
-                     <p>Date: <span class="request-name">@php echo date('d/m/Y (h:i)',strtotime($uk_time)); @endphp</span></p>
+                     <p>Date: <span class="request-name">@php echo date('d/m/Y',strtotime($req->updated_at)); @endphp ({{$uk_time}})</span></p>
                    
 
                       @if($req->status == '0')

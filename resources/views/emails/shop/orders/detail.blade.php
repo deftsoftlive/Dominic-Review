@@ -79,7 +79,7 @@
          <td style="font-family: Verdana, 'Times New Roman', Arial;vertical-align:top; font-size: 14px; line-height: 22px; color: #0c0c0c; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
             <p style="color: #333; font-weight:bold; margin-top: 0px; margin-bottom: 5px;  font-size: 16px; font-family: Verdana, 'Times New Roman', Arial;">{{$course->title}}</p>
             <span style="color: #333;  font-size: 14px; font-family: Verdana, 'Times New Roman', Arial;">
-             <b>Child:</b> {{$child->name}}
+             <b>Child:</b> {{isset($child->name) ? $child_name : ''}}
            </span>
            
 

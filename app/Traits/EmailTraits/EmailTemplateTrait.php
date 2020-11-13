@@ -80,12 +80,18 @@ protected $emailTemplate = [
       'BookATasterUserClass' =>34,
 
       // Coach submit a report
-      'CoachSubmitEndOfTermReport' =>35,
-      'CoachSubmitPlayerReport' =>36,
-      'CoachSubmitMatchReport' =>37,
+      'CoachSubmitEndOfTermReport' => 35,
+      'CoachSubmitPlayerReport' => 36,
+      'CoachSubmitMatchReport' => 37,
 
       // Subscribe Users
-      'SubscribeUsers' => 38
+      'SubscribeUsers' => 38,
+
+      // Contact Us - User
+      'ContactUs' => 40,
+
+      // Contact Us - Admin
+      'AdminContactUs' => 41
 ];
 
 

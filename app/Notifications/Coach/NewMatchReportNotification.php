@@ -57,6 +57,8 @@ class NewMatchReportNotification extends Notification
         $player = \DB::table('users')->where('id',$notifiable->player_id)->first();
         $coach_id = isset($notifiable->coach_id) ? $notifiable->coach_id: '';
 
+        $linked_coach = \DB::table('parent_coach_reqs')->where('parent_id',$notifiable->parent_id)->where('child_id',$notifiable->player_id)->first();
+
         if(!empty($coach_id))
         {
             return [
@@ -67,7 +69,8 @@ class NewMatchReportNotification extends Notification
         else
         {
             return [
-                // 
+                'send_to' => $linked_coach->coach_id,
+                'data' => 'Linked Player - '.$player->name.' - has uploaded new match'
             ];
         }
     }

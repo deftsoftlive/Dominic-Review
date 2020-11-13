@@ -116,12 +116,14 @@
                                         @php 
                                             $uk_time = utc_to_uk($ord->id);
                                         @endphp
-                                        <td>@php echo date('d/m/Y (h:i:s)',strtotime($uk_time)); @endphp</td>
+                                        <td>@php echo date('d/m/Y (h:i:s a)',strtotime($uk_time)); @endphp</td>
                                         <td>&pound; {{$ord->amount}}</td>
                                         <td>{{$ord->payment_by}}</td>
                                         
                                         @php 
-                                            $shop = DB::table('shop_cart_items')->where('orderID',$orderId)->get(); 
+                                            $shop = DB::table('shop_cart_items')->where('orderID',$orderId)->where('manual',1)->get(); 
+
+                                            //dd($shop);
                                             $shop_ty = [];
                                         @endphp
 

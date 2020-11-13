@@ -8,7 +8,7 @@
 
 @php 
     $cour_id = $course->id; 
-    $purchased_courses = DB::table('shop_cart_items')->where('shop_type','course')->where('product_id',$cour_id)->count();  
+    $purchased_courses = DB::table('shop_cart_items')->where('shop_type','course')->where('product_id',$cour_id)->where('type','order')->count();  
     $booked_courses = !empty($purchased_courses) ? $purchased_courses : '0';
 @endphp
 

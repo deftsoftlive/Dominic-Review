@@ -82,6 +82,14 @@
           </div>
         </div>
 
+        <!-- Stats Description Section -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>Stats</u></h5>
+             {{textarea($errors,'Description <span class="cst-upper-star">*</span>', 'stats_desc', $stats_desc)}}
+          </div>
+        </div>
+
         <!-- Basic details of set goals section -->
         <div class="card">
           <div class="card-body">

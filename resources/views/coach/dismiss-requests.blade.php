@@ -52,7 +52,7 @@
     <div class="col-md-12">
 
         @if(count($req)> 0)
-        <h2 class="cst_sub_heading">Parent Link Requests</h2>
+        <h2 class="cst_sub_heading">Player Link Requests</h2>
         <div class="player-report-table tbl_shadow">
          
           <div class="report-table-wrap">
@@ -81,8 +81,9 @@
                         @endphp
 
                           <tr>
-                            <td><p>{{$re->updated_at}}</p></td>
-                           <!--  <td><p>{{$parent->name}}</p></td> -->
+                            <td><p>@php echo date('d/m/Y',strtotime($re->updated_at)); @endphp</p></td>
+                            <!-- <td><p>{{$re->updated_at}}</p></td> -->
+                           <!--  <td><p>{{isset($parent->name) ? $parent->name : ''}}</p></td> -->
                             <td><p>{{isset($child->name) ? $child->name : ''}}</p></td>
                             <td><p>{{isset($coach->name) ? $coach->name : ''}}</p></td>
                             <td><p>
@@ -111,7 +112,10 @@
 					      </div>
 
             </div>
+
           </div>
+
+          {{$req->render()}}
 
             @else
               <div class="noData offset-md-4 col-md-4 sorry_msg">

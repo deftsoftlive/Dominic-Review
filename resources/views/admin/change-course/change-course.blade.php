@@ -61,7 +61,7 @@
                 </div>
               </div>
 
-              <form action="{{route('save_change_course')}}" enctype="multipart/form-data">
+              <form class="ch_course" action="{{route('save_change_course')}}" enctype="multipart/form-data">
                 
                 @csrf
                 <input type="hidden" name="shop_id" value="{{$shop_cart_items->id}}">
@@ -71,7 +71,7 @@
 
                   <label class="control-label">Change Course<span class="cst-upper-star">*</span></label>
                   @php $courses = DB::table('courses')->where('status',1)->orderby('id','desc')->get(); @endphp
-                  <select class="form-control" name="course">
+                  <select class="form-control" id="change_course" name="course">
                     <option disabled selected="" value="">Select Course</option>
                     @foreach($courses as $co)
                       <option value="{{$co->id}}">{{$co->title}}</option>

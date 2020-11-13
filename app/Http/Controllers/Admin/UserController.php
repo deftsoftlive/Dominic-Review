@@ -774,7 +774,7 @@ class UserController extends Controller
       $first_name = $request->first_name;
       $last_name = $request->last_name;
       $gender = $request->gender1;
-      $date_of_birth = $request->date_of_birth1;
+      $date_of_birth = $request->date_of_birth;
       $address = $request->address;
       $town = $request->town;
       $postcode = $request->postcode;
@@ -833,7 +833,7 @@ class UserController extends Controller
       $add_family->first_name   =    $first_name;
       $add_family->last_name    =    $last_name;
       $add_family->gender       =    $gender;
-      $add_family->date_of_birth=    $date_of_birth;
+      // $add_family->date_of_birth=    $date_of_birth;
       $add_family->address      =    $address;
       $add_family->town         =    $town;
       $add_family->postcode     =    $postcode;
@@ -841,7 +841,7 @@ class UserController extends Controller
       $add_family->country      =    $country;
       $add_family->parent_id    =    \Auth::user()->id; 
       $add_family->relation     =    $relation;
-      $add_family->type         =    $request->type;
+      // $add_family->type         =    $request->type;
       $add_family->book_person  =    $book_person;
       // $add_family->show_name    =    $show_name;
       $add_family->tennis_club  =    isset($request->tennis_club) ? $request->tennis_club : '';
@@ -859,7 +859,7 @@ class UserController extends Controller
       $add_family->first_name   =    $first_name;
       $add_family->last_name    =    $last_name;
       $add_family->gender       =    $gender;
-      $add_family->date_of_birth=    $date_of_birth;
+      // $add_family->date_of_birth=    $date_of_birth;
       $add_family->address      =    $address;
       $add_family->town         =    $town;
       $add_family->postcode     =    $postcode;

@@ -423,103 +423,115 @@ $country_code = DB::table('country_code')->orderBy('countryname','asc')->get();
                                                 </table>
                                             </div> -->
 
-                                            @if($user_details->allergies == 'yes')
+                                            @if($user->type == 'Child')
 
-                                            @php $i = 1; @endphp
-                                            @if(count($user_allergies)>0)
-                                            <br/><h3>Allergies -</h3><br/>
-                                            @foreach($user_allergies as $cond)
-                                            <div id="accordion{{$i}}-22" class="parent_fam_mem">
-                                                <div class="card">
-                                                    <div class="card-header family-tabs conatct-inner-tab" id="headingo-{{$i}}-22">
-                                                        <h5 class="mb-0 edit-family-member">
-                                                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$i}}-22" aria-expanded="false" aria-controls="collapse{{$i}}-22">
-                                                                Allergy - {{$i}}
-                                                            </button>
+                                                @if($user_details->allergies == 'yes')
 
-                                                            <a href="{{url('/user/remove-allergy')}}/{{$cond->id}}" onclick="return confirm('Are you sure you want to remove this allergy condition?')" class="cstm-btn">Remove</a>
-                                                        </h5>
-                                                    </div>
-                                                    <div id="collapse{{$i}}-22" class="collapse" aria-labelledby="headingo-{{$i}}-22" data-parent="#accordion{{$i}}-22">
-                                                        <div class="card-body">
-                                                            <div class="register-sec form-register-sec family_mem ">
-                                                                <div class="form-partition fam-mem-contact">
-                                                                    <div class="col-md-12 report_row">
-                                                                        <div class="table_wrap">
-                                                                            <ul>
+                                                    @php $i = 1; @endphp
+                                                    @if(count($user_allergies)>0)
+                                                    <br/><h3>Allergies -</h3><br/>
+                                                    @foreach($user_allergies as $cond)
+                                                    <div id="accordion{{$i}}-22" class="parent_fam_mem">
+                                                        <div class="card">
+                                                            <div class="card-header family-tabs conatct-inner-tab" id="headingo-{{$i}}-22">
+                                                                <h5 class="mb-0 edit-family-member">
+                                                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$i}}-22" aria-expanded="false" aria-controls="collapse{{$i}}-22">
+                                                                        Allergy - {{$i}}
+                                                                    </button>
 
-                                                                                <li>
-                                                                                    <p>Name of the allergy and describe how it affects this child -
-                                                                                        <span> {{$cond->allergy}}
-                                                                                        </span>
-                                                                                    </p>
-                                                                                </li>
-                                                                                
-                                                                            </ul>
+                                                                    <a href="{{url('/user/remove-allergy')}}/{{$cond->id}}" onclick="return confirm('Are you sure you want to remove this allergy condition?')" class="cstm-btn">Remove</a>
+                                                                </h5>
+                                                            </div>
+                                                            <div id="collapse{{$i}}-22" class="collapse" aria-labelledby="headingo-{{$i}}-22" data-parent="#accordion{{$i}}-22">
+                                                                <div class="card-body">
+                                                                    <div class="register-sec form-register-sec family_mem ">
+                                                                        <div class="form-partition fam-mem-contact">
+                                                                            <div class="col-md-12 report_row">
+                                                                                <div class="table_wrap">
+                                                                                    <ul>
+
+                                                                                        <li>
+                                                                                            <p>Name of the allergy and describe how it affects this child -
+                                                                                                <span> {{$cond->allergy}}
+                                                                                                </span>
+                                                                                            </p>
+                                                                                        </li>
+                                                                                        
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
-                                            @endforeach
-                                            @endif
+                                                    @php $i++; @endphp
+                                                    @endforeach
+                                                    @endif
+
+                                                @endif
 
                                             @endif
+                                            
 
                                             <br/><h3>Medical & Behavioural Information -</h3><br/>
                                             <ul>
                                                 <li>
                                                     <p>- Does this person have any medical or behavioural conditions that we should be aware of? - <span>{{isset($user_details->med_cond) ? $user_details->med_cond : ''}} </span></p>
                                                 </li>
-                                                <li>
-                                                    <p> Does your child have any allergies that we should be aware of? - 
-                                                        <span>{{isset($user_details->allergies) ? $user_details->allergies : ''}}</span></p>
-                                                </li>
+                                                
                                                <!--  <li>
                                                     <p>- Does this person have any medical or behavioural conditions that we should be aware of? - <span>{{isset($user_details->med_cond) ? $user_details->med_cond : ''}} </span></p>
                                                 </li> -->
-                                                <li>
-                                                    <p>- Will your child need to take any prescribed medication during the coaching course or holiday camp? - 
-                                                        <span>{{isset($user_details->pres_med) ? $user_details->pres_med : ''}}</span></p>
-                                                </li>
 
-                                                @if($user_details->pres_med == 'yes')
-                                                <li>
-                                                    <p>- Please state the name of the medication along with how and when this might be administered. - 
-                                                        <span>{{isset($user_details->pres_med_info) ? $user_details->pres_med_info : ''}}</span></p>
-                                                </li>
-                                                @endif
+                                                @if($user->type == 'Child')
 
-                                                <li>
-                                                    <p>- Does the child have any additional medical requirements that we may need be aware of? - <span>{{isset($user_details->med_req) ? $user_details->med_req : ''}} </span></p>
-                                                </li>
+                                                    <li>
+                                                        <p>- Does your child have any allergies that we should be aware of? - 
+                                                            <span>{{isset($user_details->allergies) ? $user_details->allergies : ''}}</span></p>
+                                                    </li>
 
-                                                @if($user_details->med_req == 'yes')
-                                                <li>
-                                                    <p>- Please state the name of the medical requirements along with how and when this might be administered. - 
-                                                        <span>{{isset($user_details->med_req_info) ? $user_details->med_req_info : ''}}</span></p>
-                                                </li>
-                                                @endif
+                                                    <li>
+                                                        <p>- Will your child need to take any prescribed medication during the coaching course or holiday camp? - 
+                                                            <span>{{isset($user_details->pres_med) ? $user_details->pres_med : ''}}</span></p>
+                                                    </li>
 
-                                                <li>
-                                                    <p>- Is this child toilet trained and able to go to the toilet without any assitance form an adult? - 
-                                                        <span>{{isset($user_details->toilet) ? $user_details->toilet : ''}}</span></p>
-                                                </li>
+                                                    @if($user_details->pres_med == 'yes')
+                                                    <li>
+                                                        <p>- Please state the name of the medication along with how and when this might be administered. - 
+                                                            <span>{{isset($user_details->pres_med_info) ? $user_details->pres_med_info : ''}}</span></p>
+                                                    </li>
+                                                    @endif
 
-                                                <li>
-                                                    <p>- Are there any behavioural and/or special needs we need to consider to help your child to settel,participate in ans enjoy their activity? - 
-                                                        <span>{{isset($user_details->beh_need) ? $user_details->beh_need : ''}}</span></p>
-                                                </li>
+                                                    <li>
+                                                        <p>- Does the child have any additional medical requirements that we may need be aware of? - <span>{{isset($user_details->med_req) ? $user_details->med_req : ''}} </span></p>
+                                                    </li>
 
-                                                @if($user_details->beh_need == 'yes')
-                                                <li>
-                                                    <p>- Please provide more information on behavioural and/or special needs. - 
-                                                        <span>{{isset($user_details->beh_need_info) ? $user_details->beh_need_info : ''}}</span></p>
-                                                </li>
+                                                    @if($user_details->med_req == 'yes')
+                                                    <li>
+                                                        <p>- Please state the name of the medical requirements along with how and when this might be administered. - 
+                                                            <span>{{isset($user_details->med_req_info) ? $user_details->med_req_info : ''}}</span></p>
+                                                    </li>
+                                                    @endif
+
+                                                    <li>
+                                                        <p>- Is this child toilet trained and able to go to the toilet without any assitance form an adult? - 
+                                                            <span>{{isset($user_details->toilet) ? $user_details->toilet : ''}}</span></p>
+                                                    </li>
+
+                                                    <li>
+                                                        <p>- Are there any behavioural and/or special needs we need to consider to help your child to settel,participate in ans enjoy their activity? - 
+                                                            <span>{{isset($user_details->beh_need) ? $user_details->beh_need : ''}}</span></p>
+                                                    </li>
+
+                                                    @if($user_details->beh_need == 'yes')
+                                                    <li>
+                                                        <p>- Please provide more information on behavioural and/or special needs. - 
+                                                            <span>{{isset($user_details->beh_need_info) ? $user_details->beh_need_info : ''}}</span></p>
+                                                    </li>
+                                                    @endif
+
                                                 @endif
                                                 
                                             </ul>

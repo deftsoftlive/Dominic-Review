@@ -62,7 +62,7 @@
                     <label class="label-file control-label">Parent</label>
                         <select id="people11" name="type" class="form-control">
                       
-                        @php $course_cat = DB::table('product_categories')->where('parent','0')->where('subparent','0')->where('type','Course')->get(); @endphp
+                        @php $course_cat = DB::table('product_categories')->where('parent','0')->where('subparent','0')->where('type','Course')->orderBy('id','asc')->get(); @endphp
                         <option value="" disabled="" selected="">Select Parent Category</option>
                         @foreach($course_cat as $cour)
                           <option value="{{$cour->id}}" @if($venue->type == $cour->id) selected @endif>{{$cour->label}}</option>
@@ -72,15 +72,25 @@
 
                   @if(!empty($venue->subtype))
                     <div class="form-group">
-                      <label class="label-file control-label">Selected Sub Panet</label> 
-                      <input type="text" class="form-control" value="@php echo getProductCatname($venue->subtype); @endphp" disabled="">
+                      <label class="label-file control-label">Selected Sub Parent</label> 
+                      <input type="text" class="form-control" value="@php echo getProductCatname($venue->subtype); @endphp" readonly="">
+                      <input type="hidden" class="form-control" name="exist_sub_cat" value="{{$venue->subtype}}">
                     </div>
                   @endif
 
                   <div class="form-group">
+                    @php 
+                      $course_cat = DB::table('product_categories')->where('parent','0')->where('subparent','0')->where('type','Course')->orderBy('id','asc')->first(); 
+                      $course_sub_cat = DB::table('product_categories')->where('parent',$course_cat->id)->where('subparent',0)->where('type','Course')->get();
+                    @endphp
                         <label class="label-file control-label">Change Sub Parent</label>
                         <select id="inputAge11" name="subtype" class="form-control event-dropdown">
                           <option value="1" selected="" disabled="">Select Age Group</option>
+
+                          @foreach($course_sub_cat as $cat)
+                            <option value="{{$cat->id}}">{{$cat->label}}</option>
+                          @endforeach
+
                         </select>
                   </div>
 
@@ -107,6 +117,15 @@
                       <option value="Advanced" {{$venue->level == 'Advanced' ? 'selected' : ''}}>Advanced</option>
                     </select>
                   </div>
+
+                  <label class="control-label">Account Name<span class="cst-upper-star">*</span></label>
+                  @php $stripe_accounts = DB::table('stripe_accounts')->where('status',1)->orderby('id','desc')->get(); @endphp
+                  <select class="form-control" id="select_account" name="account_id">
+                    <option disabled selected="" value="">Select Account</option>
+                    @foreach($stripe_accounts as $acc)
+                      <option value="{{$acc->id}}" @if($acc->id == $venue->account_id) selected @endif>{{$acc->account_name}}</option>
+                    @endforeach
+                  </select>
 
                   {{textbox($errors,'Age Group (i.e. 3 - 7)<span class="cst-upper-star">*</span>','age_group', $venue->age_group)}}
                   
@@ -151,6 +170,11 @@
 
                   <label class="control-label">Tax/Vat Cost<span class="cst-upper-star">*</span></label>
                   <input class="form-control" type="text" name="tax_cost" value="{{$venue->tax_cost}}">
+
+                  <div class="form-group">
+                    <label class="label-file control-label">End Date</label>
+                    <input type="date" name="end_date" class="form-control" value="{{isset($venue->end_date) ? $venue->end_date : ''}}">
+                  </div>
 
             <!--       {{textbox($errors,'Coach Cost<span class="cst-upper-star">*</span>','coach_cost', $venue->coach_cost)}}
                   

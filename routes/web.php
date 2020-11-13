@@ -13,9 +13,12 @@
 */
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', ['as'=>'home', 'uses'=>'HomeController@home_index']);
+
 
 /* Register as coach */
 Route::get('/register/coach','Auth\RegisterController@regsiter_coach')->name('register-as-coach');
@@ -152,7 +155,7 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     Route::any('goal/timeline/{id}','HomeController@playerGoal')->name('playerGoal');
     Route::any('badge/timeline/{id}','HomeController@playerBadge')->name('playerBadge');
 
-    Route::post('/show-name','HomeController@show_name_in_leaderboard')->name('show_name_in_leaderboard');
+    Route::any('/show-name/{id}','HomeController@show_name_in_leaderboard')->name('show_name_in_leaderboard');
 
     Route::any('/game-chart','HomeController@game_chart')->name('game_chart');
 
@@ -172,6 +175,10 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
 
 // Coupon code
 Route::any('submit-coupon','HomeController@submit_coupon')->name('submit-coupon');
+
+// Purchase package course
+Route::any('/purchase-package-course/{booking_no}','HomeController@package_courses')->name('package.courses');
+Route::any('/save-package-courses/{booking_no}','HomeController@save_package_courses')->name('save_package_courses');
 
 #===============================================
 #

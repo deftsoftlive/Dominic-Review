@@ -193,7 +193,7 @@ public function RegisterUserSendEmail($user,$template_id)
 public function RegisterUserHtml($data,$template)
 { 
     $text2 = $template->body;
-    $text = str_replace("{user_name}",$data['user_name'],$text2);  
+    $text = str_replace("{user_name}",$data['name'],$text2);  
     $text = str_replace("{user_email}",$data['user_email'],$text);
 
     return $text;
@@ -563,6 +563,100 @@ public function BookATasterUserClassStatusHtml($data,$contact,$template)
 
 
 #---------------------------------------------------------------------------------------------------
+#  Contact Us - User
+#---------------------------------------------------------------------------------------------------
+
+public function ContactUsSuccess($contact_id)
+{
+  $template_id = $this->emailTemplate['ContactUs'];
+  $contact = ContactDetail::where('id',$contact_id)->first(); 
+  return $this->ContactUsSendEmail($contact,$template_id);
+}
+
+public function ContactUsSendEmail($contact,$template_id)
+{
+    $admin_email = getAllValueWithMeta('admin_email', 'general-setting'); 
+
+    $template = EmailTemplate::find($template_id); 
+    $view= 'emails.customEmail';
+    $arr = [
+           'title' => $template->title,
+           'subject' => $template->subject,
+           'name' => $contact->parent_name,
+           'email' => $contact->parent_email
+    ];
+    $data = $this->ContactUsStatusHtml($arr,$contact,$template); 
+
+    $ar= ['data' => $data];
+
+    // dd($ar,$arr);
+
+  return $this->sendNotification($view,$ar,$arr);
+}
+
+public function ContactUsStatusHtml($data,$contact,$template)
+{ 
+    $text2 = $template->body;
+    $text = str_replace("{user_name}",$contact['participant_name'],$text2); 
+    $text = str_replace("{parent_telephone}",$contact['parent_telephone'],$text);
+     $text = str_replace("{parent_email}",$contact['parent_email'],$text);
+    $text = str_replace("{subject}",$contact['subject'],$text);
+    $text = str_replace("{message}",$contact['message'],$text);
+
+    // dd($data,$template);
+
+    return $text;
+}
+
+
+#---------------------------------------------------------------------------------------------------
+#  Contact Us - Admin
+#---------------------------------------------------------------------------------------------------
+
+public function AdminContactUsSuccess($contact_id)
+{
+  $template_id = $this->emailTemplate['AdminContactUs'];
+  $contact = ContactDetail::where('id',$contact_id)->first(); 
+  return $this->AdminContactUsSendEmail($contact,$template_id);
+}
+
+public function AdminContactUsSendEmail($contact,$template_id)
+{
+    $admin_email = getAllValueWithMeta('admin_email', 'general-setting'); 
+
+    $template = EmailTemplate::find($template_id); 
+    $view= 'emails.customEmail';
+    $arr = [
+           'title' => $template->title,
+           'subject' => $template->subject,
+           'name' => 'Admin',
+           'email' => $admin_email
+    ];
+    $data = $this->AdminContactUsStatusHtml($arr,$contact,$template); 
+
+    $ar= ['data' => $data];
+
+    // dd($ar,$arr);
+
+  return $this->sendNotification($view,$ar,$arr);
+}
+
+public function AdminContactUsStatusHtml($data,$contact,$template)
+{ 
+    $text2 = $template->body;
+    $text = str_replace("{user_name}",$contact['participant_name'],$text2); 
+    $text = str_replace("{parent_telephone}",$contact['parent_telephone'],$text);
+    $text = str_replace("{parent_email}",$contact['parent_email'],$text);
+    $text = str_replace("{subject}",$contact['subject'],$text);
+    $text = str_replace("{message}",$contact['message'],$text);
+
+    // dd($data,$template);
+
+    return $text;
+}
+
+
+#---------------------------------------------------------------------------------------------------
 #  Coach Qualification Expired
 #---------------------------------------------------------------------------------------------------
 
@@ -621,7 +715,7 @@ public function CoachSubmitEndOfTermReportSuccess($report_id)
 
 public function CoachSubmitEndOfTermReportSendEmail($report,$template_id)
 {
-    // dd($report);
+    //dd($report);
 
     $parent = User::where('id',$report->player_id)->first();
     $coach = User::where('id',$report->coach_id)->first();
@@ -686,18 +780,18 @@ public function CoachSubmitPlayerReportSuccess($report_id)
 
 public function CoachSubmitPlayerReportSendEmail($report,$template_id)
 {
-    // dd($report);
+   // dd($report);
 
     $parent = User::where('id',$report->player_id)->first();
     $coach = User::where('id',$report->coach_id)->first();
 
     if(!empty($parent->parent_id))
     {
-      $parent_name = getUsername($parent->parent_id);
-      $parent_email = getUseremail($parent->parent_id);
+      $parent_name = isset($parent->parent_id) ? getUsername($parent->parent_id) : '';
+      $parent_email = isset($parent->parent_id) ? getUseremail($parent->parent_id) : '';
     }else{
-      $parent_name = getUsername($parent->id);
-      $parent_email = getUseremail($parent->id);
+      $parent_name = isset($parent->id) ? getUsername($parent->id) : '';
+      $parent_email = isset($parent->id) ? getUseremail($parent->id) : '';
     }
 
     if($report->type == 'complex')
@@ -707,22 +801,26 @@ public function CoachSubmitPlayerReportSendEmail($report,$template_id)
 
     $template = EmailTemplate::find($template_id); 
     $view= 'emails.customEmail';
-    $arr = [
-           'title' => $template->title,
-           'subject' => $template->subject,
-           'name' => $parent_name,
-           'email' => $parent_email,
-           'player' => $parent->name,
-           'type' => $type,
-           'coach' => $coach->name
-    ];
-    $data = $this->CoachSubmitPlayerReportHtml($arr,$report,$template); 
 
-    // dd($arr,$report,$template);
+    if(!empty($parent_email) && !empty($parent_name))
+    {
+        $arr = [
+               'title' => $template->title,
+               'subject' => $template->subject,
+               'name' => $parent_name,
+               'email' => $parent_email,
+               'player' => $parent->name,
+               'type' => $type,
+               'coach' => $coach->name
+        ];
+        $data = $this->CoachSubmitPlayerReportHtml($arr,$report,$template); 
 
-    $ar= ['data' => $data];
+        // dd($arr,$report,$template);
 
-  return $this->sendNotification($view,$ar,$arr);
+        $ar= ['data' => $data];
+
+      return $this->sendNotification($view,$ar,$arr);
+    }
 }
 
 public function CoachSubmitPlayerReportHtml($data,$report,$template)

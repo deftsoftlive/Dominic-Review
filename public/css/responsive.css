@@ -49,12 +49,21 @@
         margin: 0 30px 0 7px;
     }
 
+    .marquee.mobile {
+        display: block !important;
+    }
+
+    .marquee {
+        display: none;
+    }
+
     .we-run-container img {
         min-height: 180px;
     }
+
     .upload-section label {
-    display: block;
-    white-space: nowrap;
+        display: block;
+        white-space: nowrap;
     }
 
     .table_wrap_my_family {
@@ -429,6 +438,13 @@
         display: none;
     }
 
+    #nav-stats .progress-status-card .round:after {
+        width: calc(100% - 30px);
+        height: calc(100% - 30px);
+
+    }
+
+
 
 
 
@@ -446,6 +462,39 @@
     }
 }
 
+@media only screen and (min-device-width :768px) and (max-device-width :991px) {
+    #nav-stats .progress-box canvas {
+        height: 90px !important;
+        width: 90px !important;
+    }
+
+    #nav-stats .progress-status-card .round {
+        height: 90px;
+    }
+
+    #nav-stats .inner-content .icon_wrap,
+    #nav-stats .score-1-text .icon_wrap {
+        width: 115px;
+    }
+
+    #nav-stats .inner-content img {
+        height: 30px;
+        width: 30px;
+    }
+
+    #nav-stats .inner-content {
+
+        left: 15%;
+        margin-top: 20px;
+    }
+
+    #nav-stats .progress-status-card .round:after {
+        width: calc(100% - 30px);
+        height: calc(100% - 30px);
+
+    }
+}
+
 @media(max-width: 991px) {
 
     /* a.cstm-btn.days-btn {
@@ -456,12 +505,16 @@
         /*text-align: left;*/
         width: 78%;
     }
-     .upload-section .qly-row
-    {
+
+    .upload-section .qly-row {
         margin-bottom: 15px
     }
-    
-   
+
+    .button_wrap_row {
+        text-align: center;
+    }
+
+
 
     .we-run-container img {
         min-height: auto;
@@ -737,7 +790,8 @@
         flex-wrap: wrap;
     }
 
-    .select-player-goal-form .badges-select-bar .select-button {
+    .select-player-goal-form .badges-select-bar .select-button,
+    .select-button {
         margin-top: 20px !important;
         text-align: center;
         display: flex;
@@ -1308,6 +1362,10 @@
     .about-us-sec>.container>.row>div.col-md-6:nth-of-type(odd) {
         order: 1;
     }
+    .stats_bar_row {
+    width: 49%;
+    margin-bottom: 15px;
+    }
 
     .profile_croper .inner-cont .img-wrap {
         display: flex;
@@ -1322,18 +1380,20 @@
         height: 80px;
         width: 50px;
     }
-    form#course-booking .form-group
-     {
+
+    form#course-booking .form-group {
         flex-wrap: unset;
-     }
+    }
+
     form#course-booking a.cstm-btn.event-booking-btn.main_button {
         padding: 10px 14px;
         max-width: 110px;
         margin: 0 auto;
     }
+
     form#course-booking .outer-slt {
         min-width: auto;
-      
+
     }
 
     .outer-table-wrap {
@@ -1798,7 +1858,7 @@
     }
 
     /*.course-list-detail .event-card-form .form-group label.cst-fees,*/
-   /* .course-list-detail .event-card-form .form-group a.cstm-btn.event-booking-btn {
+    /* .course-list-detail .event-card-form .form-group a.cstm-btn.event-booking-btn {
         display: none;
     }*/
 
@@ -2355,13 +2415,23 @@
 
         margin-top: 20px;
     }
+    .stats_bar_row {
+    width: 100%;
+    margin-bottom: 0;
+    
+}
+#nav-stats .progress-status-card {
+ 
+    margin-left: 35px;
+}
+
     div#wallet_payment .tect-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
     }
-     
+
 
     ul.pagination li a,
     ul.pagination li.active span,
@@ -2374,6 +2444,7 @@
         max-width: 100%;
 
     }
+
     .player-lik-wrap {
         display: flex;
         align-items: flex-start;

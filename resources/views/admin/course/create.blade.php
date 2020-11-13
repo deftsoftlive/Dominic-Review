@@ -107,6 +107,15 @@
                     </select>
                   </div>
 
+                  <label class="control-label">Account Name<span class="cst-upper-star">*</span></label>
+                  @php $stripe_accounts = DB::table('stripe_accounts')->where('status',1)->orderby('id','desc')->get(); @endphp
+                  <select class="form-control" id="select_account" name="account_id">
+                    <option disabled selected="" value="">Select Account</option>
+                    @foreach($stripe_accounts as $acc)
+                      <option value="{{$acc->id}}">{{$acc->account_name}}</option>
+                    @endforeach
+                  </select>
+
                   {{textbox($errors,'Age Group (i.e. 3 - 7)<span class="cst-upper-star">*</span>','age_group')}}
                   
                   <!-- {{textbox($errors,'Age*','age')}}-->
@@ -141,6 +150,11 @@
                   {{textbox($errors,'Equipment Cost<span class="cst-upper-star">*</span>','equipment_cost')}}
                   {{textbox($errors,'Other Cost<span class="cst-upper-star">*</span>','other_cost')}}
                   {{textbox($errors,'Tax/Vat Cost<span class="cst-upper-star">*</span>','tax_cost')}}
+
+                  <div class="form-group">
+                    <label class="label-file control-label">End Date</label>
+                    <input type="date" name="end_date" class="form-control">
+                  </div>
 
                   <table class="add_on_services">
                     <thead>

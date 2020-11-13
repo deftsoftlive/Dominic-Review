@@ -7,8 +7,8 @@
    }
 </style>
 @php 
-$login_user = Auth::user()->id;
-$shop = \DB::table('shop_cart_items')->where('user_id',$login_user)->where('orderID',NULL)->groupBy('child_id')->get();
+   $login_user = Auth::user()->id;
+   $shop = \DB::table('shop_cart_items')->where('user_id',$login_user)->where('orderID',NULL)->groupBy('child_id')->get();
 @endphp
 <fieldset class="step-content" >
    <div class="step-form-content">
@@ -98,7 +98,7 @@ $shop = \DB::table('shop_cart_items')->where('user_id',$login_user)->where('orde
                               <input type="hidden" name="user_id" value="{{$child->id}}">
                               <div class="form-group form-check">
                                  <label class="container_lable" >Confirm
-                                 <input name="participant_info" type="checkbox" >
+                                 <input name="participant_info[][{{$child->id}}]" type="checkbox" >
                                  <span class="checkmark"></span>
                                  </label>
                               </div>

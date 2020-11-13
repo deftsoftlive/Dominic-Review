@@ -117,7 +117,8 @@ class TestController extends Controller
     /*----------------------------------------
     |   Update testcategory content
     |----------------------------------------*/ 
-    public function test_update(Request $request, $slug) {	//dd($request->all());
+    public function test_update(Request $request, $slug) 
+    {	
     	$validatedData = $request->validate([
             'title' => ['required', 'string', 'max:50'],
             'description' => ['required', 'string'],
@@ -134,6 +135,7 @@ class TestController extends Controller
     	$venue = Test::FindBySlugOrFail($slug);
     	$venue->update([
     		'title'       => $request['title'],
+            'slug'        => str_slug($request->title , "-"),
     		'description' => $request['description'],
     		'test_cat_id' => $request['test_cat_id'],
             'season'      => $request['season'],
@@ -182,8 +184,8 @@ class TestController extends Controller
     |----------------------------------------*/
     public function excel($season, $course)
     {
-        // dd(getCourseName($course),$season,$course);
-        $customer_data = Test::where('courses',$course)->where('season',$season)->where('status',1)->orderBy('test_cat_id', 'asc')->get()->toArray();
+        // dd($course,$season);
+        $customer_data = Test::where('courses',$course)->where('season',$season)->where('status',1)->orderBy('test_cat_id', 'asc')->get()->toArray();   
         $course_data = Course::where('id',$course)->first();  
 
         $customer_array = array();
@@ -199,6 +201,8 @@ class TestController extends Controller
 
         $customer_array[$i][]="User details";
 
+        // dd($customer_data);
+
         // Test Category
         foreach($customer_data as $data){   
             $customer_array[$i][] = getTestCatname($data['test_cat_id']).'-'.$data['test_cat_id'];
@@ -206,6 +210,7 @@ class TestController extends Controller
         $testCategory=[];
         $i++;
         $testCategory[]="#";
+
 
         // Tests 
         foreach($customer_data as $key=>$customer)
@@ -215,6 +220,7 @@ class TestController extends Controller
 
         $customer_array[$i]=$testCategory;
 
+        // dd($customer_array);
 
         $shop = \DB::table('shop_cart_items')->where('product_id',$course)->where('shop_type','course')->where('orderID','!=',NULL)->where('type','order')->orderBy('id','asc')->get();
 

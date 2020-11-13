@@ -218,6 +218,7 @@ class OrderController extends Controller
                     ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
                     ->where('users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->orderBy('shop_orders.id','desc')
                     ->get(); 
 
         }
@@ -230,6 +231,7 @@ class OrderController extends Controller
                     ->where('users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
+                    ->orderBy('shop_orders.id','desc')
                     ->get(); 
         }
         elseif(empty($user_name) && empty($user_email) && !empty($start_date) && empty($end_date))
@@ -239,6 +241,7 @@ class OrderController extends Controller
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
                     ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
                     ->where('shop_orders.created_at','>',$start_date)
+                    ->orderBy('shop_orders.id','desc')
                     ->get(); 
         }
         elseif(empty($user_name) && empty($user_email) && empty($start_date) && !empty($end_date))
@@ -248,6 +251,7 @@ class OrderController extends Controller
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
                     ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
                     ->where('shop_orders.created_at','<',$end_date)
+                    ->orderBy('shop_orders.id','desc')
                     ->get(); 
         }
         elseif(!empty($user_name) && !empty($user_email) && empty($start_date) && !empty($end_date))
@@ -259,6 +263,7 @@ class OrderController extends Controller
                     ->where('users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','<',$end_date)
+                    ->orderBy('shop_orders.id','desc')
                     ->get(); 
         }
         elseif(!empty($user_name) && !empty($user_email) && !empty($start_date) && !empty($end_date))
@@ -271,6 +276,7 @@ class OrderController extends Controller
                     ->where('users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
                     ->where('shop_orders.created_at','<',$end_date)
+                    ->orderBy('shop_orders.id','desc')
                     ->get(); 
         }
         elseif(!empty($user_name) && empty($user_email) && empty($start_date) && empty($end_date))
@@ -280,6 +286,7 @@ class OrderController extends Controller
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
                     ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
                     ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->orderBy('shop_orders.id','desc')
                     ->get(); 
         }
         elseif(!empty($user_name) && empty($user_email) && !empty($start_date) && empty($end_date))
@@ -290,6 +297,7 @@ class OrderController extends Controller
                     ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
                     ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
+                    ->orderBy('shop_orders.id','desc')
                     ->get(); 
         }
         elseif(!empty($user_name) && empty($user_email) && empty($start_date) && !empty($end_date))
@@ -300,6 +308,7 @@ class OrderController extends Controller
                     ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
                     ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('shop_orders.created_at','<',$end_date)
+                    ->orderBy('shop_orders.id','desc')
                     ->get(); 
         }
         elseif(!empty($user_name) && empty($user_email) && !empty($start_date) && !empty($end_date))
@@ -311,6 +320,7 @@ class OrderController extends Controller
                     ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
                     ->where('shop_orders.created_at','<',$end_date)
+                    ->orderBy('shop_orders.id','desc')
                     ->get(); 
         }
         elseif(empty($user_name) && empty($user_email) && !empty($start_date) && !empty($end_date))
@@ -321,6 +331,7 @@ class OrderController extends Controller
                     ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
                     ->where('shop_orders.created_at','>',$start_date)
                     ->where('shop_orders.created_at','<',$end_date)
+                    ->orderBy('shop_orders.id','desc')
                     ->get(); 
         }
         elseif(empty($user_name) && !empty($user_email) && empty($start_date) && empty($end_date))
@@ -330,6 +341,7 @@ class OrderController extends Controller
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
                     ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
                     ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->orderBy('shop_orders.id','desc')
                     ->get(); 
         }
         elseif(empty($user_name) && !empty($user_email) && !empty($start_date) && empty($end_date))
@@ -340,6 +352,7 @@ class OrderController extends Controller
                     ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
                     ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
+                    ->orderBy('shop_orders.id','desc')
                     ->get(); 
         }
         elseif(empty($user_name) && !empty($user_email) && empty($start_date) && !empty($end_date))
@@ -350,6 +363,7 @@ class OrderController extends Controller
                     ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
                     ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','<',$end_date)
+                    ->orderBy('shop_orders.id','desc')
                     ->get(); 
         }
         elseif(empty($user_name) && !empty($user_email) && !empty($start_date) && !empty($end_date))
@@ -361,6 +375,7 @@ class OrderController extends Controller
                     ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
                     ->where('shop_orders.created_at','<',$end_date)
+                    ->orderBy('shop_orders.id','desc')
                     ->get(); 
         }
         elseif(empty($user_name) && empty($user_email) && empty($start_date) && empty($end_date))
@@ -369,6 +384,7 @@ class OrderController extends Controller
                     ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
                     ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->orderBy('shop_orders.id','desc')
                     ->get();
         }
 

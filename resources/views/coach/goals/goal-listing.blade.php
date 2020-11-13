@@ -60,7 +60,8 @@
                 @foreach($goals as $go)
 
                   <tr>
-                    <td><p>{{$go->goal_date}}</p></td>
+                    <!-- <td><p>{{$go->goal_date}}</p></td> -->
+                    <td><p>@php echo date('d/m/Y',strtotime($go->created_at)); @endphp</p></td>
                     <td><p>@php echo getUsername($go->player_id); @endphp</p></td>
                     <td><p>@php echo getUsername($go->parent_id); @endphp</p></td>
                     <td><p>
@@ -76,7 +77,7 @@
                    	@else
                     	<td><a onclick="return confirm('Are you sure you want to finalise this goal? Finalised goals cannot be changed.')" href="{{url('/user/goal/finalize')}}/@php echo base64_encode($go->id); @endphp" class="cstm-btn main_button">Finalize</a></td> 
                     @endif
-                    <td><p><a class="cstm-btn main_button" href="{{url('/user/goal')}}/{{$go->goal_type}}/{{$go->id}}/add-comment">View</a></p></td>
+                    <td><p><a class="cstm-btn main_button" href="{{url('/user/goal')}}/{{$go->goal_type}}/{{$go->goalID}}/add-comment">View</a></p></td>
                   </tr>
                 @endforeach
 

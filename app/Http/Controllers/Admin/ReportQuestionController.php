@@ -335,7 +335,8 @@ class ReportQuestionController extends Controller
     /*-------------------------------------------------
     |    Match Stats
     |--------------------------------------------------*/
-    public function match_stats($comp_id,$match_id){    
+    public function match_stats($comp_id,$match_id)
+    {    
         $stats = MatchStats::where('competition_id',$comp_id)->where('match_id',$match_id)->first();
 
         if(!empty($stats))
@@ -345,6 +346,15 @@ class ReportQuestionController extends Controller
             $stats_calculation = '';
         }
         return view('admin.player-report.match-report.stats',compact('stats_calculation','comp_id','match_id'));
+    }
+
+    /*-------------------------------------------------
+    |    Delete reports (End of term & match report)
+    |-------------------------------------------------*/
+    public function player_reports_delete($id)
+    {
+        $get_report = PlayerReport::where('id',$id)->delete();    
+        return \Redirect::back()->with('success','Report deleted successfully.');
     }
 
 }

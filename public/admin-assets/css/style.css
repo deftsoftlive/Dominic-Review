@@ -840,7 +840,56 @@ form#inventoryFormSubmit .error {
     left: 15px;
     top: 45px;}
 
+ .select2-container--default .select2-selection--single .select2-selection__rendered
+{
+  line-height: 43px!important;
+}
+ .select2-container .select2-selection--single,
+ select#inputPlayer
+{
+  height: 43px!important;
 
+    border: 1px solid #ced4da!important;
+}
+span.select2-dropdown.select2-dropdown--below
+{
+  border: 1px solid #ced4da!important;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    
+    top: 9px!important;
+  
+}
+form.ch_course label.control-label {
+    margin: 8px 0;
+}
+.weeks_outer_wrap label {
+    width: 97px;
+}
+.weeks_outer_wrap input[type="text"] {
+    width:calc(100% - 101px)!important;
+}
+.weeks_outer_wrap input[type="date"] {
+    width: calc(100% - 100px)!important;
+}
+
+.weeks_outer_wrap .wrap_days label {
+    margin-bottom: 0;
+    margin-left: 6px;
+}
+.wrap_days input[type="date"] {
+    border: 1px solid #767676;
+    border-radius: 2px;
+    padding: 1px 4px;
+}
+.weeks_outer_wrap .wrap_days {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.wrap_btn {
+    padding: 10px!important;
+}
 
 @page {
   size: auto;

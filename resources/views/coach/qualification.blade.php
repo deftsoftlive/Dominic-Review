@@ -1,4 +1,3 @@
-Y
 @extends('inc.homelayout')
 
 @section('title', 'DRH|Register')
@@ -59,18 +58,18 @@ Y
                        </div>
                       <div class="col-lg-2 col-md-3 col-sm-3">
                         <label><strong>Expiry Date</strong> - </label>
-                        {{!empty($doc->expiry_date) ? $doc->expiry_date : 'No expiry date'}}
+                        {{!empty($doc->expiry_date) ? $doc->created_at->format('d-m-Y') : 'No expiry date'}}
                       </div>
                       <div class="col-lg-2 col-md-3 col-sm-3">
                         <label><strong>Notification</strong> - </label>
                         @if($doc->notification == 'No Reminder')
                           @php $date = 'No Reminder'; @endphp
                         @elseif($doc->notification == '1 Month')
-                          @php  $date = $doc->created_at->addMonths(1)->format('Y-m-d'); @endphp
+                          @php  $date = $doc->created_at->addMonths(1)->format('d-m-Y'); @endphp
                         @elseif($doc->notification == '3 Months')
-                          @php  $date = $doc->created_at->addMonths(3)->format('Y-m-d'); @endphp
+                          @php  $date = $doc->created_at->addMonths(3)->format('d-m-Y'); @endphp
                         @elseif($doc->notification == '6 Months')
-                          @php  $date = $doc->created_at->addMonths(6)->format('Y-m-d'); @endphp
+                          @php  $date = $doc->created_at->addMonths(6)->format('d-m-Y'); @endphp
                         @endif
                         {{$date}}
                       </div>

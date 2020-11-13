@@ -170,6 +170,7 @@ class CourseController extends Controller
             'description' => ['required', 'string'],
             // 'type' => ['required'],
             // 'subtype' => ['required'],
+            'account_id' => ['required'],
             'age_group' => ['required','string'],
             // 'age' => ['required', 'string'],
             'session_date' => ['required', 'string'],
@@ -183,7 +184,8 @@ class CourseController extends Controller
             'venue_cost' => ['required', 'numeric'],
             'equipment_cost' => ['required', 'numeric'],
             'other_cost' => ['required', 'numeric'],
-            'tax_cost' => ['required', 'numeric']
+            'tax_cost' => ['required', 'numeric'],
+            'end_date' => ['required']
         ]);
 
     	$course = Course::create([
@@ -194,6 +196,7 @@ class CourseController extends Controller
             'subtype' => $request['subtype'],
             'course_category' => $request['course_category'],
             'level' => $request['level'],
+            'account_id' => $request['account_id'],
             'age_group' => $request['age_group'],
     		'age' => isset($request['age']) ? $request['age'] : '',
             'session_date' => $request['session_date'],
@@ -211,6 +214,7 @@ class CourseController extends Controller
             'tax_cost' => $request['tax_cost'],
             'early_birth_price' => isset($request['early_birth_price']) ? $request['early_birth_price'] : '',
             'bottom_section' => isset($request['bottom_section']) ? $request['bottom_section'] : '',
+            'end_date' => $request['end_date'],
     	]);
 
         if(isset($data['course_date'])){  
@@ -267,11 +271,19 @@ class CourseController extends Controller
 
         CourseDate::where('course_id',$course_id)->delete();
 
+        if(!empty($request->subtype))
+        {
+            $sub_cat = $request->subtype;
+        }else{
+            $sub_cat = $request->exist_sub_cat;
+        }
+
     	$validatedData = $request->validate([
             'title' => ['required', 'string'],
             'description' => ['required', 'string'],
             // 'type' => ['required'],
             // 'subtype' => ['required'],
+            'account_id' => ['required'],
             'age_group' => ['required','string'],
             // 'age' => ['required', 'string'],
             'session_date' => ['required', 'string'],
@@ -285,7 +297,8 @@ class CourseController extends Controller
             'venue_cost' => ['required', 'numeric'],
             'equipment_cost' => ['required', 'numeric'],
             'other_cost' => ['required', 'numeric'],
-            'tax_cost' => ['required', 'numeric']
+            'tax_cost' => ['required', 'numeric'],
+            'end_date' => ['required']
         ]);
 
     	$venue = Course::FindBySlugOrFail($slug);
@@ -294,7 +307,8 @@ class CourseController extends Controller
     		'description' => $request['description'],
             'season' => $request['season'],
             'type' => $request['type'],
-            'subtype' => $request['subtype'],
+            'subtype' => $sub_cat,
+            'account_id' => $request['account_id'],
             'age_group' => $request['age_group'],
             'course_category' => $request['course_category'],
             'level' => $request['level'],
@@ -314,6 +328,7 @@ class CourseController extends Controller
             'tax_cost' => $request['tax_cost'],
             'early_birth_price' => isset($request['early_birth_price']) ? $request['early_birth_price'] : '',
             'bottom_section' => isset($request['bottom_section']) ? $request['bottom_section'] : '',
+            'end_date' => $request['end_date'],
     	]);
 
         if(isset($data['course_date'])){  

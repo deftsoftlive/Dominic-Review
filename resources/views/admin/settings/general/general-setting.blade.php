@@ -64,6 +64,22 @@
           </div>
         </div>
 
+        <!-- Headline - At the top of the website -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>HEADLINE - At the top of the website </u></h5>
+               {{textarea($errors,'Headline <span class="cst-upper-star">*</span>','website_headline',$website_headline)}}
+
+
+            <h5 class="card-title"><u>Enable/Disable Heading </u></h5>
+               <select class="form-control" name="enable_heading">
+                  <option @if($enable_heading == 'Enable') selected @endif name="Enable">Enable</option>
+                  <option @if($enable_heading == 'Disable') selected @endif name="Disable">Disable</option>
+               </select>
+          </div>
+        </div>
+
+
         <!-- Social Links -->
         <div class="card">
           <div class="card-body">

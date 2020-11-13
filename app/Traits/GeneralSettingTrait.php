@@ -550,6 +550,9 @@ trait GeneralSettingTrait {
                        // Description of goals section
                        'goals_desc' => getAllValueWithMeta('goals_desc', $slug),
 
+                       // Description of stats section
+                       'stats_desc' => getAllValueWithMeta('stats_desc', $slug),
+
                        // Basic detils of goals section
                        'specific_title' => getAllValueWithMeta('specific_title', $slug),
                        'specific_desc' => getAllValueWithMeta('specific_desc', $slug),
@@ -621,6 +624,7 @@ trait GeneralSettingTrait {
           return [
                         // Banner
                        'login_banner' => getAllValueWithMeta('login_banner', $slug),
+                       'signup_banner' => getAllValueWithMeta('signup_banner', $slug),
                        'reset_pass_banner' => getAllValueWithMeta('reset_pass_banner', $slug),
                        'shop_banner' => getAllValueWithMeta('shop_banner', $slug),
                        'faq_banner' => getAllValueWithMeta('faq_banner', $slug),
@@ -664,6 +668,10 @@ trait GeneralSettingTrait {
 
                        // Website logo
                        'website_logo' => getAllValueWithMeta('website_logo', $slug),
+
+                       // Website headline
+                       'website_headline' => getAllValueWithMeta('website_headline', $slug),
+                       'enable_heading' => getAllValueWithMeta('enable_heading', $slug),
 
                        // Social links
                        'facebook_link' => getAllValueWithMeta('facebook_link', $slug),

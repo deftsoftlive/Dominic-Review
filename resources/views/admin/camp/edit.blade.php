@@ -76,11 +76,46 @@
 
                   <img id="image_src" style="width: 100px; height: 100px;" src="{{ URL::asset('/uploads').'/'.$venue->image }}" /> -->
 
-                  {{textbox($errors,'Coach Cost<span class="cst-upper-star">*</span>','coach_cost', $venue->coach_cost)}}
+                  <label class="control-label">Account Name<span class="cst-upper-star">*</span></label>
+                  @php $stripe_accounts = DB::table('stripe_accounts')->where('status',1)->orderby('id','desc')->get(); @endphp
+                  <select class="form-control" id="select_account" name="account_id">
+                    <option disabled selected="" value="">Select Account</option>
+                    @foreach($stripe_accounts as $acc)
+                      <option value="{{$acc->id}}" @if($acc->id == $venue->account_id) selected @endif>{{$acc->account_name}}</option>
+                    @endforeach
+                  </select>
+                  <br/>
+
+                  <div class="form-group">
+                    <label class="control-label">Coach Cost<span class="cst-upper-star">*</span></label>
+                    <input class="form-control" type="text" name="coach_cost" value="{{$venue->coach_cost}}">
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label">Court/Venue Cost<span class="cst-upper-star">*</span></label>
+                    <input class="form-control" type="text" name="venue_cost" value="{{$venue->venue_cost}}">
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label">Equipment Cost<span class="cst-upper-star">*</span></label>
+                    <input class="form-control" type="text" name="equipment_cost" value="{{$venue->equipment_cost}}">
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label">Other Cost<span class="cst-upper-star">*</span></label>
+                    <input class="form-control" type="text" name="other_cost" value="{{$venue->other_cost}}">
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label">Tax/Vat Cost<span class="cst-upper-star">*</span></label>
+                    <input class="form-control" type="text" name="tax_cost" value="{{$venue->tax_cost}}">
+                  </div>
+
+                <!--   {{textbox($errors,'Coach Cost<span class="cst-upper-star">*</span>','coach_cost', $venue->coach_cost)}}
                   {{textbox($errors,'Court/Venue Cost<span class="cst-upper-star">*</span>','venue_cost', $venue->venue_cost)}}
                   {{textbox($errors,'Equipment Cost<span class="cst-upper-star">*</span>','equipment_cost', $venue->equipment_cost)}}
                   {{textbox($errors,'Other Cost<span class="cst-upper-star">*</span>','other_cost', $venue->other_cost)}}
-                  {{textbox($errors,'Tax/Vat Cost<span class="cst-upper-star">*</span>','tax_cost', $venue->tax_cost)}}
+                  {{textbox($errors,'Tax/Vat Cost<span class="cst-upper-star">*</span>','tax_cost', $venue->tax_cost)}} -->
 
 
                   <!-- ***********************************************
@@ -98,6 +133,7 @@
                   @endphp
                   <input type="hidden" name="camp_price_id" id="camp_price_id" value="{{$camp->id}}">
                   <div class="form-group">
+                    <div class="weeks_outer_wrap">
                     <h5><u>Week</u></h5>
                     <div class="row"> 
 
@@ -109,164 +145,281 @@
 
                       @foreach($arrSku as $arrKey => $arrData) 
                       
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                           <h5>Week {{$arrKey+1}} <input type="checkbox" id="Week" name="Week[{{$arrKey+1}}][Selected]" value="1" {{isset($arrData->Selected) ? 'checked': ''}}></h5>
                           <label for="StartDate"> Start Date</label>
                           <input type="text" id="StartDate" name="Week[{{$arrKey+1}}][StartDate]" style="width:100px;" value="{{isset($arrData->StartDate) ? $arrData->StartDate : ''}}"><br>
                           <label for="EndDate"> End Date</label>
                           <input type="text" id="EndDate" name="Week[{{$arrKey+1}}][EndDate]" style="width:100px;" value="{{isset($arrData->EndDate) ? $arrData->EndDate : ''}}"><br>
-                          <input type="checkbox" id="Monday" name="Week[{{$arrKey+1}}][Monday]" value="1" {{isset($arrData->Monday) ? 'checked': ''}}>
-                          <label for="Monday"> Monday</label><br>
-                          <input type="checkbox" id="Tuesday" name="Week[{{$arrKey+1}}][Tuesday]" value="1" {{isset($arrData->Tuesday) ? 'checked': ''}}>
-                          <label for="Tuesday"> Tuesday</label><br>
-                          <input type="checkbox" id="Wednesday" name="Week[{{$arrKey+1}}][Wednesday]" value="1" {{isset($arrData->Wednesday) ? 'checked': ''}}>
-                          <label for="Wednesday"> Wednesday</label><br>
-                          <input type="checkbox" id="Thursday" name="Week[{{$arrKey+1}}][Thursday]" value="1" {{isset($arrData->Thursday) ? 'checked': ''}}>
-                          <label for="Thursday"> Thursday</label><br>
-                          <input type="checkbox" id="Friday" name="Week[{{$arrKey+1}}][Friday]" value="1" {{isset($arrData->Friday) ? 'checked': ''}}>
-                          <label for="Friday"> Friday</label><br>
-                          <input type="checkbox" id="Fullweek" name="Week[{{$arrKey+1}}][Fullweek]" value="1" {{isset($arrData->Fullweek) ? 'checked': ''}}>
-                          <label for="Fullweek"> Fullweek</label><br>
+
+                          <div class="wrap_days">
+                            <input type="checkbox" id="Monday" name="Week[{{$arrKey+1}}][Monday]" value="1" {{isset($arrData->Monday) ? 'checked': ''}}>
+                            <label for="Monday"> Monday</label><br>
+                            <input type="date" id="Monday" class="form-control" name="Week[{{$arrKey+1}}][MondayDate]" value="{{isset($arrData->MondayDate) ? $arrData->MondayDate: ''}}">
+                          </div>
+
+                          <div class="wrap_days">
+                            <input type="checkbox" id="Tuesday" name="Week[{{$arrKey+1}}][Tuesday]" value="1" {{isset($arrData->Tuesday) ? 'checked': ''}}>
+                            <label for="Tuesday"> Tuesday</label><br>
+                            <input type="date" id="Tuesday" class="form-control" name="Week[{{$arrKey+1}}][TuesdayDate]" value="{{isset($arrData->TuesdayDate) ? $arrData->TuesdayDate: ''}}">
+                          </div>
+
+                          <div class="wrap_days">
+                            <input type="checkbox" id="Wednesday" name="Week[{{$arrKey+1}}][Wednesday]" value="1" {{isset($arrData->Wednesday) ? 'checked': ''}}>
+                            <label for="Wednesday"> Wednesday</label><br>
+                            <input type="date" id="Wednesday" class="form-control" name="Week[{{$arrKey+1}}][WednesdayDate]" value="{{isset($arrData->WednesdayDate) ? $arrData->WednesdayDate: ''}}">
+                          </div>
+
+                          <div class="wrap_days">
+                            <input type="checkbox" id="Thursday" name="Week[{{$arrKey+1}}][Thursday]" value="1" {{isset($arrData->Thursday) ? 'checked': ''}}>
+                            <label for="Thursday"> Thursday</label><br>
+                            <input type="date" id="Thursday" class="form-control" name="Week[{{$arrKey+1}}][ThursdayDate]" value="{{isset($arrData->ThursdayDate) ? $arrData->ThursdayDate: ''}}">
+                          </div>
+
+                          <div class="wrap_days">
+                            <input type="checkbox" id="Friday" name="Week[{{$arrKey+1}}][Friday]" value="1" {{isset($arrData->Friday) ? 'checked': ''}}>
+                            <label for="Friday"> Friday</label><br>
+                            <input type="date" id="Friday" class="form-control" name="Week[{{$arrKey+1}}][FridayDate]" value="{{isset($arrData->FridayDate) ? $arrData->FridayDate: ''}}">
+                          </div>
+
+                          <div class="wrap_days">
+                            <input type="checkbox" id="Fullweek" name="Week[{{$arrKey+1}}][Fullweek]" value="1" {{isset($arrData->Fullweek) ? 'checked': ''}}>
+                            <label for="Fullweek"> Fullweek</label><br>
+                            <input type="date" id="Fullweek" class="form-control" name="Week[{{$arrKey+1}}][FullweekDate]" value="{{isset($arrData->FullweekDate) ? $arrData->FullweekDate: ''}}">
+                          </div>
+                          
                         </div>
                       @endforeach
 
                       @php $keydata = $arrKey+1; @endphp
 
                       @for( $i=$keydata ; $i<=9 ; $i++)
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                           <h5>Week {{$i+1}} <input type="checkbox" id="Week" name="Week[{{$i+1}}][Selected]" value="1"></h5>
                           <label for="StartDate"> Start Date</label>
                           <input type="text" id="StartDate" name="Week[{{$i+1}}][StartDate]" style="width:100px;"><br>
                           <label for="EndDate"> End Date</label>
+
                           <input type="text" id="EndDate" name="Week[{{$i+1}}][EndDate]" style="width:100px;"><br>
+                            <div class="wrap_days">
                           <input type="checkbox" id="Monday" name="Week[{{$i+1}}][Monday]" value="1">
                           <label for="Monday"> Monday</label><br>
+                          <input type="date" id="Monday" class="form-control" name="Week[{{$i+1}}][MondayDate]" value="">
+                            </div><div class="wrap_days">
+
                           <input type="checkbox" id="Tuesday" name="Week[{{$i+1}}][Tuesday]" value="1">
                           <label for="Tuesday"> Tuesday</label><br>
+                          <input type="date" id="Monday" class="form-control" name="Week[{{$i+1}}][TuesdayDate]" value="">
+                            </div><div class="wrap_days">
+
                           <input type="checkbox" id="Wednesday" name="Week[{{$i+1}}][Wednesday]" value="1">
                           <label for="Wednesday"> Wednesday</label><br>
+                          <input type="date" id="Wednesday" class="form-control" name="Week[{{$i+1}}][WednesdayDate]" value="">
+                            </div><div class="wrap_days">
+
                           <input type="checkbox" id="Thursday" name="Week[{{$i+1}}][Thursday]" value="1">
                           <label for="Thursday"> Thursday</label><br>
+                          <input type="date" id="Thursday" class="form-control" name="Week[{{$i+1}}][ThursdayDate]" value="">
+                            </div><div class="wrap_days">
+
                           <input type="checkbox" id="Friday" name="Week[{{$i+1}}][Friday]" value="1">
                           <label for="Friday"> Friday</label><br>
+                          <input type="date" id="Friday" class="form-control" name="Week[{{$i+1}}][FridayDate]" value="">
+                            </div><div class="wrap_days">
+
                           <input type="checkbox" id="Fullweek" name="Week[{{$i+1}}][Fullweek]" value="1">
                           <label for="Fullweek"> Fullweek</label><br>
+                          <input type="date" id="Fullweek" class="form-control" name="Week[{{$i+1}}][FullweekDate]" value="">
+                            </div>
+
                         </div>
                       @endfor
                     @else
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                       <h5>Week 1 <input type="checkbox" id="Week" name="Week[1][Selected]" value="1"></h5>
                       <label for="StartDate"> Start Date</label>
                       <input type="text" id="StartDate" name="Week[1][StartDate]" style="width:100px;"><br>
                       <label for="EndDate"> End Date</label>
+
                       <input type="text" id="EndDate" name="Week[1][EndDate]" style="width:100px;"><br>
                       <input type="checkbox" id="Monday" name="Week[1][Monday]" value="1">
                       <label for="Monday"> Monday</label><br>
+                      <input type="date" id="Monday" class="form-control" name="Week[1][MondayDate]" value="">
+
                       <input type="checkbox" id="Tuesday" name="Week[1][Tuesday]" value="1">
                       <label for="Tuesday"> Tuesday</label><br>
+                      <input type="date" id="Tuesday" class="form-control" name="Week[1][TuesdayDate]" value="">
+
                       <input type="checkbox" id="Wednesday" name="Week[1][Wednesday]" value="1">
                       <label for="Wednesday"> Wednesday</label><br>
+                      <input type="date" id="Wednesday" class="form-control" name="Week[1][WednesdayDate]" value="">
+
                       <input type="checkbox" id="Thursday" name="Week[1][Thursday]" value="1">
                       <label for="Thursday"> Thursday</label><br>
+                      <input type="date" id="Thursday" class="form-control" name="Week[1][ThursdayDate]" value="">
+
                       <input type="checkbox" id="Friday" name="Week[1][Friday]" value="1">
                       <label for="Friday"> Friday</label><br>
+                      <input type="date" id="Friday" class="form-control" name="Week[1][FridayDate]" value="">
+
                       <input type="checkbox" id="Fullweek" name="Week[1][Fullweek]" value="1">
                       <label for="Fullweek"> Fullweek</label><br>
+                      <input type="date" id="Fullweek" class="form-control" name="Week[1][FullweekDate]" value="">
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                       <h5>Week 2 <input type="checkbox" id="Week" name="Week[2][Selected]" value="1"></h5>
                       <label for="StartDate"> Start Date</label>
                       <input type="text" id="StartDate" name="Week[2][StartDate]" style="width:100px;"><br>
                       <label for="EndDate"> End Date</label>
+
                       <input type="text" id="EndDate" name="Week[2][EndDate]" style="width:100px;"><br>
                       <input type="checkbox" id="Monday" name="Week[2][Monday]" value="1">
                       <label for="Monday"> Monday</label><br>
+                      <input type="date" id="Monday" class="form-control" name="Week[2][MondayDate]" value="">
+
                       <input type="checkbox" id="Tuesday" name="Week[2][Tuesday]" value="1">
                       <label for="Tuesday"> Tuesday</label><br>
+                      <input type="date" id="Tuesday" class="form-control" name="Week[2][TuesdayDate]" value="">
+
                       <input type="checkbox" id="Wednesday" name="Week[2][Wednesday]" value="1">
                       <label for="Wednesday"> Wednesday</label><br>
+                      <input type="date" id="Wednesday" class="form-control" name="Week[2][WednesdayDate]" value="">
+
                       <input type="checkbox" id="Thursday" name="Week[2][Thursday]" value="1">
                       <label for="Thursday"> Thursday</label><br>
+                      <input type="date" id="Thursday" class="form-control" name="Week[2][ThursdayDate]" value="">
+
                       <input type="checkbox" id="Friday" name="Week[2][Friday]" value="1">
                       <label for="Friday"> Friday</label><br>
+                      <input type="date" id="Friday" class="form-control" name="Week[2][FridayDate]" value="">
+
                       <input type="checkbox" id="Fullweek" name="Week[2][Fullweek]" value="1">
                       <label for="Fullweek"> Fullweek</label><br>
+                      <input type="date" id="Fullweek" class="form-control" name="Week[2][FullweekDate]" value="">
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                       <h5>Week 3 <input type="checkbox" id="Week" name="Week[3][Selected]" value="1"></h5>
                       <label for="StartDate"> Start Date</label>
                       <input type="text" id="StartDate" name="Week[3][StartDate]" style="width:100px;"><br>
                       <label for="EndDate"> End Date</label>
+
                       <input type="text" id="EndDate" name="Week[3][EndDate]" style="width:100px;"><br>
                       <input type="checkbox" id="Monday" name="Week[3][Monday]" value="1">
                       <label for="Monday"> Monday</label><br>
+                      <input type="date" id="Monday" class="form-control" name="Week[3][MondayDate]" value="">
+
                       <input type="checkbox" id="Tuesday" name="Week[3][Tuesday]" value="1">
                       <label for="Tuesday"> Tuesday</label><br>
+                      <input type="date" id="Tuesday" class="form-control" name="Week[3][TuesdayDate]" value="">
+
                       <input type="checkbox" id="Wednesday" name="Week[3][Wednesday]" value="1">
                       <label for="Wednesday"> Wednesday</label><br>
+                      <input type="date" id="Wednesday" class="form-control" name="Week[3][WednesdayDate]" value="">
+
                       <input type="checkbox" id="Thursday" name="Week[3][Thursday]" value="1">
                       <label for="Thursday"> Thursday</label><br>
+                      <input type="date" id="Thursday" class="form-control" name="Week[3][ThursdayDate]" value="">
+
                       <input type="checkbox" id="Friday" name="Week[3][Friday]" value="1">
                       <label for="Friday"> Friday</label><br>
+                      <input type="date" id="Friday" class="form-control" name="Week[3][FridayDate]" value="">
+
                       <input type="checkbox" id="Fullweek" name="Week[3][Fullweek]" value="1">
                       <label for="Fullweek"> Fullweek</label><br>
+                      <input type="date" id="Fullweek" class="form-control" name="Week[3][FullweekDate]" value="">
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                       <h5>Week 4 <input type="checkbox" id="Week" name="Week[4][Selected]" value="1"></h5>
                       <label for="StartDate"> Start Date</label>
                       <input type="text" id="StartDate" name="Week[4][StartDate]" style="width:100px;"><br>
                       <label for="EndDate"> End Date</label>
+
                       <input type="text" id="EndDate" name="Week[4][EndDate]" style="width:100px;"><br>
                       <input type="checkbox" id="Monday[4]" name="Week[4][Monday]" value="1">
                       <label for="Monday"> Monday</label><br>
-                      <input type="checkbox" id="Tuesday[4]" name="Week[4][Tuesday]" value="1">
+                      <input type="date" id="Monday" class="form-control" name="Week[4][MondayDate]" value="">
+
+                      <input type="checkbox" id="Tuesday" name="Week[4][Tuesday]" value="1">
                       <label for="Tuesday"> Tuesday</label><br>
-                      <input type="checkbox" id="Wednesday[4]" name="Week[4][Wednesday]" value="1">
+                      <input type="date" id="Tuesday" class="form-control" name="Week[4][TuesdayDate]" value="">
+
+                      <input type="checkbox" id="Wednesday" name="Week[4][Wednesday]" value="1">
                       <label for="Wednesday"> Wednesday</label><br>
-                      <input type="checkbox" id="Thursday[4]" name="Week[4][Thursday]" value="1">
+                      <input type="date" id="Wednesday" class="form-control" name="Week[4][WednesdayDate]" value="">
+
+                      <input type="checkbox" id="Thursday" name="Week[4][Thursday]" value="1">
                       <label for="Thursday"> Thursday</label><br>
-                      <input type="checkbox" id="Friday[4]" name="Week[4][Friday]" value="1">
+                      <input type="date" id="Thursday" class="form-control" name="Week[4][ThursdayDate]" value="">
+
+                      <input type="checkbox" id="Friday" name="Week[4][Friday]" value="1">
                       <label for="Friday"> Friday</label><br>
+                      <input type="date" id="Friday" class="form-control" name="Week[4][FridayDate]" value="">
+
                       <input type="checkbox" id="Fullweek" name="Week[4][Fullweek]" value="1">
                       <label for="Fullweek"> Fullweek</label><br>
+                      <input type="date" id="Fullweek" class="form-control" name="Week[4][FullweekDate]" value="">
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                       <h5>Week 5 <input type="checkbox" id="Week" name="Week[5][Selected]" value="1"></h5>
                       <label for="StartDate"> Start Date</label>
                       <input type="text" id="StartDate" name="Week[5][StartDate]" style="width:100px;"><br>
                       <label for="EndDate"> End Date</label>
+
                       <input type="text" id="EndDate" name="Week[5][EndDate]" style="width:100px;"><br>
                       <input type="checkbox" id="Monday[5]" name="Week[5][Monday]" value="1">
                       <label for="Monday5"> Monday</label><br>
-                      <input type="checkbox" id="Tuesday[5]" name="Week[5][Tuesday]" value="1">
-                      <label for="Tuesday5"> Tuesday</label><br>
-                      <input type="checkbox" id="Wednesday[5]" name="Week[5][Wednesday]" value="1">
-                      <label for="Wednesday5"> Wednesday</label><br>
-                      <input type="checkbox" id="Thursday[5]" name="Week[5][Thursday]" value="1">
-                      <label for="Thursday5"> Thursday</label><br>
-                      <input type="checkbox" id="Friday[5]" name="Week[5][Friday]" value="1">
-                      <label for="Friday5"> Friday</label><br>
+                      <input type="date" id="Monday" class="form-control" name="Week[5][MondayDate]" value="">
+
+                      <input type="checkbox" id="Tuesday" name="Week[5][Tuesday]" value="1">
+                      <label for="Tuesday"> Tuesday</label><br>
+                      <input type="date" id="Tuesday" class="form-control" name="Week[5][TuesdayDate]" value="">
+
+                      <input type="checkbox" id="Wednesday" name="Week[5][Wednesday]" value="1">
+                      <label for="Wednesday"> Wednesday</label><br>
+                      <input type="date" id="Wednesday" class="form-control" name="Week[5][WednesdayDate]" value="">
+
+                      <input type="checkbox" id="Thursday" name="Week[5][Thursday]" value="1">
+                      <label for="Thursday"> Thursday</label><br>
+                      <input type="date" id="Thursday" class="form-control" name="Week[5][ThursdayDate]" value="">
+
+                      <input type="checkbox" id="Friday" name="Week[5][Friday]" value="1">
+                      <label for="Friday"> Friday</label><br>
+                      <input type="date" id="Friday" class="form-control" name="Week[5][FridayDate]" value="">
+
                       <input type="checkbox" id="Fullweek" name="Week[5][Fullweek]" value="1">
                       <label for="Fullweek"> Fullweek</label><br>
+                      <input type="date" id="Fullweek" class="form-control" name="Week[5][FullweekDate]" value="">
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                       <h5>Week 6 <input type="checkbox" id="Week" name="Week[6][Selected]" value="1"></h5>
                       <label for="StartDate"> Start Date</label>
                       <input type="text" id="StartDate" name="Week[6][StartDate]" style="width:100px;"><br>
                       <label for="EndDate"> End Date</label>
+
                       <input type="text" id="EndDate" name="Week[6][EndDate]" style="width:100px;"><br>
                       <input type="checkbox" id="Monday[6]" name="Week[6][Monday]" value="1">
                       <label for="Monday6"> Monday</label><br>
-                      <input type="checkbox" id="Tuesday[6]" name="Week[6][Tuesday]" value="1">
-                      <label for="Tuesday6"> Tuesday</label><br>
-                      <input type="checkbox" id="Wednesday[6]" name="Week[6][Wednesday]" value="1">
-                      <label for="Wednesday6"> Wednesday</label><br>
-                      <input type="checkbox" id="Thursday[6]" name="Week[6][Thursday]" value="1">
-                      <label for="Thursday6"> Thursday</label><br>
-                      <input type="checkbox" id="Friday[6]" name="Week[6][Friday]" value="1">
-                      <label for="Friday6"> Friday</label><br>
+                      <input type="date" id="Monday" class="form-control" name="Week[6][MondayDate]" value="">
+
+                      <input type="checkbox" id="Tuesday" name="Week[6][Tuesday]" value="1">
+                      <label for="Tuesday"> Tuesday</label><br>
+                      <input type="date" id="Tuesday" class="form-control" name="Week[6][TuesdayDate]" value="">
+
+                      <input type="checkbox" id="Wednesday" name="Week[6][Wednesday]" value="1">
+                      <label for="Wednesday"> Wednesday</label><br>
+                      <input type="date" id="Wednesday" class="form-control" name="Week[6][WednesdayDate]" value="">
+
+                      <input type="checkbox" id="Thursday" name="Week[6][Thursday]" value="1">
+                      <label for="Thursday"> Thursday</label><br>
+                      <input type="date" id="Thursday" class="form-control" name="Week[6][ThursdayDate]" value="">
+
+                      <input type="checkbox" id="Friday" name="Week[6][Friday]" value="1">
+                      <label for="Friday"> Friday</label><br>
+                      <input type="date" id="Friday" class="form-control" name="Week[6][FridayDate]" value="">
+
                       <input type="checkbox" id="Fullweek" name="Week[6][Fullweek]" value="1">
                       <label for="Fullweek"> Fullweek</label><br>
+                      <input type="date" id="Fullweek" class="form-control" name="Week[6][FullweekDate]" value="">
                     </div>
                     
                     <br>
@@ -274,7 +427,7 @@
                   <br></br>
                   <div class="row">
                     
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                       <h5>Week 7 <input type="checkbox" id="Week" name="Week[7][Selected]" value="1"></h5>
                       <label for="StartDate"> Start Date</label>
                       <input type="text" id="StartDate" name="Week[7][StartDate]" style="width:100px;"><br>
@@ -293,7 +446,7 @@
                       <input type="checkbox" id="Fullweek" name="Week[7][Fullweek]" value="1">
                       <label for="Fullweek"> Fullweek</label><br>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                       <h5>Week 8 <input type="checkbox" id="Week" name="Week[8][Selected]" value="1"></h5>
                       <label for="StartDate"> Start Date</label>
                       <input type="text" id="StartDate" name="Week[8][StartDate]" style="width:100px;"><br>
@@ -312,7 +465,7 @@
                       <input type="checkbox" id="Fullweek" name="Week[8][Fullweek]" value="1">
                       <label for="Fullweek"> Fullweek</label><br>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                       <h5>Week 9 <input type="checkbox" id="Week" name="Week[9][Selected]" value="1"></h5>
                       <label for="StartDate"> Start Date</label>
                       <input type="text" id="StartDate" name="Week[9][StartDate]" style="width:100px;"><br>
@@ -331,7 +484,7 @@
                       <input type="checkbox" id="Fullweek" name="Week[9][Fullweek]" value="1">
                       <label for="Fullweek"> Fullweek</label><br>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                       <h5>Week 10 <input type="checkbox" id="Week" name="Week[10][Selected]" value="1"></h5>
                       <label for="StartDate"> Start Date</label>
                       <input type="text" id="StartDate" name="Week[10][StartDate]" style="width:100px;"><br>
@@ -353,6 +506,7 @@
                   </div>
                   @endif
                   </br></br>
+                </div>
                 </div>
 
 

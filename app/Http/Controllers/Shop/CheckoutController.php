@@ -71,23 +71,91 @@ public function participantInfo()
 /* Save participant info */
 public function saveParticipantInfo(Request $request)
 {
-	$check_consents = \DB::table('children_details')->where('child_id',$request->user_id)->first();
-    $check_contacts = \DB::table('child_contacts')->where('child_id', $request->user_id)->first();
+	// List of users in the cart
+	$shop_cart = \DB::table('shop_cart_items')->where('user_id',Auth::user()->id)->where('type','cart')->get();
+	$child_id = $users = [];
+	foreach($shop_cart as $cart)
+	{
+		$child_id[] = $cart->child_id;
+	}
 
-    if(isset($check_consents) && isset($check_contacts) && !empty($check_consents->media) && !empty($check_consents->confirm) && !empty($check_consents->med_cond))
-    {
-		if(isset($request->participant_info)){
-
-			if($request->participant_info == 'on'){
-				return redirect('/shop/checkout/billing-address');
+	// select confirm users
+	if(!empty($request->participant_info))
+	{
+		$selected_users = $request->participant_info;
+		foreach($selected_users as $key=>$info)
+		{	
+			foreach($info as $user_id=>$info1)
+			{
+				$users[] = $user_id;
 			}
+		}
+	}
 
+	// intersection of shop cart table and selected users
+	$a = array_intersect($child_id,$users);
+
+	if(count($child_id) == count($a))
+	{	
+
+		if(!empty($request->participant_info))
+		{
+			foreach($request->participant_info as $key=>$info)
+			{
+				if(!empty($info))
+				{
+					foreach($info as $user_id=>$info1)
+					{
+						if(!empty($user_id))
+						{
+							$check_consents = \DB::table('children_details')->where('child_id',$user_id)->first();
+	    					$check_contacts = \DB::table('child_contacts')->where('child_id', $user_id)->first();
+
+	    					//dd($check_consents,$check_contacts);
+
+	    					if(isset($check_consents) && isset($check_contacts) && !empty($check_consents->media) && !empty($check_consents->confirm))
+						    {
+								// if(isset($request->participant_info)){
+
+									// if($request->participant_info == 'on'){
+										return redirect('/shop/checkout/billing-address');
+									// }
+
+								// }else{
+								// 	return \Redirect::back()->with('error', 'Please confirm that the participant details are correct');
+								// }
+							}else{
+								return \Redirect::back()->with('error', 'Please ensure each participant has complete details and you click confirm in order to proceed.');
+							}
+						}
+					}
+				}
+			}
 		}else{
-			return \Redirect::back()->with('error', 'Please confirm that the participant details are correct');
+			return \Redirect::back()->with('error', 'Please ensure each participant has complete details and you click confirm in order to proceed.');
 		}
 	}else{
-		return \Redirect::back()->with('error', 'Some details are missing. Please ensure each participant has complete details in order to proceed.');
+		return \Redirect::back()->with('error', 'Please ensure each participant has complete details and you click confirm in order to proceed.');
 	}
+	
+
+	// $check_consents = \DB::table('children_details')->where('child_id',$request->user_id)->first();
+ //    $check_contacts = \DB::table('child_contacts')->where('child_id', $request->user_id)->first();
+
+ //    if(isset($check_consents) && isset($check_contacts) && !empty($check_consents->media) && !empty($check_consents->confirm) && !empty($check_consents->med_cond))
+ //    {
+	// 	if(isset($request->participant_info)){
+
+	// 		if($request->participant_info == 'on'){
+	// 			return redirect('/shop/checkout/billing-address');
+	// 		}
+
+	// 	}else{
+	// 		return \Redirect::back()->with('error', 'Please confirm that the participant details are correct');
+	// 	}
+	// }else{
+	// 	return \Redirect::back()->with('error', 'Some details are missing. Please ensure each participant has complete details in order to proceed.');
+	// }
 }
 
 /* Remove Coupon */ 

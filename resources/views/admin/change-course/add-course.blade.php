@@ -41,7 +41,7 @@
  
           <div class="card-body">
 
-              <form action="{{route('save_course_for_player')}}" enctype="multipart/form-data">
+              <form class="ch_course" action="{{route('save_course_for_player')}}" enctype="multipart/form-data">
                 
                 @csrf
 
@@ -56,13 +56,11 @@
                       <option value="{{$sh->id}}">@php echo getUsername($sh->id); @endphp</option>
                     @endforeach
                   </select>
-                  <br/>
 
                   <label class="control-label">Select Player</label>
                   <select class="form-control" id="player_id" name="player">
                     <option disabled selected="" value="">Select Player</option>
                   </select>
-                  <br/>
 
                   <label class="control-label">Cost/No Cost<span class="cst-upper-star">*</span></label>
                   <select class="form-control" id="cost_type" name="cost_type">
@@ -70,17 +68,15 @@
                     <option value="Cost">Cost</option>
                     <option value="No Cost">No Cost</option>
                   </select>
-                  <br/>
 
                   <label class="control-label">Change Course<span class="cst-upper-star">*</span></label>
                   @php $courses = DB::table('courses')->where('status',1)->orderby('id','desc')->get(); @endphp
-                  <select class="form-control" name="course">
+                  <select class="form-control" id="change_course" name="course">
                     <option disabled selected="" value="">Select Course</option>
                     @foreach($courses as $co)
                       <option value="{{$co->id}}">{{$co->title}}</option>
                     @endforeach
                   </select>
-                  <br/>
                   
                   <div id="pay_meth">
                     <label class="control-label">Payment Method</label>
@@ -90,7 +86,6 @@
                       <option value="Wallet">Wallet</option>
                       <option value="Childcare">Childcare</option>
                     </select>
-                    <br/>
                   </div>
 
                 <div class="card-footer pl-0">

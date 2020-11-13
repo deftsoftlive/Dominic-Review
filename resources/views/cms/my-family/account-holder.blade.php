@@ -2,9 +2,9 @@
 @section('title', 'DRH|Register')
 @section('content')
 
-@php 
+@php
     $country_code = DB::table('country_code')->orderBy('countryname','asc')->get(); 
-    $user_id = request()->get('user');
+    $user_id = request()->get('user'); 
     $sec = request()->get('sec');  
 @endphp
 
@@ -13,7 +13,7 @@
 @php
     $user_data = DB::table('users')->where('id',$user_id)->first();
 
-    $children_details = DB::table('children_details')->where('parent_id',$user->id)->first();   
+    $children_details = DB::table('children_details')->where('parent_id',$user->id)->where('child_id',$user->id)->first();  
     $child_contacts = DB::table('child_contacts')->where('child_id',$user->id)->get(); 
     $count_child_contacts = $child_contacts->count();
 
@@ -75,9 +75,17 @@ input#agree {
 <section class="register-acc">
     <div class="container">
         <div class="inner-cont">
+            @php 
+                $user = Db::table('users')->where('id',Auth::user()->id)->first();
+            @endphp
             @if(isset($user_id) && isset($user_data))
             <div class="back-to-family">
                 <h4 class="pl_name">Name : <p>{{$user_data->name}}</p></h4>
+                <a href="{{url('/user/my-family')}}" class="cstm-btn main_button">Back to my family</a>
+            </div>
+            @elseif(!empty($user))
+            <div class="back-to-family">
+                <h4 class="pl_name">Name : <p>{{$user->name}}</p></h4>
                 <a href="{{url('/user/my-family')}}" class="cstm-btn main_button">Back to my family</a>
             </div>
             @endif
@@ -440,6 +448,8 @@ input#agree {
                             <div class="register-sec form-register-sec family_mem ">
                                 <div class="form-partition">
 
+                                    @php //dd($children_details); @endphp
+
                                     <form action="{{route('ah_medical_information')}}" class="register-form contact_form medicical-form" method="POST">
                                         @csrf
                                         <input type="hidden" name="child_id" value="{{Auth::user()->id}}">
@@ -455,18 +465,18 @@ input#agree {
                                                         </div>
                                                         <div class="radio-wrap">
                                                             <div class="cstm-radio">
-                                                                <input type="radio" class="medical_cond" name="med_cond" id="med_cond_yes1" value="yes" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'yes') checked @endif @endif>
+                                                                <input type="radio" class="ah_medical_cond" name="med_cond" id="med_cond_yes1" value="yes" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'yes') checked @endif @endif>
                                                                 <label for="med_cond_yes1">Yes</label>
                                                             </div>
                                                             <div class="cstm-radio">
-                                                                <input type="radio" class="medical_cond" name="med_cond" id="med_cond_no1" value="no" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') checked @endif @endif> 
+                                                                <input type="radio" class="ah_medical_cond" name="med_cond" id="med_cond_no1" value="no" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') checked @endif @endif> 
                                                                 <label for="med_cond_no1">No</label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div id="medical_cond1" class="col-md-12 option_row consent-option-row" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') style="display:none;" @elseif($children_details->med_cond == 'yes') style="display:block;" @endif @endif> 
+                                                <div id="ah_medical_cond1" class="col-md-12 option_row consent-option-row" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') style="display:none;" @elseif($children_details->med_cond == 'yes') style="display:block;" @endif @endif> 
 
                                                 @if(count($child_medicals)>0)
                                                 @php $i=1; @endphp
@@ -508,7 +518,7 @@ input#agree {
                                                 </div>
 
                                                 <div class="form-group row f-g-full" @if(isset($children_details->med_cond)) @if($children_details->med_cond == 'no') style="display:none;" @elseif($children_details->med_cond == 'yes') style="display:block;" @endif @endif>
-                                                    <div class="col-sm-12 button-center another_medical" style="margin-top: 15px;">
+                                                    <div class="col-sm-12 button-center ah_another_medical" style="margin-top: 15px;">
                                                         <a href="javascript:void(0);" style="margin:0;" onclick="addmedical();" class="additional_contact cstm-btn main_button">Add Another Medical or Behavioural Condition <i class="fas fa-plus"></i></a>
                                                     </div>
                                                 </div>
@@ -593,7 +603,7 @@ input#agree {
                                                         </div>
                                                     </div>
                                                     <div class="form-radios conform_radios">
-                                                        <p style="display: inline-block; font-weight:400; margin-right: 15px;">I confirm that I agree to the DRH Sports Terms & conditions</p>
+                                                        <p style="display: inline-block; font-weight:400; margin-right: 15px;">I confirm that I agree to the DRH Sports <a href="{{url('/page/terms-and-condition')}}" target="_blank">Terms & conditions</a></p>
                                                     </div>
                                                 </div>
                                             </div>

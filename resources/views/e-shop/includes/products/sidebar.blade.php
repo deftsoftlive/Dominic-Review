@@ -33,7 +33,7 @@
                 </form>
 
                 @if(isset($category))
-                    <a href="javascript:void(0);" class="" id="CloseFilterCategory"><i class="fas fa-times-circle"></i></a>
+                   <!--  <a href="javascript:void(0);" class="" id="CloseFilterCategory"><i class="fas fa-times-circle"></i></a>
                     <h5 class="filter_categories"> Categories</h5>
                        <div id="filters-accordion"> 
                         <div class="card">
@@ -60,7 +60,7 @@
                             </div>
                           </div>
                         </div>
-                      </div> 
+                      </div>  -->
 
 
 
@@ -104,7 +104,7 @@
                                 </div>      
                                 -->
 
-                          <form id="ProductFilterOfSidebar" action="{{url(route('shop.ajax.product.sidebarFilter',$category->id))}}">
+                          <!-- <form id="ProductFilterOfSidebar" action="{{url(route('shop.ajax.product.sidebarFilter',$category->id))}}"> -->
                            
                           <!-- <div class="card">
                             <div class="card-header" id="heading-3">
@@ -159,7 +159,7 @@
                             </div>
                           </div> -->
 
-                      @if($category->categorySubparent->ProductVariations != null && $category->categorySubparent->ProductVariations->count() > 0)    
+                     <!--  @if($category->categorySubparent->ProductVariations != null && $category->categorySubparent->ProductVariations->count() > 0)    
                           
                         @foreach($category->categorySubparent->ProductVariations as $variation)
                           <div class="card">
@@ -206,7 +206,7 @@
                           @endforeach
                         @endif
 
-                        </form>
+                        </form> -->
 
                 @endif        
               </div> 

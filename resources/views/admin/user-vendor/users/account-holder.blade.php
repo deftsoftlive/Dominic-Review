@@ -194,6 +194,15 @@ input#agree {
                                                         </select>
                                                     </div>
                                                 </div> -->
+
+                                                <!-- Tennis Club -->
+                                                <div class="form-group row">
+                                                    <label for="tennis_club" class="col-md-12 col-form-label text-md-right person_attend">Tennis Club</label>
+                                                    <div class="col-md-12">
+                                                        <input id="tennis_club" type="text" class="form-control" name="tennis_club" value="{{isset($user->tennis_club) ? $user->tennis_club : ''}}">
+                                                    </div>
+                                                </div>
+
                                                 <!-- school -->
                                                 <div class="form-group row" style="display: none;">
                                                     <label for="tennis_club" class="col-md-12 col-form-label text-md-right person_attend">Which school does this person attend</label>
@@ -582,7 +591,7 @@ input#agree {
                                                         </div>
                                                     </div>
                                                     <div class="form-radios conform_radios">
-                                                        <p style="display: inline-block; font-weight:400; margin-right: 15px;">I confirm that I agree to the DRH Sports Terms & conditions</p>
+                                                        <p style="display: inline-block; font-weight:400; margin-right: 15px;">I confirm that I agree to the DRH Sports <a href="{{url('/page/terms-and-condition')}}" target="_blank">Terms & conditions</a></p>
                                                     </div>
                                                 </div>
                                             </div>

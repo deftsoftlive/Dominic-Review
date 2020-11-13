@@ -201,7 +201,7 @@ input#agree {
                                                         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                                         <select id="country" name="country1" class="paste_country form-control cstm-select-list">
                                                             @foreach($country_code as $name)
-                                                            <option value="{{$name->countryname}}">{{$name->countryname}}</option>
+                                                            <option @if($name->countryname == $user_data->country) selected @endif value="{{$name->countryname}}">{{$name->countryname}}</option>
                                                             @endforeach
                                                         </select>
                                                         @if ($errors->has('country'))
@@ -383,7 +383,7 @@ input#agree {
                                                             <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                                             <select id="country" name="country" class="paste_country form-control cstm-select-list">
                                                                 @foreach($country_code as $name)
-                                                                <option value="{{$name->countryname}}">{{$name->countryname}}</option>
+                                                                <option @if($name->countryname == $user_data->country) selected @endif value="{{$name->countryname}}">{{$name->countryname}}</option>
                                                                 @endforeach
                                                             </select>
                                                             @if ($errors->has('country'))
@@ -2510,7 +2510,7 @@ input#agree {
                                                         </div>
                                                     </div>
                                                     <div class="form-radios conform_radios">
-                                                        <p style="display: inline-block; font-weight:400; margin-right: 15px;">I confirm that I agree to the DRH Sports Terms & conditions</p>
+                                                        <p style="display: inline-block; font-weight:400; margin-right: 15px;">I confirm that I agree to the DRH Sports <a href="{{url('/page/terms-and-condition')}}" target="_blank">Terms & conditions</a></p>
                                                     </div>
                                                 </div>
                                             </div>

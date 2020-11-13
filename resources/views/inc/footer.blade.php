@@ -83,10 +83,13 @@
         </div>
       </div>
     </footer>
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
    <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
+
+<script src="{{ URL::asset('js/circle-progress.min.js')}}"></script>
 
    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -115,8 +118,36 @@
     <script type="text/javascript" src="{{URL::asset('/e-shop/js/home/home.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('/e-shop/js/products/wishlist.js')}}"></script>
     <script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function() { 
+          $("#season_ID").select2();
+          $("#season").select2();
+          $("#active_seasons").select2();
+        });
     
+
+    $(document).ready(function() {
+        $('.print_report').click(function() {
+            //window.print();
+        var report_id = $(this).data("id"); 
+            
+            $('.pl_rp_data').addClass('d-print-none');
+            $('.player-reports-'+report_id).removeClass('d-print-none'); 
+            window.print();
+        });
+
+      });
     
+
+      $(document).ready(function() {
+        $('#print_all_rps').click(function() {
+          $('.pl_rp_data').removeClass('d-print-none');
+        });
+      });
+    </script> 
+  
 <script type="text/javascript">
 $(document).ready(function(){
   if(!$(".alert_msg").hasClass("shop_items") && !$(".alert_msg").hasClass("course_items") && !$(".alert_msg").hasClass("camp_items")){
@@ -176,6 +207,27 @@ $(document).ready(function(){
 
 <script type="text/javascript">
 $(document).ready(function($){
+
+    $(".ah_medical_cond").change(function(){
+       var result = $('input[name="med_cond"]:checked').val();
+
+       if(result == 'no')
+       {  
+          $('#ah_medical_cond1').css('display','none');
+          $('.ah_medi').css('display','none');
+          $('.ah_medi_button').css('display','none');
+          $('.ah_another_medical').parent().css('display','none');
+       }
+       else
+       {
+          $('#ah_medical_cond1').css('display','block');
+          $('.ah_medi').css('display','block');
+          $('.ah_medi_button').css('display','block');
+          $('.ah_another_medical').parent().css('display','block');
+       }
+
+     });
+
 
     $(".medical_cond").change(function(){
        var result = $('input[name="med_cond"]:checked').val();
@@ -510,11 +562,12 @@ $('.upload-image').on('click', function (ev) {
           $(".design-loader").fadeOut("slow");
     });
 
-    $(document).ready(function(){
-      $("#childcare_form").on("submit", function(){
-          $("body").css('opacity',0.5);
-      });//submit
-    });
+    // $(document).ready(function(){
+    //   $("#childcare_form").on("submit", function(){
+    //       $("body").addClass('processing');
+    //   });
+    //   });
+    // });
     
   /*****************************
   | Update Tennis Club
@@ -1434,6 +1487,9 @@ $("#submit-booking").click(function() {
 });
 
     </script>
+
+
+
   <!-- player info slider -->
       <script>
         $('.player-info-slider').owlCarousel({
@@ -1462,5 +1518,219 @@ $("#submit-booking").click(function() {
  $( ".player-info-slider .owl-next").html('<i class="fas fa-arrow-circle-right"></i>');
 
     </script>
+
+
+
+<script>
+function score(el){
+
+  $(el).circleProgress({
+    fill: { gradient: ["#1279db", "#1279db"] },
+     startAngle: -Math.PI/2,
+     emptyFill: { color: "#fff" },
+     reverse: true,
+      emptyFill: 'transparent'
+  })
+    .on('circle-animation-progress', function(event, progress, stepValue){
+     $(this).find('.progress-value > span').text(String(stepValue.toFixed(2)).substr(2)+'%');
+    });  
+};
+score('#Score');
+
+function score1(el){
+
+  $(el).circleProgress({
+    fill: { gradient: ["#4eb86c", "#4eb86c"] },
+     startAngle: -Math.PI/2,
+     emptyFill: { color: "#fff" },
+     reverse: true,
+      emptyFill: 'transparent'
+  })
+    .on('circle-animation-progress', function(event, progress, stepValue){
+     $(this).find('.progress-value > span').text(String(stepValue.toFixed(2)).substr(2)+'%');
+    });  
+};
+score1('#Score-1');
+
+function score2(el){
+
+  $(el).circleProgress({
+    fill: { gradient: ["#1279db", "#1279db"] },
+     startAngle: -Math.PI/2,
+     emptyFill: { color: "#fff" },
+     reverse: true,
+      emptyFill: 'transparent'
+  })
+    .on('circle-animation-progress', function(event, progress, stepValue){
+     $(this).find('.progress-value > span').text(String(stepValue.toFixed(2)).substr(2)+'%');
+    });  
+};
+score2('#Score-2');
+
+function score3(el){
+
+  $(el).circleProgress({
+    fill: { gradient: ["#4eb86c", "#4eb86c"] },
+     startAngle: -Math.PI/2,
+     emptyFill: { color: "#fff" },
+     reverse: true,
+      emptyFill: 'transparent'
+  })
+    .on('circle-animation-progress', function(event, progress, stepValue){
+     $(this).find('.progress-value > span').text(String(stepValue.toFixed(2)).substr(2)+'%');
+    });  
+};
+score3('#Score-3');
+
+function score4(el){
+
+  $(el).circleProgress({
+    fill: { gradient: ["#1279db", "#1279db"] },
+     startAngle: -Math.PI/2,
+     emptyFill: { color: "#fff" },
+     reverse: true,
+      emptyFill: 'transparent'
+  })
+    .on('circle-animation-progress', function(event, progress, stepValue){
+     $(this).find('.progress-value > span').text(String(stepValue.toFixed(2)).substr(2)+'%');
+    });  
+};
+score4('#Score-4');
+
+function score5(el){
+
+  $(el).circleProgress({
+    fill: { gradient: ["#4eb86c", "#4eb86c"] },
+     startAngle: -Math.PI/2,
+     emptyFill: { color: "#fff" },
+     reverse: true,
+      emptyFill: 'transparent'
+  })
+    .on('circle-animation-progress', function(event, progress, stepValue){
+     $(this).find('.progress-value > span').text(String(stepValue.toFixed(2)).substr(2)+'');
+    });  
+};
+score5('#Score-5');
+
+function score6(el){
+
+  $(el).circleProgress({
+    fill: { gradient: ["#1279db", "#1279db"] },
+     startAngle: -Math.PI/2,
+     emptyFill: { color: "#fff" },
+     reverse: true,
+      emptyFill: 'transparent'
+  })
+    .on('circle-animation-progress', function(event, progress, stepValue){
+     $(this).find('.progress-value > span').text(String(stepValue.toFixed(2)).substr(2)+'');
+    });  
+};
+score6('#Score-6');
+
+function score7(el){
+
+  $(el).circleProgress({
+    fill: { gradient: ["#4eb86c", "#4eb86c"] },
+     startAngle: -Math.PI/2,
+     emptyFill: { color: "#fff" },
+     reverse: true,
+      emptyFill: 'transparent'
+  })
+    .on('circle-animation-progress', function(event, progress, stepValue){
+     $(this).find('.progress-value > span').text(String(stepValue.toFixed(2)).substr(2)+'');
+    });  
+};
+score7('#Score-7');
+
+function score8(el){
+
+  $(el).circleProgress({
+    fill: { gradient: ["#4eb86c", "#4eb86c"] },
+     startAngle: -Math.PI/2,
+     emptyFill: { color: "#fff" },
+     reverse: true,
+      emptyFill: 'transparent'
+  })
+    .on('circle-animation-progress', function(event, progress, stepValue){
+     $(this).find('.progress-value > span').text(String(stepValue.toFixed(2)).substr(2)+'%');
+    });  
+};
+score8('#Score-8');
+
+function score9(el){
+
+  $(el).circleProgress({
+    fill: { gradient: ["#4eb86c", "#4eb86c"] },
+     startAngle: -Math.PI/2,
+     emptyFill: { color: "#fff" },
+     reverse: true,
+      emptyFill: 'transparent'
+  })
+    .on('circle-animation-progress', function(event, progress, stepValue){
+     $(this).find('.progress-value > span').text(String(stepValue.toFixed(2)).substr(2)+'%');
+    });  
+};
+score9('#Score-9');
+
+function score10(el){
+
+  $(el).circleProgress({
+    fill: { gradient: ["#1279db", "#1279db"] },
+     startAngle: -Math.PI/2,
+     emptyFill: { color: "#fff" },
+     reverse: true,
+      emptyFill: 'transparent'
+  })
+    .on('circle-animation-progress', function(event, progress, stepValue){
+     $(this).find('.progress-value > span').text(String(stepValue.toFixed(2)).substr(2)+'%');
+    });  
+};
+score10('#Score-10');
+
+function score11(el){
+
+  $(el).circleProgress({
+    fill: { gradient: ["#4eb86c", "#4eb86c"] },
+     startAngle: -Math.PI/2,
+     emptyFill: { color: "#fff" },
+     reverse: true,
+      emptyFill: 'transparent'
+  })
+    .on('circle-animation-progress', function(event, progress, stepValue){
+     $(this).find('.progress-value > span').text(String(stepValue.toFixed(2)).substr(2)+'%');
+    });  
+};
+score11('#Score-11');
+
+function score12(el){
+
+  $(el).circleProgress({
+    fill: { gradient: ["#1279db", "#1279db"] },
+     startAngle: -Math.PI/2,
+     emptyFill: { color: "#fff" },
+     reverse: true,
+      emptyFill: 'transparent'
+  })
+    .on('circle-animation-progress', function(event, progress, stepValue){
+     $(this).find('.progress-value > span').text(String(stepValue.toFixed(2)).substr(2)+'%');
+    });  
+};
+score12('#Score-12');
+
+function score13(el){
+
+  $(el).circleProgress({
+    fill: { gradient: ["#1279db", "#1279db"] },
+     startAngle: -Math.PI/2,
+     emptyFill: { color: "#fff" },
+     reverse: true,
+      emptyFill: 'transparent'
+  })
+    .on('circle-animation-progress', function(event, progress, stepValue){
+     $(this).find('.progress-value > span').text(String(stepValue.toFixed(3)).substr(2)+'');
+    });  
+};
+score13('#Score-13');
+</script>
   </body>
 </html>

@@ -148,9 +148,9 @@
                                                 Conform Order
                                             </button> -->
 
-                                            <form action="{{route('save_wallet')}}" method="POST">
+                                            <form id="save_wallet" action="{{route('save_wallet')}}" method="POST">
                                                 @csrf
-                                                <button class="cstm-btn main_button" >Confirm Order</button>
+                                                <button class="wallet_confirm_order cstm-btn main_button" >Confirm Order</button>
                                             </form>
                                         </div>
                                   

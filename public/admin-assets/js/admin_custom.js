@@ -136,7 +136,7 @@ $(document).ready(function(){
             },      
         })
 
-        $('#selected_cat').val(selectedSeason);
+        
     });
   });
 
@@ -146,6 +146,83 @@ $(document).ready(function(){
           // $('#parent').val(parent);
         });
 });
+
+
+/*****************************
+| Package Courses
+|****************************/
+$(document).ready(function(){
+
+        $("select#player_id").change(function(){ 
+            var player = $(this).children("option:selected").val(); 
+            $("#player").val(player);
+            var account = $("#account_id").val();
+
+            $("#select_account").val("");
+
+            AjaxPackageCourse();
+        });
+
+        $("select#parent_id").change(function(){ 
+            var parent = $(this).children("option:selected").val(); 
+            $("#parent").val(parent);
+            var account = $("#account_id").val(); 
+
+            $("#select_account").val("");  
+
+             AjaxPackageCourse();  
+        });
+
+        $("select#select_account").change(function(){ 
+            var account_id = $(this).children("option:selected").val(); 
+            var account = $("#account_id").val(account_id);
+
+             AjaxPackageCourse();
+        });
+
+});
+
+    function AjaxPackageCourse()
+    {
+            var account = $("#account_id").val();
+            var parent = $("#parent").val();
+            var player = $("#player").val();
+
+            $.ajax({
+                url:$base_url+"/admin/get-courses",
+                method:'GET',
+                data:{account:account,parent:parent,player:player},
+                dataType:'json',
+                success:function(data)
+                {   
+                    $('.append_courses').html(data.option);
+                },      
+            })
+    }
+
+    function AddMoreAjaxPackageCourse(parent,player,account)
+    {
+        $.ajax({
+            url:$base_url+"/admin/get-courses",
+            method:'GET',
+            data:{account:account,parent:parent,player:player},
+            dataType:'json',
+            success:function(data)
+            {   
+                console.log(data);
+                $('.append_courses').html(data.option);
+            },      
+        })
+    }
+
+
+    $(document).ready(function(){
+      $("select#parent_id").change(function(){
+          var parent = $(this).children("option:selected").val();    
+          // $('#parent').val(parent);
+        });
+});
+
 
 /*****************************
 | Badge Sort Number Update

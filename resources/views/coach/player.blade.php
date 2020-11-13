@@ -55,7 +55,7 @@
                     
                   </figure>
                   <figcaption class="activity-caption">
-                      <p>Child Name: <span class="request-name">{{isset($child->name) ? $child->name : ''}}</span></p>
+                      <p>{{isset($child->type) ? $child->type : 'Account Holder'}} Name: <span class="request-name">{{isset($child->name) ? $child->name : ''}}</span></p>
                       <p>Parent Name: <span class="request-name">{{isset($parent->name) ? $parent->name : ''}}</span></p>
 
                       <!-- @if($pl->status == '0')
@@ -93,7 +93,7 @@
                             </div>
                           </div>
                       @endif
-                      <a style="margin-top: 5px;" href="{{url('/user/timeline-view/player')}}/@php echo base64_encode($pl->child_id); @endphp" class="cstm-btn main_button">View Details</a>
+                      <!-- <a style="margin-top: 5px;" href="{{url('/user/timeline-view/player')}}/@php echo base64_encode($pl->child_id); @endphp" class="cstm-btn main_button">View Details</a> -->
                     </figcaption>
 
                </div>

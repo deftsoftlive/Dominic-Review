@@ -38,8 +38,9 @@
 
             <div class="row">
               <div class="col-sm-10">
-                <p><b>Course Name</b> - @php echo getCourseName($course);  @endphp</p>
-                <p><b>Season</b> - @php echo getSeasonname($season); @endphp</p>
+
+                <h5><b>Course Name</b> - @php echo getCourseName($course);  @endphp</h5>
+                <h5><b>Season</b> - @php echo getSeasonname($season); @endphp</h5> 
               </div>
               <div class="col-sm-2">
                 <div class="test_print_btn d-print-none">

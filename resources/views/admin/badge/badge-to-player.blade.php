@@ -47,6 +47,7 @@
           @csrf
           <input type="hidden" name="child_id" value="{{$child_id}}">
           <input type="hidden" name="season_id" value="{{$season}}">
+          <input type="hidden" name="course_id" value="{{$course}}">
 
           @php 
             $courses = array();
@@ -111,11 +112,11 @@
                    @endforeach
                   <br/><br/> -->
 
-                  @if(!empty($user->tennis_club))
+                  <!-- @if(!empty($user->tennis_club))
                     {{textbox($errors,'Tennis Club','tennis_club', $user->tennis_club)}}
                   @else
                     {{textbox($errors,'Tennis Club*','tennis_club')}}
-                  @endif
+                  @endif -->
 
 
                    <div class="cst-user-add-property">
@@ -134,7 +135,7 @@
 
 
                               @php 
-                                $user_badge = DB::table('user_badges')->where('user_id',$child_id)->first();
+                                $user_badge = DB::table('user_badges')->where('user_id',$child_id)->where('course_id',$course->product_id)->where('season_id',$season)->first();
                                 $badges = DB::table('badges')->orderBy('id','asc')->where('status',1)->get();
                               @endphp
 

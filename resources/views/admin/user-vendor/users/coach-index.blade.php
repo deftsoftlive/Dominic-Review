@@ -141,7 +141,7 @@ input:checked + .slider:before {
                                     <th>Contact</th>
                                     <th>Address</th>
                                     <!-- <th>Coach Status</th> -->
-                                    <th>Upload Inovoice Feature (On/Off)</th>
+                                    <!-- <th>Upload Inovoice Feature (On/Off)</th> -->
                                     <th>Action</th>
 
                                 </tr>admin/users
@@ -166,7 +166,7 @@ input:checked + .slider:before {
                                             <span class="cst_in-active"><i class="fas fa-times-circle"></i></span>
                                         @endif
                                         </td> -->
-                                        <td>
+                                       <!--  <td>
                                         <form id="enable_inv_status-{{$user->id}}" action="{{route('enable_inv_status')}}" method="POST">
                                             @csrf
                                             <input type="hidden" id="change_status" name="id" value="{{$user->id}}">
@@ -175,12 +175,13 @@ input:checked + .slider:before {
                                               <span class="slider round"></span>
                                             </label>
                                         </form>
-                                        </td>
+                                        </td> -->
                                         <td>
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
                                                 <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;">
                                                     <a href="{{url('admin/users/edit')}}/{{$user->id}}" class="dropdown-item">Edit</a>
+                                                    <a href="{{url('admin/freeze/coach-account')}}/{{$user->id}}" class="dropdown-item">Manage Account</a>
                                                     <!-- <a href="{{route('admin.user.status',$user->id)}}" class="dropdown-item">
                                                         @if($user->updated_status == '1')
                                                             In-active

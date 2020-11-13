@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'role_id','first_name', 'last_name', 'gender', 'date_of_birth', 'address', 'town', 'postcode', 'county', 'country', 'phone_number', 'email', 'password', 'parent_id', 'type', 'relation', 'book_person', 'show_name', 'enable_inovice', 'created_at', 'updated_at'
+        'role_id','first_name', 'last_name', 'gender', 'date_of_birth', 'address', 'town', 'postcode', 'county', 'country', 'phone_number', 'email', 'password', 'parent_id', 'tennis_club', 'type', 'relation', 'book_person', 'show_name', 'enable_inovice', 'created_at', 'updated_at'
     ];
 
     /**

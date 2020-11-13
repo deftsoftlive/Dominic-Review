@@ -64,7 +64,7 @@
                      @endif
                   </figure>
                   <figcaption class="activity-caption">
-                     <p>Child Name: <span class="request-name">{{$details->name}}</span></p>
+                     <p>{{isset($details->type) ? $details->type : 'Account Holder'}} Name: <span class="request-name">{{$details->name}}</span></p>
                      <p>Coach Name: <span class="request-name">{{$coach_details->name}}</span></p>
                      <p>Date: <span class="request-name">@php echo date("d/m/Y (H:i)",strtotime($req->updated_at)); @endphp</span></p>
 

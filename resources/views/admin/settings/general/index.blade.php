@@ -47,7 +47,6 @@
                                 </thead>
 
                                 <tbody>
-                                    <!-- Banners -->
                                     <td>Banners</td>
                                     <td>
                                         <div class="btn-group">

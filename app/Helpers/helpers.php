@@ -71,9 +71,16 @@ function getTestname($id){
 /*-------------------------------------
 | Product Category name using category ID 
 |-------------------------------------*/
-function getProductCatname($id){
-  $category = \DB::table('product_categories')->where('id',$id)->first();  
-  return $category->label;  
+function getProductCatname($id){ 
+  $category = \DB::table('product_categories')->where('id',$id)->first(); //dd($category->label);
+
+  if(!empty($category->label))
+  {
+      return $category->label;  
+  }else{
+      return '-' ;
+  }
+  
 }
 
 function getProductCatslug($id){
@@ -87,6 +94,32 @@ function getProductCatslug($id){
 function getReportCategoryName($id){
   $cat = \DB::table('report_questions')->where('id',$id)->first();
   return $cat->title;
+}
+
+/*----------------------------------------------
+| Get Account ID using course/camp/product ID
+|----------------------------------------------*/
+function getAccountID($id){
+  
+  $shopItem = \DB::table('shop_cart_items')->where('id',$id)->where('user_id',Auth::user()->id)->where('type','cart')->first();
+  
+  if($shopItem->shop_type == 'course')
+  {
+    $course = \DB::table('courses')->where('id',$shopItem->product_id)->first();
+    $account_id = $course->account_id;
+  }
+  elseif($shopItem->shop_type == 'camp')
+  {
+    $course = \DB::table('camps')->where('id',$shopItem->product_id)->first();
+    $account_id = $course->account_id;
+  }
+  elseif($shopItem->shop_type == 'product')
+  {
+    $course = \DB::table('products')->where('id',$shopItem->product_id)->first();
+    $account_id = $course->account_id;
+  }
+
+  return $account_id;
 }
 
 /*-------------------------------------
@@ -117,7 +150,7 @@ function timeutc_to_uk($time)
   $tz = new DateTimeZone('Europe/London');
   $date = new DateTime($received);
   $date->setTimezone($tz);
-  return $date->format('H:i:s');
+  return $date->format('H:i:s a');
 }
 
 function uk_to_utc($id)
@@ -129,6 +162,259 @@ function uk_to_utc($id)
   // $bst =  $date->toDateTimeString();
 
   // return $bst;
+}
+
+
+/*-------------------------------------
+| DRH Tennis Pro - Stats Calculation 
+| -------------------------------------
+| On the basis of excel sheet by client
+|-------------------------------------*/
+function ExcelStatsCalculation($jsonData)
+{
+  $data = json_decode($jsonData);
+  
+  // Calculations
+
+  // 1 - Total points played in match
+  $tp_played = $data->tp_in_match;  
+
+  // 2 - Your percentage points won in match 
+  $percent_pts_won = ($data->tp_won)/($data->tp_in_match)*100;
+
+  // 3 - Your percentage of 1st serevs in
+  $percent_1serves_in = ($data->total_1serves_in + $data->total_aces) / ($data->total_1serves_in + $data->total_2serves_in + $data->total_double_faults + $data->total_aces)*100; 
+
+  // 4 - Your opponent's percentage of points in match
+  $op_percent_pts_won = (($data->tp_in_match - $data->tp_won)/$data->tp_in_match * 100); 
+
+  // 5 - Your opponent's percentage of 1st serves in match
+  $op_percent_1serves_in = ($data->total_1serve_by_op) / ($data->total_1serve_by_op + $data->total_2serve_by_op + $data->total_double_fault_by_op)*100;
+
+  // 6 - Your percentagre points won in 1st serves in
+  $percent_pts_won_1serve = $data->tp_won_in_1serve / $data->total_1serves_in * 100; 
+
+  // 7 - Your percentage of points won from 2nd serve
+  $percent_pts_won_2serve = $data->tp_won_in_2serve / $data->total_2serves_in * 100;
+
+  // 8 - Your percentage of points won on opponent’s 1st serve
+  $percent_pts_won_op_1serve = $data->tp_won_ops_1sereve / $data->total_1serve_by_op * 100;
+
+  // 9 - Your percentage of points won on opponent’s 2nd serve
+  $percent_pts_won_op_2serve = $data->tp_won_ops_2sereve / $data->total_2serve_by_op * 100;
+
+  // 10 - Your percentage of points won when rally was 1-4 shots
+  $percent_pts_won_rally_1shots = $data->tp_won_rally_4shots / $data->tp_played_rally_4shots * 100;
+
+  // 11 - Your percentage of points won when rally was 5+ shots
+  $percent_pts_won_rally_5shots = $data->tp_won_rally_5shots / $data->tp_played_rally_5shots * 100;
+
+  // 12 - Average rally length
+  $average_rally_length = ($data->total_shots_match / $data->tp_in_match);
+  $rally_length = number_format((float)$average_rally_length, 2, '.', '');
+
+  // 13 - Your total aces
+  $total_aces = $data->total_aces;
+
+  // 14 - Your total double faults
+  $total_double_faults = $data->total_double_faults;
+
+  $stats_array = [
+      'tp_played'                     =>   number_format((float)$tp_played, 2, '.', ''),
+      'percent_pts_won'               =>   number_format((float)$percent_pts_won, 2, '.', ''),
+      'percent_1serves_in'            =>   number_format((float)$percent_1serves_in, 2, '.', ''),
+      'op_percent_pts_won'            =>   number_format((float)$op_percent_pts_won, 2, '.', ''),
+      'op_percent_1serves_in'         =>   number_format((float)$op_percent_1serves_in, 2, '.', ''),
+      'percent_pts_won_1serve'        =>   number_format((float)$percent_pts_won_1serve, 2, '.', ''),
+      'percent_pts_won_2serve'        =>   number_format((float)$percent_pts_won_2serve, 2, '.', ''),
+      'percent_pts_won_op_1serve'     =>   number_format((float)$percent_pts_won_op_1serve, 2, '.', ''),
+      'percent_pts_won_op_2serve'     =>   number_format((float)$percent_pts_won_op_2serve, 2, '.', ''),
+      'percent_pts_won_rally_1shots'  =>   number_format((float)$percent_pts_won_rally_1shots, 2, '.', ''),
+      'percent_pts_won_rally_5shots'  =>   number_format((float)$percent_pts_won_rally_5shots, 2, '.', ''),
+      'average_rally_length'          =>   $rally_length,
+      'total_aces'                    =>   $total_aces,
+      'total_double_faults'           =>   $total_double_faults,
+  ];
+
+  return $stats_array;
+
+}
+
+/*---------------------------------------------
+| DRH Tennis Pro - Average Stats Calculation 
+| ---------------------------------------------
+| On the basis of excel sheet by client
+|----------------------------------------------*/
+function AverageStatsCalculation($arr_matches)
+{
+  // dd($arr_matches);
+
+  $match_count = count($arr_matches); 
+
+  $tp_in_match = [];
+  $tp_won = [];
+  $total_1serves_in = [];
+  $total_2serves_in = [];
+  $total_double_faults = [];
+  $total_aces = [];
+  $total_1serve_by_op = [];
+  $total_2serve_by_op = [];
+  $total_double_fault_by_op = [];
+  $tp_won_in_1serve = [];
+  $tp_won_in_2serve = [];
+  $tp_won_ops_1sereve = [];
+  $tp_won_ops_2sereve = []; 
+  $tp_played_rally_4shots = [];
+  $tp_played_rally_5shots = [];
+  $tp_won_rally_4shots = [];
+  $tp_won_rally_5shots = [];
+  $total_shots_match = [];
+
+  foreach($arr_matches as $data)
+  {
+    $tp_in_match[] = $data['tp_in_match'];
+    $tp_won[] = $data['tp_won'];
+    $total_1serves_in[] = $data['total_1serves_in'];
+    $total_2serves_in[] = $data['total_2serves_in'];
+    $total_double_faults[] = $data['total_double_faults'];
+    $total_aces[] = $data['total_aces'];
+    $total_1serve_by_op[] = $data['total_1serve_by_op'];
+    $total_2serve_by_op[] = $data['total_2serve_by_op'];
+    $total_double_fault_by_op[] = $data['total_double_fault_by_op'];
+    $tp_won_in_1serve[] = $data['tp_won_in_1serve'];
+    $tp_won_in_2serve[] = $data['tp_won_in_2serve'];
+    $tp_won_ops_1sereve[] = $data['tp_won_ops_1sereve'];
+    $tp_won_ops_2sereve[] = $data['tp_won_ops_2sereve'];
+    $tp_played_rally_4shots[] = $data['tp_played_rally_4shots']; 
+    $tp_played_rally_5shots[] = $data['tp_played_rally_5shots'];
+    $tp_won_rally_4shots[] = $data['tp_won_rally_4shots'];
+    $tp_won_rally_5shots[] = $data['tp_won_rally_5shots'];
+    $total_shots_match[] = $data['total_shots_match'];
+  }
+ 
+  // 1. Sum of total points in match
+  $sum_tp_in_match = array_sum($tp_in_match);
+
+  // 2. Sum of total points won
+  $sum_tp_won = array_sum($tp_won);
+
+  // 3. Sum of total 1 serves in
+  $sum_total_1serves_in = array_sum($total_1serves_in);
+
+  // 4. Sum of total 2 serves in
+  $sum_total_2serves_in = array_sum($total_2serves_in);
+
+  // 5. Sum of total Double faults 
+  $sum_total_double_faults = array_sum($total_double_faults);
+
+  // 6. Sum of total aces
+  $total_aces = array_sum($total_aces);
+
+  // 7. Sum of total 1 serve by oponent
+  $total_1serve_by_op = array_sum($total_1serve_by_op);
+
+  // 8. Sum of total 2 serve by oponent
+  $total_2serve_by_op = array_sum($total_2serve_by_op);
+
+  // 9. Sum of total double faults by oponent
+  $total_double_fault_by_op = array_sum($total_double_fault_by_op);
+
+  // 10. Sum of total points won in 1st serve
+  $tp_won_in_1serve = array_sum($tp_won_in_1serve);
+
+  // 11. Sum of total points won in 2nd serve
+  $tp_won_in_2serve = array_sum($tp_won_in_2serve);
+
+  // 12. Sum of total points won by oponents in 1 serve
+  $tp_won_ops_1sereve = array_sum($tp_won_ops_1sereve);
+
+  // 13. Sum of total points won by oponents in 2 serve
+  $tp_won_ops_2sereve = array_sum($tp_won_ops_2sereve);
+
+  // 14. Sum of total points played rally in 4 shots
+  $tp_played_rally_4shots = array_sum($tp_played_rally_4shots);
+
+  // 15. Sum of total points played rally in 5 shots
+  $tp_played_rally_5shots = array_sum($tp_played_rally_5shots);
+
+  // 16. Sum of total points won rally in 4 shots
+  $tp_won_rally_4shots = array_sum($tp_won_rally_4shots);
+
+  // 17. Sum of total points played rally in 5 shots
+  $tp_won_rally_5shots = array_sum($tp_won_rally_5shots);
+
+  // 18. Sum of total shots in match
+  $total_shots_match = array_sum($total_shots_match);
+
+  // dd($sum_tp_in_match,$sum_tp_won,$sum_total_1serves_in,$sum_total_2serves_in,$sum_total_double_faults,$total_aces,$total_1serve_by_op,$total_2serve_by_op,$total_double_fault_by_op,$tp_won_in_1serve,$tp_won_in_2serve,$tp_won_ops_1sereve,$tp_won_ops_2sereve,$tp_played_rally_4shots,$tp_played_rally_5shots,$tp_won_rally_4shots,$tp_won_rally_5shots,$total_shots_match);
+
+
+
+  /*------------- Average calculation of matches ------------- */
+
+  // 1. Average number of points played in matches
+  $tp_in_match = $sum_tp_in_match / $match_count;
+
+  // 2. Your percentage points won in match
+  $percent_won_in_match = $sum_tp_won / $sum_tp_in_match*100;
+
+  // 3. Your percentage of 1st serves in
+  $percent_1serves_in = ($sum_total_1serves_in + $total_aces) / ($sum_total_1serves_in + $sum_total_2serves_in + $sum_total_double_faults + $total_aces) * 100;
+
+  // 4. Your opponent’s percentage of points won in match
+  $op_percent_pts_won = ($sum_tp_in_match - $sum_tp_won) / $sum_tp_in_match * 100;
+
+  // 5. Your opponent’s percentage of 1st serves in
+  $op_percent_1serves_in = ($sum_total_double_faults + $total_2serve_by_op) / ($sum_total_double_faults + $total_aces + $total_1serve_by_op + $total_2serve_by_op) * 100;
+
+  // 6. Your percentage of points won from 1st serve
+  $percent_pts_won_1serve = $tp_won_in_1serve / $sum_total_1serves_in * 100;
+
+  // 7. Your percentage of points won from 2nd serve
+  $percent_pts_won_2serve = $tp_won_in_2serve / $sum_total_2serves_in * 100;
+
+  // 8. Your percentage of points won on opponent’s 1st serve
+  $percent_pts_won_op_1serve = $tp_won_ops_1sereve / $sum_total_1serves_in * 100;
+
+  // 9. Your percentage of points won on opponent’s 2nd serve 
+  $percent_pts_won_op_2serve = $tp_won_ops_2sereve / $sum_total_2serves_in * 100;
+
+  // 10. Your percentage of points won when rally was 1-4 shots
+  $percent_pts_won_rally_1shots = $tp_won_rally_4shots / $tp_played_rally_4shots * 100;
+
+  // 11. Your percentage of points won when rally was 5+ shots
+  $percent_pts_won_rally_5shots = $tp_won_rally_5shots / $tp_played_rally_5shots * 100;
+
+  // 12. Average rally length
+  $rally_length = $total_shots_match / $total_1serve_by_op;
+
+  // 13. Average number of aces
+  $average_aces = $total_aces / $match_count;
+
+  // 14. Average number of double faults
+  $total_double_faults = $sum_total_double_faults / $match_count;
+
+  $stats_array = [
+      'tp_in_match'                   =>  number_format((float)$tp_in_match, 2, '.', ''), 
+      'percent_won_in_match'          =>  number_format((float)$percent_won_in_match, 2, '.', ''), 
+      'percent_1serves_in'            =>  number_format((float)$percent_1serves_in, 2, '.', ''), 
+      'op_percent_pts_won'            =>  number_format((float)$op_percent_pts_won, 2, '.', ''), 
+      'op_percent_1serves_in'         =>  number_format((float)$op_percent_1serves_in, 2, '.', ''), 
+      'percent_pts_won_1serve'        =>  number_format((float)$percent_pts_won_1serve, 2, '.', ''), 
+      'percent_pts_won_2serve'        =>  number_format((float)$percent_pts_won_2serve, 2, '.', ''), 
+      'percent_pts_won_op_1serve'     =>  number_format((float)$percent_pts_won_op_1serve, 2, '.', ''), 
+      'percent_pts_won_op_2serve'     =>  number_format((float)$percent_pts_won_op_2serve, 2, '.', ''), 
+      'percent_pts_won_rally_1shots'  =>  number_format((float)$percent_pts_won_rally_1shots, 2, '.', ''), 
+      'percent_pts_won_rally_5shots'  =>  number_format((float)$percent_pts_won_rally_5shots, 2, '.', ''), 
+      'rally_length'                  =>  number_format((float)$rally_length, 2, '.', ''), 
+      'average_aces'                  =>  number_format((float)$average_aces, 2, '.', ''), 
+      'total_double_faults'           =>  number_format((float)$total_double_faults, 2, '.', ''), 
+  ];
+
+  //dd($stats_array);
+
+  return $stats_array;
+
 }
 
 /*-------------------------------------
@@ -5165,24 +5451,45 @@ function getidByname($name,$type)
 
 function stripeAccount()
 {
-   $status = getMataData('stripe_status','api_setting');
-    $live = [
-          'status' => 'live',
-          'sk' => getMataData('stripe_secrat_key','api_setting'),
-          'pk' => getMataData('stripe_public_key','api_setting')
-    ];
+  // Check shop cart items content
+   $check_cart = \DB::table('shop_cart_items')->where('type','cart')->where('user_id',Auth::user()->id)->first();
+
+   if(!empty($check_cart))
+   {
+      $account_id = getAccountID($check_cart->id);
+      $account_details = \DB::table('stripe_accounts')->where('id',$account_id)->first();
+
+      $status = 'live';
+
+        $credentials = [
+              'status' => 'live',
+              'sk' => $account_details->secret_key,
+              'pk' => $account_details->public_key
+        ];
+
+        return $credentials;
+   }
+   else
+   {
+      $status = getMataData('stripe_status','api_setting');
+      
+        $live = [
+              'status' => 'live',
+              'sk' => getMataData('stripe_secrat_key','api_setting'),
+              'pk' => getMataData('stripe_public_key','api_setting')
+        ];
 
 
-    $test = [
-          'status' => 'test',
-          'sk' => getMataData('stripe_secrat_test_key','api_setting'),
-          'pk' => getMataData('stripe_public_test_key','api_setting')
-    ];
+        $test = [
+              'status' => 'test',
+              'sk' => getMataData('stripe_secrat_test_key','api_setting'),
+              'pk' => getMataData('stripe_public_test_key','api_setting')
+        ];
 
-    return $status == "live" ? $live : $test;
- 
+        return $status == "live" ? $live : $test;
+   }
+   
 }
-
 
 
 function BrainTreeAccount()

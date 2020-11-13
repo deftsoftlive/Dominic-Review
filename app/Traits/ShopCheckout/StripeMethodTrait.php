@@ -80,7 +80,13 @@ public function postPaymentStripe(Request $request)
                       $so->shipping_address = $shipping_address;
                       $so->orderID = $sci->orderID;
                       $so->status = 1;
-                      $so->save();
+                      
+                      if($so->save())
+                      {
+                        $this->ShopProductOrderPlacedForVendorSuccess($so->id);
+                        $this->ShopProductOrderPlacedSuccess($so->id);
+                        $this->ShopProductOrderPlacedInfo($so->id);
+                      }
 
                       Wallet::where('user_id',Auth::user()->id)->update(array('money_amount' => 0));
 

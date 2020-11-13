@@ -34,29 +34,54 @@
                             $day_filter = Request::get('day'); 
                         @endphp
 
+                        @php 
+                            $session_data = json_decode($camp_price->selected_session); 
+                            $i=1; 
+                        @endphp
+
+                        <!-- To get column count -->
+                        @if(isset($session_data->early_drop) && $session_data->early_drop == 1)
+                            @php $col_count = $i++; @endphp
+                        @endif
+                        @if(isset($session_data->morning) && $session_data->morning == 1)
+                            @php $col_count = $i++; @endphp
+                        @endif
+                        @if(isset($session_data->lunch) && $session_data->lunch == 1)
+                            @php $col_count = $i++; @endphp
+                        @endif
+                        @if(isset($session_data->afernoon) && $session_data->afernoon == 1)
+                            @php $col_count = $i++; @endphp
+                        @endif
+                        @if(isset($session_data->fullday) && $session_data->fullday == 1)
+                            @php $col_count = $i++; @endphp
+                        @endif
+                        @if(isset($session_data->late_pickup) && $session_data->late_pickup == 1)
+                            @php $col_count = $i++; @endphp   
+                        @endif 
+
                         @if(!empty($day_filter))    
-                            <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day={{$day_filter}}">{{$day_filter}}</a></th>
+                            <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day={{$day_filter}}">{{$day_filter}}</a></th>
                         @else
                             @foreach($admin_selected as $key=>$we)
 
                                 @if($key == $week_key_value)
                                     @if(!empty($we->Monday))
-                                        <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Monday">Monday</a></th>
+                                        <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Monday">Monday</a></th>
                                     @endif
                                     @if(!empty($we->Tuesday))
-                                        <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Tuesday">Tuesday</a></th>
+                                        <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Tuesday">Tuesday</a></th>
                                     @endif
                                     @if(!empty($we->Wednesday))
-                                        <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Wednesday">Wednesday</a></th>
+                                        <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Wednesday">Wednesday</a></th>
                                     @endif
                                     @if(!empty($we->Thursday))
-                                        <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Thursday">Thursday</a></th>
+                                        <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Thursday">Thursday</a></th>
                                     @endif
                                     @if(!empty($we->Friday))                               
-                                        <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Friday">Friday</a></th>
+                                        <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Friday">Friday</a></th>
                                     @endif
                                     @if(!empty($we->Fullweek))
-                                        <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Fullweek">Fullweek</a></th>
+                                        <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Fullweek">Fullweek</a></th>
                                     @endif
                                 @endif
 
@@ -74,12 +99,43 @@
                             @php 
                                 $headerValue[$day_filter]=1;
                             @endphp
+                                @if(!empty($we->Monday))
+                                    <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Monday">Monday</a></th>
+                                @endif
+                                @if(!empty($we->Tuesday))
+                                    <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Tuesday">Tuesday</a></th>
+                                @endif
+                                @if(!empty($we->Wednesday))
+                                    <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Wednesday">Wednesday</a></th>
+                                @endif
+                                @if(!empty($we->Thursday))
+                                    <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Thursday">Thursday</a></th>
+                                @endif
+                                @if(!empty($we->Friday))                               
+                                    <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Friday">Friday</a></th>
+                                @endif
+                                @if(!empty($we->Fullweek))
+                                    <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Fullweek">Fullweek</a></th>
+                                @endif    
+
+                                @if(isset($session_data->early_drop) && $session_data->early_drop == 1)
                                 <td class="">ED</td>
-                                <td class="">AM</td>
-                                <td class="">LC</td>
-                                <td class="">PM</td>
-                                <td class="">FD</td>
-                                <td class="">LS</td>                     
+                                @endif
+                                @if(isset($session_data->morning) && $session_data->morning == 1)
+                                    <td class="">AM</td>
+                                @endif
+                                @if(isset($session_data->lunch) && $session_data->lunch == 1)
+                                    <td class="">LC</td>
+                                @endif
+                                @if(isset($session_data->afernoon) && $session_data->afernoon == 1)
+                                    <td class="">PM</td>
+                                @endif
+                                @if(isset($session_data->fullday) && $session_data->fullday == 1)
+                                    <td class="">FD</td>
+                                @endif
+                                @if(isset($session_data->late_pickup) && $session_data->late_pickup == 1)
+                                    <td class="">LS</td> 
+                                @endif               
                                         
                         @else 
                                 @foreach($admin_selected as $key=>$we)
@@ -94,12 +150,27 @@
                                                 @php 
                                                     $headerValue[$weekDays]=1;  
                                                 @endphp
-                                                <td class="">ED</td>
-                                                <td class="">AM</td>
-                                                <td class="">LC</td>
-                                                <td class="">PM</td>
-                                                <td class="">FD</td>
-                                                <td class="">LS</td> 
+                                                
+
+                                                @if(isset($session_data->early_drop) && $session_data->early_drop == 1)
+                                                    <td class="">ED</td>
+                                                @endif
+                                                @if(isset($session_data->morning) && $session_data->morning == 1)
+                                                    <td class="">AM</td>
+                                                @endif
+                                                @if(isset($session_data->lunch) && $session_data->lunch == 1)
+                                                    <td class="">LC</td>
+                                                @endif
+                                                @if(isset($session_data->afernoon) && $session_data->afernoon == 1)
+                                                    <td class="">PM</td>
+                                                @endif
+                                                @if(isset($session_data->fullday) && $session_data->fullday == 1)
+                                                    <td class="">FD</td>
+                                                @endif
+                                                @if(isset($session_data->late_pickup) && $session_data->late_pickup == 1)
+                                                    <td class="">LS</td>   
+                                                @endif      
+
                                
                                             @endif
                                         @endforeach 
@@ -210,12 +281,53 @@
                                 $week_value = ''.$week_data.''; 
                             @endphp
 
-                            @if(isset($userSelectedDataByWeek[$playerId][$week_value][$currentday][$headItem]))
-                            <td style="text-align: center;">X</td>
-                            @else
-                            <td></td>
-                            @endif  
+                            @if(isset($session_data->early_drop) && $session_data->early_drop == 1 && $headItem == 'early_drop')
+                                @if(isset($userSelectedDataByWeek[$playerId][$week_value][$currentday][$headItem]))
+                                <td style="text-align: center;">X</td>
+                                @else
+                                <td></td>
+                                @endif  
+                            @endif
+
+                            @if(isset($session_data->lunch) && $session_data->lunch == 1 && $headItem == 'lunch')
+                                @if(isset($userSelectedDataByWeek[$playerId][$week_value][$currentday][$headItem]))
+                                <td style="text-align: center;">X</td>
+                                @else
+                                <td></td>
+                                @endif  
+                            @endif
+
+                            @if(isset($session_data->afernoon) && $session_data->afernoon == 1 && $headItem == 'noon')
+                                @if(isset($userSelectedDataByWeek[$playerId][$week_value][$currentday][$headItem]))
+                                <td style="text-align: center;">X</td>
+                                @else
+                                <td></td>
+                                @endif  
+                            @endif
                             
+                            @if(isset($session_data->late_pickup) && $session_data->late_pickup == 1 && $headItem == 'late_pickup')
+                                @if(isset($userSelectedDataByWeek[$playerId][$week_value][$currentday][$headItem]))
+                                <td style="text-align: center;">X</td>
+                                @else
+                                <td></td>
+                                @endif  
+                            @endif
+
+                            @if(isset($session_data->morning) && $session_data->morning == 1 && $headItem == 'mor')
+                                @if(isset($userSelectedDataByWeek[$playerId][$week_value][$currentday][$headItem]))
+                                <td style="text-align: center;">X</td>
+                                @else
+                                <td></td>
+                                @endif  
+                            @endif
+
+                            @if(isset($session_data->fullday) && $session_data->fullday == 1 && $headItem == 'full')
+                                @if(isset($userSelectedDataByWeek[$playerId][$week_value][$currentday][$headItem]))
+                                <td style="text-align: center;">X</td>
+                                @else
+                                <td></td>
+                                @endif  
+                            @endif
 
                             @endforeach
 

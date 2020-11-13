@@ -168,14 +168,14 @@ class BadgeController extends Controller
 
             // if(count($course)>0)
             // {
-                $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('course_season',$season)->where('orderID','!=',NULL)->groupBy('child_id')->paginate(10);
+                $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('course_season',$season)->where('orderID','!=',NULL)->orderBy('id','desc')->get();
             // }else{
             //     $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('course_season',$season)->where('orderID','!=',NULL)->groupBy('child_id')->paginate(10);
             // }
 
         }elseif(!empty($user_id) && empty($season))
         {
-            $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('child_id',$user_id)->where('orderID','!=',NULL)->groupBy('child_id')->paginate(10);
+            $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('child_id',$user_id)->where('orderID','!=',NULL)->orderBy('id','desc')->get();
 
         }elseif(!empty($user_id) && !empty($season))
         {
@@ -186,14 +186,14 @@ class BadgeController extends Controller
                 $cour_id[] = $cour->id;   
             }
             
-            $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('course_season',$season)->where('child_id',$user_id)->where('orderID','!=',NULL)->groupBy('child_id')->paginate(10);
+            $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('course_season',$season)->where('child_id',$user_id)->where('orderID','!=',NULL)->orderBy('id','desc')->get();
 
         }else{
 
-            $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('child_id','!=',NULL)->where('orderID','!=',NULL)->where('order_id','!=',NULL)->groupBy('child_id')->paginate(10);
+            $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('child_id','!=',NULL)->where('orderID','!=',NULL)->where('order_id','!=',NULL)->orderBy('id','desc')->get();
         }
 
-        // dd($purchase_course);
+        //dd($purchase_course);
 
         return view('admin.badge.assign-badge',compact('purchase_course'))
         ->with(['name' => 'Players Management', 'addLink' => 'admin.badge.showCreate']);
@@ -202,12 +202,14 @@ class BadgeController extends Controller
     /*----------------------------------------
     |   Assign badges to players
     |----------------------------------------*/
-    public function assign_badge($season,$child_id){  
+    public function assign_badge($season,$course,$child_id){  
         $purchase_course = \DB::table('shop_cart_items')->where('course_season',$season)->where('shop_type','course')->where('orderID','!=',NULL)->where('child_id',$child_id)->get();
-        return view('admin.badge.badge-to-player',compact('purchase_course','child_id','season'));
+        return view('admin.badge.badge-to-player',compact('purchase_course','child_id','course','season'));
     }
 
-    public function save_assign_badge(Request $request){  
+    public function save_assign_badge(Request $request)
+    {  
+        // dd($request->all());
 
         if(!empty($request->badges))
         {
@@ -231,7 +233,7 @@ class BadgeController extends Controller
 
             $total_points = array_sum($points);       
 
-            $user_badge = UserBadge::where('user_id',$request->child_id)->first(); 
+            $user_badge = UserBadge::where('user_id',$request->child_id)->where('course_id',$request->course_id)->where('season_id',$request->season_id)->first(); 
 
             if(!empty($user_badge))
             {
@@ -241,6 +243,7 @@ class BadgeController extends Controller
                     $ca = UserBadge::find($user_badge->id);
                     $ca->user_id = $request->child_id;
                     $ca->season_id = $request->season_id; 
+                    $ca->course_id = $request->course_id;
                     $ca->badges = $badges;
                     $ca->badges_points = $total_points;
                     $ca->save();
@@ -256,6 +259,7 @@ class BadgeController extends Controller
                     $ca = new UserBadge;
                     $ca->user_id = $request->child_id;
                     $ca->season_id = $request->season_id; 
+                    $ca->course_id = $request->course_id;
                     $ca->badges = $badges;
                     $ca->badges_points = $total_points;
                     $ca->save();

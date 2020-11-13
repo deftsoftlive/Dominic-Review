@@ -162,6 +162,25 @@
 
                 <!-- ****************************
                 |
+                |       Manage Stripe Accounts
+                |
+                |********************************* -->
+                <li class="nav-item {{ \Request::route()->getName() === 'admin.stripe_account.list' ? 'nav-item active' : 'nav-item' }}">
+                <a href="{{url(route('admin.stripe_account.list'))}}" class="nav-link "><span class="pcoded-micon"><i class="fas fa-list-alt"></i></span><span class="pcoded-mtext">Stripe Accounts</span></a>
+                </li>
+
+                <!-- ****************************
+                |
+                |       Manage Package Courses
+                |
+                |********************************* -->
+                <li class="nav-item {{ \Request::route()->getName() === 'admin.packageCourse.list' ? 'nav-item active' : 'nav-item' }}">
+                <a href="{{url(route('admin.packageCourse.list'))}}" class="nav-link "><span class="pcoded-micon"><i class="fas fa-list-alt"></i></span><span class="pcoded-mtext">Package Courses</span></a>
+                </li>
+
+
+                <!-- ****************************
+                |
                 |       CAMPS
                 |
                 |********************************* -->

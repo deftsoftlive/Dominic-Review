@@ -40,6 +40,16 @@ footer.site-footerss {
                     
                     @include('e-shop.errors')
 
+                    @if(Session::has('success'))
+                    <div class="alert_msg alert alert-success">
+                       <p>{{ Session::get('success') }} </p>
+                    </div>
+                    @endif
+                    @if(Session::has('error'))
+                    <div class="alert_msg alert alert-danger">
+                       <p>{{ Session::get('error') }} </p>
+                    </div>
+                    @endif
 
                     <table class="cart__table cart-table">
                         <thead class="cart-table__head">

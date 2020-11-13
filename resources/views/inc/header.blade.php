@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.7.0/flexslider.min.css">
     <link href="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <script src="{{URL::asset('/js/timeCounter.js')}}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {!! getAllValueWithMeta('google_analytics', 'general-setting') !!}
@@ -46,8 +47,42 @@
         </div>
     </div>
     <header class="main-header">
+
+      @php 
+        $check_enable_heading = getAllValueWithMeta('enable_heading', 'general-setting');
+      @endphp
+
+      @if(request()->route()->getName() == 'homepage')
+
+      @if($check_enable_heading == 'Enable')
+      <div class="marquee mobile" style="display: none;";>
+        <marquee  class="mobile_view" style="position: absolute;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            line-height: 50px;            
+            color: #001642;
+            font-weight: 600;":> {{getAllValueWithMeta('website_headline', 'general-setting')}} </marquee>
+          </div>
+          <div class="marquee">
+            <p style=" 
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                line-height: 21px;
+                color: #001642;
+                font-weight: 600;
+                padding: 10px 0;
+                text-align: center":> {{getAllValueWithMeta('website_headline', 'general-setting')}} </p>
+          </div>
+      @endif
+
+      @endif
+
       <div class="container">
+
         <div class="row">
+
           <div class="col-sm-12">
             <ul class="header-top mobile">
               <li>

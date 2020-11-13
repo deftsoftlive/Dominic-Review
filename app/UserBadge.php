@@ -10,6 +10,6 @@ class UserBadge extends Model
 	use Notifiable;
 
     protected $fillable = [
-        'id', 'user_id', 'season_id', 'badges', 'badges_points'
+        'id', 'user_id', 'season_id', 'course_id', 'badges', 'badges_points'
     ];
 }

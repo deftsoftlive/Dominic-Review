@@ -330,6 +330,7 @@
                         $full_weekClass=$weekDays=='Fullweek'?'full_week':'';
                         $full_weekTitle=$weekDays=='Fullweek'?'Full Week':$weekDays;
                       @endphp 
+
                     <tr class="week{{$arrKey+1}}">
                       <td class="success"><b> {{$full_weekTitle}}</b></td>
 
@@ -389,7 +390,7 @@
                             <label for="checkbox-{{$arrKey+1}}{{$weekDaysValue}}full" class="checkbox-style-3-label"></label>
 
                             @if($full_weekClass == 'full_week')
-                            @php $fullweek_price = ($camp->fullday_price); @endphp
+                            @php $fullweek_price = 5*($camp->fullday_price); @endphp
                               <input type="hidden" id="pricing-{{$arrKey+1}}-{{$weekDaysValue}}-full" value="{{$fullweek_price}}">
                             @else
                               <input type="hidden" id="pricing-{{$arrKey+1}}-{{$weekDaysValue}}-full" value="{{$camp->fullday_price}}">

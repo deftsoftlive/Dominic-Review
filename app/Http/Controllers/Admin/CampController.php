@@ -47,11 +47,12 @@ class CampController extends Controller
             // 'image' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
             'category' => ['required', 'string'],
             'camp_date' => ['required'],
-            'coach_cost' => ['required', 'numeric', 'min:1', 'max:100'],
-            'venue_cost' => ['required', 'numeric', 'min:1', 'max:100'],
-            'equipment_cost' => ['required', 'numeric', 'min:1', 'max:100'],
-            'other_cost' => ['required', 'numeric', 'min:1', 'max:100'],
-            'tax_cost' => ['required', 'numeric', 'min:1', 'max:100']
+            'account_id' => ['required'],
+            'coach_cost' => ['required', 'numeric', 'max:100'],
+            'venue_cost' => ['required', 'numeric', 'max:100'],
+            'equipment_cost' => ['required', 'numeric', 'max:100'],
+            'other_cost' => ['required', 'numeric', 'max:100'],
+            'tax_cost' => ['required', 'numeric', 'max:100']
         ]);
 
         $arrSku = $request->Week;   
@@ -125,6 +126,7 @@ class CampController extends Controller
     		'title' => $request['title'],
             'location' => $request['location'],
             'term' => $request['term'],
+            'account_id' => $request['account_id'],
     		'description' => $request['description'],
             'usefull_info' => $request['usefull_info'],
             'info_email_content' => $request['info_email_content'],
@@ -165,7 +167,10 @@ class CampController extends Controller
     /*----------------------------------------
     |   Update camp content
     |----------------------------------------*/ 
-    public function camp_update(Request $request, $slug) {  //dd($request->all());
+    public function camp_update(Request $request, $slug) 
+    {  
+        // dd($request->all());
+
     	$validatedData = $request->validate([
             'title' => ['required', 'string', 'max:50'],
             'description' => ['required', 'string'],
@@ -174,11 +179,12 @@ class CampController extends Controller
             // 'image' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
             'category' => ['required', 'string'],
             'camp_date' => ['required'],
-            'coach_cost' => ['required', 'numeric', 'min:1', 'max:100'],
-            'venue_cost' => ['required', 'numeric', 'min:1', 'max:100'],
-            'equipment_cost' => ['required', 'numeric', 'min:1', 'max:100'],
-            'other_cost' => ['required', 'numeric', 'min:1', 'max:100'],
-            'tax_cost' => ['required', 'numeric', 'min:1', 'max:100']
+            'account_id' => ['required'],
+            'coach_cost' => ['required', 'numeric', 'max:100'],
+            'venue_cost' => ['required', 'numeric', 'max:100'],
+            'equipment_cost' => ['required', 'numeric', 'max:100'],
+            'other_cost' => ['required', 'numeric', 'max:100'],
+            'tax_cost' => ['required', 'numeric', 'max:100']
         ]);
 
         $arrSku = $request->Week;   
@@ -198,21 +204,27 @@ class CampController extends Controller
             
             if(isset($arrData['Monday'])){
                 $arrNewSku[$incI]['Monday'] = isset($arrData['Monday']) ? $arrData['Monday'] : '';
+                $arrNewSku[$incI]['MondayDate'] = isset($arrData['MondayDate']) ? $arrData['MondayDate'] : '';
             }
             if(isset($arrData['Tuesday'])){
                 $arrNewSku[$incI]['Tuesday'] = isset($arrData['Tuesday']) ? $arrData['Tuesday'] : '';
+                $arrNewSku[$incI]['TuesdayDate'] = isset($arrData['TuesdayDate']) ? $arrData['TuesdayDate'] : '';
             }
             if(isset($arrData['Wednesday'])){
                 $arrNewSku[$incI]['Wednesday'] = isset($arrData['Wednesday']) ? $arrData['Wednesday'] : '';
+                $arrNewSku[$incI]['WednesdayDate'] = isset($arrData['WednesdayDate']) ? $arrData['WednesdayDate'] : '';
             }
             if(isset($arrData['Thursday'])){
                 $arrNewSku[$incI]['Thursday'] = isset($arrData['Thursday']) ? $arrData['Thursday'] : '';
+                $arrNewSku[$incI]['ThursdayDate'] = isset($arrData['ThursdayDate']) ? $arrData['ThursdayDate'] : '';
             }
             if(isset($arrData['Friday'])){
                 $arrNewSku[$incI]['Friday'] = isset($arrData['Friday']) ? $arrData['Friday'] : '';
+                $arrNewSku[$incI]['FridayDate'] = isset($arrData['FridayDate']) ? $arrData['FridayDate'] : '';
             }
             if(isset($arrData['Fullweek'])){
                 $arrNewSku[$incI]['Fullweek'] = isset($arrData['Fullweek']) ? $arrData['Fullweek'] : '';
+                $arrNewSku[$incI]['FullweekDate'] = isset($arrData['FullweekDate']) ? $arrData['FullweekDate'] : '';
             }
             if(isset($arrData['Selected'])){
                 $arrNewSku[$incI]['Selected'] = isset($arrData['Selected']) ? $arrData['Selected'] : '';  
@@ -266,6 +278,7 @@ class CampController extends Controller
             // 'image' => $filename,
             'category' => $request['category'],
             'camp_date' => $request['camp_date'],
+            'account_id' => $request['account_id'],
             'coach_cost' => $request['coach_cost'],
             'venue_cost' => $request['venue_cost'],
             'equipment_cost' => $request['equipment_cost'],

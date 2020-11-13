@@ -54,6 +54,8 @@ class MatchReportNotification extends Notification
      */
     public function toArray($notifiable)
     {
+        //dd($notifiable);
+
         if($notifiable->parent_id == '' & $notifiable->coach_id != '')
         {
             $child_name = getUsername($notifiable->player_id);

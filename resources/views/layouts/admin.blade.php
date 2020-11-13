@@ -36,12 +36,14 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
 
 
 <script src="{{URL::asset('/AdminFILE/plugins/jquery/jquery.min.js')}}"></script>
  
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="{{URL::asset('/bootstrap-fileinput-master/js/fileinput.js')}}" type="text/javascript"></script>
+
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/i18n/af.min.js"></script> -->
 
 <!-- <script>
@@ -49,6 +51,7 @@
       $("#inputPlayer").select2();
     });
 </script> -->
+
 </head>
 
 <body>
@@ -88,9 +91,19 @@
 <script src="{{URL::asset('/vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
 <script src="{{URL::asset('/admin-assets/js/validations/customValidation.js')}}"></script>
 <script src="{{URL::asset('/admin-assets/js/admin_custom.js')}}" type="text/javascript"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 <!-- delete data js -->
 <script src="{{ asset('js/deleteData.js') }}"></script>
+
+<script>
+$(document).ready(function() { 
+   $("#inputPlayer").select2();
+   $("#season_id").select2();
+   $("#parent_id").select2();
+   $("#change_course").select2();
+});
+</script>
 
 @yield('scripts')
 

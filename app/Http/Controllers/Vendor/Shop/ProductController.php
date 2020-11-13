@@ -137,6 +137,7 @@ public function update(Request $request,$product_id)
 	// $shop_id = Auth::user()->shop->id;
 	 $this->validate($request,[
          'name' => 'required',
+         'account_id' => 'required',
          'description' => 'required',
          'short_description' => 'required',
          'thumbnail' => function(){
@@ -150,6 +151,7 @@ public function update(Request $request,$product_id)
 	 $product->description = trim($request->description);
 	 $product->short_description = trim($request->short_description);
    $product->vou_prod_type = isset($request->vou_prod_type) ? $request->vou_prod_type : 'normal';
+   $product->account_id = isset($request->account_id) ? $request->account_id : 'normal';
    $product->voucher = isset($request->voucher) ? $request->voucher : '';
    $product->tag = $request->tag;
 	  $product->create_status = 1;
@@ -258,26 +260,37 @@ public function ajaxCategory(Request $request)
 
 public function createGeneralSetting(Request $request,$product_id)
 {
-	 $product = Product::find($product_id);
+   //dd($request->all());
+	 
+  if($request->sale_price > $request->price)
+  {
+      $status = ['status' => 1, 'messages' => 'Sale price cannot greater than price of the product.'];
 
-	 if($product->id == Auth::user()->id){
-	 	$status = ['status' => 0, 'messages' => 'Unautherized to do this operation!'];
-	 }else{
-          
-          $product->height = trim($request->height);
-          $product->weight = trim($request->weight);
-          $product->length = trim($request->length);
-          $product->width = trim($request->width);
-          $product->price = trim($request->price);
-          $product->sale_price = trim($request->sale_price);
-          $product->final_price = trim(($request->price - $request->sale_price));
-          $product->save();
+      return response()->json($status);
+  }
+  else
+  {
+     $product = Product::find($product_id);
 
-	 	$status = ['status' => 1, 'messages' => 'General Setting is saved'];
+  	 if($product->id == Auth::user()->id){
+  	 	$status = ['status' => 0, 'messages' => 'Unautherized to do this operation!'];
+  	 }else{
+            
+            $product->height = trim($request->height);
+            $product->weight = trim($request->weight);
+            $product->length = trim($request->length);
+            $product->width = trim($request->width);
+            $product->price = trim($request->price);
+            $product->sale_price = trim($request->sale_price);
+            $product->final_price = trim(($request->price - $request->sale_price));
+            $product->save();
 
-	 }
+  	 	$status = ['status' => 1, 'messages' => 'General Setting is saved'];
 
-	 return response()->json($status);
+  	 }
+
+  	 return response()->json($status);
+  }
 }
 
 

@@ -919,7 +919,26 @@ $(document).ready(function (){
        
     submitHandler: function(form) {
         $("#submit-childcare").attr("disabled", true);
-        form.submit();
+        $("body").addClass('processing');
+
+        setTimeout(function(){ form.submit(); }, 1000);
+        
+    }
+  });
+
+    /*validations on childcare voucher*/
+  $('#save_wallet').validate({
+           rules: {
+        },
+        messages:{
+        },
+       
+    submitHandler: function(form) {
+        $(".wallet_confirm_order").attr("disabled", true);
+        $("body").addClass('processing');
+
+        setTimeout(function(){ form.submit(); }, 1000);
+        
     }
   });
 
@@ -1293,6 +1312,44 @@ $(document).ready(function (){
         $('#changePasswordForm').submit();
       }else{
         return false;
+      }
+    });
+
+
+    // Stats Filter validations
+
+    /*validation for booking table*/
+    $('#stats_filter').validate({
+             rules: {
+             stats_participant_name: {
+                  required: true
+              },
+              stats_match_no: {
+                  required: true
+              },
+          },
+          messages:{
+              stats_participant_name:{required:"This field is required."},
+              stats_match_no:{required:"This field is required."},
+          },
+
+      highlight: function (element, errorClass, validClass) {
+
+        if(element.type =='text'||element.type =='password'||element.type =='email'||element.type =='select-one') {
+            $(element).siblings("label").addClass("error");
+            $(element).addClass('input--error').removeClass(validClass+' input--success');
+        }
+      },
+      unhighlight: function (element, errorClass, validClass) {
+        if (element.type === "text"||element.type =='password' ||element.type =='email'||element.type =='select-one') {
+            $(element).siblings("label").removeClass("error");
+            $('.errorMsg').addClass('displaynone');
+            $(element).closest('.myForm').removeClass('has-error has-feedback').addClass('has-success has-feedback');
+        } 
+      },
+         
+        submitHandler: function(form) {
+          form.submit();
       }
     });
 

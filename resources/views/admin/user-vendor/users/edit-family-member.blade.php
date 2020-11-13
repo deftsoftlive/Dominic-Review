@@ -149,7 +149,8 @@ input#agree {
                                                 <div class="form-group row">
                                                     <label for="date_of_birth" class="col-md-12 col-form-label text-md-right">Date Of Birth</label>
                                                     <div class="col-md-12">
-                                                        <input id="date_of_birth" type="date" class="form-control" name="date_of_birth1" value="{{isset($user_data->date_of_birth) ? $user_data->date_of_birth : ''}}" required="" max="2020-07-07">
+                                                        <input type="text" readonly="" value="{{isset($user_data->date_of_birth) ? $user_data->date_of_birth : ''}}" class="form-control">
+                                                        <!-- <input id="date_of_birth" type="date" class="form-control" name="date_of_birth1" value="{{isset($user_data->date_of_birth) ? $user_data->date_of_birth : ''}}" required="" max="2020-07-07"> -->
                                                     </div>
                                                 </div>
                                                 <!-- Address -->
@@ -215,6 +216,15 @@ input#agree {
                                                         </select>
                                                     </div>
                                                 </div>
+
+                                                <!-- Tennis Club -->
+                                                <div class="form-group row">
+                                                    <label for="tennis_club" class="col-md-12 col-form-label text-md-right person_attend">Tennis Club</label>
+                                                    <div class="col-md-12">
+                                                        <input id="tennis_club" type="text" class="form-control" name="tennis_club" value="{{isset($user_data->tennis_club) ? $user_data->tennis_club : ''}}">
+                                                    </div>
+                                                </div>
+
                                                 <!-- school -->
                                                 @if(!empty($user_data)) 
                                                     @if($user_data->type == 'Adult') 
@@ -331,7 +341,8 @@ input#agree {
                                                     <div class="form-group row">
                                                         <label for="date_of_birth" class="col-md-12 col-form-label text-md-right">Date Of Birth</label>
                                                         <div class="col-md-12">
-                                                            <input id="date_of_birth" type="date" class="form-control" name="date_of_birth" required="" max="2020-07-07">
+                                                            <input type="text" readonly="" value="{{isset($user_data->date_of_birth) ? $user_data->date_of_birth : ''}}" class="form-control">
+                                                            <!-- <input id="date_of_birth" type="date" class="form-control" name="date_of_birth" required="" max="2020-07-07"> -->
                                                         </div>
                                                     </div>
                                                     <!-- Address -->
@@ -2548,6 +2559,8 @@ input#agree {
 </div>
 
 @endsection
+
+@section('scripts')
 <script type="text/javascript">
 function addmedical() {
     var number = parseInt($("#noOfMed").val());

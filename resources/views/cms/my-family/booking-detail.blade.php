@@ -215,7 +215,7 @@
 			                                    $child = DB::table('users')->where('id',$cart->child_id)->first();
 			                                @endphp
 											<tr>
-											  <td style="width: 30%; text-align: left;"><b>Child : </b>{{isset($child->name) ? $child->name : 'No child selected'}}</td>
+											  <td style="width: 30%; text-align: left;"><b>{{isset($child->type) ? $child->type : 'Account Holder'}} : </b>{{isset($child->name) ? $child->name : 'No child selected'}}</td>
 											  <td style="width: 40%;">
 											  	<h5>{{$course->title}}</h5>
 											  	<p>@php echo getSeasonname($course->season); @endphp | {{$course->day_time}}</p>
@@ -237,7 +237,7 @@
 			                                    $child = DB::table('users')->where('id',$cart->child_id)->first();
 			                                @endphp
 											<tr>
-											  <td style="width: 30%; text-align: left;"><b>Child : </b>{{isset($child->name) ? $child->name : 'No child selected'}}</td>
+											  <td style="width: 30%; text-align: left;"><b>{{isset($child->type) ? $child->type : 'Account Holder'}} : </b>{{isset($child->name) ? $child->name : 'No child selected'}}</td>
 											  <td style="width: 40%;">
 											  	<h5>{{$camp->title}}</h5>
 
