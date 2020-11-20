@@ -201,9 +201,10 @@ input#agree {
                                                         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                                         <select id="country" name="country1" class="paste_country form-control cstm-select-list">
                                                             @foreach($country_code as $name)
-                                                            <option @if($name->countryname == $user_data->country) selected @endif value="{{$name->countryname}}">{{$name->countryname}}</option>
+                                                            <option value="{{isset($name->countryname) ? $name->countryname : ''}}" @if(!empty($user_data)) @if($name->countryname == $user_data->country) selected @endif @endif>{{isset($name->countryname) ? $name->countryname : ''}}</option>
                                                             @endforeach
                                                         </select>
+
                                                         @if ($errors->has('country'))
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $errors->first('country') }}</strong>
@@ -383,7 +384,7 @@ input#agree {
                                                             <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                                             <select id="country" name="country" class="paste_country form-control cstm-select-list">
                                                                 @foreach($country_code as $name)
-                                                                <option @if($name->countryname == $user_data->country) selected @endif value="{{$name->countryname}}">{{$name->countryname}}</option>
+                                                                <option value="{{isset($name->countryname) ? $name->countryname : ''}}" @if(!empty($user_data)) @if($name->countryname == $user_data->country) selected @endif @endif>{{isset($name->countryname) ? $name->countryname : ''}}</option>
                                                                 @endforeach
                                                             </select>
                                                             @if ($errors->has('country'))

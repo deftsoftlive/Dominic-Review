@@ -19,7 +19,7 @@ class HomeSliderController extends Controller
     |   Listing of HOME SLIDER
     |----------------------------------------*/ 
     public function HomeSlider_index() {
-        $HomeSlider = HomeSlider::select(['id','title','heading','status','slug'])->paginate(10);
+        $HomeSlider = HomeSlider::select(['id','title','heading','status','slug','sort'])->orderBy('sort','asc')->paginate(10);
     	return view('admin.HomeSlider.index',compact('HomeSlider'))
     	->with(['title' => 'Home Slider Management', 'addLink' => 'admin.HomeSlider.showCreate']);
     }
@@ -89,6 +89,22 @@ class HomeSliderController extends Controller
     	$venue = HomeSlider::FindBySlugOrFail($slug);
     	return view('admin.HomeSlider.edit')
     	->with(['venue' => $venue, 'title' => 'Edit Home Slider', 'addLink' => 'admin.HomeSlider.list']);
+    }
+
+    /*----------------------------------------
+    |   Update home slider sorting number 
+    |-----------------------------------------*/
+    public function update_homeslider_sort($sort_no,$homeslider_id) 
+    {   
+        $homeslider = HomeSlider::find($homeslider_id);
+        $homeslider->sort = $sort_no;
+        $homeslider->save();
+
+        $data = array(
+            'sort_no'   => $homeslider,
+        );
+
+        echo json_encode($data);
     }
 
     /*----------------------------------------

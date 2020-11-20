@@ -44,7 +44,7 @@
             <ul class="services-description">
 
               @php 
-                $accordian1 = DB::table('accordians')->where('page_title',$url)->get(); 
+                $accordian1 = DB::table('accordians')->where('page_title',$url)->where('status',1)->get(); 
               @endphp
 
               @foreach($accordian1 as $accor)

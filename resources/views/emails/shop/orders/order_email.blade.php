@@ -1,4 +1,10 @@
-Order Email for Wallet & vouchers starts here -->
+<h5>&nbsp;<b>Order ID</b> - {{$orders->orderID}}</h5> 
+
+@php 
+   $orders = DB::table('shop_cart_items')->where('orderID',$orders->orderID)->get(); 
+@endphp
+
+<br/>
 
 <tr>
    <td style="padding-left: 10px; padding-right: 10px; padding-bottom: 30px;">
@@ -17,10 +23,7 @@ Order Email for Wallet & vouchers starts here -->
 
 
 
-@php 
-   $orders = DB::table('shop_cart_items')->where('orderID',$orders->orderID)->get(); 
-@endphp
-
+    
 
 @foreach($orders as $item)
 
@@ -29,7 +32,9 @@ Order Email for Wallet & vouchers starts here -->
     $product = $item->product_id; 
     $product_data = DB::table('products')->where('id',$item->product_id)->first();
     $variation = \App\Models\Products\ProductAssignedVariation::find($item->variant_id);
-@endphp                         
+@endphp       
+
+                
  
       <tr>
          <td style="font-family: Verdana, 'Times New Roman', Arial; vertical-align:top;font-size: 14px; line-height: 22px; color: #0c0c0c; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; width: 70px;" >

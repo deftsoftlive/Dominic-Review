@@ -735,7 +735,7 @@ public function football_listing(Request $request)
     $accordian = Accordian::where('page_title',$slug)->where('status','1')->orderBy('sort','asc')->get();
 
     // Get subtype for tennis courses
-    $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->get();
+    $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->orderBy('sorting','asc')->get();
 
     $testimonial = Testimonial::select(['id','title', 'description','status','slug','image'])->where('page_title','course-listing/football')->where('status','1')->get(); 
     return view('cms.course.football-listing',compact('testimonial','course','course_name','age_group','level','accordian','subtype'));
@@ -780,7 +780,7 @@ public function tennis_listing(Request $request)
     // dd($course);
 
     // Get subtype for tennis courses
-    $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->get();
+    $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->orderBy('sorting','asc')->get();
 
     $testimonial = Testimonial::select(['id','title', 'description','status','slug','image'])->where('status','1')->where('page_title','course-listing/tennis')->get(); 
     return view('cms.course.tennis-listing',compact('testimonial','course','course_name','age_group','level','accordian','subtype'));
@@ -822,7 +822,7 @@ public function school_listing(Request $request)
     $accordian = Accordian::where('page_title',$slug)->where('status','1')->orderBy('sort','asc')->get();
 
     // Get subtype for tennis courses
-    $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->get();
+    $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->orderBy('sorting','asc')->get();
 
     $testimonial = Testimonial::select(['id','title', 'description','status','slug','image'])->where('page_title','course-listing/school')->where('status','1')->get(); 
     return view('cms.course.school-listing',compact('testimonial','course','course_name','age_group','level','accordian','subtype'));
@@ -3556,37 +3556,26 @@ public function badges()
 
     // Leader Board - Filter conditioning
     if(!empty($term) && empty($stage) || !empty($term) && $stage==NULL){
-        $user_badge1 = \DB::table('user_badges')->where('season_id',$term)->orderBy('badges_points','desc')->paginate(1);
+        $user_badge1 = \DB::table('user_badges')->where('season_id',$term)->orderBy('badges_points','desc')->paginate(10);
     }
     elseif(!empty($term) && !empty($stage)){
-        $course = Course::where('season',$term)->where('subtype',$stage)->first();
 
-        if(!empty($course))
-        {
-            $shop_data = ShopCartItems::where('course_season',$course->season)->where('shop_type','course')->where('product_id',$course->id)->where('orderID','!=',NULL)->first();
+      $user_badge1 = \DB::table('user_badges')->where('season_id',$term)->where('stage_id',$stage)->orderBy('badges_points','desc')->paginate(10);
 
-            if(!empty($shop_data))
-            {
-              $child_id = $shop_data->child_id;  
-              $user_badge1 = \DB::table('user_badges')->where('user_id',$child_id)->where('season_id',$term)->orderBy('badges_points','desc')->paginate(10); 
-            }else{
-              $user_badge1 = '';
-            }
-            
-        }else{
-            $user_badge1 = '';
-        }
     }
     elseif(!empty($stage) && empty($term)){
-        $course = Course::where('subtype',$stage)->first();
 
-        //dd($course);
+      // dd($stage);
+
+      // $user_badge1 = \DB::table('user_badges')->where('stage_id',$stage)->orderBy('badges_points','desc')->paginate(10);
+
+      // dd($user_badge1);
+
+        $course = Course::where('subtype',$stage)->first();
 
         if(!empty($course))
         {
             $shop_data = ShopCartItems::where('shop_type','course')->where('product_id',$course->id)->where('orderID','!=',NULL)->first();
-
-            //dd($course,$shop_data);
 
             if(!empty($shop_data))
             {
@@ -3600,6 +3589,8 @@ public function badges()
     }else{
         $user_badge1 = \DB::table('user_badges')->orderBy('badges_points','desc')->paginate(10);
     }
+
+    //dd($user_badge1);
 
     $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('child_id','!=',NULL)->where('orderID','!=',NULL)->where('order_id','!=',NULL)->paginate(10);
     $testimonial = Testimonial::where('page_title','badges')->where('status',1)->get();
@@ -4206,7 +4197,8 @@ public function save_contact_us(Request $request)
 
         }else if($todayDate <= $check_coupon->start_date)
         {
-          $output .= '<div class="alert alert-danger" role="alert">You can use this coupon after '.$check_coupon->start_date.'<div>';
+          $coupon_start_date = date('d/m/Y',strtotime($check_coupon->start_date));
+          $output .= '<div class="alert alert-danger" role="alert">You can use this coupon after '.$coupon_start_date.'<div>';
         }else
         {
           // Cart Items
@@ -4450,6 +4442,101 @@ public function save_wallet(Request $request)
                         return redirect()->route('shop.checkout.thankyou', ['order_id' => $so->id]);  
 
                         
+                        // $this->AdminOrderSuccessOrderSuccess($so->id);
+
+                    }
+            }
+        }
+    }
+
+}
+
+/*--------------------------------
+|   Package wallet payment 
+|---------------------------------*/ 
+public function save_package_wallet_pay(Request $request)
+{
+    //dd($request->all());
+    $user_id = base64_decode($request->u_id);
+    $booking_no = base64_decode($request->booking_no);
+
+    $wallet = Wallet::where('user_id',$user_id)->first(); 
+    $wallet_amount = $wallet->money_amount; 
+
+    $billing_address = $request->session()->get('shopBillingAddress');
+    $shipping_address = $request->session()->get('shopBillingAddress');
+
+    $shop_cart_items = \DB::table('package_courses')->where('parent_id',$user_id)->where('booking_no',$booking_no)->get(); 
+    $price = [];
+
+    if(!empty($shop_cart_items))
+    {
+        foreach($shop_cart_items as $pack)
+        {
+            $price[] = $pack->price; 
+        }
+        $total_amount = array_sum($price); 
+    }
+
+    if($total_amount <= $wallet_amount)
+    {
+        foreach($shop_cart_items as $pack)
+        {
+            $get_course = Course::where('id',$pack->course_id)->first();
+
+            // $sci = ShopCartItems::find($item->id);
+            // $sci->type = 'order';
+            // $sci->orderID = '#DRHSHOP'.strtotime(date('y-m-d h:i:s'));  
+            // $sci->save();
+
+            $sci = new ShopCartItems;
+            $sci->shop_id = 0;
+            $sci->vendor_id = 1;
+            $sci->user_id = $user_id;
+            $sci->child_id = isset($pack->player_id) ? $pack->player_id : '';
+            $sci->product_id = $pack->course_id;
+            $sci->course_season = $get_course->season;
+            $sci->price = $pack->price;
+            $sci->total = $pack->price;
+            $sci->type = 'order';
+            $sci->shop_type = 'course';
+            $sci->manual = 1;
+            $sci->orderID = '#DRHSHOP'.strtotime(date('y-m-d h:i'));
+            $sci->save();
+
+            $so = new ShopOrder;
+            $so->user_id = $user_id;
+            $so->payment_by = 'Wallet';
+            $so->amount = $total_amount;
+            $so->billing_address = $billing_address;
+            $so->shipping_address = $shipping_address;
+            $so->orderID = $sci->orderID;
+            $so->status = 1;
+
+            if($so->save()){
+
+                $this->ShopProductOrderPlacedForVendorSuccess($so->id);
+                $this->ShopProductOrderPlacedSuccess($so->id);
+                $this->ShopProductOrderPlacedInfo($so->id);
+
+                $remaining_wallet_money = $wallet_amount - $total_amount;
+                Wallet::where('user_id',Auth::user()->id)->update(array('money_amount' => $remaining_wallet_money));
+
+                $walletHistory = WalletHistory::create($request->all()); 
+                $walletHistory->user_id = \Auth::user()->id; 
+                $walletHistory->type = 'debit';
+                $walletHistory->money_amount = $total_amount;
+                $walletHistory->save();
+
+                ShopCartItems::where('orderID', $so->orderID)->update(array('orderID' => $so->orderID));
+
+                  if(Auth::user()->createOrderFromCart($so))
+                    {
+                        \Session::forget('shippingAddress');
+                        \Session::forget('shopBillingAddress');
+
+                        return redirect()->route('shop.checkout.thankyou', ['order_id' => $so->id]);  
+
                         // $this->AdminOrderSuccessOrderSuccess($so->id);
 
                     }
@@ -5070,7 +5157,7 @@ public function ah_participant_details(Request $request)
     
     $last_user_id = $add_family->id;
 
-    return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Participant Details upd successfully.');
+    return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Participant Details updated successfully.');
 }
 
 /*------------------------------------------

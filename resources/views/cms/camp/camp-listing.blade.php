@@ -262,7 +262,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                             </div>
                             <div class="we-run-wrap d-f">
                                 @foreach($camp_categories as $cat)
-                                <div class="col-sm-4">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 club-wrap"">
                                     <a href="{{url('camp-detail')}}/{{$cat->slug}}" class="we-run-container">
                                         <img src="{{URL::asset('/uploads')}}/{{$cat->image}}" alt="" />
                                         <div class="we-run-overlay">
@@ -311,7 +311,12 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                         <p>Available</p>
                                                     </td>
                                                     <td>
-                                                        <p><a href="{{url('/book-a-camp')}}/{{$ca->slug}}">Book Now</a></p>
+                                                        @if(Auth::check())
+                                                            <p><a href="{{url('/book-a-camp')}}/{{$ca->slug}}">Book Now</a></p>
+                                                        @else
+                                                            <p><a href="{{url('login')}}">Book Now</a></p>
+                                                        @endif
+                                                        <!-- <p><a href="{{url('/book-a-camp')}}/{{$ca->slug}}">Book Now</a></p> -->
                                                     </td>
                                                 </tr>
                                                 @endforeach

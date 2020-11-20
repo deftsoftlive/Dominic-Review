@@ -82,6 +82,30 @@
           </div>
         </div>
 
+        <!-- Leader Board Section - Description -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>Leader Board</u></h5>
+             {{textarea($errors,'Description <span class="cst-upper-star">*</span>', 'leaderboard_desc', $leaderboard_desc)}}
+          </div>
+        </div>
+
+        <!-- Reports Section - Description -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>Reports</u></h5>
+             {{textarea($errors,'Description <span class="cst-upper-star">*</span>', 'report_desc', $report_desc)}}
+          </div>
+        </div>
+
+        <!-- Matches Section - Description -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>Matches</u></h5>
+             {{textarea($errors,'Description <span class="cst-upper-star">*</span>', 'matches_desc', $matches_desc)}}
+          </div>
+        </div>
+
         <!-- Stats Description Section -->
         <div class="card">
           <div class="card-body">
@@ -152,4 +176,14 @@
 @section('scripts')
 <script src="{{url('/admin-assets/js/validations/settings/homePageValidation.js')}}"></script>
 <script src="{{url('/js/validations/imageShow.js')}}"></script>
+<script src="{{ asset('js/cke_config.js') }}"></script>
+
+<script type="text/javascript">
+   CKEDITOR.replace('badges_desc', options);
+   CKEDITOR.replace('goals_desc', options);
+   CKEDITOR.replace('report_desc', options);
+   CKEDITOR.replace('leaderboard_desc', options);
+   CKEDITOR.replace('matches_desc', options);
+   CKEDITOR.replace('stats_desc', options);
+</script>
 @endsection

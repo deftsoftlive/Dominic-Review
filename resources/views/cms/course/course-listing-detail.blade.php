@@ -14,7 +14,11 @@
 
 @php $base_url = \URL::to('/'); @endphp
 
-<section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/1583997335banner_image.png);">
+@if(!empty($course->image))
+  <section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/{{$course->image}});">
+@else
+  <section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/1583997335banner_image.png);">
+@endif
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
@@ -236,7 +240,11 @@
                                         @if(!empty($start_value) && !empty($end_value))
 
                                           @if($start_value <= $years && $end_value >= $years)
-                                          <option {{$years}} value="{{$child->id}}">{{$child->name}}</option>
+
+                                          @if(Auth::user()->id != $child->id)
+                                            <option {{$years}} value="{{$child->id}}">{{$child->name}}</option>
+                                          @endif
+
                                           @endif
 
                                         @endif

@@ -12,7 +12,7 @@ class HomeSlider extends Model
     use SluggableScopeHelpers;
 
     protected $fillable = [
-        'title', 'title_color', 'slug', 'heading', 'heading_color', 'subheading', 'sub_heading_color', 'description', 'description_color', 'button_text', 'button_link', 'image', 'status', 'created_at', 'updated_at'
+        'title', 'title_color', 'slug', 'heading', 'heading_color', 'subheading', 'sub_heading_color', 'description', 'description_color', 'button_text', 'button_link', 'image', 'status', 'sort', 'created_at', 'updated_at'
     ];
 
     public function sluggable() {

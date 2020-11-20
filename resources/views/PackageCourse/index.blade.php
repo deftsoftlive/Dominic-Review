@@ -53,6 +53,7 @@
             </div>
         </div>
 
+        <div class="pay_with_wallet" >
         <form class="pack_form" action="{{url('save-package-courses')}}/{{$booking_no}}" method="POST">
 
             <b style="font-size:20px;">Total Price : &pound;{{ array_sum($amount) }}</b> &nbsp;
@@ -61,7 +62,37 @@
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button new-main-button" data-key="{{$account_data->public_key}}" data-amount="{{$total}}" data-name="DRH Panel" data-class="DRH Panel" data-description="Shopping" data-email="{{getUseremail($pack->parent_id)}}" data-currency="gbp" data-locale="auto">
             </script>
         </form>
+
+            <!-- <button class="cstm-btn main_button">Pay with wallet</button> -->
+
+            @php 
+                $package = DB::table('package_courses')->where('parent_id',$pack->parent_id)->where('booking_no',$pack->booking_no)->get(); 
+                $wallet = DB::table('wallets')->where('user_id',$pack->parent_id)->first(); 
+                $price = [];
+            @endphp
+
+            @if(!empty($package))
+                @foreach($package as $pack)
+                    @php $price[] = $pack->price; @endphp
+                @endforeach
+
+                @php $total = array_sum($price); @endphp
+
+            @endif
+
+            @if(!empty($wallet) && $wallet->money_amount >= $total)
+                <form id="save_package_wallet_pay" action="{{route('save_package_wallet_pay')}}" method="POST">
+                    <input type="hidden" name="u_id" value="@php echo base64_encode($pack->parent_id); @endphp"> 
+                    <input type="hidden" name="booking_no" value="@php echo base64_encode($booking_no); @endphp"> 
+                    @csrf
+                    <!-- <button class="wallet_confirm_order cstm-btn main_button">Pay with wallet</button> -->
+                </form>
+            @endif
+
+        </div>
+
     </div>
+
 </section>
 
 

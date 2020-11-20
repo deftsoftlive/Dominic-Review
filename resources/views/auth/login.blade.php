@@ -93,6 +93,10 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+
+                                <a class="cstm-btn main_button" href="{{ route('register') }}">
+                                    {{ __('Register as parent/adult') }}
+                                </a>
                             </div>
                         </div>
                     </form>

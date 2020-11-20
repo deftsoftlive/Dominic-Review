@@ -71,7 +71,7 @@
                         @elseif($doc->notification == '6 Months')
                           @php  $date = $doc->created_at->addMonths(6)->format('d-m-Y'); @endphp
                         @endif
-                        {{$date}}
+                        {{isset($date) ? $date : ''}}
                       </div>
                       <div class="col-lg-3 col-md-3 col-sm-3 ">
                         <label><strong>Upload Document</strong> - </label>

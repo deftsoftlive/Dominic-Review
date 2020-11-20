@@ -110,14 +110,14 @@
                 <!-- *************************
                 |   Linkings - Start
                 |***************************** -->
-        		<div class="member-book">
+        		<!-- <div class="member-book">
         			<a target="_blank" href="{{url('/shop')}}" class="cstm-btn main_button">Go To Shop</a>
             		<a target="_blank" href="{{url('/coach-listing')}}" class="cstm-btn main_button">Coach Connect</a>
             		<a target="_blank" href="{{url('/tennis-landing')}}" class="cstm-btn main_button">Book Tennis Coaching</a>
             		<a target="_blank" href="{{url('camp-listing')}}" class="cstm-btn main_button">Book A Holiday Camp</a>
             		<a target="_blank" href="{{url('/football-landing')}}" class="cstm-btn main_button">Book Football Coaching</a>
             		<a target="_blank" href="{{url('/school-landing')}}" class="cstm-btn main_button">Book A School Club</a>
-        		</div>
+        		</div> -->
                 <!-- *************************
                 |   Linkings - End
                 |***************************** -->

@@ -156,6 +156,15 @@
                     <input type="date" name="end_date" class="form-control">
                   </div>
 
+                  <div class="form-group">
+                      <label class="control-label">Image</label>
+                      <input type="file" required accept="image/*" onchange="ValidateSingleInput(this, 'image_src')" name="image" id="selImage1">
+                      @if ($errors->has('image'))
+                      <div class="error">{{ $errors->first('image') }}</div>
+                      @endif
+                  </div>
+                  <img src="" id="image_src" style="width: 100px; height: 100px; display: none" />
+
                   <table class="add_on_services">
                     <thead>
                       <tr>

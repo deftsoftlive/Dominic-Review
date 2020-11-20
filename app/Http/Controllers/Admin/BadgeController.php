@@ -240,10 +240,14 @@ class BadgeController extends Controller
                 // dd($user_badge);
                 // if($user_badge->user_id == $request->child_id && $user_badge->season_id == $request->season_id)
                 // {
+                
+                    $course = \Db::table('courses')->where('id',$request->course_id)->first();
+
                     $ca = UserBadge::find($user_badge->id);
                     $ca->user_id = $request->child_id;
                     $ca->season_id = $request->season_id; 
                     $ca->course_id = $request->course_id;
+                    $ca->stage_id = $course->subtype;
                     $ca->badges = $badges;
                     $ca->badges_points = $total_points;
                     $ca->save();
@@ -255,11 +259,13 @@ class BadgeController extends Controller
                    // UserBadge::where('season_id', $request->season_id)->where('user_id', $request->child_id)->update(array('badges' => $badges, 'badges_points' => $total_points));    
                 // }
             }else{
+                    $course = \Db::table('courses')->where('id',$request->course_id)->first();
 
                     $ca = new UserBadge;
                     $ca->user_id = $request->child_id;
                     $ca->season_id = $request->season_id; 
                     $ca->course_id = $request->course_id;
+                    $ca->stage_id = $course->subtype;
                     $ca->badges = $badges;
                     $ca->badges_points = $total_points;
                     $ca->save();

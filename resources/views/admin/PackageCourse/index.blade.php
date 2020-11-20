@@ -89,7 +89,8 @@
                         <table class="table table-hover">
                             <thead>
                             <tr> 
-                                <th>Booking No.</th>
+                                <!-- <th>Booking No.</th> -->
+                                <th>Order ID</th>
                                 <th>Package Issue Date</th>
                                 <th>Account Name</th> 
                                 <th>Player Name</th>
@@ -106,7 +107,8 @@
 
                             @foreach($PackageCourse as $test)
                                 <tr>
-                                    <td>{{$test->booking_no}}</td>
+                                    <!-- <td>{{$test->booking_no}}</td> -->
+                                    <td>{{isset($test->orderID) ? $test->orderID : '-'}}</td>
                                     <td>{{date('d/m/Y',strtotime($test->created_at))}}</td>
                                     <td>
                                         @php

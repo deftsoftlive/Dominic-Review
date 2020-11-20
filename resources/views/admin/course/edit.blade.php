@@ -176,6 +176,16 @@
                     <input type="date" name="end_date" class="form-control" value="{{isset($venue->end_date) ? $venue->end_date : ''}}">
                   </div>
 
+                  <div class="form-group">
+                    <label class="control-label">Image</label>
+                    <input type="file" name="image" id="selImage1" accept="image/*" onchange="ValidateSingleInput(this, 'image_src')">
+                    @if ($errors->has('image'))
+                        <div class="error">{{ $errors->first('image') }}</div>
+                    @endif
+                  </div>
+
+                  <img id="image_src" style="width: 100px; height: 100px;" src="{{ URL::asset('/uploads').'/'.$venue->image }}" />
+
             <!--       {{textbox($errors,'Coach Cost<span class="cst-upper-star">*</span>','coach_cost', $venue->coach_cost)}}
                   
                   {{textbox($errors,'Court/Venue Cost<span class="cst-upper-star">*</span>','venue_cost', $venue->venue_cost)}}

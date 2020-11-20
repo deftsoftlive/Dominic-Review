@@ -43,14 +43,14 @@ class CourseController extends Controller
                 $course = \DB::table('courses')
                      ->where('type', '=', $type)
                      ->where('subtype', '=', $subtype)
-                     ->orderBy('sort','asc')->paginate(10);
+                     ->orderBy('sort','asc')->paginate(20);
 
             }else{
                 $course = \DB::table('courses')
                      ->where('type', '=', $type)
                      ->where('subtype', '=', $subtype)
                      ->where('level', '=', $level)
-                     ->orderBy('sort','asc')->paginate(10);
+                     ->orderBy('sort','asc')->paginate(20);
             }
 
         }else if(!empty(request()->get('type')) && empty(request()->get('subtype')) && !empty(request()->get('level'))){
@@ -58,22 +58,22 @@ class CourseController extends Controller
             if(request()->get('level') == 'All'){
                 $course = \DB::table('courses')
                      ->where('type', '=', $type)
-                     ->orderBy('sort','asc')->paginate(10);
+                     ->orderBy('sort','asc')->paginate(20);
             }else{
                 $course = \DB::table('courses')
                      ->where('type', '=', $type)
                      ->where('level', '=', $level)
-                     ->orderBy('sort','asc')->paginate(10);
+                     ->orderBy('sort','asc')->paginate(20);
             }
 
         }else if(!empty(request()->get('type')) && !empty(request()->get('subtype')) && empty(request()->get('level'))){
             $course = \DB::table('courses')
                      ->where('type', '=', $type)
                      ->where('subtype', '=', $subtype)
-                     ->orderBy('sort','asc')->paginate(10);
+                     ->orderBy('sort','asc')->paginate(20);
 
         }else{
-          $course = Course::orderBy('sort','asc')->paginate(10);
+          $course = Course::orderBy('sort','asc')->paginate(20);
         }
     
         $course_cat = ProductCategory::where('parent','0')->where('subparent','0')->where('type','Course')->get();
@@ -185,8 +185,16 @@ class CourseController extends Controller
             'equipment_cost' => ['required', 'numeric'],
             'other_cost' => ['required', 'numeric'],
             'tax_cost' => ['required', 'numeric'],
-            'end_date' => ['required']
+            'end_date' => ['required'],
+            'image' => ['required']
         ]);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/uploads');
+            $image->move($destinationPath, $filename);
+        }
 
     	$course = Course::create([
     		'title' => $request['title'],
@@ -215,6 +223,7 @@ class CourseController extends Controller
             'early_birth_price' => isset($request['early_birth_price']) ? $request['early_birth_price'] : '',
             'bottom_section' => isset($request['bottom_section']) ? $request['bottom_section'] : '',
             'end_date' => $request['end_date'],
+            'image' => isset($filename) ? $filename : '',
     	]);
 
         if(isset($data['course_date'])){  
@@ -298,10 +307,24 @@ class CourseController extends Controller
             'equipment_cost' => ['required', 'numeric'],
             'other_cost' => ['required', 'numeric'],
             'tax_cost' => ['required', 'numeric'],
-            'end_date' => ['required']
+            'end_date' => ['required'],
+            'image' => ['required']
         ]);
 
     	$venue = Course::FindBySlugOrFail($slug);
+
+        $filename = $venue->image;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/uploads');
+            $img_path = public_path().'/uploads/'.$venue->image;
+            // if (file_exists($img_path)) {
+            //     unlink($img_path);
+            // }
+            $image->move($destinationPath, $filename);
+        }
+        
     	$venue->update([
     		'title' => $request['title'],
     		'description' => $request['description'],
@@ -329,6 +352,7 @@ class CourseController extends Controller
             'early_birth_price' => isset($request['early_birth_price']) ? $request['early_birth_price'] : '',
             'bottom_section' => isset($request['bottom_section']) ? $request['bottom_section'] : '',
             'end_date' => $request['end_date'],
+            'image' => isset($filename) ? $filename : '',
     	]);
 
         if(isset($data['course_date'])){  

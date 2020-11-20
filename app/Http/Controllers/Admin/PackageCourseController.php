@@ -30,24 +30,24 @@ class PackageCourseController extends Controller
         {
             if($status == 'all')
             {
-                $PackageCourse = PackageCourse::select(['id','parent_id','player_id','account_id','booking_no','status','created_at'])->groupBY('booking_no')->paginate(10);
+                $PackageCourse = PackageCourse::select(['id','parent_id','player_id','account_id','booking_no','status','orderID','created_at'])->groupBY('booking_no')->orderBy('id','desc')->paginate(10);
             }
             elseif($status == '1' || $status == '0')
             {
-                $PackageCourse = PackageCourse::select(['id','parent_id','player_id','account_id','booking_no','status','created_at'])->where('status',$status)->groupBY('booking_no')->paginate(10);
+                $PackageCourse = PackageCourse::select(['id','parent_id','player_id','account_id','booking_no','status','orderID','created_at'])->where('status',$status)->groupBY('booking_no')->orderBy('id','desc')->paginate(10);
             }
         }
         elseif($status == ''  && empty($user_id))
         {
-            $PackageCourse = PackageCourse::select(['id','parent_id','player_id','account_id','booking_no','status','created_at'])->groupBY('booking_no')->paginate(10);
+            $PackageCourse = PackageCourse::select(['id','parent_id','player_id','account_id','booking_no','status','orderID','created_at'])->groupBY('booking_no')->orderBy('id','desc')->paginate(10);
         }
         elseif(!empty($user_id) && $status == '')
         {
-            $PackageCourse = PackageCourse::where('player_id',$user_id)->paginate(10);
+            $PackageCourse = PackageCourse::where('player_id',$user_id)->orderBy('id','desc')->paginate(10);
 
             if(empty($PackageCourse))
             {
-                $PackageCourse = PackageCourse::where('parent_id',$user_id)->paginate(10);
+                $PackageCourse = PackageCourse::where('parent_id',$user_id)->orderBy('id','desc')->paginate(10);
             }
 
             //dd($packageCourse);
@@ -56,20 +56,20 @@ class PackageCourseController extends Controller
         {
             if($status == 'all')
             {
-                $PackageCourse = PackageCourse::select(['id','parent_id','player_id','account_id','booking_no','status','created_at'])->groupBY('booking_no')->where('player_id',$user_id)->paginate(10);
+                $PackageCourse = PackageCourse::select(['id','parent_id','player_id','account_id','booking_no','status','orderID','created_at'])->groupBY('booking_no')->where('player_id',$user_id)->paginate(10);
 
                 if(empty($PackageCourse))
                 {
-                    $PackageCourse = PackageCourse::select(['id','parent_id','player_id','account_id','booking_no','status','created_at'])->groupBY('booking_no')->where('parent_id',$user_id)->paginate(10);
+                    $PackageCourse = PackageCourse::select(['id','parent_id','player_id','account_id','booking_no','status','orderID','created_at'])->groupBY('booking_no')->where('parent_id',$user_id)->paginate(10);
                 }
             }
             elseif($status == '1' || $status == '0')
             {
-                $PackageCourse = PackageCourse::select(['id','parent_id','player_id','account_id','booking_no','status','created_at'])->where('status',$status)->where('player_id',$user_id)->groupBY('booking_no')->paginate(10);
+                $PackageCourse = PackageCourse::select(['id','parent_id','player_id','account_id','booking_no','status','orderID','created_at'])->where('status',$status)->where('player_id',$user_id)->groupBY('booking_no')->paginate(10);
 
                 if(empty($PackageCourse))
                 {
-                    $PackageCourse = PackageCourse::select(['id','parent_id','player_id','account_id','booking_no','status','created_at'])->where('status',$status)->where('parent_id',$user_id)->groupBY('booking_no')->paginate(10);
+                    $PackageCourse = PackageCourse::select(['id','parent_id','player_id','account_id','booking_no','status','orderID','created_at'])->where('status',$status)->where('parent_id',$user_id)->groupBY('booking_no')->paginate(10);
                 }
             }
 

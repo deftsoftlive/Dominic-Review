@@ -547,6 +547,15 @@ trait GeneralSettingTrait {
                        // Description of goals section
                        'badges_desc' => getAllValueWithMeta('badges_desc', $slug),
 
+                       // Description of reports section
+                       'report_desc' => getAllValueWithMeta('report_desc', $slug),
+
+                       // Description of leader board section
+                       'leaderboard_desc' => getAllValueWithMeta('leaderboard_desc', $slug),
+
+                       // Description of matches section
+                       'matches_desc' => getAllValueWithMeta('matches_desc', $slug),
+
                        // Description of goals section
                        'goals_desc' => getAllValueWithMeta('goals_desc', $slug),
 

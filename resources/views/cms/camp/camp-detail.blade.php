@@ -8,7 +8,7 @@
   $base_url = \URL::to('/'); 
   $camp_cat_id = $camp_category->id; 
   $camp = DB::table('camps')->where('category',$camp_cat_id)->where('status',1)->get();
-  $accordian = DB::table('accordians')->where('page_title', Request::path())->get();
+  $accordian = DB::table('accordians')->where('page_title', Request::path())->where('status',1)->get();
 @endphp
 
 <style>
@@ -74,38 +74,41 @@
   <div class="row">
   <div class="col-sm-8 @if(count($accordian)> 0) @else accord_nt_exist @endif">
   <div class="c-d-accordion">
+
+
   <div id="accordion">
 
-@foreach($accordian as $acc)
-                <div class="card @if($acc->color == '#be298d')pink @elseif($acc->color == '#00afef')blue @elseif($acc->color == '#bea029')yellow @endif">
-                  <div class="card-header" id="headingOne">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{$acc->id}}" aria-expanded="false" aria-controls="collapse{{$acc->id}}">
-                      {{$acc->title}}
-                      </button>
-                    </h5>
-                  </div>
-                  <div id="collapse{{$acc->id}}" class="collapse" aria-labelledby="heading{{$acc->id}}" data-parent="#accordion" style="">
-                    <div class="card-body">
-                      {!! $acc->description !!}
-                    
+    @foreach($accordian as $acc)
+        <div class="card @if($acc->color == '#be298d')pink @elseif($acc->color == '#00afef')blue @elseif($acc->color == '#bea029')yellow @endif">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{$acc->id}}" aria-expanded="false" aria-controls="collapse{{$acc->id}}">
+              {{$acc->title}}
+              </button>
+            </h5>
+          </div>
+          <div id="collapse{{$acc->id}}" class="collapse" aria-labelledby="heading{{$acc->id}}" data-parent="#accordion" style="">
+            <div class="card-body">
+              {!! $acc->description !!}
+            
 
-                    @php 
-                      $acc_id = $acc->id;
-                      $accor_pdfs = DB::table('accordian_pdfs')->where('accordian_id','=', $acc_id)->get(); 
-                    @endphp
+            @php 
+              $acc_id = $acc->id;
+              $accor_pdfs = DB::table('accordian_pdfs')->where('accordian_id','=', $acc_id)->get(); 
+            @endphp
 
-                  @if(count($accor_pdfs)> 0)
-                    @foreach($accor_pdfs as $pdf)
-                        <a target="_blank" href="{{URL::asset('/uploads/accordian')}}/{{$pdf->pdf}}" class="course-pdf-icon"><i class="fa fa-file-pdf"></i>{{$pdf->accordian_title}}</a>
-                    @endforeach
-                  @endif
-                  </div>
-                  </div>
-                </div>
-                @endforeach
+          @if(count($accor_pdfs)> 0)
+            @foreach($accor_pdfs as $pdf)
+                <a target="_blank" href="{{URL::asset('/uploads/accordian')}}/{{$pdf->pdf}}" class="course-pdf-icon"><i class="fa fa-file-pdf"></i>{{$pdf->accordian_title}}</a>
+            @endforeach
+          @endif
+          </div>
+          </div>
+        </div>
+    @endforeach
 
-</div>
+  </div>
+  
     </div>
     </div>
     <div class="col-sm-4">

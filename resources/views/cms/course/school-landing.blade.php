@@ -285,7 +285,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                             @endphp
                             <div class="we-run-wrap images_back_wrap d-f">
                                 @foreach($course_cat as $cat)
-                                <div class="col-sm-4">
+                                  <div class="col-lg-3 col-md-4 col-sm-6 col-12 club-wrap">
                                     <a href="{{url('/course-listing/school')}}?&cat={{$cat->id}}" class="we-run-container">
                                         <img src="{{URL::asset('/uploads')}}/{{$cat->image}}" alt="" />
                                         <div class="we-run-overlay">

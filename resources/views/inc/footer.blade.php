@@ -1388,7 +1388,8 @@ function camp_checks(grid_input) {
 
       
         // clear items in this column except full_week
-        var ele = ".camp_grid input."+col;
+        var ele = "input."+col;
+        // var ele = ".camp_grid input."+col;
         $(ele).not(".full_week").prop("checked",false);
         $(ele).not(".full_week").data("checked", false);
       }
@@ -1396,7 +1397,8 @@ function camp_checks(grid_input) {
     else {
       // untick full week option for that column
       console.log("untick full week");
-      var ele = ".camp_grid input.full_week."+col;
+      //var ele = ".camp_grid input.full_week."+col;
+      var ele = "input.full_week."+col;
       $(ele).prop("checked",false);
       $(ele).removeAttr("checked");
       $(ele).data("checked", false);

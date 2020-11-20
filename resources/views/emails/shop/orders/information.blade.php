@@ -1,11 +1,11 @@
          <!-- info table starts here -->
-                        <tr>
-                           <td style="padding-left: 10px; padding-right: 10px; padding-bottom: 30px;">
+                        <!-- <tr>
+                           <td style="padding-left: 10px; padding-right: 10px; padding-bottom: 30px;"> -->
                               <table align="center" cellpadding="0" cellspacing="0" width="100%" style= "border-collapse: collapse; border: 1px solid #efefef;">
                                  <tbody>
                                     <tr>
                                        <td width="100%" style="vertical-align: top;">
-                                          <table align="center" cellpadding="0" cellspacing="0" width="100%" style= "border-collapse: collapse;">
+                                          <table align="center" class="tabel_main_dtls" cellpadding="0" cellspacing="0" width="100%" style= "border-collapse: collapse;table-layout: fixed;">
 <tbody>
 <!-- <tr>
    <td style="font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">Image</td>
@@ -30,39 +30,34 @@
   $child = DB::table('users')->where('id',$item->child_id)->first();
 @endphp
 
-      <br/> <br/> <br/>
 
-      <tr>
-         <td colspan="2" style="border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; background-color: #efefef; padding-left: 10px; padding-right: 10px; padding-top: 10px;" align="left">Course Name</td>
-           <td colspan="2" style="border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">{{isset($course->title) ? $course->title : '-' }}</td>
-      </tr>
-    
-      <tr>
-         <td colspan="2" style="border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">Venue</td>
-           <td colspan="2" style="border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">{{isset($course->location) ? $course->location : '-' }}</td>
-      </tr>
+ 
+      <!-- <br/> <br/> <br/> -->
 
-      <tr>
-         <td colspan="2" style="border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">Day Time</td>
-            <td colspan="2" style="border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">{{isset($course->day_time) ? $course->day_time : '-' }}</td>    
-      </tr>
-
-      <tr>
-         <td colspan="2" style="border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">Age Group</td>
-            <td colspan="2" style="border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">{{isset($course->age_group) ? $course->age_group : '-' }}</td>    
-      </tr>
-
-      <tr>
-         <td colspan="2" style="border-bottom:4px solid #3f4c67; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">More Info</td>
-            <td colspan="2" style="border-bottom:4px solid #3f4c67; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">{!!isset($course->more_info) ? $course->more_info : '-' !!}</td>    
-      </tr>
-
-
-      <tr>
-         <td colspan="2" style="border-bottom:4px solid #3f4c67; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">Further Info</td>
-            <td colspan="2" style="border-bottom:4px solid #3f4c67; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">{!!isset($course->info_email_content) ? $course->info_email_content : '-' !!}</td>    
-      </tr>
-
+            <tr>
+                <td colspan="1" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px; padding-top: 10px;width:150px;" align="left">Course Name</td>
+                <td colspan="4" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;" align="left">{{isset($course->title) ? $course->title : '-' }}</td>
+            </tr>
+            <tr>
+                <td colspan="1" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px;width:150px;" align="left">Venue</td>
+                <td colspan="4" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;" align="left">{{isset($course->location) ? $course->location : '-' }}</td>
+            </tr>
+            <tr>
+                <td colspan="1" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px;width:150px;" align="left">Day Time</td>
+                <td colspan="4" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;" align="left">{{isset($course->day_time) ? $course->day_time : '-' }}</td>
+            </tr>
+            <tr>
+                <td colspan="1" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px;width:150px;" align="left">Age Group</td>
+                <td colspan="4" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;" align="left">{{isset($course->age_group) ? $course->age_group : '-' }}</td>
+            </tr>
+            <tr>
+                <td colspan="1" style="vertical-align: top; border-bottom:4px solid #3f4c67; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px;width:150px;" align="left">More Info</td>
+                <td colspan="4" style="vertical-align: top; border-bottom:4px solid #3f4c67; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;" align="left">{!!isset($course->more_info) ? $course->more_info : '-' !!}</td>
+            </tr>
+            <tr>
+                <td colspan="1" style="vertical-align: top;border-bottom:4px solid #3f4c67; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px;width:150px;" align="left">Further Info</td>
+                <td colspan="4" style="vertical-align: top; border-bottom:4px solid #3f4c67; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;" align="left">{!!isset($course->info_email_content) ? $course->info_email_content : '-' !!}</td>
+            </tr>
 @elseif($item->shop_type == 'camp')
 
 @php 
@@ -71,36 +66,32 @@
   $child = DB::table('users')->where('id',$item->child_id)->first();
 @endphp
 
-      <br/> <br/> <br/>
+      <!-- <br/> <br/> <br/> -->
 
-      <tr>
-         <td colspan="2" style="border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; background-color: #efefef; padding-left: 10px; padding-right: 10px; padding-top: 10px;" align="left">Camp Name</td>
-           <td colspan="2" style="border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">{{isset($camp->title) ? $camp->title : '-' }}</td>
-      </tr>
-    
-      <tr>
-         <td colspan="2" style="border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">Camp Location</td>
-           <td colspan="2" style="border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">{{isset($camp->location) ? $camp->location : '-' }}</td>
-      </tr>
-
-      <tr>
-         <td colspan="2" style="border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">Description</td>
-            <td colspan="2" style="border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">{!!isset($camp->description) ? $camp->description : '-' !!}</td>    
-      </tr>
-
-      <tr>
-         <td colspan="2" style="border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">Usefull Info</td>
-            <td colspan="2" style="border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">{!!isset($camp->usefull_info) ? $camp->usefull_info : '-' !!}</td>    
-      </tr>
-
-      <tr>
-         <td colspan="2" style="border-bottom:4px solid #3f4c67; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">Further Info</td>
-            <td colspan="2" style="border-bottom:4px solid #3f4c67; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">{!!isset($camp->info_email_content) ? $camp->info_email_content : '-' !!}</td>    
-      </tr>
+            <tr>
+                <th colspan="1" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px; padding-top: 10px;width:150px;">Camp Name</th>
+                <td colspan="4" style="vertical-align: top;border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;">{{isset($camp->title) ? $camp->title : '-' }}</td>
+            </tr>
+            <tr>
+                <th colspan="1" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px;width:150px;">Camp Location</th>
+                <td colspan="4" style="vertical-align: top;border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;">{{isset($camp->location) ? $camp->location : '-' }}</td>
+            </tr>
+            <tr>
+                <th colspan="1" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px;width:150px;">Description</th>
+                <td colspan="4" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;">{!!isset($camp->description) ? $camp->description : '-' !!}</td>
+            </tr>
+            <tr>
+                <th colspan="1" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px;width:150px;">Usefull Info</th>
+                <td colspan="4" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;">{!!isset($camp->usefull_info) ? $camp->usefull_info : '-' !!}</td>
+            </tr>
+            <tr>
+                <th colspan="1" style="vertical-align: top; border-bottom:4px solid #3f4c67; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px;width:150px;">Further Info</th>
+                <td colspan="4" style="vertical-align: top; border-bottom:4px solid #3f4c67; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;">{!!isset($camp->info_email_content) ? $camp->info_email_content : '-' !!}</td>
+            </tr>
 
 @endif
 
-<br/> <br/> <br/>
+<!-- <br/> <br/> <br/> -->
                                                  
 @endforeach                                           
                           
@@ -111,6 +102,6 @@
 
            </tbody>
         </table>
-     </td>
-  </tr>
+     <!-- </td>
+  </tr> -->
                         <!-- info table ends here -->

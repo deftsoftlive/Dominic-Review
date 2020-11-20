@@ -1,7 +1,8 @@
 @extends('inc.homelayout')
 @extends('e-shop.layouts.layout')
 
- @php $base_url = \URL::to('/'); @endphp
+@section('content')
+@php $base_url = \URL::to('/'); @endphp
  
  <!-- banner section starts here here -->
     <section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/{{ getAllValueWithMeta('shop_banner', 'banners') }});">
@@ -184,7 +185,7 @@
 
 
 
-
+@endsection
 
 
 @section('jscript')

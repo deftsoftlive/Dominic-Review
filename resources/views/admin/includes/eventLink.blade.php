@@ -451,9 +451,9 @@
                     <li class="{{ request()->is('admin/settings/general/edit/general-setting') ? 'active' : ''}}"><a href="{{url('admin/settings/general/edit/general-setting')}}" class="">General Settings</a></li>
 
                     <li class="<?= ActiveMenu(['list_payment_settings'],'active') ?>"><a href="{{ route('list_payment_settings') }}" class="">Payment Settings</a></li>
-                    <li class="<?= ActiveMenu(['global_settings'],'active') ?>">
+                   <!--  <li class="<?= ActiveMenu(['global_settings'],'active') ?>">
                         <a href="{{ route('global_settings') }}" class="">Global Settings</a>
-                    </li>
+                    </li> -->
                 </ul>
                 </li> 
 

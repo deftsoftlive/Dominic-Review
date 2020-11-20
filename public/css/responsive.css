@@ -48,6 +48,17 @@
     .contact-gender label {
         margin: 0 30px 0 7px;
     }
+    .we-run-overlay p {
+    font-size: 18px;
+}
+    .we-run-container {
+    
+    height: 160px;
+}
+
+    .camp-logo-section a.inner-logo {
+        max-width: 150px;
+    }
 
     .marquee.mobile {
         display: block !important;
@@ -472,6 +483,7 @@
         height: 90px;
     }
 
+
     #nav-stats .inner-content .icon_wrap,
     #nav-stats .score-1-text .icon_wrap {
         width: 115px;
@@ -649,20 +661,20 @@
 
     /* button.navbar-toggler {
     position: relative;
-}
- button.navbar-toggler::after {
-    position: absolute;
-    font-family: "Font Awesome 5 Free";
-    content: "\f0c9";
-    display: inline-block;
-    padding-right: 3px;
-    vertical-align: middle;
-    font-weight: 900;
-    color: #fff;
-    font-size: 24px;
-    top: 4px;
-    right: 4px;
-}*/
+    }
+     button.navbar-toggler::after {
+        position: absolute;
+        font-family: "Font Awesome 5 Free";
+        content: "\f0c9";
+        display: inline-block;
+        padding-right: 3px;
+        vertical-align: middle;
+        font-weight: 900;
+        color: #fff;
+        font-size: 24px;
+        top: 4px;
+        right: 4px;
+    }*/
     #navbarSupportedContent .serch-login-signup a.cart-btn {
         color: #001642;
 
@@ -1127,7 +1139,7 @@
     }
 
     .we-run-container {
-        max-height: 110px;
+        max-height: 140px;
     }
 
     .camp-down-sec .left-side-content h4,
@@ -1362,9 +1374,10 @@
     .about-us-sec>.container>.row>div.col-md-6:nth-of-type(odd) {
         order: 1;
     }
+
     .stats_bar_row {
-    width: 49%;
-    margin-bottom: 15px;
+        width: 49%;
+        margin-bottom: 15px;
     }
 
     .profile_croper .inner-cont .img-wrap {
@@ -2052,9 +2065,9 @@
         font-size: 16px;
     }
 
-    .we-run-container {
-        max-height: 80px;
-    }
+   .we-run-container {
+    max-height: 110px;
+}
 
     .o-i-tab>.row>div {
         width: 100%;
@@ -2315,7 +2328,12 @@
     .sec-heading {
         padding: 5px 40px;
     }
-
+.club-wrap {
+    width: 100%!important;
+}
+.we-run-container {
+    max-height: 150px;
+}
     .click-sec-content .click-sec-tagline {
         font-size: 28px;
     }
@@ -2415,15 +2433,48 @@
 
         margin-top: 20px;
     }
+    .we-run-overlay p {
+    font-size: 20px;
+}
+.login-sec button.cstm-btn.login {
+    margin-right: 10px;
+}
     .stats_bar_row {
-    width: 100%;
-    margin-bottom: 0;
-    
+        width: 100%;
+        margin-bottom: 0;
+
+    }.login-sec button.cstm-btn.login {
+   
+    margin-bottom: 10px;
 }
-#nav-stats .progress-status-card {
- 
-    margin-left: 35px;
-}
+
+    .pay_with_wallet {
+        width: 100%;
+        display: flex;
+        align-items: flex-end;
+        margin-top: 30px;
+        align-items: flex-end;
+        flex-direction: column;
+    }
+
+    .pack_form {
+        text-align: right;
+        /* margin-top: 30px; */
+        padding-right: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .pay_with_wallet button.cstm-btn.main_button {
+        margin-top: 10px;
+        margin-right: 15px;
+    }
+
+    #nav-stats .progress-status-card {
+
+        margin-left: 35px;
+    }
 
     div#wallet_payment .tect-wrap {
         display: flex;
@@ -2546,7 +2597,7 @@
 
     .login-sec button.cstm-btn.login {
 
-        margin-bottom: 15px;
+        margin-bottom: 10px;
     }
 
     .member .match_edit .inner_wrap_icon {

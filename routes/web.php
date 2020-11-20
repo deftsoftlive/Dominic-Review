@@ -126,6 +126,7 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     // Childcare voucher
     Route::any('save_childcare_voucher','HomeController@save_childcare_voucher')->name('save_childcare_voucher');
     Route::any('save_wallet','HomeController@save_wallet')->name('save_wallet');
+    Route::any('save_package_wallet_pay','HomeController@save_package_wallet_pay')->name('save_package_wallet_pay');
 
     // Coach - Add Competition & match report 
     Route::any('add_competition','HomeController@add_competition')->name('add_competition');

@@ -9,7 +9,7 @@
       <div class="banner-slider owl-carousel owl-theme">
 
         @php 
-          $home_slides = DB::table('home_sliders')->where('status',1)->get();
+          $home_slides = DB::table('home_sliders')->where('status',1)->orderBy('sort','asc')->get();
         @endphp
 
         @foreach($home_slides as $slides)

@@ -275,7 +275,7 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::post('/home-slider/{slug}','Admin\HomeSliderController@HomeSlider_update')->name('admin.HomeSlider.update');
 		Route::get('/home-slider/status/{id}','Admin\HomeSliderController@HomeSlider_Status')->name('admin.HomeSlider.status');
 		Route::any('/home-slider/delete/{id}','Admin\HomeSliderController@delete_HomeSlider')->name('delete_HomeSlider');
-
+		Route::any('/update_homeslider_sort/{sort_no}/{homeslider_id}','Admin\HomeSliderController@update_homeslider_sort')->name('homeslider.update.sort');
 
 
 		#----------------------------------------------------------------

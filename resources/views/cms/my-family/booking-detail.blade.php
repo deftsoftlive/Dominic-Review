@@ -8,7 +8,7 @@
   $orderId = $order->orderID;
   $user_id = $order->user_id;
   $user_detail = DB::table('users')->where('id',$user_id)->first();	
-  $cart_items = DB::table('shop_cart_items')->where('orderID', $orderId)->get(); 
+  $cart_items = DB::table('shop_cart_items')->where('orderID', $orderId)->where('manual',1)->get(); 
 
   $country_code = DB::table('country_code')->orderBy('countryname','asc')->get();
   $notification = DB::table('parent_coach_reqs')->where('coach_id',Auth::user()->id)->where('status',NULL)->count();

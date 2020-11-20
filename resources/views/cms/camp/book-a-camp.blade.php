@@ -23,7 +23,7 @@
     </div>
   </div>
 </section>
-<br/><br/>
+
 @if(Session::has('success'))               
     <div class="alert_msg alert alert-success">
         <p>{{ Session::get('success') }} </p>

@@ -106,6 +106,7 @@
                                                                 </button>
                                                                 <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;">
                                                                     <a href="{{url('admin/menu')}}/{{$test->id}}" class="dropdown-item">Edit</a>
+                                                                    <a href="{{url('admin/menu/delete')}}/{{$test->id}}" class="dropdown-item" onclick="return confirm('Are you sure you want to delete this menu?')" >Delete</a>
                                                                 </div>
                                                             </div>
                                                         </td>

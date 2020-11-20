@@ -64,6 +64,33 @@ $(document).ready(function() {
         fetch_course_sort_data(sort_no,course_id);
     });
 
+
+/*********************************
+| Home Slider Sort Number Update
+|*********************************/
+    function fetch_homeslider_sort_data(sort_no = '', homeslider_id = '')
+    {
+
+        $.ajax({
+            url:$base_url+"/admin/update_homeslider_sort/"+sort_no+"/"+homeslider_id,
+            method:'GET',
+            data:{sort_no:sort_no, homeslider_id:homeslider_id},
+            dataType:'json',
+            success:function(data)
+            {   
+                
+            },      
+        })
+    }
+
+    $(document).on('keyup', '#update_homeslider_sort',function(){
+        var sort_no = $(this).val(); 
+        var homeslider_id = $(this).attr("data-id");
+
+        fetch_homeslider_sort_data(sort_no,homeslider_id);
+    });
+
+
 /*****************************
 | Menu Sort Number Update
 |*****************************/
