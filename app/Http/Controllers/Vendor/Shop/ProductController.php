@@ -229,14 +229,18 @@ public function saveCategory(Request $request,$id)
 
 public function ajaxCategory(Request $request)
 {     
-	  $shop = Auth::user()->shop;
+    //dd($request->all()); 
+
+	  $shop = Auth::user()->shop; 
       $ShopCategory = new ShopCategory;
        if($request->parent > 0){
 
-	      $category = $ShopCategory->parentCategory($shop->id,$request->parent);
+	      // $category = $ShopCategory->parentCategory($shop->id,$request->parent); dd($category);
+
+        $category = ProductCategory::where('parent',$request->parent)->where('subparent',$request->subparent)->where('status',1)->orderBy('label','ASC')->get();
 
        }elseif($request->subparent > 0){
-            $category = ProductCategory::where('subparent',$request->subparent)->where('status',1)->orderBy('label','ASC')->get();
+            $category = ProductCategory::where('parent',$request->parent)->where('subparent',$request->subparent)->where('status',1)->orderBy('label','ASC')->get();
 
        }
 

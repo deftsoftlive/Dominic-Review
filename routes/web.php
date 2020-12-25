@@ -12,11 +12,6 @@
 
 */
 
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Route::get('/', ['as'=>'home', 'uses'=>'HomeController@home_index']);
 
 
@@ -25,11 +20,6 @@ Route::get('/register/coach','Auth\RegisterController@regsiter_coach')->name('re
 
 Route::any('selectedCat','HomeController@selectedCat')->name('selectedCat');
 
-Route::get('crop-image', 'HomeController@index_crop');
-// Route::post('crop-image', ['as'=>'croppie.upload-image','uses'=>'HomeController@imageCrop']);
-
-
-error_reporting(E_ALL);
 
 #===============================================
 #
@@ -69,6 +59,9 @@ Route::any('coach/detail/{id}','HomeController@coach_detail')->name('coach-detai
 Route::any('newsletter','HomeController@newsletter_integration')->name('newsletter');
 Route::any('unsubscribe-user/{id}','HomeController@unsubscribe_newsletter')->name('unsubscribe_newsletter');
 
+// Wallet for package courses purchase
+Route::any('save_package_wallet_pay','HomeController@save_package_wallet_pay')->name('save_package_wallet_pay');
+
 // My Family Section
 Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function() 
 {
@@ -87,6 +80,9 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     Route::any('order/invoice/download/{id}','HomeController@order_pdf')->name('order-inv-pdf');
     Route::any('parent-req-status','HomeController@parent_req_status')->name('parent_req_status');
     Route::any('course_booking','HomeController@course_booking')->name('course_booking');
+
+    // Membership Status
+    Route::any('membership-status','HomeController@membership_status')->name('membership_status'); 
 
     // Dismiss notifications
     Route::any('/parent-req/dismiss','HomeController@coach_dismiss_notifi')->name('dismiss-requests');
@@ -126,7 +122,6 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     // Childcare voucher
     Route::any('save_childcare_voucher','HomeController@save_childcare_voucher')->name('save_childcare_voucher');
     Route::any('save_wallet','HomeController@save_wallet')->name('save_wallet');
-    Route::any('save_package_wallet_pay','HomeController@save_package_wallet_pay')->name('save_package_wallet_pay');
 
     // Coach - Add Competition & match report 
     Route::any('add_competition','HomeController@add_competition')->name('add_competition');
@@ -194,17 +189,19 @@ Route::get('course_search','HomeController@course_search')->name('course_search'
 #       Routes Files - Start Here
 #
 #===============================================
+Route::get('/', 'HomeController@index')->name('homepage');
+Auth::routes();
+
 require __DIR__.'/routing/user/checkout.php';
-require __DIR__.'/routing/home/routes.php';
-require __DIR__.'/routing/home/ajax.php';
-
-
 require __DIR__.'/routing/shop/routes.php';
-require __DIR__.'/routing/shop/ajax.php';
-
 
 require __DIR__.'/routing/admin/routes.php';
+
+require __DIR__.'/routing/home/routes.php';
+require __DIR__.'/routing/shop/ajax.php';
+require __DIR__.'/routing/home/ajax.php';
 require __DIR__.'/routing/vendor/routes.php';
+
 require __DIR__.'/routing/user/ajax.php';
 require __DIR__.'/routing/user/routes.php';
 #===============================================
@@ -311,3 +308,5 @@ try {
     var_dump($e);
 }
 });
+
+?>

@@ -18,7 +18,7 @@ public $folder = 'images/products/categories/';
  
 public function index($type)
 {
-	
+	 
 	return view($this->path.'index',[
         'title' => $type,
         'addLink' => route('admin.products.variation',$type),

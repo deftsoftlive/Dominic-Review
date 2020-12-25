@@ -2,9 +2,10 @@
 @extends('e-shop.layouts.checkout')
 @section('checkContent')
 <style>
-    header.Eshop-header {
+header.Eshop-header {
     display: none;
 }
+
 </style>
 <!-- fourth step content starts here -->
 <fieldset class="step-content">
@@ -27,6 +28,41 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="tabs-1" role="tabpanel">
                         @include('e-shop.includes.checkout.stripe')
+
+                        <a id="zero_pay_button" style="display: none;" href="javascript:void(0);" class="cstm-btn main_button" data-toggle="modal" data-target="#stripePopup">Place Order</a>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="stripePopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Confirm your order</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      
+                                    <div class="tect-wrap">
+                                      <p>Are you sure you wish to confirm your order?</p>
+                                      <br/>
+
+                                        <!-- <button type="button" class="btn btn-primary cstm-btn main_button">
+                                            Conform Order
+                                        </button> -->
+
+                                        <form id="save_wallet" action="{{route('save_wallet')}}" method="POST">
+                                            @csrf
+                                            <button class="wallet_confirm_order cstm-btn main_button" >Confirm Order</button>
+                                        </form>
+                                    </div>
+                              
+                              </div>
+                             
+                            </div>
+                          </div>
+                        </div>
+
                     </div>
                     <div class="tab-pane" id="tabs-2" role="tabpanel">
                         @php 
@@ -170,36 +206,6 @@
                                 <a target="_blank" href="{{url('/user/add-money-to-wallet')}}" class="cstm-btn main_button">Add Wallet Money</a>
                             </div>
                             <br/>
-                             <form action="{{url(route('shop.checkout.stripe.payment'))}}" method="POST">
-                                <?php 
-                                    $stripe = SripeAccount();
-                                    $pk = $stripe['pk'];  
-
-                                    if(!empty($wallet_amount))
-                                    {
-                                        $amount = ($cart_total - $wallet_amount)*100;
-                                    }else{
-                                        $amount = $cart_total * 100;
-                                    }
-                                    
-                                ?>
-                                @csrf
-                                <input type="hidden" name="type" value="wallet&stripe">
-                                <input type="hidden" name="total" value="{{$cart_total}}">
-                                <input type="hidden" name="amt" value="@if(!empty($wallet_amount)) @php echo $cart_total - $wallet_amount; @endphp @else @php echo $cart_total; @endphp @endif">
-                                <!-- <button class="cstm-btn" >Pay With Wallet</button> -->
-                                <script
-                                    src="https://checkout.stripe.com/checkout.js" class="stripe-button new-main-button"
-                                    data-key="{{$stripe['pk']}}"
-                                    data-amount="{{$amount}}"
-                                    data-name="DRH Panel"
-                                    data-class="DRH Panel"
-                                    data-description="Shopping"
-                                    data-email="{{Auth::user()->email}}"   
-                                    data-currency="gbp"                           
-                                    data-locale="auto">
-                                </script>
-                            </form>
                         @else
                         
                         @endif
@@ -217,6 +223,7 @@
                         @endif
                     </div>
                 </div>
+
                 <div class="modal fade child-voc" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -270,8 +277,7 @@
                     </div>
                 </div>
                 <br />
-                <div id="coupon_msg">
-                </div>
+                <div id="coupon_msg"></div>
                 @php
                     $coupon = DB::table('shop_cart_items')->where('user_id',Auth::user()->id)->where('orderID', '=', NULL)->where('discount_code','!=',NULL)->get();
                 @endphp

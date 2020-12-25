@@ -40,7 +40,13 @@
 				      <h2 class="mb-0">
 				        <button class="d-flex align-items-center justify-content-between btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{$key}}" aria-expanded="false" aria-controls="collapse{{$key}}">
 				          {{ $faq->question }}
+<div class="inner-icons">
 
+                                                              
+                              
+                             <span data-toggle="collapse" data-target="#collapseone2" aria-expanded="false" aria-controls="collapseFirst"><i class="fas fa-plus plus-dp"></i>
+                             <!--  <i class="fas fa-minus minus-dp"></i> --></span>
+                           </div>
 				        </button>
 				      </h2>
 				    </div>

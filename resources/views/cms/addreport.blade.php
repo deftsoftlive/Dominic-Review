@@ -613,14 +613,14 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
 
                                         <!-- ******************************
                                         |
-                                        |     Upload Match Chart
+                                        |     Upload Match Chart Images
                                         |
                                         | ********************************* -->
                                       <div class="table_outer_wrap">
                                         <table class="add_on_services match_game_chart">
                                             <thead>
                                                 <tr>
-                                                    <th>Upload Match Chart</th>
+                                                    <th>Upload Match Chart Images</th>
                                                     <th><a onclick="addnewsection();" href="javascript:void(0);"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></th>
                                                 </tr>
                                             </thead>

@@ -97,6 +97,7 @@
                                              <table class="table table-hover">
                                                 <thead>
                                                 <tr> 
+                                                    <th>Course ID</th>
                                                     <th>Sort</th>
                                                     <th>Name</th>
                                                     <th>Season</th>
@@ -118,6 +119,7 @@
 
                                                     <tr>
                                                     @if(count($course)> 0)
+                                                        <td>{{$test->id}}</td>
                                                         <td><input type="text" id="update_course_sort" data-id="{{$test->id}}" value="{{$test->sort}}" style="width:
                                                         50px"></td>
                                                         <td>

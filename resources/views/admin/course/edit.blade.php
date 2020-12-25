@@ -183,8 +183,16 @@
                         <div class="error">{{ $errors->first('image') }}</div>
                     @endif
                   </div>
-
                   <img id="image_src" style="width: 100px; height: 100px;" src="{{ URL::asset('/uploads').'/'.$venue->image }}" />
+                  <br/>
+
+                  <div class="form-group">
+                    <label class="label-file control-label">Membership Popup</label>
+                    <select name="membership_popup" class="select-player">
+                      <option value="1" {{$venue->membership_popup == '1' ? 'selected' : ''}}>Enable</option>
+                      <option value="0" {{$venue->membership_popup == '0' ? 'selected' : ''}}>Disable</option>
+                    </select>
+                  </div><br/>
 
             <!--       {{textbox($errors,'Coach Cost<span class="cst-upper-star">*</span>','coach_cost', $venue->coach_cost)}}
                   

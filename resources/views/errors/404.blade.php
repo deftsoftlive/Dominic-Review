@@ -3,7 +3,7 @@
 
 <head>
     <title>DRH Sports</title>
-    <link rel="icon" href="http://49.249.236.30:8654/dominic-new/images/fav-icon.png" type="image/x-icon" sizes="16x16">
+    <link rel="icon" href="{{url('/images/fav-icon.png')}}" type="image/x-icon" sizes="16x16">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, maximum-scale=1,initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.rawgit.com/michalsnik/aos/2.0.4/dist/aos.css">

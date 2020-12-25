@@ -141,7 +141,9 @@
               							  <div class="col-lg-2 col-md-4 qly-row">
               							    <label>Expiry Date</label>
               							    <div class="calendar">
-              								  <input type="date" id="" class="form-control" name="expiry_date[{{$count}}]" placeholder="Expiry Date">
+              								  <!-- <input type="date" id="" class="form-control" name="expiry_date[{{$count}}]" placeholder="Expiry Date"> -->
+
+                                <input type="text" class="form-control textbox-n {{ $errors->has('expiry_date') ? ' is-invalid' : '' }}" name="expiry_date[{{$count}}]" placeholder="Expiry Date" onfocus="(this.type='date')" id="date" value="{{ old('expiry_date') }}">
               								</div>
               							  </div>
                               <div class="col-lg-2 col-md-4 qly-row">

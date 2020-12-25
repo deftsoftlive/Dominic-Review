@@ -32,6 +32,8 @@
                         <h5>{{$title}}</h5>
                         <div class="cst-admin-filter">
                             <a href="{{ url(route($addLink)) }}" class="btn btn-primary">Add</a>
+                            <a href="{{ url('/admin/coupon/import/csv') }}" class="btn btn-primary">Import CSV</a>
+                            <a href="{{ url('/admin/coupon/export/csv') }}" class="btn btn-primary">Export CSV</a>
                         </div>
                        
                         <!-- <span class="d-block m-t-5">use class <code>table-hover</code> inside table element</span> -->
@@ -80,6 +82,7 @@
                                                         Active
                                                     @endif
                                                 </a>
+                                                <a href="{{url('/admin/coupon/duplicate')}}/{{$test->id}}" class="dropdown-item">Duplicate</a>
                                             </div>
                                         </div>
                                     </td>

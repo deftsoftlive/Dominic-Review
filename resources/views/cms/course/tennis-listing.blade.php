@@ -7,7 +7,7 @@
 
 @php 
   $base_url = \URL::to('/');
-  $cat = \Request::get('cat'); 
+  $cat = $cat_id; 
   $url = 'course-listing/tennis?&cat='.$cat;  
   $course_cat = DB::table('link_course_and_categories')->where('id',$cat)->first();
 @endphp
@@ -44,7 +44,7 @@
             <ul class="services-description">
 
               @php 
-                $accordian1 = DB::table('accordians')->where('page_title',$url)->where('status',1)->get();
+                $accordian1 = DB::table('accordians')->where('page_title',$url)->where('status',1)->orderBy('sort','asc')->get();
               @endphp
               @foreach($accordian1 as $accor)
                 <li>
@@ -189,12 +189,13 @@
         </div>
       </div>
     </section>
-    <sectiion class="events-sec inner-event-section">
+    <section class="events-sec inner-event-section">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <form action="{{route('listing')}}" method="POST" class="cst-selection">
+            <form action="{{route('tennis-listing')}}" method="POST" class="cst-selection">
             @csrf
+            <input type="hidden" name="cat" value="{{isset($cat) ? $cat : ''}}">
             <div class="form-row course_search_form">
               <div class="form-group col-lg-4 col-md-4">
                       <!-- <label for="inputCity">Search Course</label>
@@ -345,7 +346,7 @@
                     <h1 class="event-booking-price"><span>Price : </span>
 
                     @if($currntD >= $endDate)
-                      <div class="product-price">£{{$cour->price}}</div>
+                      <div class="product-price">£{{number_format((float)$cour->price, 2, '.', '')}}</div>
                     @else
                       @if($early_bird_enable == '1')
                         @php 
@@ -366,13 +367,13 @@
           </div>
           @endforeach
           @else
-            <tr><td colspan="8"><div class="offset-md-4 col-md-4 sorry_msg"><div class="no_results"><h3>Sorry, no results</h3><p>No Course Found</p></div></div></td></tr>
+            <tr><td colspan="8"><div class="noData offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-2 col-sm-8 sorry_msg"><div class="no_results"><h3>Sorry, no results</h3><p>No Course Found</p></div></div></td></tr>
           @endif
 
 
         </div>
       </div>
-    </sectiion>
+    </section>
 
 
     <!-- ******************************
@@ -395,8 +396,9 @@
             <div class="item">
               <div class="testimonial-card alt-testimonial-card">
                 <figure class="testimonial-img-wrap">
-              <img src="{{ URL::asset('/images/testimonial-card-img-2.png')}}">
-              </figure>
+                    <img class="nb-icon" src="{{ URL::asset('images/nb-icon.png')}}">
+                    <img class="b-icon" src="{{ URL::asset('images/b-icon.png')}}">
+                </figure>
                 <figcaption class="testimonial-caption">
                     <p>{{$test->description}}</p>
                     <div class="t-user">

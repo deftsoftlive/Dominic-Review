@@ -182,11 +182,11 @@
         </div>
       </div>
     </section>
-    <sectiion class="events-sec inner-event-section">
+    <section class="events-sec inner-event-section">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <form action="{{route('listing')}}" method="POST" class="cst-selection">
+            <form action="{{route('football-listing')}}" method="POST" class="cst-selection">
             @csrf
             <div class="form-row course_search_form">
               <div class="form-group col-lg-4 col-md-4">
@@ -324,7 +324,7 @@
                     <div class="event-booking">
                     <h1 class="event-booking-price"><span>Price : </span>
                     @if($currntD >= $endDate)
-                      <div class="product-price">£{{$cour->price}}</div>
+                      <div class="product-price">£{{number_format((float)$cour->price, 2, '.', '')}}</div>
                     @else
                       @if($early_bird_enable == '1')
                         @php 
@@ -345,7 +345,7 @@
           </div>
           @endforeach
           @else
-            <tr><td colspan="8"><div class="offset-md-4 col-md-4 sorry_msg"><div class="no_results"><h3>Sorry, no results</h3><p>No Course Found</p></div></div></td></tr>
+            <tr><td colspan="8"><div class="noData offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-2 col-sm-8 sorry_msg"><div class="no_results"><h3>Sorry, no results</h3><p>No Course Found</p></div></div></td></tr>
           @endif 
           <!-- ********************************
           |     Courses Management - End Here

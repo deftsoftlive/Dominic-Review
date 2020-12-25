@@ -64,6 +64,31 @@ $(document).ready(function() {
         fetch_course_sort_data(sort_no,course_id);
     });
 
+/*****************************
+| Actvity Sort Number Update
+|*****************************/
+    function fetch_activity_sort_data(sort_no = '', activity_id = '')
+    {
+
+        $.ajax({
+            url:$base_url+"/admin/update_drhactivity_sort/"+sort_no+"/"+activity_id,
+            method:'GET',
+            data:{sort_no:sort_no, activity_id:activity_id},
+            dataType:'json',
+            success:function(data)
+            {   
+                
+            },      
+        })
+    }
+
+    $(document).on('keyup', '#update_drhactivity_sort',function(){
+        var sort_no = $(this).val(); 
+        var activity_id = $(this).attr("data-id");
+
+        fetch_activity_sort_data(sort_no,activity_id);
+    });
+
 
 /*********************************
 | Home Slider Sort Number Update

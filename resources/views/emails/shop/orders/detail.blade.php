@@ -14,7 +14,6 @@
    <td style="font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">Price</td>
 </tr>
 
-
 @foreach($orders as $item)
 
 @if($item->shop_type == 'product')

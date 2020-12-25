@@ -164,6 +164,15 @@
                       @endif
                   </div>
                   <img src="" id="image_src" style="width: 100px; height: 100px; display: none" />
+                  <br/>
+
+                  <div class="form-group">
+                    <label class="label-file control-label">Membership Popup</label>
+                    <select name="check_early_bird" class="select-player">
+                      <option value="1">Enable</option>
+                      <option value="0">Disable</option>
+                    </select>
+                  </div><br/>
 
                   <table class="add_on_services">
                     <thead>

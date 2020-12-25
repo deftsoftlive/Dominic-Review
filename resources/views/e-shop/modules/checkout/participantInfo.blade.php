@@ -14,7 +14,7 @@
    <div class="step-form-content">
       <h2 class="step-content-title"><b>Participant info</b> - Please confirm that we have the correct details for our registers</h2>
       <div class="row">
-         <div class="col-lg-12">
+         <div class="col-lg-12 table-step-row">
             <div class="cart block">
                <table class="cart__table cart-table">
                   <thead class="cart-table__head">

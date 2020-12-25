@@ -264,6 +264,9 @@ $("body").on('click','#loadAllVariationOfProductBTN',function(e){
    var $url = $( this ).attr('data-route');
    var option = $("body").find('#loadAllVariationOfProduct');
    var val =  option.val();
+
+   // alert($url,option,val);
+
           if(val != ''){
                option.find('option:selected').attr('disabled','true');
 			   var $div =$("body").find('.loadAllVariationOfProduct');
@@ -633,47 +636,5 @@ function validationRuleOfAttributes($this) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

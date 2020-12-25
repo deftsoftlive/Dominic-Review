@@ -94,6 +94,31 @@
 |******************************* -->
 
 @if($user->role_id == 3)
+
+<section class="content">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <!-- /.card-header -->
+        <div class="card-body">
+
+        <div class="col-md-12">
+        <label class="control-label">Coach Profile - </label>
+        <br/>
+        @php $coach_profile = DB::table('coach_profiles')->where('coach_id',$user->id)->first(); @endphp
+
+        @if(!empty($coach_profile->image))
+          <img height="200px;" width="200px;" src="{{URL::asset('/uploads')}}/{{$coach_profile->image}}">
+        @else
+          <p>No profile picture found.</p>
+        @endif
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
 <section class="content">
   <div class="row">
     <div class="col-12">

@@ -1181,7 +1181,12 @@ ul {
 #FilterCategoryToggle{
     display: none;
 }
-
+form#payment-form .alert-danger.alert {
+    background: transparent!important;
+    padding: 12px 0!important;
+    color: #ff0018!important;
+    border-color: transparent!important;
+}
 /******************/
 .products-layout-wrap {
     padding: 80px 0px;
@@ -1822,4 +1827,4 @@ ul {
     display: none;
   }
 }
-/************/
+/************//*

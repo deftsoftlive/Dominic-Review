@@ -198,7 +198,7 @@ public function SaveToShopUserCartItemTable($request,$product,$variant_id)
 		 return 1;
 
 		}else{
-			return \Redirect::back()->with('error','You cannot book this course.');
+			return \Redirect::back()->with('error','Courses / camps held at Letchworth Sports & Tennis Club cannot be purchased at the same time as courses / camps held at other venues or some shop items. You will need to purchase LSTC courses / camps seperately - Thank you!');
 		}
 
 	}else{

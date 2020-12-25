@@ -31,6 +31,12 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
          <h2>My Competitions & Matches</h2>
          <a class="add_competition cstm-btn main_button" href="{{ route('coach_report') }}">Add Competition</a>
       </div>
+
+      <div class="row">
+       <div class="textbox-manage ">
+         <p>{!! getAllValueWithMeta('coach_competition', 'textbox-management') !!}</p>
+       </div>
+     </div>
       <div class="col-md-12">
          @if(count($competitions)> 0)
          <div class="player-report-table tbl_shadow">
@@ -40,7 +46,7 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
                      <thead>
                         <tr>
                            <th>Player Name</th>
-                           <th>Opponent Type</th>
+                           <th>Competition Type</th>
                            <th>Competition Date</th>
                            <th>Competition Venue</th>
                            <th>Competition Name</th>
@@ -64,7 +70,7 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
                                  <p>{{$sho->comp_type}}</p>
                               </td>
                               <td>
-                                 <p>{{$sho->comp_date}}</p>
+                                 <p>{{date('d/m/Y',strtotime($sho->comp_date))}}</p>
                               </td>
                               <td>
                                  <p>{{$sho->comp_venue}}</p>
@@ -83,13 +89,11 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
                      </tbody>
                   </table>
                </div>
-               @if(count($competitions)>0)
-               {{$competitions->render()}}
-               @endif
+          
             </div>
          </div>
          @else
-         <div class="noData offset-md-4 col-md-4 sorry_msg">
+         <div class="noData offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-2 col-sm-8 sorry_msg">
             <div class="no_results">
                <h3>Sorry, no results</h3>
                <p>No Competition Found</p>

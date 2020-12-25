@@ -52,10 +52,10 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
             <div class="col-md-12">
                 <nav>
                     <div class="nav nav-tabs account-menu-tabs activity-tab " id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link menu-tab-link active" id="nav-goals-tab" data-toggle="tab" href="#nav-goals" role="tab" aria-controls="nav-home" aria-selected="true"><span><i class="fa fa-home"></i></span>Home</a>
-                        <a class="nav-item nav-link menu-tab-link" id="nav-badges-tab" data-toggle="tab" href="#nav-badges" role="tab" aria-controls="nav-profile" aria-selected="false"><span><i class="fa fa-info-circle"></i></span>Camp Info</a>
-                        <a class="nav-item nav-link menu-tab-link" id="nav-reports-tab" data-toggle="tab" href="#nav-reports" role="tab" aria-controls="nav-contact" aria-selected="false"><span><i class="fas fa-clipboard-list"></i></span>Book A Camp</a>
-                        <a class="nav-item nav-link menu-tab-link" id="nav-family-tab" data-toggle="tab" href="#nav-family" role="tab" aria-controls="nav-home" aria-selected="false"><span><i class="fas fa-users"></i></span>Parent Info</a>
+                        <a class="nav-item nav-link menu-tab-link active" id="nav-goals-tab" data-toggle="tab" href="#nav-goals" role="tab" aria-controls="nav-home" aria-selected="true"><span><i class="fa fa-home"></i></span>{!! getAllValueWithMeta('camp_tab_title1', 'camp-listing') !!}</a>
+                        <a class="nav-item nav-link menu-tab-link" id="nav-badges-tab" data-toggle="tab" href="#nav-badges" role="tab" aria-controls="nav-profile" aria-selected="false"><span><i class="fa fa-info-circle"></i></span>{!! getAllValueWithMeta('camp_tab_title2', 'camp-listing') !!}</a>
+                        <a class="nav-item nav-link menu-tab-link" id="nav-reports-tab" data-toggle="tab" href="#nav-reports" role="tab" aria-controls="nav-contact" aria-selected="false"><span><i class="fas fa-clipboard-list"></i></span>{!! getAllValueWithMeta('camp_tab_title3', 'camp-listing') !!}</a>
+                        <a class="nav-item nav-link menu-tab-link" id="nav-family-tab" data-toggle="tab" href="#nav-family" role="tab" aria-controls="nav-home" aria-selected="false"><span><i class="fas fa-users"></i></span>{!! getAllValueWithMeta('camp_tab_title4', 'camp-listing') !!}</a>
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
@@ -138,7 +138,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                             </div>
                                         </div>
                                         <div class="activitiy-info-content">
-                                            <h4>{{ getAllValueWithMeta('camp_tab2_title', 'camp-listing') }}</h4>
+                                            <h4>{!! getAllValueWithMeta('camp_tab2_title', 'camp-listing') !!}</h4>
                                             <!-- <p class="challange-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit,</p> -->
                                         </div>
                                     </div>
@@ -250,19 +250,19 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                     <div class="item">
                                         <div class="inner-content">
                                             <figure>
-                                                <img src="{{URL::asset('/uploads')}}/{{ getAllValueWithMeta('camp_tab2_image', 'camp-listing') }}" alt="">
+                                                <img src="{{URL::asset('/uploads')}}/{{ getAllValueWithMeta('camp_tab3_image', 'camp-listing') }}" alt="">
                                             </figure>
                                         </div>
                                     </div>
                                     <div class="activitiy-info-content">
-                                        <h4>{{ getAllValueWithMeta('camp_tab2_title', 'camp-listing') }}</h4>
+                                        <h4>{!! getAllValueWithMeta('camp_tab3_description', 'camp-listing') !!}</h4>
                                         <!-- <p class="challange-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit,</p> -->
                                     </div>
                                 </div>
                             </div>
                             <div class="we-run-wrap d-f">
                                 @foreach($camp_categories as $cat)
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 club-wrap"">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 club-wrap">
                                     <a href="{{url('camp-detail')}}/{{$cat->slug}}" class="we-run-container">
                                         <img src="{{URL::asset('/uploads')}}/{{$cat->image}}" alt="" />
                                         <div class="we-run-overlay">
@@ -364,7 +364,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                         <h2>Camp GO Parent info</h2>
                                         <div id="accordion">
                                             @foreach($accordian as $acc)
-                                            <div class="card @if($acc->color == '#be298d')pink @elseif($acc->color == '#00afef')blue @elseif($acc->color == '#bea029')yellow @endif">
+                                            <div class="card @if($acc->color == '#001642')blue @elseif($acc->color == '#00afef')sky-blue @elseif($acc->color == '#bea029')yellow @endif">
                                                 <div class="card-header" id="headingOne">
                                                     <h5 class="mb-0">
                                                         <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$acc->id}}" aria-expanded="false" aria-controls="collapse{{$acc->id}}">

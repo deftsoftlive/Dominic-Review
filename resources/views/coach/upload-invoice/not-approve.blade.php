@@ -29,11 +29,15 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
     <h2>Uploaded Invoices</h2>    
   </div>
   <div class="col-md-12 upload_opt">
-  <a style="float:right;" href="{{url('user/upload-invoice/add')}}" class="cstm-btn">Add New Invoice</a>
-  <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice')}}" class="cstm-btn">All Invoices</a>
-  <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice/not-approved')}}" class="cstm-btn">Not Approved</a>
-  <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice/pending')}}" class="cstm-btn">Pending</a>
-  <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice/accept')}}" class="cstm-btn">Accepted</a>
+  <a style="float:right;" href="{{url('user/upload-invoice/add')}}" class="cstm-btn {{ \Request::route()->getName() === 'add_upload_invoice' ? 'active' : 'nav-item' }}"> Add New Invoice</a>
+
+  <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice')}}" class="cstm-btn {{ \Request::route()->getName() === 'upload_invoice' ? 'active' : 'nav-item' }}">All Invoices</a>
+
+  <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice/not-approved')}}" class="cstm-btn {{ \Request::route()->getName() === 'inv_not_approve' ? 'active' : 'nav-item' }}">Not Approved</a>
+
+  <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice/pending')}}" class="cstm-btn {{ \Request::route()->getName() === 'inv_pending' ? 'active' : 'nav-item' }}">Pending</a>
+
+  <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice/accept')}}" class="cstm-btn {{ \Request::route()->getName() === 'inv_accept' ? 'active' : 'nav-item' }}">Accepted</a>
   </div>
   <div class="col-md-12 invoice_apd">
 
@@ -90,7 +94,7 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
             @endif
 
             @else
-              <div class="noData offset-md-4 col-md-4 sorry_msg">
+              <div class="noData offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-2 col-sm-8 sorry_msg">
                 <div class="no_results">
                   <h3>Sorry, no results</h3>
                   <p>No Invoice Found</p>

@@ -79,6 +79,8 @@
                                                                         @endif
                                                                     </a>
 
+                                                                    <a href="{{url('admin/pages/delete')}}/{{$test->slug}}" class="dropdown-item" onclick="return confirm('Are you sure you want to delete this cms page?')" >Delete</a>
+
                                                                     <!-- <a onclick="return confirm('Are you sure you want to delete this testimonial?')" href="{{url('admin/pages/delete')}}/{{$test->id}}" class="dropdown-item">Delete</a> -->
                                                                 </div>
                                                             </div>

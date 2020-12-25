@@ -41,12 +41,14 @@ public function payWithStripe(Request $request)
                             $description = 'Customer for pay for '.$OrderID;
                             $charge = \Stripe\Charge::create([
                               "amount" => ($total * 100),
-                              "currency" => "usd",
+                              "currency" => "gbp",
                               "source" => $request->stripeToken,
                               //"shipping" => $shipping,
                               "description" => $description,
                               //"application_fee" => $application_fee,
                               ],$AccountWithPayment);
+
+                            //dd($OrderID);
 
                               if($charge){
 

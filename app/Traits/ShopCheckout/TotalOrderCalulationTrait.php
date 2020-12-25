@@ -22,41 +22,45 @@ trait TotalOrderCalulationTrait {
 
 public function CommissionFeeServiceAccordingVendor($type="STRIPE",$account_status=0)
 {
-	   $orders = Auth::user()->ShopProductCartItemOfVendors; 
+  // dd($type,$account_status);
+	   $orders = !empty(Auth::user()) ? Auth::user()->ShopProductCartItemOfVendors : ''; 
      $arr =[];
      $account =[];
 
-	 foreach ($orders as $key => $value) {
+      if(!empty($orders))
+      {
+    	 foreach ($orders as $key => $value) {
 
-	  
-	 	$amount = trim($value->getOrderOfSingleVendor->sum('total')); 
+    	  
+    	 	$amount = trim($value->getOrderOfSingleVendor->sum('total')); 
 
-        // $account_id = $type == "STRIPE" ? $value->vendor->shop->stripe_account_id : $value->vendor->shop->paypal_email;
-        $service_fee = $this->getServiceFee($amount);
-        $commission_fee = $this->getCommissionFee($amount);
-
-
-        $payable_amount = round($amount - ($service_fee + $commission_fee));
-
-        $stripeAccountParams= (array)["amount" => $payable_amount];
-
-        array_push($account, $stripeAccountParams);
-
-	 	$arr[$value->vendor_id] = [
-           'vendor_id' => $value->vendor_id,
-           'total' => $this->getGrandTotal(),
-           'amount' => $amount,
-           'tax' => $this->getTax(),
-           'commission_fee' => $commission_fee,
-           'service_fee' => $service_fee,
-           'payable_amount' => $payable_amount,
-           'account_id' => 0,
-           'stripeAccountParams' => $stripeAccountParams
-	 	];
+            // $account_id = $type == "STRIPE" ? $value->vendor->shop->stripe_account_id : $value->vendor->shop->paypal_email;
+            $service_fee = $this->getServiceFee($amount);
+            $commission_fee = $this->getCommissionFee($amount);
 
 
-	 	//array_push($arr[$value->vendor_id], $arr1);
-	 }
+            $payable_amount = round($amount - ($service_fee + $commission_fee));
+
+            $stripeAccountParams= (array)["amount" => $payable_amount];
+
+            array_push($account, $stripeAccountParams);
+
+    	 	$arr[$value->vendor_id] = [
+               'vendor_id' => $value->vendor_id,
+               'total' => $this->getGrandTotal(),
+               'amount' => $amount,
+               'tax' => $this->getTax(),
+               'commission_fee' => $commission_fee,
+               'service_fee' => $service_fee,
+               'payable_amount' => $payable_amount,
+               'account_id' => 0,
+               'stripeAccountParams' => $stripeAccountParams
+    	 	];
+
+
+    	 	//array_push($arr[$value->vendor_id], $arr1);
+    	 }
+      }
 
 	 return $account_status == 0 ? $arr : $account;
  

@@ -5,7 +5,7 @@
   $orderId = $order->orderID;
   $user_id = $order->user_id;
   $user_detail = DB::table('users')->where('id',$user_id)->first();	
-  $cart_items = DB::table('shop_cart_items')->where('orderID', $orderId)->get(); 
+  $cart_items = DB::table('shop_cart_items')->where('orderID', $orderId)->get();
 @endphp
 <div class="page-header">
     <div class="page-block">

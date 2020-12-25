@@ -86,6 +86,8 @@ class PackageCourseController extends Controller
     |----------------------------------------*/ 
     public function get_courses(Request $request)
     {
+        // dd($request->all());
+
         // Place of insertion 
         if(!empty($request->number)){
            $number = $request->number; 
@@ -101,12 +103,16 @@ class PackageCourseController extends Controller
     	{
     		$user_id = $request->parent;
 
+            $user_age = getUserage($user_id);
+
             // check course is already purchased or not
             $check_course = \DB::table('shop_cart_items')->where('user_id',$request->parent)->where('shop_type','course')->where('type','order')->get();
     	}
     	elseif(!empty($request->player))
     	{
     		$user_id = $request->player;
+
+            $user_age = getUserage($user_id);
 
             // check course is already purchased or not
             $check_course = \DB::table('shop_cart_items')->where('user_id',$request->parent)->where('child_id',$request->player)->where('shop_type','course')->where('type','order')->get();
@@ -145,6 +151,25 @@ class PackageCourseController extends Controller
                 {
 
                 }else{
+
+                    $course_range = $sh->age_group;
+
+                    $check_age_group1 = substr_count($sh->age_group, ' - '); 
+
+                    if($check_age_group1 > 0)
+                    {
+                      if(!empty($course_range))
+                      {
+                        $range_arr = explode(' ',$course_range);  
+
+                        if($range_arr[1] == '-')
+                        {
+                          $start_value = $range_arr[0];
+                          $end_value = $range_arr[2];
+                        }
+                      }
+                    }
+
                     $cour_id = $sh->id; 
                     $purchased_courses = \DB::table('shop_cart_items')->where('shop_type','course')->where('product_id',$cour_id)->count();  
                     $booked_courses = !empty($purchased_courses) ? $purchased_courses : '0';
@@ -155,7 +180,15 @@ class PackageCourseController extends Controller
                     {
 
                     }else{
-                        $output .= '<option value="'.$sh->id.'">'.$sh->title.'</option>';
+
+                        if(!empty($start_value) && !empty($end_value))
+                        {
+                            if($start_value <= $user_age && $end_value >= $user_age)
+                            {
+
+                                $output .= '<option value="'.$sh->id.'">'.$sh->title.'</option>';
+                            }
+                        }
                     }
                 }
     		    
@@ -201,6 +234,9 @@ class PackageCourseController extends Controller
 
         $parent_email = getUseremail($request['parent_id']);
 
+        if(isset($request->course) && !empty($request->price))
+        {
+
         if(!empty($request->course) && !empty($request->price))
         {
 
@@ -227,14 +263,23 @@ class PackageCourseController extends Controller
             
         }
 
-        // Link generated email
-        \Mail::send('emails.packagecourse', ['parent_email' => $parent_email,'booking_no' => $package->booking_no] , 
-            function($message) use($parent_email){
-                $message->to($parent_email);
-                 $message->subject('Subject : '.'Your Tennis Coaching Courses');
-               });
+        }
+
+        if(!empty($package))
+        {
+            // Link generated email
+            \Mail::send('emails.packagecourse', ['parent_email' => $parent_email,'booking_no' => $package->booking_no] , 
+                function($message) use($parent_email){
+                    $message->to($parent_email);
+                     $message->subject('Subject : '.'Your Tennis Coaching Courses');
+                   });
+            
+            return redirect()->route('admin.packageCourse.list')->with('flash_message', 'Package Course has been created successfully!');
+        }else{
+            return \Redirect::back()->with('error', 'No package course has been added by you!');
+        }
+
         
-    	return redirect()->route('admin.packageCourse.list')->with('flash_message', 'Package Course has been created successfully!');
     }
 
 

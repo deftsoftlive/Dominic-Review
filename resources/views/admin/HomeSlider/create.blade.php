@@ -79,7 +79,7 @@
                {{textbox($errors,'Button Link<span class="cst-upper-star">*</span>','button_link')}}
 
                 <div class="form-group">
-                  <label>Image (315 X 352)<span class="cst-upper-star">*</span></label>
+                  <label class="control-label">Image (1350 X 805)<span class="cst-upper-star">*</span></label>
                   <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'image_src')" name="image" id="selImage">
                   @if ($errors->has('image'))
                       <div class="error">{{ $errors->first('image') }}</div>

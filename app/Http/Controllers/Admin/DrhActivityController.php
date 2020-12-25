@@ -20,7 +20,7 @@ class DrhActivityController extends Controller
     |   Listing of drh-activity 
     |----------------------------------------*/ 
     public function drhactivity_index() {
-        $drhactivity = DrhActivity::select(['id','title','subtitle','status','slug'])->paginate(10);
+        $drhactivity = DrhActivity::select(['id','title','subtitle','status','slug','sort'])->orderBy('sort','asc')->paginate(10);
     	return view('admin.drhactivity.index',compact('drhactivity'))
     	->with(['title' => 'DRH Activity Management', 'addLink' => 'admin.drhactivity.showCreate']);
     }
@@ -123,5 +123,21 @@ class DrhActivityController extends Controller
        return redirect(route('admin.drhactivity.list'))->with('flash_message', $msg);
      }
      return redirect()->back()->with('flash_message', 'Something Went Wrong!');
+    }
+
+    /*----------------------------------------
+    |   Update DRH Activity sorting number 
+    |-----------------------------------------*/
+    public function update_drhactivity_sort($sort_no,$activity_id) 
+    {   
+        $activity = DrhActivity::find($activity_id);
+        $activity->sort = $sort_no;
+        $activity->save();
+
+        $data = array(
+            'sort_no'   => $activity,
+        );
+
+        echo json_encode($data);
     }
 }

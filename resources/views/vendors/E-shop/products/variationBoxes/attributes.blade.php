@@ -8,7 +8,19 @@
                 <select name="variation" class="v-cstm-select form-control" id="loadAllVariationOfProduct">
 	                <option value="">Choose</option>  
 
-	                @if(!empty($allTypAlreadySaved))
+	                @if(!empty($product->subcategory))
+	                @foreach($product->subcategory->ProductVariations as $v)
+					      <option 
+					        value="{{$v->variations->type}}" 
+					      	id="diabled-{{$v->variations->type}}"
+					      	{{$v->variations->type}}
+					      	>
+					      	{{$v->variations->name}}
+					      </option>  
+					@endforeach
+					@endif
+
+	                <!-- @if(!empty($allTypAlreadySaved))
 	                  	@foreach($product->subcategory->ProductVariations as $v)
 	                      <option 
 	                        value="{{$v->variations->type}}" 
@@ -18,7 +30,7 @@
 	                      	{{$v->variations->name}}
 	                      </option>  
 	                  	@endforeach
-	                @endif
+	                @endif -->
 
 		        </select>
 		    </div>

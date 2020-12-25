@@ -33,7 +33,7 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
   <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice')}}" class="cstm-btn">All Invoices</a>
   <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice/not-approved')}}" class="cstm-btn">Not Approved</a>
   <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice/pending')}}" class="cstm-btn">Pending</a>
-  <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice/accept')}}" class="cstm-btn">Accepted</a>
+  <a style="float:right;margin-right: 5px;" href="{{url('user/upload-invoice/accept')}}" class="cstm-btn active">Accepted</a>
   </div>
   <div class="col-md-12 invoice_apd">
 
@@ -88,7 +88,7 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
             @endif
 
             @else
-              <div class="noData offset-md-4 col-md-4 sorry_msg">
+              <div class="noData offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-2 col-sm-8 sorry_msg">
                 <div class="no_results">
                   <h3>Sorry, no results</h3>
                   <p>No Accepted Invoice Found</p>

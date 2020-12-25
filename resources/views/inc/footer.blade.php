@@ -125,6 +125,19 @@
           $("#season_ID").select2();
           $("#season").select2();
           $("#active_seasons").select2();
+          $(".inputPlayer").select2();
+
+
+          // For checkout payment page
+          var price = $('#totakl').html(); 
+
+            if(price == '£0.30')
+            {
+              $("#payment-form").css('display','none');
+              $(".panel.panel-default.credit-card-box").css('display','none');
+
+              $("#zero_pay_button").css('display','block');
+            }
         });
     
 
@@ -633,11 +646,12 @@ $('.upload-image').on('click', function (ev) {
     $(document).ready(function(){
         $("select#season").change(function(){
             var selectedSeason = $(this).children("option:selected").val(); 
+            var selectedUser = $('#inputPlayer option:selected').attr('value'); 
 
             $.ajax({
                 url:"http://49.249.236.30:8654/dominic-new/user/selectedSeason/",
                 method:'GET',
-                data:{selectedSeason:selectedSeason},
+                data:{selectedSeason:selectedSeason,selectedUser:selectedUser},
                 dataType:'json',
                 success:function(data)
                 {   
@@ -1089,6 +1103,7 @@ $('.upload-image').on('click', function (ev) {
             coupon_code:coupon_code,
           },
           success:function(data){ 
+
             $('#coupon_msg').html(data.output);
             setTimeout(function()
               { 
@@ -1181,10 +1196,11 @@ $('#inputPlayer-3').on('change', function()
         }
     })
         $('.testimonial-slider').owlCarousel({
-        loop:true,
+        loop:false,
         margin:0,
         dots:true,
-        nav:false,
+        autoplay:true,
+        nav:true,
         responsiveClass:true,
         responsive:{
             0:{
@@ -1398,7 +1414,10 @@ function camp_checks(grid_input) {
       // untick full week option for that column
       console.log("untick full week");
       //var ele = ".camp_grid input.full_week."+col;
-      var ele = "input.full_week."+col;
+      var ele = "input.full_week."+col; 
+
+      // $('.full_week').prop("checked",false);
+
       $(ele).prop("checked",false);
       $(ele).removeAttr("checked");
       $(ele).data("checked", false);
@@ -1452,15 +1471,24 @@ $(".checkbox-style").click(function(){
     // console.log(checkboxValue);
     if($("#"+checkboxID).is(":checked")) {
       total = total + parseFloat($("#pricing-"+checkboxValue).val()); 
+      encode_total = window.btoa(total);
+
+      // Round Off upto 2 decimals
+      var num = total;
+      total_val = num.toFixed(2); 
     }
   });
-  if(total > 0) {
-    $("#total-form").text(total);
-    $("#updated_price").val(total);
-  }
-  else {
-    $("#total-form").text("");
-  }
+  
+  $("#total-form").text(total_val);
+  $("#updated_price").val(encode_total);
+
+  // if(total > 0) {
+  //   $("#total-form").text(total);
+  //   $("#updated_price").val(total);
+  // }
+  // else {
+  //   $("#total-form").text("");
+  // }
 });
 
 

@@ -1,13 +1,13 @@
 @extends('emails.layout')
 @section('content')
 @php
-    $get_package = \DB::table('package_courses')->where('booking_no',$booking_no)->first();
+    $get_package = \DB::table('package_courses')->where('booking_no',$booking_no)->first(); 
     $get_all_packages = \DB::table('package_courses')->where('booking_no',$booking_no)->orderBy('id','desc')->get();
     $account = \DB::table('stripe_accounts')->where('id',$get_package->account_id)->first();
 @endphp
 
 <div class="text-wrap" style="padding: 10px 30px;">
-    <p style="font-family: 'Maven Pro', sans-serif;font-size: 16px;font-weight: 600;">Hi {{isset($get_package->player_id) ? getUsername($get_package->player_id) : getUsername($get_package->parent_id)}}</p>
+    <p style="font-family: 'Maven Pro', sans-serif;font-size: 16px;font-weight: 600;">Hi {{isset($get_package->parent_id) ?  getUsername($get_package->parent_id) : ''}}</p>
     <p style="font-family: 'Maven Pro', sans-serif;display: block;margin-bottom: 15px;font-size: 16px;font-weight: 400;">Thank you for requesting to enrol {{isset($get_package->player_id) ? getUsername($get_package->player_id) : getUsername($get_package->parent_id)}} onto the courses below. Please review the course and click the payment link to confirm the booking. </p>
     <span style="font-family: 'Maven Pro', sans-serif;display: block;margin-bottom: 15px;font-size: 16px;font-weight: 400;">Thank you!</span>
 </div>
@@ -48,6 +48,13 @@
                                 </tr>
                                 @endforeach
 
+                                @php $packagePrice = []; @endphp
+                                @foreach($get_all_packages as $package)
+                                    @php $packagePrice[] = $package->price; @endphp
+                                @endforeach
+
+                                <p style="font-size: 14px;"><b>Total Price :</b> &pound;{{array_sum($packagePrice)}}</p> 
+
                                 <!-- <tr>
                   <td style="font-family: 'Maven Pro', sans-serif; font-size: 16px; line-height: 22px; color: #726c6c; padding-top: 10px;">
 
@@ -81,6 +88,8 @@
             </tbody>
         </table>
     </td>
+</tr>
+<tr>
     <td>
         <table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" class="nl-container" role="presentation" style="table-layout: fixed; vertical-align: top; min-width: 320px; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #FFFFFF; width: 100%;" valign="top" width="100%">
 <tbody>
@@ -98,7 +107,22 @@
 <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:0px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
 <!--<![endif]-->
 <div align="right" class="button-container" style="padding-top:0px;padding-right:15px;padding-bottom:5px;padding-left:5px;">
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="padding-top: 0px; padding-right: 15px; padding-bottom: 5px; padding-left: 5px" align="right"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="googlr.com" style="height:24pt; width:60.5pt; v-text-anchor:middle;" arcsize="13%" stroke="false" fillcolor="#3AAEE0"><w:anchorlock/><v:textbox inset="0,0,0,0"><center style="color:#ffffff; font-family:Arial, sans-serif; font-size:16px"><![endif]--><a href="{{url('/purchase-package-course')}}/{{$get_package->booking_no}}" style="-webkit-text-size-adjust: none; text-decoration: none; display: inline-block; color: #ffffff; background-color: #3AAEE0; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; width: auto; width: auto; border-top: 1px solid #3AAEE0; border-right: 1px solid #3AAEE0; border-bottom: 1px solid #3AAEE0; border-left: 1px solid #3AAEE0; padding-top: 0px; padding-bottom: 0px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;" target="_blank"><span style="padding-left:20px;padding-right:20px;font-size:16px;display:inline-block;"><span style="font-size: 16px; line-height: 2; mso-line-height-alt: 32px;">Pay</span></span></a>
+
+
+    @if($get_package->status == 0)
+
+    <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="padding-top: 7px; border-radius: 5px;padding-right: 15px; padding-bottom: 7px; padding-left: 5px" align="right"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{url('/purchase-package-course')}}/{{$get_package->booking_no}}" style="height:24pt; width:60.5pt; v-text-anchor:middle;" arcsize="13%" stroke="false" fillcolor="#3AAEE0"><w:anchorlock/><v:textbox inset="0,0,0,0"><center style="color:#ffffff; font-family:Arial, sans-serif; font-size:16px"><![endif]-->
+
+    <a href="{{url('/purchase-package-course')}}/{{$get_package->booking_no}}" style="-webkit-text-size-adjust: none; text-decoration: none; display: inline-block; color: #ffffff; background-color: #3AAEE0; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 4px; width: auto; width: auto; border-top: 1px solid #3AAEE0; border-right: 1px solid #3AAEE0; border-bottom: 1px solid #3AAEE0; border-left: 1px solid #3AAEE0; border-radius: 5px;padding-top: 7px; padding-bottom: 7px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;" target="_blank"><span style="padding-left:20px;padding-right:20px;font-size:16px;display:inline-block;"><span style="font-size: 16px; line-height: 2; mso-line-height-alt: 32px;">Pay</span></span></a>
+     
+
+    @elseif($get_package->status == 1)
+
+    <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="padding-top: 7px; padding-right: 15px; padding-bottom:7px; padding-left: 5px" border-radius: 5px;align="right"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{url('/404')}}" style="height:24pt; width:60.5pt; v-text-anchor:middle;" arcsize="13%" stroke="false" fillcolor="#3AAEE0"><w:anchorlock/><v:textbox inset="0,0,0,0"><center style="color:#ffffff; font-family:Arial, sans-serif; font-size:16px"><![endif]-->
+        
+    <a href="{{url('/404')}}" style="-webkit-text-size-adjust: none; text-decoration: none; display: inline-block; color: #ffffff; background-color: #3AAEE0; border-radius: 5px;border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius:5px; width: auto; width: auto; border-top: 1px solid #3AAEE0; border-right: 1px solid #3AAEE0; border-bottom: 1px solid #3AAEE0; border-left: 1px solid #3AAEE0; padding-top: 7px; padding-bottom: 7px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;" target="_blank"><span style="padding-left:20px;padding-right:20px;font-size:16px;display:inline-block;"><span style="font-size: 16px; line-height: 2; mso-line-height-alt: 32px;">Pay</span></span></a>
+
+    @endif
     
 <!--[if mso]></center></v:textbox></v:roundrect></td></tr></table><![endif]-->
 </div>

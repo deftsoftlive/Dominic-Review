@@ -1179,6 +1179,7 @@ ul.services-description {
 
 .d-flex.align-items-center.justify-content-between.btn.btn-link {
     position: relative;
+    padding-right: 15px;
 }
 
 /*.d-flex.align-items-center.justify-content-between.btn.btn-link::after {
@@ -1225,6 +1226,7 @@ div#accordion-2 .card h2.mb-0 button {
 .event-card .event-booking .event-booking-price span {
     font-size: 25px;
     font-weight: 500;
+    display: inline-block;
 }
 
 .events-sec {
@@ -1438,6 +1440,10 @@ section.member.section-padding.report_detail_page .pink-heading h2 {
 .select-player-goal-form {
     margin-bottom: 23px;
 }
+div#nav-leaderboard .select-player-goal-form
+{
+	width:  100%;
+}
 
 .select-player-goal-form .form-row .form-group {
     display: flex;
@@ -1581,7 +1587,7 @@ section.member.section-padding.report_detail_page .pink-heading h2 {
     font-size: 22px;
     color: #fff;
     background: #00afef;
-    padding: 11px 32px!important;
+    padding: 11px 32px !important;
     border-bottom: 2px solid #bea029;
     transition: all linear 0.3s;
     text-align: center;
@@ -1880,6 +1886,11 @@ section.member.section-padding.report_detail_page .pink-heading h2 {
     border-bottom: 0;
 }
 
+.table_wrap_my_family {
+
+    margin-bottom: 15px;
+}
+
 .player-report-table .report-table-wrap table,
 #b-c-modal table {
     width: 100%;
@@ -1887,8 +1898,9 @@ section.member.section-padding.report_detail_page .pink-heading h2 {
     border-radius: 20px;
     border-collapse: separate;
     border-spacing: 0;
-    border: 1px solid #d9dada;
+    border:1px solid #d9dada;
     overflow: hidden;
+    margin-bottom: 0;
 }
 
 .player-report-table .report-table-wrap th,
@@ -2600,6 +2612,10 @@ form.cstm-cont-page .contact-gender {
     margin-bottom: 0;
 }
 
+.multistep-footer.mt-4.text-right br {
+    display: none;
+}
+
 .services-sec .ch-sec,
 .cd-sec .card-body {
     background: #bea029;
@@ -2999,7 +3015,7 @@ position: absolute;
 
 .no_results h3 {
     margin-bottom: 10px;
-    color: #000;
+    color: #fff;
 }
 
 .event-info p.detail-cont {
@@ -3652,6 +3668,8 @@ div#nav-badges .activitiy-info-content p {
     position: relative;
     padding-right: 125px;
     border: 3px solid #001642;
+
+    align-items: center;
 }
 
 .c-d-book-now-text a {
@@ -3710,7 +3728,7 @@ div#nav-badges .activitiy-info-content p {
     padding: 0 15px;
     border-left: 1px solid #efefef;
     border-right: 1px solid #efefef;
-    min-height: 70px;
+
 }
 
 .we-run-container {
@@ -5454,8 +5472,9 @@ table th {
     font-size: 22px;
     color: #001642;
     font-weight: 600;
-    float: left;
+    /* float: left;*/
     width: 70%;
+    display: inline;
 }
 
 .product-price small {
@@ -6615,6 +6634,7 @@ section.coach_detail .card.coach_profile .coach.details ul li>strong>span {
 
 section.coach_detail .card.coach_profile .coach.details ul li>span {
     width: calc(100% - 162px);
+    white-space: pre-line;
 }
 
 section.coach_detail .card.coach_profile .form-btn {
@@ -7442,7 +7462,7 @@ div#reject-detail button.close:focus {
 
 .player-badge-sec .menu-tab-link {
     font-size: 18px;
-    padding: 13px 35px;
+    padding: 13px 32px;
 }
 
 .player-badge-sec .player-info .player-img-wrap img {
@@ -7907,7 +7927,7 @@ section.account-menu-sec.player-badge-sec .leadertable-wrap ul.leader-bord-bages
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 5px 10px 0;
+    padding: 5px 0 0;
 }
 
 .badges-select-bar .selt_opt .inner-wrap {
@@ -8638,13 +8658,32 @@ form.reject_req {
     display: block !important;
 }
 
-
+.player-report-table.tbl_shadow.goalz_print {
+    margin-top: 50px !important;
+}
 
 @media print {
+
     h1.print_heading,
-    ul.stats-list  {
-    display: block!important;
-}
+    ul.stats-list {
+        display: block !important;
+    }
+
+    .table_wrap_my_family {
+        overflow: auto;
+        border: none !important;
+        border-radius: 0px !important;
+        border-top: 0;
+        margin-bottom: 0 !important;
+    }
+
+    .coach-goal-comment-sec {
+        padding: 0 0 50px;
+    }
+
+    .coach-goal-comment-sec .pink-heading.btn-right h2 {
+        margin-bottom: 50px;
+    }
 
     .accordian_summary .collapse {
         display: block !important;
@@ -8652,15 +8691,17 @@ form.reject_req {
 
     .member .rp_test_score {
         width: 100% !important;
-      
 
-    } 
-    .player-report-table.tbl_shadow .rp_test_score th{
-        min-width: unset!important;
+
     }
-     .table_wrap_my_family {
-        overflow: hidden!important;
-        width: 100%!!important;
+
+    .player-report-table.tbl_shadow .rp_test_score th {
+        min-width: unset !important;
+    }
+
+    .table_wrap_my_family {
+        overflow: hidden !important;
+        width: 100% !important;
     }
 
 
@@ -10192,11 +10233,23 @@ p.leaderboard-note span {
 
 }
 
+.t-p-text a,
+.t-p-c-more a,
+.t-p-c-more a:hover,
+.t-p-text a:hover,
+a.less-about-camp:hover,
+a.less-about-camp,
 .read-more-less,
 .read-more-less:hover {
-    font-weight: 500;
-    color: red;
-    text-decoration: none;
+    font-weight: 500 !important;
+    color: #007bff;
+    text-decoration: none !important;
+}
+
+.t-p-c-more .less-about-camp {
+    font-weight: 500 !important;
+    color: #007bff;
+    text-decoration: none !important;
 }
 
 .owl-stage .owl-item:nth-child(even) .testimonial-card {
@@ -10261,7 +10314,7 @@ form#venueForm a,
 
 .navbar-light .navbar-toggler-icon {
     background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 0, 0, 0.5)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e);
-    fill: #fff;
+fill: #fff;
 }
 
 .member .accordian_summary .card {
@@ -11041,18 +11094,21 @@ div#wallet_payment {
     padding-right: 0 !important;
 }
 
-div#wallet_payment .modal-header {
+div#wallet_payment .modal-header,
+div#membership .modal-header {
     background: #001642;
     text-align: center;
     position: relative;
 }
 
-div#wallet_payment .modal-header h5 {
+div#wallet_payment .modal-header h5,
+div#membership .modal-header h5 {
     color: #fff;
     width: 100%;
 }
 
-div#wallet_payment .modal-header button.close {
+div#wallet_payment .modal-header button.close,
+div#membership .modal-header button.close {
     position: absolute;
     top: 25px;
     right: 30px;
@@ -11060,42 +11116,85 @@ div#wallet_payment .modal-header button.close {
     z-index: 99;
 }
 
-div#wallet_payment .modal-header button.close span {
+div#wallet_payment .modal-header button.close span,
+div#membership .modal-header button.close span {
     color: #fff;
 }
 
-div#wallet_payment .modal-body li {
+div#wallet_payment .modal-body li,
+div#membership .modal-body li  {
     margin-bottom: 2px;
 }
 
-div#wallet_payment .modal-body p {
+div#wallet_payment .modal-body p{
     font-weight: 500;
     color: #000;
+    
+}
+div#membership .modal-body p {
+    font-weight: 500;
+    color: #000;
+    margin-right: 40px;
 }
 
-div#wallet_payment .modal-body span {
+div#wallet_payment .modal-body span,
+div#membership .modal-body span{
     font-weight: 400;
     padding-left: 2px;
     color: #666;
 }
 
-div#wallet_payment .modal-body button {
+div#wallet_payment .modal-body button,
+div#membership .modal-body button {
     margin-bottom: 0 !important;
 }
 
-div#wallet_payment .tect-wrap {
+div#wallet_payment .tect-wrap{
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-
-div#wallet_payment .modal-dialog {
+div#membership .tect-wrap {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+div#membership form#save_wallet {
+    display: flex;
+  
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+div#membership .from-wrap {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+   
+    width: 100%;
+}
+div#membership form#save_wallet label {
+    margin-bottom: 0;
+    margin-right: 10px;
+    margin: 0 10px 0 3px;
+}
+div#wallet_payment .modal-dialog,
+div#membership .modal-dialog {
     max-width: 600px;
 
 }
-
+div#membership .inner-warp {
+    display: flex;
+}
+div#membership form#member_wallet {
+    margin-top: 15px;
+    display: flex;
+    margin-left: auto;
+}
 .Payment-block button:focus,
-div#wallet_payment .modal-body button:focus {
+div#wallet_payment .modal-body button:focus,
+div#membership .modal-body button:focus {
     box-shadow: none;
     outline: none;
 }
@@ -11104,7 +11203,8 @@ div#wallet_payment .modal-body button:focus {
     overflow-y: scroll;
 }
 
-div#wallet_payment .modal-dialog {
+div#wallet_payment .modal-dialog,
+div#membership .modal-dialog {
     max-width: 600px;
     top: 50%;
     transform: translateY(-50%);
@@ -11208,23 +11308,26 @@ div#wallet_payment .modal-dialog {
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
     border: 2px solid #2d78b5;
-        box-shadow: 6px 6px 25px -4px rgba(0, 0, 0, 0.2);
+    box-shadow: 6px 6px 25px -4px rgba(0, 0, 0, 0.2);
 }
 
-#nav-stats p.prog_text, #nav-stats p.prog_text sup {
+#nav-stats p.prog_text,
+#nav-stats p.prog_text sup {
     color: #1274d2;
     font-weight: 600;
     margin-top: 5px;
     text-transform: capitalize;
 }
+
 #nav-stats .inner-content .icon_wrap p.prog_text strong {
     padding: 0 4px;
     text-transform: capitalize;
 }
-.form-control:focus
-{
-    border-color:#ced4da;
+
+.form-control:focus {
+    border-color: #ced4da;
 }
+
 #nav-stats .inner-content {
     position: absolute;
     /* top: 57%; */
@@ -11252,7 +11355,8 @@ div#wallet_payment .modal-dialog {
 }
 
 
-#nav-stats .score-1-text p.prog_text, #nav-stats .score-1-text p.prog_text sup {
+#nav-stats .score-1-text p.prog_text,
+#nav-stats .score-1-text p.prog_text sup {
     color: #4eb86c !important;
     font-weight: 600;
     margin-top: 5px;
@@ -11348,6 +11452,7 @@ div#nav-stats input {
 .records_wrap td p {
     white-space: pre-line;
 }
+
 .processing::after {
     position: fixed;
     content: '';
@@ -11355,9 +11460,10 @@ div#nav-stats input {
     top: 0;
     height: 100%;
     width: 100%;
-    background: rgba(0,0,0,.7);
+    background: rgba(0, 0, 0, .7);
     z-index: 9999;
 }
+
 .processing::before {
     position: fixed;
     content: 'We are are processing your order - Please wait';
@@ -11374,47 +11480,52 @@ div#nav-stats input {
     align-items: center;
     justify-content: center;
 }
+
 .stat_from_row {
-    margin: 0 -15px!important;
+    margin: 0 -15px !important;
     padding: 0 15px;
 }
-ul.stats-list
-{
+
+ul.stats-list {
     margin: 10px 0 20px;
 }
+
 ul.stats-list li p {
     font-size: 16px;
     color: #000;
     font-weight: 400;
     text-transform: capitalize;
 }
+
 ul.stats-list li span {
     font-size: 16px;
     color: #000;
     font-weight: 600;
     text-transform: capitalize;
 }
+
 h1.print_heading,
 ul.stats-list {
     display: none;
 }
 
-.marquee{
-height: 60px;
-/*overflow: hidden;*/
-position: relative;
-background: #00afef;
-color: #333;
+.marquee {
+    height: 60px;
+    /*overflow: hidden;*/
+    position: relative;
+    background: #00afef;
+    color: #333;
 
 }
-.marquee.mobile
-{
+
+.marquee.mobile {
     height: 50px;
 }
-.package-heading
-{
+
+.package-heading {
     margin-bottom: 25px;
 }
+
 .pack_form {
     text-align: right;
     /* margin-top: 30px; */
@@ -11430,28 +11541,29 @@ color: #333;
 
     */
 
-   .progress-box p.number-text {
+.progress-box p.number-text {
     font-weight: 600;
     color: #000;
     font-size: 22px;
 }
-         
+
 .stats_bar_row {
     margin-bottom: 25px;
 }
-  
+
 /*17 Nov 2020*/
 ul.services-description li ul {
-   list-style: initial;
+    list-style: initial;
 }
+
 ul.services-description li ul li {
-   box-shadow:none;
-   
+    box-shadow: none;
+
 }
 
 .tab-points-wrap .t-p-text p {
-margin-bottom: 10px;
-}      
+    margin-bottom: 10px;
+}
 
 .pay_with_wallet {
     width: 100%;
@@ -11461,22 +11573,26 @@ margin-bottom: 10px;
     margin-top: 30px;
     align-items: center;
 }
+
 .pay_with_wallet button.cstm-btn.main_button {
     padding: 5px 10px;
-    font-size: 12px!important;
+    font-size: 12px !important;
 }
+
 .pack_form b {
     padding-right: 5px;
 }
+
 .camp-logo-section a.inner-logo {
     width: 100%;
     max-width: 200px;
     margin-top: 10px;
 }
-.tabel_main_dtls th
-{
-	white-space: nowrap;
+
+.tabel_main_dtls th {
+    white-space: nowrap;
 }
+
 .we-run-container img {
     width: 100%;
     height: 100%;
@@ -11484,12 +11600,281 @@ margin-bottom: 10px;
 }
 
 /* 19 Nov 2020 */
-.faq-sec ul, .inverted ul
-{
+.faq-sec ul,
+.inverted ul {
     padding-left: 15px;
     list-style: disc;
 }
+
 .we-run-wrap {
     justify-content: center;
 }
 
+label#participant_gender-error {
+    font-size: 11px;
+    color: #dc3545;
+    font-weight: 600;
+    /* position: relative; */
+    top: 40px;
+}
+
+section.events-sec.inner-event-section {
+    padding-top: 70px;
+}
+
+.inner-icons {
+    position: absolute;
+    right: 0;
+}
+
+.calendar input[type="date"]:before {
+    line-height: 20px;
+}
+
+body#main .football-course-sec:nth-of-type(2),
+body#main main.products-layout-wrap:nth-of-type(2) {
+    display: none;
+}
+
+.package-purchase {
+    padding-top: 85px;
+}
+
+a.less-about-camp.box-5 {
+    font-weight: 500;
+    color: red;
+    text-decoration: none;
+}
+
+.upload_opt a.cstm-btn.active {
+    background: #001642;
+    color: #fff;
+    text-decoration: none;
+    border-color: #001642;
+}
+
+.panel.panel-default.credit-card-box .panel-heading.display-table {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.panel form#payment-form {
+    padding: 0 10px;
+}
+
+.panel form#payment-form input {
+    width: 100%;
+}
+
+.panel form#payment-form label.control-label {
+    margin-bottom: 5px;
+}
+
+.panel-btn-wrap {
+    margin: 10px 0;
+
+}
+
+form#payment-form .alert {
+
+    margin: 10px 0;
+}
+
+form#payment-form .error {
+    position: absolute;
+    left: 15px;
+    line-height: 18px;
+    padding-right: 30px;
+    top: unset;
+    bottom: 0px;
+    padding: 0 40px 0 10px;
+}
+
+.panel button.cstm-btn.main_button {
+    margin-bottom: 50px;
+}
+
+.textbox-manage {
+    margin: 15px;
+}
+
+.payment-switches {
+    width: 100%;
+}
+
+.tabs-wrap ul li {
+    width: 49.5%;
+    text-align: center;
+}
+
+.tabs-wrap ul#pills-tab li a {
+    padding: 25px 20px;
+    background: #fff;
+    border: 0;
+    padding: 12px 11px;
+    text-align: center;
+    display: block;
+    margin: 0;
+    -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+    position: relative;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #00afef;
+    min-height: 78px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tabs-wrap ul#pills-tab li a.active {
+    background: #03163b;
+    color: #fff;
+    border: 0;
+    position: relative;
+
+}
+
+.tabs-wrap div#pills-tabContent {
+    margin-top: 30px;
+    border: 1px solid #d1d1d1;
+    padding: 24px 20px;
+    background: #eaf0f4;
+    border-radius: 4px;
+}
+
+.tabs-wrap ul#pills-tab li a.active:after {
+    background: #03163b;
+    z-index: 999;
+}
+
+.tabs-wrap ul#pills-tab li a:after {
+    content: "";
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%) rotate(-180deg);
+    transform: translateX(-50%) rotate(-180deg);
+    -webkit-clip-path: polygon(50% 0, 0 100%, 100% 100%);
+    clip-path: polygon(50% 0, 0 100%, 100% 100%);
+    height: 10px;
+    width: 20px;
+    display: block;
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    background: #ffffff;
+    height: 11px;
+}
+.term-content span {
+    line-height: 26px;
+}
+.textbox-manage ul {
+    list-style: unset;
+    padding-left: 15px;
+}
+.testimonial-slider .owl-nav {
+    display: none!important;
+}
+.cms-pages strong,
+.cms-pages b {
+    font-weight: 600;
+}
+.textbox-manage ul li {
+    font-weight: 300;
+    color: #666666;
+}
+
+.total_wrap {
+    text-align: right;
+    padding: 0 20px;
+    margin: 30px 0;
+}
+.total_wrap p,
+.total_wrap span
+{
+    font-size: 20px;
+}
+div#membership h5#exampleModalLongTitle {
+    font-size: 22px;
+}
+div#membership .inner-warp {
+    padding: 15px;
+}
+div#membership .modal-body {
+    padding: 0;
+}
+div#membership .tect-wrap {
+    border-bottom: 4px solid #001642;
+}
+div#membership .tect-wrap p {
+    padding: 15px;
+    margin: 0;
+    text-align: center;
+}
+div#membership hr.from-line {
+    border-top: 1px solid #a0a8b5;
+    width: 100%;
+    margin: 5px 0;
+}
+div#membership .from-wrap p {
+    font-weight: 600;
+    font-size: 17px;
+    width: 90%;
+}
+div#membership .tect-wrap a {
+    text-transform: uppercase;
+    color: black;
+    text-decoration: underline;
+}
+div#membership form#member_wallet {
+    padding: 0 15px;
+    text-align: center;
+    justify-content: flex-end;
+    display: flex;
+    margin: 0px 0 15px!important;
+}
+
+.from-wrap input:checked + label::After {
+    opacity: 1!important;
+}
+
+.from-wrap input {
+    position: absolute;
+    opacity: 0;
+    z-index: -999;
+}
+
+.rad-checked::After {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border-right: 2px solid #001642;
+    border-bottom: 2px solid #001642;
+    transform: rotate(45deg);
+    opacity: 0;
+}
+
+.rad-checked {
+    height: 18px;
+    width: 18px;
+    border: 2px solid #000;
+    position: relative;
+    margin-top: 5px;
+}
+
+.activity-slider .owl-dots span {
+    border-color: #fff!important;
+}
+
+.notice-wrap {
+    margin: 0 20px;
+    border: 3px solid red;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+.notice-wrap h4 {  
+    margin-bottom: 5px;
+}

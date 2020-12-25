@@ -53,18 +53,19 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
 
                 @if(Auth::user()->role_id == '3')
                 <li class="nav-item">
-                    <a class="nav-link cstm-btn active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">End of term report</a>
+                    <a class="nav-link cstm-btn" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">End of term report</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link cstm-btn" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Player Report</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link cstm-btn" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Match Report</a>
+                    <a class="nav-link cstm-btn active" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Match Report</a>
                     <!-- <a href="{{url('/user/all-match-reports')}}" class="cstm-btn main_button">All Match Reports</a> -->
                 </li>
                 @else
                 <li class="nav-item">
-                    <a class="nav-link cstm-btn" href="{{ url()->previous() }}">Back to menu</a>
+                    <!-- <a class="nav-link cstm-btn" href="{{ url()->previous() }}">Back to menu</a> -->
+                    <a class="nav-link cstm-btn" href="{{ url('/user/badges') }}">Back to menu</a>
                     <a class="nav-link cstm-btn" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Match Report</a>
                     <a href="{{url('/user/all-match-reports')}}" class="cstm-btn main_button">All Match Reports</a>
                 </li>
@@ -73,7 +74,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
             </ul>
             <div class="tab-content" id="myTabContent">
                 <!-- Report - 1 (Start Here)-->
-                <div class="tab-pane fade @if(Auth::user()->role_id == '3') show active @endif" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="upper-form report-tab-sec report-tab-one">
                         <p class="sub-head">End of Term Report</p>
                         <form id="simple_report_filter" action="{{route('coach_report')}}" method="POST" enctype="multipart/form-data">
@@ -432,7 +433,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
 
                             @if(!empty($exist_player))
                             @php
-                                $reports = DB::table('player_reports')->where('type','complex')->where('player_id',$exist_player)->get();
+                                $reports = DB::table('player_reports')->where('type','complex')->where('player_id',$exist_player)->orderBy('id','desc')->get();
                             @endphp
 
                             <p class="sub-head">Previous player reports for {{getUsername($exist_player)}}</p>
@@ -534,10 +535,15 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                 <!-- Report - 2 (End Here)-->
 
                 <!-- Match Report (Start Here)-->
-                <div class="tab-pane fade @if(Auth::user()->role_id == '2') show active @endif" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                    <div class="content-wrap">
+                <div class="tab-pane fade @if(Auth::user()->role_id == '3') show active @endif @if(Auth::user()->role_id == '2') show active @endif" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                    <!-- <div class="content-wrap"> -->
+                    
+                    <br/>
+                    <div class="">
                         {!! getAllValueWithMeta('report3_content', 'report') !!}
                     </div>
+                    <br/>
+
                     <div class="form-head">
                         <div class="pink-heading">
                             <h2>Add Match Report</h2>
@@ -704,7 +710,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                         <table class="add_on_services match_game_chart">
                                             <thead>
                                                 <tr>
-                                                    <th>Upload Match Chart</th>
+                                                    <th>Upload Match Chart Images</th>
                                                     <th><a onclick="addnewsection();" href="javascript:void(0);"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></th>
                                                 </tr>
                                             </thead>

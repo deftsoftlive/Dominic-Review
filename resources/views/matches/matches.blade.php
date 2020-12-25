@@ -44,27 +44,29 @@
       @php $competition = DB::table('competitions')->where('id',$comp_id)->first(); @endphp
       <div class="player-report-table tbl_shadow matches-wrap">
          <div class="report-table-wrap">
-            <div class="m-b-table">
+            <div class="m-b-table">              
                <table class="matches-wrap-table">
-                  <thead>
-                     <tr>
-                        <th>Player Name</th>
-                        <th>Competition Name</th>
-                        <th>Competition Type</th>
-                        <th>Competition Date</th>
-                        <th>Competition Venue</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     <tr>
-                        <td>@php echo getUsername($competition->player_id); @endphp</td>
-                        <td>{{$competition->comp_name}}</td>
-                        <td>{{$competition->comp_type}}</td>
-                        <td>{{$competition->comp_date}}</td>
-                        <td>{{$competition->comp_venue}}</td>
-                     </tr>
-                  </tbody>
+                     <thead>
+                        <tr>
+                           <th>Player Name</th>
+                           <th>Competition Name</th>
+                           <th>Competition Type</th>
+                           <th>Competition Date</th>
+                           <th>Competition Venue</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td>@php echo getUsername($competition->player_id); @endphp</td>
+                           <td>{{$competition->comp_name}}</td>
+                           <td>{{$competition->comp_type}}</td>
+                           <td>{{$competition->comp_date}}</td>
+                           <td>{{$competition->comp_venue}}</td>
+                        </tr>
+                     </tbody>
                </table>
+               
+
             </div>
          </div>
       </div>
@@ -98,55 +100,56 @@
                <div class="card-body">
                   <div class="report-table-wrap report-tab-sec report-tab-one player_rp_detail matches-dtl">
                      <div class="col-md-12 report_row">
-
-                        <table class="table table-bordered  cst-reports">
-                           <tbody>
-                              <tr>
-                                 <th>
-                                    <p><b>Result :</b></p>
-                                 </th>
-                                 <td>
-                                    <h4><strong>{{isset($match->result) ? $match->result : ''}}</strong></h4>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <th>
-                                    <p><b>Score : </b></p>
-                                 </th>
-                                 <td>{{isset($match->score) ? $match->score : ''}}</td>
-                              </tr>
-                              <tr>
-                                 <th>
-                                    <p><b>Start Date :</b></p>
-                                 </th>
-                                 <td>{{isset($match->start_date) ? date("d/m/Y", strtotime($match->start_date)) : ''}}</td>
-                              </tr>
-                              <tr>
-                                 <th>
-                                    <p><b>Surface Type :</b></p>
-                                 </th>
-                                 <td>{{isset($match->surface_type) ? $match->surface_type : ''}}</td>
-                              </tr>
-                              <tr>
-                                 <th>
-                                    <p><b>What went well : </b></p>
-                                 </th>
-                                 <td>{{isset($match->wht_went_well) ? $match->wht_went_well : ''}}</td>
-                              </tr>
-                              <tr>
-                                 <th>
-                                    <p><b>What could've been better : </b></p>
-                                 </th>
-                                 <td>{{isset($match->wht_could_better) ? $match->wht_could_better : ''}}</td>
-                              </tr>
-                              <tr>
-                                 <th>
-                                    <p><b>Other Comments : </b></p>
-                                 </th>
-                                 <td>{{isset($match->other_comments) ? $match->other_comments : ''}}</td>
-                              </tr>
-                           </tbody>
-                        </table>
+                        <div class="matches_table-wrap">
+                           <table class="table table-bordered  cst-reports">
+                              <tbody>
+                                 <tr>
+                                    <th>
+                                       <p><b>Result :</b></p>
+                                    </th>
+                                    <td>
+                                       <h4><strong>{{isset($match->result) ? $match->result : ''}}</strong></h4>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <th>
+                                       <p><b>Score : </b></p>
+                                    </th>
+                                    <td>{{isset($match->score) ? $match->score : ''}}</td>
+                                 </tr>
+                                 <tr>
+                                    <th>
+                                       <p><b>Start Date :</b></p>
+                                    </th>
+                                    <td>{{isset($match->start_date) ? date("d/m/Y", strtotime($match->start_date)) : ''}}</td>
+                                 </tr>
+                                 <tr>
+                                    <th>
+                                       <p><b>Surface Type :</b></p>
+                                    </th>
+                                    <td>{{isset($match->surface_type) ? $match->surface_type : ''}}</td>
+                                 </tr>
+                                 <tr>
+                                    <th>
+                                       <p><b>What went well : </b></p>
+                                    </th>
+                                    <td>{{isset($match->wht_went_well) ? $match->wht_went_well : ''}}</td>
+                                 </tr>
+                                 <tr>
+                                    <th>
+                                       <p><b>What could've been better : </b></p>
+                                    </th>
+                                    <td>{{isset($match->wht_could_better) ? $match->wht_could_better : ''}}</td>
+                                 </tr>
+                                 <tr>
+                                    <th>
+                                       <p><b>Other Comments : </b></p>
+                                    </th>
+                                    <td>{{isset($match->other_comments) ? $match->other_comments : ''}}</td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
                      </div>
                   </div>
                </div>

@@ -540,6 +540,9 @@ $(".checkbox-style").click(function(){
     // console.log(checkboxValue);
     if($("#"+checkboxID).is(":checked")) {
       total = total + parseFloat($("#pricing-"+checkboxValue).val()); 
+
+      // var total = total1.toFixed(2);
+
     }
   });
   if(total > 0) {

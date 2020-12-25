@@ -21,7 +21,7 @@ class AccordianController extends Controller
     |   Listing of accordians
     |----------------------------------------*/ 
     public function accordian_index() {
-        $accordian = Accordian::select(['id','title','sort','description','status','slug','page_title'])->orderBy('sort','asc')->paginate(10);
+        $accordian = Accordian::select(['id','title','sort','description','status','slug','page_title'])->orderBy('sort','asc')->paginate(20);
        return view('admin.accordian.index',compact('accordian'))
     	->with(['title' => 'Accordian Management', 'addLink' => 'admin.accordian.showCreate']);
     }

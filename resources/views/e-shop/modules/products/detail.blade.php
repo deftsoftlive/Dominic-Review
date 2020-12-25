@@ -160,12 +160,12 @@ figure.product-specification-img img {
                                 <div class="tab-pane" id="tabs-2" role="tabpanel">
                                     <div class="description-content">
                                         <div class="row">
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6  ">
                                                 <figure class="product-specification-img">
                                                     <img src="{{url($product->thumbnail)}}">
                                                 </figure>
                                             </div>
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6  ">
                                                 <div class="specification-head">
                                                     <h3>Specification</h3>
                                                 </div>

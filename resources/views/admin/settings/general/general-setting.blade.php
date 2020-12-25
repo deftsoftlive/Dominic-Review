@@ -171,6 +171,14 @@
           </div>
         </div>
 
+        <!-- Membership Popup -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>Membership Popup Text</u></h5>
+            {{textarea($errors,'Membership Popup Text','membership_popup_text',$membership_popup_text)}}
+          </div>
+        </div>
+
         <!-- /.card-body -->
         <div class="card-footer">
           <button type="submit" id="homePageFormBtn" class="btn btn-primary">Submit</button>
@@ -200,5 +208,6 @@
 <script src="{{ asset('js/cke_config.js') }}"></script>
 <script type="text/javascript">
   CKEDITOR.replace('thanku_page_text', options);
+  CKEDITOR.replace('membership_popup_text', options);
 </script>
 @endsection

@@ -217,7 +217,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('foot_lan_act4_title', 'football-landing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('foot_lan_act4_description', 'football-landing') }}</p>
+                                                    <p>{!! getAllValueWithMeta('foot_lan_act4_description', 'football-landing') !!}</p>
                                                 </li>
                                             </ul>
                                         </div>

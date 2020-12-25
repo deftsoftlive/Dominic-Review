@@ -19,7 +19,7 @@ class CustomBoxController extends Controller
     |   Listing of custom box content
     |----------------------------------------*/ 
     public function custombox_index() {
-        $custombox = CustomBox::select(['id','title','type','description','status','slug','sort'])->orderBy('sort','asc')->paginate(10);
+        $custombox = CustomBox::select(['id','title','type','description','status','slug','sort'])->orderBy('sort','asc')->paginate(20);
     	return view('admin.custombox.index',compact('custombox'))
     	->with(['title' => 'Custom Box Management', 'addLink' => 'admin.custombox.showCreate']);
     }

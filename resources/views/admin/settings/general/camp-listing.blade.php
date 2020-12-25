@@ -52,6 +52,20 @@
         | 
         |************************************ -->
 
+        <!-- Banner -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">BANNER SECTION</h5>
+             {{textbox($errors,'Banner Title <span class="cst-upper-star">*</span>','camp_page_title',$camp_page_title)}}
+
+             <div class="form-group">
+              <label class="label-file control-label">Banner Image  (1349 X 438)<span class="cst-upper-star">*</span></label>
+              <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'camp_banner_image_src')" class="form-control" name="camp_banner_image">
+             </div>
+             <img id="camp_banner_image_src" src="{{ URL::asset('/uploads').'/'.$camp_banner_image }}" style="width: 100px;" />
+          </div>
+        </div>
+
         <!-- Logo -->
         <div class="card">
           <div class="card-body">
@@ -67,25 +81,11 @@
           </div>
         </div>
 
-        <!-- Banner -->
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">BANNER SECTION</h5>
-             {{textbox($errors,'Banner Title <span class="cst-upper-star">*</span>','camp_page_title',$camp_page_title)}}
-
-             <div class="form-group">
-              <label class="label-file control-label">Banner Image  (1349 X 438)<span class="cst-upper-star">*</span></label>
-              <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'camp_banner_image_src')" class="form-control" name="camp_banner_image">
-             </div>
-             <img id="camp_banner_image_src" src="{{ URL::asset('/uploads').'/'.$camp_banner_image }}" style="width: 100px;" />
-          </div>
-        </div>
-
         <!-- Tabs Section -->
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">TABS SECTION</h5>
-            {{textbox($errors,'Heading <span class="cst-upper-star">*</span>','camp_tab_title',$camp_tab_title)}}
+            <!-- {{textbox($errors,'Heading <span class="cst-upper-star">*</span>','camp_tab_title',$camp_tab_title)}} -->
             <br/>
 
             <!-- ************************************
@@ -112,6 +112,8 @@
                 <!-- Tab - 1 -->
                 <h5 class="card-title">TAB - 1</h5>
 
+                {{ textbox($errors,'Tab Title<span class="cst-upper-star">*</span>','camp_tab_title1', $camp_tab_title1) }}
+
                  <div class="form-group">
                   <label class="label-file control-label">Slider Image - 1 (1110 X 400) <span class="cst-upper-star">*</span></label>
                   <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'camp_tab1_image1_src')" class="form-control" name="camp_tab1_image1">
@@ -135,19 +137,25 @@
               </div>
               <div class="tab-pane fade" id="camp_info" role="tabpanel" aria-labelledby="camp_info-tab">
                 <!-- Tab - 2 -->
-                 <h5 class="card-title">TAB - 2</h5>
-                 {{textbox($errors,'Tab Title<span class="cst-upper-star">*</span>','camp_tab2_title',$camp_tab2_title)}}
+                <h5 class="card-title">TAB - 2</h5>
 
+                {{ textbox($errors,'Tab Title<span class="cst-upper-star">*</span>','camp_tab_title2', $camp_tab_title2) }}
+                 
                  <div class="form-group">
                   <label class="label-file control-label">Image (1110 X 400)<span class="cst-upper-star">*</span></label>
                   <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'camp_tab2_image_src')" class="form-control" name="camp_tab2_image">
                  </div>
                  <img id="camp_tab2_image_src" src="{{ URL::asset('/uploads').'/'.$camp_tab2_image }}" style="width: 100px;" />
-                 {{ textarea($errors,'Description<span class="cst-upper-star">*</span>','camp_tab2_description', $camp_tab2_description) }}
+
+                 {{textarea($errors,'Description<span class="cst-upper-star">*</span>','camp_tab2_title',$camp_tab2_title)}}
+
+                 <!-- {{ textarea($errors,'Description<span class="cst-upper-star">*</span>','camp_tab2_description', $camp_tab2_description) }} -->
               </div>
               <div class="tab-pane fade" id="book_a_camp" role="tabpanel" aria-labelledby="book_a_camp-tab">
                 <!-- Tab - 3 -->
-                 <h5 class="card-title">TAB - 3</h5>
+                <h5 class="card-title">TAB - 3</h5>
+
+                {{ textbox($errors,'Tab Title<span class="cst-upper-star">*</span>','camp_tab_title3', $camp_tab_title3) }}
 
                  <div class="form-group">
                   <label class="label-file control-label">Image (1110 X 400)<span class="cst-upper-star">*</span></label>
@@ -156,11 +164,13 @@
                  <img id="camp_tab3_image_src" src="{{ URL::asset('/uploads').'/'.$camp_tab3_image }}" style="width: 100px;" />
 
                  {{ textarea($errors,'Description <span class="cst-upper-star">*</span>','camp_tab3_description', $camp_tab3_description) }}
-
                  
               </div>
               <div class="tab-pane fade" id="parent_info" role="tabpanel" aria-labelledby="parent_info-tab"><!-- Tab - 4 -->
                  <h5 class="card-title">TAB - 4</h5>
+
+                 {{ textbox($errors,'Tab Title<span class="cst-upper-star">*</span>','camp_tab_title4', $camp_tab_title4) }}
+
                  {{textbox($errors,'Title<span class="cst-upper-star">*</span>','camp_tab4_title',$camp_tab4_title)}}
 
                  
@@ -242,16 +252,16 @@
         </div>
 
         <!-- Section - 2 -->
-        <div class="card">
+       <!--  <div class="card">
           <div class="card-body">
             <h5 class="card-title"><u>SECTION - 2</u></h5>
              {{textbox($errors,'Heading <span class="cst-upper-star">*</span>','camp_heading2',$camp_heading2)}}
              {{textarea($errors,'Description <span class="cst-upper-star">*</span>','camp_description2',$camp_description2)}}
           </div>
-        </div>
+        </div> -->
 
         <!-- Section - 3 -->
-        <div class="card">
+        <!-- <div class="card">
           <div class="card-body">
             <h5 class="card-title"><u>SECTION - 3</u></h5>
              {{textbox($errors,'Heading <span class="cst-upper-star">*</span>','camp_heading3',$camp_heading3)}}
@@ -263,16 +273,14 @@
              </div>
              <img id="camp_image3_src" src="{{ URL::asset('/uploads').'/'.$camp_image3 }}" style="width: 100px;" />
           </div>
-        </div>
+        </div> -->
 
         <!-- Section - 4 -->
-        <div class="card">
+        <!-- <div class="card">
           <div class="card-body">
             <h5 class="card-title"><u>SECTION - 4</u></h5>
              
              <br/>
-
-             <!-- Section 1 -->
              <div class="form-group">
               <label class="label-file control-label">Image - 1 (250 X 130)<span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'camp_image4_src')" class="form-control" name="camp_image4">
@@ -283,7 +291,6 @@
              {{textbox($errors,'Link - 1 <span class="cst-upper-star">*</span>','camp_link4',$camp_link4)}}
              <br/>
 
-             <!-- Section 2 -->
              <div class="form-group">
               <label class="label-file control-label">Image - 2 (250 X 130)<span class="cst-upper-star">*</span></label>
               <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'camp_image4_src')" class="form-control" name="camp_image4">
@@ -294,12 +301,12 @@
              {{textbox($errors,'Link - 2<span class="cst-upper-star">*</span>','camp_link4',$camp_link4)}}
 
           </div>
-        </div>
+        </div> -->
 
         <!-- Section - 5 -->
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title"><u>SECTION - 5</u></h5>
+            <h5 class="card-title"><u>Userfull Information & Download Section</u></h5>
              {{textbox($errors,'Heading <span class="cst-upper-star">*</span>','camp_heading5',$camp_heading5)}}
              {{textarea($errors,'Description <span class="cst-upper-star">*</span>','camp_description5',$camp_description5)}}
           </div>
@@ -346,10 +353,15 @@
 
 <script type="text/javascript">
    CKEDITOR.replace('camp_tab1_description', options);
-   CKEDITOR.replace('camp_tab2_description', options);
+   CKEDITOR.replace('camp_tab2_title', options);
    CKEDITOR.replace('camp_tab3_description', options);
 </script>
 <script type="text/javascript">
   CKEDITOR.replace('camp_go_title', options);
+  CKEDITOR.replace('act1_description', options);
+  CKEDITOR.replace('act2_description', options);
+  CKEDITOR.replace('act3_description', options);
+  CKEDITOR.replace('act4_description', options);
+  CKEDITOR.replace('act5_description', options);
 </script>
 @endsection

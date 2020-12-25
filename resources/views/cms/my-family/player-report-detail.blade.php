@@ -88,8 +88,13 @@ div#report_detail_cont {
                     </div>
                     @endif
                     <br/>
+
                     <div id="report_detail_cont">
-                        <p class="report-2-cont">{!! getAllValueWithMeta('report_detail', 'report') !!}</p>
+                        @if($report->type == 'simple')
+                            <p class="report-2-cont">{!! getAllValueWithMeta('report_detail', 'report') !!}</p>
+                        @elseif($report->type == 'complex')
+                            <p class="report-2-cont">{!! getAllValueWithMeta('player_report_detail', 'report') !!}</p>
+                        @endif
                     </div>
                     <br/><br/>
 
@@ -344,7 +349,7 @@ div#report_detail_cont {
 
             </div>
             @else
-            <div class="noData offset-md-4 col-md-4 sorry_msg">
+            <div class="noData offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-2 col-sm-8 sorry_msg">
                 <div class="no_results">
                     <h3>Sorry, no results</h3>
                     <p>No Booking Found</p>

@@ -32,9 +32,11 @@ class CourseController extends Controller
     |----------------------------------------*/ 
     public function course_index() 
     {
-        $type = request()->get('course_name');    
+        $type = request()->get('type');    
         $subtype = request()->get('subtype');
         $level = request()->get('level');
+
+        // dd($type,$subtype,$level);
 
         if(!empty(request()->get('type')) && !empty(request()->get('subtype')) && !empty(request()->get('level')))
         {
@@ -52,6 +54,12 @@ class CourseController extends Controller
                      ->where('level', '=', $level)
                      ->orderBy('sort','asc')->paginate(20);
             }
+
+        }else if(!empty(request()->get('type')) && empty(request()->get('subtype')) && empty(request()->get('level')))
+        {
+            $course = \DB::table('courses')
+                     ->where('type', '=', $type)
+                     ->orderBy('sort','asc')->paginate(20);
 
         }else if(!empty(request()->get('type')) && empty(request()->get('subtype')) && !empty(request()->get('level'))){
 
@@ -75,6 +83,8 @@ class CourseController extends Controller
         }else{
           $course = Course::orderBy('sort','asc')->paginate(20);
         }
+
+        //dd($course);
     
         $course_cat = ProductCategory::where('parent','0')->where('subparent','0')->where('type','Course')->get();
         $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->get();
@@ -97,18 +107,27 @@ class CourseController extends Controller
                      ->where('type', '=', $type)
                      ->where('subtype', '=', $subtype)
                      ->where('level', '=', $level)
-                     ->where('status',1)
-                     ->orderBy('sort','asc')->paginate(10);
+                     // ->where('status',1)
+                     ->orderBy('sort','asc')->paginate(20);
+
+        }else if(!empty(request()->get('type')) && empty(request()->get('subtype')) && empty(request()->get('level')))
+        {
+            $course = \DB::table('courses')
+                     ->where('type', '=', $type)
+                     // ->where('status',1)
+                     ->orderBy('sort','asc')->paginate(20);
 
         }else if(!empty(request()->get('type')) && empty(request()->get('subtype')) && !empty(request()->get('level'))){
             $course = \DB::table('courses')
                      ->where('type', '=', $type)
                      ->where('level', '=', $level)
-                     ->where('status',1)
-                     ->orderBy('sort','asc')->paginate(10);
+                     // ->where('status',1)
+                     ->orderBy('sort','asc')->paginate(20);
         }else{
-          $course = Course::select(['id','title','type','season','description','status','slug','price','booking_slot','sort'])->where('status',1)->paginate(10);
+          $course = Course::select(['id','title','type','season','description','status','slug','price','booking_slot','sort'])->where('status',1)->paginate(20);
         }
+
+       // dd($course);
         
         $course_cat = ProductCategory::where('parent','0')->where('subparent','0')->where('type','Course')->get();
         $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->get();
@@ -122,8 +141,10 @@ class CourseController extends Controller
     public function course_inactive() {
 
         $type = request()->get('type');
-          $subtype = request()->get('subtype');
-          $level = request()->get('level');
+        $subtype = request()->get('subtype');
+        $level = request()->get('level');
+
+        //dd($type,$subtype,$level);
 
         if(!empty(request()->get('type')) && !empty(request()->get('subtype')) && !empty(request()->get('level')))
         {
@@ -131,18 +152,27 @@ class CourseController extends Controller
                      ->where('type', '=', $type)
                      ->where('subtype', '=', $subtype)
                      ->where('level', '=', $level)
-                     ->where('status','=', '0')
-                     ->orderBy('sort','asc')->paginate(10);
+                     // ->where('status','=', 0)
+                     ->orderBy('sort','asc')->paginate(20);
+
+        }else if(!empty(request()->get('type')) && empty(request()->get('subtype')) && empty(request()->get('level')))
+        {
+            $course = \DB::table('courses')
+                     ->where('type', '=', $type)
+                     // ->where('status',0)
+                     ->orderBy('sort','asc')->paginate(20);
 
         }else if(!empty(request()->get('type')) && empty(request()->get('subtype')) && !empty(request()->get('level'))){
             $course = \DB::table('courses')
                      ->where('type', '=', $type)
                      ->where('level', '=', $level)
-                     ->where('status', '=', '0')
-                     ->orderBy('sort','asc')->paginate(10);
+                     // ->where('status', '=', 0)
+                     ->orderBy('sort','asc')->paginate(20);
         }else{
-          $course = Course::select(['id','title','type','season','description','status','slug','price','booking_slot','sort'])->where('status', '=', '0')->paginate(10);
+          $course = Course::select(['id','title','type','season','description','status','slug','price','booking_slot','sort'])->where('status',0)->paginate(20);
         }
+
+       // dd($course);
 
         $course_cat = ProductCategory::where('parent','0')->where('subparent','0')->where('type','Course')->get();
         $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->get();
@@ -167,17 +197,17 @@ class CourseController extends Controller
 
     	$validatedData = $request->validate([
             'title' => ['required', 'string'],
-            'description' => ['required', 'string'],
+            'description' => ['required'],
             // 'type' => ['required'],
             // 'subtype' => ['required'],
             'account_id' => ['required'],
-            'age_group' => ['required','string'],
+            'age_group' => ['required'],
             // 'age' => ['required', 'string'],
-            'session_date' => ['required', 'string'],
+            'session_date' => ['required'],
             'course_category' => ['required'],
-            'location' => ['required', 'string'],
-            'day_time' => ['required', 'string'],
-            'more_info' => ['required', 'string'],
+            'location' => ['required'],
+            'day_time' => ['required'],
+            'more_info' => ['required'],
             'booking_slot' => ['required', 'numeric', 'max:100'],
             'price' => ['required', 'numeric'],
             'coach_cost' => ['required', 'numeric'],
@@ -186,7 +216,8 @@ class CourseController extends Controller
             'other_cost' => ['required', 'numeric'],
             'tax_cost' => ['required', 'numeric'],
             'end_date' => ['required'],
-            'image' => ['required']
+            // 'image' => ['required'],
+            // 'membership_popup' => ['required'],
         ]);
 
         if ($request->hasFile('image')) {
@@ -224,6 +255,7 @@ class CourseController extends Controller
             'bottom_section' => isset($request['bottom_section']) ? $request['bottom_section'] : '',
             'end_date' => $request['end_date'],
             'image' => isset($filename) ? $filename : '',
+            'membership_popup' => $request['membership_popup'],
     	]);
 
         if(isset($data['course_date'])){  
@@ -272,7 +304,7 @@ class CourseController extends Controller
     |----------------------------------------*/ 
     public function course_update(Request $request, $slug) {
 
-        $data = $request->all();    //dd($data);
+        $data = $request->all();    //dd($data['membership_popup']);
         
         // get course id using slug
         $course = Course::where('slug',$slug)->first();
@@ -289,26 +321,22 @@ class CourseController extends Controller
 
     	$validatedData = $request->validate([
             'title' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            // 'type' => ['required'],
-            // 'subtype' => ['required'],
+            'description' => ['required'],
             'account_id' => ['required'],
-            'age_group' => ['required','string'],
-            // 'age' => ['required', 'string'],
-            'session_date' => ['required', 'string'],
-            'location' => ['required', 'string'],
-            'day_time' => ['required', 'string'],
+            'age_group' => ['required'],
+            'session_date' => ['required'],
             'course_category' => ['required'],
-            // 'more_info' => ['required', 'string'],
+            'location' => ['required'],
+            'day_time' => ['required'],
+            'more_info' => ['required'],
             'booking_slot' => ['required', 'numeric', 'max:100'],
-            // 'price' => ['required', 'numeric', 'min:1'],
+            // 'price' => ['required', 'numeric'],
             'coach_cost' => ['required', 'numeric'],
             'venue_cost' => ['required', 'numeric'],
             'equipment_cost' => ['required', 'numeric'],
             'other_cost' => ['required', 'numeric'],
             'tax_cost' => ['required', 'numeric'],
             'end_date' => ['required'],
-            'image' => ['required']
         ]);
 
     	$venue = Course::FindBySlugOrFail($slug);
@@ -353,6 +381,8 @@ class CourseController extends Controller
             'bottom_section' => isset($request['bottom_section']) ? $request['bottom_section'] : '',
             'end_date' => $request['end_date'],
             'image' => isset($filename) ? $filename : '',
+            'membership_popup' => isset($data['membership_popup']) ? $data['membership_popup'] : '',
+            // 'membership_popup' => $request['membership_popup'],
     	]);
 
         if(isset($data['course_date'])){  
@@ -416,7 +446,7 @@ class CourseController extends Controller
     public function update_course_price($price,$course_id) 
     {    
         $course = Course::find($course_id);
-        $course->price = $price;
+        $course->price = number_format((float)$price, 2, '.', '');
         $course->save();
 
         $data = array(
@@ -447,6 +477,8 @@ class CourseController extends Controller
     |----------------------------------------*/
     public function selectedCat(Request $request)
     {
+        //dd($request->all()); 
+        
         $cat_id = $request->selectedCat;
         $sub_cat = ProductCategory::where('parent',$cat_id)->where('subparent','0')->get();
 

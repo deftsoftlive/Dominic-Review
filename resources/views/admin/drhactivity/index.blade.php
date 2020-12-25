@@ -42,6 +42,7 @@
                         <table class="table table-hover">
                             <thead>
                             <tr> 
+                                <th>Sort</th>
                                 <th>Title</th>
                                 <!-- <th>Description</th> -->
                                 <th>Subtitle</th> 
@@ -53,6 +54,8 @@
                             <tbody>
                             @foreach($drhactivity as $test)
                                 <tr>
+                                    <td><input type="text" id="update_drhactivity_sort" data-id="{{$test->id}}" value="{{$test->sort}}" style="width:
+                                    50px"></td>
                                     <td>{{$test->title}}</td>
                                     <td>{{$test->subtitle}}</td>
                                     <td>

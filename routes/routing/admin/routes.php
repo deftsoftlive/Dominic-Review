@@ -4,7 +4,7 @@ Route::get('/admin/login', 'Admin\AdminController@index')->name('admin_login');
 Route::post('/admin/login', 'Admin\AdminController@check')->name('post_admin_login');
 
 Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
-       require __DIR__.'/ajax.php';
+       //require __DIR__.'/ajax.php';
        require __DIR__.'/product.php';
 
 
@@ -28,6 +28,13 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::any('/image-icon','Admin\ImageIconController@image_icons')->name('image_icons');
 		Route::any('/image-icon/save','Admin\ImageIconController@save_image_icons')->name('save_image_icons');
 		Route::any('/image-icon/remove/{id}','Admin\ImageIconController@remove_image_icons')->name('remove_image_icons');
+
+		#----------------------------------------------------------------
+		#  Image Crud Management
+		#----------------------------------------------------------------
+		Route::any('/images','Admin\ImageCrudController@image_icons')->name('images');
+		Route::any('/images/save','Admin\ImageCrudController@save_image_icons')->name('save_images');
+		Route::any('/images/remove/{id}','Admin\ImageCrudController@remove_image_icons')->name('remove_images');
 
 		#----------------------------------------------------------------
 		#  Coach - Invoice PDF's Management
@@ -263,6 +270,7 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::post('/drh-activity/{slug}','Admin\DrhActivityController@drhactivity_update')->name('admin.drhactivity.update');
 		Route::get('/drh-activity/status/{id}','Admin\DrhActivityController@drhactivity_Status')->name('admin.drhactivity.status');
 		Route::any('/drh-activity/delete/{id}','Admin\DrhActivityController@delete_drhactivity')->name('delete_drhactivity');
+		Route::any('/update_drhactivity_sort/{sort_no}/{activity_id}','Admin\DrhActivityController@update_drhactivity_sort')->name('update.activity.sort');
 
 
 		#----------------------------------------------------------------
@@ -340,6 +348,10 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::get('/coupon/{id}','Admin\CouponController@coupon_showEdit')->name('admin.coupon.showEdit');
 		Route::post('/coupon/{id}','Admin\CouponController@coupon_update')->name('admin.coupon.update');
 		Route::get('/coupon/status/{id}','Admin\CouponController@coupon_Status')->name('admin.coupon.status');
+		Route::any('/coupon/duplicate/{id}','Admin\CouponController@duplicate_coupon')->name('duplicate_coupon');
+		Route::any('/coupon/export/csv','Admin\CouponController@export_coupon_csv')->name('export_coupon_csv');
+		Route::any('/coupon/import/csv','Admin\CouponController@coupon_import_csv')->name('coupon_csv');
+		Route::any('/coupon/csv/save','Admin\CouponController@save_coupon_csv')->name('save_coupon_csv');
 
 		#----------------------------------------------------------------
 		#  Camp Category Management
@@ -420,6 +432,7 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::get('/reportquestion/{slug}','Admin\ReportQuestionController@reportquestion_showEdit')->name('admin.reportquestion.showEdit');
 		Route::post('/reportquestion/{slug}','Admin\ReportQuestionController@reportquestion_update')->name('admin.reportquestion.update');
 		Route::get('/reportquestion/status/{id}','Admin\ReportQuestionController@reportquestion_Status')->name('admin.reportquestion.status');
+		Route::any('/reportquestion/delete/{id}','Admin\ReportQuestionController@delete_reportquestion')->name('delete_reportquestion');
 
 
 		Route::get('/report-question-option','Admin\ReportQuestionController@reportquestionopt_index')->name('admin.reportquestionopt.list');
@@ -428,6 +441,7 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::get('/report-question-option/{id}','Admin\ReportQuestionController@reportquestionopt_showEdit')->name('admin.reportquestionopt.showEdit');
 		Route::post('/report-question-option/{id}','Admin\ReportQuestionController@reportquestionopt_update')->name('admin.reportquestionopt.update');
 		Route::get('/report-question-option/status/{id}','Admin\ReportQuestionController@reportquestionopt_Status')->name('admin.reportquestionopt.status');
+		Route::get('/report-question-option/delete/{id}','Admin\ReportQuestionController@delete_reportquestionopt')->name('delete_reportquestionopt');
 
 		Route::any('/player-reports','Admin\ReportQuestionController@player_reports')->name('admin.player_reports.listing');
 		Route::get('/player-report/{id}','Admin\ReportQuestionController@player_reports_detail')->name('admin.player_reports.detail');
@@ -544,6 +558,7 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
         Route::get('/pages/{slug}', 'Admin\CmsPageController@edit')->name('admin.cms-pages.edit');
         Route::post('/pages/{slug}', 'Admin\CmsPageController@update')->name('admin.cms-pages.update');
         Route::get('/pages/status/{slug}', 'Admin\CmsPageController@changeStatus')->name('admin.cms-pages.status');
+        Route::get('/pages/delete/{slug}', 'Admin\CmsPageController@delete')->name('admin.cms-pages.delete');
 
 
         #------------------------------------------------------------------------------------

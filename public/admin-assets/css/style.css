@@ -890,6 +890,18 @@ form.ch_course label.control-label {
 .wrap_btn {
     padding: 10px!important;
 }
+.image-from-wrap {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.image-from-wrap a {
+    margin-top: 15px!important;
+}
+.image-from-wrap input {
+    font-size: 12.4px;
+}
 
 @page {
   size: auto;

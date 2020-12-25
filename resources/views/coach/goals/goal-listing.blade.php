@@ -31,7 +31,13 @@
   <div class="outer-wrap">
     <div class="row">
   <div class="col-md-12 pink-heading">
-    <h2>Goals</h2>    
+    <h2>Goals</h2>  
+  </div>
+
+  <div class="row">
+    <div class="textbox-manage ">
+      <p>{!! getAllValueWithMeta('coach_goals', 'textbox-management') !!}</p>
+    </div>
   </div>
 
   <div class="col-md-12 invoice_apd">
@@ -90,7 +96,7 @@
           </div>
 
             @else
-              <div class="noData offset-md-4 col-md-4 sorry_msg">
+              <div class="noData offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-2 col-sm-8 sorry_msg">
                 <div class="no_results">
                   <h3>Sorry, no results</h3>
                   <p>No Invoice Found</p>

@@ -46,7 +46,7 @@
                                             <div class="row">
                                                 <div class="col-sm-3">
                                                     <!-- <label for="inputCity">Search Course</label> -->
-                                                      <select id="people" name="type" class="form-control">
+                                                      <select id="people" name="type1" class="form-control">
                                                     
                                                       <option value="" disabled="" selected="">Select Course Category</option>
                                                       @foreach($course_cat as $cour)
@@ -57,13 +57,13 @@
                                                     
                                                 <div class="col-sm-3">
                                                       <!-- <label for="inputAge">Select Age Group</label> -->
-                                                      <select id="inputAge" name="subtype" class="form-control event-dropdown">
+                                                      <select id="inputAge" name="subtype1" class="form-control event-dropdown">
                                                         <option value="" selected="" disabled="">Select Age Group</option>
                                                       </select>
                                                 </div>
 
                                                 <div class="col-sm-3">
-                                                    <select name="level" class="form-control">
+                                                    <select name="level1" class="form-control">
                                                       <option value="" selected="" disabled="">Select Level</option>
                                                       <option value="Beginner">Beginner</option>
                                                       <option value="Intermediate">Intermediate</option>
@@ -90,6 +90,7 @@
                                              <table class="table table-hover">
                                                 <thead>
                                                 <tr> 
+                                                    <th>Course ID</th>
                                                     <th>Sort</th>
                                                     <th>Name</th>
                                                     <th>Season</th>
@@ -111,6 +112,7 @@
 
                                                     <tr>
                                                     @if(count($course)> 0)
+                                                        <td>{{$test->id}}</td>
                                                         <td><input type="text" id="update_course_sort" data-id="{{$test->id}}" value="{{$test->sort}}" style="width:
                                                         50px"></td>
                                                         <td>

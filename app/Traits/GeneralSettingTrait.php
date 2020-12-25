@@ -145,6 +145,12 @@ trait GeneralSettingTrait {
                        'camp_page_title' => getAllValueWithMeta('camp_page_title', $slug),
                        'camp_banner_image' => getAllValueWithMeta('camp_banner_image', $slug),
 
+                       // Tab's Title
+                       'camp_tab_title1' => getAllValueWithMeta('camp_tab_title1', $slug),
+                       'camp_tab_title2' => getAllValueWithMeta('camp_tab_title2', $slug),
+                       'camp_tab_title3' => getAllValueWithMeta('camp_tab_title3', $slug),
+                       'camp_tab_title4' => getAllValueWithMeta('camp_tab_title4', $slug),
+
                        // Tab Section
                        'camp_tab_title' => getAllValueWithMeta('camp_tab_title', $slug),
 
@@ -639,6 +645,16 @@ trait GeneralSettingTrait {
                        'faq_banner' => getAllValueWithMeta('faq_banner', $slug),
                        'checkout_banner' => getAllValueWithMeta('checkout_banner', $slug),
           ];
+
+        case 'textbox-management': 
+          return [
+                        // Text Box management
+                       'coach_my_players' => getAllValueWithMeta('coach_my_players', $slug),
+                       'coach_notifications' => getAllValueWithMeta('coach_notifications', $slug),
+                       'coach_goals' => getAllValueWithMeta('coach_goals', $slug),
+                       'coach_competition' => getAllValueWithMeta('coach_competition', $slug),
+          ];
+
         case 'early-bird': 
           return [    
                        // Early Bird Date & Time
@@ -661,6 +677,7 @@ trait GeneralSettingTrait {
                        'report2_content' => getAllValueWithMeta('report2_content', $slug),
                        'report3_content' => getAllValueWithMeta('report3_content', $slug),
                        'report_detail' => getAllValueWithMeta('report_detail', $slug),
+                       'player_report_detail' => getAllValueWithMeta('player_report_detail', $slug),
           ];
         case 'child-care-popup': 
           return [    
@@ -715,6 +732,9 @@ trait GeneralSettingTrait {
 
                        // Match Stats Text
                        'match_stats_text' => getAllValueWithMeta('match_stats_text', $slug),
+
+                       // Membership Popup Text
+                       'membership_popup_text' => getAllValueWithMeta('membership_popup_text', $slug),
           ];
 		 	case 'global-settings': 
           return [

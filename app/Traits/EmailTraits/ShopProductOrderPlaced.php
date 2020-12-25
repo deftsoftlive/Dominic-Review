@@ -94,6 +94,7 @@ public function ShopProductOrderPlacedInfoSendEmail($order,$template_id)
 // Order Email
 public function ShopProductOrderPlacedHtml($order,$template)
 { 
+  //dd($order);
     $banner = view('emails.order.shoppingBanner')->render();
     $text2 = $template->body;
     $orderDetail = $this->ShopProductOrderPlacedDetail($order);
@@ -139,10 +140,16 @@ public function ShopProductOrderPlacedInfoDetail($order)
 // Order Email
 public function ShopProductOrderPlacedDetail($order)
 {
-  //dd($order);
+
   if($order->payment_by == 'STRIPE')
   {
-    return $vv = view('emails.shop.orders.detail')->with('orders',$order->orderItems)->render(); 
+    if(count($order->orderItems)>0)
+    {
+      return $vv = view('emails.shop.orders.detail')->with('orders',$order->orderItems)->render(); 
+    }else{
+      return $vv = view('emails.shop.orders.order_email')->with('orders',$order)->render();
+    }
+    
   }
   else
   { 

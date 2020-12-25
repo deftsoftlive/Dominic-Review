@@ -335,7 +335,7 @@ if (in_array('product', $shop_type, TRUE)){ ?>
       @csrf
       <h2 class="step-content-title" style="display:none;">Billing Address</h2>
       <div class="row">
-      	<br/><br/><h4>&nbsp; Not required for camps/courses</h4>
+      	<br/><br/><h4>&nbsp; Billing / Shipping details not required for camps or coaching courses</h4>
          <div class="col-lg-8" style="display:none;">
             <div class="row">
                <div class="col-md-6">

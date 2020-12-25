@@ -22,7 +22,19 @@
         <div class="col-12">
           <div class="card">
             <!-- /.card-header -->
-       @include('admin.error_message')
+       <!-- @include('admin.error_message') -->
+
+        @if(Session::has('success'))
+        <div class="alert_msg alert alert-success">
+            <p>{{ Session::get('success') }} </p>
+        </div>
+        @endif
+
+        @if(Session::has('error'))
+        <div class="alert_msg alert alert-danger">
+            <p>{{ Session::get('error') }} </p>
+        </div>
+        @endif
  
             <div class="card-body">
 
@@ -84,6 +96,9 @@
 
                             <div class="form-group">
                               <label class="control-label" for="timelsots">Courses Data</label>
+
+                              <p style="font-size:16px;color:#3f4d67;"><b>Please Note</b>: Courses will only appear if there are available spaces, the player has the correct age and they are not already booked on the course - Thank you!</p>
+                              
 
                                 <!-- ******************************
                                 |     Courses Dates

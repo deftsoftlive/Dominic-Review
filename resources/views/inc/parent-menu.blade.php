@@ -17,45 +17,52 @@
 <li><a href="{{ route('linked_coaches') }}" class="{{ \Request::route()->getName() === 'linked_coaches' ? 'active' : '' }}">My Coaches</a></li>
 
 
-@if(Auth::user()->role_id == '2')
+@if(Auth::user()->role_id == 2)
 
-	@php 
-	    $notifications = DB::table('notifications')->orderBy('created_at','desc')->get(); 	
-	    $children = DB::table('users')->where('parent_id',Auth::user()->id)->get();
-	    $child_id = [];
+@php 
+    $notifications = DB::table('notifications')->orderBy('created_at','desc')->get();
+    $children = DB::table('users')->where('parent_id',Auth::user()->id)->get();
+    $child_id = [];
+    $i = 0;
+@endphp
 
-	    $i = 0;
-	@endphp
+@foreach($children as $child)
+    @php $child_id[] = $child->id; @endphp
+@endforeach
 
-	@foreach($children as $child)
-        @php $child_id[] = $child->id; @endphp
-    @endforeach
+@foreach ($notifications as $notification)
 
+@php 
+    $notification_arr = json_decode($notification->data); 
+    //dd($notification_arr,$child_id,Auth::user()->id);
+@endphp
 
-	@foreach ($notifications as $notification)
+        @if(!empty($notification_arr))
 
-	@php 
-	    $notification_arr = json_decode($notification->data);  
-	    
-	@endphp
+        @if($notification->notifiable_type = 'App\UserBadge' || $notification->notifiable_type = 'App\PlayerReport' || $notification->notifiable_type = 'App\MatchReport')
 
-	@if(!empty($notification_arr))
+            @if(in_array($notification_arr->send_to,$child_id))
 
-        @if(in_array($notification_arr->send_to,$child_id))
+            	@php $i++; @endphp
 
-            @php $i++; @endphp
+            @endif
 
-        @elseif($notification_arr->send_to == Auth::user()->id)
+        @else
 
-            @php $i++; @endphp
+            @if($notification_arr->send_to == Auth::user()->id)
+
+            	@php $i++; @endphp
+
+            @endif
 
         @endif
-        
-    @endif
 
-	@endforeach
+        @endif
+
+@endforeach
 
 @endif
+
 
 <li><a href="{{ route('notification_timeline') }}" class="{{ \Request::route()->getName() === 'notification_timeline' ? 'active' : '' }}">Notifications ({{isset($i) ? $i : '0'}}) <span class="notification-icon"></span></a></li>
 

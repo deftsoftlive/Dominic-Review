@@ -32,7 +32,7 @@
 
                       <li class="{{$number >= 1 ? 'active' : ''}}">Cart Review</li>  
                       <li class="{{$number >= 2 ? 'active' : ''}}">Participant Info</li> 
-                      <li class="{{$number >= 3 ? 'active' : ''}}">Shipping/Billing</li>
+                      <li class="{{$number >= 3 ? 'active' : ''}}">Shipping / Billing</li>
                       <li class="{{$number >= 4 ? 'active' : ''}}">Payment</li>
                     </ul>
            

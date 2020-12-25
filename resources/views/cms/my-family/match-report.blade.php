@@ -54,7 +54,8 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
 
                 <!-- Match Report (Start Here)-->
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                    <div class="content-wrap">
+                    <!-- <div class="content-wrap"> -->
+                    <div>
                         {!! getAllValueWithMeta('report3_content', 'report') !!}
                     </div>
                     <div class="form-head">

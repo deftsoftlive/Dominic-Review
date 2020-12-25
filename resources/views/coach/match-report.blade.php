@@ -66,7 +66,9 @@ border: 4px solid #001642;
 
                 <!-- Match Report (Start Here)-->
                 <div class="tab-pane fade active show" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                    <div class="content-wrap">
+                    <br/>
+                    <!-- <div class="content-wrap"> -->
+                    <div>
                         {!! getAllValueWithMeta('report3_content', 'report') !!}
                     </div>
                     <div class="form-head">
@@ -268,10 +270,11 @@ border: 4px solid #001642;
                                                                 $check_game_chart = DB::table('match_game_charts')->where('comp_id',$comp->id)->where('match_id',$ma->id)->where('player_id',$comp->player_id)->get();
                                                                 $count_game_chart = $check_game_chart->count();
                                                             @endphp
+                                                            <div class="table-services-wrap">
                                                             <table class="add_on_services match_game_chart">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>Upload Match Chart</th>
+                                                                        <th>Upload Match Chart Images</th>
                                                                         <th><a onclick="addnewsection();" href="javascript:void(0);"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></th>
                                                                     </tr>
                                                                 </thead>
@@ -307,6 +310,7 @@ border: 4px solid #001642;
                                                               
                                                                 </tbody>
                                                             </table>
+                                                        </div>
                                                           <!--   <div class="form-group">
                                                                 <label>Upload Match Chart</label><br/>
 
@@ -410,7 +414,7 @@ border: 4px solid #001642;
                                         <table class="add_on_services match_game_chart">
                                             <thead>
                                                 <tr>
-                                                    <th>Upload Match Chart</th>
+                                                    <th>Upload Match Chart Images</th>
                                                     <th><a onclick="addnewsection();" href="javascript:void(0);"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></th>
                                                 </tr>
                                             </thead>
@@ -512,7 +516,7 @@ border: 4px solid #001642;
                                     <table class="add_on_services match_game_chart">
                                         <thead>
                                             <tr>
-                                                <th>Upload Match Chart</th>
+                                                <th>Upload Match Chart Images</th>
                                                 <th><a onclick="addnewsection();" href="javascript:void(0);"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></th>
                                             </tr>
                                         </thead>

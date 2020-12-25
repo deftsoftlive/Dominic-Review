@@ -82,6 +82,7 @@ class SeasonController extends Controller
             'description' => ['required', 'string']
         ]);
 
+        $venue = Season::where('slug',$slug)->first();
         $venue->update([
             'title' => $request['title'],
             'description' => $request['description'],

@@ -60,6 +60,8 @@ use App\Models\Products\ProductCategory;
 use App\Traits\ProductCart\UserCartTrait;
 use App\Traits\EmailTraits\EmailNotificationTrait;
 use Notification;
+use Validator;
+use Stripe;
 use App\Notifications\MyFirstNotification;
 use App\Notifications\WalletMoneyNotification;
 
@@ -95,8 +97,14 @@ class HomeController extends Controller
     }
 
     public function showCmsPage($slug) {
-      $page = CmsPage::FindBySlugOrFail($slug);
-      return view('cmspage')->with('page', $page);
+      $page = CmsPage::FindBySlugOrFail($slug); 
+
+      if($page->status == 1)
+      {
+        return view('cmspage')->with('page', $page);
+      }else{
+        return redirect('404');
+      }
     }
 
     /**
@@ -701,11 +709,12 @@ public function listing(Request $request)
 public function football_listing(Request $request)
 {
     $slug = 'course-listing/football';
+    
+    $course_name = !empty(request()->get('selected_course_name')) ? request()->get('selected_course_name') : '';
+    $subtype = !empty(request()->get('subtype')) ? request()->get('subtype') : '';
+    $level = !empty(request()->get('level')) ? request()->get('level') : '';
 
     if(!empty(request()->get('course'))){
-          $course_name = request()->get('selected_course_name');
-          $subtype = request()->get('subtype');
-          $level = request()->get('level');
 
           //dd($course,$course_name,$age_group,$level);
 
@@ -738,7 +747,7 @@ public function football_listing(Request $request)
     $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->orderBy('sorting','asc')->get();
 
     $testimonial = Testimonial::select(['id','title', 'description','status','slug','image'])->where('page_title','course-listing/football')->where('status','1')->get(); 
-    return view('cms.course.football-listing',compact('testimonial','course','course_name','age_group','level','accordian','subtype'));
+    return view('cms.course.football-listing',compact('testimonial','course','course_name','level','accordian','subtype'));
 }
 
 /* Tennis Course Listing Page */
@@ -746,19 +755,99 @@ public function tennis_listing(Request $request)
 {
     $slug = 'course-listing/tennis';
 
-    $cat_id = $request->input('cat'); 
+    if(!empty($request->category_id) && isset($request->category_id)) {
+      $cat_id = $request->category_id;
+    }else{
+      $cat_id = $request->input('cat'); 
+    }
+    
+    $course_name = !empty(request()->get('selected_course_name')) ? request()->get('selected_course_name') : '';
+    $subtype = !empty(request()->get('subtype')) ? request()->get('subtype') : '';
+    $level = !empty(request()->get('level')) ? request()->get('level') : '';
 
-    if(!empty(request()->get('course'))){
-      $course_name = request()->get('selected_course_name');
-      $subtype = request()->get('subtype');
-      $level = request()->get('level');
+    if(!empty(request()->get('course')) && !empty(request()->get('subtype')) && !empty(request()->get('level'))){
 
       $course = \DB::table('courses')
                  ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('title', '=', $course_name)
+                 ->where('courses.title', '=', $course_name)
                  ->where('subtype', '=', $subtype)
-                 // ->where('subtype', '=', $level)
-                 ->where('status',1)
+                 ->where('level', '=', $level)
+                 ->where('courses.status',1)
+                 ->where('seasons.status',1)
+                 ->where('course_category',$cat_id)
+                 ->where('type','156')
+                 ->select('courses.*')
+                 ->orderBy('sort','asc')->get();
+
+    }else if(!empty(request()->get('course')) && !empty(request()->get('subtype')) && empty(request()->get('level'))){
+
+      $course = \DB::table('courses')
+                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
+                 ->where('courses.title', '=', $course_name)
+                 ->where('subtype', '=', $subtype)
+                 ->where('courses.status',1)
+                 ->where('seasons.status',1)
+                 ->where('course_category',$cat_id)
+                 ->where('type','156')
+                 ->select('courses.*')
+                 ->orderBy('sort','asc')->get();
+
+    }else if(!empty(request()->get('course')) && empty(request()->get('subtype')) && !empty(request()->get('level'))){
+
+      $course = \DB::table('courses')
+                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
+                 ->where('courses.title', '=', $course_name)
+                 ->where('level', '=', $level)
+                 ->where('courses.status',1)
+                 ->where('seasons.status',1)
+                 ->where('course_category',$cat_id)
+                 ->where('type','156')
+                 ->select('courses.*')
+                 ->orderBy('sort','asc')->get();
+
+    }else if(!empty(request()->get('course')) && empty(request()->get('subtype')) && empty(request()->get('level'))){
+
+      $course = \DB::table('courses')
+                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
+                 ->where('courses.title', '=', $course_name)
+                 ->where('courses.status',1)
+                 ->where('seasons.status',1)
+                 ->where('course_category',$cat_id)
+                 ->where('type','156')
+                 ->select('courses.*')
+                 ->orderBy('sort','asc')->get();
+
+    }else if(empty(request()->get('course')) && !empty(request()->get('subtype')) && empty(request()->get('level'))){
+
+      $course = \DB::table('courses')
+                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
+                 ->where('subtype', '=', $subtype)
+                 ->where('courses.status',1)
+                 ->where('seasons.status',1)
+                 ->where('course_category',$cat_id)
+                 ->where('type','156')
+                 ->select('courses.*')
+                 ->orderBy('sort','asc')->get();
+
+    }else if(empty(request()->get('course')) && empty(request()->get('subtype')) && !empty(request()->get('level'))){
+
+      $course = \DB::table('courses')
+                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
+                 ->where('level', '=', $level)
+                 ->where('courses.status',1)
+                 ->where('seasons.status',1)
+                 ->where('course_category',$cat_id)
+                 ->where('type','156')
+                 ->select('courses.*')
+                 ->orderBy('sort','asc')->get();
+
+    }else if(empty(request()->get('course')) && !empty(request()->get('subtype')) && !empty(request()->get('level'))){
+
+      $course = \DB::table('courses')
+                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
+                 ->where('subtype', '=', $subtype)
+                 ->where('level', '=', $level)
+                 ->where('courses.status',1)
                  ->where('seasons.status',1)
                  ->where('course_category',$cat_id)
                  ->where('type','156')
@@ -777,13 +866,11 @@ public function tennis_listing(Request $request)
     }
     $accordian = Accordian::where('page_title',$slug)->where('status','1')->orderBy('sort','asc')->get();  
 
-    // dd($course);
-
     // Get subtype for tennis courses
     $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->orderBy('sorting','asc')->get();
 
     $testimonial = Testimonial::select(['id','title', 'description','status','slug','image'])->where('status','1')->where('page_title','course-listing/tennis')->get(); 
-    return view('cms.course.tennis-listing',compact('testimonial','course','course_name','age_group','level','accordian','subtype'));
+    return view('cms.course.tennis-listing',compact('testimonial','course','accordian','subtype','course_name','level','cat_id'));
 }
 
 /* School Course Listing Page */
@@ -791,17 +878,93 @@ public function school_listing(Request $request)
 {
     $slug = 'course-listing/school';
 
-    if(!empty(request()->get('course'))){
-      $course_name = request()->get('selected_course_name');
-      $subtype = request()->get('subtype');
-      $level = request()->get('level');
+    if(!empty($request->cat) && isset($request->cat)) {
+      $cat_id = $request->cat;
+    }else{
+      $cat_id = $request->input('cat'); 
+    }
+    
+    $course_name = !empty(request()->get('selected_course_name')) ? request()->get('selected_course_name') : '';
+    $subtype = !empty(request()->get('subtype')) ? request()->get('subtype') : '';
+    $level = !empty(request()->get('level')) ? request()->get('level') : '';
+
+    if(!empty(request()->get('course')) && !empty(request()->get('subtype')) && !empty(request()->get('level'))){
 
       $course = \DB::table('courses')
                  ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('title', '=', $course_name)
+                 ->where('courses.title', '=', $course_name)
+                 ->where('subtype', '=', $subtype)
+                 ->where('level', '=', $level)
+                 ->where('seasons.status',1)
+                 ->where('courses.status',1)
+                 ->where('type','191')
+                 ->select('courses.*')
+                 ->orderBy('sort','asc')->get();
+
+    }else if(!empty(request()->get('course')) && !empty(request()->get('subtype')) && empty(request()->get('level'))){
+
+      $course = \DB::table('courses')
+                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
+                 ->where('courses.title', '=', $course_name)
                  ->where('subtype', '=', $subtype)
                  ->where('seasons.status',1)
-                 // ->where('subtype', '=', $level)
+                 ->where('courses.status',1)
+                 ->where('type','191')
+                 ->select('courses.*')
+                 ->orderBy('sort','asc')->get();
+
+    }else if(!empty(request()->get('course')) && empty(request()->get('subtype')) && !empty(request()->get('level'))){
+
+      $course = \DB::table('courses')
+                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
+                 ->where('courses.title', '=', $course_name)
+                 ->where('level', '=', $level)
+                 ->where('seasons.status',1)
+                 ->where('courses.status',1)
+                 ->where('type','191')
+                 ->select('courses.*')
+                 ->orderBy('sort','asc')->get();
+
+    }else if(!empty(request()->get('course')) && empty(request()->get('subtype')) && empty(request()->get('level'))){
+
+      $course = \DB::table('courses')
+                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
+                 ->where('courses.title', '=', $course_name)
+                 ->where('seasons.status',1)
+                 ->where('courses.status',1)
+                 ->where('type','191')
+                 ->select('courses.*')
+                 ->orderBy('sort','asc')->get();
+
+    }else if(empty(request()->get('course')) && !empty(request()->get('subtype')) && empty(request()->get('level'))){
+
+      $course = \DB::table('courses')
+                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
+                 ->where('subtype', '=', $subtype)
+                 ->where('seasons.status',1)
+                 ->where('courses.status',1)
+                 ->where('type','191')
+                 ->select('courses.*')
+                 ->orderBy('sort','asc')->get();
+
+    }else if(empty(request()->get('course')) && empty(request()->get('subtype')) && !empty(request()->get('level'))){
+
+      $course = \DB::table('courses')
+                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
+                 ->where('level', '=', $level)
+                 ->where('seasons.status',1)
+                 ->where('courses.status',1)
+                 ->where('type','191')
+                 ->select('courses.*')
+                 ->orderBy('sort','asc')->get();
+
+    }else if(empty(request()->get('course')) && !empty(request()->get('subtype')) && !empty(request()->get('level'))){
+
+      $course = \DB::table('courses')
+                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
+                 ->where('subtype', '=', $subtype)
+                 ->where('level', '=', $level)
+                 ->where('seasons.status',1)
                  ->where('courses.status',1)
                  ->where('type','191')
                  ->select('courses.*')
@@ -825,7 +988,7 @@ public function school_listing(Request $request)
     $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->orderBy('sorting','asc')->get();
 
     $testimonial = Testimonial::select(['id','title', 'description','status','slug','image'])->where('page_title','course-listing/school')->where('status','1')->get(); 
-    return view('cms.course.school-listing',compact('testimonial','course','course_name','age_group','level','accordian','subtype'));
+    return view('cms.course.school-listing',compact('testimonial','course','course_name','level','accordian','subtype','cat_id'));
 }
 
 /* Course Detail Page */
@@ -879,7 +1042,7 @@ public function tennis_pro()
 /* Course Booking */
 public function course_booking(Request $request)
 {
-  $check_cart = ShopCartItems::where('user_id',Auth::user()->id)->where('type','cart')->first();
+  $check_cart = ShopCartItems::where('user_id',Auth::user()->id)->where('type','cart')->first(); //dd($check_cart);
 
   if(!empty($check_cart))
   {
@@ -896,7 +1059,7 @@ public function course_booking(Request $request)
         $check_consents = ChildrenDetail::where('child_id', $request->child)->first();
         $check_contacts = ChildContact::where('child_id', $request->child)->first(); 
 
-        // dd($check_consents,$check_contacts,$check_consents->media,$check_consents->media,$check_consents->confirm,$check_consents->med_cond);
+        //dd($check_consents,$check_contacts,$check_consents->media,$check_consents->media,$check_consents->confirm,$check_consents->med_cond);
 
         // if(isset($check_consents) && isset($check_contacts) && !empty($check_consents->media) && !empty($check_consents->confirm) && !empty($check_consents->med_cond))
         // {
@@ -935,6 +1098,7 @@ public function course_booking(Request $request)
                 $add_course->product_id = $course_id;
                 $add_course->user_id    = \Auth::user()->id;
                 $add_course->course_season = $course_season;
+                $add_course->membership_status = 0;
 
               if($currntD >= $endDate)
               {   
@@ -967,7 +1131,14 @@ public function course_booking(Request $request)
 
                   // return response()->json($data);
 
+                  // return redirect('shop/cart');
+
+                if($course->membership_popup == 1)
+                {
+                  return \Redirect::back()->withInput(array('shop_id' => $add_course->id))->with('popup',' ');
+                }else{
                   return redirect('shop/cart');
+                }
           }
           else{
             return \Redirect::back()->with('error','This person is already booked on this course.');
@@ -977,7 +1148,7 @@ public function course_booking(Request $request)
       //   return \Redirect::back()->with('error','User details are required in order to proceed.');
       // }
       }else{
-        return \Redirect::back()->with('error','You cannot book this course.');
+        return \Redirect::back()->with('error','Courses / camps held at Letchworth Sports & Tennis Club cannot be purchased at the same time as courses / camps held at other venues or some shop items. You will need to purchase LSTC courses / camps seperately - Thank you!');
       }
   }else{
       $course = Course::where('id',$request->course_id)->first();
@@ -1021,6 +1192,7 @@ public function course_booking(Request $request)
               $add_course->product_id = $course_id;
               $add_course->user_id    = \Auth::user()->id;
               $add_course->course_season = $course_season;
+              $add_course->membership_status = 0;
 
             if($currntD >= $endDate)
             {   
@@ -1047,7 +1219,12 @@ public function course_booking(Request $request)
                 $output = 0;
               }
 
+              if($course->membership_popup == 1)
+              {
+                return \Redirect::back()->withInput(array('shop_id' => $add_course->id))->with('popup',' ');
+              }else{
                 return redirect('shop/cart');
+              }
         }
         else{
           return \Redirect::back()->with('error','This person is already booked on this course.');
@@ -1055,6 +1232,16 @@ public function course_booking(Request $request)
   }
   
 } 
+
+  /*----------------------------------------
+  |   Membership Status
+  |----------------------------------------*/
+  public function membership_status(Request $request) 
+  {
+    ShopCartItems::where('id',$request->shop_id)->update(array('membership_status' => $request->membership_status));
+    return redirect('shop/cart');
+  }
+
 
   /* Course Page Search */
   public function course_search(Request $request) 
@@ -1148,7 +1335,7 @@ public function camp_listing()
 {
     $camp_categories = CampCategory::orderBy('id','desc')->where('status','1')->get();
     $providers = ChildcareVoucher::orderBy('id','desc')->get();
-    $testimonial = Testimonial::select(['id','title', 'description','status','slug','image'])->where('page_title','camp-listing')->where('status','1')->paginate(1);
+    $testimonial = Testimonial::select(['id','title', 'description','status','slug','image'])->where('page_title','camp-listing')->where('status','1')->get();
     $accordian = Accordian::where('page_title','camp-listing')->where('status',1)->orderBy('sort','asc')->get(); 
     $accordian_download = Accordian::where('page_title','camp-download')->where('status',1)->orderBy('sort','asc')->get(); 
     $accordian_parent_info = Accordian::where('page_title','camp-parent-info')->where('status',1)->orderBy('sort','asc')->get(); 
@@ -1176,6 +1363,8 @@ public function book_a_camp($slug)
 /* Book a Camp Page */
 public function submit_book_a_camp(Request $request) 
 {  
+  //dd($request->all());
+
   $check_cart = ShopCartItems::where('user_id',Auth::user()->id)->where('type','cart')->first();
 
   if(!empty($check_cart))
@@ -1290,10 +1479,13 @@ public function submit_book_a_camp(Request $request)
         $add_course->vendor_id  = 1;
         $add_course->product_id = $camp_id;
         $add_course->user_id    = \Auth::user()->id;
-        $add_course->price      = $add_price;
-        $add_course->total      = $add_price;
+        // $add_course->price      = $add_price;
+        // $add_course->total      = $add_price;
+        // $add_course->camp_price = $add_price;
+        $add_course->price      = base64_decode($request->price);
+        $add_course->total      = base64_decode($request->price);
         $add_course->week       = $sel_week;
-        $add_course->camp_price = $add_price;
+        $add_course->camp_price = base64_decode($request->price);
         $add_course->child_id   = $child;
 
         if($add_course->save())
@@ -1313,10 +1505,11 @@ public function submit_book_a_camp(Request $request)
 
     }
   }else{
-    return \Redirect::back()->with('error','You cannot book this course.');
+    return \Redirect::back()->with('error','Courses / camps held at Letchworth Sports & Tennis Club cannot be purchased at the same time as courses / camps held at other venues or some shop items. You will need to purchase LSTC courses / camps seperately - Thank you!Courses / camps held at Letchworth Sports & Tennis Club cannot be purchased at the same time as courses / camps held at other venues or some shop items. You will need to purchase LSTC courses / camps seperately - Thank you!');
   }
 
   }else{
+    // dd('1');
     $check_consents = ChildrenDetail::where('child_id', $request->child_id)->first();
     $check_contacts = ChildContact::where('child_id', $request->child_id)->first();
 
@@ -1359,12 +1552,18 @@ public function submit_book_a_camp(Request $request)
     $camp_noon = array();
     $camp_full = array();
 
+  $days_arr = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
       if(isset($week))
       {
+        $days_arr = [
+            'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
+          ];
+
         foreach($week as $arrKey => $arrData){ 
 
           if(isset($arrData['early_drop'])){  
-            $arrNewSku[$incI]['early_drop'] = isset($arrData['early_drop']) ? $arrData['early_drop'] : '';
+            $arrNewSku[$incI]['early_drop'] = isset($arrData['early_drop']) ? $arrData['early_drop'] : ''; //dd($arrNewSku[$incI]['early_drop']);
             $count_early[] = count($arrData['early_drop'])*$early_price;
           }
 
@@ -1394,7 +1593,7 @@ public function submit_book_a_camp(Request $request)
             $incI++;
         }
 
-        //dd($request->all(), $camp_morning,$camp_noon,$camp_full);
+      //  dd($request->all(), $camp_morning,$camp_noon,$camp_full);
 
         $early_drop_price = isset($count_early) ? array_sum($count_early) : '';
         $late_pickup_price = isset($count_late_pickup) ? array_sum($count_late_pickup) : '';
@@ -1416,10 +1615,13 @@ public function submit_book_a_camp(Request $request)
         $add_course->vendor_id  = 1;
         $add_course->product_id = $camp_id;
         $add_course->user_id    = \Auth::user()->id;
-        $add_course->price      = $add_price;
-        $add_course->total      = $add_price;
+        // $add_course->price      = $add_price;
+        // $add_course->total      = $add_price;
+        $add_course->price      = base64_decode($request->price);
+        $add_course->total      = base64_decode($request->price);
         $add_course->week       = $sel_week;
-        $add_course->camp_price = $add_price;
+        $add_course->camp_price = base64_decode($request->price);
+        // $add_course->camp_price = $add_price;
         $add_course->child_id   = $child;
 
         if($add_course->save())
@@ -3005,7 +3207,7 @@ public function unlink_coach(Request $request)
 /* My Bookings Page */
 public function my_bookings(){
   $logined_user_id = \Auth::user()->id; 
-  $shop = \DB::table('shop_orders')->where('user_id',$logined_user_id)->orderBy('id','desc')->paginate(10);
+  $shop = \DB::table('shop_orders')->where('user_id',$logined_user_id)->groupBY('orderID')->orderBy('id','desc')->paginate(10);
   return view('cms.my-family.my-booking',compact('shop'));
 } 
 
@@ -3390,6 +3592,7 @@ public function badges()
     $course_id = request()->get('course_id');
 
     // Leader Board Filter
+    $player_id = request()->get('player_id');
     $term = request()->get('term');
     $stage = request()->get('stage');
 
@@ -3422,10 +3625,10 @@ public function badges()
               $ass_badges_data[] = $bg->badges;
             }
             
-          $badges_points = isset($pts) ? array_sum($pts) : '';
-          $courses_list = isset($courses) ? implode(', ', $courses) : ''; 
-          $course_subcat_list = isset($course_subcat) ? implode(', ', $course_subcat) : ''; 
-          $ass_badges_data = isset($ass_badges_data) ? implode(',',$ass_badges_data) : '';
+            $badges_points = isset($pts) ? array_sum($pts) : '';
+            $courses_list = isset($courses) ? implode(', ', $courses) : ''; 
+            $course_subcat_list = isset($course_subcat) ? implode(', ', $course_subcat) : ''; 
+            $ass_badges_data = isset($ass_badges_data) ? implode(',',$ass_badges_data) : '';
           }
           
       $shop = \DB::table('shop_cart_items')->where('shop_type','course')->where('user_id',Auth::user()->id)->where('child_id','!=',NULL)->where('orderID','!=',NULL)->where('order_id','!=',NULL)->orderBy('id','asc')->first();
@@ -3555,42 +3758,142 @@ public function badges()
     // }
 
     // Leader Board - Filter conditioning
-    if(!empty($term) && empty($stage) || !empty($term) && $stage==NULL){
-        $user_badge1 = \DB::table('user_badges')->where('season_id',$term)->orderBy('badges_points','desc')->paginate(10);
+
+    // Only term selected
+    if(!empty($term) && empty($stage) && empty($player_id) || !empty($term) && $stage==NULL && empty($player_id)){
+
+        $user_badge1 = \DB::table('user_badges')
+            ->leftjoin('seasons', 'seasons.id', '=', 'user_badges.season_id')
+            ->select('seasons.status', 'user_badges.*')
+            ->where('season_id',$term)
+            ->where('seasons.status',1)
+            ->orderBy('badges_points','desc')
+            ->paginate(20);
     }
-    elseif(!empty($term) && !empty($stage)){
+    // Only term & stage selected
+    elseif(!empty($term) && !empty($stage) && empty($player_id)){
 
-      $user_badge1 = \DB::table('user_badges')->where('season_id',$term)->where('stage_id',$stage)->orderBy('badges_points','desc')->paginate(10);
+      $user_badge1 = \DB::table('user_badges')
+            ->leftjoin('seasons', 'seasons.id', '=', 'user_badges.season_id')
+            ->select('seasons.status', 'user_badges.*')
+            ->where('user_badges.season_id',$term)
+            ->where('user_badges.stage_id',$stage)
+            ->where('seasons.status',1)
+            ->orderBy('badges_points','desc')
+            ->paginate(20);
+
+            // dd($term,$stage,$user_badge1);
 
     }
-    elseif(!empty($stage) && empty($term)){
+    // Only stage selected
+    elseif(empty($term) && !empty($stage) && empty($player_id)){
 
-      // dd($stage);
+      $user_badge1 = \DB::table('user_badges')
+            ->leftjoin('seasons', 'seasons.id', '=', 'user_badges.season_id')
+            ->select('seasons.status', 'user_badges.*')
+            ->where('user_badges.stage_id',$stage)
+            ->where('seasons.status',1)
+            ->orderBy('badges_points','desc')
+            ->paginate(20);
 
-      // $user_badge1 = \DB::table('user_badges')->where('stage_id',$stage)->orderBy('badges_points','desc')->paginate(10);
+            // dd($term,$stage,$user_badge1);
 
-      // dd($user_badge1);
+    }
+    // Only term & player selected
+    elseif(!empty($term) && empty($stage) && !empty($player_id)){
 
-        $course = Course::where('subtype',$stage)->first();
+      $user_badge1 = \DB::table('user_badges')
+            ->leftjoin('seasons', 'seasons.id', '=', 'user_badges.season_id')
+            ->select('seasons.status', 'user_badges.*')
+            ->where('user_badges.season_id',$term)
+            ->where('user_badges.user_id',$player_id)
+            ->where('seasons.status',1)
+            ->orderBy('badges_points','desc')
+            ->paginate(20);
 
-        if(!empty($course))
-        {
-            $shop_data = ShopCartItems::where('shop_type','course')->where('product_id',$course->id)->where('orderID','!=',NULL)->first();
+    }
+    // Only player selected
+    elseif(empty($term) && empty($stage) && !empty($player_id)){
 
-            if(!empty($shop_data))
-            {
-              $child_id = $shop_data->child_id;  
-              $user_badge1 = \DB::table('user_badges')->where('course_id',$course->id)->orderBy('badges_points','desc')->paginate(10);
-            }else{
-              $user_badge1 = '';
-            }
-        }
+      $user_badge1 = \DB::table('user_badges')
+            ->leftjoin('seasons', 'seasons.id', '=', 'user_badges.season_id')
+            ->select('seasons.status', 'user_badges.*')
+            ->where('user_badges.user_id',$player_id)
+            ->where('seasons.status',1)
+            ->orderBy('badges_points','desc')
+            ->paginate(20);
+
+    }
+    // Only stage & player selected
+    elseif(empty($term) && !empty($stage) && !empty($player_id)){
+
+      $user_badge1 = \DB::table('user_badges')
+            ->leftjoin('seasons', 'seasons.id', '=', 'user_badges.season_id')
+            ->select('seasons.status', 'user_badges.*')
+            ->where('user_badges.stage_id',$stage)
+            ->where('user_badges.user_id',$player_id)
+            ->where('seasons.status',1)
+            ->orderBy('badges_points','desc')
+            ->paginate(20);
+
+            //dd($stage,$player_id,$user_badge1);
+
+    }
+    // Only term, stage & player selected
+    elseif(!empty($term) && !empty($stage) && !empty($player_id)){
+
+      $user_badge1 = \DB::table('user_badges')
+            ->leftjoin('seasons', 'seasons.id', '=', 'user_badges.season_id')
+            ->select('seasons.status', 'user_badges.*')
+            ->where('user_badges.season_id',$term)
+            ->where('user_badges.stage_id',$stage)
+            ->where('user_badges.user_id',$player_id)
+            ->where('seasons.status',1)
+            ->orderBy('badges_points','desc')
+            ->paginate(20);
+
+    }
+    // Only stage selected
+
+    // elseif(!empty($stage) && empty($term) && empty($player_id)){
+
+    //     $course = Course::where('subtype',$stage)->first();
+
+    //     if(!empty($course))
+    //     {
+    //         $shop_data = ShopCartItems::where('shop_type','course')->where('product_id',$course->id)->where('orderID','!=',NULL)->first();
+
+    //         if(!empty($shop_data))
+    //         {
+    //           $child_id = $shop_data->child_id;  
+
+    //           $user_badge1 = \DB::table('user_badges')
+    //                   ->leftjoin('seasons', 'seasons.id', '=', 'user_badges.season_id')
+    //                   ->select('seasons.status', 'user_badges.*')
+    //                   ->where('seasons.status',1)
+    //                   ->where('user_badges.course_id',$course->id)
+    //                   ->orderBy('badges_points','desc')
+    //                   ->paginate(20);
+
+    //         }else{
+    //           $user_badge1 = '';
+    //         }
+    //     }
       
-    }else{
-        $user_badge1 = \DB::table('user_badges')->orderBy('badges_points','desc')->paginate(10);
+    // }
+    
+    // Nothing is selected
+    else{
+
+        $user_badge1 = \DB::table('user_badges')
+            ->leftjoin('seasons', 'seasons.id', '=', 'user_badges.season_id')
+            ->select('seasons.status', 'user_badges.*')
+            ->where('seasons.status',1)
+            ->orderBy('badges_points','desc')
+            ->paginate(20);
     }
 
-    //dd($user_badge1);
+    // dd($user_badge1);
 
     $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('child_id','!=',NULL)->where('orderID','!=',NULL)->where('order_id','!=',NULL)->paginate(10);
     $testimonial = Testimonial::where('page_title','badges')->where('status',1)->get();
@@ -3651,6 +3954,13 @@ public function badges()
         $average_stats = '';
       }
       
+    }
+
+    if(isset($average_stats))
+    {
+        $average_stats = $average_stats; 
+    }else{
+        $average_stats = '';
     }
 
     return view('cms.badges',compact('purchase_course','testimonial','shop','user_id','course_id','season_id','user_badge','user_badge1','goal_player','goal_type','user_goal','badges_points','courses_list','course_subcat_list','ass_badges_data','average_stats','stats_participant_name','stats_match_no'));
@@ -3721,6 +4031,8 @@ public function show_name_in_leaderboard($id,Request $request)
 public function selectedSeason(Request $request)
 { 
     $season = $request->selectedSeason; 
+    $user = $request->selectedUser;
+
     // $shop = ShopCartItems::where('course_season',$request->selectedSeason)->where('orderID','!=',NULL)->groupBy('product_id')->get(); 
 
     // $shop = \DB::table('shop_cart_items')
@@ -3732,7 +4044,20 @@ public function selectedSeason(Request $request)
     //         ->groupBy('shop_cart_items.product_id')
     //         ->get();
 
-    $shop = Course::where('season',$request->selectedSeason)->where('status',1)->get();
+    $shop = \DB::table('shop_cart_items')
+            ->leftjoin('courses', 'courses.id', '=', 'shop_cart_items.product_id')
+            ->select('courses.*', 'shop_cart_items.product_id')
+            ->where('shop_cart_items.shop_type','course')
+            ->where('course_season',$season)
+            ->where('child_id',$user)
+            ->where('shop_cart_items.type','order')
+            ->groupBy('shop_cart_items.product_id')
+            ->get();
+
+            //dd($shop);
+
+
+    // $shop = Course::where('season',$request->selectedSeason)->where('status',1)->get();
 
     if(count($shop) > 0)
     {
@@ -4195,7 +4520,7 @@ public function save_contact_us(Request $request)
         {
           $output .= '<div class="alert alert-danger" role="alert">Coupon has expired.</div>';
 
-        }else if($todayDate <= $check_coupon->start_date)
+        }else if($todayDate < $check_coupon->start_date)
         {
           $coupon_start_date = date('d/m/Y',strtotime($check_coupon->start_date));
           $output .= '<div class="alert alert-danger" role="alert">You can use this coupon after '.$coupon_start_date.'<div>';
@@ -4209,6 +4534,7 @@ public function save_contact_us(Request $request)
           $check_coupon = Coupon::where('coupon_code',$coupon_code)->first();
           $selected_products = explode(',',$check_coupon->products);
           $selected_courses = explode(',', $check_coupon->courses);
+          $selected_camps = explode(',', $check_coupon->camps);
 
           if(!empty($userCart))
           {
@@ -4247,7 +4573,26 @@ public function save_contact_us(Request $request)
                 }else{
                   $result = '<div class="alert alert-danger" role="alert">Coupon already applied.</div>';
                 }
+              }elseif(in_array($cart->product_id,$selected_camps)){
+
+                $prod = ShopCartItems::where('user_id',$user_id)->where('orderID', '=', NULL)->where('product_id',$cart->product_id)->first();
+
+                if($prod->discount_code != $coupon_code)
+                { 
+                  $pr = ShopCartItems::find($prod->id);
+                  $pr->discount_code = $request->coupon_code;
+                  $pr->discount_price = $check_coupon->flat_discount;
+                  $pr->save();
+
+                  $result = '<div class="alert alert-success" role="alert">Coupon applied successfully.</div>';
+
+                }else{
+                  $result = '<div class="alert alert-danger" role="alert">Coupon already applied.</div>';
+                }
+              }else{
+                $result = '<div class="alert alert-danger" role="alert">Something went wrong.</div>';
               }
+
             }
           }
           $output .= $result;
@@ -4333,6 +4678,7 @@ public function save_childcare_voucher(Request $request)
 public function save_wallet(Request $request)
 {
     //dd($request->all());
+
     $wallet = Wallet::where('user_id',Auth::user()->id)->first(); 
     $wallet_amount = $wallet->money_amount; 
 
@@ -4456,7 +4802,6 @@ public function save_wallet(Request $request)
 |---------------------------------*/ 
 public function save_package_wallet_pay(Request $request)
 {
-    //dd($request->all());
     $user_id = base64_decode($request->u_id);
     $booking_no = base64_decode($request->booking_no);
 
@@ -4520,10 +4865,10 @@ public function save_package_wallet_pay(Request $request)
                 $this->ShopProductOrderPlacedInfo($so->id);
 
                 $remaining_wallet_money = $wallet_amount - $total_amount;
-                Wallet::where('user_id',Auth::user()->id)->update(array('money_amount' => $remaining_wallet_money));
+                Wallet::where('user_id',$user_id)->update(array('money_amount' => $remaining_wallet_money));
 
                 $walletHistory = WalletHistory::create($request->all()); 
-                $walletHistory->user_id = \Auth::user()->id; 
+                $walletHistory->user_id = $user_id; 
                 $walletHistory->type = 'debit';
                 $walletHistory->money_amount = $total_amount;
                 $walletHistory->save();
@@ -4689,11 +5034,11 @@ public function all_match_reports()
 
 	if($check_role == '2')
 	{
-		$match_reports = MatchReport::where('coach_id',0)->paginate(10);
+		$match_reports = MatchReport::where('coach_id',0)->where('parent_id',Auth::user()->id)->orderBy('id','desc')->paginate(10);
 	}
 	elseif($check_role == '3')
 	{
-		$match_reports = MatchReport::where('parent_id',0)->paginate(10);
+		$match_reports = MatchReport::where('parent_id',0)->where('coach_id',Auth::user()->id)->orderBy('id','desc')->paginate(10);
 	}
 
 	return view('all-match-reports', compact('match_reports'));
@@ -4758,6 +5103,8 @@ public function add_match(Request $request)
                 }
               }
             }
+
+            $data = $request->all();
 
             if($request->hasFile('match_chart'))
             {
@@ -4886,7 +5233,7 @@ public function competition_list()
     //     $competitions = Competition::where('parent_id', Auth::user()->id)->paginate(10);
     //}
 
-    $competitions = Competition::orderBy('id','desc')->paginate(10);
+    $competitions = Competition::orderBy('id','desc')->get();
 
     return view('matches.competition',compact('competitions'));
 }
@@ -5405,8 +5752,8 @@ public function save_package_courses($booking_no)
 
           // ShopCartItems::where('orderID', $so->orderID)->update(array('orderID' => $so->orderID));
 
-            if(Auth::user()->createOrderFromCart($so))
-              {
+            // if(Auth::user()->createOrderFromCart($so))
+            //   {
                   \Session::forget('shippingAddress');
                   \Session::forget('shopBillingAddress');
 
@@ -5414,10 +5761,44 @@ public function save_package_courses($booking_no)
 
                   // $this->AdminOrderSuccessOrderSuccess($so->id);
 
-              }
+              // }
       }
     
   return view('PackageCourse.index',compact('get_packages'));
+}
+
+/*------------------------------------
+| Stripe Custom Form
+|------------------------------------*/
+public function stripe()
+{
+    return view('stripe');
+}
+  
+/**
+ * success response method.
+ *
+ * @return \Illuminate\Http\Response
+ */
+public function stripePost(Request $request)
+{
+   // dd($request->all());
+
+    $stripe_data = SripeAccount(); 
+    $stripe1 = $stripe_data['sk'];
+    Stripe\Stripe::setApiKey($stripe1);
+
+    // Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+    Stripe\Charge::create ([
+            "amount" => 100 * 100,
+            "currency" => "gbp",
+            "source" => $request->stripeToken,
+            "description" => "Shop" 
+    ]);
+
+    // Session::flash('success', 'Payment successful!');
+      
+    return back()->with('success', 'Payment successful!');
 }
 
 }

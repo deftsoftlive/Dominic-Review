@@ -114,7 +114,7 @@
           </div>
 
             @else
-              <div class="noData offset-md-4 col-md-4 sorry_msg">
+              <div class="noData offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-2 col-sm-8 sorry_msg">
                 <div class="no_results">
                   <h3>Sorry, no results</h3>
                   <p>No result Found</p>

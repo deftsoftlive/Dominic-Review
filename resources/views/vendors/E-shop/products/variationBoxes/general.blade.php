@@ -32,7 +32,7 @@
 				       <div class="col-md-12">
 				            <div class="form-group">
 				                 <label>Product Weight(KG)</label>
-				                 <input type="number" name="weight" value="{{$product->weight}}" class="form-control" min="1">
+				                 <input type="number" name="weight" value="{{$product->weight}}" class="form-control" min="0">
 				            </div>
 				       </div>
 				       <div class="col-md-12">
@@ -41,19 +41,19 @@
 				       <div class="col-md-4">
 				            <div class="form-group">
 				                 <label>Product Height</label>
-				                 <input type="number" name="height" value="{{$product->height}}" class="form-control" min="1">
+				                 <input type="number" name="height" value="{{$product->height}}" class="form-control" min="0">
 				            </div>
 				       </div>
 				       <div class="col-md-4">
 				            <div class="form-group">
 				                 <label>Product Width</label>
-				                 <input type="number" name="width" value="{{$product->width}}" class="form-control" min="1">
+				                 <input type="number" name="width" value="{{$product->width}}" class="form-control" min="0">
 				            </div>
 				       </div>
 				       <div class="col-md-4">
 				            <div class="form-group">
 				                 <label>Product Length</label>
-				                 <input type="number" name="length" value="{{$product->length}}" class="form-control" min="1">
+				                 <input type="number" name="length" value="{{$product->length}}" class="form-control" min="0">
 				            </div>
 				       </div>
 

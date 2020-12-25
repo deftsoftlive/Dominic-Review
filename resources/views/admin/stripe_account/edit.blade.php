@@ -38,7 +38,7 @@
                    {{textbox($errors,'Account Holder Name<span class="cst-upper-star">*</span>','acc_holder_name', $venue->acc_holder_name)}}
                    {{textbox($errors,'Secret Key<span class="cst-upper-star">*</span>','secret_key', $venue->secret_key)}}
                    {{textbox($errors,'Public Key<span class="cst-upper-star">*</span>','public_key', $venue->public_key)}}
-                   {{textbox($errors,'Client Key<span class="cst-upper-star">*</span>','client_key', $venue->client_key)}}
+                   <!-- {{textbox($errors,'Client Key<span class="cst-upper-star">*</span>','client_key', $venue->client_key)}} -->
 
                 <div class="card-footer pl-0">
                   <button type="submit" id="btnVanue" class="btn btn-primary">Submit</button>

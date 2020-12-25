@@ -91,8 +91,10 @@
 
                             <div class="col-md-12">
 
-                                <input id="date_of_birth" type="date" class="form-control{{ $errors->has('date_of_birth') ? ' is-invalid' : '' }}" name="date_of_birth" value="{{ old('date_of_birth') }}" required autofocus placeholder="Please enter date of birth">
+                                <!-- <input id="date_of_birth" type="date" class="form-control{{ $errors->has('date_of_birth') ? ' is-invalid' : '' }}" name="date_of_birth" value="{{ old('date_of_birth') }}" required autofocus placeholder="Please enter date of birth"> -->
 
+                                <input type="text" class="form-control textbox-n {{ $errors->has('date_of_birth') ? ' is-invalid' : '' }}" name="date_of_birth" placeholder="D.O.B - dd/mm/yyy" onfocus="(this.type='date')" id="date" value="{{ old('date_of_birth') }}">
+                                
                                 @if ($errors->has('date_of_birth'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('date_of_birth') }}</strong>

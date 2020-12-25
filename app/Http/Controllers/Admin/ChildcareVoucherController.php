@@ -86,6 +86,16 @@ class ChildcareVoucherController extends Controller
      return redirect()->back()->with('flash_message', 'Something Went Woring!');
     }
 
+    /*----------------------------------------------
+    |   Delete childcare voucher
+    |-----------------------------------------------*/ 
+    public function childcare_voucher_delete($slug) 
+    {
+        $venue = ChildcareVoucher::FindBySlugOrFail($slug);
+        $venue->delete();
+        return redirect(route('admin.ChildcareVoucher.list'))->with('flash_message', 'Childcare Voucher deleted successfully.');
+    }
+
     /*---------------------------------------------
     |   Linked courses & camps
     |----------------------------------------------*/

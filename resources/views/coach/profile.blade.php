@@ -103,7 +103,7 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
                         <div class="form-group row address-detail">
                            <label for="personal_statement" class="col-md-12 col-form-label text-md-right">{{ __('My Personal Statement') }}</label>
                            <div class="col-md-12 label-textarea">
-                              <textarea name="personal_statement">{{ isset($user->personal_statement) ? $user->personal_statement : '' }}</textarea>
+                              <textarea name="personal_statement" rows="10">{{ isset($user->personal_statement) ? $user->personal_statement : '' }}</textarea>
                               @if ($errors->has('personal_statement'))
                               <span class="invalid-feedback" role="alert">
                               <strong>{{ $errors->first('personal_statement') }}</strong>

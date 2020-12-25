@@ -47,14 +47,20 @@
 @media(max-width: 1199px) {
     .contact-gender label {
         margin: 0 30px 0 7px;
-    }
+    }#date {
+    line-height: 24px;
+}
+.we-run-wrap {
+    justify-content: flex-start;
+}
     .we-run-overlay p {
-    font-size: 18px;
-}
+        font-size: 18px;
+    }
+
     .we-run-container {
-    
-    height: 160px;
-}
+
+        height: 160px;
+    }
 
     .camp-logo-section a.inner-logo {
         max-width: 150px;
@@ -63,6 +69,9 @@
     .marquee.mobile {
         display: block !important;
     }
+    .calendar input.form-control {
+    line-height:25px;
+}
 
     .marquee {
         display: none;
@@ -77,10 +86,13 @@
         white-space: nowrap;
     }
 
-    .table_wrap_my_family {
-        overflow: auto;
-    }
-
+   .table_wrap_my_family {
+    overflow: auto;
+    border: 1px solid #d9dada;
+    border-radius: 20px!important;
+    border-top: 0;
+    margin-bottom: 15px;
+}
     .panel input {
         width: 100%;
     }
@@ -306,7 +318,7 @@
     }
 
     .account-menu-tabs .menu-tab-link {
-        padding: 11px 20px;
+        padding: 11px 17px!important;
     }
 
     .select-player-goal-form .form-group label {
@@ -464,6 +476,7 @@
 
 
 
+
     .account-menu nav li+li {
         margin-left: 3px;
     }
@@ -505,6 +518,28 @@
         height: calc(100% - 30px);
 
     }
+    .table-step-row {
+    padding-right: 0;
+    }
+    #nav-stats .inner-content {
+        left: 15%;
+        margin-top: 0;
+        top: -10px;
+    }
+    .stats_bar_row {
+        margin-bottom: 60px;
+    }
+}
+@media (min-width :800px) and (max-width :900px) 
+{
+
+    .stats_bar_row,
+    .stats_row_bar
+    {width: 50%!important;
+            flex: 0 0 50%;
+    max-width: 50%;
+
+    }
 }
 
 @media(max-width: 991px) {
@@ -516,6 +551,38 @@
     .member .inner_back_wrap h2 {
         /*text-align: left;*/
         width: 78%;
+    }
+    .res-tabs {
+    display: none;
+}
+.pay_with_wallet {    
+    margin-top: 45px;   
+}
+    #date {
+    line-height: 16px;
+}
+    .account-menu-tabs .menu-tab-link {
+        padding: 11px 9px!important;
+    }table.cart__table.cart-table {
+    margin-bottom: 25px;
+}
+div#priceCartSideBar {
+    margin-top: 25px;
+}
+
+.calendar input.form-control {
+    line-height: 30px;
+}
+   label.who_they {
+    min-height: 56px;
+    }
+    .upload-section label {
+    display: inline-block;
+    white-space: nowrap;
+    }
+
+    ul.serch-login-signup li:nth-child(2) {
+        padding: 12px 0 !important;
     }
 
     .upload-section .qly-row {
@@ -538,7 +605,7 @@
 
     div#upload_doc input,
     div#upload_doc select {
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .form-head .pink-heading h2 {
@@ -573,7 +640,7 @@
 
     .match_btn {
 
-        width: 59%;
+        width: 66%;
     }
 
     figure.about-us-img-wrap img {
@@ -826,9 +893,7 @@
         width: 58%;
     }
 
-    .acc_sub_menu nav li+li {
-        margin-left: 8px !important;
-    }
+    
 
     .acc_sub_menu nav a {
         font-size: 14px !important;
@@ -1183,9 +1248,14 @@
 
 
     .account-menu nav li+li {
-        margin-left: 1px;
+        margin-left:5px;
     }
-
+.account-menu nav ul li:last-child {
+    margin: 0;
+}
+.account-menu.acc_sub_menu nav ul li:last-child {
+    margin-left:  5px;
+}
     .account-menu nav a {
         font-size: 15px;
     }
@@ -1367,19 +1437,90 @@
     .Payment-block .nav-tabs li a {
         min-height: 107px;
     }
-
+.pink-heading.btn-right h2 {
+    font-size: 26px;
+    margin-bottom: 0;
+}
+.pink-heading.btn-right  {
+    align-items: center;
+}
+.member .pink-heading a.add_competition.cstm-btn {
+  
+    margin-right: 15px;
+}
 }
 
 @media(max-width: 767px) {
     .about-us-sec>.container>.row>div.col-md-6:nth-of-type(odd) {
         order: 1;
     }
+    .pink-heading.comp_match.btn-right.match_wrap-res {
+    align-items: flex-end;
+}.camp_list_title.camp-logo-section h2 span:first-child {
+    font-size: 56px!important;
+}
+form#goals .form-row {
+    flex-wrap: nowrap;
+}
+.goal-filter .form-group
+{
+    align-items: unset!important;
+    justify-content: unset!important;
+     margin-bottom: 20px !important;
+     
+        margin-right: 0 !important;
+}
 
-    .stats_bar_row {
+    .c-d-book-now-wrap 
+    {
+    	height: 100%;
+    	align-items: flex-start;
+    }
+    form#payment-form .error {
+   
+    bottom: -15px;
+    
+}
+.multistep-footer.mt-4.text-right h4 {
+    text-align: center;
+    margin-bottom: 15px;
+    width: 100%;
+}
+.match_game_chart th {
+    
+    font-size: 16px;
+    }
+    div#priceCartSideBar {
+    margin-top: 0;
+}
+.member .pink-heading.btn-right {
+    justify-content: space-between !important;
+    display: flex;
+    flex-direction: column;
+}
+.pink-heading.btn-right h2 {
+    font-size: 26px;
+    margin-bottom:15px;
+}
+.member .pink-heading a.add_competition.cstm-btn {
+  
+    margin-right: 0px;
+    margin-bottom: 5px;
+}
+    .stats_bar_row,
+  .stats_row_bar {
         width: 49%;
         margin-bottom: 15px;
     }
 
+.cart__buttons a {
+    width: 100%;
+    margin-bottom: 15px;
+}
+.cart__buttons a:last-child {
+  
+    margin-bottom:0px;
+}
     .profile_croper .inner-cont .img-wrap {
         display: flex;
         flex-direction: row;
@@ -1457,8 +1598,8 @@
     }
 
     .member .pink-heading a.add_competition.cstm-btn {
-        width: 232px;
-    }
+    width: auto;
+}
 
     .det-gender-opt label {
         margin: 0 10px 0 7px !important;
@@ -1615,11 +1756,7 @@
         margin-bottom: 15px;
     }
 
-    .goal-filter .form-group {
-        margin-bottom: 20px !important;
-        justify-content: center !important;
-        margin-right: 0 !important;
-    }
+   
 
     .report-tab-one .inner-form-box {
         height: auto;
@@ -1702,31 +1839,31 @@
     font-size: 18px;
     }
 
-.main-radio {
-    margin-right: 0;
-}
+    .main-radio {
+        margin-right: 0;
+    }
 
-.main-radio label::before {
-    left: 51px;
-    top: 2px;
-    width: 18px;
-    height: 18px;
-}
+    .main-radio label::before {
+        left: 51px;
+        top: 2px;
+        width: 18px;
+        height: 18px;
+    }
 
-.main-radio label::after {
+    .main-radio label::after {
 
-    left: 57px;
-    top: 5px;
-    width: 6px;
-    height: 11px;
+        left: 57px;
+        top: 5px;
+        width: 6px;
+        height: 11px;
 
-}
+    }
 
-.main-radio input {
-    right: -2px;
-}
+    .main-radio input {
+        right: -2px;
+    }
 
-*/
+    */
 
     .register-acc .cstm-radio.main-radio label {
         font-size: 18px;
@@ -1807,9 +1944,13 @@
         flex-wrap: wrap;
     }
 
-    .badges-select-bar .selt_opt,
+   
     .label-row {
         padding: 0;
+        margin-bottom: 15px;
+    }
+    .badges-select-bar .selt_opt{
+        padding: 0 5px;
         margin-bottom: 15px;
     }
 
@@ -1828,9 +1969,7 @@
         margin-top: 20px;
     }
 
-    .camp_list_title.camp-logo-section h2 span {
-        font-size: 60px !important;
-    }
+    
 
     p#med_beha {
         display: block;
@@ -1838,7 +1977,7 @@
 
     /*.select-player-goal-form .form-group label {
     width: 32%;
-}*/
+    }*/
     .acc_sub_menu .outer-wrap {
         display: unset;
     }
@@ -1992,7 +2131,7 @@
     /* .select-player-goal-form .form-row .form-group {
         margin-bottom: 20px;
     }
-*/
+    */
     .school-card {
         margin-bottom: 20px;
     }
@@ -2065,9 +2204,9 @@
         font-size: 16px;
     }
 
-   .we-run-container {
-    max-height: 110px;
-}
+    .we-run-container {
+        max-height: 110px;
+    }
 
     .o-i-tab>.row>div {
         width: 100%;
@@ -2144,7 +2283,7 @@
     }
 
     .account-menu nav li+li {
-        margin-left: 0;
+        margin-left: 0 !important;
         margin: 10px 0;
     }
 
@@ -2180,7 +2319,7 @@
 
     section.c-d-slider.section-padding+section.c-d-book-now .c-d-book-now-wrap .c-d-book-now-date {
         flex: unset;
-        height: 74px;
+        height: 60px;
         align-items: flex-start;
         max-width: calc(100% - 100px) !important;
         padding-left: 0px;
@@ -2244,7 +2383,7 @@
 
     section.coach_detail .card.coach_profile .coach.details ul li>strong,
     section.coach_detail .card.coach_profile .coach.details ul li>span {
-        width: 100%;
+        width: auto;
     }
 
     section.coach_detail .card.coach_profile .coach.details ul li>strong>span {
@@ -2328,12 +2467,15 @@
     .sec-heading {
         padding: 5px 40px;
     }
-.club-wrap {
-    width: 100%!important;
-}
-.we-run-container {
-    max-height: 150px;
-}
+
+    .club-wrap {
+        width: 100% !important;
+    }
+
+    .we-run-container {
+        max-height: 150px;
+    }
+
     .click-sec-content .click-sec-tagline {
         font-size: 28px;
     }
@@ -2433,20 +2575,148 @@
 
         margin-top: 20px;
     }
+    .matches-dtl .matches_table-wrap table.table.table-bordered.cst-reports {
+    margin-bottom: 0;
+}
+.badges-select-bar .selt_opt{
+        padding: 0 15px;
+        
+    }
+.matches_table-wrap {
+    width: 100%;
+    overflow: auto;
+    border: 1px solid #e9d8d9;
+    border-radius: 20px;
+    margin-bottom: 15px;
+}
+    .events-sec .sorry_msg {
+     padding: 0 15px; 
+}
+form#goals .form-row {
+    flex-wrap: wrap;
+}
+.goal-filter .form-group
+{
+    align-items: center!important;
+    justify-content: center!important;
+
+}
+.match_game_chart {
+  
+    margin-bottom: 0;
+}
+.table-services-wrap {
+    overflow: auto;
+}
+div#membership .inner-warp {
+    display: flex;
+    flex-direction: column;
+}
+.wallet_amt h4 {
+    font-size: 21px;
+}
+div#membership .modal-body p {
+   
+    margin-right: 0;
+    margin-bottom: 8px;
+}
+
+
+.tabs-wrap ul li {
+    width: 100%;
+   
+}
+.display-td {
+    
+    font-size: 22px;
+}
+.Payment-block div#tabs-3 .alert_msg.alert.alert-danger {
+    margin-top: 10px;
+}
+form#payment-form .error {
+   
+    bottom: -7px;
+    padding: 0px 30px 0 0;
+}
+ label.who_they {
+    min-height: auto;
+    }
+    .cstm-btn {
+    padding: 10px 14px;
+    margin-bottom: 15px;
+}
+.match_game_chart th {
+   
+    font-size: 14px;
+   
+}
+.report_detail_page .player-report-table {
+    padding: 30px 20px;
+}
+
+
+.event-booking a.cstm-btn.main_button
+{
+	margin-bottom: 0!important;
+
+}
+button#submit-newsletter {
+    margin-bottom: 0!important;
+}
+div#accordion .card-header button {
+   
+    padding-right: 15px;
+}
+li.nav-item .cstm-btn:last-child
+{
+    margin-bottom: 0;
+}
+    label#participant_gender-error {
+
+        top: 19px;
+    }
+
     .we-run-overlay p {
-    font-size: 20px;
-}
-.login-sec button.cstm-btn.login {
-    margin-right: 10px;
-}
+        font-size: 20px;
+    }
+
+    .login-sec button.cstm-btn.login {
+        margin-right: 10px;
+    }
+
     .stats_bar_row {
         width: 100%;
         margin-bottom: 0;
 
-    }.login-sec button.cstm-btn.login {
+    }
+    /*.Payment-block .tab-content div#tabs-3 {
    
-    margin-bottom: 10px;
+   
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}*/
+div#tabs-3 button.cstm-btn.main_button {
+    margin-bottom: 0;
+    font-size: 13px;
+    padding: 10px 17.5px;
+    width: 100%;
+    margin-top: 10px;
 }
+.Payment-block .tab-content {
+  
+    
+    padding: 25px 12px;
+   
+}
+
+.Payment-block .tab-content button.stripe-button-el {
+    margin-bottom: 15px;
+}    .login-sec button.cstm-btn.login {
+
+        margin-bottom: 10px;
+    }
 
     .pay_with_wallet {
         width: 100%;
@@ -2644,9 +2914,9 @@
     }
 
     .card-header.view-card-header a {
-        width: 100%;
-        margin-bottom: 0px;
-    }
+    width: 100%;
+    margin-bottom: 15px;
+}
 
     .card-header.view-card-header .view_stats {
 
@@ -2671,10 +2941,11 @@
 
 
     .upload_opt {
-        margin-bottom: 30px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-direction: column-reverse;
     }
 
 
@@ -3157,6 +3428,11 @@
         width: 288px;
 
     }
+    div#tabs-3 button.cstm-btn.main_button {
+   
+        padding: 10px;
+    
+}
 
     .checkout-step-sec.check_out_none table.cart__table.cart-table .checkmark {
 

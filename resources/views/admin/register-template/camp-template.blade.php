@@ -32,11 +32,17 @@
                             $week_key_value = $week_key - 1;  
 
                             $day_filter = Request::get('day'); 
+                            $newWeekKeys = [];
                         @endphp
 
                         @php 
                             $session_data = json_decode($camp_price->selected_session); 
                             $i=1; 
+                            unset($session_data->fullday);
+                            //unset($session_data['fullday']);
+                            //echo "<pre>";
+                            //print_r($session_data);
+
                         @endphp
 
                         <!-- To get column count -->
@@ -52,9 +58,9 @@
                         @if(isset($session_data->afernoon) && $session_data->afernoon == 1)
                             @php $col_count = $i++; @endphp
                         @endif
-                        @if(isset($session_data->fullday) && $session_data->fullday == 1)
+                        <!-- @if(isset($session_data->fullday) && $session_data->fullday == 1)
                             @php $col_count = $i++; @endphp
-                        @endif
+                        @endif -->
                         @if(isset($session_data->late_pickup) && $session_data->late_pickup == 1)
                             @php $col_count = $i++; @endphp   
                         @endif 
@@ -63,26 +69,41 @@
                             <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day={{$day_filter}}">{{$day_filter}}</a></th>
                         @else
                             @foreach($admin_selected as $key=>$we)
-
+                            	
                                 @if($key == $week_key_value)
                                     @if(!empty($we->Monday))
                                         <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Monday">Monday</a></th>
+                                        @php
+	                                    	array_push($newWeekKeys, 'Monday');
+	                                    @endphp
                                     @endif
                                     @if(!empty($we->Tuesday))
                                         <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Tuesday">Tuesday</a></th>
+                                        @php
+	                                    	array_push($newWeekKeys, 'Tuesday');
+	                                    @endphp
                                     @endif
                                     @if(!empty($we->Wednesday))
                                         <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Wednesday">Wednesday</a></th>
+                                        @php
+	                                    	array_push($newWeekKeys, 'Wednesday');
+	                                    @endphp
                                     @endif
                                     @if(!empty($we->Thursday))
                                         <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Thursday">Thursday</a></th>
+                                        @php
+	                                    	array_push($newWeekKeys, 'Thursday');
+	                                    @endphp
                                     @endif
                                     @if(!empty($we->Friday))                               
                                         <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Friday">Friday</a></th>
+                                        @php
+	                                    	array_push($newWeekKeys, 'Friday');
+	                                    @endphp
                                     @endif
-                                    @if(!empty($we->Fullweek))
+                                    <!-- @if(!empty($we->Fullweek))
                                         <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Fullweek">Fullweek</a></th>
-                                    @endif
+                                    @endif -->
                                 @endif
 
                             @endforeach
@@ -95,28 +116,44 @@
                         <td>Age</td>
                         
                         @if(!empty($day_filter))
-                                
                             @php 
+                            	$newWeekKeys = [ $day_filter ];
                                 $headerValue[$day_filter]=1;
+
                             @endphp
-                                @if(!empty($we->Monday))
+                               <!--  @if(!empty($we->Monday))
                                     <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Monday">Monday</a></th>
+                                    @php
+                                    	array_push($newWeekKeys, 'Monday');
+                                    @endphp 
                                 @endif
                                 @if(!empty($we->Tuesday))
                                     <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Tuesday">Tuesday</a></th>
+                                    @php
+                                    	array_push($newWeekKeys, 'Tuesday');
+                                    @endphp 
                                 @endif
                                 @if(!empty($we->Wednesday))
                                     <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Wednesday">Wednesday</a></th>
+                                    @php
+                                    	array_push($newWeekKeys, 'Wednesday');
+                                    @endphp 
                                 @endif
                                 @if(!empty($we->Thursday))
                                     <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Thursday">Thursday</a></th>
+                                    @php
+                                    	array_push($newWeekKeys, 'Thursday');
+                                    @endphp
                                 @endif
                                 @if(!empty($we->Friday))                               
                                     <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Friday">Friday</a></th>
+                                    @php
+                                    	array_push($newWeekKeys, 'Friday');
+                                    @endphp
                                 @endif
                                 @if(!empty($we->Fullweek))
                                     <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Fullweek">Fullweek</a></th>
-                                @endif    
+                                @endif     -->
 
                                 @if(isset($session_data->early_drop) && $session_data->early_drop == 1)
                                 <td class="">ED</td>
@@ -142,7 +179,9 @@
 
                                     @if($key == $week_key_value)
 
-                                        @php $weekValue=['Monday','Tuesday','Wednesday','Thursday','Friday','Fullweek'];@endphp
+                                        @php 
+                                        	$weekValue = ['Monday','Tuesday','Wednesday','Thursday','Friday']
+                                        @endphp
 
                                         @foreach($weekValue as $weekDays)
                                             @if(!empty($we->$weekDays))
@@ -189,9 +228,12 @@
                     </tr>
                         @php  
                             $camp_we = []; 
+
                             $userSelectedDataByWeek=[];       
-                            //dd($shop);                      
                         @endphp
+                        @php 
+                    		//print_r($newWeekKeys);
+                    	@endphp
                    
                              @foreach($shop as $sh)
 
@@ -212,7 +254,6 @@
                                                        
                                                         $check_selected_value =explode('-',$day_value);
                                                         $check_selected_value =$check_selected_value[2];
-                                                       
                                                         if($check_selected_value=="noon"){
                                                             $userSelectedDataByWeek[$playerId][$week][$day]["noon"]=1; 
                                                         }else if($check_selected_value=="mor"){
@@ -234,6 +275,85 @@
                                     @endforeach                        
                                 @endforeach
                               @endforeach
+	                          	@php 
+	                          		//echo "<pre>";
+	                          		//print_r($userSelectedDataByWeek);
+	                          	@endphp 
+                              <!-- Code by SB Starts Here-->
+                              <!-- Modifications for Full Day Functionality -->
+                              	
+								@foreach( $userSelectedDataByWeek as $keyId => $newData)
+									@foreach( $newData as $keyh => $newDat)
+												@php 
+				                              		//echo $keyh;
+
+				                              	@endphp
+										@foreach( $newDat as $keyold => $newDa)
+											@php 
+				                              		//echo $keyold;
+				                              		//print_r($newDat);
+
+				                              	@endphp
+											@if ((strcmp("Fullweek",$keyold)) == 0)
+												
+												@foreach( $newDat as $kkkk => $kData)
+													@if ((strcmp("Fullweek",$kkkk)) != 0)
+														@php 
+														//print_r($userSelectedDataByWeek[$keyId][$keyh]);
+															$userSelectedDataByWeek[$keyId][$keyh][$kkkk] = array_merge($userSelectedDataByWeek[$keyId][$keyh][$kkkk],$newDat["Fullweek"]);
+															$newDat[$kkkk]=array_merge($newDat[$kkkk],$newDat["Fullweek"]);
+						                              		//echo $kkkk;
+						                              		//print_r($newDat);
+						                              		//echo "modified";
+						                              		//print_r($userSelectedDataByWeek[$keyId][$keyh]);
+						                              	@endphp
+						                            @endif
+						                        @endforeach
+
+						                        @foreach( $newWeekKeys as $newKeyForfullweek )
+						                        	@php 
+						                        		$userSelectedDataByWeek[$keyId][$keyh][$newKeyForfullweek] = $newDat["Fullweek"];					                        		
+						                        	@endphp
+						                        	@if(array_key_exists ( $newKeyForfullweek , $newDat ))
+						                        	@else
+						                        		@php 
+							                        		$newDat[$newKeyForfullweek]=$newDat["Fullweek"];
+							                        	@endphp
+						                        	@endif
+						                        @endforeach
+
+
+				                            @endif	
+				                        @endforeach
+					                        @php 
+					                        	unset($newDat['Fullweek']);
+					                        	unset($userSelectedDataByWeek[$keyId][$keyh]['Fullweek']);
+					                        	//print_r($userSelectedDataByWeek);
+					                        @endphp
+				                        @foreach( $newDat as $keyold => $newDa)		                            
+											@foreach( $newDa as $key => $newD)
+												@if ((strcmp("full",$key)) == 0)
+													@php 
+														$userSelectedDataByWeek[$keyId][$keyh][$keyold]["noon"]=1; 
+														$userSelectedDataByWeek[$keyId][$keyh][$keyold]["mor"]=1;												
+														$userSelectedDataByWeek[$keyId][$keyh][$keyold]["lunch"]=1;
+
+													@endphp												
+											  	@endif												
+												@php 
+						                        	unset($newDa['full']);
+						                        	unset($userSelectedDataByWeek[$keyId][$keyh][$keyold]["full"]);
+						                        	//print_r($userSelectedDataByWeek);
+						                        @endphp										
+											@endforeach	
+										@endforeach									
+									@endforeach
+								@endforeach	
+                              	@php 
+                              		//print_r($userSelectedDataByWeek);
+                              	@endphp 
+                               	<!-- Code by SB  ends here-->
+
 
 
                     @foreach($shop1 as $sh)
@@ -313,7 +433,7 @@
                                 @endif  
                             @endif
 
-                            @if(isset($session_data->morning) && $session_data->morning == 1 && $headItem == 'mor')
+                            @if((isset($session_data->morning) && $session_data->morning == 1 && $headItem == 'mor'))
                                 @if(isset($userSelectedDataByWeek[$playerId][$week_value][$currentday][$headItem]))
                                 <td style="text-align: center;">X</td>
                                 @else
@@ -419,9 +539,9 @@
                                     @if(!empty($we->Friday))                               
                                         <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Friday">Friday &nbsp;&nbsp;&nbsp;</a></th>
                                     @endif
-                                    @if(!empty($we->Fullweek))
+                                    <!-- @if(!empty($we->Fullweek))
                                         <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Fullweek">Fullweek</a></th>
-                                    @endif
+                                    @endif -->
                                 @endif
 
                             @endforeach

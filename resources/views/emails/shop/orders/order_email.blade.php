@@ -21,8 +21,6 @@
    <td style="font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; background-color: #efefef; padding-left: 10px; padding-right: 10px;" align="left">Price</td>
 </tr>
 
-
-
     
 
 @foreach($orders as $item)
@@ -75,7 +73,8 @@
       </tr>
 
 @elseif($item->shop_type == 'course')
-@php 
+
+@php
   $course_id = $item->product_id;
   $course = DB::table('courses')->where('id',$course_id)->first();  
   $child = DB::table('users')->where('id',$item->child_id)->first();
@@ -87,7 +86,7 @@
          <td style="font-family: Verdana, 'Times New Roman', Arial;vertical-align:top; font-size: 14px; line-height: 22px; color: #0c0c0c; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
             <p style="color: #333; font-weight:bold; margin-top: 0px; margin-bottom: 5px;  font-size: 16px; font-family: Verdana, 'Times New Roman', Arial;">{{$course->title}}</p>
             <span style="color: #333;  font-size: 14px; font-family: Verdana, 'Times New Roman', Arial;">
-             <b>Child:</b> {{$child->name}}
+             <b>Child:</b> {{isset($child->name) ? $child->name : ''}}
            </span>
            
 
@@ -123,7 +122,7 @@
          <td style="font-family: Verdana, 'Times New Roman', Arial;vertical-align:top; font-size: 14px; line-height: 22px; color: #0c0c0c; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
             <p style="color: #333; font-weight:bold; margin-top: 0px; margin-bottom: 5px;  font-size: 16px; font-family: Verdana, 'Times New Roman', Arial;">{{$camp->title}}</p>
             <span style="color: #333;  font-size: 14px; font-family: Verdana, 'Times New Roman', Arial;">
-             <b>Child:</b> {{$child->name}}
+             <b>Child:</b> {{isset($child->name) ? $child->name : ''}}
              <p>
                @foreach($week as $number=>$number_array)
 

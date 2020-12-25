@@ -105,6 +105,15 @@
                     <a href="{{url(route('child_activities'))}}" class="nav-link "><span class="pcoded-micon"><i class="fas fa-circle"></i></span><span class="pcoded-mtext">Activities</span></a>
                 </li> -->
 
+                <!-- ****************************
+                |
+                |       IMAGE CRUD
+                |
+                |********************************* -->
+                <li class="nav-item {{ \Request::route()->getName() === 'images' ? 'nav-item active' : 'nav-item' }}">
+                    <a href="{{url(route('images'))}}" class="nav-link "><span class="pcoded-micon"><i class="fas fa-images"></i></span><span class="pcoded-mtext">Link Images</span></a>
+                </li>
+
 
                 <!-- ****************************
                 |

@@ -59,7 +59,7 @@
                     @foreach($match_reports as $sh)
                     <tr>
                         <td>
-                            <p>@php echo date("d/m/Y", strtotime($sh->date)); @endphp</p>
+                            <p>@php echo date("d/m/Y", strtotime($sh->created_at)); @endphp</p>
                         </td>
 
                         @php $comp = DB::table('competitions')->where('id',$sh->comp_id)->first(); @endphp 
@@ -99,7 +99,7 @@
     </div>
 {{$match_reports->render()}}
 @else
-<div class="noData offset-md-4 col-md-4 sorry_msg">
+<div class="noData offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-2 col-sm-8 sorry_msg">
     <div class="no_results">
         <h3>Sorry, no results</h3>
         <p>No Report Found</p>

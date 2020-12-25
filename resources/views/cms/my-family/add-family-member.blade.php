@@ -493,7 +493,7 @@ input#agree {
                                                 @if($user_data->type == 'Child') 
                                                     <div class="child-selection-content" style="display: block;">
                                                         <div class="form-group-wrap">
-                                                            <p style="display: inline-block; font-weight: 500; margin:0 15px;" class="main_head">Contacts and desiginated adults for activity pick up/drop off </p>
+                                                            <p style="display: inline-block; font-weight: 500; margin:0 15px!important;" class="main_head">Contacts and desiginated adults for activity pick up/drop off </p>
                                                             <div class="col-sm-12">
                                                                 <p style="font-weight: 500;margin-right: 15px;text-transform: capitalize;font-size: 18px;margin-bottom: 8px;color: #00000;">Please note</p>
                                                             </div>
@@ -704,7 +704,7 @@ input#agree {
                                                 @elseif($user_data->type == 'Adult') 
                                                     <div class="child-selection-content" style="display: none;">
                                                         <div class="form-group-wrap">
-                                                            <p style="display: inline-block; font-weight: 500; margin:0 15px;" class="main_head">Contacts and desiginated adults for activity pick up/drop off </p>
+                                                             <p style="display: inline-block; font-weight: 500; margin:0 15px!important;" class="main_head">Contacts and desiginated adults for activity pick up/drop off </p>
                                                             <div class="col-sm-12">
                                                                 <p style="font-weight: 500;margin-right: 15px;text-transform: capitalize;font-size: 18px;margin-bottom: 8px;color: #00000;">Please note</p>
                                                             </div>
@@ -919,7 +919,7 @@ input#agree {
                                             @else 
                                                 <div class="child-selection-content">
                                                     <div class="form-group-wrap">
-                                                            <p style="display: inline-block; font-weight: 500; margin:0 15px;" class="main_head">Contacts and desiginated adults for activity pick up/drop off </p>
+                                                             <p style="display: inline-block; font-weight: 500; margin:0 15px!important;" class="main_head">Contacts and desiginated adults for activity pick up/drop off </p>
                                                             <div class="col-sm-12">
                                                                 <p style="font-weight: 500;margin-right: 15px;text-transform: capitalize;font-size: 18px;margin-bottom: 8px;color: #00000;">Please note</p>
                                                             </div>

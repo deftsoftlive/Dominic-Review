@@ -1,4 +1,3 @@
-<!-- Header section -->
 @extends('inc.homelayout')
 
 @section('title', 'DRH|Listing')
@@ -48,6 +47,18 @@
       </div>
       @endif
 
+      @if($course->membership_popup == 1)
+      @if(!empty(Session::get('popup')))
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+            <script>
+              $(function(){
+                $('#membership').modal('show');
+              });
+            </script>
+      @endif
+    @endif
+
 		  <div class="row">
 
           <div class="col-md-12 sports-text">
@@ -80,7 +91,7 @@
                                 </div>
                                 <div class="event-info-dt">
                                    <p>Level</p>
-                                   <span>Begineer</span>
+                                   <span>{{$course->level}}</span>
                                 </div>
                               </div>
                               <div class="event-card-heading sub_heading h-c-dates">
@@ -128,9 +139,17 @@
                               </div>
                             </div>
 
+                            @if(Auth::check())
+                            @else
+                            <div class="notice-wrap">
+                              <h4>Note :</h4><p>You have to login first to select a player.</p>
+                            </div>
+                            @endif
+
                           @if($booked_courses >= $course->booking_slot)
 
                           @else
+
                           <div class="event-card-form">
                             <form id="course-booking" action="{{route('course_booking')}}" method="POST">
                               @csrf
@@ -154,8 +173,7 @@
                                  <!--  <select id="inputPlayer-3" class="form-control event-dropdown">
                                     <option value="" selected="" disabled="">Select Child</option>
                                     @if(Auth::check() && !empty($children))
-                                      @foreach($children as $child)
-                                        <option  
+                                      @foreach($children as $child)                                        <option  
                                         @if(in_array($child->id, $child_id))
                                           disabled
                                         @endif
@@ -292,7 +310,7 @@
                                   <p class="cst-fees"><span>£
 
                                     @if($currntD >= $endDate)
-                                      {{$course->price}}
+                                      {{number_format((float)$course->price, 2, '.', '')}}
                                     @else
                                       @if($early_bird_enable == '1')
                                         @php 
@@ -301,7 +319,7 @@
                                         @endphp
                                         {{$dis_price}}
                                       @else
-                                        {{$course->price}}
+                                       {{number_format((float)$course->price, 2, '.', '')}}
                                       @endif
                                     @endif
                                   </p>
@@ -309,7 +327,17 @@
                                   @endif
 
                                 @if(Auth::check())
+
+                                  <!-- @if($course->membership_popup == 1)
+                                    <button type="submit" id="course_book" class="cstm-btn event-booking-btn main_button">Book Now</button>
+                                  @else
+                                    <button type="button" class="cstm-btn event-booking-btn main_button" data-toggle="modal" data-target="#membership">
+                                      Launch demo modal
+                                    </button>
+                                  @endif -->
+
                                   <button type="submit" id="course_book" class="cstm-btn event-booking-btn main_button">Book Now</button>
+
                                 @else
                                   <a href="{{url('/login')}}" class="cstm-btn event-booking-btn main_button">Book Now</a>
                                 @endif 
@@ -342,30 +370,83 @@
 
 
 <section class="click-here-sec">
-      <div class="container">
-        <div class="row">
-        	<div class="col-md-8 offset-md-2">
-        		<div class="click-sec-content">
-        		  <h2 class="click-sec-tagline">Need help with kids camps or our coaching courses?</h2>
-        	  	  <ul class="click-btn-content">
-        	  	    <li>
-        	          <figure>
-        		   	    <img src="{{url('/')}}/public/images/click-btn-img.png">
-        			  </figure>
-        		  	</li>
-        		  	<li>
-        		  		<a href="" class="cstm-btn main_button">Click Here</a>
-        		  	</li>
-        		  	<li>
-        	          <figure>
-        		   	    <img src="{{url('/')}}/public/images/click-btn-img.png">
-        			  </figure>
-        		  	</li>
-        		    </ul>
-        		</div>
-        	</div>
-         
+    <div class="container">
+      <div class="row">
+      	<div class="col-md-8 offset-md-2">
+      		<div class="click-sec-content">
+      		  <h2 class="click-sec-tagline">Need help with kids camps or our coaching courses?</h2>
+      	  	  <ul class="click-btn-content">
+      	  	    <li>
+      	          <figure>
+      		   	    <img src="{{url('/')}}/public/images/click-btn-img.png">
+      			  </figure>
+      		  	</li>
+      		  	<li>
+      		  		<a href="" class="cstm-btn main_button">Click Here</a>
+      		  	</li>
+      		  	<li>
+      	          <figure>
+      		   	    <img src="{{url('/')}}/public/images/click-btn-img.png">
+      			  </figure>
+      		  	</li>
+      		    </ul>
+      		</div>
+      	</div>
+       
+      </div>
+    </div>
+</section>
+    
+
+<!-- Modal -->
+<div class="modal fade" id="membership" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="exampleModalLongTitle">Is this participant a member of the tennis club?</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+        </div>
+        <div class="modal-body">
+           <div class="tect-wrap">
+            <p>{!! getAllValueWithMeta('membership_popup_text', 'general-setting') !!}</p>
+          </div>
+              <div class="inner-warp">
+                 
+                 <form action="{{route('membership_status')}}" method="POST" novalidate="novalidate">
+                  @csrf
+
+                  <input type="hidden" name="shop_id" value="@if(old('shop_id')) {{ old('shop_id') }} @endif">
+
+                  <div class="from-wrap">
+                      <p>Yes,this participant is a member of the tennis club</p>
+                    <input type="radio" id="memb" name="membership_status" value="1">
+                    <label for="memb" class="rad-checked"></label>
+                    
+                  </div>
+                  <hr class="from-line">
+                  <div class="from-wrap">
+                      <p>Not yet. They will become a member before classes commence </p>
+                    <input type="radio" id="memb1" name="membership_status" value="0">
+                   <label for="memb1" class="rad-checked"></label>
+                  </div>
+
+                   <button class="wallet_confirm_order cstm-btn main_button">Book Now</button>
+                 </form>
+              </div>
+              <!-- <button type="button" class="btn btn-primary cstm-btn main_button">
+                 Conform Order
+                 </button> -->
+             <!--  <form id="member_wallet" action="http://49.249.236.30:8654/dominic-new/user/save_wallet" method="POST" novalidate="novalidate">
+                 <input type="hidden" name="_token" value="lX2NPKsMMFMsCPRixr2fU1jV8yQcZTmiW752Dfa5">  
+                 <button class="wallet_confirm_order cstm-btn main_button">Book Now</button>
+              </form> -->
+           </div>
+        </div>
+
         </div>
       </div>
-    </section>
+</div>
+
 @endsection

@@ -37,7 +37,7 @@ class StipeAccController extends Controller
             'acc_holder_name' => ['required'],
             'secret_key' => ['required'],
             'public_key' => ['required'],
-            'client_key' => ['required'],
+            // 'client_key' => ['required'],
         ]);
 
     	StripeAccount::create([
@@ -45,7 +45,7 @@ class StipeAccController extends Controller
             'acc_holder_name' => $request['acc_holder_name'],
     		'secret_key' => $request['secret_key'],
     		'public_key' => $request['public_key'],
-    		'client_key' => $request['client_key'],
+    		// 'client_key' => $request['client_key'],
     	]);
     	return redirect()->route('admin.stripe_account.list')->with('flash_message', 'Stripe Account has been created successfully!');
     }
@@ -68,7 +68,7 @@ class StipeAccController extends Controller
             'acc_holder_name' => ['required'],
             'secret_key' => ['required'],
             'public_key' => ['required'],
-            'client_key' => ['required'],
+            // 'client_key' => ['required'],
         ]);
 
     	$venue = StripeAccount::FindBySlugOrFail($slug);
@@ -78,7 +78,7 @@ class StipeAccController extends Controller
             'acc_holder_name' => $request['acc_holder_name'],
     		'secret_key' => $request['secret_key'],
     		'public_key' => $request['public_key'],
-    		'client_key' => $request['client_key'],
+    		// 'client_key' => $request['client_key'],
     	]);
     	return redirect()->route('admin.stripe_account.list')->with('flash_message', 'Stripe Account has been updated successfully!');
     }

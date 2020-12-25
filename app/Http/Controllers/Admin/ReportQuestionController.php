@@ -24,7 +24,7 @@ class ReportQuestionController extends Controller
     |   Listing of ReportQuestion
     |----------------------------------------*/ 
     public function reportquestion_index() {
-        $reportquestion = ReportQuestion::select(['id','title','slug'])->paginate(10);
+        $reportquestion = ReportQuestion::select(['id','title','slug'])->orderBy('id','desc')->paginate(10);
     	return view('admin.reportquestion.index',compact('reportquestion'))
     	->with(['title' => 'Report Question Management', 'addLink' => 'admin.reportquestion.showCreate']);
     }

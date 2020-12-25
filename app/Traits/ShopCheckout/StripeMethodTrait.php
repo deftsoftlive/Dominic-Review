@@ -9,6 +9,7 @@ use Auth;
 use App\Models\Vendors\DiscountDeal;
 use App\Models\EventOrder;
 use Session;
+use App\Course;
 use App\Wallet;
 use App\WalletHistory;
 use App\Models\Shop\ShopCartItems;
@@ -26,6 +27,9 @@ use EmailNotificationTrait;
 
 public function postPaymentStripe(Request $request)
 {
+  //dd($request->all());
+  Session::put('booking_no',$request->booking_no);
+
   if($request->type == 'wallet&stripe')
   {
     $error = '';
@@ -50,7 +54,9 @@ public function postPaymentStripe(Request $request)
 
                     $total = $request->amt;
 
-                    $description = 'Customer for pay for '.$sci->OrderID;
+                    // $description = 'Customer for pay for order ID - ' .$sci->OrderID. ' & user ID - '. \Auth::user()->name  ;
+
+                    $description = 'Payment from customer name - ' .\Auth::user()->name. ' & order ID - '. $OrderID. '& user email - '. \Auth::user()->email ;
 
                      $wallet = Wallet::where('user_id',Auth::user()->id)->first(); 
                      $wallet_amount = $wallet->money_amount; 
@@ -98,7 +104,7 @@ public function postPaymentStripe(Request $request)
 
                      $charge = \Stripe\Charge::create([
                         "amount" => ($total * 100),
-                        "currency" => "usd",
+                        "currency" => "gbp",
                         "source" => $request->stripeToken,
                         "description" => $description,
                         ],$AccountWithPayment);
@@ -155,11 +161,11 @@ public function postPaymentStripe(Request $request)
 
                      $total = $this->getGrandTotal();
 
-                     $description = 'Customer for pay for '.$OrderID;
+                     $description = 'Payment from customer name - ' .\Auth::user()->name. ' & order ID - '. $OrderID. '& user email - '. \Auth::user()->email ;
 
                      $charge = \Stripe\Charge::create([
                         "amount" => ($total * 100),
-                        "currency" => "usd",
+                        "currency" => "gbp",
                         "source" => $request->stripeToken,
                         //"shipping" => $shipping,
                         "description" => $description,
@@ -207,34 +213,68 @@ public function saveDataInShopOrder($charge,$type,$OrderID)
 
 public function CreateOrder($charge,$OrderID,$type)
 {
- 
-   $paymentDetails= json_encode($this->CommissionFeeServiceAccordingVendor($type));
-    $o = new ShopOrder;
-    $o->orderID=$OrderID;
-    $o->user_id =Auth::user()->id;
-    $o->shipping_address = json_encode($this->getBillingAddress());
-    $o->billing_address = json_encode($this->getShippingAddress());
-    $o->payment_detail=json_encode($charge);
-    $o->balance_transaction= $paymentDetails;
-    $o->amount=$this->getGrandTotal();
-    $o->payment_by=$type;
-    $o->status=1;
-    if($o->save()){
-              if(Auth::user()->createOrderFromCart($o)){
-                   Session::forget('shippingAddress');
-                   Session::forget('shopBillingAddress');
+    $value = \Session::get('booking_no'); 
+    $get_package = \DB::table('package_courses')->where('booking_no',$value)->first();
+    $get_packages = \DB::table('package_courses')->where('booking_no',$value)->get();
+    $user_id = isset($get_package) ? $get_package->parent_id : Auth::user()->id;
 
-                   
-                     $this->ShopProductOrderPlacedForVendorSuccess($o->id);
-                     $this->ShopProductOrderPlacedSuccess($o->id);
-                     $this->ShopProductOrderPlacedInfo($o->id);
-                     // $this->AdminOrderSuccessOrderSuccess($o->id);
-                   return redirect()->route('shop.checkout.thankyou', ['order_id' => $o->id]);  
-             }
- 
-   }
+    $paymentDetails= json_encode($this->CommissionFeeServiceAccordingVendor($type));
 
-   
+    if(!empty(Auth::user()->id))
+    {
+
+    }elseif(!empty($value))
+    {
+      foreach($get_packages as $pack)
+      {
+        $get_course = Course::where('id',$pack->course_id)->first();
+
+        $sci = new ShopCartItems;
+        $sci->shop_id = 0;
+        $sci->vendor_id = 1;
+        $sci->user_id = $pack->parent_id;
+        $sci->child_id = isset($pack->player_id) ? $pack->player_id : $pack->parent_id;
+        $sci->product_id = $pack->course_id;
+        $sci->course_season = $get_course->season;
+        $sci->price = $pack->price;
+        $sci->total = $pack->price;
+        $sci->type = 'order';
+        $sci->shop_type = 'course';
+        $sci->manual = 1;
+        $sci->orderID = $OrderID;
+        $sci->save();
+      }
+    }
+
+        $o = new ShopOrder;
+        $o->orderID=$OrderID;
+        $o->user_id = !empty(Auth::user()->id) ? Auth::user()->id : $user_id;
+        $o->shipping_address = json_encode($this->getBillingAddress());
+        $o->billing_address = json_encode($this->getShippingAddress());
+        $o->payment_detail=json_encode($charge);
+        $o->balance_transaction= $paymentDetails;
+        $o->amount=$this->getGrandTotal();
+        $o->payment_by=$type;
+        $o->status=1;
+        
+        if($o->save()){
+
+          ShopCartItems::where('user_id',$o->user_id)->where('type','cart')->update(array('orderID' => $o->orderID, 'type' => 'order'));
+
+
+                  // if(Auth::user()->createOrderFromCart($o)){
+                        Session::forget('shippingAddress');
+                        Session::forget('shopBillingAddress');
+                        Session::forget('booking_no');
+                       
+                        $this->ShopProductOrderPlacedForVendorSuccess($o->id);
+                        $this->ShopProductOrderPlacedSuccess($o->id);
+                        $this->ShopProductOrderPlacedInfo($o->id);
+                        // $this->AdminOrderSuccessOrderSuccess($o->id);
+                       return redirect()->route('shop.checkout.thankyou', ['order_id' => $o->id]);  
+                 // }
+
+    }
 
 }
 

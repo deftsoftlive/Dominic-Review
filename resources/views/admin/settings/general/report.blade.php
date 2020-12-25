@@ -72,7 +72,14 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title"><u>REPORT DETAIL</u></h5>
-             {{textarea($errors,'Report Detail Page - Content <span class="cst-upper-star">*</span>','report_detail',$report_detail)}}
+             {{textarea($errors,'Report Detail Page - Content (End of term reports)<span class="cst-upper-star">*</span>','report_detail',$report_detail)}}
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>REPORT DETAIL</u></h5>
+             {{textarea($errors,'Report Detail Page - Content (Player reports)<span class="cst-upper-star">*</span>','player_report_detail',$player_report_detail)}}
           </div>
         </div>
 
@@ -109,5 +116,6 @@
    CKEDITOR.replace('report2_content', options);
    CKEDITOR.replace('report3_content', options);
    CKEDITOR.replace('report_detail', options);
+   CKEDITOR.replace('player_report_detail', options);
 </script>
 @endsection

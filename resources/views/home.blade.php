@@ -98,7 +98,7 @@
 
               <!-- DRH Activity - Tennis Coaching -->
 
-              @php $drh_activity = DB::table('drh_activities')->where('status',1)->get(); @endphp
+              @php $drh_activity = DB::table('drh_activities')->where('status',1)->orderBy('sort','asc')->get(); @endphp
               @foreach($drh_activity as $activity)
               <div class="item">
                 <div class="activity-card text-center">
@@ -144,7 +144,7 @@
               <div class="item">
                 <div class="testimonial-card">
                   <figure class="testimonial-img-wrap">
-                   <img class="nb-icon" src="{{ URL::asset('images/nb-icon.png')}}">
+                    <img class="nb-icon" src="{{ URL::asset('images/nb-icon.png')}}">
                     <img class="b-icon" src="{{ URL::asset('images/b-icon.png')}}"> 
                   </figure>
                   <figcaption class="testimonial-caption">

@@ -138,7 +138,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                <ul class="click-btn-content">
                   <li>
                      <figure>
-                        <img src="http://49.249.236.30:8654/dominic-new/public/images/click-btn-img.png" alt="">
+                        <img src="{{URL::asset('/images/click-btn-img.png')}}" alt="">
                      </figure>
                   </li>
                   <li>
@@ -146,7 +146,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                   </li>
                   <li>
                      <figure>
-                        <img src="http://49.249.236.30:8654/dominic-new/public/images/click-btn-img.png" alt="">
+                        <img src="{{URL::asset('/images/click-btn-img.png')}}" alt="">
                      </figure>
                   </li>
                </ul>

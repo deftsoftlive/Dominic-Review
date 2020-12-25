@@ -92,8 +92,9 @@
                           <input type="text" class="form-control" name="participant_name" placeholder="Enter Participant Name">
                       </div>
                       <div class="form-group">
-                          <input type="date" id="date_of_birth" class="form-control" name="participant_dob" placeholder="Enter Participant DOB">
-                         <!--  <input type="date" class="form-control" name="participant_dob" placeholder="Enter Participant DOB"> -->
+                       <!--    <input type="date" id="date_of_birth" class="form-control" name="participant_dob" placeholder="Enter Participant DOB"> -->
+
+                          <input type="text" class="form-control textbox-n" name="participant_dob" placeholder="D.O.B - dd/mm/yyy" onfocus="(this.type='date')" id="date">
                       </div>
                       <div class="form-group row gender-opt contact-gender courses-gender">  
                       
@@ -312,7 +313,7 @@
           </div>
           @endforeach
           @else
-            <tr><td colspan="8"><div class="offset-md-4 col-md-4 sorry_msg"><div class="no_results"><h3>Sorry, no results</h3><p>No Course Found</p></div></div></td></tr>
+            <tr><td colspan="8"><div class="noData offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-2 col-sm-8 sorry_msg"><div class="no_results"><h3>Sorry, no results</h3><p>No Course Found</p></div></div></td></tr>
           @endif
           <!-- ********************************
           |     Courses Management - End Here

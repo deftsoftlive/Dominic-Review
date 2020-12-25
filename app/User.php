@@ -215,9 +215,13 @@ class User extends Authenticatable
                     // dd($dis_type);
 
                     $dis_price = isset($im->discount_price) ? $im->discount_price : 0;
+                
+
+                /*Assign for product*/  
+                if($im->shop_type == 'product') {
                     $product = $im->product;  
                     $variation = \App\Models\Products\ProductAssignedVariation::find($im->variant_id);
-
+                }     
 
 
                     if(!empty($product->final_price))
@@ -234,6 +238,7 @@ class User extends Authenticatable
                         $price = ($product->final_price)-($dis_price);
                       }
                     }else{
+
                       if($im->shop_type == 'course')
                       {
                         $course_id = $im->product_id;
@@ -338,6 +343,9 @@ class User extends Authenticatable
                         }
                       }
                     }
+
+
+
                      // $im->vendor_id = $product->user_id;
                      // $im->shop_id = $product->shop_id;
                      $im->price = $price;

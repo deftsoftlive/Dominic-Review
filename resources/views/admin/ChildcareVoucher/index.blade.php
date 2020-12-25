@@ -79,6 +79,8 @@
                                                                             Active
                                                                         @endif
                                                                     </a>
+
+                                                                    <a onclick="return confirm('Are you sure you want to delete this childcare voucher?')" href="{{url('admin/childcare-vouchure/delete')}}/{{$test->slug}}" class="dropdown-item">Delete</a>
                                                                 </div>
                                                             </div>
                                                         </td>

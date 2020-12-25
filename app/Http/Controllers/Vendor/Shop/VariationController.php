@@ -60,28 +60,30 @@ public function saveAttributes(Request $request,$product_id)
 
 public function loadSteps(Request $request,$product_id)
 {
+	// dd($request->all(),$product_id);
+
 	$product = Product::find($product_id);
     $product->product_type= $request->variationType;
 	$product->save();
 	$step = $request->step;
     switch ($step) {
 		case 1:
-		       $vv = view('vendors.E-shop.products.variationBoxes.general')
+		        $vv = view('vendors.E-shop.products.variationBoxes.general')
 	               ->with('product',$product);
                     return response()->json(['status' => 1, 'htm' => $vv->render()]); 
 		     break;
 		case 2:
-		      $vv = view('vendors.E-shop.products.variationBoxes.inventory')
+		        $vv = view('vendors.E-shop.products.variationBoxes.inventory')
 	               ->with('product',$product);
                     return response()->json(['status' => 1, 'htm' => $vv->render()]); 
 			break;
 		case 3:
-		     $vv = view('vendors.E-shop.products.variationBoxes.attributes')
+		        $vv = view('vendors.E-shop.products.variationBoxes.attributes')
 	               ->with('product',$product);
                     return response()->json(['status' => 1, 'htm' => $vv->render()]); 
 			break;
 		case 4:
-		      $vv = view('vendors.E-shop.products.variationBoxes.variation')
+		        $vv = view('vendors.E-shop.products.variationBoxes.variation')
 	               ->with('product',$product);
                     return response()->json(['status' => 1, 'htm' => $vv->render()]); 
 			break;

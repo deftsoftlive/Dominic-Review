@@ -11,7 +11,7 @@ use Session;
 use App\Models\Shop\ShopCartItems;
 trait PaymentStepTrait {
 
-
+ 
 
 
 public function payment()
@@ -56,7 +56,26 @@ public function paymentEvalueAteToVendor()
 
 public function getTotalOrder()
 {
-	return Auth::user()->ShopProductCartItems->sum('total'); 
+	 $value = \Session::get('booking_no'); 
+     $get_package = \DB::table('package_courses')->where('booking_no',$value)->get();
+     $price = [];
+
+    foreach ($get_package as $value) {
+     	$price[] = $value->price;
+    }
+
+    $total = array_sum($price);
+
+    if(!empty(Auth::user())) 
+    {
+    	return Auth::user()->ShopProductCartItems->sum('total'); 
+    }
+    elseif(!empty($value))
+    {
+    	return $total;
+    }
+	
+	
 	// $coupon = \DB::table('shop_cart_items')->where('user_id',Auth::user()->id)->where('orderID', '=', NULL)->where('discount_code','!=',NULL)->get();
 
 	// $extra = getAllValueWithMeta('service_fee_amount', 'global-settings'); 
@@ -215,6 +234,7 @@ $text .='</table>';
 public function getServiceFee($total=null)
 {
     $totalAmount = $total == null ? $this->getTotalOrder()  : $total;
+   
     return getFee($totalAmount, 'service_fee_type', 'service_fee_amount');
 }
 

@@ -27,6 +27,13 @@
     <div class="pink-heading">
          <h2>My Players</h2>
       </div>
+
+      <div class="row">
+          <div class="textbox-manage ">
+            <p>{!! getAllValueWithMeta('coach_my_players', 'textbox-management') !!}</p>
+          </div>
+      </div>
+
     <div class="all-members">
 	  <div class="row">
 
@@ -55,8 +62,12 @@
                     
                   </figure>
                   <figcaption class="activity-caption">
-                      <p>{{isset($child->type) ? $child->type : 'Account Holder'}} Name: <span class="request-name">{{isset($child->name) ? $child->name : ''}}</span></p>
-                      <p>Parent Name: <span class="request-name">{{isset($parent->name) ? $parent->name : ''}}</span></p>
+                      <!-- <p>{{isset($child->type) ? $child->type : 'Account Holder'}} Name: <span class="request-name">{{isset($child->name) ? $child->name : ''}}</span></p>
+                      <p>Parent Name: <span class="request-name">{{isset($parent->name) ? $parent->name : ''}}</span></p> -->
+
+                      <p>Account Holder Name: <span class="request-name">{{isset($parent->name) ? $parent->name : ''}}</span></p>
+
+                      <p>Player Name: <span class="request-name">{{isset($child->name) ? $child->name : ''}}</span></p>
 
                       <!-- @if($pl->status == '0')
                       <div class="profile-status">Request Status: <span class="p-s-not-verified"><i class="fas fa-times-circle"></i> Did not accept</span></div>
@@ -101,7 +112,7 @@
 		    
 			@endforeach
 		@else
-			<div class="noData offset-md-4 col-md-4 sorry_msg">
+			<div class="noData offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-2 col-sm-8 sorry_msg">
                 <div class="no_results">
                   <h3>Sorry, no results</h3>
                   <p>No Player Found</p>

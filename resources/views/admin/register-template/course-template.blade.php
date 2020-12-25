@@ -86,7 +86,6 @@ td.checkbox_course {
                 </thead>
             </table>
             <figure>
-                <!-- <img src="http://49.249.236.30:8654/dominic-new/public/uploads/1584078701website_logo.png"> -->
             </figure>
         </div>
             <table class="table table-bordered camp-table">
@@ -95,6 +94,7 @@ td.checkbox_course {
                         <th>Player Name</th>
                         <th>Player DOB</th>
                         <th>Media</th>
+                        <th>Mem</th>
                         <th>Parent Name</th>
                         <th>Parent Tel</th>
 
@@ -136,6 +136,7 @@ td.checkbox_course {
                             <td class="@if(!empty($player)) @if($player->gender == 'male') odd-name-row @elseif($player->gender == 'female') even-name-row @endif @endif"> {{isset($player->name) ? $player->name : ''}}</td>
                             <td>@if(isset($player->date_of_birth)) @php echo date('d/m/Y',strtotime($player->date_of_birth)); @endphp @endif</td>
                             <td style="text-align:center;">@if(!empty($child_details->media) && ($child_details->media == 'yes')) Y @else N @endif</td>
+                            <td>@if($sh->membership_status == 1) Y @else N @endif</td>
                             <td>{{isset($parent->name) ? $parent->name : ''}}</td>                      
                             <td>{{isset($parent->phone_number) ? $parent->phone_number : ''}}</td>     
 

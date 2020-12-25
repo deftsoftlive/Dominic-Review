@@ -11,7 +11,7 @@ class ImageIconController extends Controller
 
     /* ****************************************
     |
-    | Add Activities for Child 
+    | Add image icon for profile picture 
     |
     |******************************************/
     public function image_icons()
@@ -26,17 +26,6 @@ class ImageIconController extends Controller
     {
         // IconImage::truncate();
         $data = $request->all();  
-   
-        // if(isset($data) && !(empty($data['ac_title'])))
-        // {
-
-        //     foreach ($data['ac_title'] as $number => $value) 
-        //     {                                      
-        //         $ac =  new IconImage;
-        //         $ac['ac_title'] = $data['ac_title'][$number]; 
-        //         $ac->save(); 
-        //     }
-        // }
 
         if(isset($data) && !(empty($data['ac_title'])))
         {

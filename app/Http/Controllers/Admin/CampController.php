@@ -304,6 +304,7 @@ class CampController extends Controller
         $camp_price->lunch_percent = $request->lunch_percent;
         $camp_price->fullday_price = $request->fullday_price;
         $camp_price->fullday_time = $request->fullday_time;
+        $camp_price->fullday_percent = $request->fullday_percent;
         $camp_price->latepickup_price = $request->latepickup_price;
         $camp_price->latepickup_time = $request->latepickup_time;
         $camp_price->latepickup_percent = $request->latepickup_percent;

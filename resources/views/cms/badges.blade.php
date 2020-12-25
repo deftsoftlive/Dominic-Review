@@ -95,14 +95,17 @@ label.confirm_msg.form-check-label {
                                                                 <select id="goal_player" name="goal_player" class="form-control">
                                                                     <option selected="" disabled="">Select Player</option>
                                                                     @php
-                                                                    $children = DB::table('users')->where('parent_id',Auth::user()->id)->get();
+                                                                        $children = DB::table('users')->where('parent_id',Auth::user()->id)->get();
                                                                     @endphp
                                                                     @foreach($children as $ch)
-                                                                    <option value="{{$ch->id}}" @if(isset($goal_player)) @if($ch->id == $goal_player)
-                                                                        selected
+                                                                    <option value="{{$ch->id}}" value="{{$ch->id}}" 
+                                                                        @if(isset($goal_player)) 
+                                                                            @if($ch->id == $goal_player)
+                                                                                selected
+                                                                            @endif
                                                                         @endif
-                                                                        @endif
-                                                                        value="{{$ch->id}}">{{$ch->name}}</option>
+                                                                        >{{$ch->name}}
+                                                                    </option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -144,7 +147,7 @@ label.confirm_msg.form-check-label {
                                                     </div>
                                                 </div>
                                                 @php
-                                                $goals = DB::table('goals')->where('goal_type','beginner')->get();
+                                                    $goals = DB::table('goals')->where('goal_type','beginner')->get();
                                                 @endphp
                                                 <form id="goal_detail" action="{{route('save_goal')}}" class="col-md-12" method="POST">
                                                     @csrf
@@ -153,9 +156,9 @@ label.confirm_msg.form-check-label {
                                                     <input type="hidden" name="parent_id" value="{{Auth::user()->id}}">
                                                     @foreach($goals as $go)
                                                     @if(!empty($goal_player))
-                                                    @php
-                                                    $user_goal = DB::table('set_goals')->where('player_id',$goal_player)->where('parent_id',Auth::user()->id)->where('goal_id',$go->id)->where('finalize',NULL)->first();
-                                                    @endphp
+                                                        @php
+                                                            $user_goal = DB::table('set_goals')->where('player_id',$goal_player)->where('parent_id',Auth::user()->id)->where('goal_id',$go->id)->where('finalize',NULL)->first();
+                                                        @endphp
                                                     @endif
                                                     <div class="col-md-12">
                                                         <fieldset class="player-goal-card">
@@ -446,7 +449,7 @@ label.confirm_msg.form-check-label {
                                                         </li>
                                                     </ul>
 
-                                                    <select id="inputPlayer" name="user_id" class="form-control">
+                                                    <select id="inputPlayer" name="user_id" class="inputPlayer form-control">
                                                         <option selected="" disabled="">Select Player</option>
 
                                                     <!-- Active courses - Those who purchased by players and courses are not expired -->
@@ -783,228 +786,249 @@ label.confirm_msg.form-check-label {
                                 </div>
                             </div>
                         </div>
-                        
+                        @else
+                        <div class="noData offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-2 col-sm-8 sorry_msg">
+                                <div class="no_results">
+                                    <h3>Sorry, no results</h3>
+                                    <p>No Report Found</p>
+                                </div>
+                            </div>
+                        @endif
                     </div>
-
                     <div class="tab-pane fade" id="nav-leaderboard" role="tabpanel" aria-labelledby="nav-leaderboard-tab">
                         <div class="row">
-                        <div class="col-md-12">
-                            <div class="leader-bord-heading-wrap">
-                                <h1>Leader Board</h1>
-                            </div>
-
-                            <p class="goal-setting-text">{!! getAllValueWithMeta('leaderboard_desc', 'badges') !!}</p><br/>
-                        </div>
-                        <form action="{{route('badges')}}" method="POST" class="select-player-goal-form">
-                            @csrf
-                            <div class="form-row badges-select-bar">
-                                <div class="form-group col-lg-9 col-md-12 col-sm-12">
-                                    <div class="col-md-6 col-sm-12 col-12 selt_opt">
-                                        <div class="outer-wrap">
-                                            <ul class="stepl-list">
-                                                <li>
-                                                    <a href="#">
-                                                        <div class="inner-wrap">
-                                                            <span>step</span>
-                                                            <p>1</p>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                            <select id="term" name="term" class="form-control">
-                                                <option selected="" disabled="">Select Term</option>
-                                                @php $season = DB::table('seasons')->where('status',1)->get(); @endphp
-                                                @foreach($season as $se)
-                                                <option value="{{$se->id}}">{{$se->title}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-12 selt_opt">
-                                        <div class="outer-wrap">
-                                            <ul class="stepl-list">
-                                                <li>
-                                                    <a href="#">
-                                                        <div class="inner-wrap">
-                                                            <span>step</span>
-                                                            <p>2</p>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                            
-                                            <select id="stage" name="stage" class="form-control">
-                                                <option selected="" disabled="">Select Stage</option>
-                                                <option value="">All Age Groups</option>
-                                                <!-- @php
-                                                    $user_badges = DB::table('user_badges')->orderBy('id','asc')->get();
-                                                @endphp
-                                                @foreach($user_badges as $bd)
-                                                @php
-                                                    $shop11 = DB::table('shop_cart_items')->where('shop_type','course')->where('orderID','!=',NULL)->where('child_id',$bd->user_id)->where('course_season',$bd->season_id)->groupBy('product_id')->get();
-                                                    $course = DB::table('courses')->where('season',$bd->season_id)->first();
-                                                    $subcat = [];
-                                                @endphp
-                                                @foreach($shop11 as $sh)
-                                                @php
-                                                    $course = DB::table('courses')->where('id',$sh->product_id)->first();
-                                                    $subcat = !empty($course->subtype) ? getProductCatname($course->subtype) : '';
-                                                @endphp
-
-                                                @if(!empty($course->subtype))
-                                                    <option value="{{!empty($course->subtype) ? $course->subtype : ''}}">{{!empty($subcat) ? $subcat : ''}}</option>
-                                                @endif
-
-                                                @endforeach
-                                                @endforeach -->
-
-
-                                                <!-- Get tennis categories - as per new badges functionality -->
-                                                @php 
-                                                    $stages = DB::table('product_categories')->where('parent','156')->where('subparent',0)->orderBy('sorting','asc')->get();
-                                                @endphp
-
-                                                @foreach($stages as $st)
-                                                    <option value="{{$st->id}}">{{$st->label}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="col-sm-1" style="margin-left:10px">
-                                <a href="" onclick="myFunction();" class="btn btn-primary">Reset</a>
-                              </div> -->
+                            <div class="col-md-12">
+                                <div class="leader-bord-heading-wrap">
+                                    <h1>Leader Board</h1>
                                 </div>
-                                <div class="col-lg-3 col-md-12 select-button" style="margin-right:10px;">
-                                    <button type="submit" class="cstm-btn main_button">Submit</button>
-                                    <a href="{{url('/user/badges')}}" class="cstm-btn main_button">Reset</a>
-                                </div>
+                                <p class="goal-setting-text">{!! getAllValueWithMeta('leaderboard_desc', 'badges') !!}</p><br />
                             </div>
-                        </form>
-                        <div class="col-md-12">
-                            <div class="leader-board-table">
-                                <div class="leadertable-wrap">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Place</th>
-                                                <th>Player Name</th>
-                                                <th>Player Age</th>
-                                                <th>Stage</th>
-                                                <th>Tennis Club</th>
-                                                <th>Points</th>
-                                                <th>Achievements</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if(!empty($user_badge1))
-                                                @php
-                                                    $i = 1+ ($user_badge1->currentpage()-1)* $user_badge1->perpage();
-                                                @endphp
-                                            @endif
-
-                                            @if(!empty($user_badge1) && count($user_badge1)> 0)
-
-                                            @foreach($user_badge1 as $bd)
-                                                @php
-                                                    $user = DB::table('users')->where('id',$bd->user_id)->first();
-                                                    $shop = DB::table('shop_cart_items')->where('shop_type','course')->where('orderID','!=',NULL)->where('child_id',$bd->user_id)->where('course_season',$bd->season_id)->get();
-                                                    $course_subcategory = [];
-                                                @endphp
-
-                                            @foreach($shop as $sh)
-                                                @php
-                                                    $course = DB::table('courses')->where('id',$sh->product_id)->first();
-                                                    $course_subcategory[] = !empty($course->subtype) ? getProductCatname($course->subtype) : '';
-                                                @endphp
-                                            @endforeach
-
-                                            @if(!empty($user))
-                                                @php
-                                                    $selected_badges = explode(',',$bd->badges);
-                                                    $user_age = strtotime($user->date_of_birth);
-                                                    $current_date = strtotime(date('Y-m-d'));
-                                                    $age_diff = abs($current_date - $user_age);
-                                                    $years = floor($age_diff / (365*60*60*24));
-                                                @endphp
-                                            @endif
-
-                                            <tr>
-                                                <td>
-                                                    <p>@php echo $i++; @endphp</p>
-                                                </td>
-                                                <td>
-                                                    @if($user->show_name == 1)
-                                                        <p>{{$user->name}}</p>
-                                                    @elseif($user->show_name == 0)
-                                                        <p>Anonymous</p>
-                                                    @elseif(empty($user) && $user->show_name != 0 && $user->show_name != 1)
-                                                        <p><b>User Not found</b></p>
+                            <form action="{{route('badges')}}" method="POST" class="select-player-goal-form">
+                                @csrf
+                                <div class="form-row badges-select-bar">
+                                    <div class="form-group col-lg-9 col-md-12 col-sm-12">
+                                        <div class="col-md-4 col-sm-4 col-12 selt_opt">
+                                            <div class="outer-wrap">
+                                                <ul class="stepl-list">
+                                                    <li>
+                                                        <a href="#">
+                                                            <div class="inner-wrap">
+                                                                <span>step</span>
+                                                                <p>1</p>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <select id="inputPlayer" name="player_id" class="inputPlayer form-control">
+                                                    <option selected="" disabled="">Select Player</option>
+                                                    <!-- Those players who purchased courses -->
+                                                    @php $players = DB::table('shop_cart_items')->where('shop_type','course')->groupBy('child_id')->get(); @endphp
+                                                    @foreach($players as $pl)
+                                                    @php $users = DB::table('users')->where('id',$pl->child_id)->first(); @endphp
+                                                    @if(!empty($users))
+                                                    <option value="{{$pl->child_id}}">@php echo getUsername($pl->child_id); @endphp</option>
                                                     @endif
-                                                </td>
-                                                <td>
-                                                    <p>{{isset($years) ? $years : ''}} Years</p>
-                                                </td>
-                                                <td>
-                                                    <p>{{implode(',',$course_subcategory)}}</p>
-                                                </td>
-                                                <td>
-                                                    <p>{{isset($user->tennis_club) ? $user->tennis_club : ''}}</p>
-                                                </td>
-                                                <td>
-                                                    <p>
-                                                        @php
-                                                        $points = array();
-                                                        @endphp
-                                                        @if(!empty($selected_badges))
-                                                        @foreach($selected_badges as $data=>$value)
-                                                        @php
-                                                        $badge = DB::table('badges')->where('id',$value)->first();
-                                                        $points[] = $badge->points;
-                                                        @endphp
-                                                        @endforeach
-                                                        @php $total_points = array_sum($points); @endphp
-                                                        {{$total_points}}
-                                                        @endif
-                                                    </p>
-                                                </td>
-                                                <td>
-                                                    <ul class="leader-bord-bages">
-                                                        <li>
-                                                            <figure>
-                                                                @if(!empty($selected_badges))
-                                                                @foreach($selected_badges as $data=>$value)
-                                                                @php $badge = DB::table('badges')->where('id',$value)->first(); @endphp
-                                                        <li title="{!! $badge->description !!}"><img style="width:40px;height:40px; object-fit:contain;" src="{{URL::asset('/uploads')}}/{{$badge->image}}"></li>
-                                                        @endforeach
-                                                        @endif
-                                                        </figure>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                            @else
-                                            <tr>
-                                                <td colspan="7">
-                                                    <div class="offset-md-4 col-md-4 sorry_msg">
-                                                        <div class=""><br />
-                                                            <h3>No Data Found</h3></br>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            @endif
-                                        </tbody>
-                                    </table>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-12 selt_opt">
+                                            <div class="outer-wrap">
+                                                <ul class="stepl-list">
+                                                    <li>
+                                                        <a href="#">
+                                                            <div class="inner-wrap">
+                                                                <span>step</span>
+                                                                <p>2</p>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <select id="term" name="term" class="form-control">
+                                                    <option selected="" disabled="">Select Term</option>
+                                                    <!-- Active Seasons -->
+                                                    @php $season = DB::table('seasons')->where('status',1)->get(); @endphp
+                                                    @foreach($season as $se)
+                                                    <option value="{{$se->id}}">{{$se->title}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-12 selt_opt">
+                                            <div class="outer-wrap">
+                                                <ul class="stepl-list">
+                                                    <li>
+                                                        <a href="#">
+                                                            <div class="inner-wrap">
+                                                                <span>step</span>
+                                                                <p>3</p>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <select id="stage" name="stage" class="form-control">
+                                                    <option selected="" disabled="">Select Stage</option>
+                                                    <option value="">All Age Groups</option>
+                                                    <!-- @php
+                                                        $user_badges = DB::table('user_badges')->orderBy('id','asc')->get();
+                                                    @endphp
+                                                    @foreach($user_badges as $bd)
+                                                    @php
+                                                        $shop11 = DB::table('shop_cart_items')->where('shop_type','course')->where('orderID','!=',NULL)->where('child_id',$bd->user_id)->where('course_season',$bd->season_id)->groupBy('product_id')->get();
+                                                        $course = DB::table('courses')->where('season',$bd->season_id)->first();
+                                                        $subcat = [];
+                                                    @endphp
+                                                    @foreach($shop11 as $sh)
+                                                    @php
+                                                        $course = DB::table('courses')->where('id',$sh->product_id)->first();
+                                                        $subcat = !empty($course->subtype) ? getProductCatname($course->subtype) : '';
+                                                    @endphp
+
+                                                    @if(!empty($course->subtype))
+                                                        <option value="{{!empty($course->subtype) ? $course->subtype : ''}}">{{!empty($subcat) ? $subcat : ''}}</option>
+                                                    @endif
+
+                                                    @endforeach
+                                                    @endforeach -->
+                                                    <!-- Get tennis categories - as per new badges functionality -->
+                                                    @php
+                                                    $stages = DB::table('product_categories')->where('parent','156')->where('subparent',0)->orderBy('sorting','asc')->get();
+                                                    @endphp
+                                                    @foreach($stages as $st)
+                                                    <option value="{{$st->id}}">{{$st->label}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-sm-1" style="margin-left:10px">
+                                    <a href="" onclick="myFunction();" class="btn btn-primary">Reset</a>
+                                  </div> -->
+                                    </div>
+                                    <div class="col-lg-3 col-md-12 select-button" style="margin-right:10px;">
+                                        <button type="submit" class="cstm-btn main_button">Submit</button>
+                                        <a href="{{url('/user/badges')}}" class="cstm-btn main_button">Reset</a>
+                                    </div>
                                 </div>
-                                @if(!empty($user_badge1))
-                                {{$user_badge1->render()}}
-                                @endif
+                            </form>
+                            <div class="col-md-12">
+                                <div class="leader-board-table">
+                                    <div class="leadertable-wrap">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Place</th>
+                                                    <th>Player Name</th>
+                                                    <th>Player Age</th>
+                                                    <th>Stage</th>
+                                                    <th>Tennis Club</th>
+                                                    <th>Points</th>
+                                                    <th>Achievements</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if(!empty($user_badge1))
+                                                @php
+                                                $i = 1+ ($user_badge1->currentpage()-1)* $user_badge1->perpage();
+                                                @endphp
+                                                @endif
+                                                @if(!empty($user_badge1) && count($user_badge1)> 0)
+                                                @foreach($user_badge1 as $bd)
+                                                @php
+                                                $user = DB::table('users')->where('id',$bd->user_id)->first();
+                                                $shop = DB::table('shop_cart_items')->where('shop_type','course')->where('orderID','!=',NULL)->where('child_id',$bd->user_id)->where('course_season',$bd->season_id)->get();
+                                                $course_subcategory = [];
+                                                @endphp
+                                                @foreach($shop as $sh)
+                                                @php
+                                                $course = DB::table('courses')->where('id',$sh->product_id)->first();
+                                                $course_subcategory[] = !empty($course->subtype) ? getProductCatname($course->subtype) : '';
+                                                @endphp
+                                                @endforeach
+                                                @if(!empty($user))
+                                                @php
+                                                $selected_badges = explode(',',$bd->badges);
+                                                $user_age = strtotime($user->date_of_birth);
+                                                $current_date = strtotime(date('Y-m-d'));
+                                                $age_diff = abs($current_date - $user_age);
+                                                $years = floor($age_diff / (365*60*60*24));
+                                                @endphp
+                                                @endif
+                                                <tr>
+                                                    <td>
+                                                        <p>@php echo $i++; @endphp</p>
+                                                    </td>
+                                                    <td>
+                                                        @if($user->show_name == 1)
+                                                        <p>{{$user->name}}</p>
+                                                        @elseif($user->show_name == 0)
+                                                        <p>Anonymous</p>
+                                                        @elseif(empty($user) && $user->show_name != 0 && $user->show_name != 1)
+                                                        <p><b>User Not found</b></p>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <p>{{isset($years) ? $years : ''}} Years</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>{{implode(',',$course_subcategory)}}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>{{isset($user->tennis_club) ? $user->tennis_club : ''}}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>
+                                                            @php
+                                                            $points = array();
+                                                            @endphp
+                                                            @if(!empty($selected_badges))
+                                                            @foreach($selected_badges as $data=>$value)
+                                                            @php
+                                                            $badge = DB::table('badges')->where('id',$value)->first();
+                                                            $points[] = $badge->points;
+                                                            @endphp
+                                                            @endforeach
+                                                            @php $total_points = array_sum($points); @endphp
+                                                            {{$total_points}}
+                                                            @endif
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <ul class="leader-bord-bages">
+                                                            <li>
+                                                                <figure>
+                                                                    @if(!empty($selected_badges))
+                                                                    @foreach($selected_badges as $data=>$value)
+                                                                    @php $badge = DB::table('badges')->where('id',$value)->first(); @endphp
+                                                            <li title="{!! $badge->description !!}"><img style="width:40px;height:40px; object-fit:contain;" src="{{URL::asset('/uploads')}}/{{$badge->image}}"></li>
+                                                            @endforeach
+                                                            @endif
+                                                            </figure>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                                @else
+                                                <tr>
+                                                    <td colspan="7">
+                                                        <div class="noData offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-2 col-sm-8 sorry_msg">
+                                                            <div class=""><br />
+                                                                <h3>No Data Found</h3><br />
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    @if(!empty($user_badge1))
+                                    {{$user_badge1->render()}}
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
-                    </div>
-
                     <div class="tab-pane fade" id="nav-reports" role="tabpanel" aria-labelledby="nav-reports-tab">
                         <div class="row">
                             <div class="col-md-12">
@@ -1014,7 +1038,6 @@ label.confirm_msg.form-check-label {
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="page-description">
@@ -1025,16 +1048,16 @@ label.confirm_msg.form-check-label {
                         <br />
                         <div class="col-md-12">
                             @php
-                                $logined_user_id = \Auth::user()->id;
-                                $children = DB::table('users')->where('parent_id',$logined_user_id)->orderBy('id','asc')->get();
-                                $child_id = [];
+                            $logined_user_id = \Auth::user()->id;
+                            $children = DB::table('users')->where('parent_id',$logined_user_id)->orderBy('id','asc')->get();
+                            $child_id = [];
                             @endphp
                             @foreach($children as $ch)
-                                @php $child_id[] = $ch->id; @endphp
+                            @php $child_id[] = $ch->id; @endphp
                             @endforeach
                             @if(count($child_id)>0)
                             @php
-                                $reports = DB::table('player_reports')->whereIn('player_id',$child_id)->orderBy('id','desc')->paginate(5);
+                            $reports = DB::table('player_reports')->whereIn('player_id',$child_id)->orderBy('id','desc')->paginate(5);
                             @endphp
                             @if(count($reports)> 0)
                             <div class="player-report-table tbl_shadow goal_reports rp_list_section">
@@ -1085,7 +1108,7 @@ label.confirm_msg.form-check-label {
                             </div>
                             {{$reports->render()}}
                             @else
-                            <div class="noData offset-md-4 col-md-4 sorry_msg">
+                            <div class="noData offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-2 col-sm-8 sorry_msg">
                                 <div class="no_results">
                                     <h3>Sorry, no results</h3>
                                     <p>No Report Found</p>
@@ -1102,18 +1125,14 @@ label.confirm_msg.form-check-label {
                                     <h2 class="comp_and_match">My Competitions & Matches</h2>
                                     <a class="add_competition cstm-btn main_button" href="{{ route('coach_report') }}">Add Competition</a>
                                 </div>
-
-                                
                                 <div class="col-md-12">
-
-                                	<div class="row">
-	                                    <div class="col-md-12">
-	                                        <div class="page-description">
-	                                            <p class="goal-setting-text" style="font-size:16px;">{!! getAllValueWithMeta('matches_desc', 'badges') !!}</p>
-	                                        </div>
-	                                    </div>
-	                                </div>
-
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="page-description">
+                                                <p class="goal-setting-text" style="font-size:16px;">{!! getAllValueWithMeta('matches_desc', 'badges') !!}</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @php
                                     $user_role = \Auth::user()->role_id;
                                     if($user_role == '3')
@@ -1173,7 +1192,7 @@ label.confirm_msg.form-check-label {
                                         </div>
                                     </div>
                                     @else
-                                    <div class="noData offset-md-4 col-md-4 sorry_msg">
+                                    <div class="noData offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-2 col-sm-8 sorry_msg">
                                         <div class="no_results">
                                             <h3>Sorry, no results</h3>
                                             <p>No Competition Found</p>
@@ -1184,129 +1203,113 @@ label.confirm_msg.form-check-label {
                             </div>
                         </section>
                     </div>
-                   <!--  <div class="tab-pane fade" id="nav-schedule" role="tabpanel" aria-labelledby="nav-schedule-tab">
-                        <div class="inner-content">
-
-                            <figure class="schedule-img-wrap">
-                                <img class="b-icon" src="{{ URL::asset('images/coming-soon.png')}}">
-                            </figure>
-                        </div>
-                    </div> -->
                     <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab">
                         <div class="row">
-
-                            <form id="stats_filter" style="width: 100%;" action="{{route('badges')}}" method="POST"> 
-                            @csrf
-
-                            <br/>
-
-                            <div class="col-lg-12 col-md-12 d-print-none">
-                                <!-- <div class="textarea_rwo_wrap"> -->
-                                <div class="">
-                                    <p>{!! getAllValueWithMeta('stats_desc', 'badges') !!}</p>
+                            <form id="stats_filter" style="width: 100%;" action="{{route('badges')}}" method="POST">
+                                @csrf
+                                <br />
+                                <div class="col-lg-12 col-md-12 d-print-none">
+                                    <!-- <div class="textarea_rwo_wrap"> -->
+                                    <div class="">
+                                        <p>{!! getAllValueWithMeta('stats_desc', 'badges') !!}</p>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="col-lg-12 col-md-12">
-                                
-                                 <div class="tab-page-heading">
-                                    <h1 class="print_heading">Match Stats</h1>
-                                    
-                                    <br>
-                                </div>
-                                <ul class="stats-list">
-                                   
-                                    <li><p><span>Player Name</span> : @php echo getUsername($stats_participant_name); @endphp</p></li>
-                                    <li><p><span>Date</span> : @php echo date('d-m-Y'); @endphp</p></li>
-                                    <li><p><span>Report Type</span> :   
-                                        @if(!empty($stats_match_no))
-                                            @if($stats_match_no == 'all')
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="tab-page-heading">
+                                        <h1 class="print_heading">Match Stats</h1>
+                                        <br>
+                                    </div>
+                                    <ul class="stats-list">
+                                        <li>
+                                            <p><span>Player Name</span> : @php echo getUsername($stats_participant_name); @endphp</p>
+                                        </li>
+                                        <li>
+                                            <p><span>Date</span> : @php echo date('d-m-Y'); @endphp</p>
+                                        </li>
+                                        <li>
+                                            <p><span>Report Type</span> :
+                                                @if(!empty($stats_match_no))
+                                                @if($stats_match_no == 'all')
                                                 All Matches
-                                            @elseif($stats_match_no == '1')
+                                                @elseif($stats_match_no == '1')
                                                 Last Match
-                                            @else
+                                                @else
                                                 Last {{$stats_match_no}} matches
-                                            @endif
-                                        @endif
-                                    </p></li>
-                                </ul>
-                            </div>
-
-                            <div class="row stat_from_row d-print-none">
-                            <div class="col-lg-8 col-md-12">
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-12">@php //dd($stats_participant_name); @endphp
-                                        <div class="form-group upper-input-row">
-                                            <select id="stats_participant_name" name="stats_participant_name" class="form-control">
-                                                <option selected="" disabled="">Select Player</option>
-                                                @php
-                                                $children = DB::table('users')->where('parent_id',Auth::user()->id)->get();
-                                                @endphp
-                                                @foreach($children as $ch)
-                                                <option value="{{$ch->id}}" @if(!empty($stats_participant_name)) @if($stats_participant_name == $ch->id) selected @endif @endif>{{$ch->name}}</option>
-                                                @endforeach
-                                            </select>
+                                                @endif
+                                                @endif
+                                            </p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="row stat_from_row d-print-none">
+                                    <div class="col-lg-8 col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-12">@php //dd($stats_participant_name); @endphp
+                                                <div class="form-group upper-input-row">
+                                                    <select id="stats_participant_name" name="stats_participant_name" class="form-control">
+                                                        <option selected="" disabled="">Select Player</option>
+                                                        @php
+                                                        $children = DB::table('users')->where('parent_id',Auth::user()->id)->get();
+                                                        @endphp
+                                                        @foreach($children as $ch)
+                                                        <option value="{{$ch->id}}" @if(!empty($stats_participant_name)) @if($stats_participant_name==$ch->id) selected @endif @endif>{{$ch->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12 d-print-none">
+                                                <div class="form-group upper-input-row">
+                                                    <select id="stats_match_no" name="stats_match_no" class="form-control">
+                                                        <option selected="" disabled="">Tell me what to show you</option>
+                                                        <option value="1" @if(!empty($stats_match_no)) @if($stats_match_no=='1' ) selected @endif @endif>My Last match</option>
+                                                        <option value="5" @if(!empty($stats_match_no)) @if($stats_match_no=='5' ) selected @endif @endif>Last 5 matches</option>
+                                                        <option value="10" @if(!empty($stats_match_no)) @if($stats_match_no=='10' ) selected @endif @endif>Last 10 matches</option>
+                                                        <option value="15" @if(!empty($stats_match_no)) @if($stats_match_no=='15' ) selected @endif @endif>Last 15 matches</option>
+                                                        <option value="20" @if(!empty($stats_match_no)) @if($stats_match_no=='20' ) selected @endif @endif>Last 20 matches</option>
+                                                        <option value="all" @if(!empty($stats_match_no)) @if($stats_match_no=='all' ) selected @endif @endif>All matches</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-12 d-print-none">
-                                        <div class="form-group upper-input-row">
-                                            <select id="stats_match_no" name="stats_match_no" class="form-control">
-                                                <option selected="" disabled="">Tell me what to show you</option>
-                                                <option value="1" @if(!empty($stats_match_no)) @if($stats_match_no == '1') selected @endif @endif>My Last match</option>
-                                                <option value="5" @if(!empty($stats_match_no)) @if($stats_match_no == '5') selected @endif @endif>Last 5 matches</option>
-                                                <option value="10" @if(!empty($stats_match_no)) @if($stats_match_no == '10') selected @endif @endif>Last 10 matches</option>
-                                                <option value="15" @if(!empty($stats_match_no)) @if($stats_match_no == '15') selected @endif @endif>Last 15 matches</option>
-                                                <option value="20" @if(!empty($stats_match_no)) @if($stats_match_no == '20') selected @endif @endif>Last 20 matches</option>
-                                                <option value="all" @if(!empty($stats_match_no)) @if($stats_match_no == 'all') selected @endif @endif>All matches</option>
-                                            </select>
-                                        </div>
+                                    <div class="col-lg-3 col-md-12 button_wrap_row d-print-none">
+                                        <button type="submit" class="cstm-btn main_button">Submit</button>
+                                        <a href="{{url('/user/badges')}}" class="cstm-btn main_button">Reset</a>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-3 col-md-12 button_wrap_row d-print-none">                               
-                                <button type="submit" class="cstm-btn main_button">Submit</button>
-                                <a href="{{url('/user/badges')}}" class="cstm-btn main_button">Reset</a>                               
-                            </div>
+                            </form>
                         </div>
-                        </form>
-
-                        </div>
-
                         @php //dd($average_stats); @endphp
                         @if(!empty($average_stats))
                         <div class="col-lg-12 col-md-12">
                             <div class="status-card">
                                 <div class="row cstm-sm-row">
-
                                     <!-- 1. Total points played in match -->
                                     <div class="col-lg-4  col-md-4 col-xs-4 stats_bar_row">
                                         <div class="progress-status-card">
                                             <div class="progress-box">
-
                                                 <div class="round" id="Score-13" data-value="@php echo $average_stats['tp_in_match']/1000; @endphp" total-value="100" data-size="120" data-thickness="20">
                                                     <strong class="progress-value"><span></span></strong>
                                                 </div>
                                                 <div class="inner-content">
-                                                     <p class="number-text">1</p>
+                                                    <p class="number-text">1</p>
                                                     <div class="icon_wrap ">
                                                         <span><img src="{{url::asset('/images/1.png')}}"></span>
                                                     </div>
-                                                    <p class="prog_text">Total points <br/>played in match</p>
+                                                    <p class="prog_text">Total points <br />played in match</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                     <!-- Your % points won in match -->
                                     <div class="col-lg-4  col-md-4 col-xs-4 stats_bar_row">
                                         <div class="progress-status-card">
                                             <div class="progress-box">
-
                                                 <div class="round" id="Score-8" data-value="@php echo $average_stats['percent_won_in_match']/100; @endphp" total-value="100" data-size="120" data-thickness="20">
                                                     <strong class="progress-value"><span></span></strong>
                                                 </div>
                                                 <div class="inner-content score-1-text">
-                                                      <p class="number-text">2</p>
+                                                    <p class="number-text">2</p>
                                                     <div class="icon_wrap ">
                                                         <span><img src="{{url::asset('/images/1.png')}}"></span>
                                                     </div>
@@ -1315,17 +1318,15 @@ label.confirm_msg.form-check-label {
                                             </div>
                                         </div>
                                     </div>
-
                                     <!-- Your % of 1st serves in -->
                                     <div class="col-lg-4  col-md-4 col-xs-4 stats_bar_row">
                                         <div class="progress-status-card">
                                             <div class="progress-box">
-
                                                 <div class="round" id="Score" data-value="@php echo $average_stats['percent_1serves_in']/100; @endphp" total-value="100" data-size="120" data-thickness="20">
                                                     <strong class="progress-value"><span></span></strong>
                                                 </div>
                                                 <div class="inner-content">
-                                                      <p class="number-text">3</p>
+                                                    <p class="number-text">3</p>
                                                     <div class="icon_wrap ">
                                                         <span><img src="{{url::asset('/images/1.png')}}"></span>
                                                     </div>
@@ -1334,17 +1335,15 @@ label.confirm_msg.form-check-label {
                                             </div>
                                         </div>
                                     </div>
-
                                     <!-- 4. Your opponent's % of points won in match -->
                                     <div class="col-lg-4  col-md-4 col-xs-4 stats_bar_row">
                                         <div class="progress-status-card">
                                             <div class="progress-box">
-
                                                 <div class="round" id="Score-9" data-value="@php echo $average_stats['op_percent_pts_won']/100; @endphp" total-value="100" data-size="120" data-thickness="20">
                                                     <strong class="progress-value"><span></span></strong>
                                                 </div>
                                                 <div class="inner-content score-1-text">
-                                                      <p class="number-text">4</p>
+                                                    <p class="number-text">4</p>
                                                     <div class="icon_wrap">
                                                         <span><img src="{{url::asset('/images/1.png')}}"></span>
                                                     </div>
@@ -1353,7 +1352,6 @@ label.confirm_msg.form-check-label {
                                             </div>
                                         </div>
                                     </div>
-
                                     <!-- 5. Your opponent's % of 1st serves in -->
                                     <div class="col-lg-4  col-md-4 col-xs-4 stats_bar_row">
                                         <div class="progress-status-card">
@@ -1362,7 +1360,7 @@ label.confirm_msg.form-check-label {
                                                     <strong class="progress-value"><span></span></strong>
                                                 </div>
                                                 <div class="inner-content">
-                                                      <p class="number-text">5</p>
+                                                    <p class="number-text">5</p>
                                                     <div class="icon_wrap">
                                                         <span><img src="{{url::asset('/images/2.png')}}"></span>
                                                     </div>
@@ -1371,8 +1369,6 @@ label.confirm_msg.form-check-label {
                                             </div>
                                         </div>
                                     </div>
-
-
                                     <div class="col-lg-4  col-md-4 col-xs-4 stats_bar_row">
                                         <div class="progress-status-card">
                                             <div class="progress-box">
@@ -1380,7 +1376,7 @@ label.confirm_msg.form-check-label {
                                                     <strong class="progress-value"><span></span></strong>
                                                 </div>
                                                 <div class="inner-content score-1-text">
-                                                      <p class="number-text">6</p>
+                                                    <p class="number-text">6</p>
                                                     <div class="icon_wrap">
                                                         <span><img src="{{url::asset('/images/2.png')}}"></span>
                                                     </div>
@@ -1389,7 +1385,6 @@ label.confirm_msg.form-check-label {
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-lg-4  col-md-4 col-xs-4 stats_bar_row">
                                         <div class="progress-status-card">
                                             <div class="progress-box">
@@ -1397,7 +1392,7 @@ label.confirm_msg.form-check-label {
                                                     <strong class="progress-value"><span></span></strong>
                                                 </div>
                                                 <div class="inner-content score-2-text">
-                                                     <p class="number-text">7</p>
+                                                    <p class="number-text">7</p>
                                                     <div class="icon_wrap">
                                                         <span><img src="{{url::asset('/images/3.png')}}"></span>
                                                     </div>
@@ -1406,7 +1401,6 @@ label.confirm_msg.form-check-label {
                                             </div>
                                         </div>
                                     </div>
-                       
                                     <div class="col-lg-4  col-md-4 col-xs-4 stats_bar_row">
                                         <div class="progress-status-card">
                                             <div class="progress-box">
@@ -1414,7 +1408,7 @@ label.confirm_msg.form-check-label {
                                                     <strong class="progress-value"><span></span></strong>
                                                 </div>
                                                 <div class="inner-content score-1-text">
-                                                     <p class="number-text">8</p>
+                                                    <p class="number-text">8</p>
                                                     <div class="icon_wrap">
                                                         <span><img src="{{url::asset('/images/2.png')}}"></span>
                                                     </div>
@@ -1423,7 +1417,6 @@ label.confirm_msg.form-check-label {
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-lg-4  col-md-4 col-xs-4 stats_bar_row">
                                         <div class="progress-status-card">
                                             <div class="progress-box">
@@ -1431,7 +1424,7 @@ label.confirm_msg.form-check-label {
                                                     <strong class="progress-value"><span></span></strong>
                                                 </div>
                                                 <div class="inner-content ">
-                                                     <p class="number-text">9</p>
+                                                    <p class="number-text">9</p>
                                                     <div class="icon_wrap">
                                                         <span><img src="{{url::asset('/images/2.png')}}"></span>
                                                     </div>
@@ -1440,7 +1433,6 @@ label.confirm_msg.form-check-label {
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-lg-4  col-md-4 col-xs-4 stats_bar_row">
                                         <div class="progress-status-card">
                                             <div class="progress-box">
@@ -1448,7 +1440,7 @@ label.confirm_msg.form-check-label {
                                                     <strong class="progress-value"><span></span></strong>
                                                 </div>
                                                 <div class="inner-content score-1-text">
-                                                     <p class="number-text">10</p>
+                                                    <p class="number-text">10</p>
                                                     <div class="icon_wrap">
                                                         <span><img src="{{url::asset('/images/1.png')}}"></span>
                                                     </div>
@@ -1457,7 +1449,6 @@ label.confirm_msg.form-check-label {
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-lg-4  col-md-4 col-xs-4 stats_bar_row">
                                         <div class="progress-status-card">
                                             <div class="progress-box">
@@ -1465,7 +1456,7 @@ label.confirm_msg.form-check-label {
                                                     <strong class="progress-value"><span></span></strong>
                                                 </div>
                                                 <div class="inner-content score-2-text">
-                                                     <p class="number-text">11</p>
+                                                    <p class="number-text">11</p>
                                                     <div class="icon_wrap">
                                                         <span><img src="{{url::asset('/images/2.png')}}"></span>
                                                     </div>
@@ -1474,7 +1465,6 @@ label.confirm_msg.form-check-label {
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-lg-4  col-md-4 col-xs-4 stats_bar_row">
                                         <div class="progress-status-card">
                                             <div class="progress-box">
@@ -1483,7 +1473,7 @@ label.confirm_msg.form-check-label {
                                                     <strong class="progress-value"><span></span></strong>
                                                 </div>
                                                 <div class="inner-content score-1-text">
-                                                     <p class="number-text">12</p>
+                                                    <p class="number-text">12</p>
                                                     <div class="icon_wrap">
                                                         {{$average_stats['rally_length']}}
                                                         <span><img src="{{url::asset('/images/3.png')}}"></span>
@@ -1493,7 +1483,6 @@ label.confirm_msg.form-check-label {
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-lg-4  col-md-4 col-xs-4 stats_bar_row">
                                         <div class="progress-status-card">
                                             <div class="progress-box">
@@ -1501,7 +1490,7 @@ label.confirm_msg.form-check-label {
                                                     <strong class="progress-value"><span></span></strong>
                                                 </div>
                                                 <div class="inner-content score-2-text">
-                                                     <p class="number-text">13</p>
+                                                    <p class="number-text">13</p>
                                                     <div class="icon_wrap">
                                                         {{$average_stats['average_aces']}}
                                                         <span><img src="{{url::asset('/images/1.png')}}"></span>
@@ -1519,12 +1508,12 @@ label.confirm_msg.form-check-label {
                                                     <strong class="progress-value"><span></span></strong>
                                                 </div>
                                                 <div class="inner-content score-1-text">
-                                                     <p class="number-text">14</p>
+                                                    <p class="number-text">14</p>
                                                     <div class="icon_wrap">
-                                                        @php 
-                                                            $average_value = $average_stats['total_double_faults'];
-                                                            $integer = floor($average_value);      
-                                                            $fraction = $average_value - $integer; 
+                                                        @php
+                                                        $average_value = $average_stats['total_double_faults'];
+                                                        $integer = floor($average_value);
+                                                        $fraction = $average_value - $integer;
                                                         @endphp
                                                         {{$average_stats['total_double_faults']}}
                                                         <span><img src="{{url::asset('/images/2.png')}}"></span>
@@ -1534,13 +1523,12 @@ label.confirm_msg.form-check-label {
                                             </div>
                                         </div>
                                     </div>
-                                    
                                 </div>
                             </div>
                         </div>
                         <a href="#" style="float:right;" onclick="window.print();" class="d-print-none cstm-btn main_button">Print</a>
                         @else
-                        <div class="noData offset-md-4 col-md-4 sorry_msg">
+                        <div class="noData offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-2 col-sm-8 sorry_msg">
                             <div class="no_results">
                                 <h3>Sorry, no results</h3>
                                 <p>No Data Found</p>
@@ -1550,14 +1538,8 @@ label.confirm_msg.form-check-label {
                     </div>
                 </div>
             </div>
-            @else
-            <div class="noData offset-md-4 col-md-4 sorry_msg">
-                <div class="no_results">
-                    <h3>Sorry, no results</h3>
-                    <p>No Data Found</p>
-                </div>
-            </div>
-            @endif
+           
+         
         </div>
     </div>
     </div>

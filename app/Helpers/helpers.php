@@ -29,6 +29,20 @@ function getUseremail($id){
 }
 
 /*-------------------------------------
+| To calculate the age of the user
+|-------------------------------------*/
+function getUserage($id){
+  $user = App\User::where('id',$id)->first();
+
+  $user_age = strtotime($user->date_of_birth);
+  $current_date1 = strtotime(date('Y-m-d')); 
+  $user_diff = abs($current_date1 - $user_age);
+  $years1 = floor($user_diff / (365*60*60*24));
+
+  return $years1;
+}
+
+/*-------------------------------------
 | Camp Category name using category ID 
 |-------------------------------------*/
 function getCatname($id){
@@ -69,6 +83,21 @@ function getTestname($id){
 }
 
 /*-------------------------------------
+| Calculate available spaces
+|-------------------------------------*/
+function calculateAvSpaces($id){
+  $campData = App\Camp::where('id',$id)->first();
+  $purchasedCamps = \DB::table('shop_cart_items')->where('shop_type','camp')->where('product_id',$id)->where('type','order')->get();
+
+  foreach($purchasedCamps as $key=>$camps)
+  {
+    // $weekArray = json_decode($camps->week); dd($weekArray);
+  }
+
+  return $test['title'];
+}
+
+/*-------------------------------------
 | Product Category name using category ID 
 |-------------------------------------*/
 function getProductCatname($id){ 
@@ -99,9 +128,33 @@ function getReportCategoryName($id){
 /*----------------------------------------------
 | Get Account ID using course/camp/product ID
 |----------------------------------------------*/
-function getAccountID($id){
-  
+function getAccountID($id)
+{
   $shopItem = \DB::table('shop_cart_items')->where('id',$id)->where('user_id',Auth::user()->id)->where('type','cart')->first();
+  
+  if($shopItem->shop_type == 'course')
+  {
+    $course = \DB::table('courses')->where('id',$shopItem->product_id)->first();
+    $account_id = $course->account_id;
+  }
+  elseif($shopItem->shop_type == 'camp')
+  {
+    $course = \DB::table('camps')->where('id',$shopItem->product_id)->first();
+    $account_id = $course->account_id;
+  }
+  elseif($shopItem->shop_type == 'product')
+  {
+    $course = \DB::table('products')->where('id',$shopItem->product_id)->first();
+    $account_id = $course->account_id;
+  }
+
+  return $account_id;
+}
+
+// For those where auth is not found
+function ToGetAccountID($id,$user_id)
+{
+  $shopItem = \DB::table('shop_cart_items')->where('id',$id)->where('user_id',$user_id)->where('type','cart')->first();
   
   if($shopItem->shop_type == 'course')
   {

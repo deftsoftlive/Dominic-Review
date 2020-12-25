@@ -43,6 +43,7 @@
                         <table class="table table-hover">
                             <thead>
                             <tr> 
+                                <th>Camp ID</th>
                                 <th>Name</th>
                                 <th>Category</th> 
                                 <th>Status</th>
@@ -53,6 +54,7 @@
                             <tbody>
                             @foreach($camp as $test)
                                 <tr>
+                                    <td>{{$test->id}}</td>
                                     <td>{{$test->title}}</td>
                                     <td>@php echo getCatname($test->category); @endphp</td> 
                                     <td>

@@ -20,7 +20,7 @@
         "maatwebsite/excel": "^2.1.0",
         "ptondereau/laravel-ups-api": "^1.1",
         "spatie/laravel-newsletter": "^4.2",
-        "stripe/stripe-php": "^7.14",
+        "stripe/stripe-php": "^7.66",
         "taxjar/taxjar-php": "^1.9",
         "unisharp/laravel-ckeditor": "^4.7",
         "unisharp/laravel-filemanager": "~1.8",

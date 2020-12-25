@@ -318,7 +318,7 @@ public function StripePay($request,$amount,$deal,$package)
 
                           $charge = \Stripe\Charge::create([
                                      'amount' => round($total * 100),
-                                     'currency' => 'usd',
+                                     'currency' => 'gbp',
                                      'description' => 'description',
                                      'receipt_email' => Auth::user()->email,
                                      'customer' => $customer->id,

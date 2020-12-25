@@ -16,7 +16,7 @@ Route::group(['prefix' => 'checkout'], function(){
    Route::get('/billing-address','Shop\CheckoutController@billingAddress')->name('shop.checkout.billingAddress');
    Route::post('/billing-address','Shop\CheckoutController@postBillingAddress')->name('shop.checkout.billingAddress');
 
-   Route::any('/payment','Shop\CheckoutController@payment')->name('shop.checkout.payment');
+   Route::any('/payment','Shop\CheckoutController@payment')->name('shop.checkout.payment'); 
    Route::any('/removeCoupon','Shop\CheckoutController@removeCoupon')->name('removeCoupon');
    Route::post('/stripe/payment','Shop\CheckoutController@postPaymentStripe')->name('shop.checkout.stripe.payment');
 

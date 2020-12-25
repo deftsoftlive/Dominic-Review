@@ -1,7 +1,7 @@
 @extends('inc.homelayout')
 @section('title', 'DRH|Register')
 @section('content')
-<div class="account-menu d-print-none">
+<div class="account-menu d-print-none ">
     <div class="container">
         <div class="menu-title">
             <span>Account</span> menu
@@ -35,12 +35,11 @@
         <h2>Update Your Goals</h2>
         <a class="cstm-btn d-print-none main_button" href="{{url('/user/goals/list')}}">Back to menu</a>
         <button class="cstm-btn d-print-none main_button" id="goal_print">Print</button>
-        <br/><br/>
       </div>
 
     <div class="col-md-12 invoice_apd">
         @if(!empty($get_goal))
-        <div class="player-report-table tbl_shadow">
+        <div class="player-report-table tbl_shadow goalz_print">
           <div class="report-table-wrap">
      
             <div class="m-b-table">
@@ -78,7 +77,7 @@
           </div>
 
             @else
-              <div class="noData offset-md-4 col-md-4 sorry_msg">
+              <div class="noData offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-2 col-sm-8 sorry_msg">
                 <div class="no_results">
                   <h3>Sorry, no results</h3>
                   <p>No Invoice Found</p>

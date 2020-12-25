@@ -262,12 +262,24 @@
                                 </tbody>
 
                                 <tbody>
-                                    <!-- Contact Us Page -->
+                                    <!-- Childcare Popup -->
                                     <td>Childcare Popup</td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
                                             <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/settings/general/edit/child-care-popup')}}" class="dropdown-item">Edit</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tbody>
+
+                                <!-- Textbox Management -->
+                                <tbody>
+                                    <td>Textbox Management</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+                                            <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;"><a href="{{url('admin/settings/general/edit/textbox-management')}}" class="dropdown-item">Edit</a>
                                             </div>
                                         </div>
                                     </td>

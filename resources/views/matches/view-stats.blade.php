@@ -34,7 +34,7 @@ table.stats.table.table-bordered.cst-reports th {
 @endif
 <section class="member view_stats section-padding">
    <div class="container">
-      <div class="pink-heading comp_match btn-right">
+      <div class="pink-heading comp_match btn-right match_wrap-res">
          <h2 class="text-left">Match Stats&nbsp; </h2>
           <button class="cstm-btn main_button d-print-none" onclick="window.print();" >Print</button>
       </div>

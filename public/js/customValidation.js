@@ -1353,5 +1353,53 @@ $(document).ready(function (){
       }
     });
 
+    /*validation for Tennis listing filter*/
+    $('#tennis-listing').validate({
+             rules: {
+             course: {
+                  required: true
+              },
+              subtype: {
+                  required: true
+              },
+              level: {
+                  required: true
+              },
+          },
+          messages:{
+              course:{required:"This field is required."},
+              subtype:{required:"This field is required."},
+              level:{required:"This field is required."},
+          },
+
+      highlight: function (element, errorClass, validClass) {
+
+      if(element.type =='text'||element.type =='password'||element.type =='email'||element.type =='select-one'||element.type == 'tel') {
+          $(element).siblings("label").addClass("error");
+          $(element).addClass('input--error').removeClass(validClass+' input--success');
+          $(element).closest('.myForm').removeClass('has-success has-feedback').addClass('has-error has-feedback');
+        // this.findByName(element.name).removeClass('has-success has-feedback').addClass('has-error has-feedback');
+        $(element).closest('.myForm').find('i.fa').remove();
+        $(element).closest('.myForm').append('<i class="fa fa-exclamation fa-lg form-control-feedback"></i>');
+      }else if(element.type == 'checkbox'){
+          $("input#checkbox1").after('<span class="checkmark"></span>');
+      }
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      if (element.type === "text"||element.type =='password' ||element.type =='email'||element.type =='select-one'||element.type == 'tel') {
+          $(element).siblings("label").removeClass("error");
+          $('.errorMsg').addClass('displaynone');
+          $(element).closest('.myForm').removeClass('has-error has-feedback').addClass('has-success has-feedback');
+          $(element).removeClass('input--error').addClass(validClass+' input--success');
+          $(element).closest('.myForm').find('i.fa').remove();
+          $(element).closest('.myForm').append('<i class="fa fa-check fa-lg form-control-feedback"></i>');
+      } 
+    },
+         
+        submitHandler: function(form) {
+          form.submit();
+      }
+    });
+
 
 });
