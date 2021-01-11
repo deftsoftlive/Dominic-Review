@@ -240,7 +240,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                         <div class="tab-points-wrap">
 
                                             @foreach($custom_box as $box)
-                                              @if($box->type == 'school-landing-home')
+                                              @if($box->type == 'school-landing-book')
                                               <div class="tab-points-content @if($box->position == 1) inverted @endif">
                                                  <div class="tab-points-container">
                                                     <div class="row">
@@ -276,7 +276,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                     </div>
                     <div class="tab-pane fade" id="nav-reports" role="tabpanel" aria-labelledby="nav-reports-tab">
                         <div class="o-i-tab">
-                            {!! getAllValueWithMeta('ten_lan_camp_tab3_description', 'tennis-landing') !!}
+                            {!! getAllValueWithMeta('sch_lan_camp_tab3_description', 'school-landing') !!}
 
                             <br/><br/>
 

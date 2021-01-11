@@ -1,4 +1,5 @@
     <footer class="site-footer d-print-none">
+      <input type="hidden" id="base_url" value="{{url('/')}}/">
       <div class="ftr-top">
         <div class="container">
           <div class="row">
@@ -131,7 +132,7 @@
           // For checkout payment page
           var price = $('#totakl').html(); 
 
-            if(price == '£0.30')
+            if(price == '£0.00')
             {
               $("#payment-form").css('display','none');
               $(".panel.panel-default.credit-card-box").css('display','none');
@@ -414,9 +415,9 @@ $(document).ready(function(){
 $("#money_amount").change(function(){
 
   var amt = $('#money_amount').val();
-
+  var base_url=$('#base_url').val();
   $.ajax({
-      url:"http://49.249.236.30:8654/dominic-new/user/stripe-wallet",
+      url:base_url+"user/stripe-wallet",
       method:'GET',
       data:{wallet_amount:amt},
       dataType:'json',
@@ -434,7 +435,7 @@ $("#money_amount").change(function(){
 //         var player_id = $('#player_id').val(); 
 //         var report_type = $('#rp_type').val();
 
-//         $base_url = "http://49.249.236.30:8654/dominic-new/user";
+//         $base_url = "https://demo.drhsports.co.uk/user";
 
 //         $.ajax({
 //             url:$base_url+"/sim_report_popup",
@@ -587,8 +588,9 @@ $('.upload-image').on('click', function (ev) {
   |*****************************/
     function fetch_tennis_club_data(tennis_club = '', user_id = '', shop_id = '')
     {
+      var base_url=$('#base_url').val();
         $.ajax({
-            url:"http://49.249.236.30:8654/dominic-new"+"/user/update_tennis_club/"+tennis_club+"/"+user_id+"/"+shop_id,
+            url:base_url+"user/update_tennis_club/"+tennis_club+"/"+user_id+"/"+shop_id,
             method:'GET',
             data:{tennis_club:tennis_club, user_id:user_id, shop_id:shop_id},
             dataType:'json',
@@ -647,9 +649,9 @@ $('.upload-image').on('click', function (ev) {
         $("select#season").change(function(){
             var selectedSeason = $(this).children("option:selected").val(); 
             var selectedUser = $('#inputPlayer option:selected').attr('value'); 
-
+            var base_url=$('#base_url').val();
             $.ajax({
-                url:"http://49.249.236.30:8654/dominic-new/user/selectedSeason/",
+                url:base_url+"user/selectedSeason/",
                 method:'GET',
                 data:{selectedSeason:selectedSeason,selectedUser:selectedUser},
                 dataType:'json',
@@ -676,9 +678,9 @@ $('.upload-image').on('click', function (ev) {
     $(document).ready(function(){
         $("select#people").change(function(){
             var selectedCat = $(this).children("option:selected").val();  
-
+            var base_url=$('#base_url').val();
             $.ajax({
-                url:"http://49.249.236.30:8654/dominic-new/selectedCat/",
+                url:base_url+"selectedCat/",
                 method:'GET',
                 data:{selectedCat:selectedCat},
                 dataType:'json',
@@ -713,9 +715,9 @@ $('.upload-image').on('click', function (ev) {
        function quickview(id) {  
 
         $("body").addClass("modal-open");
-        
+        var base_url=$('#base_url').val();
         $.ajax({
-          url: "http://49.249.236.30:8654/dominic-new/shop/product/view/"+id,
+          url: base_url+"shop/product/view/"+id,
           type: "get",
           success: function (response) {
            // console.log(response);
@@ -1094,9 +1096,9 @@ $('.upload-image').on('click', function (ev) {
         event.preventDefault();
 
         coupon_code = $('#coupon_code').val();
-
+        var base_url=$('#base_url').val();
         $.ajax({
-          url: "/dominic-new/submit-coupon",
+          url: base_url+"submit-coupon",
           type:"POST",
           data:{
             "_token": "{{ csrf_token() }}",
@@ -1131,7 +1133,7 @@ $('#inputPlayer-3').on('change', function()
   //   var course_id = $('#course_id').val();
 
   //   $.ajax({
-  //     url: "/dominic-new/user/course_booking",
+  //     url: "/user/course_booking",
   //     type:"POST",
   //     data:{
   //       "_token": "{{ csrf_token() }}",
@@ -1140,7 +1142,7 @@ $('#inputPlayer-3').on('change', function()
   //     },
   //     success:function(data){
   //       if(data.output == 1){
-  //         window.location.href="http://49.249.236.30:8654/dominic-new/shop/cart";
+  //         window.location.href="https://demo.drhsports.co.uk/shop/cart";
   //       }
   //     }
 

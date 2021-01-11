@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Shop\ShopOrder;
 use App\User;
 use App\ChildcareVoucher;
+use App\StripeAccount;
 
 class OrderController extends Controller
 {
@@ -227,9 +228,9 @@ class OrderController extends Controller
         if(!empty($user_name) && !empty($user_email) && empty($start_date) && empty($end_date))
         {
             $tasks = \DB::table('shop_orders')
-                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('shop_cart_items', 'shop_orders.orderID', '=', 'shop_cart_items.orderID')
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
-                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where('users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('users.email', 'LIKE', '%' . $user_email . '%' )
                     ->orderBy('shop_orders.id','desc')
@@ -239,9 +240,9 @@ class OrderController extends Controller
         elseif(!empty($user_name) && !empty($user_email) && !empty($start_date) && empty($end_date))
         {
             $tasks = \DB::table('shop_orders')
-                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('shop_cart_items', 'shop_orders.orderID', '=', 'shop_cart_items.orderID')
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
-                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where('users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
@@ -251,9 +252,9 @@ class OrderController extends Controller
         elseif(empty($user_name) && empty($user_email) && !empty($start_date) && empty($end_date))
         {
             $tasks = \DB::table('shop_orders')
-                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('shop_cart_items', 'shop_orders.orderID', '=', 'shop_cart_items.orderID')
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
-                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where('shop_orders.created_at','>',$start_date)
                     ->orderBy('shop_orders.id','desc')
                     ->get(); 
@@ -261,9 +262,9 @@ class OrderController extends Controller
         elseif(empty($user_name) && empty($user_email) && empty($start_date) && !empty($end_date))
         {
             $tasks = \DB::table('shop_orders')
-                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('shop_cart_items', 'shop_orders.orderID', '=', 'shop_cart_items.orderID')
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
-                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where('shop_orders.created_at','<',$end_date)
                     ->orderBy('shop_orders.id','desc')
                     ->get(); 
@@ -271,9 +272,9 @@ class OrderController extends Controller
         elseif(!empty($user_name) && !empty($user_email) && empty($start_date) && !empty($end_date))
         {
             $tasks = \DB::table('shop_orders')
-                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('shop_cart_items', 'shop_orders.orderID', '=', 'shop_cart_items.orderID')
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
-                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where('users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','<',$end_date)
@@ -283,9 +284,9 @@ class OrderController extends Controller
         elseif(!empty($user_name) && !empty($user_email) && !empty($start_date) && !empty($end_date))
         {
             $tasks = \DB::table('shop_orders')
-                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('shop_cart_items', 'shop_orders.orderID', '=', 'shop_cart_items.orderID')
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
-                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where('users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
@@ -296,9 +297,9 @@ class OrderController extends Controller
         elseif(!empty($user_name) && empty($user_email) && empty($start_date) && empty($end_date))
         {
             $tasks = \DB::table('shop_orders')
-                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('shop_cart_items', 'shop_orders.orderID', '=', 'shop_cart_items.orderID')
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
-                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
                     ->orderBy('shop_orders.id','desc')
                     ->get(); 
@@ -306,9 +307,9 @@ class OrderController extends Controller
         elseif(!empty($user_name) && empty($user_email) && !empty($start_date) && empty($end_date))
         {
             $tasks = \DB::table('shop_orders')
-                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('shop_cart_items', 'shop_orders.orderID', '=', 'shop_cart_items.orderID')
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
-                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
                     ->orderBy('shop_orders.id','desc')
@@ -317,9 +318,9 @@ class OrderController extends Controller
         elseif(!empty($user_name) && empty($user_email) && empty($start_date) && !empty($end_date))
         {
             $tasks = \DB::table('shop_orders')
-                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('shop_cart_items', 'shop_orders.orderID', '=', 'shop_cart_items.orderID')
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
-                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('shop_orders.created_at','<',$end_date)
                     ->orderBy('shop_orders.id','desc')
@@ -328,9 +329,9 @@ class OrderController extends Controller
         elseif(!empty($user_name) && empty($user_email) && !empty($start_date) && !empty($end_date))
         {
             $tasks = \DB::table('shop_orders')
-                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('shop_cart_items', 'shop_orders.orderID', '=', 'shop_cart_items.orderID')
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
-                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
                     ->where('shop_orders.created_at','<',$end_date)
@@ -340,9 +341,9 @@ class OrderController extends Controller
         elseif(empty($user_name) && empty($user_email) && !empty($start_date) && !empty($end_date))
         {
             $tasks = \DB::table('shop_orders')
-                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('shop_cart_items', 'shop_orders.orderID', '=', 'shop_cart_items.orderID')
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
-                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where('shop_orders.created_at','>',$start_date)
                     ->where('shop_orders.created_at','<',$end_date)
                     ->orderBy('shop_orders.id','desc')
@@ -351,9 +352,9 @@ class OrderController extends Controller
         elseif(empty($user_name) && !empty($user_email) && empty($start_date) && empty($end_date))
         {
             $tasks = \DB::table('shop_orders')
-                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('shop_cart_items', 'shop_orders.orderID', '=', 'shop_cart_items.orderID')
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
-                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
                     ->orderBy('shop_orders.id','desc')
                     ->get(); 
@@ -361,9 +362,9 @@ class OrderController extends Controller
         elseif(empty($user_name) && !empty($user_email) && !empty($start_date) && empty($end_date))
         {
             $tasks = \DB::table('shop_orders')
-                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('shop_cart_items', 'shop_orders.orderID', '=', 'shop_cart_items.orderID')
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
-                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
                     ->orderBy('shop_orders.id','desc')
@@ -372,9 +373,9 @@ class OrderController extends Controller
         elseif(empty($user_name) && !empty($user_email) && empty($start_date) && !empty($end_date))
         {
             $tasks = \DB::table('shop_orders')
-                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('shop_cart_items', 'shop_orders.orderID', '=', 'shop_cart_items.orderID')
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
-                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','<',$end_date)
                     ->orderBy('shop_orders.id','desc')
@@ -383,9 +384,9 @@ class OrderController extends Controller
         elseif(empty($user_name) && !empty($user_email) && !empty($start_date) && !empty($end_date))
         {
             $tasks = \DB::table('shop_orders')
-                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('shop_cart_items', 'shop_orders.orderID', '=', 'shop_cart_items.orderID')
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
-                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
                     ->where('shop_orders.created_at','<',$end_date)
@@ -395,12 +396,14 @@ class OrderController extends Controller
         elseif(empty($user_name) && empty($user_email) && empty($start_date) && empty($end_date))
         {
            $tasks = \DB::table('shop_orders')
-                    ->leftjoin('shop_cart_items', 'shop_orders.id', '=', 'shop_cart_items.order_id')
+                    ->leftjoin('shop_cart_items', 'shop_orders.orderID', '=', 'shop_cart_items.orderID')
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
-                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id')
+                    ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->orderBy('shop_orders.id','desc')
                     ->get();
         }
+
+
 
             $headers = array(
                 "Content-type"        => "text/csv",
@@ -409,20 +412,45 @@ class OrderController extends Controller
                 "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
                 "Expires"             => "0"
             );
+            $columns = array('Date', 'Order ID', 'Order Type', 'Season', 'Account' ,'User Name', 'User Email', 'Amount', 'Payment By', 'Transaction Details', 'Provider ID');
 
-            $columns = array('Date', 'Order ID', 'Order Type', 'User Name', 'User Email', 'Amount', 'Payment By', 'Transaction Details', 'Provider ID');
+                /*foreach ($tasks as $task) {
+                    dd($tasks);
 
+                    if(!empty($task->provider_id)){
+                        $provider = \DB::table('childcare_vouchers')->where('id',$task->provider_id)->first();
+                    }
+                    $season = isset($task->course_season) ? (getSeasonname($task->course_season)) : '';
+
+
+                    $accountId = isset($task->id) ? ToGetAccountIDForTypeOrder($task->shop_id, $task->user_id) : '';
+                    if (isset($accountId)) {
+                        $accountData = StripeAccount::where('id', $accountId)->first();
+                        $accountName = isset($accountData->account_name) ? $accountData->account_name: 'DRH Default Account';
+                    }else{
+                        $accountName = 'DRH Default Account';
+                    }
+                }*/
+            
             $callback = function() use($tasks, $columns) {
                 $file = fopen('php://output', 'w');
                 fputcsv($file, $columns);
-
 
                 foreach ($tasks as $task) {
 
                     if(!empty($task->provider_id)){
                         $provider = \DB::table('childcare_vouchers')->where('id',$task->provider_id)->first();
                     }
+                    $season = isset($task->course_season) ? (getSeasonname($task->course_season)) : '';
 
+
+                    $accountId = isset($task->id) ? ToGetAccountIDForTypeOrder($task->shop_id, $task->user_id) : '';
+                    if (isset($accountId)) {
+                        $accountData = StripeAccount::where('id', $accountId)->first();
+                        $accountName = isset($accountData->account_name) ? $accountData->account_name: 'DRH Default Account';
+                    }else{
+                        $accountName = 'DRH Default Account';
+                    }
                     // if($task->shop_type == 'course')
                     // {
                     //     $course = DB::table('courses')->where('id',$task->product_id)->first(); 
@@ -439,10 +467,12 @@ class OrderController extends Controller
                     $row['User Email'] = $task->email;
                     $row['Amount']     = $task->amount;
                     $row['Payment By'] = $task->payment_by;
+                    $row['Season']     = $season;
+                    $row['Account']    = $accountName;
                     $row['Transaction Details']  = isset($task->transaction_details) ? $task->transaction_details : '-';
                     $row['Provider ID']  = isset($task->provider_id) ? $provider->provider_name : '-';
 
-                    fputcsv($file, array($row['Date'], $row['Order ID'], $row['Order Type'], $row['User Name'], $row['User Email'], $row['Amount'], $row['Payment By'], $row['Transaction Details'], $row['Provider ID']));
+                    fputcsv($file, array($row['Date'], $row['Order ID'], $row['Order Type'], $row['Season'], $row['Account'],$row['User Name'], $row['User Email'], $row['Amount'], $row['Payment By'], $row['Transaction Details'], $row['Provider ID']));
                 }
 
                 fclose($file);

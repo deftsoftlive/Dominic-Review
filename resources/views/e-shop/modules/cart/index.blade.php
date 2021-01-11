@@ -20,12 +20,12 @@ footer.site-footerss {
 
 @php $base_url = \URL::to('/'); @endphp
 <!-- banner section starts here here -->
-<section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/1584684865tennis_course_banner_image.png);">
+<section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/1609147916checkout_banner.png);">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="football-course-content-data">
-                    <h2 class="f-course-heading">SHOPING CART</h2>
+                    <h2 class="f-course-heading">SHOPPING CART</h2>
                 </div>
             </div>
         </div>

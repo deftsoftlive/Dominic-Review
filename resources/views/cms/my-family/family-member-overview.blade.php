@@ -93,6 +93,9 @@ $country_code = DB::table('country_code')->orderBy('countryname','asc')->get();
                                                     <p>Country -
                                                     	<span>{{isset($user->country) ? $user->country : ''}}</span></p>
                                                 </li>
+                                                @if(Auth::user() && Auth::user()->type != 'Adult' && Auth::user()->type != 'Child')
+
+                                                @else
                                                 <li>
                                                     <p>What Is The Relationship Of The Account Holder To This Person? -
                                                     	<span>{{isset($user->relation) ? $user->relation : ''}} </span></p>
@@ -100,6 +103,8 @@ $country_code = DB::table('country_code')->orderBy('countryname','asc')->get();
                                                 <li>
                                                     <p>Is English this person’s primary language? - <span>{{isset($user_details->core_lang) ? $user_details->core_lang : ''}} </span></p>
                                                 </li>
+                                                @endif
+
                                                 <li>
                                                     <p>Will this person be booking onto a DRH coaching course or holiday camp ? - 
                                                     	<span>{{isset($user->book_person) ? $user->book_person : ''}}</span></p>

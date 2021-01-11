@@ -200,7 +200,7 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		#----------------------------------------------------------------
 		Route::any('/purchased-course','Admin\UserController@change_course_list')->name('purchased_course_data');
 		Route::any('/shop/{id}/change-course','Admin\UserController@change_course')->name('change_course');
-		Route::any('/shop/{id}/delete/player','Admin\UserController@delete_course')->name('delete_course');
+		Route::any('/shop/course/{id}/delete/player','Admin\UserController@delete_course')->name('delete_course');
 		Route::any('/change-course/save','Admin\UserController@save_change_course')->name('save_change_course');
 		Route::any('/purchased-course/add','Admin\UserController@add_course_for_player')->name('add_course_for_player');
 		Route::any('/purchased-course/save','Admin\UserController@save_course_for_player')->name('save_course_for_player');
@@ -269,7 +269,7 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::get('/drh-activity/{slug}','Admin\DrhActivityController@drhactivity_showEdit')->name('admin.drhactivity.showEdit');
 		Route::post('/drh-activity/{slug}','Admin\DrhActivityController@drhactivity_update')->name('admin.drhactivity.update');
 		Route::get('/drh-activity/status/{id}','Admin\DrhActivityController@drhactivity_Status')->name('admin.drhactivity.status');
-		Route::any('/drh-activity/delete/{id}','Admin\DrhActivityController@delete_drhactivity')->name('delete_drhactivity');
+		Route::any('/drhactivity/delete/{id}','Admin\DrhActivityController@delete_drhactivity')->name('delete_drhactivity');
 		Route::any('/update_drhactivity_sort/{sort_no}/{activity_id}','Admin\DrhActivityController@update_drhactivity_sort')->name('update.activity.sort');
 
 
@@ -349,6 +349,7 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::post('/coupon/{id}','Admin\CouponController@coupon_update')->name('admin.coupon.update');
 		Route::get('/coupon/status/{id}','Admin\CouponController@coupon_Status')->name('admin.coupon.status');
 		Route::any('/coupon/duplicate/{id}','Admin\CouponController@duplicate_coupon')->name('duplicate_coupon');
+		Route::any('/coupon/delete/{id}','Admin\CouponController@delete_coupon')->name('delete_coupon');
 		Route::any('/coupon/export/csv','Admin\CouponController@export_coupon_csv')->name('export_coupon_csv');
 		Route::any('/coupon/import/csv','Admin\CouponController@coupon_import_csv')->name('coupon_csv');
 		Route::any('/coupon/csv/save','Admin\CouponController@save_coupon_csv')->name('save_coupon_csv');
@@ -434,7 +435,6 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::get('/reportquestion/status/{id}','Admin\ReportQuestionController@reportquestion_Status')->name('admin.reportquestion.status');
 		Route::any('/reportquestion/delete/{id}','Admin\ReportQuestionController@delete_reportquestion')->name('delete_reportquestion');
 
-
 		Route::get('/report-question-option','Admin\ReportQuestionController@reportquestionopt_index')->name('admin.reportquestionopt.list');
 		Route::get('/report-question-option/create','Admin\ReportQuestionController@reportquestionopt_showCreate')->name('admin.reportquestionopt.showCreate');
 		Route::post('/report-question-option/create','Admin\ReportQuestionController@reportquestionopt_create')->name('admin.reportquestionopt.create');
@@ -490,6 +490,24 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::any('/course/delete/{id}','Admin\CourseController@delete_course')->name('delete_course');
 		Route::any('/course/duplicate/{id}','Admin\CourseController@duplicate_course')->name('duplicate_course');
 		Route::any('selectedCat','Admin\CourseController@selectedCat')->name('selectedCat');
+
+		#----------------------------------------------------------------
+		#  Pay Go Course Management
+		#----------------------------------------------------------------
+		Route::any('/pay-go-course','Admin\PayGoCourseController@pay_go_course_index')->name('admin.pay.go.course.list');
+		Route::get('/pay-go-course/active','Admin\PayGoCourseController@pay_go_course_active')->name('admin.pay.go.course.active');
+		Route::get('/pay-go-course/in-active','Admin\PayGoCourseController@pay_go_course_inactive')->name('admin.pay.go.course.in-active');
+		Route::get('/pay-go-course/create','Admin\PayGoCourseController@pay_go_course_showCreate')->name('admin.pay.go.course.showCreate');
+		Route::post('/pay-go-course/create','Admin\PayGoCourseController@pay_go_course_create')->name('admin.pay.go.course.create');
+		Route::get('/pay-go-course/{slug}','Admin\PayGoCourseController@pay_go_course_showEdit')->name('admin.pay.go.course.showEdit');
+		Route::post('/pay-go-course/{slug}','Admin\PayGoCourseController@pay_go_course_update')->name('admin.pay.go.course.update');
+		Route::get('/pay-go-course/status/{slug}','Admin\PayGoCourseController@pay_go_course_Status')->name('admin.pay.go.course.status');
+
+		Route::any('/update_pay_go_course_price/{price}/{course_id}','Admin\PayGoCourseController@update_pay_go_course_price')->name('pay.go.update.price');
+		Route::any('/update_pay_go_course_sort/{sort_no}/{course_id}','Admin\PayGoCourseController@update_pay_go_course_sort')->name('pay.go.update.sort');
+		Route::any('/pay-go-course/delete/{id}','Admin\PayGoCourseController@delete_pay_go_course')->name('delete_pay_go_course');
+		Route::any('/pay-go-course/duplicate/{id}','Admin\PayGoCourseController@duplicate_pay_go_course')->name('duplicate_pay_go_course');
+		Route::any('pay_go_course_selectedCat','Admin\PayGoCourseController@pay_go_selectedCat')->name('pay.go.selectedCat');
 
 		#----------------------------------------------------------------
 		#  Businesses Management
@@ -683,5 +701,9 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
        #--------------------------------------------------------------------------------------------------------------
        #  users
        #--------------------------------------------------------------------------------------------------------------
+
+
+		/*New Video Management Route*/
+		Route::get('/video-management','Admin\VideoManagementController@index')->name('admin.video.management');
        
 });

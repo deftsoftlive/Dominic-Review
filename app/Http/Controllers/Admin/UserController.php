@@ -514,7 +514,7 @@ class UserController extends Controller
     |********************************/
     public function add_course_for_player()
     {
-       return view('admin.change-course.add-course',compact('purchase_course')); 
+       return view('admin.change-course.add-course'); 
     }
 
     /********************************

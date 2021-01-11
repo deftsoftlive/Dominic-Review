@@ -21,7 +21,7 @@ public $include = 'e-shop.includes.checkout.';
 
     public function __construct(Request $request)
 	{   
-		//dd($request->all());
+		// dd($request->all());
 		$stripe = SripeAccount();
 
 		if(!empty($request->user_id) && !empty($request->stripeToken))

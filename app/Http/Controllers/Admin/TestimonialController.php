@@ -20,7 +20,7 @@ class TestimonialController extends Controller
     |   Listing of testimonials
     |----------------------------------------*/ 
     public function testimonial_index() {
-        $testimonial = Testimonial::select(['id','title','page_title','description','status','slug'])->paginate(20);
+        $testimonial = Testimonial::select(['id','title','page_title','description','status','slug'])->orderBy('id','desc')->paginate(20);
     	return view('admin.testimonial.index',compact('testimonial'))
     	->with(['title' => 'Testimonial Management', 'addLink' => 'admin.testimonial.showCreate']);
     }

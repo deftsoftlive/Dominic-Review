@@ -90,7 +90,7 @@
                                                 <div class="form-group row">
                                                     <label for="date_of_birth" class="col-md-12 col-form-label text-md-right">Date Of Birth</label>
                                                     <div class="col-md-12">
-                                                        <input id="date_of_birth" type="date" class="form-control" name="date_of_birth" value="" required="" max="2020-07-07">
+                                                        <input id="date_of_birth" type="date" class="form-control input_date" name="date_of_birth" value="" required="">
                                                     </div>
                                                 </div>
                                                 <!-- Address -->
@@ -485,7 +485,7 @@
                                                 <div class="form-group row">
                                                     <label for="date_of_birth" class="col-md-12 col-form-label text-md-right">Date Of Birth</label>
                                                     <div class="col-md-12">
-                                                        <input id="date_of_birth" type="date" class="form-control" name="date_of_birth" value="" required="" max="2020-07-07">
+                                                        <input id="date_of_birth" type="date" class="form-control input_date" name="date_of_birth" value="" required="">
                                                     </div>
                                                 </div>
                                                 <!-- Address -->

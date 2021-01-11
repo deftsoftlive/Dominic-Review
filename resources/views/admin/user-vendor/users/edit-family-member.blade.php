@@ -39,6 +39,12 @@ $count_child_allergies = '';
 @php
 $count = 1; 
 @endphp
+@if(isset($user_data->date_of_birth))
+@php 
+$dobNew = date('d-m-Y', strtotime($user_data->date_of_birth));
+$user_data->date_of_birth = $dobNew;
+@endphp
+@endif
 
 <style>
 #child_section, #medical_info, #child_contacts, #medical_beh, #media_consent, #primary_lang, #beh_info, #med_cond_info, #med_con_button, #pres_med_info, #allergy_button, #allergies_info, #special_needs_info{
@@ -1849,8 +1855,8 @@ input#agree {
                                                         <div class="col-md-12 option_row consent-option-row">
                                                             <div class="form-group row ">
                                                                 <div class="form-radios">
-                                                                    <p class="inner_head"><strong>Behavioral, learning difficultes and /or other disability matters</strong></p>
-                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;margin-bottom:5px;">Are there any behavioural and/or special needs we need to consider to help your child to settel,participate in ans enjoy their activity?</p>
+                                                                    <p class="inner_head"><strong>Behavioural, learning difficulties and /or other disability matters</strong></p>
+                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;margin-bottom:5px;">Are there any behavioural and/or special needs we need to consider to help your child to settle, participate and enjoy their activity?</p>
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio behv_radio">
@@ -2092,8 +2098,8 @@ input#agree {
                                                         <div class="col-md-12 option_row consent-option-row">
                                                             <div class="form-group row ">
                                                                 <div class="form-radios">
-                                                                    <p class="inner_head"><strong>Behavioral, learning difficultes and /or other disability matters</strong></p>
-                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;margin-bottom:5px;">Are there any behavioural and/or special needs we need to consider to help your child to settel,participate in ans enjoy their activity?</p>
+                                                                    <p class="inner_head"><strong>Behavioural, learning difficulties and /or other disability matters</strong></p>
+                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;margin-bottom:5px;">Are there any behavioural and/or special needs we need to consider to help your child to settle, participate and enjoy their activity?</p>
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                      <div class="cstm-radio behv_radio">
@@ -2320,8 +2326,8 @@ input#agree {
                                                         <div class="col-md-12 option_row consent-option-row">
                                                             <div class="form-group row ">
                                                                 <div class="form-radios">
-                                                                    <p class="inner_head"><strong>Behavioral, learning difficultes and /or other disability matters</strong></p>
-                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;margin-bottom:5px;">Are there any behavioural and/or special needs we need to consider to help your child to settel,participate in ans enjoy their activity?</p>
+                                                                    <p class="inner_head"><strong>Behavioural, learning difficulties and /or other disability matters</strong></p>
+                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;margin-bottom:5px;">Are there any behavioural and/or special needs we need to consider to help your child to settle, participate and enjoy their activity?</p>
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                   <div class="cstm-radio behv_radio">

@@ -9,7 +9,7 @@ use App\FAQs;
 class FaqController extends Controller
 {
 	public function index($type) {
-		$faqs = FAQs::where('type', $type)->paginate(10);
+		$faqs = FAQs::where('type', $type)->orderBy('id','desc')->paginate(10);
 		return view('admin.faqs.index')
             ->with([
             	'faqs' => $faqs,

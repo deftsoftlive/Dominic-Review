@@ -4,9 +4,9 @@
             <a class="mobile-menu" id="mobile-collapse1" href="javascript:"><span></span></a>
             <a href="index.html" class="b-brand">
                    <div class="b-bg">
-                       <i class="feather icon-trending-up"></i>
+                       <!-- <i class="feather icon-trending-up"></i> -->
                    </div>
-                   <span class="b-title">Datta Able</span>
+                   <!-- <span class="b-title">Datta Able</span> -->
                </a>
         </div>
         <a class="mobile-menu" id="mobile-header" href="javascript:">

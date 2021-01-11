@@ -16,7 +16,7 @@ function getShopType($orderID){
 }
 
 /*-------------------------------------
-| User name using category ID 
+| User name using user ID 
 |-------------------------------------*/
 function getUsername($id){
   $user = App\User::where('id',$id)->first();
@@ -154,8 +154,13 @@ function getAccountID($id)
 // For those where auth is not found
 function ToGetAccountID($id,$user_id)
 {
-  $shopItem = \DB::table('shop_cart_items')->where('id',$id)->where('user_id',$user_id)->where('type','cart')->first();
-  
+  if(Auth::check() && Auth::user()->id == 1)
+  {
+    $shopItem = \DB::table('shop_cart_items')->where('id',$id)->where('user_id',$user_id)->first(); 
+  }else{
+    $shopItem = \DB::table('shop_cart_items')->where('id',$id)->where('user_id',$user_id)->where('type','cart')->first(); 
+  }
+    
   if($shopItem->shop_type == 'course')
   {
     $course = \DB::table('courses')->where('id',$shopItem->product_id)->first();
@@ -175,6 +180,39 @@ function ToGetAccountID($id,$user_id)
   return $account_id;
 }
 
+// For those where auth is not found for type Order Management
+function ToGetAccountIDForTypeOrder($id,$user_id)
+{
+  if(Auth::check() && Auth::user()->id == 1)
+  {
+    $shopItem = \DB::table('shop_cart_items')->where('id',$id)->where('user_id',$user_id)->first(); 
+  }else{
+    $shopItem = \DB::table('shop_cart_items')->where('id',$id)->where('user_id',$user_id)->where('type','order')->first(); 
+  }
+  if (!empty($shopItem)) {
+    if($shopItem->shop_type == 'course')
+    {
+      $course = \DB::table('courses')->where('id',$shopItem->product_id)->first();
+      $account_id = $course->account_id;
+    }
+    elseif($shopItem->shop_type == 'camp')
+    {
+      $course = \DB::table('camps')->where('id',$shopItem->product_id)->first();
+      $account_id = $course->account_id;
+    }
+    elseif($shopItem->shop_type == 'product')
+    {
+      $course = \DB::table('products')->where('id',$shopItem->product_id)->first();
+      $account_id = $course->account_id;
+    }
+    # code...
+    return $account_id;
+  }else{
+    return '';
+  }
+
+}
+
 /*-------------------------------------
 | Report Category Options
 |-------------------------------------*/
@@ -190,7 +228,7 @@ function utc_to_uk($id)
 {
   $order_details = \DB::table('shop_orders')->where('id',$id)->first();
 
-  $received = $order_details->created_at;
+  $received = $order_details->updated_at;
   $tz = new DateTimeZone('Europe/London');
   $date = new DateTime($received);
   $date->setTimezone($tz);

@@ -405,7 +405,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                         <p>{{$test->description}}</p>
                                                         <div class="t-user">
                                                             <div class="round-arrow">
-                                                                <img src="{{url('/')}}w/public/images/round-arrow-img.png">
+                                                                <img src="{{URL::asset('/images/round-arrow-img.png')}}">
                                                             </div>
                                                             <h3>{{$test->title}}</h3>
                                                             <span>

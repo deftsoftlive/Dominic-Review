@@ -50,7 +50,7 @@
 	                                <button class="btn btn-link upload_profile collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 	                                    Upload Your Profile Picture
 	                                </button>
-	                                <!--   <a class="btn btn-primary" href="http://49.249.236.30:8654/dominic-new/admin/account-holder/overview/117&amp;sec=1">Edit</a> -->
+	                                <!--   <a class="btn btn-primary" href="http://demo.drhsports.co.uk/admin/account-holder/overview/117&amp;sec=1">Edit</a> -->
 	                            </h5>
 	                        </div>
 

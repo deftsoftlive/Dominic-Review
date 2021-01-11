@@ -8,6 +8,7 @@ use App\PackageCourse;
 use App\User;
 use App\Course;
 use Carbon\Carbon;
+use App\Models\Shop\ShopCartItems;
 
 class PackageCourseController extends Controller
 {
@@ -86,7 +87,7 @@ class PackageCourseController extends Controller
     |----------------------------------------*/ 
     public function get_courses(Request $request)
     {
-        // dd($request->all());
+        //dd($request->all());
 
         // Place of insertion 
         if(!empty($request->number)){

@@ -305,7 +305,7 @@ header.Eshop-header {
                     &pound
                 @endif
 
-                @php echo intval($coupon_details->flat_discount) @endphp
+                {{number_format($coupon_details->flat_discount,2)}}
 
                 @if($coupon_details->discount_type == 1) % OFF @endif
 
@@ -319,7 +319,7 @@ header.Eshop-header {
                     &pound
                 @endif
 
-                @php echo intval($voucher->flat_discount) @endphp
+                {{number_format($coupon_details->flat_discount,2)}}
 
                 @if($voucher->discount_type == 1) % OFF @endif
                 @endif
@@ -336,7 +336,9 @@ header.Eshop-header {
                 @if($coupon_details->discount_type == 0)
                     &pound
                 @endif
-                @php echo intval($coupon_details->flat_discount) @endphp
+
+                {{number_format($coupon_details->flat_discount,2)}}
+                
                 @if($coupon_details->discount_type == 1) % OFF @endif
                 @elseif(!empty($voucher_details))
 

@@ -33,7 +33,7 @@
         </div>
         
         <h2>Update Your Goals</h2>
-        <a class="cstm-btn d-print-none main_button" href="{{url('/user/goals/list')}}">Back to menu</a>
+        <a class="cstm-btn d-print-none main_button" href="{{ url()->previous() }}">Back to menu</a>
         <button class="cstm-btn d-print-none main_button" id="goal_print">Print</button>
       </div>
 

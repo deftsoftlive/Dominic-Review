@@ -7,7 +7,7 @@
         <div class="row align-items-center">
             <div class="col-md-12">
                 <div class="page-header-title">
-                    <h5 class="m-b-10">Upload Coupon CSV</h5>
+                    <h5 class="m-b-10">Upload Coupon Excel</h5>
                 </div>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{url(route('admin_dashboard'))}}"><i class="feather icon-home"></i></a></li>
@@ -32,8 +32,8 @@
                 
                    @csrf
 
-                   <label class="control-label">Upload Coupon CSV<span class="cst-upper-star">*</span></label>
-                   <input type="file" class="form-control" name="csv"><br/>
+                   <label class="control-label">Upload Coupon Excel<span class="cst-upper-star">*</span></label>
+                   <input type="file" class="form-control" name="csv" accept=".xlsx, .xls"><br/>
 
                 <div class="card-footer pl-0">
                   <button type="submit" id="btnVanue" class="btn btn-primary">Submit</button>

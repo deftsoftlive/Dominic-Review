@@ -253,6 +253,15 @@ trait GeneralSettingTrait {
                        'book_camp_button_title' => getAllValueWithMeta('book_camp_button_title', $slug),
                        'book_camp_button_url' => getAllValueWithMeta('book_camp_button_url', $slug),
           ];
+
+        case 'my-family': 
+          return [
+                        // Text Box management
+                       'my_family_section4_title' => getAllValueWithMeta('my_family_section4_title', $slug),
+                       'my_family_section4_button_title' => getAllValueWithMeta('my_family_section4_button_title', $slug),
+                       'my_family_section4_button_url' => getAllValueWithMeta('my_family_section4_button_url', $slug),
+          ];
+
         case 'tennis-landing': 
           return [
                         // Meta Data

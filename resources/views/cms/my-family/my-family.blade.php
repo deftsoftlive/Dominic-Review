@@ -341,30 +341,30 @@
 
 <!-- Course/Camp Linking - Start -->
 <section class="click-here-sec">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-8 offset-md-2">
-            <div class="click-sec-content">
-              <h2 class="click-sec-tagline">Need help with kids camps or our coaching courses?</h2>
-                <ul class="click-btn-content">
-                  <li>
-                    <figure>
-                    <img src="{{url('/')}}/public/images/click-btn-img.png">
-                </figure>
-                </li>
-                <li>
-                  <a href="" class="cstm-btn main_button">Click Here</a>
-                </li>
-                <li>
-                    <figure>
-                    <img src="{{url('/')}}/public/images/click-btn-img.png">
-                </figure>
-                </li>
-                </ul>
-            </div>
-          </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="click-sec-content">
+          <h2 class="click-sec-tagline">{{ getAllValueWithMeta('my_family_section4_title', 'my-family') }}</h2>
+            <ul class="click-btn-content">
+              <li>
+                <figure>
+                <img src="{{url('/')}}/public/images/click-btn-img.png">
+            </figure>
+            </li>
+            <li>
+              <a href="{{ getAllValueWithMeta('my_family_section4_button_url', 'my-family') }}" class="cstm-btn main_button">{{ getAllValueWithMeta('my_family_section4_button_title', 'my-family') }}</a>
+            </li>
+            <li>
+                <figure>
+                <img src="{{url('/')}}/public/images/click-btn-img.png">
+            </figure>
+            </li>
+            </ul>
         </div>
       </div>
+    </div>
+  </div>
 </section>
 <!-- Course/Camp Linking - End -->
 

@@ -8,7 +8,7 @@
                 <select name="variation" class="v-cstm-select form-control" id="loadAllVariationOfProduct">
 	                <option value="">Choose</option>  
 
-	                @if(!empty($product->subcategory))
+                    @if(!empty($product->subcategory))
 	                @foreach($product->subcategory->ProductVariations as $v)
 					      <option 
 					        value="{{$v->variations->type}}" 

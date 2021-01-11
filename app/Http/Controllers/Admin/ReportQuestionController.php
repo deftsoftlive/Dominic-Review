@@ -111,7 +111,7 @@ class ReportQuestionController extends Controller
     |   Listing of ReportQuestion
     |----------------------------------------*/ 
     public function reportquestionopt_index() {
-        $reportquestionopt = ReportQuestionOption::paginate(10);
+        $reportquestionopt = ReportQuestionOption::orderBy('id','desc')->paginate(10);
     	return view('admin.reportquestionopt.index',compact('reportquestionopt'))
     	->with(['title' => 'Report Question Management', 'addLink' => 'admin.reportquestionopt.showCreate']);
     }

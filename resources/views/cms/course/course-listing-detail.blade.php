@@ -438,7 +438,7 @@
               <!-- <button type="button" class="btn btn-primary cstm-btn main_button">
                  Conform Order
                  </button> -->
-             <!--  <form id="member_wallet" action="http://49.249.236.30:8654/dominic-new/user/save_wallet" method="POST" novalidate="novalidate">
+             <!--  <form id="member_wallet" action="http://demo.drhsports.co.uk/user/save_wallet" method="POST" novalidate="novalidate">
                  <input type="hidden" name="_token" value="lX2NPKsMMFMsCPRixr2fU1jV8yQcZTmiW752Dfa5">  
                  <button class="wallet_confirm_order cstm-btn main_button">Book Now</button>
               </form> -->

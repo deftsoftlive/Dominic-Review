@@ -10,17 +10,20 @@
   $cat = $cat_id; 
   $url = 'course-listing/tennis?&cat='.$cat;  
   $course_cat = DB::table('link_course_and_categories')->where('id',$cat)->first();
+  $image = !empty($course_cat->image) ? $course_cat->image : '1602747912banner_image.jpg';
 @endphp
 
 <!-- ***********************************
 |   Tennis Courses Banner Section
 |*************************************** -->
-    <section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/{{ $course_cat->image }});">
+
+
+    <section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/{{ $image }});">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
             <div class="football-course-content">
-              <h2 class="f-course-heading">{{ getAllValueWithMeta('tennis_course_page_title', 'tennis-course-listing') }} - {{$course_cat->title}}</h2>
+              <h2 class="f-course-heading">{{ getAllValueWithMeta('tennis_course_page_title', 'tennis-course-listing') }}{{!empty($course_cat->title) ? ' - '.$course_cat->title : ''}}</h2>
             </div>
           </div>
         </div>

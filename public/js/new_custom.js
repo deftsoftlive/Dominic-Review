@@ -1,5 +1,3 @@
-$base_url = 'http://49.249.236.30:8654/dominic-new';
-
 /*****************************
 | Print Goal Data
 |*****************************/
@@ -17,7 +15,8 @@ $(document).ready(function() {
 
     function fetch_course_data(query = '')
     {
-
+        $base_url = 'http://49.249.236.30:8654/dominic-new';
+        
         $.ajax({
             url:$base_url+"/course_search",
             method:'GET',
@@ -53,6 +52,7 @@ $('#season_ID').on('change', function() {
   $('#season_id').val(this.value);
     
     var season_id = this.value;   
+    $base_url = 'http://49.249.236.30:8654/dominic-new';
 
         $.ajax({
             url:$base_url+"/user/get_course_from_season/"+season_id,
@@ -70,6 +70,7 @@ $('#course_ID').on('change', function() {
   $('#course_id').val(this.value);
     
     var course_id = this.value;   
+    $base_url = 'http://49.249.236.30:8654/dominic-new';
 
         $.ajax({
             url:$base_url+"/user/get_player_from_course/"+course_id,
@@ -95,6 +96,8 @@ $('#player_ID').on('change', function() {
 |*****************************/
 $('.copy_address a').click(function(){
 
+    $base_url = 'http://49.249.236.30:8654/dominic-new';
+    
         $.ajax({
             url:$base_url+"/user/copy_address",
             method:'GET',
@@ -118,6 +121,7 @@ $('#parent-coach').click(function()
 {
     var coach_id = $(this).attr("coach"); 
     var parent_id = $(this).attr("parent"); 
+    $base_url = 'http://49.249.236.30:8654/dominic-new';
 
         $.ajax({
             url:$base_url+"/user/parent-coach",
@@ -140,6 +144,7 @@ $('#parent_request a').click(function()
     var status = $(this).attr("req");      
     var parent_id = $(this).attr("parent"); 
     var child_id = $(this).attr("child"); 
+    $base_url = 'http://49.249.236.30:8654/dominic-new';
 
     $('.par-req-'+child_id).css('display','none');
     $('.par-req-'+child_id).after('<div style="margin-top:50px;" class="loading"></div>');

@@ -309,4 +309,13 @@ try {
 }
 });
 
+
+
+
+/*************************************************/
+/*------------- New Video Page Route ------------*/
+/*************************************************/
+
+Route::any('/videos','HomeController@videosListing')->name('home.videos.listing');
+
 ?>

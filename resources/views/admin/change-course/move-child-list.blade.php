@@ -106,7 +106,7 @@
 
                                             <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;">
                                                 <a href="{{url('admin/shop')}}/{{$bd->id}}/change-course" class="dropdown-item">Change Course</a>
-                                                <a href="{{url('admin/shop')}}/{{$bd->id}}/delete/player" onclick="return confirm('Are you sure you want to remove this player from this course?')" class="dropdown-item">Remove</a>
+                                                <a href="{{url('admin/shop/course')}}/{{$bd->id}}/delete/player" onclick="return confirm('Are you sure you want to remove this player from this course?')" class="dropdown-item">Remove</a>
                                             </div>
                                         </div>
                                     </td>

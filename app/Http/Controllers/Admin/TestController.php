@@ -236,7 +236,7 @@ class TestController extends Controller
 
          // dd($customer_array);
 
-        ob_end_clean();
+        if (ob_get_contents()) { ob_end_clean(); }
         ob_start();
 
         Excel::create('Customer Data', function($excel) use ($customer_array){

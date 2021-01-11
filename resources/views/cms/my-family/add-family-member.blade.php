@@ -694,6 +694,13 @@ input#agree {
                                                                     <a href="javascript:void(0);" style="margin:0;" onclick="addcontact();" class="additional_contact cstm-btn main_button">Add an additional contact <i class="fas fa-plus"></i></a>
                                                                 </div>
                                                             </div>
+
+                                                            @if(empty($contacts))
+                                                            <div class="cst_text_wrap">
+                                                                <p><b>You must add atleast 1 additional contact.</b></p>
+                                                            </div>
+                                                            @endif
+
                                                             <div class="form-group row f-g-full ">
                                                                 <div class="col-sm-12 next-setp">
                                                                     <button type="submit" id="medical_info_to_next" class="cstm-btn main_button" style="margin:0px;">Save section</button>
@@ -908,6 +915,13 @@ input#agree {
                                                                     <a href="javascript:void(0);" style="margin:0;" onclick="addcontact();" class="additional_contact cstm-btn main_button">Add an additional contact <i class="fas fa-plus"></i></a>
                                                                 </div>
                                                             </div>
+
+                                                            @if(empty($contacts))
+                                                            <div class="cst_text_wrap">
+                                                                <p><b>You must add atleast 1 additional contact.</b></p>
+                                                            </div>
+                                                            @endif
+
                                                             <div class="form-group row f-g-full ">
                                                                 <div class="col-sm-12 next-setp">
                                                                     <button type="submit" id="medical_info_to_next" class="cstm-btn main_button" style="margin:0px;">Save section</button>
@@ -1117,6 +1131,13 @@ input#agree {
                                                                     <a href="javascript:void(0);" style="margin:0;" onclick="addcontact();" class="additional_contact cstm-btn main_button">Add an additional contact <i class="fas fa-plus"></i></a>
                                                                 </div>
                                                             </div>
+
+                                                            @if(empty($contacts))
+                                                            <div class="cst_text_wrap">
+                                                                <p><b>You must add atleast 1 additional contact.</b></p>
+                                                            </div>
+                                                            @endif
+
                                                             <div class="form-group row f-g-full ">
                                                                 <div class="col-sm-12 next-setp">
                                                                     <button type="submit" id="medical_info_to_next" class="cstm-btn main_button" style="margin:0px;">Save section</button>
@@ -1271,6 +1292,13 @@ input#agree {
                                                                             <!--  <button onclick="addcontact();" class="cstm-btn" style="margin:0;">add an additional contact <i class="fas fa-plus"></i></button> -->
                                                                         </div>
                                                                     </div>
+
+                                                                    @if(empty($contacts))
+                                                                    <div class="cst_text_wrap">
+                                                                        <p><b>You must add atleast 1 additional contact.</b></p>
+                                                                    </div>
+                                                                    @endif
+
                                                                     <div class="form-group row f-g-full ">
                                                                         <div class="col-sm-12 next-setp">
                                                                             <button id="medical_info_to_next" class="cstm-btn main_button" style="margin:0px;">Save section</button>
@@ -1430,6 +1458,11 @@ input#agree {
                                                                             <!--  <button onclick="addcontact();" class="cstm-btn" style="margin:0;">add an additional contact <i class="fas fa-plus"></i></button> -->
                                                                         </div>
                                                                     </div>
+                                                                    @if(empty($contacts))
+                                                                    <div class="cst_text_wrap">
+                                                                        <p><b>You must add atleast 1 additional contact.</b></p>
+                                                                    </div>
+                                                                    @endif
                                                                     <div class="form-group row f-g-full ">
                                                                         <div class="col-sm-12 next-setp">
                                                                             <button id="medical_info_to_next" class="cstm-btn main_button" style="margin:0px;">Save section</button>
@@ -1576,6 +1609,11 @@ input#agree {
                                                                             <!--  <button onclick="addcontact();" class="cstm-btn" style="margin:0;">add an additional contact <i class="fas fa-plus"></i></button> -->
                                                                         </div>
                                                                     </div>
+                                                                    @if(empty($contacts))
+                                                                    <div class="cst_text_wrap">
+                                                                        <p><b>You must add atleast 1 additional contact.</b></p>
+                                                                    </div>
+                                                                    @endif
                                                                     <div class="form-group row f-g-full ">
                                                                         <div class="col-sm-12 next-setp">
                                                                             <button id="medical_info_to_next" class="cstm-btn main_button" style="margin:0px;">Save section</button>
@@ -1852,8 +1890,8 @@ input#agree {
                                                         <div class="col-md-12 option_row consent-option-row">
                                                             <div class="form-group row ">
                                                                 <div class="form-radios">
-                                                                    <p class="inner_head"><strong>Behavioral, learning difficultes and /or other disability matters</strong></p>
-                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;margin-bottom:5px;">Are there any behavioural and/or special needs we need to consider to help your child to settel,participate in ans enjoy their activity?</p>
+                                                                    <p class="inner_head"><strong>Behavioural, learning difficulties and /or other disability matters</strong></p>
+                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;margin-bottom:5px;">Are there any behavioural and/or special needs we need to consider to help your child to settle, participate and enjoy their activity?</p>
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                     <div class="cstm-radio behv_radio">
@@ -2095,8 +2133,8 @@ input#agree {
                                                         <div class="col-md-12 option_row consent-option-row">
                                                             <div class="form-group row ">
                                                                 <div class="form-radios">
-                                                                    <p class="inner_head"><strong>Behavioral, learning difficultes and /or other disability matters</strong></p>
-                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;margin-bottom:5px;">Are there any behavioural and/or special needs we need to consider to help your child to settel,participate in ans enjoy their activity?</p>
+                                                                    <p class="inner_head"><strong>Behavioural, learning difficulties and /or other disability matters</strong></p>
+                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;margin-bottom:5px;">Are there any behavioural and/or special needs we need to consider to help your child to settle, participate and enjoy their activity?</p>
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                      <div class="cstm-radio behv_radio">
@@ -2323,8 +2361,8 @@ input#agree {
                                                         <div class="col-md-12 option_row consent-option-row">
                                                             <div class="form-group row ">
                                                                 <div class="form-radios">
-                                                                    <p class="inner_head"><strong>Behavioral, learning difficultes and /or other disability matters</strong></p>
-                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;margin-bottom:5px;">Are there any behavioural and/or special needs we need to consider to help your child to settel,participate in ans enjoy their activity?</p>
+                                                                    <p class="inner_head"><strong>Behavioural, learning difficulties and /or other disability matters</strong></p>
+                                                                    <p style="display: inline-block; font-weight: 400; margin-right: 15px;margin-bottom:5px;">Are there any behavioural and/or special needs we need to consider to help your child to settle, participate and enjoy their activity?</p>
                                                                 </div>
                                                                 <div class="radio-wrap">
                                                                   <div class="cstm-radio behv_radio">

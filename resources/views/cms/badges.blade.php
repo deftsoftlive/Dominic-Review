@@ -813,18 +813,19 @@ label.confirm_msg.form-check-label {
                                                     <li>
                                                         <a href="#">
                                                             <div class="inner-wrap">
-                                                                <span>step</span>
-                                                                <p>1</p>
+                                                                <span>Search by name</span>
                                                             </div>
                                                         </a>
                                                     </li>
                                                 </ul>
+                                                @php $players = DB::table('shop_cart_items')->where('shop_type','course')->groupBy('child_id')->get(); 
+                                                @endphp
                                                 <select id="inputPlayer" name="player_id" class="inputPlayer form-control">
                                                     <option selected="" disabled="">Select Player</option>
                                                     <!-- Those players who purchased courses -->
-                                                    @php $players = DB::table('shop_cart_items')->where('shop_type','course')->groupBy('child_id')->get(); @endphp
                                                     @foreach($players as $pl)
-                                                    @php $users = DB::table('users')->where('id',$pl->child_id)->first(); @endphp
+                                                    @php $users = DB::table('users')->where('id',$pl->child_id)->where('parent_id',Auth::user()->id)->first();
+                                                    @endphp
                                                     @if(!empty($users))
                                                     <option value="{{$pl->child_id}}">@php echo getUsername($pl->child_id); @endphp</option>
                                                     @endif
@@ -838,8 +839,7 @@ label.confirm_msg.form-check-label {
                                                     <li>
                                                         <a href="#">
                                                             <div class="inner-wrap">
-                                                                <span>step</span>
-                                                                <p>2</p>
+                                                                <span>Search by term</span>
                                                             </div>
                                                         </a>
                                                     </li>
@@ -860,8 +860,7 @@ label.confirm_msg.form-check-label {
                                                     <li>
                                                         <a href="#">
                                                             <div class="inner-wrap">
-                                                                <span>step</span>
-                                                                <p>3</p>
+                                                                <span>Search by stage</span>
                                                             </div>
                                                         </a>
                                                     </li>

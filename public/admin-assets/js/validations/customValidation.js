@@ -211,7 +211,7 @@ $(document).ready(function (){
            rules: {
            reason_of_rejection: {
                 required: true,
-                maxlength:255,
+                maxlength:500,
                 noSpace: true 
             }
         },

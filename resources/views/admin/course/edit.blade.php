@@ -360,7 +360,7 @@ $(document).ready(function(){
     $("select#people11").change(function(){
         var selectedCat = $(this).children("option:selected").val();
         $.ajax({
-            url:"http://49.249.236.30:8654/dominic-new/admin/selectedCat/",
+            url:"http://demo.drhsports.co.uk/admin/selectedCat/",
             method:'GET',
             data:{selectedCat:selectedCat},
             dataType:'json',

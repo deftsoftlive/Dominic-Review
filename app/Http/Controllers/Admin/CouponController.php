@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Coupon;
 use App\User;
+use App\Course;
+use App\Camp;
+use App\Product;
 use Excel;
 
 class CouponController extends Controller
@@ -68,8 +71,8 @@ class CouponController extends Controller
 
     	Coupon::create([
     		'coupon_code' => $request['coupon_code'],
-    		'start_date' => $request['start_date'],
-    		'end_date' => $request['end_date'],
+    		'start_date' => date('d-m-Y',strtotime($request['start_date'])),
+    		'end_date' => date('d-m-Y',strtotime($request['end_date'])),
             'discount_type' => $request['discount_type'],
     		'uses' => $request['uses'],
     		'flat_discount' => $request['flat_discount'],
@@ -129,8 +132,8 @@ class CouponController extends Controller
     	$venue = Coupon::find($id);
     	$venue->update([
     		'coupon_code' => $request['coupon_code'],
-    		'start_date' => $request['start_date'],
-    		'end_date' => $request['end_date'],
+    		'start_date' => date('d-m-Y',strtotime($request['start_date'])),
+            'end_date' => date('d-m-Y',strtotime($request['end_date'])),
             'discount_type' => $request['discount_type'],
     		'uses' => $request['uses'],
     		'flat_discount' => $request['flat_discount'],
@@ -139,6 +142,15 @@ class CouponController extends Controller
             'products' => $products
     	]);
     	return redirect()->route('admin.coupon.list')->with('flash_message', 'Coupon has been updated successfully!');
+    }
+    
+    /*----------------------------------------
+    |   Delete Coupon Record
+    |----------------------------------------*/
+    public function delete_coupon($id) {
+        $course = Coupon::find($id);
+        $course->delete();
+        return \Redirect::back()->with('flash_message',' Coupon has been deleted successfully!');
     }
 
     /*----------------------------------------------
@@ -224,7 +236,7 @@ class CouponController extends Controller
             $i++; 
         }
 
-        ob_end_clean();
+        if (ob_get_contents()) { ob_end_clean(); }
         ob_start();
 
         Excel::create('Coupon Data', function($excel) use ($coupon_array){
@@ -282,40 +294,83 @@ class CouponController extends Controller
 
             foreach ($data->toArray() as $key => $value) {  
 
-                // dd($key,$value['id']);
+                //dd($value);
 
                 if(!empty($value)){ 
 
                     $check_coupon = Coupon::where('id',$value['id'])->first();
+
+                    if($value['courses'] == 'All')
+                    {
+                        $courses = Course::orderBy('id','asc')->get();
+                        $course_ids = [];
+
+                        foreach($courses as $course)
+                        {
+                            $course_ids[] = $course->id;
+                        }
+                        $courses = !empty($course_ids) ? implode(',',$course_ids) : '';
+                    }else{
+                        $courses = $value['courses'];
+                    }
+
+                    if($value['camps'] == 'All')
+                    {
+                        $camps = Camp::orderBy('id','asc')->get(); 
+                        $camp_ids = [];
+
+                        foreach($camps as $camp)
+                        {
+                            $camp_ids[] = $camp->id;
+                        }
+                        
+                        $camps = !empty($camp_ids) ? implode(',',$camp_ids) : '';
+                    }else{
+                        $camps = $value['camps'];
+                    }
+
+                    if($value['products'] == 'All')
+                    {
+                        $products = Product::orderBy('id','asc')->get();
+                        $product_ids = [];
+
+                        foreach($products as $product)
+                        {
+                            $product_ids[] = $product->id;
+                        }
+                        $products = !empty($product_ids) ? implode(',',$product_ids) : '';
+                    }else{
+                        $products = $value['products'];
+                    }
 
                     if(!empty($check_coupon))
                     {
                         $co = Coupon::find($value['id']);
                         $co->update([
                             'coupon_code'   => $value['coupon_code'],
-                            'start_date'    => $value['start_date'],
-                            'end_date'      => $value['end_date'],
+                            'start_date'    => date('d-m-Y',strtotime($value['start_date'])),
+                            'end_date'      => date('d-m-Y',strtotime($value['end_date'])),
                             'uses'          => $value['uses'],
                             'discount_type' => $value['discount_type'],
                             'amount'        => $value['amount'],
                             'flat_discount' => $value['flat_discount'],
-                            'courses'       => $value['courses'],
-                            'camps'         => $value['camps'],
-                            'products'      => $value['products'],
+                            'courses'       => $courses,
+                            'camps'         => $camps,
+                            'products'      => $products,
                             'status'        => $value['status'],
                         ]);
                     }else{
                         $co                 =  new Coupon;
                         $co->coupon_code    =  $value['coupon_code'];
-                        $co->start_date     =  $value['start_date'];
-                        $co->end_date       =  $value['end_date'];
+                        $co->start_date     =  date('d-m-Y',strtotime($value['start_date']));
+                        $co->end_date       =  date('d-m-Y',strtotime($value['end_date']));
                         $co->uses           =  $value['uses'];
                         $co->discount_type  =  $value['discount_type'];
                         $co->amount         =  $value['amount'];
                         $co->flat_discount  =  $value['flat_discount'];
-                        $co->courses        =  $value['courses'];
-                        $co->camps          =  $value['camps'];
-                        $co->products       =  $value['products'];
+                        $co->courses        =  $courses;
+                        $co->camps          =  $camps;
+                        $co->products       =  $products;
                         $co->status         =  $value['status'];
                         $co->save();
                     }

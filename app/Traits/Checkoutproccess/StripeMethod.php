@@ -28,9 +28,10 @@ public function payWithStripe(Request $request)
          $error .= '<li>Stripe token Expired!</li>';
      else:
                  
+                  
                        # create customer to stripe while payment
              try {
-    
+                    dd($request->all());
                            $AccountWithPayment= $this->CommissionFeeServiceAccordingVendor('STRIPE',1);
 
 

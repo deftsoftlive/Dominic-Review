@@ -153,6 +153,8 @@
                         <li class="{{ \Request::route()->getName() === 'admin.seasons.list' ? 'active' : '' || request()->is('admin/seasons/create') ? 'active' : '' || request()->is('admin/seasons/*') ? 'active' : '' }}"><a href="{{url(route('admin.seasons.list'))}}" class="">Seasons</a></li>
 
                         <li class="{{ request()->is('admin/settings/general/edit/early-bird') ? 'active' : ''}} "><a href="{{url('admin/settings/general/edit/early-bird')}}" class="">Early Bird Management</a></li>
+
+                        <li class="{{ request()->is('admin/pay-go-course') ? 'active' : ''}} "><a href="{{url('admin/pay-go-course')}}" class="">Pay-as-you-go-course</a></li>
                     </ul>
                 </li>
 
@@ -398,9 +400,9 @@
                         'admin.products.list.brands'
                         ],'block') ?>;">
 
-                         <li class="<?= ActiveMenu(['admin.products.list.brands'],'active') ?>">
-                              <a href="{{ route('admin.products.list.brands') }}" class="">Brand</a>
-                        </li>
+                        <!-- <li class="<?= ActiveMenu(['admin.products.list.brands'],'active') ?>">-->
+                        <!--      <a href="{{ route('admin.products.list.brands') }}" class="">Brand</a>-->
+                        <!--</li>-->
                                  
                                  <li class="<?= ActiveMenu(['admin.products.create.variations'],'active') ?>">
                                       <a href="{{ route('admin.products.create.variations') }}" class="">Add New Variations</a>
@@ -420,6 +422,13 @@
                 <li class="nav-item {{ \Request::route()->getName() === 'vendor.shop.products.index'
                 ? 'nav-item active' : 'nav-item' }}">
                 <a href="{{url(route('vendor.shop.products.index'))}}" class="nav-link "><span class="pcoded-micon"><i class="fas fa-bars"></i></span><span class="pcoded-mtext">Product Listing</span></a>
+                </li>
+
+
+
+                <li class="nav-item <?= ActiveMenu(['admin.HomeSlider.list', 'admin.video.management'],'active') ?>">
+                    <a href="{{url(route('admin.video.management'))}}" class="nav-link "><span class="pcoded-micon"><i class="fas fa-th"></i></span><span class="pcoded-mtext">Video Management</span></a>
+                </li>
 
 
             <!--    <li class="nav-item {{ \Request::route()->getName() === 'admin.shop.listing'

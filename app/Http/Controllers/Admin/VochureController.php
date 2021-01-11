@@ -19,7 +19,7 @@ class VochureController extends Controller
     |   Listing of vochure
     |----------------------------------------*/ 
     public function vochure_index() {
-        $vochure = Vouchure::orderBy('id','asc')->paginate(10);
+        $vochure = Vouchure::orderBy('id','desc')->paginate(10);
     	return view('admin.vochure.index',compact('vochure'))
     	->with(['title' => 'Vochure Management', 'addLink' => 'admin.vochure.showCreate']);
     }
@@ -28,7 +28,7 @@ class VochureController extends Controller
     |   Listing of active vochure
     |----------------------------------------*/ 
     public function vochure_active() {
-        $vochure = Vouchure::where('status',1)->orderBy('id','asc')->paginate(10);
+        $vochure = Vouchure::where('status',1)->orderBy('id','desc')->paginate(10);
     	return view('admin.vochure.active',compact('vochure'))
     	->with(['title' => 'Vochure Management', 'addLink' => 'admin.vochure.showCreate']);
     }
@@ -37,7 +37,7 @@ class VochureController extends Controller
     |   Listing of in-active vochure
     |----------------------------------------*/ 
     public function vochure_inactive() {
-        $vochure = Vouchure::where('status',0)->orderBy('id','asc')->paginate(10);
+        $vochure = Vouchure::where('status',0)->orderBy('id','desc')->paginate(10);
     	return view('admin.vochure.inactive',compact('vochure'))
     	->with(['title' => 'Vochure Management', 'addLink' => 'admin.vochure.showCreate']);
     }

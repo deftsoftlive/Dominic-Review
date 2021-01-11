@@ -167,7 +167,13 @@ public function getTotalWithTr()
 	}
 	$total_price = array_sum($total);
 	$grand_total = $total_price+$extra;
-	$gr_total = number_format($grand_total,2);
+	
+	if($grand_total < 0)
+    {
+        $gr_total = ceil($grand_total);
+    }else{
+        $gr_total = number_format($grand_total,2);
+    }
 
 $text ='<table class="cart__totals">';
 $text .='<thead class="cart__totals-header">';
@@ -195,10 +201,19 @@ if(count($check_coupon)>0)
 	{
 		if(!empty($co->discount_price))
 		{
-		$text .='<tr>';
-		$text .='<th><p>Coupon applied on '.$co->shop_type.'</p></th>';
-		$text .='<td> <p>- '.$co->discount_price.'%</p></td>';
-		$text .='</tr>';
+			$discount = \DB::table('coupons')->where('coupon_code',$co->discount_code)->first();
+			if($discount->discount_type == 0)
+			{
+				$pound = '£';
+				$sign = '';
+			}else{
+				$pound = '';
+				$sign = '%';
+			}
+			$text .='<tr>';
+			$text .='<th><p>Coupon applied on '.$co->shop_type.'</p></th>';
+			$text .='<td> <p>- '.$pound.number_format($co->discount_price,2).$sign.'</p></td>';
+			$text .='</tr>';
 		}
 	}
 }

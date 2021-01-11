@@ -82,12 +82,14 @@
                                 <thead>
                                 <tr>
                                     <th>Order ID</th>
+                                    <th>Linked Account</th>
+                                    <th>Season</th>
                                     <th>Customer Info</th>
                                     <th>Order Date</th>
                                     <th>Amount Paid</th>
                                     <th>Payment Method</th>
                                     <th>Order Type</th>
-                                    <th>Status</th>
+                                    <!-- <th>Status</th> -->
                                     <th style="width:155px;">Action</th>
                                 </tr>
                                 </thead>
@@ -101,10 +103,22 @@
                                       $user_detail = DB::table('users')->where('id',$user_id)->first(); 
 
                                       $cart_items = DB::table('shop_cart_items')->where('orderID', $orderId)->get(); 
+
+                                      $pk_cart_items = DB::table('shop_cart_items')->where('orderID', $orderId)->first();  
                                     @endphp
 
                                     <tr>
                                         <td>{{$ord->orderID}}</td>
+                                        <td>@if(!empty($pk_cart_items->id))
+                                                @php 
+                                                    $acc_id = ToGetAccountID($pk_cart_items->id,$pk_cart_items->user_id); 
+                                                    $acc_name = DB::table('stripe_accounts')->where('id',$acc_id)->first();
+                                                @endphp
+
+                                                {{isset($acc_name->account_name) ? $acc_name->account_name : ''}}
+                                            @endif
+                                        </td>
+                                        <td>@if($pk_cart_items->course_season) @php echo getSeasonname($pk_cart_items->course_season); @endphp @endif</td>
                                         <td>
                                           @if(!empty($user_detail))
                                             <h5>{{$user_detail->name}}</h5>
@@ -114,10 +128,11 @@
                                           @endif
                                         </td>
                                         @php 
-                                            $uk_time = utc_to_uk($ord->id);
+                                            $uk_time = utc_to_uk($ord->id); 
                                         @endphp
-                                        <td>@php echo date('d/m/Y (h:i:s a)',strtotime($uk_time)); @endphp</td>
-                                        <td>&pound; {{$ord->amount}}</td>
+
+                                        <td>{{date('d/m/Y',strtotime($ord->updated_at))}} ({{$uk_time}})</td>
+                                        <td>&pound; {{number_format($ord->amount,2)}}</td>
                                         <td>{{$ord->payment_by}}</td>
                                         
                                         @php 
@@ -134,13 +149,13 @@
                                         @php $order_shop_type = implode(', ',$shop_ty); @endphp
                                         <td>@php echo getShopType($orderId); @endphp</td>
 
-                                        <td>
+                                        <!-- <td>
                                             @if($ord->status == 1)    
                                                 Completed
                                             @elseif($ord->status == 2)
                                                 Cancelled
                                             @endif
-                                        </td>
+                                        </td> -->
                                         <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-primary">Action</button>

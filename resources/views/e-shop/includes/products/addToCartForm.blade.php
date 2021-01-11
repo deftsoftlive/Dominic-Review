@@ -59,7 +59,12 @@
                       @foreach($assigned as $type => $val)
                         <?php $attributes = App\Models\Products\ProductVariation::whereIn('id',$val)->where('type',$type); ?>
                         <h5 class="sizes">
-                           {{$type}}
+
+                          @if($type == 'colors')
+                            @php echo 'Colours'; @endphp
+                          @else
+                            {{$type}}
+                          @endif
 
                             <ul class="ctm-type-{{$type}}">
                                 @foreach($attributes->get() as $k => $item)

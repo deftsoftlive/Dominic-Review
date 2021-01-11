@@ -99,7 +99,7 @@ public function colorField($arr,$old)
 	   $oldValue = $this->oldValues($old,$arr->name);
      $text  ='<div class="form-group label-floating is-empty"><label class="control-label">Color*</label>';
      $text .='<input type="color" value="'.$oldValue.'" '.$attrbutes.'>';
-     $text .='<input type="text" readonly value="'.$oldValue.'" class="form-control valid" name="'.$arr->name.'" id="color" required>';
+     $text .='<input type="text" readonly value="'.$oldValue.'" class="form-control valid" name="'.$arr->name.'" id="color"';
      $text .='</div>';
      return $text;
 }

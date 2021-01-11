@@ -69,7 +69,7 @@
                               </div>
 
                               </td>
-                              <td><a href="{{url('/admin/images/remove')}}/{{$number->id}}" onclick='return confirm("Are you sure you want to delete this image?")' href="javascript:void(0);" class="btn btn-primary">Remove Icon</a></td>                                  
+                              <td><a href="{{url('/admin/images/remove')}}/{{$number->id}}" onclick='return confirm("Are you sure you want to delete this image?")'  href="javascript:void(0);" class="btn btn-primary">Remove Icon</a></td>                                  
                             </tr>
                             @endforeach  
 

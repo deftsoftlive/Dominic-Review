@@ -43,7 +43,7 @@
                             </a>
                       </h5> 
                       <div class="text-right">
-                          <h4 class="">Order Total Amount : <b>&pound; {{$order->amount}}</b></h4>
+                          <h4 class="">Order Total Amount : <b>&pound; {{number_format($order->amount,2)}}</b></h4>
                       </div>
                 
                     </div> 
@@ -53,6 +53,40 @@
                   <div class="card-block table-border-style"> 
 
                       <p style="font-size: 16px; color: #3f4d67; font-weight: 400;"><b>Booked By</b> - @if($shop_data->manual == 1) Admin @else User @endif</p> 
+
+                      @php 
+                          $uk_time = utc_to_uk($order->id); 
+                      @endphp
+
+                      <p style="font-size: 16px; color: #3f4d67; font-weight: 400;"><b>Order Date</b> - {{date('d/m/Y',strtotime($order->updated_at))}} ({{$uk_time}})</p> 
+
+                      <p style="font-size: 16px; color: #3f4d67; font-weight: 400;"><b>Linked Account</b> - 
+                        @if(!empty($order->id))
+
+                        @php 
+                            if($shop_data->shop_type == 'course')
+                            {
+                              $course = \DB::table('courses')->where('id',$shop_data->product_id)->first();
+                              $account_id = $course->account_id;
+                            }
+                            elseif($shop_data->shop_type == 'camp')
+                            {
+                              $course = \DB::table('camps')->where('id',$shop_data->product_id)->first();
+                              $account_id = $course->account_id;
+                            }
+                            elseif($shop_data->shop_type == 'product')
+                            {
+                              $course = \DB::table('products')->where('id',$shop_data->product_id)->first();
+                              $account_id = $course->account_id;
+                            }
+
+                            $acc_name = \DB::table('stripe_accounts')->where('id',$account_id)->first();
+                        @endphp
+
+                            {{isset($acc_name->account_name) ? $acc_name->account_name : ''}}
+                        @endif</p> 
+
+                      <p style="font-size: 16px; color: #3f4d67; font-weight: 400;"><b>Season</b> - @if($shop_data->course_season) @php echo getSeasonname($shop_data->course_season); @endphp @endif</p> 
 
                         <div class="table-responsive">
                             <table class="table table-hover">
@@ -108,7 +142,7 @@
                                         	&pound;{{$cart->discount_price}} off on {{$product_detail->name}}
                                         @endif
                                         </td>                               
-                                        <td>&pound;{{$cart->price}}
+                                        <td>&pound;{{number_format($cart->price,2)}}
                                          <!--  @if($cart->price == $pro_amt)
                                             &pound;{{$cart->price}}
                                           @elseif($cart->price <= $pro_amt)
@@ -136,7 +170,7 @@
                                         	&pound;{{$cart->discount_price}} off on {{$course->title}}
                                         @endif
                                         </td>                                
-                                        <td>&pound;{{$cart->price}}
+                                        <td>&pound;{{number_format($cart->price,2)}}
                                           </td>                                
                                     </tr> 
                                   @elseif($cart->shop_type == 'camp')
@@ -188,7 +222,7 @@
                                           &pound;{{$cart->discount_price}} off on {{$camp->title}}
                                         @endif
                                         </td>                                
-                                        <td>&pound;{{$cart->price}}
+                                        <td>&pound;{{number_format($cart->price,2)}}
                                           </td>                                
                                     </tr> 
                                   @endif
@@ -307,7 +341,7 @@
                                             <tr>
                                               <th>Cart Subtotal</th>
                                               <td>
-                                                <strong>&pound; {{$pro_amt}}</strong>
+                                                <strong>&pound; {{number_format($pro_amt,2)}}</strong>
                                               </td>
                                             </tr>
 
@@ -317,7 +351,7 @@
                                              
                                             <tr>
                                               <th>Order Total</th>
-                                              <td><strong>&pound; {{$order->amount}}</strong></td>
+                                              <td><strong>&pound; {{number_format($order->amount,2)}}</strong></td>
                                             </tr>
                                                          
                                         </tbody>

@@ -155,7 +155,7 @@ jQuery(document).ready(function() {
     function fetch_coach_data(query = '')
     {
       $.ajax({
-        url:"http://49.249.236.30:8654/dominic-new/admin/coach_search/",
+        url:"http://demo.drhsports.co.uk/admin/coach_search/",
         method:'GET',
         data:{query:query},
         dataType:'json',

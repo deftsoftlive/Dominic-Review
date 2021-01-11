@@ -29,16 +29,17 @@ public function postPaymentStripe(Request $request)
 {
   //dd($request->all());
   Session::put('booking_no',$request->booking_no);
-
+      
   if($request->type == 'wallet&stripe')
   {
     $error = '';
       if(empty($request->stripeToken)):
          $error .= '<li>Stripe token Expired!</li>';
       else:
-                 
+                    
           # create customer to stripe while payment
           try {
+
                 $AccountWithPayment= $this->CommissionFeeServiceAccordingVendor('STRIPE',1);
                 $token = $request->stripeToken;
                 // $application_fee = $this->getCommissionFee();
@@ -155,15 +156,30 @@ public function postPaymentStripe(Request $request)
           try {
 
                      $AccountWithPayment= $this->CommissionFeeServiceAccordingVendor('STRIPE',1);
+
                      $OrderID = '#DRHSHOP'.strtotime(date('y-m-d h:i:s'));
                      $token = $request->stripeToken;
                      $application_fee = $this->getCommissionFee();
 
-                     $total = $this->getGrandTotal();
+                     if($this->getGrandTotal()<0)
+                     {
+                        $total = ceil($this->getGrandTotal());
+                     }else{
+                        $total = $this->getGrandTotal(); 
+                     }
 
                      $description = 'Payment from customer name - ' .\Auth::user()->name. ' & order ID - '. $OrderID. '& user email - '. \Auth::user()->email ;
+                     $total = round($total,2);
 
-                     $charge = \Stripe\Charge::create([
+/*dd($total,[
+                        "amount" => ($total * 100),
+                        "currency" => "gbp",
+                        "source" => $request->stripeToken,
+                        //"shipping" => $shipping,
+                        "description" => $description,
+                        //"application_fee" => $application_fee,
+                        ]);
+*/                     $charge = \Stripe\Charge::create([
                         "amount" => ($total * 100),
                         "currency" => "gbp",
                         "source" => $request->stripeToken,

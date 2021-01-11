@@ -12,7 +12,7 @@ class CmsPageController extends Controller
 	|	Listing of all CMS Pages
 	|******************************/ 
     public function index() {
-    	$cms_pages = CmsPage::orderBy('id','asc')->paginate(10);
+    	$cms_pages = CmsPage::orderBy('id','desc')->paginate(10);
     	return view('admin.cms-pages.index',compact('cms_pages'))->with(['title'=> 'Pages', 'addLink' => 'admin.cms-pages.showCreate']);
     }
 

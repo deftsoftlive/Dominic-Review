@@ -44,11 +44,16 @@
                         </div>
                     @endif
 
-                    @php 
-                        $stripe = SripeAccount(); 
-                        $shop_cart = DB::table('shop_cart_items')->where('user_id',Auth::user()->id)->where('type','cart')->first();
+                    @if(!empty($pack))
+                        @php $user_id = $pack->parent_id; @endphp
+                    @else
+                        @php $user_id = Auth::user()->id; @endphp
+                    @endif
 
-                        $account_id = getAccountID($shop_cart->id);
+                    @php
+                        $stripe = SripeAccount();
+                        $shop_cart = DB::table('shop_cart_items')->where('user_id',$user_id)->where('type','cart')->first();
+                        $account_id = ToGetAccountID($shop_cart->id,$user_id);
                         $account_details = DB::table('stripe_accounts')->where('id',$account_id)->first();
                         //dd($account_details->public_key);
                     @endphp
@@ -75,7 +80,7 @@
                         <div class='form-row row'>
                             <div class='col-lg-12 form-group required'>
                                 <label class='control-label'>Name on Card</label> <input
-                                    class='form-control' size='4' type='text' autocomplete="false">
+                                    class='form-control' size='4' type='text' autocomplete="off">
                             </div>
                         </div>
   
@@ -83,7 +88,7 @@
                             <div class='col-lg-12 form-group  required'>
                                 <label class='control-label'>Card Number</label> <input
                                     autocomplete='off' class='form-control card-number' size='20'
-                                    type='text' autocomplete="false">
+                                    type='text' autocomplete="off">
                             </div>
                         </div>
   
@@ -91,17 +96,17 @@
                             <div class='col-xs-12 col-md-4 form-group cvc required'>
                                 <label class='control-label'>CVC</label> <input autocomplete='off'
                                     class='form-control card-cvc' placeholder='ex. 311' size='4'
-                                    type='password' autocomplete="false">
+                                    type='text' autocomplete="off">
                             </div>
                             <div class='col-xs-12 col-md-4 form-group expiration required'>
                                 <label class='control-label'>Expiration Month</label> <input
                                     class='form-control card-expiry-month' placeholder='MM' size='2'
-                                    type='text' autocomplete="false">
+                                    type='text' autocomplete="off">
                             </div>
                             <div class='col-xs-12 col-md-4 form-group expiration required'>
                                 <label class='control-label'>Expiration Year</label> <input
                                     class='form-control card-expiry-year' placeholder='YYYY' size='4'
-                                    type='text' autocomplete="false">
+                                    type='text' autocomplete="off">
                             </div>
                         </div>
   
@@ -136,9 +141,21 @@
                                     @endif
 
                                     @if(!empty($obj) && isset($obj))
-                                        {{$obj->getGrandTotal()}}
+                                    
+                                        @if($obj->getGrandTotal() < 0)
+                                            {{ceil($obj->getGrandTotal())}}
+                                        @else
+                                            {{number_format($obj->getGrandTotal(),2)}}
+                                        @endif
+                                        
                                     @elseif(!empty($explodedText))
-                                        {{$total_price}}
+                                        
+                                        @if($total_price < 0)
+                                            {{ceil($total_price)}}
+                                        @else
+                                            {{number_format($total_price,2)}}
+                                        @endif
+                                        
                                     @endif
 
                                 )</button>
