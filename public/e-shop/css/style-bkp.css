@@ -506,13 +506,13 @@ ul {
     align-items: center;
     justify-content: center;
 }
-.pre-loader-inner { 
+/*.pre-loader-inner { 
   position: absolute;
   margin: auto;
   top: 0; bottom: 0; left: 0; right: 0;
   width: 6.250em; height: 6.250em;
   animation: rotate 2.4s linear infinite;
-}
+}*/
 .pre-loader .predot.white { 
   top: 0; bottom: 0; left: 0; right: 0; 
   background: white; 

@@ -18,21 +18,23 @@ class DashboardController extends Controller {
 #----------------------------------------------------------------------
  
 public function index($status='upcoming') {
-        $events = UserEvent::where(['user_id' => Auth::User()->id])
+        /*dd(\Auth::user()->role_id);*/
+        /*$events = UserEvent::where(['user_id' => Auth::User()->id])
         ->where(function($t) use($status){
             if($status == 'upcoming'){
                 $t->whereDate('start_date','>',date('Y-m-d'));
             }
         })
         ->OrderBy('start_date','ASC')
-        ->paginate(10);
-
+        ->paginate(10);*/
         if(\Auth::user()->role_id == 2){
           return redirect('user/my-family');
         }elseif(\Auth::user()->role_id == 3){
           return redirect('user/coach-profile');
         }else{
-	        return view('users.dashboard.dashboard')->with('events', $events);
+          Auth::logout();
+          return redirect('/login')->with('error', 'Please login with a parent account.');
+          //return view('users.dashboard.dashboard')->with('events', $events);
         }
 }
 

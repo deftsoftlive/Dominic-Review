@@ -9118,3 +9118,8 @@ table.add_on_services td a img {
     padding: 5px;
     border: 2px solid #be298d;
 }
+
+.inner-cont.paygo_inner-cont p {
+    order: 2;
+    margin-bottom: 15px;
+}

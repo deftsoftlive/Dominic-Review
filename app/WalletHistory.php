@@ -10,6 +10,6 @@ class WalletHistory extends Model
 	use Notifiable;
 
     protected $fillable = [
-        'id', 'user_id', 'money_amount', 'created_at', 'updated_at'
+        'id', 'user_id', 'money_amount', 'type' ,'created_at', 'updated_at'
     ];
 }

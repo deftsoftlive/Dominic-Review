@@ -27,6 +27,7 @@ public function sendNotification($emailTeplate,$data,$arr)
 {
   if(!empty($arr['email']))
   {
+        
     \Mail::send($emailTeplate,$data, function($message) use($arr) {
                $message->to($arr['email'], $arr['name'])
                ->subject($arr['subject']);

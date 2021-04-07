@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\PayGoCourse;
-use App\PaygocourseDate;
 use App\Models\Products\ProductCategory;
+use App\PaygocourseDate;
+use App\PayGoCourseBookedDate;
 
 class PayGoCourseController extends Controller
 {
@@ -89,7 +90,7 @@ class PayGoCourseController extends Controller
         $course_cat = ProductCategory::where('parent','0')->where('subparent','0')->where('type','Course')->get();
         $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->get();
     	return view('admin.pay-go-course.index',compact('course','subtype','course_cat'))
-    	->with(['title' => 'Pay-Go-Course Management', 'addLink' => 'admin.pay.go.course.showCreate']);
+    	->with(['title' => 'Pay As You Go Course Management', 'addLink' => 'admin.pay.go.course.showCreate']);
     }
 
     /*----------------------------------------
@@ -97,9 +98,9 @@ class PayGoCourseController extends Controller
     |----------------------------------------*/ 
     public function pay_go_course_active() {
 
-          $type = request()->get('type');
-          $subtype = request()->get('subtype');
-          $level = request()->get('level');
+      $type = request()->get('type');
+      $subtype = request()->get('subtype');
+      $level = request()->get('level');
 
         if(!empty(request()->get('type')) && !empty(request()->get('subtype')) && !empty(request()->get('level')))
         {
@@ -132,12 +133,13 @@ class PayGoCourseController extends Controller
         $course_cat = ProductCategory::where('parent','0')->where('subparent','0')->where('type','Course')->get();
         $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->get();
         return view('admin.pay-go-course.active-course',compact('course','course_cat','subtype'))
-        ->with(['title' => 'Pay-Go-Course Management', 'addLink' => 'admin.pay.go.course.showCreate']);
+        ->with(['title' => 'Pay As You Go Course Management', 'addLink' => 'admin.pay.go.course.showCreate']);
     }
 
     /*----------------------------------------
     |   Listing of courses - INACTIVE
     |----------------------------------------*/ 
+
     public function pay_go_course_inactive() {
 
         $type = request()->get('type');
@@ -177,7 +179,7 @@ class PayGoCourseController extends Controller
         $course_cat = ProductCategory::where('parent','0')->where('subparent','0')->where('type','Course')->get();
         $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->get();
         return view('admin.pay-go-course.inactive-course',compact('course','course_cat','subtype'))
-        ->with(['title' => 'Pay-Go-Course Management', 'addLink' => 'admin.pay.go.course.showCreate']);
+        ->with(['title' => 'Pay As You Go Course Management', 'addLink' => 'admin.pay.go.course.showCreate']);
     }
 
     /*----------------------------------------
@@ -199,7 +201,7 @@ class PayGoCourseController extends Controller
             'title' => ['required', 'string'],
             'description' => ['required'],
             // 'type' => ['required'],
-            // 'subtype' => ['required'],
+            /*'subtype' => ['required'],*/
             'account_id' => ['required'],
             'age_group' => ['required'],
             // 'age' => ['required', 'string'],
@@ -208,7 +210,7 @@ class PayGoCourseController extends Controller
             'location' => ['required'],
             'day_time' => ['required'],
             'more_info' => ['required'],
-            'booking_slot' => ['required', 'numeric', 'max:100'],
+            /*'booking_slot' => ['required', 'numeric', 'max:100'],*/
             'price' => ['required', 'numeric'],
             'coach_cost' => ['required', 'numeric'],
             'venue_cost' => ['required', 'numeric'],
@@ -216,6 +218,7 @@ class PayGoCourseController extends Controller
             'other_cost' => ['required', 'numeric'],
             'tax_cost' => ['required', 'numeric'],
             'end_date' => ['required'],
+            'linked_coach' => ['required'],
             // 'image' => ['required'],
             // 'membership_popup' => ['required'],
         ]);
@@ -226,10 +229,11 @@ class PayGoCourseController extends Controller
             $destinationPath = public_path('/uploads');
             $image->move($destinationPath, $filename);
         }
-
-    	$course = PayGoCourse::create([
-    		'title' => $request['title'],
-    		'description' => $request['description'],
+        //dd($request->all());
+        $course = PayGoCourse::create([
+            'title' => $request['title'],
+            'description' => $request['description'],
+            'advance_weeks'     => $request['advance_weeks'],
             'season' => $request['season'],
             'type' => $request['type'],
             'subtype' => $request['subtype'],
@@ -237,13 +241,13 @@ class PayGoCourseController extends Controller
             'level' => $request['level'],
             'account_id' => $request['account_id'],
             'age_group' => $request['age_group'],
-    		'age' => isset($request['age']) ? $request['age'] : '',
+            'age' => isset($request['age']) ? $request['age'] : '',
             'session_date' => $request['session_date'],
-    		'location' => $request['location'],
-    		'day_time' => $request['day_time'],
-    		'more_info' => $request['more_info'],
+            'location' => $request['location'],
+            'day_time' => $request['day_time'],
+            'more_info' => $request['more_info'],
             'info_email_content' => $request['info_email_content'],
-            'booking_slot' => $request['booking_slot'],
+            /*'booking_slot' => $request['booking_slot'],*/
             'price' => $request['price'],
             'linked_coach' => $request['linked_coach'],
             'coach_cost' => $request['coach_cost'],
@@ -268,7 +272,7 @@ class PayGoCourseController extends Controller
                 $cour->course_id        =  $course_id;  
                 $cour['course_date']    =  isset($data['course_date'][$number]) ? $data['course_date'][$number] : '' ;
                 $cour['seats']          =  isset($data['seats'][$number]) ? $data['seats'][$number] : '' ; 
-                $cour['display_course'] =  isset($data['display_course'][$number]) ? $data['display_course'][$number] : ''; 
+                $cour['display_course'] =  isset($data['display_course'][$number]) ? 1 : 0; 
                 $cour->save(); 
 
             }
@@ -305,9 +309,8 @@ class PayGoCourseController extends Controller
     |----------------------------------------*/ 
     public function pay_go_course_update(Request $request, $slug) {
 
-        $data = $request->all();    //dd($data['membership_popup']);
-        
-        // get course id using slug
+        $data = $request->all(); 
+        //dd( $data['display_course'] );   
         $course = PayGoCourse::where('slug',$slug)->first();
         $course_id = $course['id']; 
 
@@ -319,8 +322,7 @@ class PayGoCourseController extends Controller
         }else{
             $sub_cat = $request->exist_sub_cat;
         }
-
-    	$validatedData = $request->validate([
+        $validatedData = $request->validate([
             'title' => ['required', 'string'],
             'description' => ['required'],
             'account_id' => ['required'],
@@ -330,17 +332,17 @@ class PayGoCourseController extends Controller
             'location' => ['required'],
             'day_time' => ['required'],
             'more_info' => ['required'],
-            'booking_slot' => ['required', 'numeric', 'max:100'],
-            // 'price' => ['required', 'numeric'],
+            'price' => ['required', 'numeric'],
             'coach_cost' => ['required', 'numeric'],
             'venue_cost' => ['required', 'numeric'],
             'equipment_cost' => ['required', 'numeric'],
             'other_cost' => ['required', 'numeric'],
             'tax_cost' => ['required', 'numeric'],
             'end_date' => ['required'],
+            'linked_coach' => ['required'],
         ]);
 
-    	$venue = PayGoCourse::FindBySlugOrFail($slug);
+        $venue = PayGoCourse::FindBySlugOrFail($slug);
 
         $filename = $venue->image;
         if ($request->hasFile('image')) {
@@ -357,6 +359,7 @@ class PayGoCourseController extends Controller
     	$venue->update([
     		'title' => $request['title'],
     		'description' => $request['description'],
+            'advance_weeks'     => $request['advance_weeks'],
             'season' => $request['season'],
             'type' => $request['type'],
             'subtype' => $sub_cat,
@@ -364,14 +367,14 @@ class PayGoCourseController extends Controller
             'age_group' => $request['age_group'],
             'course_category' => $request['course_category'],
             'level' => $request['level'],
-    		'age' => isset($request['age']) ? $request['age'] : '',
-    		'session_date' => $request['session_date'],
-    		'location' => $request['location'],
-    		'day_time' => $request['day_time'],
-    		'more_info' => $request['more_info'],
+            'age' => isset($request['age']) ? $request['age'] : '',
+            'session_date' => $request['session_date'],
+            'location' => $request['location'],
+            'day_time' => $request['day_time'],
+            'more_info' => $request['more_info'],
             'info_email_content' => $request['info_email_content'],
             'booking_slot' => $request['booking_slot'],
-            // 'price' => $request['price'],
+            'price' => $request['price'],
             'linked_coach' => $request['linked_coach'],
             'coach_cost' => $request['coach_cost'],
             'venue_cost' => $request['venue_cost'],
@@ -382,7 +385,7 @@ class PayGoCourseController extends Controller
             'bottom_section' => isset($request['bottom_section']) ? $request['bottom_section'] : '',
             'end_date' => $request['end_date'],
             'image' => isset($filename) ? $filename : '',
-            'membership_popup' => isset($data['membership_popup']) ? $data['membership_popup'] : '',
+            'membership_popup' => isset($request['membership_popup']) ? $request['membership_popup'] : '',
             // 'membership_popup' => $request['membership_popup'],
     	]);
 
@@ -395,7 +398,7 @@ class PayGoCourseController extends Controller
                 $cour->course_id        =  $course_id;
                 $cour['course_date']    =  isset($data['course_date'][$number]) ? $data['course_date'][$number] : '' ; 
                 $cour['seats']          =  isset($data['seats'][$number]) ? $data['seats'][$number] : '' ; 
-                $cour['display_course'] =  isset($data['display_course'][$number]) ? $data['display_course'][$number] : ''; 
+                $cour['display_course'] =  isset($data['display_course'][$number]) ? 1 : 0; 
                 $cour->save(); 
 
             }
@@ -486,7 +489,7 @@ class PayGoCourseController extends Controller
 
         if(count($sub_cat) > 0)
             {
-                $output = '<option value="">All</option>';
+                /*$output = '<option value="">All</option>';*/
 
                 foreach($sub_cat as $row)
                 {
@@ -503,4 +506,40 @@ class PayGoCourseController extends Controller
 
             echo json_encode($data);
     }
+
+    /*public function register($id){
+
+        $shop = \DB::table('shop_cart_items')->where('shop_type','paygo-course')->where('product_id',$id)->where('orderID',NULL)->orderBy('id','desc')->get();
+        return view('admin.register-template.paygo-course-template', compact('shop'));
+    }*/
+
+    public function sendCourseBookingData( Request $request ){
+
+        $output = '<thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Bookings</th>
+                        </tr>
+                    </thead>
+                    <tbody>';
+        $dates = PaygocourseDate::where( 'course_id', $request->id )->get();
+
+        foreach ($dates as $key => $date) {
+            $output .= '<tr><td>'.date( 'd-m-Y', strtotime( $date->course_date ) ).'</td>';
+            $bookedSeats = PayGoCourseBookedDate::where( 'booked_date_id',  $date->id )->count();
+            $output .= '<td><p>'.$bookedSeats.'/'.$date->seats.'</p></td>
+                            </tr>';
+            
+        }
+        $output .= '</tbody>';
+
+        $data = array(
+            'table'   => $output,
+        );
+
+        echo json_encode($data);
+
+
+    }
+
 }

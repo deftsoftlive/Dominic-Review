@@ -188,6 +188,12 @@
                                 $child = DB::table('users')->where('id',$item->child_id)->first();
                               @endphp
                                 <a href="javascript:void(0);">{{isset($child->name) ? $child->name : ''}} : {{isset($course->title) ? $course->title : ''}}</a>
+                                @elseif($item->shop_type == 'paygo-course')
+                                @php 
+                                  $payGoCourse = DB::table('pay_go_courses')->where('id',$item->product_id)->first();
+                                  $child = DB::table('users')->where('id',$item->child_id)->first();
+                                @endphp
+                                  <a href="javascript:void(0);">{{isset($child->name) ? $child->name : ''}} : {{isset($payGoCourse->title) ? $payGoCourse->title : ''}}</a>
                               @elseif($item->shop_type == 'camp')
                               @php 
                                 $camp = DB::table('camps')->where('id',$item->product_id)->first();
@@ -230,10 +236,10 @@
                              
                               <div class="basic_cart_details">
                                 <p class="price cart_quantity">Quantity : {{$item->quantity}}</p>
-                                <p class="price">£{{$item->price}} </p>
+                                <p class="price">£{{custom_format($item->price,2)}} </p>
                               </div>
                               <div class="price_btn cart_price">
-                                <p class="price">£{{$item->total}} </p>
+                                <p class="price">£{{custom_format($item->total,2)}} </p>
                               </div>
                             </div>
                         @endforeach

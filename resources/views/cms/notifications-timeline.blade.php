@@ -57,6 +57,8 @@
 
                                     @php 
                                         $notifications = DB::table('notifications')->orderBy('created_at','desc')->get();
+                                        //dd($notifications);
+                                        //dd($notifications);
                                         $children = DB::table('users')->where('parent_id',Auth::user()->id)->get();
                                         $child_id = [];
                                     @endphp
@@ -69,6 +71,7 @@
 
                                     @php 
                                         $notification_arr = json_decode($notification->data); 
+                                        //dd( $notification_arr->reason_of_rejection );
                                         //dd($notification_arr,$child_id,Auth::user()->id);
                                     @endphp
 
@@ -76,7 +79,7 @@
 
                                             @if(!empty($notification_arr))
 
-                                            @if($notification->notifiable_type = 'App\UserBadge' || $notification->notifiable_type = 'App\PlayerReport' || $notification->notifiable_type = 'App\MatchReport')
+                                            @if($notification->notifiable_type == 'App\UserBadge' || $notification->notifiable_type == 'App\PlayerReport' || $notification->notifiable_type == 'App\MatchReport')
 
                                                 @if(in_array($notification_arr->send_to,$child_id))
 
@@ -86,6 +89,9 @@
                                                         </td>
                                                         <td>
                                                             <p>{{ $notification_arr->data }}</p>
+                                                            @if( isset( $notification_arr->reason_of_rejection ) )
+                                                                <p> <b>Reason Of Rejection: </b> {{ $notification_arr->reason_of_rejection }} </p>
+                                                            @endif
                                                         </td>
                                                         <td class="view_option">
                                                            <p> <a style="" href="{{url('/user/mark_as_read')}}/{{$notification->id}}" >Mark as Read</a></p>
@@ -104,9 +110,12 @@
                                                     </td>
                                                     <td>
                                                         <p>{{ $notification_arr->data }}</p>
+                                                        @if( isset( $notification_arr->reason_of_rejection ) )
+                                                            <p> <b>Reason Of Rejection: </b> {{ $notification_arr->reason_of_rejection }} </p>
+                                                        @endif
                                                     </td>
                                                     <td class="view_option">
-                                                       <p> <a style="" href="{{url('/admin/mark_as_read')}}/{{$notification->id}}" >Mark as Read</a></p>
+                                                       <p> <a style="" href="{{url('/user/mark_as_read')}}/{{$notification->id}}" >Mark as Read</a></p>
                                                     </td>
                                                 </tr>
 

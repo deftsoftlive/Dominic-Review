@@ -6,11 +6,11 @@
     $account = \DB::table('stripe_accounts')->where('id',$get_package->account_id)->first();
 @endphp
 
-<div class="text-wrap" style="padding: 10px 30px;">
+<!-- <div class="text-wrap" style="padding: 10px 30px;">
     <p style="font-family: 'Maven Pro', sans-serif;font-size: 16px;font-weight: 600;">Hi {{isset($get_package->parent_id) ?  getUsername($get_package->parent_id) : ''}}</p>
     <p style="font-family: 'Maven Pro', sans-serif;display: block;margin-bottom: 15px;font-size: 16px;font-weight: 400;">Thank you for requesting to enrol {{isset($get_package->player_id) ? getUsername($get_package->player_id) : getUsername($get_package->parent_id)}} onto the courses below. Please review the course and click the payment link to confirm the booking. </p>
     <span style="font-family: 'Maven Pro', sans-serif;display: block;margin-bottom: 15px;font-size: 16px;font-weight: 400;">Thank you!</span>
-</div>
+</div> -->
 
 <p style="font-size:20px; padding: 0 30px; margin-bottom: 0;"><b>For : {{isset($get_package->player_id) ? getUsername($get_package->player_id) : getUsername($get_package->parent_id)}}</b></p><br/>
 
@@ -28,6 +28,7 @@
                                 <tr>
                                     <th style="width: 70%;color: #fff;background: #001642;font-family: 'Maven Pro', sans-serif; font-size: 16px; line-height: 22px;  padding: 10px 0;border-top-left-radius: 20px;border-right: 1px solid #fff;">Course</th>
                                     <th style="width: 30%;color: #fff;background: #001642;font-family: 'Maven Pro', sans-serif; font-size: 16px; line-height: 22px;  padding: 10px 0;border-top-right-radius: 20px;">Price</th>
+                                </tr>
 
                                 @foreach($get_all_packages as $package)
                                 <tr>
@@ -44,7 +45,7 @@
                                         </p> 
 
                                     </td>
-                                    <td style="    font-family: 'Maven Pro', sans-serif;    font-size: 16px;    line-height: 22px;    color:#726c6c;   padding: 10px;    border: 1px solid #d9dada;    border-bottom-left-radius: 20px;text-align: center;">&pound;{{$package->price}}</td>
+                                    <td style="    font-family: 'Maven Pro', sans-serif;    font-size: 16px;    line-height: 22px;    color:#726c6c;   padding: 10px;    border: 1px solid #d9dada;    border-bottom-left-radius: 20px;text-align: center;">&pound;{{custom_format($package->price,2)}}</td>
                                 </tr>
                                 @endforeach
 
@@ -52,8 +53,12 @@
                                 @foreach($get_all_packages as $package)
                                     @php $packagePrice[] = $package->price; @endphp
                                 @endforeach
-
-                                <p style="font-size: 14px;"><b>Total Price :</b> &pound;{{array_sum($packagePrice)}}</p> 
+                                <tr>
+                                    <td></td>
+                                    <td>                                        
+                                        <p style="text-align: center;font-size: 14px;"><b>Total Price :</b> &pound;{{array_sum($packagePrice)}}</p> 
+                                    </td>
+                                </tr>
 
                                 <!-- <tr>
                   <td style="font-family: 'Maven Pro', sans-serif; font-size: 16px; line-height: 22px; color: #726c6c; padding-top: 10px;">

@@ -105,23 +105,23 @@
                                     @php 
                                         $notification_arr = json_decode($notification->data); 
                                     @endphp
+                                    @if( !empty( $notification_arr ) )
+                                      @if($notification_arr->send_to == Auth::user()->id)
 
-                                    @if($notification_arr->send_to == Auth::user()->id)
+                                          <tr>
+                                              <td>
+                                                  <p>@php echo date('d-m-Y',strtotime($notification->created_at)); @endphp </p>
+                                              </td>
+                                              <td>
+                                                  <p>{{ $notification_arr->data }}</p>
+                                              </td>
+                                              <td class="view_option">
+                                                 <p> <a style="" href="{{url('/user/mark_as_read')}}/{{$notification->id}}" >Mark as Read</a></p>
+                                              </td>
+                                          </tr>
 
-                                        <tr>
-                                            <td>
-                                                <p>@php echo date('d-m-Y',strtotime($notification->created_at)); @endphp </p>
-                                            </td>
-                                            <td>
-                                                <p>{{ $notification_arr->data }}</p>
-                                            </td>
-                                            <td class="view_option">
-                                               <p> <a style="" href="{{url('/user/mark_as_read')}}/{{$notification->id}}" >Mark as Read</a></p>
-                                            </td>
-                                        </tr>
-
+                                      @endif
                                     @endif
-
                                     @endforeach
 
                                 @endif

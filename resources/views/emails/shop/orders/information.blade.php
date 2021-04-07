@@ -56,6 +56,56 @@
                 <td colspan="1" style="vertical-align: top;border-bottom:4px solid #3f4c67; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px;width:150px;" align="left">Further Info</td>
                 <td colspan="4" style="vertical-align: top; border-bottom:4px solid #3f4c67; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;" align="left">{!!isset($course->info_email_content) ? $course->info_email_content : '-' !!}</td>
             </tr>
+@elseif($item->shop_type == 'paygo-course')
+@php 
+  $course_id = $item->product_id;
+  $course = DB::table('pay_go_courses')->where('id',$course_id)->first();  
+  $child = DB::table('users')->where('id',$item->child_id)->first();
+  $bookedDates = \App\PayGoCourseBookedDate::where( 'cart_id', $item->id )->get();
+  $datesArray = [];
+  if( !empty( $bookedDates ) ){
+    foreach( $bookedDates as $bookedDate ){
+      $actualDate = \App\PaygocourseDate::where('id', $bookedDate->booked_date_id)->first();
+      array_push( $datesArray,  $actualDate->course_date);
+    }
+  }
+  $i = 1;
+  $count = count($datesArray);
+
+@endphp
+
+
+ 
+      <!-- <br/> <br/> <br/> -->
+
+            <tr>
+                <td colspan="1" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px; padding-top: 10px;width:150px;" align="left">Course Name</td>
+                <td colspan="4" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;" align="left">{{isset($course->title) ? $course->title : '-' }}</td>
+            </tr>
+            <tr>
+                <td colspan="1" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px; padding-top: 10px;width:150px;" align="left">Booked Course Dates</td>
+                <td colspan="4" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;" align="left">@if( !empty( $datesArray )) @foreach( $datesArray as $finalDate ) {{ date('d-m-Y', strtotime( $finalDate ) ) }} @php if( $i < $count){ echo ','; $i++; }  @endphp @endforeach @else {{ '-' }} @endif</td>
+            </tr>
+            <tr>
+                <td colspan="1" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px;width:150px;" align="left">Venue</td>
+                <td colspan="4" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;" align="left">{{isset($course->location) ? $course->location : '-' }}</td>
+            </tr>
+            <tr>
+                <td colspan="1" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px;width:150px;" align="left">Day Time</td>
+                <td colspan="4" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;" align="left">{{isset($course->day_time) ? $course->day_time : '-' }}</td>
+            </tr>
+            <tr>
+                <td colspan="1" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px;width:150px;" align="left">Age Group</td>
+                <td colspan="4" style="vertical-align: top; border-bottom:2px solid #fff; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;" align="left">{{isset($course->age_group) ? $course->age_group : '-' }}</td>
+            </tr>
+            <tr>
+                <td colspan="1" style="vertical-align: top; border-bottom:4px solid #3f4c67; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px;width:150px;" align="left">More Info</td>
+                <td colspan="4" style="vertical-align: top; border-bottom:4px solid #3f4c67; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;" align="left">{!!isset($course->more_info) ? $course->more_info : '-' !!}</td>
+            </tr>
+            <tr>
+                <td colspan="1" style="vertical-align: top;border-bottom:4px solid #3f4c67; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 600; padding-left: 10px; padding-right: 10px;width:150px;" align="left">Further Info</td>
+                <td colspan="4" style="vertical-align: top; border-bottom:4px solid #3f4c67; font-family: Verdana, 'Times New Roman', Arial; font-size: 14px; line-height: 18px; color: #0c0c0c; padding-top: 10px; padding-bottom: 10px; font-weight: 200; padding-left: 10px; padding-right: 10px;" align="left">{!!isset($course->info_email_content) ? $course->info_email_content : '-' !!}</td>
+            </tr>
 @elseif($item->shop_type == 'camp')
 
 @php 

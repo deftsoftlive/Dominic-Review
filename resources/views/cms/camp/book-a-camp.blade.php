@@ -45,7 +45,7 @@
         </script>
   @endif
 @endif
-<section class="book-camp section-padding">
+<section class="book-camp section-padding cstm-book-camp">
   <div class="container">
     <div class="camp-logo-section">
       <div class="container">
@@ -86,16 +86,16 @@
                     
 
                     @php 
-  	              		$acc_id = $acc->id;
-  	              		$accor_pdfs = DB::table('accordian_pdfs')->where('accordian_id','=', $acc_id)->get(); 
-  	              	@endphp
+                      $acc_id = $acc->id;
+                      $accor_pdfs = DB::table('accordian_pdfs')->where('accordian_id','=', $acc_id)->get(); 
+                    @endphp
 
-	              	@if(count($accor_pdfs)> 0)
-	              		@foreach($accor_pdfs as $pdf)
-						    <a target="_blank" href="{{URL::asset('/uploads/accordian')}}/{{$pdf->pdf}}" class="course-pdf-icon"><i class="fa fa-file-pdf"></i>{{$pdf->accordian_title}}</a>
-                    	@endforeach
-	                @endif
-	                </div>
+                  @if(count($accor_pdfs)> 0)
+                    @foreach($accor_pdfs as $pdf)
+                <a target="_blank" href="{{URL::asset('/uploads/accordian')}}/{{$pdf->pdf}}" class="course-pdf-icon"><i class="fa fa-file-pdf"></i>{{$pdf->accordian_title}}</a>
+                      @endforeach
+                  @endif
+                  </div>
                   </div>
                 </div>
                 @endforeach
@@ -143,6 +143,7 @@
                     @php 
                       $camp_id = $camp->id;
                       $camp_data = DB::table('camp_prices')->where('camp_id',$camp_id)->first();
+
                     @endphp
 
                     <thead>
@@ -221,7 +222,7 @@
   <br/><br/>  
       <div class="accordion" id="b-c-table-accordion">
 
-      	<!-- Particular Camp Data -->
+        <!-- Particular Camp Data -->
         @php 
           $camp_id = $camp->id;
           $camp = DB::table('camp_prices')->where('camp_id',$camp_id)->first(); 
@@ -236,6 +237,7 @@
           $days_arr = [
             'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
           ];
+
         @endphp
 
         
@@ -243,15 +245,41 @@
         <input type="hidden" name="camp_id" value="{{$camp_id}}">
         @if(!empty($arrSku))
         @foreach($arrSku as $arrKey => $arrData)  
-
         <!-- To calculate array count for the mutiplication of full week -->
-        @php $days_count = 0; @endphp
+        @php $days_count = 0; 
+        $weekDisableA = $weekDisableM = '';
+        $fullweekSeatsM = $fullweekSeatsA = [];
+
+
+        $fullweekSeatsCheckM = $fullweekSeatsCheckA = 0;
+        $noWeekdayCheck = 0;
+        $keysArr = [];
+        @endphp
+
         @foreach($arrData as $day_key=>$day_value)
-          @if(in_array($day_key,$days_arr))
-            @php $days_count++; @endphp 
+        @php array_push( $keysArr, $day_key ); @endphp
+          @if( in_array($day_key,$days_arr ) )
+            @php 
+              $days_count++;
+            @endphp
+          @endif          
+        @endforeach
+
+        @foreach( $days_arr as $che )
+          @if( in_array( $che, $keysArr ) )
+            @php $noWeekdayCheck = 1; @endphp          
           @endif
         @endforeach
 
+        @if( $noWeekdayCheck == 1 )
+        @else
+          @foreach($arrData as $day_key=>$day_value)          
+            @if( !in_array( $day_key, $days_arr ) &&  !empty( $arrData ) && $day_key == 'Selected' )
+              @php $days_count = 5;
+              @endphp
+            @endif
+          @endforeach
+        @endif
           <div class="card">
             <div class="card-header" id="b-c-a-heading-one">
               <h2 class="mb-0">
@@ -268,8 +296,8 @@
             <div id="b-c-a-collapse-{{$arrKey+1}}" class="collapse" aria-labelledby="b-c-a-heading-one" data-parent="#b-c-table-accordion">
               <div class="card-body">
                 <table>
-  			    <thead>
-  				  <tr class="">
+            <thead>
+            <tr class="">
               <th style="border-top:0;" class="info"></th>
 
               <!-- Selected session of early drop i.e. early drop will appear or not -->
@@ -330,10 +358,11 @@
                 <div><span><b>Available spaces</b></span></div>
               </th>
             </tr>
-  				</thead>
+          </thead>
                   <tbody>
 
                     <!-- Weeky Management -->
+        @php //dd( $arrSku ); @endphp 
                     @php  
 
                     $weeks=[
@@ -352,7 +381,6 @@
                     @if(isset($arrData->$weekDays))
                     @if($arrData->$weekDays == '1')
 
-
                       @php //dd($weekDays,$weekDaysValue); 
                         $smallLetterWeekDays= strtolower($weekDays); 
                         $full_weekClass=$weekDays=='Fullweek'?'full_week':'';
@@ -367,8 +395,9 @@
                         $fullweekEAPrice=$weekDays=='Fullweek'? ($days_count*$EAprice)*(1-($percentageprice)/100) : $EAprice;
 
                         $AMprice = $camp->morning_price;
-                        $percentageprice1 =$camp->early_percent;
+                        $percentageprice1 =$camp->morning_percent;
                         $fullweekAMPrice=$weekDays=='Fullweek'? ($days_count*$AMprice)*(1-($percentageprice1)/100) : $AMprice;
+                        //dd($days_count*$AMprice)*(1-($percentageprice1)/100 );
 
                         $PMprice = $camp->afternoon_price;
                         $percentageprice2 =$camp->afternoon_percent;
@@ -383,19 +412,228 @@
                         $fullweekFullPrice=$weekDays=='Fullweek'? ($days_count*$Fullprice)*(1-($percentageprice4)/100) : $Fullprice;
 
                         $LSprice = $camp->latepickup_price;
-                        $percentageprice5 =$camp->lunch_percent;
+                        $percentageprice5 =$camp->latepickup_percent;
                         $fullweekLSPrice=$weekDays=='Fullweek'? ($days_count*$LSprice)*(1-($percentageprice5)/100) : $LSprice;
 
                       @endphp 
 
+
+                        @php 
+                          $shop_items = DB::table('shop_cart_items')->where('shop_type','camp')->where('type','order')->where( 'product_id', $camp_id )->get();
+                          $shop_items_count = DB::table('shop_cart_items')->where('shop_type','camp')->where('type','order')->where( 'product_id', $camp_id )->count();
+                          $m = $f = $l = $a = [];
+                          if( $shop_items_count !== 0 ){
+                            foreach($shop_items as $items){
+
+                              $campSeatsData = \App\CampPrice::where('camp_id', $items->product_id)->first();
+                              $morningSeats = (int)$campSeatsData->morning_seats;
+                              $afternoonSeats = (int)$campSeatsData->afternoon_seats;
+                              $week_data = json_decode($items->week); 
+
+                              foreach($week_data as $number=>$number_array){
+
+                                foreach($number_array as $data=>$user_data){
+
+                                  foreach($user_data as $data1=>$user_data1){
+                                    $split = explode('-',$user_data1);
+                                    $get_session = $split[2]; 
+
+                                    $week_des = $arrKey+1; 
+                                    $week_no = 'W'.$week_des; 
+                                    if($weekDays == $data1 && $number == $week_no){
+                                      if($get_session == 'mor'){
+                                        array_push($m,'1');
+                                      }elseif($get_session == 'noon'){
+                                        array_push($a,'1');
+                                      }elseif($get_session == 'lunch'){
+                                        array_push($l,'1');
+                                      }elseif($get_session == 'full'){
+                                        array_push($f,'1'); 
+                                        array_push($m,'1'); 
+                                        array_push($l,'1'); 
+                                        array_push($a,'1'); 
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }else{
+                            $campSeatsData = \App\CampPrice::where( 'camp_id', $camp_id )->first();
+                            $morningSeats = (int)$campSeatsData->morning_seats;
+                            $afternoonSeats = (int)$campSeatsData->afternoon_seats;
+                          }                                 
+
+                        $lunchSeats = ( $morningSeats > $afternoonSeats ) ? $morningSeats : $afternoonSeats;
+
+                        $eaCheckM = $eaCheckA = $eaCheck = 0;
+                        if(isset($selected_session->morning)){
+
+                          if($selected_session->morning == '1'){
+                                
+
+                            if( !empty( $m ) ){
+                              $seatsMorAf = $morningSeats - array_sum($m);
+                            }else{
+                              $seatsMorAf = $morningSeats;
+                            }
+                            $fullweekSeatsM[] = $seatsMor = ( $seatsMorAf < $morningSeats )? $seatsMorAf: $morningSeats;
+
+
+                            if( $seatsMor > 15 ){
+                              $displayTextM = 'Available'; 
+                              $disabledM = '';
+                            }elseif( in_array( $seatsMor, range( 6, 14 ) ) ){
+                              $displayTextM = 'Limited Spaces';
+                              $disabledM = '';
+                            }elseif( in_array( $seatsMor, range( 1, 5 ) ) ){
+                              $displayTextM = 'Last Few';
+                              $disabledM = '';
+                            }else{
+                              $displayTextM = 'Fully Booked';
+                              $weekDisableM = $disabledM = 'disabled';
+                              $eaCheckM = 1;
+                            }
+                          }
+                        }
+                        if( !empty( $l ) ){
+                          $seatsMorAf = $lunchSeats - array_sum($l);
+                          
+                        }else{
+                          $seatsMorAf = $lunchSeats;
+                        }
+
+                        $fullweekSeats[] = $seatsLu = ( $seatsMorAf < $lunchSeats )? $seatsMorAf: $lunchSeats;
+
+                        if( $seatsLu > 15 ){
+                          $displayTextL = 'Available'; 
+                          $disabledL = '';                           
+                        }elseif( in_array( $seatsLu, range( 6, 14 ) ) ){
+                          $displayTextL = 'Limited Spaces';
+                          $disabledL = '';
+                        }elseif( in_array( $seatsLu, range( 1, 5 ) ) ){
+                          $displayTextL = 'Last Few';
+                          $disabledL = '';
+                        }else{
+                          $displayTextL = 'Fully Booked';
+                          $disabledL = 'disabled';
+                          
+                        }
+                        
+
+
+                        /* if(!empty($l)){
+                          $seatsLunch = $lunchSeats - array_sum($l);
+                          echo 'Lunch: '.$seatsLunch.'<br>'; 
+                        }else{
+                          echo 'Lunch: '.$lunchSeats.'<br>';
+                        } */
+                        if(isset($selected_session->afernoon)){
+
+                          if($selected_session->afernoon == '1'){
+                              
+
+                            if( !empty( $a ) ){
+                              $seatsMorAf = $afternoonSeats - array_sum($a);
+                              
+                            }else{
+                              $seatsMorAf = $afternoonSeats;
+                            }
+
+                            $fullweekSeatsA[] = $seatsAF = ( $seatsMorAf < $afternoonSeats )? $seatsMorAf: $afternoonSeats;
+
+                            if( $seatsAF > 15 ){
+                              $displayTextA = 'Available'; 
+                              $disabledA = '';                                                   
+                            }elseif( in_array( $seatsAF, range( 6, 14 ) ) ){
+                              $displayTextA = 'Limited Spaces';
+                              $disabledA = '';
+                            }elseif( in_array( $seatsAF, range( 1, 5 ) ) ){
+                              $displayTextA = 'Last Few';
+                              $disabledA = '';
+                            }else{
+                              $displayTextA = 'Fully Booked';
+                              $weekDisableA = $disabledA = 'disabled';
+                              $eaCheckA = 1;
+                            }
+                          }
+                        }
+                        
+                        if( $eaCheckA == 1 && $eaCheckM == 1 ){
+                          $eaDisabled = 'disabled';
+                        }else{
+                          $eaDisabled = '';
+                        }
+                        if( $eaCheckA == 1 || $eaCheckM == 1 ){
+                          $fullDisabled = 'disabled';
+                        }else{
+                          $fullDisabled = '';
+                        }
+                         if( $weekDisableM == 'disabled' && $weekDisableA == 'disabled' ){
+                          $eaFDisabled = 'disabled';
+                          $te = 'Fully Booked';
+                        }else{
+                          $eaFDisabled = '';
+                        }
+                        if( $weekDisableM == 'disabled' || $weekDisableA == 'disabled' ){
+                          $fullWDisabled = 'disabled';
+                        }else{
+                          $fullWDisabled = '';
+                        }
+                        if( !empty( $fullweekSeatsM ) ){
+
+                          $fullweekSeatsCheckM = min( $fullweekSeatsM ); 
+                        }
+
+                        if( $fullweekSeatsCheckM > 15 ){
+                          $weekTextM = 'Available'; 
+                          //$disabledA = '';                                                   
+                        }elseif( in_array( $fullweekSeatsCheckM, range( 6, 14 ) ) ){
+                          $weekTextM = 'Limited Spaces';
+                          //$disabledA = '';
+                        }elseif( in_array( $fullweekSeatsCheckM, range( 1, 5 ) ) ){
+                          $weekTextM = 'Last Few';
+                          //$disabledA = '';
+                        }else{
+                          $weekTextM = 'Fully Booked';                          
+                          //$eaCheckA = 1;
+                        }
+                        if( !empty( $fullweekSeatsA ) ){
+
+                          $fullweekSeatsCheckA = min( $fullweekSeatsA ); 
+                        }
+
+                        if( $fullweekSeatsCheckA > 15 ){
+                          $weekTextA = 'Available';                                          
+                        }elseif( in_array( $fullweekSeatsCheckA, range( 6, 14 ) ) ){
+                          $weekTextA = 'Limited Spaces';
+                        }elseif( in_array( $fullweekSeatsCheckA, range( 1, 5 ) ) ){
+                          $weekTextA = 'Last Few';
+                        }else{
+                          $weekTextA = 'Fully Booked';
+                        }
+
+                        /*if(!empty($a)){
+                          $seatsAfter = $afternoonSeats - array_sum($a);
+                          echo 'Afternoon: '.$seatsAfter.'<br>';
+                        }else{
+                          echo 'Afternoon: '.$afternoonSeats.'<br>';
+                        }*/
+
+
+
+                        @endphp
+
+
+
                     <tr class="week{{$arrKey+1}}">
-                      <td class="success"><b> {{$full_weekTitle}}</b></td>
+                      <td class="success"><b>@php //dd($camp); @endphp {{$full_weekTitle}}</b></td>
 
                       <!-- Early Drop -->
                       @if(isset($selected_session->early_drop))
                         @if($selected_session->early_drop == '1')
                         <td class="active">
-                            <div class="cstm-check" id="chk-span-{{$arrKey+1}}{{$weekDaysValue}}early"><input id="checkbox-{{$arrKey+1}}{{$weekDaysValue}}early" class="checkbox-style col-1-W{{$arrKey+1}} {{$full_weekClass}}" week="{{$arrKey+1}}" day="{{$weekDaysValue}}" sel_type="early_drop" name="week[W{{$arrKey+1}}][early_drop][{{$weekDays}}]" type="checkbox" value="{{$arrKey+1}}-{{$weekDaysValue}}-early">
+                            <div class="cstm-check" id="chk-span-{{$arrKey+1}}{{$weekDaysValue}}early"><input id="checkbox-{{$arrKey+1}}{{$weekDaysValue}}early" class="checkbox-style col-1-W{{$arrKey+1}} {{$full_weekClass}}" week="{{$arrKey+1}}" day="{{$weekDaysValue}}" sel_type="early_drop" name="week[W{{$arrKey+1}}][early_drop][{{$weekDays}}]" type="checkbox" value="{{$arrKey+1}}-{{$weekDaysValue}}-early" {{ $eaDisabled }} @php if( $weekDaysValue == 'fullweek' ) echo $eaFDisabled;@endphp>
                               <label for="checkbox-{{$arrKey+1}}{{$weekDaysValue}}early" class="checkbox-style-3-label"></label>
                               <input type="hidden" id="pricing-{{$arrKey+1}}-{{$weekDaysValue}}-early" value="{{$fullweekEAPrice}}">
                             </div>
@@ -407,7 +645,7 @@
                       @if(isset($selected_session->morning))
                         @if($selected_session->morning == '1')
                         <td class="warning">
-                          <div class="cstm-check" id="chk-span-{{$arrKey+1}}{{$weekDaysValue}}mor"><input id="checkbox-{{$arrKey+1}}{{$weekDaysValue}}mor" class="checkbox-style  col-2-W{{$arrKey+1}} {{$full_weekClass}}" week="{{$arrKey+1}}" day="{{$weekDaysValue}}" sel_type="morning" name="week[W{{$arrKey+1}}][camp][{{$weekDays}}]" type="radio" value="{{$arrKey+1}}-{{$weekDaysValue}}-mor">
+                          <div class="cstm-check" id="chk-span-{{$arrKey+1}}{{$weekDaysValue}}mor"><input id="checkbox-{{$arrKey+1}}{{$weekDaysValue}}mor" class="checkbox-style  col-2-W{{$arrKey+1}} {{$full_weekClass}}" week="{{$arrKey+1}}" day="{{$weekDaysValue}}" sel_type="morning" name="week[W{{$arrKey+1}}][camp][{{$weekDays}}]" type="radio" value="{{$arrKey+1}}-{{$weekDaysValue}}-mor" {{ $disabledM }} @php if( $weekDaysValue == 'fullweek' ) echo $weekDisableM;@endphp>
                             <label for="checkbox-{{$arrKey+1}}{{$weekDaysValue}}mor" class="checkbox-style-3-label"></label>
                             <input type="hidden" id="pricing-{{$arrKey+1}}-{{$weekDaysValue}}-mor" value="{{$fullweekAMPrice}}">
                           </div>
@@ -419,7 +657,7 @@
                       @if(isset($selected_session->lunch))
                         @if($selected_session->lunch == '1')
                         <td class="active">
-                          <div class="cstm-check" id="chk-span-{{$arrKey+1}}{{$weekDaysValue}}lunch"><input id="checkbox-{{$arrKey+1}}{{$weekDaysValue}}lunch" class="checkbox-style col-3-W{{$arrKey+1}} {{$full_weekClass}} lunch_club" week="{{$arrKey+1}}" day="{{$weekDaysValue}}" sel_type="lunch" name="week[W{{$arrKey+1}}][lunch][{{$weekDays}}]" type="checkbox" value="{{$arrKey+1}}-{{$weekDaysValue}}-lunch">
+                          <div class="cstm-check" id="chk-span-{{$arrKey+1}}{{$weekDaysValue}}lunch"><input id="checkbox-{{$arrKey+1}}{{$weekDaysValue}}lunch" class="checkbox-style col-3-W{{$arrKey+1}} {{$full_weekClass}} lunch_club" week="{{$arrKey+1}}" day="{{$weekDaysValue}}" sel_type="lunch" name="week[W{{$arrKey+1}}][lunch][{{$weekDays}}]" type="checkbox" value="{{$arrKey+1}}-{{$weekDaysValue}}-lunch" {{ $disabledL }} @php if( $weekDaysValue == 'fullweek' ) echo $eaFDisabled;@endphp>
                             <label for="checkbox-{{$arrKey+1}}{{$weekDaysValue}}lunch" class="checkbox-style-3-label"></label>
                             <input type="hidden" id="pricing-{{$arrKey+1}}-{{$weekDaysValue}}-lunch" value="{{$fullweekLunchPrice}}">
                           </div>
@@ -431,7 +669,7 @@
                       @if(isset($selected_session->afernoon))
                         @if($selected_session->afernoon == '1')
                         <td class="warning">
-                          <div class="cstm-check" id="chk-span-{{$arrKey+1}}{{$weekDaysValue}}noon"><input id="checkbox-{{$arrKey+1}}{{$weekDaysValue}}noon" class="checkbox-style col-4-W{{$arrKey+1}}  {{$full_weekClass}}" week="{{$arrKey+1}}" day="{{$weekDaysValue}}" sel_type="afternoon" name="week[W{{$arrKey+1}}][camp][{{$weekDays}}]" type="radio" value="{{$arrKey+1}}-{{$weekDaysValue}}-noon">
+                          <div class="cstm-check" id="chk-span-{{$arrKey+1}}{{$weekDaysValue}}noon"><input id="checkbox-{{$arrKey+1}}{{$weekDaysValue}}noon" class="checkbox-style col-4-W{{$arrKey+1}}  {{$full_weekClass}}" week="{{$arrKey+1}}" day="{{$weekDaysValue}}" sel_type="afternoon" name="week[W{{$arrKey+1}}][camp][{{$weekDays}}]" type="radio" value="{{$arrKey+1}}-{{$weekDaysValue}}-noon" {{ $disabledA }} @php if( $weekDaysValue == 'fullweek' ) echo $weekDisableA;@endphp>
                             <label for="checkbox-{{$arrKey+1}}{{$weekDaysValue}}noon" class="checkbox-style-3-label"></label>
                             <input type="hidden" id="pricing-{{$arrKey+1}}-{{$weekDaysValue}}-noon" value="{{$fullweekPMPrice}}">
                           </div>
@@ -444,7 +682,7 @@
                       @if(isset($selected_session->fullday))
                         @if($selected_session->fullday == '1')
                         <td class="warning">
-                          <div class="cstm-check" id="chk-span-{{$arrKey+1}}{{$weekDaysValue}}full"><input id="checkbox-{{$arrKey+1}}{{$weekDaysValue}}full" class="checkbox-style col-5-W{{$arrKey+1}} full_day {{$full_weekClass}}" week="{{$arrKey+1}}" day="{{$weekDaysValue}}" sel_type="fullday" name="week[W{{$arrKey+1}}][camp][{{$weekDays}}]" type="radio" value="{{$arrKey+1}}-{{$weekDaysValue}}-full">
+                          <div class="cstm-check" id="chk-span-{{$arrKey+1}}{{$weekDaysValue}}full"><input id="checkbox-{{$arrKey+1}}{{$weekDaysValue}}full" class="checkbox-style col-5-W{{$arrKey+1}} full_day {{$full_weekClass}}" week="{{$arrKey+1}}" day="{{$weekDaysValue}}" sel_type="fullday" name="week[W{{$arrKey+1}}][camp][{{$weekDays}}]" type="radio" value="{{$arrKey+1}}-{{$weekDaysValue}}-full" {{ $fullDisabled }} @php if( $weekDaysValue == 'fullweek' ) echo $fullWDisabled;@endphp>
                             <label for="checkbox-{{$arrKey+1}}{{$weekDaysValue}}full" class="checkbox-style-3-label"></label>
 
                             @if($full_weekClass == 'full_week')
@@ -462,7 +700,7 @@
                       @if(isset($selected_session->late_pickup))
                         @if($selected_session->late_pickup == '1')
                         <td class="active">
-                          <div class="cstm-check" id="chk-span-{{$arrKey+1}}-{{$weekDaysValue}}-late"><input id="checkbox-{{$arrKey+1}}{{$weekDaysValue}}late" class="checkbox-style col-6-W{{$arrKey+1}}  {{$full_weekClass}}" week="{{$arrKey+1}}" day="{{$weekDaysValue}}" sel_type="late_pickup" name="week[W{{$arrKey+1}}][late_pickup][{{$weekDays}}]" type="checkbox" value="{{$arrKey+1}}-{{$weekDaysValue}}-late">
+                          <div class="cstm-check" id="chk-span-{{$arrKey+1}}-{{$weekDaysValue}}-late"><input id="checkbox-{{$arrKey+1}}{{$weekDaysValue}}late" class="checkbox-style col-6-W{{$arrKey+1}}  {{$full_weekClass}}" week="{{$arrKey+1}}" day="{{$weekDaysValue}}" sel_type="late_pickup" name="week[W{{$arrKey+1}}][late_pickup][{{$weekDays}}]" type="checkbox" value="{{$arrKey+1}}-{{$weekDaysValue}}-late" {{ $eaDisabled }} @php if( $weekDaysValue == 'fullweek' ) echo $eaFDisabled;@endphp>
                             <label for="checkbox-{{$arrKey+1}}{{$weekDaysValue}}late" class="checkbox-style-3-label"></label>
                             <input type="hidden" id="pricing-{{$arrKey+1}}-{{$weekDaysValue}}-late" value="{{$fullweekLSPrice}}">
                           </div>
@@ -493,49 +731,43 @@
                       
                       <!-- Available Spaces - Starts Here -->
                       <td class="active">
-                        @php 
-                          $shop_items = DB::table('shop_cart_items')->where('shop_type','camp')->where('type','order')->get();
-                          $m = $f = $l = $a = [];
+                       
+
+                        @php
+
+                          if( $weekDaysValue == 'fullweek' ) {
+                            //echo $weekText;
+                            if(isset($selected_session->morning)){
+
+                              if($selected_session->morning == '1'){
+                                echo '<b>Morning:</b> '.$weekTextM.'<br>';
+                              }
+                            }
+                            if(isset($selected_session->afernoon)){
+
+                              if($selected_session->afernoon == '1'){
+                                echo '<b>Afternoon:</b> '.$weekTextA.'<br>';
+                              }
+                            }
+                          }
+                          else{
+                            if(isset($selected_session->morning)){
+
+                              if($selected_session->morning == '1'){
+                                echo '<b>Morning:</b> '.$displayTextM.'<br>';
+                              }
+                            }
+                            if(isset($selected_session->afernoon)){
+
+                              if($selected_session->afernoon == '1'){
+                                echo '<b>Afternoon:</b> '.$displayTextA.'<br>';
+                              }
+                            }
+                            //echo 'Lunch: '.$displayTextL.'<br>';
+                          }
+
                         @endphp
-
-                        @foreach($shop_items as $items)
-                          @php $week_data = json_decode($items->week); @endphp
-
-                          @foreach($week_data as $number=>$number_array)
-
-                            @foreach($number_array as $data=>$user_data)
-
-                              @foreach($user_data as $data1=>$user_data1)
-                                @php 
-                                  $split = explode('-',$user_data1);
-                                  $get_session = $split[2]; 
-
-                                  $week_des = $arrKey+1; 
-                                  $week_no = 'W'.$week_des; 
-                                @endphp
-
-                                @if($weekDays == $data1 && $number == $week_no)
-
-                                  @if($get_session == 'mor')
-                                    @php array_push($m,'1'); @endphp
-                                  @elseif($get_session == 'noon')
-                                    @php array_push($a,'1'); @endphp
-                                  @elseif($get_session == 'lunch')
-                                    @php array_push($l,'1'); @endphp
-                                  @elseif($get_session == 'full')
-                                    @php array_push($f,'1'); @endphp
-                                  @endif
-
-
-                                @endif 
-
-                              @endforeach
-
-                              @endforeach
-
-                          @endforeach
-
-                        @endforeach
+                        
 
                       </td>
                       <!-- Available Spaces - End Here -->
@@ -625,11 +857,37 @@
        
               @foreach($products as $pro=>$data) 
                 <tbody>
-                  @php $prod_data = DB::table('products')->where('id',$data)->first();  @endphp
+                  @php $prod_data = DB::table('products')->where('id',$data)->first();
+                  $price = 0;
+
+                  @endphp
+
+                  @if( $prod_data->product_type == 1 )
+                    @php $url = url('/shop/product').'/'.$prod_data->slug.'-1';
+                    $slug = $prod_data->slug.'-1';
+                    $prod_data = DB::table('products')->where('slug',$slug)->first();
+                    @endphp
+
+                  @else
+                    @php $url = url('/shop/product').'/'.$prod_data->slug;
+                    @endphp
+
+                  @endif
+                  @php 
+                    $arr['price'] = ($prod_data->price);
+                    $arr['sale_price'] = ($prod_data->price - $prod_data->sale_price);
+                    $sale = $prod_data->sale_price;
+                    $text  = '<div class="product-price">';
+                    if($sale > 0){
+                       $text .='<small>£'.custom_format($arr['price'],2).'</small>';
+                    }
+                    $text .='£'.custom_format($arr['sale_price'],2).'</div>';
+                         
+                  @endphp 
                   <td><img src="{{url('/')}}/{{isset($prod_data->thumbnail) ? $prod_data->thumbnail : ''}}" alt="" /></td>
                   <td>{{isset($prod_data->name) ? $prod_data->name : ''}}</td>
-                  <td>&pound;{{isset($prod_data->price) ? $prod_data->price : ''}}</td>
-                  <td><a class="pop-view-item" target="_blank" href="{{url('/shop/product')}}/{{isset($prod_data->slug) ? $prod_data->slug : ''}}">View Item</a></td>
+                  <td>@php echo $text; @endphp</td>
+                  <td><a class="pop-view-item" target="_blank" href="{{ $url }}">View Item</a></td>
                 </tbody>
               @endforeach       
           </table>

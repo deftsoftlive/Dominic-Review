@@ -282,6 +282,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
 
                             @php 
                                 $course_cat = DB::table('link_course_and_categories')->where('linked_course_cat',158)->where('status',1)->get();
+                                //dd( $course_cat );
                             @endphp
                             <div class="we-run-wrap images_back_wrap d-f">
                                 @foreach($course_cat as $cat)

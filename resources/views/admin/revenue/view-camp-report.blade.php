@@ -12,6 +12,7 @@
 
                 <div style="text-align: right;" class="cst-admin-filter">
                     <a href="{{ route('admin.revenue.courses') }}" class="btn btn-primary d-print-none">Courses Revenue</a>
+                    <a href="{{ route('admin.revenue.paygo.courses') }}" class="btn btn-primary d-print-none">Pay-Go Courses Revenue</a>
                     <a href="{{ route('admin.revenue.camps') }}" class="btn btn-primary d-print-none">Camps Revenue</a>
                     <a href="{{ route('admin.revenue.products') }}" class="btn btn-primary d-print-none">Products Revenue</a>
                 </div>
@@ -125,11 +126,11 @@
                                             <table class="cart-table margin-top-5">
                                                 <tbody>
                                                     <tr>
-                                                        <th>No of Boys</th>
+                                                        <th>No.Males</th>
                                                         <td><strong>{{$total_male_user}}</strong></td>
                                                     </tr>
                                                     <tr>
-                                                        <th>No of Girls</th>
+                                                        <th>No.Females</th>
                                                         <td><strong>{{$total_female_user}}</strong></td>
                                                     </tr>
                                                 </tbody>

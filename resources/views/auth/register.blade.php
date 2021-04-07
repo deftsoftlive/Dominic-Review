@@ -4,8 +4,8 @@
 
 @section('content')
 
-@php $country_code = DB::table('country_code')->orderBy('countryname','asc')->get(); @endphp
-
+@php $country_code = DB::table('country_code')->orderByRaw('(case countryname when "United Kingdom" then 0 else 1 end), countryname ASC')->get();
+@endphp
 <!-- <section class="account-sec">
         <div class="container">
             <div class="row">

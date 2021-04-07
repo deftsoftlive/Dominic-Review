@@ -25,7 +25,7 @@ class BadgeController extends Controller
     |   Listing of badges
     |----------------------------------------*/ 
     public function badge_index() {
-        $badge = Badge::select(['id','name','image','description','end_date','points','status','slug','sort'])->orderBy('sort','asc')->paginate(10);
+        $badge = Badge::select(['id','name','image','description','end_date','points','status','slug','sort'])->orderBy('sort','asc')->paginate(50);
     	return view('admin.badge.index',compact('badge'))
     	->with(['name' => 'Badge Management', 'addLink' => 'admin.badge.showCreate']);
     }
@@ -38,7 +38,7 @@ class BadgeController extends Controller
     |   Listing of active badges
     |----------------------------------------*/ 
     public function badge_active() {
-        $badge = Badge::select(['id','name','image','description','end_date','points','status','slug','sort'])->where('status',1)->orderBy('sort','asc')->paginate(10);
+        $badge = Badge::select(['id','name','image','description','end_date','points','status','slug','sort'])->where('status',1)->orderBy('sort','asc')->paginate(50);
         return view('admin.badge.active',compact('badge'))
         ->with(['name' => 'Badge Management', 'addLink' => 'admin.badge.showCreate']);
     }
@@ -47,7 +47,7 @@ class BadgeController extends Controller
     |   Listing of in-active badges
     |----------------------------------------*/ 
     public function badge_inactive() {
-        $badge = Badge::select(['id','name','image','description','end_date','points','status','slug','sort'])->where('status',0)->orderBy('sort','asc')->paginate(10);
+        $badge = Badge::select(['id','name','image','description','end_date','points','status','slug','sort'])->where('status',0)->orderBy('sort','asc')->paginate(50);
         return view('admin.badge.inactive',compact('badge'))
         ->with(['name' => 'Badge Management', 'addLink' => 'admin.badge.showCreate']);
     }

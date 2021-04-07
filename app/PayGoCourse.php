@@ -12,7 +12,7 @@ class PayGoCourse extends Model
     use SluggableScopeHelpers;
 
     protected $fillable = [
-        'id', 'slug', 'title', 'description', 'season', 'type', 'account_id', 'subtype', 'course_category', 'level', 'image', 'age', 'session_date', 'location', 'day_time', 'age_group', 'booking_slot', 'more_info', 'info_email_content', 'player', 'price', 'early_birth_price', 'bottom_section', 'linked_coach', 'coach_cost', 'venue_cost' , 'equipment_cost', 'other_cost', 'tax_cost', 'status', 'sort', 'end_date', 'membership_popup'
+        'id', 'slug', 'title', 'description', 'season', 'type', 'account_id', 'subtype', 'course_category', 'level', 'image', 'age', 'session_date', 'location', 'day_time', 'age_group', 'booking_slot', 'more_info', 'info_email_content', 'player', 'price', 'early_birth_price', 'bottom_section', 'linked_coach', 'coach_cost', 'venue_cost' , 'equipment_cost', 'other_cost', 'tax_cost', 'status', 'sort', 'end_date', 'advance_weeks' ,'membership_popup'
     ];
 
     public function sluggable() {

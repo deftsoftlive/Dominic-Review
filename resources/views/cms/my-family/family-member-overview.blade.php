@@ -93,9 +93,9 @@ $country_code = DB::table('country_code')->orderBy('countryname','asc')->get();
                                                     <p>Country -
                                                     	<span>{{isset($user->country) ? $user->country : ''}}</span></p>
                                                 </li>
-                                                @if(Auth::user() && Auth::user()->type != 'Adult' && Auth::user()->type != 'Child')
+                                                @php //dd(Auth::user()->type); @endphp
 
-                                                @else
+                                                @if($user->type == 'Adult' || $user->type == 'Child')
                                                 <li>
                                                     <p>What Is The Relationship Of The Account Holder To This Person? -
                                                     	<span>{{isset($user->relation) ? $user->relation : ''}} </span></p>

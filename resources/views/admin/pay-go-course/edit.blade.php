@@ -29,7 +29,7 @@
 
 <div class="col-md-12">
 
-  <form role="form" method="post" id="venueForm" enctype="multipart/form-data">
+  <form role="form" method="post" id="venueFormPaygoEdit" enctype="multipart/form-data">
                 
           @csrf
                   
@@ -99,7 +99,7 @@
                   @endphp 
 
                   <div class="form-group">
-                      <label class="label-file control-label">Course Category</label>
+                      <label class="label-file control-label">Course Category<span class="cst-upper-star">*</span></label>
                       
                       <select name="course_category" class="form-control event-dropdown">
                           <option value="" disabled="" selected="">Select Course Category</option>
@@ -133,11 +133,11 @@
                   {{textbox($errors,'Course dates <span class="cst-upper-star">*</span>','session_date', $venue->session_date)}}
                   {{textbox($errors,'Location<span class="cst-upper-star">*</span>','location', $venue->location)}}
                   {{textbox($errors,'Day Time<span class="cst-upper-star">*</span>','day_time', $venue->day_time)}}
-                  {{textbox($errors,'Booking Slot<span class="cst-upper-star">*</span>','booking_slot', $venue->booking_slot)}}
+                  <!-- {{textbox($errors,'Booking Slot<span class="cst-upper-star">*</span>','booking_slot', $venue->booking_slot)}} -->
                   {!! textarea($errors,'More Info<span class="cst-upper-star">*</span>','more_info', $venue->more_info) !!}
                   {!! textarea($errors,'Information Email Content<span class="cst-upper-star">*</span>','info_email_content', $venue->info_email_content) !!}
 
-                  <!-- {{textbox($errors,'Price<span class="cst-upper-star">*</span>','price', $venue->price)}} -->
+                  {{textbox($errors,'Price<span class="cst-upper-star">*</span>','price', $venue->price)}}
                   {!! textarea($errors,'Bottom Section<span class="cst-upper-star">*</span>','bottom_section', $venue->bottom_section) !!}
 
                   <!-- <label>Linked Coach</label> -->
@@ -202,6 +202,11 @@
                   {{textbox($errors,'Tax/Vat Cost<span class="cst-upper-star">*</span>','tax_cost', $venue->tax_cost)}} -->
 
                   <div class="form-group">
+                    <label class="label-file control-label">Advance days booking</label>
+                    <input type="number" name="advance_weeks" class="form-control" value="{{$venue->advance_weeks}}">
+                  </div>
+
+                  <div class="form-group">
                         <label class="control-label" for="timelsots">Dates of course</label>
 
                         <table class="add_on_services">
@@ -231,7 +236,7 @@
                             <tr class="timeslots slots{{$time+1}}" value={{$time+1}}>
                               <td><input type="date" name="course_date[{{$time+1}}]" class="form-control"  value="{{$number->course_date}}" required></td>
                               <td><input type="number" name="seats[{{$time+1}}]" class="form-control"  value="{{$number->seats}}" required></td>
-                              <td><input class="course_content_center" type="checkbox" name="display_course[{{$time+1}}]" value="@php if(isset($number->display_course)){ @endphp {{$number->display_course}} @php }else{ @endphp 1 @php } @endphp" @if($number->display_course) checked @endif ></td>
+                              <td><input class="course_content_center" type="checkbox" name="display_course[{{$time+1}}]" value="@php if( $number->display_course == 1){ @endphp {{ 1 }} @php }else{ @endphp 0 @php } @endphp" @if($number->display_course) checked @endif ></td>
                               <td><a onclick="removeSection({{$time+1}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></td>                                  
                             </tr>
                             @endforeach  
@@ -338,7 +343,7 @@ $(document).ready(function(){
     $("select#people11").change(function(){
         var selectedCat = $(this).children("option:selected").val();
         $.ajax({
-            url:"http://demo.drhsports.co.uk/admin/selectedCat/",
+            url:"<?php echo route('pay.go.selectedCat') ?>",
             method:'GET',
             data:{selectedCat:selectedCat},
             dataType:'json',

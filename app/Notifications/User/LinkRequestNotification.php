@@ -54,6 +54,7 @@ class LinkRequestNotification extends Notification
      */
     public function toArray($notifiable)
     {
+        //dd($notifiable);
         $parent = \DB::table('users')->where('parent_id',$notifiable->parent_id)->first(); 
         $coach_name = getUsername($notifiable->coach_id);
         $child_name = getUsername($notifiable->child_id);
@@ -67,7 +68,8 @@ class LinkRequestNotification extends Notification
 
         return [
             'send_to' => $notifiable->parent_id,
-            'data' => $coach_name.' has '.$status.' your link request for player - '.$child_name
+            'data' => $coach_name.' has '.$status.' your link request for player - '.$child_name,
+            'reason_of_rejection'   => $notifiable->reason_of_rejection
         ];
     }
 }

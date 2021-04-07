@@ -55,6 +55,13 @@ function getCatname($id){
 |-------------------------------------*/
 function getCourseName($id){
   $course = App\Course::where('id',$id)->first();
+  if ( empty( $course ) ) {
+    $course = App\PayGoCourse::where('id',$id)->first();
+  }
+  return $course['title'];
+}
+function getPaygoCourseName($id){
+  $course = App\PayGoCourse::where('id',$id)->first();
   return $course['title'];
 }
 
@@ -147,6 +154,11 @@ function getAccountID($id)
     $course = \DB::table('products')->where('id',$shopItem->product_id)->first();
     $account_id = $course->account_id;
   }
+  elseif($shopItem->shop_type == 'paygo-course')
+  {
+    $course = \DB::table('pay_go_courses')->where('id',$shopItem->product_id)->first();
+    $account_id = $course->account_id;
+  }
 
   return $account_id;
 }
@@ -160,21 +172,36 @@ function ToGetAccountID($id,$user_id)
   }else{
     $shopItem = \DB::table('shop_cart_items')->where('id',$id)->where('user_id',$user_id)->where('type','cart')->first(); 
   }
-    
+  $account_id = '';    
   if($shopItem->shop_type == 'course')
   {
     $course = \DB::table('courses')->where('id',$shopItem->product_id)->first();
-    $account_id = $course->account_id;
+    if ( !empty( $course ) ) {
+      $account_id = $course->account_id;
+    }
   }
   elseif($shopItem->shop_type == 'camp')
   {
     $course = \DB::table('camps')->where('id',$shopItem->product_id)->first();
-    $account_id = $course->account_id;
+    if ( !empty( $course ) ) {
+        $account_id = $course->account_id;
+      }
   }
   elseif($shopItem->shop_type == 'product')
   {
     $course = \DB::table('products')->where('id',$shopItem->product_id)->first();
-    $account_id = $course->account_id;
+    if( !empty($course) ){
+      $account_id = $course->account_id;
+    }else{
+      $account_id = 1;
+    }
+  }
+  elseif($shopItem->shop_type == 'paygo-course')
+  {
+    $course = \DB::table('pay_go_courses')->where('id',$shopItem->product_id)->first();
+    if ( !empty( $course ) ) {
+        $account_id = $course->account_id;
+    }
   }
 
   return $account_id;
@@ -189,23 +216,36 @@ function ToGetAccountIDForTypeOrder($id,$user_id)
   }else{
     $shopItem = \DB::table('shop_cart_items')->where('id',$id)->where('user_id',$user_id)->where('type','order')->first(); 
   }
+  $account_id = '';
   if (!empty($shopItem)) {
     if($shopItem->shop_type == 'course')
     {
       $course = \DB::table('courses')->where('id',$shopItem->product_id)->first();
-      $account_id = $course->account_id;
+      if ( !empty( $course ) ) {
+        $account_id = $course->account_id;
+      }
     }
     elseif($shopItem->shop_type == 'camp')
     {
       $course = \DB::table('camps')->where('id',$shopItem->product_id)->first();
-      $account_id = $course->account_id;
+      if ( !empty( $course ) ) {
+        $account_id = $course->account_id;
+      }
     }
     elseif($shopItem->shop_type == 'product')
     {
       $course = \DB::table('products')->where('id',$shopItem->product_id)->first();
-      $account_id = $course->account_id;
+      if ( !empty( $course ) ) {
+        $account_id = $course->account_id;
+      }
     }
-    # code...
+    elseif($shopItem->shop_type == 'paygo-course')
+    {
+      $course = \DB::table('pay_go_courses')->where('id',$shopItem->product_id)->first();
+      if ( !empty( $course ) ) {
+        $account_id = $course->account_id;
+      }
+    }
     return $account_id;
   }else{
     return '';

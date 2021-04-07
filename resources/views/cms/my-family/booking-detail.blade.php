@@ -73,7 +73,7 @@
 									</tr>
 									<tr>
 									  <th scope="row">Order Total: </th>
-									  <td> &pound;{{$order->amount}}</td>
+									  <td> &pound;{{ custom_format( $order->amount, 2 ) }}</td>
 									</tr>
 									<tr>
 									  <th scope="row">Payment Method : </th>
@@ -229,6 +229,42 @@
 											  <!-- <td>1</td> -->
 											  <td>&pound; {{$cart->price}}</td>
 											</tr>
+											@elseif($cart->shop_type == 'paygo-course')
+											@php 
+			                                    $course_id = $cart->product_id;
+			                                    $course = DB::table('pay_go_courses')->where('id',$course_id)->first();  
+			                                    $child = DB::table('users')->where('id',$cart->child_id)->first();
+			                                    $bookedDates = \App\PayGoCourseBookedDate::where( 'cart_id', $cart->id )->get();
+			                                    $datesArray = [];
+												if( !empty( $bookedDates ) ){
+			                                      foreach( $bookedDates as $bookedDa ) {
+			                                          array_push( $datesArray, date('d-m-Y', strtotime( $bookedDa->date ) ) );
+			                                      }
+			                                    }
+			                                    if( !empty( $datesArray ) ){
+
+			                                      $bookedDatesArr = implode( ', ', $datesArray );
+			                                    }else{
+			                                      $bookedDatesArr = '';
+			                                    }
+			                                @endphp
+											<tr>
+											  	<td style="width: 30%; text-align: left;"><b>{{isset($child->type) ? $child->type : 'Account Holder'}} : </b>{{isset($child->name) ? $child->name : 'No child selected'}}
+											  	<br><b> Booked Dates: </b><br>	@if( !empty( $datesArray )) {{ $bookedDatesArr }} @else {{ '-' }} @endif
+												</td>
+											  <td style="width: 40%;">
+											  	<h5>{{$course->title}}</h5>
+											  	<p>@php echo getSeasonname($course->season); @endphp | {{$course->day_time}}</p>
+		                                      </td>
+		                                      <td>Course
+		                                      	@if(!empty($cart->discount_code))
+												  	<p><b>Applied Coupon -</b> {{isset($cart->discount_code) ? $cart->discount_code : '-'}}</p>
+												  	<p>&pound;{{$cart->discount_price}} off on {{$course->title}}</p>
+												@endif
+		                                      </td>
+											  <!-- <td>1</td> -->
+											  <td>&pound; {{custom_format( $cart->price, 2 )}}</td>
+											</tr>
 											@elseif($cart->shop_type == 'camp')
 											@php 
 												$week = json_decode($cart->week);	
@@ -299,18 +335,18 @@
 	                                            ?>
 											    <tr>
 												  <th scope="row">Subtotal(@php echo count($cart_items); @endphp items):</th>
-												  <td>&pound; {{$pro_amt}}</td>
+												  <td>&pound; {{ custom_format( $pro_amt, 2 ) }}</td>
 												</tr>
 
 												@if($extra > 0)
 												<tr>
 												  <th scope="row">Service Fee:</th>
-												  <td>&pound; {{$extra}}</td>
-												</tr>
+												  <td>&pound; {{ custom_format( $extra, 2 ) }}</td>
+												</tr> 
 												@endif
 												<tr class="order_total">
 												  <th scope="row">Order Total</th>
-												  <td>&pound; {{$order->amount}}</td>
+												  <td>&pound; {{custom_format( $order->amount, 2 ) }}</td>
 												</tr>
 											  </tbody>
 											</table>

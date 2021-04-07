@@ -16,8 +16,9 @@
   font-size: 15px;
 }
 </style>
-
-<section class="inner-banner i-b-camp-detail" style="background: url({{$base_url}}/public/uploads/{{$camp_category->image}});">
+camp_detail_banner_image
+<!-- <section class="inner-banner i-b-camp-detail" style="background: url({{$base_url}}/public/uploads/{{$camp_category->image}});"> -->
+<section class="inner-banner b-camp-detail" style="background: url({{$base_url}}/public/uploads/{{ getAllValueWithMeta('camp_detail_banner_image', 'camp-detail') }});">
       <div class="container">
         <div class="row">
           <div class="col-md-12">

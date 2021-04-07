@@ -249,7 +249,7 @@ div#report_detail_cont {
                     @endphp
                     @if(!empty($season_id) && !empty($user_id) && !empty($course_id))
                     @php 
-                        $test_score = DB::table('test_scores')->where('test_cat_id','!=',NULL)->where('season_id',$season_id)->where('user_id',$user_id)->where('course_id',$course_id)->get();
+                        $test_score = DB::table('test_scores')->where('test_cat_id','!=',NULL)->where('season_id',$season_id)->where('user_id',$user_id)->where('course_id',$course_id)->orderby('test_cat_id', 'desc')->get();
                     @endphp
                     <br/>
 
@@ -332,10 +332,10 @@ div#report_detail_cont {
                                 @endphp
                                 <tr>
                                     <th>
-                                        <p><b style="color:#35486b">@php echo getReportCategoryName($cat); @endphp</b></p>
+                                        <p><b style="color:#35486b">@php // echo getReportCategoryName($cat); @endphp</b></p>
                                     </th>
                                     <td>
-                                        <p>@php echo getReportOptionName($option); @endphp</p>
+                                        <p>@php // echo getReportOptionName($option); @endphp</p>
                                     </td>
                                 </tr>
                                 @endforeach

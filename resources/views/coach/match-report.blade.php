@@ -78,21 +78,34 @@ border: 4px solid #001642;
                         <form>
                             <p>Who is this match report for?</p>
                             <div class="form-group">
-                                <select id="child_id">
-                                    <option disabled="" selected="">Select Player</option>
-                                    @php 
+                                @if( Auth::user()->role_id == 3 )
+                                    @php  
                                         $players = DB::table('parent_coach_reqs')->where('status',1)->orderBy('id','asc')->get(); 
                                     @endphp
-                                    @foreach($players as $bd)
-                                        @php $user = DB::table('users')->where('id',$bd->child_id)->first(); @endphp
-                                        <option value="{{$bd->child_id}}" 
-                                            @if(!empty($comp))
-                                                @if($comp->player_id == $bd->child_id) 
-                                                    selected 
-                                                @endif
-                                            @endif>{{isset($user->name) ? $user->name : ''}}</option>
-                                    @endforeach
-                                </select>
+                                    <select id="child_id">
+                                        <option disabled="" selected="">Select Player</option>
+                                        @foreach($players as $bd)
+                                            @php $user = DB::table('users')->where('id',$bd->child_id)->first(); @endphp
+                                            <option value="{{$bd->child_id}}" 
+                                                @if(!empty($comp))
+                                                    @if($comp->player_id == $bd->child_id) 
+                                                        selected 
+                                                    @endif
+                                                @endif>{{isset($user->name) ? $user->name : ''}}</option>
+                                        @endforeach
+                                    </select>
+                                @elseif( Auth::user()->role_id == 2 )
+                                    @php 
+                                        $players = DB::table('users')->where('parent_id',Auth::user()->id)->where('id', '!=', Auth::user()->id)->orderBy('id','asc')->get();
+                                    @endphp
+                                    <select id="child_id">
+
+                                        <option disabled="" selected="">Select Player</option>
+                                        @foreach($players as $bd)
+                                            <option value="{{$bd->id}}" @if(!empty($comp)) @if($comp->player_id == $bd->id) selected @endif @endif>{{isset($bd->name) ? $bd->name : ''}}</option>
+                                        @endforeach
+                                    </select>
+                                @endif
                             </div>
                         </form>
                     </div>

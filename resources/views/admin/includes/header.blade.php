@@ -1,5 +1,6 @@
 <!-- [ Header ] start -->
     <header class="navbar pcoded-header navbar-expand-lg navbar-light d-print-none">
+        <input type="hidden" name="base_url" id="base_url" value="{{ url('/') }}">
         <div class="m-header">
             <a class="mobile-menu" id="mobile-collapse1" href="javascript:"><span></span></a>
             <a href="index.html" class="b-brand">
@@ -101,17 +102,19 @@
                         @foreach ($notifications as $notification)
 
                             @php $notification_arr = json_decode($notification->data); @endphp
-
+                            @if( !empty( $notification_arr ) )
                             @if($notification_arr->send_to == 1)
                                 @php $count++; @endphp
                             @endif
-
+                            @endif
                         @endforeach
 
                         <a href="{{url('/admin')}}">
                             <i class="fas fa-bell"></i> 
                             <span class="notification-icon"> {{$count}}</span>
                         </a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;                        
+                        <a href="{{ route( 'admin.notifications.all.read', Auth::user()->role_id ) }}"><i class="fas fa-check"></i><span class="notification-icon"> All</span></a>
 
                         &nbsp;&nbsp;&nbsp;&nbsp;
 

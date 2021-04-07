@@ -109,7 +109,9 @@ public function saveParticipantInfo(Request $request)
 	// intersection of shop cart table and selected users
 	$a = array_intersect($child_id,$users);
 
-	if(count($child_id) == count($a))
+	// dd($a,array_filter($child_id));
+
+	if(count(array_filter($child_id)) == count($a))
 	{	
 
 		if(!empty($request->participant_info))

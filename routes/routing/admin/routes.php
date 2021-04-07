@@ -601,6 +601,7 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::any('/register-template/camp/{id}/daily-signin','Admin\RegisterTemplateController@daily_signin')->name('daily_signin');
 
 
+
 		// Save register template dates
 		Route::any('/save-course-reg-dates','Admin\RegisterTemplateController@save_course_reg_dates')->name('save_course_reg_dates');
 
@@ -702,8 +703,30 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
        #  users
        #--------------------------------------------------------------------------------------------------------------
 
+		/********************************************************************************************/
+		/*--------------------------------New Video Management Route--------------------------------*/
+		/********************************************************************************************/
 
-		/*New Video Management Route*/
 		Route::get('/video-management','Admin\VideoManagementController@index')->name('admin.video.management');
+		Route::get('/video/create','Admin\VideoManagementController@create')->name('admin.create.video');
+		Route::any('/video/save','Admin\VideoManagementController@store')->name('admin.store.video');
+		Route::get('/video/{id}/edit','Admin\VideoManagementController@edit')->name('admin.edit.video');
+		Route::post('/video/{id}/update','Admin\VideoManagementController@update')->name('admin.update.video');
+		Route::any('/video/remove/{id}','Admin\VideoManagementController@destroy')->name('admin.remove.video');
+
+		Route::get('/videos/status/{id}','Admin\VideoManagementController@status')->name('admin.status.video');
+
+
+		/********************************************************************************************/
+		/*-----------------------------New Paygo Course registers Route-----------------------------*/
+		/********************************************************************************************/
+
+		Route::get('/register-template/paygo/{id}','Admin\RegisterTemplateController@paygo_register')->name('admin.register.paygo-course');
+		Route::any('/pay-go-course-booking-data','Admin\PayGoCourseController@sendCourseBookingData')->name('admin.pay.go.course.booking.data');
+		Route::any('/revenue/paygo-courses', 'Admin\AdminController@paygo_course_revenue')->name('admin.revenue.paygo.courses');
+        Route::get('/revenue/paygo-courses/{id}', 'Admin\AdminController@paygo_course_revenue_detail')->name('admin.revenue.paygo.courses.detail');
+        Route::any('/generate-paygo-course-report', 'Admin\AdminController@generate_paygo_course_report')->name('admin.generate.paygo.course.report');
+        Route::any('/mark-all-as-read/{role_id}', 'Admin\AdminController@markAllAsRead')->name('admin.notifications.all.read');
+		
        
 });

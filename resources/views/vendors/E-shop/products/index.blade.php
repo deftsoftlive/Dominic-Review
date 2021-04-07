@@ -138,9 +138,8 @@ p.vou_prod_type {
                                                         {{$product->status == 0 ? 'In-Active' : 'Active'}}
                                                       </td> -->
 
-                                                      <td><img src="{{url($product->thumbnail)}}" width="100"></td>
-
-
+                                                      @php $url = !empty($product->thumbnail)?url($product->thumbnail):'';@endphp
+                                                      <td><img src="{{$url}}" width="100"></td>
                                                     <td>
 
                                                       <div class="btn-group">

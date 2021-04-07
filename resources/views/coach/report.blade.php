@@ -86,7 +86,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                         <select id="season_ID" name="season_id" >
                                             <option selected="" disabled="">Select Term</option>
                                             @php
-                                            $season = DB::table('seasons')->orderBy('id','asc')->get();
+                                            $season = DB::table('seasons')->where('status', 1)->orderBy('id','asc')->get();
                                             @endphp
                                             @foreach($season as $se)
                                             <option value="{{$se->id}}" @if(!empty($season_id) && $season_id == $se->id) selected @endif >{{$se->title}}</option>
@@ -368,7 +368,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                                 <select id="inputPlayer" name="coach_player_id" class="coach_player_id">
                                                     <option selected="" disabled="">Select Player</option>
                                                     @php
-                                                        $players = DB::table('parent_coach_reqs')->where('status',1)->orderBy('id','asc')->get();
+                                                        $players = DB::table('parent_coach_reqs')->where('coach_id', \Auth::user()->id )->where('status',1)->orderBy('id','asc')->get();
                                                     @endphp
                                                     
                                                     @foreach($players as $bd)
@@ -551,14 +551,15 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                         <form>
                             <p>Who is this match report for?</p>
                             <div class="form-group">
+                                @php 
+                                    $players = DB::table('users')->where('parent_id',Auth::user()->id)->where('id', '!=', Auth::user()->id)->orderBy('id','asc')->get();
+                                    //dd($players);
+                                @endphp
                                 <select id="child_id">
 
                                 @if(Auth::user()->role_id == '2')
 
                                     <option disabled="" selected="">Select Player</option>
-                                    @php 
-                                        $players = DB::table('users')->where('parent_id',Auth::user()->id)->where('id', '!=', Auth::user()->id)->orderBy('id','asc')->get();
-                                    @endphp
                                     @foreach($players as $bd)
                                         <option value="{{$bd->id}}" @if(!empty($player_rep)) @if($player_rep->player_id == $bd->child_id) selected @endif @endif>{{isset($bd->name) ? $bd->name : ''}}</option>
                                     @endforeach

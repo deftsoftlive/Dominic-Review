@@ -132,10 +132,10 @@
                @php $shop_type[] = $sh->shop_type; @endphp
             @endforeach
 
-         @if (in_array('course', $shop_type, TRUE) || in_array('camp', $shop_type, TRUE)) 
+         @if (in_array('course', $shop_type, TRUE) || in_array('camp', $shop_type, TRUE) || in_array('paygo-course', $shop_type, TRUE)) 
                @if($sh->shop_type != 'product')
-               <a href="{{$backward}}" type="submit" class="cstm-btn main_button solid-btn">back</a>
-               <button id="save_participant" class="cstm-btn main_button" type="submit">Save &amp; Continue</button>
+                  <a href="{{$backward}}" type="submit" class="cstm-btn main_button solid-btn">back</a>
+                  <button id="save_participant" class="cstm-btn main_button" type="submit">Save &amp; Continue</button>
                @endif
          @endif
 
@@ -154,10 +154,11 @@
             </div>
             <a href="{{$backward}}" type="submit" class="cstm-btn main_button solid-btn">back</a>
             <a href="{{url('/shop/checkout/billing-address')}}" class="cstm-btn main_button">Save &amp; Continue</a>
-         @else
-         <!--  -->
-               <!-- <a href="{{$backward}}" type="submit" class="cstm-btn main_button solid-btn">back</a> -->
-               <!-- <button id="save_participant" class="cstm-btn main_button" type="submit">Save &amp; Continue</button> -->
+         @elseif(in_array('course', $data, TRUE) && in_array('product', $data, TRUE))
+            <a href="{{$backward}}" type="submit" class="cstm-btn main_button solid-btn">back</a>
+            <button id="save_participant" class="cstm-btn main_button" type="submit">Save &amp; Continue</button>
+            <!-- <a href="{{$backward}}" type="submit" class="cstm-btn main_button solid-btn">back</a> -->
+            <!-- <button id="save_participant" class="cstm-btn main_button" type="submit">Save &amp; Continue</button> -->
          @endif
          </form>
          </div>            

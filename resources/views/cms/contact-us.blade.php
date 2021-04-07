@@ -7,6 +7,7 @@
 
 @php $base_url = \URL::to('/'); @endphp
     <section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/{{ getAllValueWithMeta('banner_image', 'contact-us') }});">
+      <script src="https://www.google.com/recaptcha/api.js" async defer></script>
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -24,7 +25,7 @@
       <div class="container">
 
         @if(Session::has('success'))
-        <div class="alert_msg alert alert-success">
+        <div class="alert_msg alert alert-danger">
             <p>{{ Session::get('success') }} </p>
         </div>
         @endif
@@ -83,6 +84,7 @@
                       <!-- <div class="form-group cont-feedback">
                         <textarea class="form-control demo-textarea" name="message" rows="3" placeholder="Class you’d like to try "></textarea>
                       </div> -->
+                      <div class="g-recaptcha" data-sitekey="6Len3mIaAAAAAFDNJoUvCb1KEty7ul3vnlCQM41K"></div>
                       <button type="submit" id="disable_contact_us_btnn" class="cstm-btn main_button">Send Message</button>
                     </form>
                   </div>
@@ -186,6 +188,30 @@
         </div>
       </div>
     </section>
+<script type="text/javascript">
+  var onloadCallback = function() {
+    //alert("grecaptcha is ready!");
+  };
+
+  function checkRecaptcha(){ 
+
+    var response = grecaptcha.getResponse();
+    if(response.length == 0) 
+    { 
+      //reCaptcha not verified
+      alert("please verify you are humann!"); 
+      return false;
+    }else{
+      return true;
+    }
+    //captcha verified
+    //do the rest of your validations here
+    
+  }
+</script>
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+    async defer>
+</script>
 
 @endsection
 <!-- Footer Section -->

@@ -59,7 +59,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'bajwa7696346232@gmail.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@drhsports.co.uk'),
         'name' => env('MAIL_FROM_NAME', 'Event Organiser'),
     ],
 

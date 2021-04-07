@@ -65,11 +65,12 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                         <form>
                             <p>Who is this match report for?</p>
                             <div class="form-group">
+                                @php
+                                    $players = DB::table('parent_coach_reqs')->where('status',1)->orderBy('id','asc')->get();
+                                    
+                                @endphp
                                 <select id="child_id">
                                     <option disabled="" selected="">Select Player</option>
-                                    @php
-                                        $players = DB::table('parent_coach_reqs')->where('status',1)->orderBy('id','asc')->get();
-                                    @endphp
                                     @foreach($players as $bd)
                                         @php $user = DB::table('users')->where('id',$bd->child_id)->first(); @endphp
                                         <option value="{{$bd->child_id}}" @if(!empty($player_rep)) @if($player_rep->player_id == $bd->child_id) selected @endif @endif>{{$user->name}}</option>

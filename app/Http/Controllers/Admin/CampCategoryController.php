@@ -109,12 +109,14 @@ class CampCategoryController extends Controller
             'description' => ['required', 'string'],
             'image' => ['image','mimes:jpeg,png,jpg,gif,svg','max:2048']
         ]);
+        
 
     	$venue = CampCategory::FindBySlugOrFail($slug);
     	$filename = $venue->image;
     	if ($request->hasFile('image')) {
 	        $image = $request->file('image');
-	        $filename = time().'.'.$image->getClientOriginalExtension();
+            $random = substr(str_shuffle("0123456789abcefghijkl"), 0, 5);
+	        $filename = time().'-'.$random.'.'.$image->getClientOriginalExtension();
 	        $destinationPath = public_path('/uploads');
 	        $img_path = public_path().'/uploads/'.$venue->image;
 	        if (file_exists($img_path)) {
@@ -127,7 +129,8 @@ class CampCategoryController extends Controller
         $slider1_filename = $venue->slider_image1;
         if ($request->hasFile('slider_image1')) {
             $slider_image1 = $request->file('slider_image1');
-            $slider1_filename = time().'.'.$slider_image1->getClientOriginalExtension();
+            $random = substr(str_shuffle("0123456789abcefghijkl"), 0, 5);
+            $slider1_filename = time().'-'.$random.'.'.$slider_image1->getClientOriginalExtension();
             $slider1_destinationPath = public_path('/uploads');
             $slider1_img_path = public_path().'/uploads/'.$venue->slider_image1;
             // if (file_exists($slider1_img_path)) {
@@ -139,7 +142,8 @@ class CampCategoryController extends Controller
         $slider2_filename = $venue->slider_image2;
         if ($request->hasFile('slider_image2')) {
             $slider_image2 = $request->file('slider_image2');
-            $slider2_filename = time().'.'.$slider_image2->getClientOriginalExtension();
+            $random = substr(str_shuffle("0123456789abcefghijkl"), 0, 5);
+            $slider2_filename = time().'-'.$random.'.'.$slider_image2->getClientOriginalExtension();
             $slider2_destinationPath = public_path('/uploads');
             $slider2_img_path = public_path().'/uploads/'.$venue->slider_image2;
             // if (file_exists($slider2_img_path)) {
@@ -151,7 +155,8 @@ class CampCategoryController extends Controller
         $slider3_filename = $venue->slider_image3;
         if ($request->hasFile('slider_image3')) {
             $slider_image3 = $request->file('slider_image3');
-            $slider3_filename = time().'.'.$slider_image3->getClientOriginalExtension();
+            $random = substr(str_shuffle("0123456789abcefghijkl"), 0, 5);
+            $slider3_filename = time().'-'.$random.'.'.$slider_image3->getClientOriginalExtension();
             $slider3_destinationPath = public_path('/uploads');
             $slider3_img_path = public_path().'/uploads/'.$venue->slider_image3;
             // if (file_exists($slider3_img_path)) {
@@ -163,7 +168,8 @@ class CampCategoryController extends Controller
         $slider4_filename = $venue->slider_image4;
         if ($request->hasFile('slider_image4')) {
             $slider_image4 = $request->file('slider_image4');
-            $slider4_filename = time().'.'.$slider_image4->getClientOriginalExtension();
+            $random = substr(str_shuffle("0123456789abcefghijkl"), 0, 5);
+            $slider4_filename = time().'-'.$random.'.'.$slider_image4->getClientOriginalExtension();
             $slider4_destinationPath = public_path('/uploads');
             $slider4_img_path = public_path().'/uploads/'.$venue->slider_image4;
             // if (file_exists($slider4_img_path)) {
@@ -172,6 +178,8 @@ class CampCategoryController extends Controller
             $slider_image4->move($slider4_destinationPath, $slider4_filename);
         }
         // Slider Images - End Here
+        //dd( $slider1_filename, $slider2_filename, $slider3_filename, $slider4_filename );
+
 
     	$venue->update([
     		'title' => $request['title'],

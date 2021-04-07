@@ -69,6 +69,13 @@
                     <option value="No Cost">No Cost</option>
                   </select>
 
+                  <!-- <label class="control-label">Select Course Type<span class="cst-upper-star">*</span></label>
+                  <select class="form-control" name="course_type" id="course_type">
+                    <option disabled selected="" value="">Select Course Type</option>
+                    <option value="normal">Standard Course</option>
+                    <option value="paygo">Pay As You Go</option>
+                  </select> -->
+
                   <label class="control-label">Change Course<span class="cst-upper-star">*</span></label>
                   @php $courses = DB::table('courses')->where('status',1)->orderby('id','desc')->get(); @endphp
                   <select class="form-control" id="change_course" name="course">
@@ -77,6 +84,15 @@
                       <option value="{{$co->id}}">{{$co->title}}</option>
                     @endforeach
                   </select>
+
+                  <!-- <label class="control-label">Change Pay As You Go Course<span class="cst-upper-star">*</span></label>       
+                  @php $courses = \App\PayGoCourse::where('status',1)->orderby('id','desc')->get(); @endphp
+                  <select class="form-control" id="change_paygo_course" name="course" disabled="true">
+                    <option disabled selected="" value="">Select Course</option>
+                    @foreach($courses as $co)
+                      <option value="{{$co->id}}">{{$co->title}}</option>
+                    @endforeach
+                  </select> -->
                   
                   <div id="pay_meth">
                     <label class="control-label">Payment Method</label>
@@ -124,5 +140,24 @@ $("#cost_type").change(function()
   } 
 
 });
+
+
+
+
+
+/*$('#course_type').on('change', function(){
+  var val = $(this).val();
+  console.log( val );
+  if ( val == 'normal' ) {
+    $('#change_course').attr('disabled', false);
+    $('#change_paygo_course').attr('disabled', true);
+    $('#change_paygo_course').val('');
+  }else if( val == 'paygo' ){
+    $('#change_paygo_course').attr('disabled', false);    
+    $('#change_course').attr('disabled', true);
+    $('#change_course').val('');
+  }
+
+});*/
 </script>
 @endsection

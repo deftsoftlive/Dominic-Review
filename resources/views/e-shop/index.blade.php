@@ -81,8 +81,11 @@
                                                 @php $price = $RS->productPrice(); @endphp
                                                      {!!$price['html']!!}
                                                <div class="product-links">
-                                                     
+                                                    @if( Auth::check() )
                                                     <a href="{{$url}}" ><i class="fa fa-shopping-cart" ></i></a>
+                                                    @else
+                                                    <a href="{{ route( 'post_login' ) }}" ><i class="fa fa-shopping-cart" ></i></a>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>

@@ -70,7 +70,15 @@
                 <input type="hidden" name="old_course_id" value="{{$shop_cart_items->product_id}}">
 
                   <label class="control-label">Change Course<span class="cst-upper-star">*</span></label>
-                  @php $courses = DB::table('courses')->where('status',1)->orderby('id','desc')->get(); @endphp
+                  <!-- @php 
+                    if( $shop_cart_items->shop_type == 'paygo-course' ){
+                      $courses = \App\PayGoCourse::where('status',1)->orderby('id','desc')->get();
+                    }else{
+
+                      $courses = DB::table('courses')->where('status',1)->orderby('id','desc')->get(); 
+                    } 
+                  @endphp -->
+                  @php $courses = DB::table('courses')->where('status',1)->orderby('id','desc')->get();  @endphp 
                   <select class="form-control" id="change_course" name="course">
                     <option disabled selected="" value="">Select Course</option>
                     @foreach($courses as $co)

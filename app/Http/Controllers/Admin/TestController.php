@@ -29,10 +29,10 @@ class TestController extends Controller
 
         if(!empty(request()->get('test')))
         {
-            $test = Test::select(['id','title','slug','season','courses','status','test_cat_id'])->where( 'title', 'LIKE', '%' . $test . '%' )->paginate(10); 
+            $test = Test::select(['id','title','slug','season','courses','status','test_cat_id'])->where( 'title', 'LIKE', '%' . $test . '%' )->paginate(50); 
         }
         else{
-            $test = Test::select(['id','title','slug','season','courses','status','test_cat_id'])->paginate(10);    
+            $test = Test::select(['id','title','slug','season','courses','status','test_cat_id'])->paginate(50);    
         }
         return view('admin.test.index',compact('test'))->with(['title' => 'Test Management', 'addLink' => 'admin.test.showCreate']);
     }
@@ -46,10 +46,10 @@ class TestController extends Controller
 
         if(!empty(request()->get('test')))
         {
-            $test = Test::where('status',1)->select(['id','title','slug','season','courses','status','test_cat_id'])->where( 'title', 'LIKE', '%' . $test . '%' )->paginate(10); 
+            $test = Test::where('status',1)->select(['id','title','slug','season','courses','status','test_cat_id'])->where( 'title', 'LIKE', '%' . $test . '%' )->paginate(50); 
         }
         else{
-            $test = Test::where('status',1)->select(['id','title','slug','season','courses','status','test_cat_id'])->paginate(10);    
+            $test = Test::where('status',1)->select(['id','title','slug','season','courses','status','test_cat_id'])->paginate(50);    
         }
         return view('admin.test.active',compact('test'))->with(['title' => 'Test Management', 'addLink' => 'admin.test.showCreate']);
     }
@@ -63,10 +63,10 @@ class TestController extends Controller
 
         if(!empty(request()->get('test')))
         {
-            $test = Test::where('status',0)->select(['id','title','slug','season','courses','status','test_cat_id'])->where( 'title', 'LIKE', '%' . $test . '%' )->paginate(10); 
+            $test = Test::where('status',0)->select(['id','title','slug','season','courses','status','test_cat_id'])->where( 'title', 'LIKE', '%' . $test . '%' )->paginate(50); 
         }
         else{
-            $test = Test::where('status',0)->select(['id','title','slug','season','courses','status','test_cat_id'])->paginate(10);    
+            $test = Test::where('status',0)->select(['id','title','slug','season','courses','status','test_cat_id'])->paginate(50);    
         }
         
         // dd($test);
@@ -82,8 +82,9 @@ class TestController extends Controller
     |----------------------------------------*/ 
     public function test_create(Request $request) {
     	$validatedData = $request->validate([
+            'test_cat_id' => ['required'],
             'title' => ['required', 'string', 'max:50'],
-            'description' => ['required', 'string']
+            'description' => ['required', 'string', 'max:300']
         ]);
 
         // All selected courses
@@ -120,8 +121,9 @@ class TestController extends Controller
     public function test_update(Request $request, $slug) 
     {	
     	$validatedData = $request->validate([
+            'test_cat_id' => ['required'],
             'title' => ['required', 'string', 'max:50'],
-            'description' => ['required', 'string'],
+            'description' => ['required', 'string', 'max:300'],
         ]);
 
         // All selected courses
@@ -135,7 +137,7 @@ class TestController extends Controller
     	$venue = Test::FindBySlugOrFail($slug);
     	$venue->update([
     		'title'       => $request['title'],
-            'slug'        => str_slug($request->title , "-"),
+            // 'slug'        => str_slug($request->title , "-"),
     		'description' => $request['description'],
     		'test_cat_id' => $request['test_cat_id'],
             'season'      => $request['season'],

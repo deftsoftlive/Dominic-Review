@@ -5,7 +5,9 @@
 
 @section('content')
 
-@php $country_code = DB::table('country_code')->get(); @endphp
+@php //$country_code = DB::table('country_code')->get(); @endphp
+@php $country_code = DB::table('country_code')->orderByRaw('(case countryname when "United Kingdom" then 0 else 1 end), countryname ASC')->get();
+@endphp
 
 @php $base_url = \URL::to('/'); @endphp
 <section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/{{ getAllValueWithMeta('signup_banner', 'banners') }});">

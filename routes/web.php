@@ -12,6 +12,13 @@
 
 */
 
+ /* Route::any('runcomm',function(){
+   
+
+    echo "<pre>";print_r( Artisan::call('about_to:expire'));die;
+  });*/
+
+
 Route::get('/', ['as'=>'home', 'uses'=>'HomeController@home_index']);
 
 
@@ -312,10 +319,23 @@ try {
 
 
 
-/*************************************************/
-/*------------- New Video Page Route ------------*/
-/*************************************************/
+/*********************************************************************************/
+/*--------------------------- New Video Page Route By SB--------------------------*/
+/*********************************************************************************/
 
-Route::any('/videos','HomeController@videosListing')->name('home.videos.listing');
+Route::get('/drh-videos','HomeController@videosListing')->name('home.videos.listing');
+Route::post('drh-videos/','HomeController@videosFilter')->name('home.videos.filter');
+
+
+
+/*********************************************************************************/
+/*--------------------------- New Pay Go Courses Route By SB--------------------------*/
+/*********************************************************************************/
+
+
+Route::any('pay-go-courses','HomeController@payGoCourseListing')->name('user.paygo.courses');
+Route::any('pay-go-course-detail/{id}','HomeController@payGoCourseDetails')->name('user.paygo.course.details');
+
+Route::any('paygo-course-booking','HomeController@payGoCourseBooking')->name('paygo.course.booking');
 
 ?>

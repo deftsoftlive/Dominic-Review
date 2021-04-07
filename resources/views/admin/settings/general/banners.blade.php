@@ -122,6 +122,44 @@
           </div>
         </div>
 
+        <!-- Videos Page Banner  BY SB-->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>Videos Page - BANNER SECTION</u></h5>
+
+             <div class="form-group">
+              <label class="label-file control-label">Banner Image (1349 X 438)<span class="cst-upper-star">*</span></label>
+              <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'videos_banner_src')" class="form-control" name="videos_banner">
+             </div>
+             <img id="videos_banner_src" src="{{ URL::asset('/uploads').'/'.$videos_banner }}" style="width: 100px;" />
+          </div>
+        </div>
+
+        <!-- Pay As you Go Courses Banner  BY SB-->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>Pay As You Go Courses Page - BANNER SECTION</u></h5>
+
+             <div class="form-group">
+              <label class="label-file control-label">Banner Image (1349 X 438)<span class="cst-upper-star">*</span></label>
+              <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'paygo_courses_banner_src')" class="form-control" name="paygo_courses_banner">
+             </div>
+             <img id="paygo_courses_banner_src" src="{{ URL::asset('/uploads').'/'.$paygo_courses_banner }}" style="width: 100px;" />
+          </div>
+        </div>
+        <!-- /.card-body -->
+        <!-- Cart Banner  BY SB-->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>Shopping Cart Page - BANNER SECTION</u></h5>
+
+             <div class="form-group">
+              <label class="label-file control-label">Banner Image (1349 X 438)<span class="cst-upper-star">*</span></label>
+              <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'cart_banner_src')" class="form-control" name="cart_banner">
+             </div>
+             <img id="cart_banner_src" src="{{ URL::asset('/uploads').'/'.$cart_banner }}" style="width: 100px;" />
+          </div>
+        </div>
         <!-- /.card-body -->
         <div class="card-footer">
           <button type="submit" id="homePageFormBtn" class="btn btn-primary">Submit</button>

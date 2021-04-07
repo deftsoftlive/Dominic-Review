@@ -104,13 +104,15 @@
 
                                       $cart_items = DB::table('shop_cart_items')->where('orderID', $orderId)->get(); 
 
-                                      $pk_cart_items = DB::table('shop_cart_items')->where('orderID', $orderId)->first();  
+                                      $pk_cart_items = DB::table('shop_cart_items')->where('orderID', $orderId)->first();
+                                      //dd($pk_cart_items); 
                                     @endphp
 
                                     <tr>
                                         <td>{{$ord->orderID}}</td>
                                         <td>@if(!empty($pk_cart_items->id))
                                                 @php 
+                                                    //dd($pk_cart_items->id);
                                                     $acc_id = ToGetAccountID($pk_cart_items->id,$pk_cart_items->user_id); 
                                                     $acc_name = DB::table('stripe_accounts')->where('id',$acc_id)->first();
                                                 @endphp
@@ -118,7 +120,7 @@
                                                 {{isset($acc_name->account_name) ? $acc_name->account_name : ''}}
                                             @endif
                                         </td>
-                                        <td>@if($pk_cart_items->course_season) @php echo getSeasonname($pk_cart_items->course_season); @endphp @endif</td>
+                                        <td>@if( !empty($pk_cart_items) ) @php echo getSeasonname($pk_cart_items->course_season); @endphp @endif</td>
                                         <td>
                                           @if(!empty($user_detail))
                                             <h5>{{$user_detail->name}}</h5>
@@ -132,7 +134,7 @@
                                         @endphp
 
                                         <td>{{date('d/m/Y',strtotime($ord->updated_at))}} ({{$uk_time}})</td>
-                                        <td>&pound; {{number_format($ord->amount,2)}}</td>
+                                        <td>&pound; {{custom_format($ord->amount,2)}}</td>
                                         <td>{{$ord->payment_by}}</td>
                                         
                                         @php 

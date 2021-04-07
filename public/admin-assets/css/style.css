@@ -814,6 +814,11 @@ section.book-camp.section-padding .b-c-table-container .accordion .card-body tab
 
 }
 
+.inner-cont.paygo_inner-cont p {
+    order: 2;
+    margin-bottom: 15px!important;
+}
+
 
 
 @media only screen and (max-width: 575px) {
@@ -13552,7 +13557,18 @@ table.table.table-bordered.cst-reports tbody td
     color: #3f4d67;    
 
 }
-
+div#exampleModal p
+{
+  margin-bottom: 0;
+}
+div#exampleModal .table.table-hover {
+    margin: 0!important;
+}
+div#exampleModal button:focus,
+div#exampleModal button span:focus
+{
+box-shadow: none;outline: none;
+}
 .page-link:focus {
 
     
@@ -24891,6 +24907,13 @@ table.add_on_services th a
 
 }
 
+.table.cstm-table tr th:nth-child(3),.table.cstm-table tr th:nth-child(4)  {
+    width: 40%;
+}
+
+.table.cstm-table tr th:nth-child(5){
+    width: 10%;
+}
 
 
 
@@ -24999,6 +25022,9 @@ body {
 
     display: none!important;
 
+}
+div#exampleModal .table.table-hover {
+    margin: 0!important;
 }
 
 @media print {

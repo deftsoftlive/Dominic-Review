@@ -30,7 +30,7 @@
 
 <div class="col-md-12">
 
-  <form role="form" method="post" id="venueForm" enctype="multipart/form-data">
+  <form role="form" method="post" id="venueFormPaygoCreate" enctype="multipart/form-data">
                 
             @csrf
 
@@ -77,7 +77,7 @@
                   </div>
 
                   <div class="form-group">
-                        <label class="label-file control-label">Sub Parent</label>
+                        <label class="label-file control-label">Sub Parent<span class="cst-upper-star"></span></label>
                         <select id="inputAge11" name="subtype" class="form-control event-dropdown">
                           <option value="1" selected="" disabled="">Select Age Group</option>
                         </select>
@@ -88,7 +88,7 @@
                   @endphp 
 
                   <div class="form-group">
-                      <label class="label-file control-label">Course Category</label>
+                      <label class="label-file control-label">Course Category<span class="cst-upper-star">*</span></label>
                       
                       <select name="course_category" class="form-control event-dropdown">
                           <option value="" disabled="" selected="">Select Course Category</option>
@@ -122,7 +122,7 @@
                   {{textbox($errors,'Course dates<span class="cst-upper-star">*</span>','session_date')}}
                   {{textbox($errors,'Location<span class="cst-upper-star">*</span>','location')}}
                   {{textbox($errors,'Day Time<span class="cst-upper-star">*</span>','day_time')}}
-                  {{textbox($errors,'Booking Slot<span class="cst-upper-star">*</span>','booking_slot')}}
+                  <!-- {{textbox($errors,'Booking Slot<span class="cst-upper-star">*</span>','booking_slot')}} -->
                   {{textarea($errors,'More Info<span class="cst-upper-star">*</span>','more_info')}}
 
                   {{textarea($errors,'Information Email Content<span class="cst-upper-star">*</span>','info_email_content')}}
@@ -132,7 +132,7 @@
                   <!-- {{textbox($errors,'Early Birth Price*','early_birth_price')}} -->
 
                   <div class="form-group">
-                    <label class="label-file control-label">Linked Coach</label>
+                    <label class="label-file control-label">Linked Coach<span class="cst-upper-star">*</span></label>
                     <select name="linked_coach" class="select-player">
                       <option selected="" disabled="">Select Coach</option>
                       @php 
@@ -173,6 +173,11 @@
                       <option value="0">Disable</option>
                     </select>
                   </div><br/>
+
+                   <div class="form-group">
+                    <label class="label-file control-label">Advance days booking</label>
+                    <input type="number" name="advance_weeks" class="form-control">
+                  </div>
 
                   <table class="add_on_services">
                     <thead>
@@ -330,7 +335,7 @@ $(document).ready(function(){
     $("select#people11").change(function(){
         var selectedCat = $(this).children("option:selected").val();
         $.ajax({
-            url:"http://49.249.236.30:8654/dominic-new/admin/selectedCat/",
+            url:"<?php echo route('pay.go.selectedCat') ?>",
             method:'GET',
             data:{selectedCat:selectedCat},
             dataType:'json',

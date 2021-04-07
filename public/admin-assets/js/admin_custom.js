@@ -1,4 +1,4 @@
-$base_url = 'http://49.249.236.30:8654/dominic-new';
+$base_url = $('#base_url').val();
 
 /*****************************
 | Print Test Scores
@@ -39,6 +39,33 @@ $(document).ready(function() {
         fetch_course_price_data(price,course_id);
     });
 
+
+/*****************************
+| Course Quick Price Update
+|*****************************/
+    function fetch_paygo_course_price_data(price = '', course_id = '')
+    {
+        $.ajax({
+            url:$base_url+"/admin/update_pay_go_course_price/"+price+"/"+course_id,
+            method:'GET',
+            data:{price:price, course_id:course_id},
+            dataType:'json',
+            success:function(data)
+            {   
+                
+            },      
+        })
+    }
+
+    $(document).on('keyup', '#update_pay_go_course_price',function(){
+        var price = $(this).val(); 
+        var course_id = $(this).attr("data-id");
+
+        fetch_paygo_course_price_data(price,course_id);
+    });
+
+
+
 /*****************************
 | Course Sort Number Update
 |*****************************/
@@ -64,6 +91,32 @@ $(document).ready(function() {
         fetch_course_sort_data(sort_no,course_id);
     });
 
+
+
+/*****************************
+| Course Sort Number Update
+|*****************************/
+    function fetch_paygo_course_sort_data(sort_no = '', course_id = '')
+    {
+
+        $.ajax({
+            url:$base_url+"/admin/update_pay_go_course_sort/"+sort_no+"/"+course_id,
+            method:'GET',
+            data:{sort_no:sort_no, course_id:course_id},
+            dataType:'json',
+            success:function(data)
+            {   
+                
+            },      
+        })
+    }
+
+    $(document).on('keyup', '#update_pay_go_course_sort',function(){
+        var sort_no = $(this).val(); 
+        var course_id = $(this).attr("data-id");
+
+        fetch_paygo_course_sort_data(sort_no,course_id);
+    });
 /*****************************
 | Actvity Sort Number Update
 |*****************************/

@@ -11,6 +11,7 @@
   $url = 'course-listing/tennis?&cat='.$cat;  
   $course_cat = DB::table('link_course_and_categories')->where('id',$cat)->first();
   $image = !empty($course_cat->image) ? $course_cat->image : '1602747912banner_image.jpg';
+
 @endphp
 
 <!-- ***********************************
@@ -47,7 +48,9 @@
             <ul class="services-description">
 
               @php 
+                
                 $accordian1 = DB::table('accordians')->where('page_title',$url)->where('status',1)->orderBy('sort','asc')->get();
+                
               @endphp
               @foreach($accordian1 as $accor)
                 <li>
@@ -111,29 +114,30 @@
                           <!-- <input type="date" id="date_of_birth" class="form-control" name="participant_dob" placeholder="Enter Participant DOB"> -->
                           <input type="text" class="form-control textbox-n" name="participant_dob" placeholder="D.O.B - dd/mm/yyy" onfocus="(this.type='date')" id="date">
                       </div>
-                   <div class="form-group row gender-opt contact-gender courses-gender">  
+                      <div class="form-group row gender-opt contact-gender courses-gender">  
                       
-                          <div class="col-md-12 det-gender-opt">
-                                <div class="cstm-gender">
-                                <label for="gender" class="col-form-label text-md-right">{{ __('Gender  ') }} </label>
-                          
-                              <input type="radio" id="male1" name="participant_gender" value="male">
-                              <label for="male1">Male</label></div>
-                              <div class="cstm-gender">
-                              <input type="radio" id="female1" name="participant_gender" value="female">
-                              <label for="female1">Female</label>  
-                             
-</div>
-                              <div id="gender"></div>
-                              @if ($errors->has('gender'))
-                                  <span class="invalid-feedback" role="alert">
-                                      <strong>{{ $errors->first('gender') }}</strong>
-                                  </span>
-                              @endif 
-                      </div>
+                        <div class="col-md-12 det-gender-opt">
+                          <div class="cstm-gender">
+                            <label for="gender" class="col-form-label text-md-right">{{ __('Gender  ') }} </label>
+                        
+                            <input type="radio" id="male1" name="participant_gender" value="male">
+                            <label for="male1">Male</label>
+                          </div>
+                          <div class="cstm-gender">
+                            <input type="radio" id="female1" name="participant_gender" value="female">
+                            <label for="female1">Female</label>  
+                           
+                           </div>
+                            <div id="gender"></div>
+                            @if ($errors->has('gender'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('gender') }}</strong>
+                                </span>
+                            @endif 
+                            </div>
 
                           
-                      </div>
+                           </div>
                       <div class="form-group">
                           <input type="text" class="form-control" name="parent_name" placeholder="Enter Parent Name">
                       </div>
@@ -196,65 +200,80 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <form action="{{route('tennis-listing')}}" method="POST" class="cst-selection">
+            @php //dd($_REQUEST); @endphp
+            <form action="{{route('tennis-listing')}}" method="POST" class="cst-selection" id="tennis_listing_form">
             @csrf
-            <input type="hidden" name="cat" value="{{isset($cat) ? $cat : ''}}">
-            <div class="form-row course_search_form">
-              <div class="form-group col-lg-4 col-md-4">
-                      <!-- <label for="inputCity">Search Course</label>
-                      <input type="text" class="form-control" id="course_search" name="course" placeholder="Course A" value="{{ isset($course_name) ? $course_name : ''}}">
-                      <ul id="course_dropdown"></ul> -->
-                      <label for="inputCity">Search Course</label>
-                      <select id="people" name="course" class="form-control">
-                    
-                      <option value="" disabled="" selected="">Please Select Course</option>
-                      @foreach($course as $cour)
-                        <option value="{{$cour->title}}">{{$cour->title}}</option>
-                      @endforeach
-                    </select>
-
-                    </div>
-                    <div class="form-group col-lg-3 col-md-4">
-                      <label for="inputAge">Select Age Group</label>
-                      <select id="inputAge" name="subtype" class="form-control event-dropdown">
-                        <option disabled="" selected="" value="">Please Select Age Group</option>
-                        @if(isset($subtype))
-                            @foreach($subtype as $type)
-                                <option value="{{$type->id}}" {{ $subtype == $type->label ?  'selected' : '' }}>{{$type->label}}</option>
-                            @endforeach
-                        @else
-                            @foreach($subtype as $type)
-                                <option value="{{$type->id}}">{{$type->label}}</option>
-                            @endforeach
-                        @endif
-                      </select>
-                    </div>
-                    <input type="hidden" id="selected_course_name" name="selected_course_name">
-                    <div class="form-group col-lg-3 col-md-4">
-                      <label for="inputLevel">Select Level</label>
-                      <select id="inputLevel" name="level" class="form-control event-dropdown">
-                        @if(isset($level))
-                          <option disabled="" selected="" value="">Please Select Level</option>
-                          <option value="Beginner" {{ $level == 'Beginner' ?  'selected' : '' }}>Beginner</option>
-                          <option value="Intermediate" {{ $level == 'Intermediate' ?  'selected' : '' }}>Intermediate</option>
-                          <option value="Advanced" {{ $level == 'Advanced' ?  'selected' : '' }}>Advanced</option>
-                        @else
-                          <option disabled="" selected="" value="">Please Select Level</option>
-                          <option value="Beginner">Beginner</option>
-                          <option value="Intermediate">Intermediate</option>
-                          <option value="Advanced">Advanced</option>
-                        @endif
-                      </select>
-                    </div>
+              <input type="hidden" name="cat" value="{{isset($cat) ? $cat : ''}}">
+              <div class="form-row course_search_form">
+                <div class="form-group col-lg-3 col-md-4">
+                  <label for="course_type">Select Course Type</label>
+                  <select id="course_type" name="course_type" class="form-control event-dropdown">                    
+                      <option disabled="" selected="" value="">Select course type</option>
+                      <!-- <option value="normal" {{ $course_type == 'normal'  ? 'selected' : '' }}>Normal</option>
+                      <option value="paygo" {{ $course_type == 'paygo'  ? 'selected' : '' }}>Pay Go</option> -->
+                      <option value="normal" {{ $course_type == 'normal'  ? 'selected' : '' }}>Standard Course</option>
+                      <option value="paygo" {{ $course_type == 'paygo'  ? 'selected' : '' }}>Pay As You Go</option>
+                  </select>
+                </div>
+                <div class="form-group col-lg-3 col-md-4">
+                    <!-- <label for="inputCity">Search Course</label>
+                    <input type="text" class="form-control" id="course_search" name="course" placeholder="Course A" value="{{ isset($course_name) ? $course_name : ''}}">
+                    <ul id="course_dropdown"></ul> -->
+                    <label for="inputCity">Search Course</label>
+                    <select id="people" name="course" class="form-control">
                   
-                  <div class="form-group col-lg-1 col-md-2 col-sm-6 col-6">
-                    <button type="submit" class="cstm-btn main_button" id="course_search_submit">Submit</button>
-                  </div>
-                  <div class="form-group col-lg-1 col-md-2 col-sm-6 col-6">
-                    <button type="submit" id="course_search_submit" onclick="myFunction();" class="cstm-btn main_button">Reset</button>
-                  </div>
-                  </div>
-                  </form>
+                    <option value="" disabled="" selected="">Please Select Course</option>
+                    @foreach($course as $cour)
+                      <option value="{{$cour->title}}">{{$cour->title}}</option>
+                    @endforeach
+                  </select>
+
+                </div>
+                
+                <div class="form-group col-lg-3 col-md-4">
+                  <label for="inputAge">Select Age Group</label>
+                  <select id="inputAge" name="subtype" class="form-control event-dropdown">
+                    <option disabled="" selected="" value="">Please Select Age Group</option>
+                    @if(isset($subtype))
+                        @foreach($subtype as $type)
+                            <option value="{{$type->id}}" {{ $subtype == $type->label ?  'selected' : '' }}>{{$type->label}}</option>
+                        @endforeach
+                    @else
+                        @foreach($subtype as $type)
+                            <option value="{{$type->id}}">{{$type->label}}</option>
+                        @endforeach
+                    @endif
+                  </select>
+                </div>
+                <input type="hidden" id="selected_course_name" name="selected_course_name">
+                
+                <div class="form-group col-lg-3 col-md-4">
+                  <label for="inputLevel">Select Level</label>
+                  <select id="inputLevel" name="level" class="form-control event-dropdown">
+                    @if(isset($level))
+                      <option disabled="" selected="" value="">Please Select Level</option>
+                      <option value="Beginner" {{ $level == 'Beginner' ?  'selected' : '' }}>Beginner</option>
+                      <option value="Intermediate" {{ $level == 'Intermediate' ?  'selected' : '' }}>Intermediate</option>
+                      <option value="Advanced" {{ $level == 'Advanced' ?  'selected' : '' }}>Advanced</option>
+                    @else
+                      <option disabled="" selected="" value="">Please Select Level</option>
+                      <option value="Beginner">Beginner</option>
+                      <option value="Intermediate">Intermediate</option>
+                      <option value="Advanced">Advanced</option>
+                    @endif
+                  </select>
+                </div>
+                
+              
+              <div class="form-group col-lg-2 col-md-2 col-sm-6 col-6">
+                <button type="submit" class="cstm-btn main_button" id="course_search_submit">Submit</button>
+              </div>
+              <div class="form-group col-lg-2 col-md-2 col-sm-6 col-6">
+                <!-- <button type="submit" id="course_search_submit" onclick="myFunction();" class="cstm-btn main_button">Reset</button> -->
+                <a href="{{route('tennis-listing')}}?&cat={{isset($cat) ? $cat : ''}}" id="course_search_submit" class="cstm-btn main_button">Reset</a>
+              </div>
+              </div>
+              </form>
           </div>
 
           @php 
@@ -324,15 +343,41 @@
                     </div>
 
                     @php 
-                        $purchased_courses = DB::table('shop_cart_items')->where('shop_type','course')->where('product_id',$cour->id)->where('type','order')->count();
-                        $booked_courses = !empty($purchased_courses) ? $purchased_courses : '0';
+                      $remainingSeats = 0;
+                      $purchased_courses = DB::table('shop_cart_items')->where('shop_type','course')->where('product_id',$cour->id)->where('type','order')->count();
+                      $booked_courses = !empty($purchased_courses) ? $purchased_courses : '0';
                     @endphp
 
-                    @if($booked_courses >= $cour->booking_slot)
-                      <div class="event-book">
-                        <p>Fully Booked</p>
-                      </div>
+                    @if( isset( $cour->set_course_type_default ) &&  $cour->set_course_type_default == 1 )
+                      @if($booked_courses >= $cour->booking_slot)
+                        <div class="event-book">
+                          <p>Fully Booked</p>
+                        </div>
+                      @endif
+                    @else
+                      @php 
+                        $course_dates = \DB::table('paygocourse_dates')->where('course_id',$cour->id)->where('display_course',1)->get();
+                      @endphp
+                      @foreach($course_dates as $date)
+                        @if( strtotime( $date->course_date ) >= strtotime( date( 'Y-m-d' ) ) )
+                          @php
+                            //dd( $date );
+                            $bookedDateCount = \App\PayGoCourseBookedDate::where('date', $date->course_date)->count();
+                            
+                            $remainingSeats += (int)$date->seats - (int)$bookedDateCount;
+                          @endphp
+                        @endif
+                      @endforeach
+                      @if( $remainingSeats <= 0 )
+                        <div class="event-book">
+                          <p>Fully Booked</p>
+                        </div>
+                      @endif
                     @endif
+
+
+
+
                     
                     <div class="event-info">
                       <ul class="course-inner-list">
@@ -362,7 +407,12 @@
                       @endif
                     @endif
                     </h1>
-                    <a href="{{url('course-detail')}}/@php echo base64_encode($cour->id); @endphp" class="cstm-btn main_button">More Info</a>
+                    @php //dd($cour->set_course_type_default); @endphp
+                    @if( isset( $cour->set_course_type_default ) &&  $cour->set_course_type_default == 1 )
+                      <a href="{{url('course-detail')}}/@php echo base64_encode($cour->id); @endphp" class="cstm-btn main_button">More Info</a>
+                    @else
+                      <a href="{{route('user.paygo.course.details', base64_encode($cour->id)) }} " class="cstm-btn main_button">More Info</a>
+                    @endif
                   </div>
                   </div>
                 </li>
@@ -467,4 +517,3 @@
 
 @endsection
 <!-- Footer Section-->
-

@@ -598,7 +598,7 @@ input#agree {
                                                 <div class="form-group row ">
                                                     <div class="radio-wrap conform_wrap">
                                                         <div class="cstm-radio">
-                                                            <input type="radio" name="agree" id="agree" value="yes" @if(!empty($children_details)) @if($children_details->agree == 'yes') checked @endif @endif>
+                                                            <input type="checkbox" name="agree" id="agree" value="yes" @if(!empty($children_details)) @if($children_details->agree == 'yes') checked @endif @endif>
                                                             <label for="agree"></label>
                                                         </div>
                                                     </div>

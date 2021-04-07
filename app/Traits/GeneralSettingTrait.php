@@ -261,6 +261,12 @@ trait GeneralSettingTrait {
                        'my_family_section4_button_title' => getAllValueWithMeta('my_family_section4_button_title', $slug),
                        'my_family_section4_button_url' => getAllValueWithMeta('my_family_section4_button_url', $slug),
           ];
+        case 'video-listing': 
+        return [
+                      
+                     'video_listing_title' => getAllValueWithMeta('video_listing_title', $slug),
+                     'video_listing_text' => getAllValueWithMeta('video_listing_text', $slug),
+        ];
 
         case 'tennis-landing': 
           return [
@@ -653,6 +659,9 @@ trait GeneralSettingTrait {
                        'shop_banner' => getAllValueWithMeta('shop_banner', $slug),
                        'faq_banner' => getAllValueWithMeta('faq_banner', $slug),
                        'checkout_banner' => getAllValueWithMeta('checkout_banner', $slug),
+                       'videos_banner' => getAllValueWithMeta('videos_banner', $slug),
+                       'paygo_courses_banner' => getAllValueWithMeta('paygo_courses_banner', $slug),
+                       'cart_banner' => getAllValueWithMeta('cart_banner', $slug),
           ];
 
         case 'textbox-management': 

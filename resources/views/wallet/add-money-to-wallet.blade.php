@@ -59,7 +59,7 @@ $wallet_amt = DB::table('wallets')->where('user_id',Auth::user()->id)->first();
             <div class="col-lg-8 col-md-10">
                 <div class="card coach_profile">
                     <div class="card-header">{{ __('Add Money To Wallet') }}</div>
-                    <div class="card-body">
+                    <div class="card-body" >
                         <form id="wallet" method="POST" enctype="multipart/form-data" action="{{route('add_wallet_amt')}}">
                             @csrf
                             <input type="hidden" name="user_id" value="{{\Auth::user()->id}}">
@@ -69,16 +69,19 @@ $wallet_amt = DB::table('wallets')->where('user_id',Auth::user()->id)->first();
                                     <div class="form-group row f-g-full">
                                         <p class="amt-money">Enter money amount</p>
                                        <!--  <label for="money_amount" class="col-md-12 col-form-label text-md-right">Enter money amount</label> -->
-                                        <input id="money_amount" type="text" class="form-control{{ $errors->has('money_amount') ? ' is-invalid' : '' }}" name="money_amount" value="{{ isset($user->money_amount) ? $user->money_amount : '' }}" autofocus placeholder="Please enter amount">
+                                        <input id="money_amount" type="number" step="0.01" class="form-control{{ $errors->has('money_amount') ? ' is-invalid' : '' }}" name="money_amount" value="{{ isset($user->money_amount) ? $user->money_amount : '' }}" autofocus placeholder="Please enter amount">
                                         @if ($errors->has('money_amount'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('money_amount') }}</strong>
                                         </span>
                                         @endif
-                                        <p style="margin-top: 5px;"> Add funds to your wallet with your payment card.</p>
+                                        <p style="margin-top: 15px;"> Add funds to your wallet with your payment card.</p>
                                     </div>
                                 </div>
-                                <div class="col-md-12 col-sm-12" id="add_money_btn"><a class="cstm-btn main_button">Add Money</a></div>
+                                <div class="col-md-12 col-sm-12" id="add_money_btn"> 
+                                    <!-- <a class="cstm-btn main_button">Add Money</a> -->
+                                    <input type="submit" value="Add Money" name="" class="cstm-btn main_button">
+                                </div>
                             </div>
                             <div class="form-button">
                                 <div class="form-group row mb-0">
@@ -146,3 +149,6 @@ $walletHistory = DB::table('wallet_histories')->where('user_id',Auth::user()->id
 </section>
 @endif
 @endsection
+<script type="text/javascript">
+
+</script>

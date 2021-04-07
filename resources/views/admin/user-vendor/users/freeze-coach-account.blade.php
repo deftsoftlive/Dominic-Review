@@ -43,11 +43,12 @@
                         @csrf
 
 		                    <!-- My Profile -->
+
 		                    <div class="form-group row gender-opt signup-gender-op">
 		                        <label for="gender" class="col-md-12 col-form-label text-md-right "><h5>> My Profile</h5></label>
 		                        <div class="col-md-6 ">
 		                            <div class="cstm-radio">
-		                                <input type="radio" value="1" name="profile" id="profile-yes" @if(!empty($freeze_details)) @if($freeze_details->profile == 1) checked @endif @endif>
+		                                <input type="radio" value="1" name="profile" id="profile-yes" @if(!empty($freeze_details)) @if($freeze_details->profile == 1) checked @endif  @elseif(empty($freeze_details)) checked @endif>
 		                                <label for="profile-yes">Freeze</label>
 		                            </div>
 		                            <div class="cstm-radio">
@@ -64,7 +65,7 @@
 		                        <label for="gender" class="col-md-12 col-form-label text-md-right "><h5>> Reports</h5></label>
 		                        <div class="col-md-6 ">
 		                            <div class="cstm-radio">
-		                                <input type="radio" value="1" name="reports" id="reports-yes" @if(!empty($freeze_details)) @if($freeze_details->reports == 1) checked @endif @endif>
+		                                <input type="radio" value="1" name="reports" id="reports-yes" @if(!empty($freeze_details)) @if($freeze_details->reports == 1) checked @endif  @elseif(empty($freeze_details)) checked @endif>
 		                                <label for="reports-yes">Freeze</label>
 		                            </div>
 		                            <div class="cstm-radio">
@@ -81,7 +82,7 @@
 		                        <label for="gender" class="col-md-12 col-form-label text-md-right "><h5>> Matches</h5></label>
 		                        <div class="col-md-6 ">
 		                            <div class="cstm-radio">
-		                                <input type="radio" value="1" name="matches" id="matches-yes" @if(isset($freeze_details)) @if($freeze_details->matches == 1) checked @endif @endif>
+		                                <input type="radio" value="1" name="matches" id="matches-yes" @if(isset($freeze_details)) @if($freeze_details->matches == 1) checked @endif  @elseif(empty($freeze_details)) checked @endif>
 		                                <label for="matches-yes">Freeze</label>
 		                            </div>
 		                            <div class="cstm-radio">
@@ -98,7 +99,7 @@
 		                        <label for="gender" class="col-md-12 col-form-label text-md-right "><h5>> Goals</h5></label>
 		                        <div class="col-md-6 ">
 		                            <div class="cstm-radio">
-		                                <input type="radio" value="1" name="goals" id="goals-yes" @if(isset($freeze_details)) @if($freeze_details->goals == 1) checked @endif @endif>
+		                                <input type="radio" value="1" name="goals" id="goals-yes" @if(isset($freeze_details)) @if($freeze_details->goals == 1) checked @endif  @elseif(empty($freeze_details)) checked @endif>
 		                                <label for="goals-yes">Freeze</label>
 		                            </div>
 		                            <div class="cstm-radio">
@@ -115,7 +116,7 @@
 		                        <label for="gender" class="col-md-12 col-form-label text-md-right "><h5>> Invoices</h5></label>
 		                        <div class="col-md-6 ">
 		                            <div class="cstm-radio">
-		                                <input type="radio" value="1" name="invoices" id="invoices-yes" @if(!empty($freeze_details)) @if($freeze_details->invoices == 1) checked @endif @endif>
+		                                <input type="radio" value="1" name="invoices" id="invoices-yes" @if(!empty($freeze_details)) @if($freeze_details->invoices == 1) checked @endif @elseif(empty($freeze_details)) checked @endif>
 		                                <label for="invoices-yes">Freeze</label>
 		                            </div>
 		                            <div class="cstm-radio">
@@ -132,7 +133,7 @@
 		                        <label for="gender" class="col-md-12 col-form-label text-md-right "><h5>> My Players</h5></label>
 		                        <div class="col-md-6 ">
 		                            <div class="cstm-radio">
-		                                <input type="radio" value="1" name="players" id="players-yes" @if(isset($freeze_details)) @if($freeze_details->players == 1) checked @endif @endif>
+		                                <input type="radio" value="1" name="players" id="players-yes" @if(isset($freeze_details)) @if($freeze_details->players == 1) checked @endif  @elseif(empty($freeze_details)) checked @endif>
 		                                <label for="players-yes">Freeze</label>
 		                            </div>
 		                            <div class="cstm-radio">
@@ -149,7 +150,7 @@
 		                        <label for="gender" class="col-md-12 col-form-label text-md-right "><h5>> My Bookings</h5></label>
 		                        <div class="col-md-6 ">
 		                            <div class="cstm-radio">
-		                                <input type="radio" value="1" name="bookings" id="bookings-yes" @if(isset($freeze_details)) @if($freeze_details->bookings == 1) checked @endif @endif>
+		                                <input type="radio" value="1" name="bookings" id="bookings-yes" @if(isset($freeze_details)) @if($freeze_details->bookings == 1) checked @endif  @elseif(empty($freeze_details)) checked @endif>
 		                                <label for="bookings-yes">Freeze</label>
 		                            </div>
 		                            <div class="cstm-radio">
@@ -166,7 +167,7 @@
 		                        <label for="gender" class="col-md-12 col-form-label text-md-right "><h5>> Notifications</h5></label>
 		                        <div class="col-md-6 ">
 		                            <div class="cstm-radio">
-		                                <input type="radio" value="1" name="notifications" id="notifications-yes" @if(isset($freeze_details)) @if($freeze_details->notifications == 1) checked @endif @endif>
+		                                <input type="radio" value="1" name="notifications" id="notifications-yes" @if(isset($freeze_details)) @if($freeze_details->notifications == 1) checked @endif  @elseif(empty($freeze_details)) checked @endif>
 		                                <label for="notifications-yes">Freeze</label>
 		                            </div>
 		                            <div class="cstm-radio">
@@ -183,7 +184,7 @@
 		                        <label for="gender" class="col-md-12 col-form-label text-md-right "><h5>> Wallet</h5></label>
 		                        <div class="col-md-6 ">
 		                            <div class="cstm-radio">
-		                                <input type="radio" value="1" name="wallet" id="wallet-yes" @if(isset($freeze_details)) @if($freeze_details->wallet == 1) checked @endif @endif>
+		                                <input type="radio" value="1" name="wallet" id="wallet-yes" @if(isset($freeze_details)) @if($freeze_details->wallet == 1) checked @endif  @elseif(empty($freeze_details)) checked @endif>
 		                                <label for="wallet-yes">Freeze</label>
 		                            </div>
 		                            <div class="cstm-radio">
@@ -200,7 +201,7 @@
 		                        <label for="gender" class="col-md-12 col-form-label text-md-right "><h5>> Settings</h5></label>
 		                        <div class="col-md-6 ">
 		                            <div class="cstm-radio">
-		                                <input type="radio" value="1" name="settings" id="settings-yes" @if(isset($freeze_details)) @if($freeze_details->settings == 1) checked @endif @endif>
+		                                <input type="radio" value="1" name="settings" id="settings-yes" @if(isset($freeze_details)) @if($freeze_details->settings == 1) checked @endif  @elseif(empty($freeze_details)) checked @endif>
 		                                <label for="settings-yes">Freeze</label>
 		                            </div>
 		                            <div class="cstm-radio">

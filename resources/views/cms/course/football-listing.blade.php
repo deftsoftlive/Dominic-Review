@@ -189,7 +189,17 @@
             <form action="{{route('football-listing')}}" method="POST" class="cst-selection">
             @csrf
             <div class="form-row course_search_form">
-              <div class="form-group col-lg-4 col-md-4">
+              <div class="form-group col-lg-3 col-md-4">
+                <label for="course_type">Select Course Type</label>
+                <select id="course_type" name="course_type" class="form-control event-dropdown">                    
+                    <option disabled="" selected="" value="">Select course type</option>
+                    <!-- <option value="normal" {{ $course_type == 'normal'  ? 'selected' : '' }}>Normal</option>
+                    <option value="paygo" {{ $course_type == 'paygo'  ? 'selected' : '' }}>Pay Go</option> -->
+                    <option value="normal" {{ $course_type == 'normal'  ? 'selected' : '' }}>Standard Course</option>
+                    <option value="paygo" {{ $course_type == 'paygo'  ? 'selected' : '' }}>Pay As You Go</option>
+                </select>
+              </div>
+              <div class="form-group col-lg-3 col-md-4">
                       <!-- <label for="inputCity">Search Course</label>
                       <input type="text" class="form-control" id="course_search" name="course" placeholder="Course A" value="{{ isset($course_name) ? $course_name : ''}}">
                       <ul id="course_dropdown"></ul> -->
@@ -236,11 +246,12 @@
                       </select>
                     </div>
                   
-                  <div class="form-group col-lg-1 col-md-2 col-sm-6 col-6">
+                  <div class="form-group col-lg-2 col-md-2 col-sm-6 col-6">
                     <button type="submit" class="cstm-btn main_button" id="course_search_submit">Submit</button>
                   </div>
-                  <div class="form-group col-lg-1 col-md-2 col-sm-6 col-6">
-                    <button type="submit" id="course_search_submit" onclick="myFunction();" class="cstm-btn main_button">Reset</button>
+                  <div class="form-group col-lg-2 col-md-2 col-sm-6 col-6">
+                    <!-- <button type="submit" id="course_search_submit" onclick="myFunction();" class="cstm-btn main_button">Reset</button> -->
+                    <a href="{{route('football-listing')}}" id="course_search_submit" class="cstm-btn main_button">Reset</a>
                   </div>
                   </div>
                   </form>
@@ -307,9 +318,38 @@
                     <div class="event-card-heading">
                       <h3>{{$cour->title}}</h3>
                     </div>
-                    <div class="event-book">
-                      <p>Fully Booked</p>
-                    </div>
+                    @php 
+                      $remainingSeats = 0;
+                      $purchased_courses = DB::table('shop_cart_items')->where('shop_type','course')->where('product_id',$cour->id)->where('type','order')->count();
+                      $booked_courses = !empty($purchased_courses) ? $purchased_courses : '0';
+                    @endphp
+
+                     @if( isset( $cour->set_course_type_default ) &&  $cour->set_course_type_default == 1 )
+                      @if($booked_courses >= $cour->booking_slot)
+                        <div class="event-book">
+                          <p>Fully Booked</p>
+                        </div>
+                      @endif
+                    @else
+                      @php 
+                        $course_dates = \DB::table('paygocourse_dates')->where('course_id',$cour->id)->where('display_course',1)->get();
+                      @endphp
+                      @foreach($course_dates as $date)
+                        @if( strtotime( $date->course_date ) >= strtotime( date( 'Y-m-d' ) ) )
+                          @php
+                            //dd( $date );
+                            $bookedDateCount = \App\PayGoCourseBookedDate::where('date', $date->course_date)->count();
+                            
+                            $remainingSeats += (int)$date->seats - (int)$bookedDateCount;
+                          @endphp
+                        @endif
+                      @endforeach
+                      @if( $remainingSeats <= 0 )
+                        <div class="event-book">
+                          <p>Fully Booked</p>
+                        </div>
+                      @endif
+                    @endif
                     <div class="event-info">
                       <ul class="course-inner-list">
                         <li><p>Age :</p><span>{{$cour->age_group}} Years</span></li>
@@ -337,7 +377,13 @@
                       @endif
                     @endif
                     </h1>
-                    <a href="{{url('course-detail')}}/@php echo base64_encode($cour->id); @endphp" class="cstm-btn main_button">More Info</a>
+                    <!-- <a href="{{url('course-detail')}}/@php echo base64_encode($cour->id); @endphp" class="cstm-btn main_button">More Info</a> -->
+                    @php //dd($cour->set_course_type_default); @endphp
+                    @if( isset( $cour->set_course_type_default ) &&  $cour->set_course_type_default == 1 )
+                      <a href="{{url('course-detail')}}/@php echo base64_encode($cour->id); @endphp" class="cstm-btn main_button">More Info</a>
+                    @else
+                      <a href="{{route('user.paygo.course.details', base64_encode($cour->id)) }} " class="cstm-btn main_button">More Info</a>
+                    @endif
                   </div>
                   </div>
                 </li>

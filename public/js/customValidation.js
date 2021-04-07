@@ -310,7 +310,10 @@ $(document).ready(function (){
         noSpace: true,
         maxlength: 30
       },
-      },
+      message: {
+        required: true,
+      }
+    },
 
     messages:{
       parent_telephone:{maxlength:"Maximum character limit reached."},
@@ -347,8 +350,14 @@ $(document).ready(function (){
     },
 
       submitHandler: function(form) {        
-        $("#disable_contact_us_btnn").attr("disabled", true);
-        form.submit();
+        //$("#disable_contact_us_btnn").attr("disabled", true);
+        var check = checkRecaptcha();
+        alert( check );
+        if ( check == true ) {
+
+          form.submit();
+
+        }
       }
 
   });
@@ -441,7 +450,7 @@ $(document).ready(function (){
            rules: {
            money_amount: {
                 required: true,     
-                digits: true,
+                //digits: true,
             }
         },
         messages:{
@@ -1402,4 +1411,8 @@ $(document).ready(function (){
     });
 
 
+});
+
+$( "#money_amount" ).blur(function() {
+    this.value = parseFloat(this.value).toFixed(2);
 });

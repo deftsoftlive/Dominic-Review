@@ -44,7 +44,7 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
 
 					  <div class="m-b-table">
 
-					  <table>
+					  <table class="cstm_invoice_wrap">
                         <thead>
                           <tr>
                             <th>Date</th>

@@ -40,6 +40,32 @@ public function ShopProductOrderPlacedInfo($order_id)
   return $this->ShopProductOrderPlacedInfoSendEmail($order,$template_id);
 }
 
+/* -------------custom email template by SB for package courses---------- */
+
+public function SendInfoPackageCourses( $parentId, $bookingNo )
+{
+  $template_id = $this->emailTemplate['OrderPlacedInformationPackageCourses'];
+
+  $template = EmailTemplate::find( $template_id ); 
+  //dd( $template );
+  $user_name = getUsername( $parentId );
+  $email = getUseremail( $parentId );
+  $view= 'emails.customEmail';
+  $arr = [
+         'title' => $template->title,
+         'subject' => $template->subject,
+         'user_id' => $user_name,
+         'email' => $email,
+  ];
+
+  $data = $this->InfoHtmlPackageCourses( $user_name, $bookingNo, $template_id );
+
+  $ar= ['data' => $data]; 
+   return $this->sendNotificationInfo($view,$ar,$arr);
+
+}
+
+
 
 #---------------------------------------------------------------------------------------------------
 #  Order Success
@@ -84,6 +110,7 @@ public function ShopProductOrderPlacedInfoSendEmail($order,$template_id)
     $ar= ['data' => $data]; 
    return $this->sendNotificationInfo($view,$ar,$arr);
 }
+
 
 
 #---------------------------------------------------------------------------------------------------
@@ -131,9 +158,40 @@ public function ShopProductOrderPlacedInfoHtml($order,$data,$template)
     return $text.'<br/>';
 }
 
+
+public function InfoHtmlPackageCourses( $user_name, $bookingNo, $template_id )
+{ 
+  $get_package = \DB::table('package_courses')->where('booking_no',$bookingNo)->first(); 
+
+  $child = isset($get_package->player_id) ? getUsername($get_package->player_id) : getUsername($get_package->parent_id);
+  $template = EmailTemplate::find( $template_id ); 
+
+  $text2 = $template->body;
+
+  $packageInfo = $this->InfoDetailPackageCourse( $bookingNo );
+  $text = str_replace("{PackageInfo}",$packageInfo,$text2);
+  $text = str_replace("{name}",$user_name,$text);
+  $text = str_replace("{child}",$child,$text);
+
+    // $text = str_replace("{course_name}",$or->title,$text2);  
+    // $text = str_replace("{location}",$or->location,$text);  
+    // $text = str_replace("{day_time}",$or->day_time,$text);
+    // $text = str_replace("{age_group}",$or->age_group,$text);
+    // $text = str_replace("{session_date}",$or->session_date,$text);
+    // $text = str_replace("{more_info}",strip_tags(htmlspecialchars_decode($or->more_info)),$text);
+
+  return $text.'<br/>';
+}
+
+
 public function ShopProductOrderPlacedInfoDetail($order)
 {
   return $vv = view('emails.shop.orders.information')->with('orders',$order)->render();
+}
+
+public function InfoDetailPackageCourse( $bookingNo )
+{
+  return $vv = view('emails.packagecourse')->with( 'booking_no',$bookingNo )->render();
 }
 
 
@@ -293,7 +351,8 @@ public function CoachLinkRequestSendEmail($req,$template_id)
            'parent' => $parent,
            'player' => $child,
            'coach' => $coach,
-           'status' => $req->status
+           'status' => $req->status,
+           'reason' => $req->reason_of_rejection
     ];
     $data = $this->CoachLinkRequestHtml($arr,$req,$template); 
 
@@ -318,6 +377,7 @@ public function CoachLinkRequestHtml($data,$req,$template)
     $text = str_replace("{player}",$data['player'],$text);
     $text = str_replace("{coach}",$data['coach'],$text);
     $text = str_replace("{status}",$status,$text);
+    $text = str_replace("{reason}",$data['reason'],$text);
 
     // dd($data,$template);
 
@@ -579,6 +639,11 @@ public function ContactUsSuccess($contact_id)
   $contact = ContactDetail::where('id',$contact_id)->first(); 
   return $this->ContactUsSendEmail($contact,$template_id);
 }
+public function NewsletterSuccess($emailId)
+{
+  $template_id = $this->emailTemplate['SubscribeUsers'];
+  return $this->NewsletterSendEmail( $emailId, $template_id );
+}
 
 public function ContactUsSendEmail($contact,$template_id)
 {
@@ -601,6 +666,26 @@ public function ContactUsSendEmail($contact,$template_id)
   return $this->sendNotification($view,$ar,$arr);
 }
 
+public function NewsletterSendEmail( $emailId, $template_id ){
+    
+
+    $template = EmailTemplate::find($template_id); 
+    $view= 'emails.customEmail';
+    $arr = [
+           'title' => $template->title,
+           'subject' => $template->subject,
+           'email' => $emailId,
+           'name' => ''
+    ];
+    $data = $this->NewsletterStatusHtml( $arr, $template ); 
+
+    $ar= ['data' => $data];
+
+    // dd($ar,$arr);
+
+  return $this->sendNotification($view,$ar,$arr);
+}
+
 public function ContactUsStatusHtml($data,$contact,$template)
 { 
     $text2 = $template->body;
@@ -610,6 +695,13 @@ public function ContactUsStatusHtml($data,$contact,$template)
     $text = str_replace("{subject}",$contact['subject'],$text);
     $text = str_replace("{message}",$contact['message'],$text);
 
+    // dd($data,$template);
+
+    return $text;
+}
+public function NewsletterStatusHtml( $arr, $template )
+{ 
+    $text = $template->body;
     // dd($data,$template);
 
     return $text;

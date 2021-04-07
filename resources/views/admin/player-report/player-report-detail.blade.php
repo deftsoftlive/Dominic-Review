@@ -167,7 +167,7 @@
                         <br/>
                         @if(!empty($report))
                             @php 
-                                $test_score = DB::table('test_scores')->where('test_cat_id','!=',NULL)->where('season_id',$report->season_id)->where('user_id',$report->player_id)->where('course_id',$report->course_id)->get(); 
+                                $test_score = DB::table('test_scores')->where('test_cat_id','!=',NULL)->where('season_id',$report->season_id)->where('user_id',$report->player_id)->where('course_id',$report->course_id)->orderby('test_cat_id', 'desc')->get(); 
                             @endphp
                             <br/><br/>
                             

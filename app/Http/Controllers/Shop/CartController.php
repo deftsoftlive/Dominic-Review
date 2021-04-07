@@ -16,6 +16,8 @@ use App\Models\Products\ProductAssignedVariation;
 use Cart;
 use App\Traits\ProductCart\AddCartItemTrait;
 use App\Models\Shop\ShopCartItems;
+use App\PayGoCourseBookedDate;
+
 class CartController extends Controller
 {
 
@@ -75,11 +77,15 @@ public function addQty($request,$val)
 
 	 if(Auth::check() && Auth::user()->role == "user"){
 
-	 	$userCart = ShopCartItems::where('user_id',Auth::user()->id)->where('id',$rowId);
+	 	$userCart = ShopCartItems::where('user_id',Auth::user()->id)->where('id',$rowId)->first();
 
+	 	//dd($userCart);
 	 	 if($userCart->count() > 0){
 	 	 	if($val == 2) {
-                 $userCart->delete();
+	             if ( $userCart->shop_type == 'paygo-course' ) {
+	             	\App\PayGoCourseBookedDate::where('cart_id', $rowId)->delete();
+	             }
+	             $userCart->delete();
 	 	 	}else{
 		 	 	$c = $userCart->first();
 		 	 	$qty = $val == 1 ? ($c->quantity + 1) : abs($c->quantity - 1);
@@ -95,6 +101,7 @@ public function addQty($request,$val)
           $cart = Cart::get($rowId);
 		  if($val == 2){
                  Cart::remove($rowId);
+
           }else{
 			      $new = $val == 1 ? 1 : -1;
 				    Cart::update($rowId,[
@@ -103,6 +110,7 @@ public function addQty($request,$val)
 	      }
 
      }
+
       return  $this->listItemOfcart();
 
 
@@ -121,8 +129,7 @@ public function listItemOfcart()
    $userCart = ShopCartItems::where('user_id',$user_id)->where('type','cart');
    
    $vv = view($this->include.$view)->with('userCartContent',$userCart);
-   $v = view($this->include.'totals')->with('userCartContent',$userCart);
-
+   $v = view($this->include.'totals')->with('userCartContent',$userCart);   
 
    return [
         'status' => 1,

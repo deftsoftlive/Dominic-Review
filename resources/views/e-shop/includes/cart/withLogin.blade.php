@@ -11,6 +11,7 @@
     $availableStock = $TotalStock > 0 ? ($TotalStock - $item->quantity) : 0;
     $stockMessage = $availableStock <= 1 ? $availableStock == 0 ? 'no item' : $availableStock.' item left only' : $availableStock.' items left only';
   }
+
   
  ?>
 
@@ -112,7 +113,77 @@
           </td>
           <td class="cart-table__column cart-table__column--total" data-title="Total">
 
-                  £{{($item->price * $item->quantity)}} 
+                  £{{custom_format(($item->price * $item->quantity),2)}} 
+          </td>
+          <td class="cart-table__column cart-table__column--remove">
+              <a href="javascript" class="btn btn-light btn-sm btn-svg-icon cartItemQty"
+                  data-type="remove"
+                  data-id="{{$item->id}}"
+                  data-disable="1"
+              >
+                 <i class="fas fa-trash-alt"></i>
+              </a>
+          </td>
+    </tr>
+@elseif($item->shop_type == 'paygo-course')
+
+@php 
+  $cart_id = $item->id;
+  $course_id = $item->product_id;
+  $course = DB::table('pay_go_courses')->where('id',$course_id)->first();  
+  $child = DB::table('users')->where('id',$item->child_id)->first();
+  $login_user = Auth::user()->id;
+  $idPayGo = base64_encode($course->id);
+  $paygoBookedDates = \App\PayGoCourseBookedDate:: where('cart_id', $cart_id)->get();
+  $payGoPrice = 0;
+  foreach($paygoBookedDates as $pagoCo){
+    $payGoPrice = $payGoPrice + $item->price;
+  }
+  $payGoPrice = $item->paygo_course_price ;
+  //dd($payGoPrice);
+@endphp
+   <tr class="cart-table__row">
+          <td class="cart-table__column cart-table__column--image">
+              <b>Course </b>
+          </td>
+          <td class="cart-table__column cart-table__column--product">
+              <a href="{{ route( 'user.paygo.course.details', $idPayGo ) }}" class="cart-table__product-name">{{$course->title}}</a>
+
+              <ul class="cart-table__options">
+                <li>@if($item->child_id == $login_user) Account Holder:  @else {{$child->type}} : @endif  
+                  <b class="bText">{{isset($child->name) ? $child->name : 'No child selected'}}</b>
+                </li>                 
+              </ul>
+              @php
+              $bookedDates = \App\PayGoCourseBookedDate::where( 'cart_id', $item->id )->get();
+              $datesArray = [];   
+              if( !empty( $bookedDates ) ){
+                foreach( $bookedDates as $bookedDa ) {
+                    array_push( $datesArray, date('d-m-Y', strtotime( $bookedDa->date ) ) );
+                }
+              }
+              @endphp
+              <div class="dates_div" style="display: flex;">
+                <!-- <span style="color: #999;"> Dates: </span> -->
+                <p>Booked Dates: </p>
+                <ul class="cart-table__options paygo-dates">
+                  @foreach( $datesArray as $daArr )
+
+                  <li> <b class="bText"> {{ date( 'd-m-Y', strtotime( $daArr ) ) }}  </b> </li>                 
+                  @endforeach
+                </ul>
+
+              </div>
+          </td>
+          <td class="cart-table__column cart-table__column--price" data-title="Price">
+             £{{custom_format($payGoPrice,2)}}    
+          </td>
+          <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
+              1
+          </td>
+          <td class="cart-table__column cart-table__column--total" data-title="Total">
+
+                  £{{custom_format(($payGoPrice * $item->quantity),2)}} 
           </td>
           <td class="cart-table__column cart-table__column--remove">
               <a href="javascript" class="btn btn-light btn-sm btn-svg-icon cartItemQty"
@@ -132,6 +203,7 @@
   $child = DB::table('users')->where('id',$item->child_id)->first(); 
   $week = json_decode($item->week); 
 @endphp
+
    <tr class="cart-table__row">
           <td class="cart-table__column cart-table__column--image">
               <b>Camp </b>
@@ -183,8 +255,9 @@
               1
           </td>
           <td class="cart-table__column cart-table__column--total" data-title="Total">
-
-                  £{{($item->price * $item->quantity)}} 
+                  
+                  £{{custom_format($item->price * $item->quantity,2)}} 
+                 
           </td>
           <td class="cart-table__column cart-table__column--remove">
               <a href="javascript" class="btn btn-light btn-sm btn-svg-icon cartItemQty"

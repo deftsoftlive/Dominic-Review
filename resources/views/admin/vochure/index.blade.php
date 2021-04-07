@@ -58,8 +58,8 @@
                                                 @foreach($vochure as $test)
                                                     <tr>
                                                         <td>{{$test->title}}</td>
-                                                        <td>{{$test->start_date}}</td> 
-                                                        <td>{{$test->end_date}}</td> 
+                                                        <td>{{ date( 'd-m-Y', strtotime( $test->start_date ) ) }}</td> 
+                                                        <td>{{ date( 'd-m-Y', strtotime( $test->end_date ) ) }}</td>
                                                         <td>
                                                         @if($test->status == '1')
                                                             <span class="cst_active"><i class="fas fa-check-circle"></i></span>

@@ -64,6 +64,14 @@ use Validator;
 use Stripe;
 use App\Notifications\MyFirstNotification;
 use App\Notifications\WalletMoneyNotification;
+use App\VideosManagement;
+use App\VideoManagementLinking;
+use App\Traits\Checkoutproccess\TotalOrderCalulation;
+use App\VideoCategory;
+use App\PayGoCourse;
+use App\PaygocourseDate;
+use App\PayGoCourseBookedDate;
+
 
 class HomeController extends Controller
 {
@@ -71,7 +79,7 @@ class HomeController extends Controller
     use GeneralSettingTrait;
     use EmailNotificationTrait;
     use UserCartTrait;
-
+    use TotalOrderCalulation;
     /**
      * Create a new controller instance.
      *
@@ -709,12 +717,83 @@ public function listing(Request $request)
 public function football_listing(Request $request)
 {
     $slug = 'course-listing/football';
+    if ( !empty( request()->get( 'selected_course_name' ) ) ) {
+      $course_name = request()->get( 'selected_course_name' ); 
+    }elseif( !empty( request()->get( 'course' ) ) ){
+      $course_name = request()->get( 'course' ); 
+    }else{
+      $course_name = '%%';
+    }
     
-    $course_name = !empty(request()->get('selected_course_name')) ? request()->get('selected_course_name') : '';
-    $subtype = !empty(request()->get('subtype')) ? request()->get('subtype') : '';
-    $level = !empty(request()->get('level')) ? request()->get('level') : '';
+    $course_name = !empty(request()->get('selected_course_name')) ? request()->get('selected_course_name') : '%%';
+    $subtype = !empty(request()->get('subtype')) ? request()->get('subtype') : '%%';
+    $level = !empty(request()->get('level')) ? request()->get('level') : '%%';
+    $course_type = !empty(request()->get('course_type'))? request()->get('course_type') : '%%';
 
-    if(!empty(request()->get('course'))){
+
+
+    if ( $course_type == 'normal' ) {
+      $table="courses";
+       $payGo=[];
+    }elseif( $course_type == 'paygo' ){
+        $table="pay_go_courses";
+        $payGo=[];
+    }else{
+      $table="courses";
+
+      $payGo = \DB::table('pay_go_courses')
+                   ->leftjoin('seasons', 'pay_go_courses.season', '=', 'seasons.id');                 
+                   
+
+      if (!empty($cat_id)) {
+
+       $payGo =$payGo->where('course_category',$cat_id);
+
+      }
+
+      $payGo =$payGo->where('pay_go_courses.title', 'like' ,$course_name)
+                   ->where('subtype', 'like' ,$subtype)
+                   ->where('level', 'like' ,$level)
+                   ->where('pay_go_courses.status',1)
+                   ->where('seasons.status',1)
+                   ->where('type','157')
+                   ->select('pay_go_courses.*');
+                    
+    }
+
+
+    $course = \DB::table("{$table}")
+                    ->leftjoin('seasons', "{$table}.season", '=', 'seasons.id');                    
+         
+    if (!empty($cat_id)) {
+
+     $course =$course->where('course_category',$cat_id);
+     
+    }
+    $course =$course->where("{$table}.title", 'like' ,$course_name)
+                   ->where('subtype', 'like' ,$subtype)
+                   ->where('level', 'like' ,$level)
+                   ->where("{$table}.status",1)
+                   ->where('seasons.status',1)
+                   ->where('type','157')
+                   ->select("{$table}.*");
+    
+    if(!empty($payGo)){
+      $course= $course->union($payGo);
+
+    }else{
+       $course= $course->orderBy('sort','asc');
+    }
+
+      
+    $course =$course->get(); 
+
+
+
+
+
+
+    /*if(!empty(request()->get('course'))){
 
           //dd($course,$course_name,$age_group,$level);
 
@@ -739,7 +818,7 @@ public function football_listing(Request $request)
                      ->where('type','157')
                      ->select('courses.*')
                      ->orderBy('sort','asc')->get();
-    }
+    }*/
 
     $accordian = Accordian::where('page_title',$slug)->where('status','1')->orderBy('sort','asc')->get();
 
@@ -747,7 +826,7 @@ public function football_listing(Request $request)
     $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->orderBy('sorting','asc')->get();
 
     $testimonial = Testimonial::select(['id','title', 'description','status','slug','image'])->where('page_title','course-listing/football')->where('status','1')->get(); 
-    return view('cms.course.football-listing',compact('testimonial','course','course_name','level','accordian','subtype'));
+    return view('cms.course.football-listing',compact('testimonial','course','course_name','level','accordian','subtype', 'course_type'));
 }
 
 /* Tennis Course Listing Page */
@@ -760,126 +839,83 @@ public function tennis_listing(Request $request)
     }else{
       $cat_id = $request->input('cat'); 
     }
-    
-    $course_name = !empty(request()->get('selected_course_name')) ? request()->get('selected_course_name') : request()->get('course');
-    $subtype = !empty(request()->get('subtype')) ? request()->get('subtype') : '';
-    $level = !empty(request()->get('level')) ? request()->get('level') : '';
 
-    if(!empty($course_name) && !empty($subtype) && !empty($level)){
-
-      $course = \DB::table('courses')
-                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('courses.title', $course_name)
-                 ->where('subtype', $subtype)
-                 ->where('level', $level)
-                 ->where('courses.status',1)
-                 ->where('seasons.status',1)
-                 ->where('type','156')
-                 ->select('courses.*')
-                 ->orderBy('sort','asc')->get();
-
-    }else if(!empty($course_name) && !empty($subtype) && empty($level)){
-
-      $course = \DB::table('courses')
-                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('courses.title', $course_name)
-                 ->where('subtype', $subtype)
-                 ->where('courses.status',1)
-                 ->where('seasons.status',1)
-                 ->where('type','156')
-                 ->select('courses.*')
-                 ->orderBy('sort','asc')->get();
-
-    }else if(!empty($course_name) && empty($subtype) && !empty($level)){
-
-      $course = \DB::table('courses')
-                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('courses.title', $course_name)
-                 ->where('level', $level)
-                 ->where('courses.status',1)
-                 ->where('seasons.status',1)
-                 ->where('type','156')
-                 ->select('courses.*')
-                 ->orderBy('sort','asc')->get();
-
-    }else if(!empty($course_name) && empty($subtype) && empty($level)){
-
-      $course = \DB::table('courses')
-                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('courses.title', $course_name)
-                 ->where('courses.status',1)
-                 ->where('seasons.status',1)
-                 ->where('type','156')
-                 ->select('courses.*')
-                 ->orderBy('sort','asc')->get();
-
-                 // dd($course);
-
-    }else if(empty($course_name) && !empty($subtype) && empty($level)){
-
-      $course = \DB::table('courses')
-                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('subtype', $subtype)
-                 ->where('courses.status',1)
-                 ->where('seasons.status',1)
-                 ->where('type','156')
-                 ->select('courses.*')
-                 ->orderBy('sort','asc')->get();
-
-    }else if(empty($course_name) && empty($subtype) && !empty($level)){
-
-      $course = \DB::table('courses')
-                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('level', $level)
-                 ->where('courses.status',1)
-                 ->where('seasons.status',1)
-                 ->where('type','156')
-                 ->select('courses.*')
-                 ->orderBy('sort','asc')->get();
-
-    }else if(empty($course_name) && !empty($subtype) && !empty($level)){
-
-      $course = \DB::table('courses')
-                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('subtype', $subtype)
-                 ->where('level', $level)
-                 ->where('courses.status',1)
-                 ->where('seasons.status',1)
-                 ->where('type','156')
-                 ->select('courses.*')
-                 ->orderBy('sort','asc')->get();
-
+    if ( !empty( request()->get( 'selected_course_name' ) ) ) {
+      $course_name = request()->get( 'selected_course_name' ); 
+    }elseif( !empty( request()->get( 'course' ) ) ){
+      $course_name = request()->get( 'course' ); 
     }else{
+      $course_name = '%%';
+    }
+        
+    /*$course_name = !empty(request()->get('selected_course_name')) ? request()->get('selected_course_name') : request()->get('course');*/
+    $subtype = !empty(request()->get('subtype')) ? request()->get('subtype') : '%%';
+    $level = !empty(request()->get('level')) ? request()->get('level') : '%%';
+    $course_type = !empty(request()->get('course_type'))? request()->get('course_type') : '%%';
+    /*\DB::enableQueryLog();*/
+    if ( $course_type == 'normal' ) {
+      $table="courses";
+       $payGo=[];
+    }elseif( $course_type == 'paygo' ){
+        $table="pay_go_courses";
+        $payGo=[];
+    }else{
+      $table="courses";
 
-      if(!empty($cat_id))
-      {
-        $course = \DB::table('courses')
-                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('courses.status',1)
-                 ->where('seasons.status',1)
-                 ->where('course_category',$cat_id)
-                 ->where('type','156')
-                 ->select('courses.*')
-                 ->orderBy('sort','asc')->get();
-      }else{
-        $course = \DB::table('courses')
-                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('courses.status',1)
-                 ->where('seasons.status',1)
-                 ->where('type','156')
-                 ->select('courses.*')
-                 ->orderBy('sort','asc')->get();
+      $payGo = \DB::table('pay_go_courses')
+                   ->leftjoin('seasons', 'pay_go_courses.season', '=', 'seasons.id');                 
+                   
+
+      if (!empty($cat_id)) {
+
+       $payGo =$payGo->where('course_category',$cat_id);
+
       }
+
+      $payGo =$payGo->where('pay_go_courses.title', 'like' ,$course_name)
+                   ->where('subtype', 'like' ,$subtype)
+                   ->where('level', 'like' ,$level)
+                   ->where('pay_go_courses.status',1)
+                   ->where('seasons.status',1)
+                   ->where('type','156')
+                   ->select('pay_go_courses.*');
+                    
     }
 
-   // dd($course);
+
+    $course = \DB::table("{$table}")
+                    ->leftjoin('seasons', "{$table}.season", '=', 'seasons.id');                    
+         
+    if (!empty($cat_id)) {
+
+     $course =$course->where('course_category',$cat_id);
+     
+    }
+    $course =$course->where("{$table}.title", 'like' ,$course_name)
+                   ->where('subtype', 'like' ,$subtype)
+                   ->where('level', 'like' ,$level)
+                   ->where("{$table}.status",1)
+                   ->where('seasons.status',1)
+                   ->where('type','156')
+                   ->select("{$table}.*");
+    
+    if(!empty($payGo)){
+      $course= $course->union($payGo);
+
+    }else{
+       $course= $course->orderBy('sort','asc');
+    }
+
+      
+    $course =$course->get();  
     $accordian = Accordian::where('page_title',$slug)->where('status','1')->orderBy('sort','asc')->get();  
 
     // Get subtype for tennis courses
     $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->orderBy('sorting','asc')->get();
 
     $testimonial = Testimonial::select(['id','title', 'description','status','slug','image'])->where('status','1')->where('page_title','course-listing/tennis')->get(); 
-    return view('cms.course.tennis-listing',compact('testimonial','course','accordian','subtype','course_name','level','cat_id'));
+    return view('cms.course.tennis-listing',compact('testimonial','course','accordian','subtype','course_name','level', 'course_type','cat_id'));
+
 }
 
 /* School Course Listing Page */
@@ -892,112 +928,82 @@ public function school_listing(Request $request)
     }else{
       $cat_id = $request->input('cat'); 
     }
-    
-    $course_name = !empty(request()->get('selected_course_name')) ? request()->get('selected_course_name') : '';
-    $subtype = !empty(request()->get('subtype')) ? request()->get('subtype') : '';
-    $level = !empty(request()->get('level')) ? request()->get('level') : '';
-
-    if(!empty(request()->get('course')) && !empty(request()->get('subtype')) && !empty(request()->get('level'))){
-
-      $course = \DB::table('courses')
-                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('courses.title', '=', $course_name)
-                 ->where('subtype', '=', $subtype)
-                 ->where('level', '=', $level)
-                 ->where('seasons.status',1)
-                 ->where('courses.status',1)
-                 ->where('type','191')
-                 ->select('courses.*')
-                 ->orderBy('sort','asc')->get();
-
-    }else if(!empty(request()->get('course')) && !empty(request()->get('subtype')) && empty(request()->get('level'))){
-
-      $course = \DB::table('courses')
-                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('courses.title', '=', $course_name)
-                 ->where('subtype', '=', $subtype)
-                 ->where('seasons.status',1)
-                 ->where('courses.status',1)
-                 ->where('type','191')
-                 ->select('courses.*')
-                 ->orderBy('sort','asc')->get();
-
-    }else if(!empty(request()->get('course')) && empty(request()->get('subtype')) && !empty(request()->get('level'))){
-
-      $course = \DB::table('courses')
-                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('courses.title', '=', $course_name)
-                 ->where('level', '=', $level)
-                 ->where('seasons.status',1)
-                 ->where('courses.status',1)
-                 ->where('type','191')
-                 ->select('courses.*')
-                 ->orderBy('sort','asc')->get();
-
-    }else if(!empty(request()->get('course')) && empty(request()->get('subtype')) && empty(request()->get('level'))){
-
-      $course = \DB::table('courses')
-                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('courses.title', '=', $course_name)
-                 ->where('seasons.status',1)
-                 ->where('courses.status',1)
-                 ->where('type','191')
-                 ->select('courses.*')
-                 ->orderBy('sort','asc')->get();
-
-    }else if(empty(request()->get('course')) && !empty(request()->get('subtype')) && empty(request()->get('level'))){
-
-      $course = \DB::table('courses')
-                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('subtype', '=', $subtype)
-                 ->where('seasons.status',1)
-                 ->where('courses.status',1)
-                 ->where('type','191')
-                 ->select('courses.*')
-                 ->orderBy('sort','asc')->get();
-
-    }else if(empty(request()->get('course')) && empty(request()->get('subtype')) && !empty(request()->get('level'))){
-
-      $course = \DB::table('courses')
-                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('level', '=', $level)
-                 ->where('seasons.status',1)
-                 ->where('courses.status',1)
-                 ->where('type','191')
-                 ->select('courses.*')
-                 ->orderBy('sort','asc')->get();
-
-    }else if(empty(request()->get('course')) && !empty(request()->get('subtype')) && !empty(request()->get('level'))){
-
-      $course = \DB::table('courses')
-                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('subtype', '=', $subtype)
-                 ->where('level', '=', $level)
-                 ->where('seasons.status',1)
-                 ->where('courses.status',1)
-                 ->where('type','191')
-                 ->select('courses.*')
-                 ->orderBy('sort','asc')->get();
-
+    if ( !empty( request()->get( 'selected_course_name' ) ) ) {
+      $course_name = request()->get( 'selected_course_name' ); 
+    }elseif( !empty( request()->get( 'course' ) ) ){
+      $course_name = request()->get( 'course' ); 
     }else{
-        // $course = Course::orderBy('sort','asc')->where('status',1)->where('type','191')->get();
+      $course_name = '%%';
+    }
+    
+    $course_name = !empty(request()->get('selected_course_name')) ? request()->get('selected_course_name') : '%%';
+    $subtype = !empty(request()->get('subtype')) ? request()->get('subtype') : '%%';
+    $level = !empty(request()->get('level')) ? request()->get('level') : '%%';
+    $course_type = !empty(request()->get('course_type'))? request()->get('course_type') : '%%';
 
-      $course = \DB::table('courses')
-                 ->leftjoin('seasons', 'courses.season', '=', 'seasons.id')
-                 ->where('seasons.status',1)
-                 ->where('courses.status',1)
-                 ->where('type','191')
-                 ->select('courses.*')
-                 ->orderBy('sort','asc')->get();
+    if ( $course_type == 'normal' ) {
+      $table="courses";
+       $payGo=[];
+    }elseif( $course_type == 'paygo' ){
+        $table="pay_go_courses";
+        $payGo=[];
+    }else{
+      $table="courses";
+
+      $payGo = \DB::table('pay_go_courses')
+                   ->leftjoin('seasons', 'pay_go_courses.season', '=', 'seasons.id');                 
+                   
+
+      if (!empty($cat_id)) {
+
+       $payGo =$payGo->where('course_category',$cat_id);
+
+      }
+
+      $payGo =$payGo->where('pay_go_courses.title', 'like' ,$course_name)
+                   ->where('subtype', 'like' ,$subtype)
+                   ->where('level', 'like' ,$level)
+                   ->where('pay_go_courses.status',1)
+                   ->where('seasons.status',1)
+                   ->where('type','191')
+                   ->select('pay_go_courses.*');
+                    
     }
 
+
+    $course = \DB::table("{$table}")
+                    ->leftjoin('seasons', "{$table}.season", '=', 'seasons.id');                    
+         
+    if (!empty($cat_id)) {
+
+     $course =$course->where('course_category',$cat_id);
+     
+    }
+    $course =$course->where("{$table}.title", 'like' ,$course_name)
+                   ->where('subtype', 'like' ,$subtype)
+                   ->where('level', 'like' ,$level)
+                   ->where("{$table}.status",1)
+                   ->where('seasons.status',1)
+                   ->where('type','191')
+                   ->select("{$table}.*");
+    
+    if(!empty($payGo)){
+      $course= $course->union($payGo);
+
+    }else{
+       $course= $course->orderBy('sort','asc');
+    }
+
+      
+    $course =$course->get();  
+    
     $accordian = Accordian::where('page_title',$slug)->where('status','1')->orderBy('sort','asc')->get();
 
     // Get subtype for tennis courses
     $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->orderBy('sorting','asc')->get();
 
     $testimonial = Testimonial::select(['id','title', 'description','status','slug','image'])->where('page_title','course-listing/school')->where('status','1')->get(); 
-    return view('cms.course.school-listing',compact('testimonial','course','course_name','level','accordian','subtype','cat_id'));
+    return view('cms.course.school-listing',compact('testimonial','course','course_name','level','accordian','subtype','course_type','cat_id'));
 }
 
 /* Course Detail Page */
@@ -1029,6 +1035,7 @@ public function school_landing()
     $accordian_download = Accordian::where('page_title','school-landing-download')->where('status',1)->orderBy('sort','asc')->get(); 
     $accordian_parent_info = Accordian::where('page_title','school-landing-parent-info')->where('status',1)->orderBy('sort','asc')->get(); 
     return view('cms.course.school-landing',compact('providers','testimonial','accordian','accordian_download','accordian_parent_info'));
+    //dd();
 }
 
 /* Football Landing Page */
@@ -1452,7 +1459,7 @@ public function submit_book_a_camp(Request $request)
 
           if(isset($arrData['camp']))
           {  
-            $camp_data = array();;
+            $camp_data = array();
             foreach ($arrData['camp'] as $sku){ 
               $camp_array = explode('-',$sku);
               $camp_data[] = $camp_array[2];
@@ -1588,7 +1595,7 @@ public function submit_book_a_camp(Request $request)
 
           if(isset($arrData['camp']))
           {  
-            $camp_data = array();;
+            $camp_data = array();
             foreach ($arrData['camp'] as $sku){ 
               $camp_array = explode('-',$sku);
               $camp_data[] = $camp_array[2];
@@ -1741,9 +1748,9 @@ public function parent_coach(Request $request)
     { 
       if($check->status == 1)
       {
-        $msg = 'Your player is alreday linked with "<b>'.$linked_coach.'</b>" coach.';
+        $msg = 'Your player is already linked with "<b>'.$linked_coach.'</b>" coach.';
       }else{
-        $msg = 'Your player is alreday requested to "<b>'.$linked_coach.'</b>" coach.';
+        $msg = 'Your player is already requested to "<b>'.$linked_coach.'</b>" coach.';
       }
        
     }else{
@@ -1876,8 +1883,10 @@ public function add_money_to_wallet()
     return view('wallet.add-money-to-wallet');
 }
 
-public function stripe_wallet(Request $request) 
+/*public function stripe_wallet(Request $request) 
 {
+    //dd($request->all());
+  
   if(!empty($request->wallet_amount))
   {
     $stripe = SripeAccount();
@@ -1904,13 +1913,115 @@ public function stripe_wallet(Request $request)
     echo json_encode($data); 
   }
     
-}
+}*/
 
 public function add_wallet_amt(Request $request) 
 {   
+    if(empty($request->money_amount)){
+      return redirect()->route('add_money_to_wallet');
+    }
+    $user_id = $request->user_id;    
+    //dd($request->all());
     $user_id = $request->user_id;
-    $check_wallet = Wallet::where('user_id',$user_id)->first();
+    $money_amount  = $request->money_amount;
+    return view('wallet.wallet-stripe',compact('user_id', 'money_amount'));
+    
+}   
 
+/********************************************************************************/
+/*-----------------------New Stripe Payment for Wallet By SB--------------------*/
+/********************************************************************************/
+
+public function stripe_wallet_payemnt( Request $request)
+{
+  if(empty($request->money_amount) || empty( $request->user_id )){
+    return redirect()->route('add_money_to_wallet');
+  }
+
+  $error = '';
+  $user_id = $request->user_id;
+  $user_name = getUsername($user_id);
+  $user_email = getUseremail($user_id);
+  $total_price = $request->money_amount;
+  $check_wallet = Wallet::where('user_id',$user_id)->first();
+  if(empty($request->stripeToken)):
+         $error .= '<li>Stripe token Expired!</li>';
+      else:
+                    
+          # create customer to stripe while payment
+          try {
+
+                /*$AccountWithPayment= $this->CommissionFeeServiceAccordingVendor('STRIPE',1);*/
+                $description = 'Payment from customer name - ' .$user_name. ' & Added Money to wallet & user email - '. $user_email ;
+                $AccountWithPayment = [];
+                $token = $request->stripeToken;
+                //dd($AccountWithPayment);                
+                $stripe_data = SripeAccount();
+                $stripe1 = $stripe_data['sk']; 
+                           
+                Stripe\Stripe::setApiKey($stripe1);
+                $charge = \Stripe\Charge::create([
+                        "amount" => ($total_price * 100),
+                        "currency" => "gbp",
+                        "source" => $request->stripeToken,
+                        "description" => $description,
+                        ],$AccountWithPayment);
+                if($charge){
+                  $walletHistoryData['user_id'] = $request->user_id;
+                  $walletHistoryData['money_amount'] = $request->money_amount;
+                  $walletHistoryData['type'] = 'credit';
+                  $walletHistoryData['type'] = 'credit';
+                  $walletHistory = WalletHistory::create($walletHistoryData); 
+                  if( $walletHistory )
+                  {         
+                            
+                      $walletHistory->notify(new \App\Notifications\WalletMoneyNotification($walletHistory));
+                  }
+
+
+                  if(!empty($check_wallet))
+                  {
+                      $creditWalletHistory = WalletHistory::where('type','credit')->where('user_id',$user_id)->get();
+                      $debitWalletHistory = WalletHistory::where('user_id',$user_id)->where('type','debit')->get();
+
+                      $wallet_amt1 = [];
+                      foreach($creditWalletHistory as $wh){
+                          $wallet_amt1[] = $wh->money_amount;
+                      }
+
+                      $wallet_amt2 = [];
+                      foreach($debitWalletHistory as $wh){
+                          $wallet_amt2[] = $wh->money_amount;
+                      }
+
+                      $total_credit_amt = array_sum($wallet_amt1);
+                      $total_debit_amt = array_sum($wallet_amt2);
+
+                      $wallet_amt = $total_credit_amt - $total_debit_amt;
+                      Wallet::where('user_id',$user_id)->update(array('money_amount' => $wallet_amt));
+
+                  }else{
+                      $walletData['user_id'] = $request->user_id;
+                      $walletData['money_amount'] = $request->money_amount;
+                      $wallet = Wallet::create($walletData); 
+                      $wallet->save(); 
+                  } 
+
+                  return \Redirect::route('add_money_to_wallet')->with('success',' Amount has been added successfully in wallet!');
+                //}
+
+                }else{
+                        $error .= '<li><b>Payment Failed</b> Something Wrong going on!</li>';
+                }
+           } catch (Exception $e) {
+                $error .='Caught exception: '.  $e->getMessage();
+                return \Redirect::route('add_money_to_wallet')->with('error',' Something Wrong going on'.$error.'!');
+           }
+     endif; 
+
+     return $error;
+
+  /*
     $walletHistory = WalletHistory::create($request->all()); 
     $walletHistory->type = 'credit';
     // $walletHistory->save();
@@ -1947,8 +2058,10 @@ public function add_wallet_amt(Request $request)
         $wallet->save(); 
     } 
 
-    return \Redirect::back()->with('success',' Amount has been added successfully in wallet!');
-}   
+    return \Redirect::back()->with('success',' Amount has been added successfully in wallet!');*/
+}
+
+
 
 /*--------------------------------
 |   Coach Reports
@@ -1956,6 +2069,7 @@ public function add_wallet_amt(Request $request)
 public function coach_report() 
 {
   // dd(request()->get('coach_player_id'));
+
     $player_id = request()->get('coach_player_id');  
 
     $season_id = request()->get('season_id');
@@ -2038,9 +2152,9 @@ public function save_simple_report(Request $request)
             $report->selected_options = isset($request->selected_options) ? json_encode($request->selected_options) : '';
             $report->status = 0;
             $report->save();
-              // $this->CoachSubmitReportSuccess($report->id);
-              // $this->CoachSubmitEndOfTermReportSuccess($report->id);
-              // $report->notify(new \App\Notifications\User\ReportNotification());
+              //$this->CoachSubmitReportSuccess($report->id);
+              $this->CoachSubmitEndOfTermReportSuccess($report->id);
+              $report->notify(new \App\Notifications\User\ReportNotification());
             
 
             $override_url = url()->current().'?rp='.$report->id;
@@ -2064,8 +2178,8 @@ public function save_simple_report(Request $request)
 
                 if($report->save())
                 {
-                  // $this->CoachSubmitReportSuccess($report->id);
-                  // $this->CoachSubmitEndOfTermReportSuccess($report->id);
+                  //$this->CoachSubmitReportSuccess($report->id);
+                  $this->CoachSubmitEndOfTermReportSuccess($report->id);
                   $report->notify(new \App\Notifications\User\ReportNotification());
                 }
 
@@ -2379,7 +2493,7 @@ public function save_qualifications(Request $request)
 {
   $data = $request->all();  
   $user = \Auth::user()->id;
- 
+  //dd($data);
     if($request->hasFile('upload_document'))
     {
         foreach ($data['document_name'] as $number => $value)
@@ -2855,24 +2969,27 @@ public function medical_information(Request $request)
 | Add Family Member - Media Consents
 |---------------------------------------------------*/
 public function media_consent(Request $request)
-{   
-  if(!empty($request->confirm) && isset($request->confirm))
-  {
-    if($request->confirm == 'yes')
-    {
-      ChildrenDetail::where('child_id',$request->child_id)->update(array('media' => $request->media_consent, 'confirm' => $request->confirm)); 
-
-      $last_user_id = $request->child_id;
-      return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Media Consents added successfully.');
-    }
-    else{
-      ChildrenDetail::where('child_id',$request->child_id)->update(array('media' => $request->media_consent, 'confirm' => $request->confirm)); 
-
-      $last_user_id = $request->child_id;
-      return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','You will not be able to book this participant onto any DRH Sports activity if you select NO to this question.');
-    }
-    
-  }else{
+{ 
+   if(isset($request->agree)){
+   
+     if(!empty($request->confirm) && isset($request->confirm))
+     {
+       if($request->confirm == 'yes')
+       {
+         ChildrenDetail::where('child_id',$request->child_id)->update(array('media' => $request->media_consent, 'confirm' => $request->confirm, 'agree' => $request->agree )); 
+   
+         $last_user_id = $request->child_id;
+         return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Media Consents added successfully.');
+       }
+       else{
+         ChildrenDetail::where('child_id',$request->child_id)->update(array('media' => $request->media_consent, 'confirm' => $request->confirm, 'agree' => $request->agree )); 
+   
+         $last_user_id = $request->child_id;
+         return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','You will not be able to book this participant onto any DRH Sports activity if you select NO to this question.');
+       }
+       
+     }
+   }else{
     $last_user_id = $request->child_id;
 
     return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','Please confirm the details you have filled.');
@@ -4126,7 +4243,8 @@ public function save_goal(Request $request)
 
             if($value != null)
             {
-              SetGoal::where('parent_id',$request->parent_id)->where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->where('goal_id',$goaldata)->update(array('parent_comment' => $value, 'coach_id' => $coach_id));
+              /*SetGoal::where('parent_id',$request->parent_id)->where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->where('goal_id',$goaldata)->update(array('parent_comment' => $value, 'coach_id' => $coach_id));*/
+              SetGoal::where('parent_id',$request->parent_id)->where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->where('goal_id',$goaldata+1)->update(array('parent_comment' => $value[$goaldata+1], 'coach_id' => $coach_id));
             }
           // }
           
@@ -4367,6 +4485,14 @@ public function contact_us()
 /* Save contact form details */
 public function save_contact_us(Request $request)
 {
+    $this->validate($request,[
+                   'participant_name' => 'required',
+                   'parent_email' => 'required',
+                   'parent_telephone' => 'required',
+                   'message' => 'required',
+                   'g-recaptcha-response' => 'required',
+                   
+     ]);
     $contact = ContactDetail::create($request->all()); 
 
     if($contact->type == 'course')
@@ -4389,6 +4515,13 @@ public function save_contact_us(Request $request)
     else{
       return \Redirect::back()->with('success','Thank you for filling out the taster class request form. DRH Sports will contact you soon to confirm the details.');
     }
+    /*if($request->type == 'contact')
+    {
+      return \Redirect::back()->with('success',"Sorry, this form isn't working right now. To reach us, please email us directly at info@drhsports.co.uk.");
+    }
+    else{
+      return \Redirect::back()->with('success',"Sorry, this form isn't working right now. To reach us, please email us directly at info@drhsports.co.uk.");
+    }*/
     
 } 
 
@@ -4409,7 +4542,7 @@ public function save_contact_us(Request $request)
     //dd($coupon_code,$check_coupon,$shop_voucher);  
     $result='';
     $output = '';
-  	if($request->ajax())
+    if($request->ajax())
     {
       if($check_coupon == '' && $shop_voucher == '')
       {
@@ -4546,73 +4679,75 @@ public function save_contact_us(Request $request)
           // Cart Items
           $user_id = \Auth::check() && Auth::user()->role == "user" ? Auth::user()->id : 0;
           $userCart = \DB::table('shop_cart_items')->where('user_id',$user_id)->where('type','cart')->get();
-
+          $user_check_coupon_cart = \DB::table('shop_cart_items')->where('user_id',$user_id)->where('discount_code', $request->coupon_code)->count();
           $coupon_code = $request->coupon_code;
           $check_coupon = Coupon::where('coupon_code',$coupon_code)->first(); 
           $selected_products = explode(',',$check_coupon->products);
           $selected_courses = explode(',', $check_coupon->courses);
           $selected_camps = explode(',', $check_coupon->camps);
+          if($check_coupon->uses > $user_check_coupon_cart){
+            if(!empty($userCart)){
+              foreach($userCart as $cart)
+              {
+                 if(in_array($cart->product_id,$selected_products))
+                 {
+                  $prod = ShopCartItems::where('user_id',$user_id)->where('orderID', '=', NULL)->where('product_id',$cart->product_id)->first();
 
-          if(!empty($userCart))
-          {
-            foreach($userCart as $cart)
-            {
-               if(in_array($cart->product_id,$selected_products))
-               {
-                $prod = ShopCartItems::where('user_id',$user_id)->where('orderID', '=', NULL)->where('product_id',$cart->product_id)->first();
+                  if($prod->discount_code != $coupon_code)
+                  { 
+                    $pr = ShopCartItems::find($prod->id);
+                    $pr->discount_code = $request->coupon_code;
+                    $pr->discount_price = number_format($check_coupon->flat_discount,2);
+                    $pr->save();
 
-                if($prod->discount_code != $coupon_code)
-                { 
-                  $pr = ShopCartItems::find($prod->id);
-                  $pr->discount_code = $request->coupon_code;
-                  $pr->discount_price = number_format($check_coupon->flat_discount,2);
-                  $pr->save();
+                    $result = '<div class="alert alert-success" role="alert">Coupon applied successfully.</div>';
 
-                  $result = '<div class="alert alert-success" role="alert">Coupon applied successfully.</div>';
+                  }else if($prod->discount_code == $coupon_code){
+                    $result = '<div class="alert alert-success" role="alert">Coupon applied successfully.</div>';
+                  }else{
+                    $result = '<div class="alert alert-danger" role="alert">Coupon already applied.</div>';
+                  }
 
-                }else if($prod->discount_code == $coupon_code){
-                  $result = '<div class="alert alert-success" role="alert">Coupon applied successfully.</div>';
+                }elseif(in_array($cart->product_id,$selected_courses)){
+
+                  $prod = ShopCartItems::where('user_id',$user_id)->where('orderID', '=', NULL)->where('product_id',$cart->product_id)->first();
+
+                  if($prod->discount_code != $coupon_code)
+                  { 
+                    $pr = ShopCartItems::find($prod->id);
+                    $pr->discount_code = $request->coupon_code;
+                    $pr->discount_price = number_format($check_coupon->flat_discount,2);
+                    $pr->save();
+
+                  }else if($prod->discount_code == $coupon_code){
+                    $result = '<div class="alert alert-success" role="alert">Coupon applied successfully.</div>';
+                  }else{
+                    $result = '<div class="alert alert-danger" role="alert">Coupon already applied.</div>';
+                  }
+                }elseif(in_array($cart->product_id,$selected_camps)){
+
+                  $prod = ShopCartItems::where('user_id',$user_id)->where('orderID', '=', NULL)->where('product_id',$cart->product_id)->first();
+
+                  if($prod->discount_code != $coupon_code)
+                  { 
+                    $pr = ShopCartItems::find($prod->id);
+                    $pr->discount_code = $request->coupon_code;
+                    $pr->discount_price = number_format($check_coupon->flat_discount,2);
+                    $pr->save();
+
+                  }else if($prod->discount_code == $coupon_code){
+                    $result = '<div class="alert alert-success" role="alert">Coupon applied successfully.</div>';
+                  }else{
+                    $result = '<div class="alert alert-danger" role="alert">Coupon already applied.</div>';
+                  }
                 }else{
-                  $result = '<div class="alert alert-danger" role="alert">Coupon already applied.</div>';
+                  $result = '<div class="alert alert-danger" role="alert">Something went wrong.</div>';
                 }
 
-              }elseif(in_array($cart->product_id,$selected_courses)){
-
-                $prod = ShopCartItems::where('user_id',$user_id)->where('orderID', '=', NULL)->where('product_id',$cart->product_id)->first();
-
-                if($prod->discount_code != $coupon_code)
-                { 
-                  $pr = ShopCartItems::find($prod->id);
-                  $pr->discount_code = $request->coupon_code;
-                  $pr->discount_price = number_format($check_coupon->flat_discount,2);
-                  $pr->save();
-
-                }else if($prod->discount_code == $coupon_code){
-                  $result = '<div class="alert alert-success" role="alert">Coupon applied successfully.</div>';
-                }else{
-                  $result = '<div class="alert alert-danger" role="alert">Coupon already applied.</div>';
-                }
-              }elseif(in_array($cart->product_id,$selected_camps)){
-
-                $prod = ShopCartItems::where('user_id',$user_id)->where('orderID', '=', NULL)->where('product_id',$cart->product_id)->first();
-
-                if($prod->discount_code != $coupon_code)
-                { 
-                  $pr = ShopCartItems::find($prod->id);
-                  $pr->discount_code = $request->coupon_code;
-                  $pr->discount_price = number_format($check_coupon->flat_discount,2);
-                  $pr->save();
-
-                }else if($prod->discount_code == $coupon_code){
-                  $result = '<div class="alert alert-success" role="alert">Coupon applied successfully.</div>';
-                }else{
-                  $result = '<div class="alert alert-danger" role="alert">Coupon already applied.</div>';
-                }
-              }else{
-                $result = '<div class="alert alert-danger" role="alert">Something went wrong.</div>';
               }
-
             }
+          }else{
+            $result = '<div class="alert alert-danger" role="alert">Coupon limit completed.</div>';
           }
           $output .= $result;
           
@@ -4924,18 +5059,20 @@ public function newsletter_integration(Request $request)
       return view('newsletter_success',compact('existing_email'))->with('error',$entered_email. ' email is already subscribed.');
     }
     else{
-      $newsletter = NewsletterSubscription::create($request->all()); 
-      $newsletter->status = 1;
-      $newsletter->save();
+        $newsletter = NewsletterSubscription::create($request->all()); 
+        $newsletter->status = 1;
+        $newsletter->save();
 
-      $user_email = $newsletter->email;
-
+        $user_email = $request->email;
+        
+        $this->NewsletterSuccess( $user_email );
       // Mail to user
-      \Mail::send('emails.newsletter.subscribe', ['user_email' => $user_email,'id' => $newsletter->id] , 
+      /*\Mail::send('emails.newsletter.subscribe', ['user_email' => $user_email,'id' => $newsletter->id] , 
            function($message) use($user_email){
                $message->to($user_email);
                $message->subject('Subject : '.'Subscribe By Admin');
-             });
+             });*/
+
 
       return view('newsletter_success',compact('entered_email'))->with('success',$entered_email. ' email is subscribed successfully.');
     }
@@ -5040,27 +5177,32 @@ public function add_competition(Request $request)
 
 public function comp_data($id)
 {
+
+    //dd($comp);
+    if (condition) {
+      # code...
+    }
     $comp = Competition::where('id',$id)->first();
     return view('coach.match-report')->with('comp',$comp)->with('success',' Competition added successfully!');
 }
 
 /*---------------------------------
-|	All match reports
+| All match reports
 |----------------------------------*/
 public function all_match_reports()
 {
-	$check_role = Auth::user()->role_id;
+  $check_role = Auth::user()->role_id;
 
-	if($check_role == '2')
-	{
-		$match_reports = MatchReport::where('coach_id',0)->where('parent_id',Auth::user()->id)->orderBy('id','desc')->paginate(10);
-	}
-	elseif($check_role == '3')
-	{
-		$match_reports = MatchReport::where('parent_id',0)->where('coach_id',Auth::user()->id)->orderBy('id','desc')->paginate(10);
-	}
+  if($check_role == '2')
+  {
+    $match_reports = MatchReport::where('coach_id',0)->where('parent_id',Auth::user()->id)->orderBy('id','desc')->paginate(10);
+  }
+  elseif($check_role == '3')
+  {
+    $match_reports = MatchReport::where('parent_id',0)->where('coach_id',Auth::user()->id)->orderBy('id','desc')->paginate(10);
+  }
 
-	return view('all-match-reports', compact('match_reports'));
+  return view('all-match-reports', compact('match_reports'));
 }
 
 /*---------------------------------
@@ -5072,11 +5214,11 @@ public function add_match(Request $request)
 
   if($role_id == '2')
   {
-  	$parent_id = Auth::user()->id;
+    $parent_id = Auth::user()->id;
   }
   elseif($role_id == '3')
   {
-  	$coach_id = Auth::user()->id;
+    $coach_id = Auth::user()->id;
   }
 
   if(!empty($request->opponent_name) && !empty($request->start_date) && !empty($request->surface_type) && !empty($request->condition) && !empty($request->result) && !empty($request->score))
@@ -5471,7 +5613,6 @@ public function notification_timeline()
 public function mark_as_read($id)
 {
   $notifications = \DB::table('notifications')->where('id',$id)->delete();
-
   return \Redirect::back();
 }
 
@@ -5587,22 +5728,24 @@ public function ah_contact_information(Request $request)
 |---------------------------------------------------*/
 public function ah_media_consent(Request $request)
 {  
-  if(!empty($request->confirm) && isset($request->confirm))
-  {
-    if($request->confirm == 'yes')
+  if(isset($request->agree)){
+    if(!empty($request->confirm) && isset($request->confirm))
     {
-      ChildrenDetail::where('child_id',$request->child_id)->update(array('media' => $request->media_consent, 'confirm' => $request->confirm)); 
+      if($request->confirm == 'yes')
+      {
+        ChildrenDetail::where('child_id',$request->child_id)->update(array('media' => $request->media_consent, 'confirm' => $request->confirm, 'agree' => $request->agree)); 
 
-      $last_user_id = $request->child_id;
-      return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Media Consents added successfully.');
-    }
-    else{
-      ChildrenDetail::where('child_id',$request->child_id)->update(array('media' => $request->media_consent, 'confirm' => $request->confirm)); 
+        $last_user_id = $request->child_id;
+        return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('success','Media Consents added successfully.');
+      }
+      else{
+        ChildrenDetail::where('child_id',$request->child_id)->update(array('media' => $request->media_consent, 'confirm' => $request->confirm, 'agree' => $request->agree)); 
 
-      $last_user_id = $request->child_id;
-      return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','You will not be able to book this participant onto any DRH Sports activity if you select NO to this question.');
+        $last_user_id = $request->child_id;
+        return redirect('/user/family-member/overview/'.$last_user_id)->with('last_user_id', $last_user_id)->with('error','You will not be able to book this participant onto any DRH Sports activity if you select NO to this question.');
+      }
+      
     }
-    
   }else{
     $last_user_id = $request->child_id;
 
@@ -5721,10 +5864,126 @@ public function package_courses($booking_no)
   return view('PackageCourse.index',compact('get_packages','booking_no','pack'));
 }
 
+/************************************************************************/
+/*-------------Package Course payemnt Functionality By SB---------------*/
+/************************************************************************/
+public function save_package_courses( Request $request, $booking_no )
+{
+
+  $get_packages = PackageCourse::where('booking_no',$booking_no)->get(); //dd($get_packages);
+  foreach ($get_packages as $vae) {
+    $account_id = $vae->account_id;
+    $account_details = \DB::table('stripe_accounts')->where('id',$account_id)->first();
+  }
+  $account_key = $account_details->secret_key;
+  $total = [];
+
+  foreach($get_packages as $pack)
+  { 
+    $get_course = Course::where('id',$pack['course_id'])->first();
+
+    $sci = new ShopCartItems;
+    $sci->shop_id = 0;
+    $sci->vendor_id = 1;
+    $sci->user_id = $pack['parent_id'];
+    $sci->child_id = isset($pack['player_id']) ? $pack['player_id'] : '';
+    $sci->product_id = $pack['course_id'];
+    $sci->course_season = $get_course->season;
+    $sci->price = $pack['price'];
+    $sci->total = $pack['price'];
+    $sci->type = 'order';
+    $sci->quantity = 1;
+    $sci->shop_type = 'course';
+    $sci->manual = 1;
+    $sci->orderID = '#DRHSHOP'.strtotime(date('y-m-d h:i'));
+    $sci->save();
+
+    $total[]  = $sci->price;
+  }
+  $total_price = array_sum($total); 
+
+  if (Auth::check()) {
+    $name_for_details = \Auth::user()->name;
+    $email_for_details =  \Auth::user()->email;
+  }else{
+    $name_for_details = 'Anonymous';
+    $email_for_details = 'Email not found because user was not logged in.';
+  }
+  //dd($total_price);    
+  $error = '';
+  if(empty($request->stripeToken)):
+         $error .= '<li>Stripe token Expired!</li>';
+      else:
+                    
+          # create customer to stripe while payment
+          try {
+
+                /*$AccountWithPayment= $this->CommissionFeeServiceAccordingVendor('STRIPE',1);*/
+                $description = 'Payment from customer name - ' .$name_for_details. ' & order type - Package course & user email - '. $email_for_details ;
+                $AccountWithPayment = [];
+                $token = $request->stripeToken;
+                //dd($AccountWithPayment);                
+                /*$stripe_data = SripeAccount(); 
+                $stripe1 = $stripe_data['sk']; */
+                           
+                Stripe\Stripe::setApiKey($account_key);
+                $charge = \Stripe\Charge::create([
+                        "amount" => ($total_price * 100),
+                        "currency" => "gbp",
+                        "source" => $request->stripeToken,
+                        "description" => $description,
+                        ],$AccountWithPayment);
+                if($charge){
+                  $so = new ShopOrder;
+                  $so->user_id = $pack->parent_id;
+                  $so->payment_by = 'STRIPE';
+                  $so->amount = $total_price;
+                  $so->orderID = $sci->orderID;
+                  $so->status = 1;
+                  
+                  if($so->save()){
+
+                    ShopCartItems::where('orderID', $so->orderID)->update(array('orderID' => $so->orderID, 'order_id' => $so->id));
+
+                    PackageCourse::where('booking_no',$booking_no)->update(array('status' => 1, 'orderID' => $sci->orderID, 'payment_date' => $sci->updated_at));
+
+                    $this->ShopProductOrderPlacedForVendorSuccess($so->id);
+                    $this->ShopProductOrderPlacedSuccess($so->id);
+                    $this->ShopProductOrderPlacedInfo($so->id);
+
+                      // ShopCartItems::where('orderID', $so->orderID)->update(array('orderID' => $so->orderID));
+
+                        // if(Auth::user()->createOrderFromCart($so))
+                        //   {
+                              \Session::forget('shippingAddress');
+                              \Session::forget('shopBillingAddress');
+
+                              return redirect()->route('shop.checkout.thankyou', ['order_id' => $so->id]);  
+
+                              // $this->AdminOrderSuccessOrderSuccess($so->id);
+
+                          // }
+                  }
+                
+                  return view('PackageCourse.index',compact('get_packages'));
+
+                }else{
+                        $error .= '<li><b>Payment Failed</b> Something Wrong going on!</li>';
+                }
+           } catch (Exception $e) {
+                $error .='Caught exception: '.  $e->getMessage();
+           }
+     endif; 
+
+     return $error;
+  //$data = save_package_courses_payment_data( $booking_no );
+
+  }
+
 /*------------------------------------
 | Save Package Courses
 |------------------------------------*/
-public function save_package_courses($booking_no)
+/*public function save_package_courses($booking_no)
 {
   $get_packages = PackageCourse::where('booking_no',$booking_no)->get(); //dd($get_packages);
   $total = [];
@@ -5785,6 +6044,8 @@ public function save_package_courses($booking_no)
     
   return view('PackageCourse.index',compact('get_packages'));
 }
+*/
+
 
 /*------------------------------------
 | Stripe Custom Form
@@ -5824,12 +6085,406 @@ public function stripePost(Request $request)
 /*-----------------------New Videos Functionality Starts Here by SB --------------------*/
 /****************************************************************************************/
 
-public function videosListing()
-  {
-      return view('cms.videos.video-listing');
+public function videosListing() {
+      $categories = VideoCategory:: where('status', 1)->get();
+      if(Auth::check()) 
+      {
+        $videos = VideosManagement::where(['status' => 1])->get();
+        $categories = VideoCategory:: where('status', 1)->get();
+        $user_videos = VideoManagementLinking::select('video_id')->where(['user_id' => Auth::User()->id])->get();
+        $season_videos = VideoManagementLinking::select('video_id', 'season_id')->whereNotNull('season_id')->groupBy('season_id')->get();
+        $course_season = ShopCartItems::select('course_season')->where('user_id',Auth::user()->id)->where('type','order')->where('shop_type','course')->whereNotNull('course_season')->groupBy('course_season')->get();
+        $active_seasons =Season::select('id')->where('status',1)->orderBy('id','desc')->get();
+        $seas = $existingSea = $cours = [];
+        foreach($season_videos as $se){
+          array_push($seas, $se->season_id);
+        }
+        foreach($course_season as $s){
+          array_push($cours, $s->course_season);
+        }
+        foreach ($seas as $value) {
+          if (in_array($value, $cours)) {
+            array_push($existingSea, $value);
+          }
+        }
+        //dd($existingSea);
+          
+      }else{
+        /*$videos = VideosManagement::where(['status' => 1])->where(['users' => 'all'])->get();*/
+        $videos = $user_videos = $active_seasons = $existingSea = [];
+      }
+      $cat_id = '';
+      return view('cms.videos.video-listing',compact('videos','user_videos','existingSea','active_seasons', 'categories', 'cat_id'));
+  }
+
+  public function videosFilter(Request $request){
+    $categories = VideoCategory:: where('status', 1)->get();
+    if(Auth::check()) 
+    {
+      if(empty($request->category)){
+        return redirect()->route('home.videos.listing');
+      }
+      $categ = VideoCategory::select('slug')-> where('id', $request->category)->first();
+      
+      $cat_id = $request->category;
+      if ( strcmp($categ->slug , 'all-videos') == 0 ) {
+        $videos = VideosManagement:: where('status', 1)->get();
+      }
+      elseif(strcmp($categ->slug , 'my-videos') == 0){
+        $videos = VideosManagement:: where('users', '!=' , 'all')->where('status', 1)->get();        
+      }else{
+
+        /*$videos = VideosManagement::where(['video_category' => $request->category, 'status' => 1])->get();*/
+        $videos = VideosManagement::where([['status', '=', 1],['video_category', 'like', '%,' . $request->category .',%']])->orWhere([['status', '=', 1],['video_category', 'like', $request->category.',%']])->orWhere([['status', '=', 1],['video_category', 'like', $request->category]])->orWhere([['status', '=', 1],['video_category', 'like', '%,'.$request->category]])->get();
+      }
+      $user_videos = VideoManagementLinking::select('video_id')->where(['user_id' => Auth::User()->id])->get();
+      $season_videos = VideoManagementLinking::select('video_id', 'season_id')->whereNotNull('season_id')->groupBy('season_id')->get();
+      $course_season = ShopCartItems::select('course_season')->where('user_id',Auth::user()->id)->where('type','order')->where('shop_type','course')->whereNotNull('course_season')->groupBy('course_season')->get();
+      $active_seasons =Season::select('id')->where('status',1)->orderBy('id','desc')->get();
+      $seas = $existingSea = $cours = [];
+      foreach($season_videos as $se){
+        array_push($seas, $se->season_id);
+      }
+      foreach($course_season as $s){
+        array_push($cours, $s->course_season);
+      }
+      foreach ($seas as $value) {
+        if (in_array($value, $cours)) {
+          array_push($existingSea, $value);
+        }
+      }
+      //dd($existingSea);
+        
+    }else{
+      $videos = $user_videos = $active_seasons = $existingSea = [];
+    }
+    // dd($videos);
+    return view ('cms.videos.video-listing',compact('videos','user_videos','existingSea','active_seasons', 'categories', 'cat_id'));
   }
 
 
 
+  /*********************************************************************************/
+  /*--------------------- New Pago Courses functionality By SB--------------------*/
+  /*********************************************************************************/
+  public function payGoCourseListing(Request $request)
+  {
+     $slug = 'course-listing';
+
+      if(!empty(request()->get('course'))){
+        $course_name = request()->get('selected_course_name');
+        $subtype = request()->get('subtype');
+        $level = request()->get('level');
+
+        //dd($course,$course_name,$age_group,$level);
+
+        $course = \DB::table('courses')
+                   ->where('title', '=', $course_name)
+                   ->where('subtype', '=', $subtype)
+                   // ->where('subtype', '=', $level)
+                   ->where('status',1)
+                   ->orderBy('sort','asc')->get();
+
+      }else{
+        $course = PayGoCourse::orderBy('sort','asc')->where('status',1)->get();
+      }
+
+      $accordian = Accordian::where('page_title',$slug)->where('status','1')->orderBy('sort','asc')->get();  
+
+      // Get subtype for tennis courses
+      $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->get();
+
+      $testimonial = Testimonial::select(['id','title', 'description','status','slug','image'])->where('page_title','course-listing')->where('status','1')->get(); 
+      return view('cms.pay-go-course.listing',compact('testimonial','course','course_name','age_group','level','accordian','subtype'));
+  }
+
+  public function payGoCourseDetails($id)
+  {
+      $decode_id = base64_decode($id);
+      $course = PayGoCourse::where('id','=',$decode_id)->first();
+      $course_dates = PaygocourseDate::where('course_id','=',$decode_id)->get();
+      return view('cms.pay-go-course.detail',compact('course','course_dates'));
+  }
+
+  /* Course Booking */
+  public function payGoCourseBooking(Request $request)
+  {
+
+    $this->validate($request,[
+                   'selected_date_ids' => 'required',
+                   
+     ],[
+          'selected_date_ids.required' => 'Please Select at least one date for booking.'
+     ]);
+
+    $selected_date_ids = $request->selected_date_ids;
+    $courDates = [];
+    foreach ($selected_date_ids as $k => $v) {
+      $getDateData = PaygocourseDate::where( 'id', $v )->first();
+      array_push( $courDates, strtotime( $getDateData->course_date ) );
+    }
+    $checkIfExists1 = [];
+    $check_course = [];
+    $check_course1 = \DB::table('shop_cart_items')
+                      ->leftjoin('pay_go_course_booked_dates', 'shop_cart_items.id', '=', 'pay_go_course_booked_dates.cart_id')
+                      ->where('shop_cart_items.child_id',$request->child)
+                      ->where('shop_cart_items.shop_type','paygo-course')
+                      ->where('shop_cart_items.product_id',$request->course_id)
+                      ->where(function($q) { 
+                      $q->where('shop_cart_items.type', 'cart') 
+                      ->orWhere('shop_cart_items.type', 'order'); })
+                      /*->where('shop_cart_items.type','cart')*/
+                      ->select('shop_cart_items.*', 'pay_go_course_booked_dates.*')->get();
+    $checkAlreadyBookedDates = 0;
+    foreach( $check_course1 as $checkDate ){
+      $datebooked = strtotime( $checkDate->date );
+      if (in_array( $datebooked, $courDates)) {
+        array_push( $check_course, date('d-m-Y', $datebooked ) );
+        $checkAlreadyBookedDates = 1;
+      }
+    }
+    if ( $checkAlreadyBookedDates == 1 ) {
+      $c = implode(', ', $check_course);
+              return \Redirect::back()->with('error','This person is already booked for '.$c.' on this course or the course is already in the cart for these dates. Please select different date!');
+    }
+
+    $allDatesTotalPrice = $request->final_paygo_price;
+    //dd($allDatesTotalPrice);
+    $check_cart = ShopCartItems::where('user_id',Auth::user()->id)->where('type','cart')->first(); 
+    //dd($check_cart);
+
+    if(!empty($check_cart))
+    {
+        $account_id = getAccountID($check_cart->id);
+    }
+
+    if(!empty($check_cart))
+    { 
+        $course = PayGoCourse::where('id',$request->course_id)->first();
+        $current_account_id = $course->account_id;
+
+        if($account_id == $current_account_id)
+        {
+          $check_consents = ChildrenDetail::where('child_id', $request->child)->first();
+          $check_contacts = ChildContact::where('child_id', $request->child)->first(); 
+
+          //dd($check_consents,$check_contacts,$check_consents->media,$check_consents->media,$check_consents->confirm,$check_consents->med_cond);
+
+          // if(isset($check_consents) && isset($check_contacts) && !empty($check_consents->media) && !empty($check_consents->confirm) && !empty($check_consents->med_cond))
+          // {
+            /*$check_course = \DB::table('shop_cart_items')
+                            ->leftjoin('pay_go_course_booked_dates', 'shop_cart_items.id', '=', 'pay_go_course_booked_dates.cart_id')
+                            ->where('shop_cart_items.child_id',$request->child)
+                            ->where('shop_cart_items.shop_type','paygo-course')
+                            ->where('shop_cart_items.product_id',$request->course_id)
+                            ->where('shop_cart_items.type','order')
+                            ->get();
+            dd($check_course);*/
+            $course_id = $request->course_id;
+            $child_id  = $request->child;
+            $course    = PayGoCourse::where('id',$course_id)->first(); 
+            $course_cat = $course->type; 
+            $course_season = $course->season;
+            $cat = \DB::table('product_categories')->where('id',$course_cat)->first(); 
+            //dd($cat);
+
+            if($cat->slug == 'tennis'){
+                $early_bird_enable = getAllValueWithMeta('check_tennis_percentage', 'early-bird');
+                $percentage = getAllValueWithMeta('tennis_percentage', 'early-bird');
+            }elseif($cat->slug == 'football'){
+                $early_bird_enable = getAllValueWithMeta('check_football_percentage', 'early-bird');
+                $percentage = getAllValueWithMeta('football_percentage', 'early-bird');
+            }elseif($cat->slug == 'schools'){
+                $early_bird_enable = getAllValueWithMeta('check_school_percentage', 'early-bird');
+                $percentage = getAllValueWithMeta('school_percentage', 'early-bird');
+            }
+
+              $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
+              $early_bird_time = getAllValueWithMeta('early_bird_time', 'early-bird');
+              $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).' 23:59:00');
+              $currntD = strtotime(date('Y-m-d H:i:s'));
+
+            $add_course = new ShopCartItems;
+            $add_course->shop_type  = 'paygo-course';
+            $add_course->quantity   = 1;
+            $add_course->vendor_id  = 1;
+            $add_course->product_id = $course_id;
+            $add_course->user_id    = \Auth::user()->id;
+            $add_course->course_season = $course_season;
+            $add_course->membership_status = 0;
+
+          if($currntD >= $endDate)
+          {   
+              $add_course->price  = $course->price;
+              $add_course->total  = $allDatesTotalPrice;
+              $add_course->paygo_course_price = $allDatesTotalPrice;
+          }else{
+            if($early_bird_enable == '1'){
+              $cour_price = $course->price;
+              $dis_price = $cour_price - (($cour_price) * ($percentage/100));
+              $add_course->price  = $dis_price;
+
+              $cour_price = $allDatesTotalPrice;
+              $dis_price = $cour_price - (($cour_price) * ($percentage/100));
+
+              $add_course->total  = $dis_price;
+              $add_course->paygo_course_price = $dis_price;
+            }else{
+              $add_course->price  = $course->price;
+              $add_course->total  = $allDatesTotalPrice;
+              $add_course->paygo_course_price = $allDatesTotalPrice;
+            }
+          }
+
+            $add_course->child_id = $child_id;
+
+            if($add_course->save()){
+              $bookedPayGoDatesData['cart_id'] = $add_course['id'];
+              $bookedPayGoDatesData['course_id'] = $request->course_id;
+              $bookedPayGoDatesData['child_id'] = $request->child;
+              for ($i=0; $i <count($request->selected_date_ids) ; $i++) { 
+                $bookedPayGoDatesData['booked_date_id'] = $request->selected_date_ids[$i];
+                $date = PaygocourseDate::where('id', $request->selected_date_ids[$i] )->first();
+                $bookedPayGoDatesData['date'] = $date->course_date;
+                PayGoCourseBookedDate:: Create($bookedPayGoDatesData);
+              }
+
+              $output = 1;
+            }else{
+              $output = 0;
+            }
+
+              // $data = array(
+              //             'output'   => $output,
+              //         );
+
+              // return response()->json($data);
+
+              // return redirect('shop/cart');
+
+            if($course->membership_popup == 1)
+            {
+              return \Redirect::back()->withInput(array('shop_id' => $add_course->id))->with('popup',' ');
+            }else{
+              return redirect('shop/cart');
+            }     
+
+        // }else{
+        //   return \Redirect::back()->with('error','User details are required in order to proceed.');
+        // }
+        }else{
+          return \Redirect::back()->with('error','Courses / camps held at Letchworth Sports & Tennis Club cannot be purchased at the same time as courses / camps held at other venues or some shop items. You will need to purchase LSTC courses / camps seperately - Thank you!');
+        }
+    }else{
+        $course = PayGoCourse::where('id',$request->course_id)->first();
+        $current_account_id = $course->account_id;
+
+        $check_consents = ChildrenDetail::where('child_id', $request->child)->first();
+        $check_contacts = ChildContact::where('child_id', $request->child)->first(); 
+
+          //$check_course = \DB::table('shop_cart_items')->where('child_id',$request->child)->where('shop_type','paygo-course')->where('product_id',$request->course_id)->where('type','order')->first();
+
+         
+        $course_id = $request->course_id;
+        $child_id  = $request->child;
+        $course    = PayGoCourse::where('id',$course_id)->first(); 
+        $course_cat = $course->type; 
+        $course_season = $course->season;
+        $cat = \DB::table('product_categories')->where('id',$course_cat)->first(); 
+
+        if($cat->slug == 'tennis'){
+            $early_bird_enable = getAllValueWithMeta('check_tennis_percentage', 'early-bird');
+            $percentage = getAllValueWithMeta('tennis_percentage', 'early-bird');
+        }elseif($cat->slug == 'football'){
+            $early_bird_enable = getAllValueWithMeta('check_football_percentage', 'early-bird');
+            $percentage = getAllValueWithMeta('football_percentage', 'early-bird');
+        }elseif($cat->slug == 'schools'){
+            $early_bird_enable = getAllValueWithMeta('check_school_percentage', 'early-bird');
+            $percentage = getAllValueWithMeta('school_percentage', 'early-bird');
+        }
+
+          $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
+          $early_bird_time = getAllValueWithMeta('early_bird_time', 'early-bird');
+          $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).' 23:59:00');
+          $currntD = strtotime(date('Y-m-d H:i:s'));
+
+        $add_course = new ShopCartItems;
+        $add_course->shop_type  = 'paygo-course';
+        $add_course->quantity   = 1;
+        $add_course->vendor_id  = 1;
+        $add_course->product_id = $course_id;
+        $add_course->user_id    = \Auth::user()->id;
+        $add_course->course_season = $course_season;
+        $add_course->membership_status = 0;
+
+      /*if($currntD >= $endDate)
+      {   
+          $add_course->price  = $course->price;
+          $add_course->total  = $course->price;
+      }else{
+        if($early_bird_enable == '1'){
+          $cour_price = $course->price;
+          $dis_price = $cour_price - (($cour_price) * ($percentage/100));
+
+          $add_course->price  = $dis_price;
+          $add_course->total  = $dis_price;
+        }else{
+          $add_course->price  = $course->price;
+          $add_course->total  = $course->price;
+        }
+      }*/
+      if($currntD >= $endDate)
+        {   
+            $add_course->price  = $course->price;
+            $add_course->total  = $allDatesTotalPrice;
+            $add_course->paygo_course_price = $allDatesTotalPrice;
+        }else{
+          if($early_bird_enable == '1'){
+            $cour_price = $course->price;
+            $dis_price = $cour_price - (($cour_price) * ($percentage/100));
+            $add_course->price  = $dis_price;
+            
+            $cour_price = $allDatesTotalPrice;
+            $dis_price = $cour_price - (($cour_price) * ($percentage/100));
+
+            $add_course->total  = $dis_price;
+            $add_course->paygo_course_price = $dis_price;
+          }else{
+            $add_course->price  = $course->price;
+            $add_course->total  = $allDatesTotalPrice;
+            $add_course->paygo_course_price = $allDatesTotalPrice;
+          }
+        }
+
+        $add_course->child_id = $child_id;
+
+        if($add_course->save()){
+          $bookedPayGoDatesData['cart_id'] = $add_course['id'];
+          $bookedPayGoDatesData['course_id'] = $request->course_id;
+          $bookedPayGoDatesData['child_id'] = $request->child;
+          for ($i=0; $i <count($request->selected_date_ids) ; $i++) { 
+              $bookedPayGoDatesData['booked_date_id'] = $request->selected_date_ids[$i];
+              $date = PaygocourseDate::where('id', $request->selected_date_ids[$i] )->first();
+              $bookedPayGoDatesData['date'] = $date->course_date;
+              //dd($bookedPayGoDatesData);
+              PayGoCourseBookedDate:: Create($bookedPayGoDatesData);
+            }
+          $output = 1;
+        }else{
+          $output = 0;
+        }
+
+        if($course->membership_popup == 1)
+        {
+          return \Redirect::back()->withInput(array('shop_id' => $add_course->id))->with('popup',' ');
+        }else{
+          return redirect('shop/cart');
+        }
+          
+    }
+    
+  }
+
 
 }
+

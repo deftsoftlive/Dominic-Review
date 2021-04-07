@@ -338,3 +338,236 @@ $(document).ready(function (){
     }
   });
 });
+
+
+/****************************************************************************/
+/*------------------------New Video Functionality Js -----------------------*/
+/****************************************************************************/
+
+
+$(document).ready(function(){
+  $("#parentId").select2();
+  $("#seasonId").select2();
+  $("#coachId").select2();
+  $("#video_category").select2();
+  
+});
+
+
+
+$(document).ready(function(){
+   // Add Department Form
+  $('#videoForm').validate({
+    onfocusout: function (valueToBeTested) {
+      $(valueToBeTested).valid();
+    },
+  
+    highlight: function(element) {
+      $('element').removeClass("error");
+    },
+  
+    rules: {
+      "title": { 
+          required: true,
+          maxlength: 30,
+      },
+      "url": { 
+          required: true,
+      },
+      "description": { 
+          required: true,
+          maxlength: 500,
+      },
+      valueToBeTested: {
+          required: true,
+      }
+    },
+    });   
+  
+    // Add Department Submitting Form 
+    $('#videoSubmitButton').click(function()
+    {
+      if($('#videoForm').valid())
+      {
+        $('#videoSubmitButton').prop('disabled', true);
+        $('#videoForm').submit();
+      } else {
+        return false;
+      }
+    });
+
+
+    $('#venueFormPaygoCreate').validate({
+    onfocusout: function (valueToBeTested) {
+      $(valueToBeTested).valid();
+    },
+  
+    highlight: function(element) {
+      $('element').removeClass("error");
+    },
+  
+    rules: {
+      "title": { 
+          required: true,
+      },
+      "description": { 
+          required: true,
+      },
+      /*"subtype": { 
+          required: true,
+      },*/
+      "account_id": { 
+          required: true,
+      },
+      "age_group": { 
+          required: true,
+      },
+      "session_date": { 
+          required: true,
+      },
+      "course_category": { 
+          required: true,
+      },
+      "location": { 
+          required: true,
+      },
+      "day_time": { 
+          required: true,
+      },
+      "more_info": { 
+          required: true,
+      },
+      "price": { 
+          required: true,
+      },
+      "coach_cost": { 
+          required: true,
+      },
+      "venue_cost": { 
+          required: true,
+      },
+      "equipment_cost": { 
+          required: true,
+      },
+      "other_cost": { 
+          required: true,
+      },
+      "tax_cost": { 
+          required: true,
+      },
+      "end_date": { 
+          required: true,
+      },
+      "linked_coach": { 
+          required: true,
+      },
+
+    },
+    });   
+  
+    // Add Department Submitting Form 
+    $('#btnVanue').click(function()
+    {
+      if($('#venueFormPaygoCreate').valid())
+      {
+        $('#btnVanue').prop('disabled', true);
+        $('#venueFormPaygoCreate').submit();
+      } else {
+        return false;
+      }
+    });
+
+    $('#venueFormPaygoEdit').validate({
+    onfocusout: function (valueToBeTested) {
+      $(valueToBeTested).valid();
+    },
+  
+    highlight: function(element) {
+      $('element').removeClass("error");
+    },
+  
+    rules: {
+      "title": { 
+          required: true,
+      },
+      "description": { 
+          required: true,
+      },
+      "account_id": { 
+          required: true,
+      },
+      "age_group": { 
+          required: true,
+      },
+      "session_date": { 
+          required: true,
+      },
+      "course_category": { 
+          required: true,
+      },
+      "location": { 
+          required: true,
+      },
+      "day_time": { 
+          required: true,
+      },
+      "more_info": { 
+          required: true,
+      },
+      "price": { 
+          required: true,
+      },
+      "coach_cost": { 
+          required: true,
+      },
+      "venue_cost": { 
+          required: true,
+      },
+      "equipment_cost": { 
+          required: true,
+      },
+      "other_cost": { 
+          required: true,
+      },
+      "tax_cost": { 
+          required: true,
+      },
+      "end_date": { 
+          required: true,
+      },
+      "linked_coach": { 
+          required: true,
+      },
+
+    },
+    });   
+  
+    // Add Department Submitting Form 
+    $('#btnVanue').click(function()
+    {
+      if($('#venueFormPaygoEdit').valid())
+      {
+        $('#btnVanue').prop('disabled', true);
+        $('#venueFormPaygoEdit').submit();
+      } else {
+        return false;
+      }
+    });
+
+
+
+    
+});
+
+/*Select all coaches*/
+/*$(document).ready(function() {
+    $("#select_all_coaches").click(function(){
+      if($("#select_all_coaches").is(':checked') ){ //select all
+        $("#coachId").find('option:not([disabled])').prop("selected",true);
+        $("#coachId").trigger('change');
+      } else { //deselect all
+        $("#coachId").find('option:not([disabled])').prop("selected",false);
+        $("#coachId").trigger('change');
+      }
+  });
+});*/

@@ -84,6 +84,46 @@ header.Eshop-header {
                                                 </td>
                                                 <td class="cart-table__column cart-table__column--total" data-title="Total">&pound;{{custom_format($item->total,2)}}</td>                                        
                                             </tr>
+                                        @elseif($item->shop_type == 'paygo-course')
+                                        @php
+                                        $bookedDates = \App\PayGoCourseBookedDate::where( 'cart_id', $item->id )->get();
+                                        $datesArray = [];   
+                                        if( !empty( $bookedDates ) ){
+                                          foreach( $bookedDates as $bookedDa ) {
+                                              array_push( $datesArray, date('d-m-Y', strtotime( $bookedDa->date ) ) );
+                                          }
+                                        }
+                                        $course_id = $item->product_id;
+                                        $course = DB::table('pay_go_courses')->where('id',$course_id)->first();  
+                                        $child = DB::table('users')->where('id',$item->child_id)->first();
+                                        @endphp
+                                          <tr class="cart-table__row">
+                                                <td class="cart-table__column cart-table__column--image"><b>Course </b></td>
+
+                                                <td class="cart-table__column cart-table__column--product"><a href="" class="cart-table__product-name">{{$course->title}}</a>
+                                                  <ul class="cart-table__options">
+                                                    <li>Participant: 
+                                                      <b class="bText">{{isset($child->name) ? $child->name : 'No child selected'}}</b>
+                                                    </li>                 
+                                                  </ul>
+                                                  <div class="dates_div" style="display: flex;">
+                                                    <!-- <span style="color: #999;"> Dates: </span> -->
+                                                    <p>Booked Dates: </p>
+                                                      <ul class="cart-table__options paygo-dates cart-review">
+                                                      @foreach( $datesArray as $daArr )
+
+                                                      <li> <b class="bText"> {{ date( 'd-m-Y', strtotime( $daArr ) ) }}  </b> </li>                 
+                                                      @endforeach
+                                                    </ul>
+
+                                                  </div>
+                                                </td>
+                                                
+                                                <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
+                                                    <span class="Quantity_number">{{$item->quantity}}</span>
+                                                </td>
+                                                <td class="cart-table__column cart-table__column--total" data-title="Total">&pound;{{custom_format($item->total,2)}}</td>                                        
+                                            </tr>
 
                                         @elseif($item->shop_type == 'camp')
                                         @php 
@@ -101,6 +141,7 @@ header.Eshop-header {
                                                       <b class="bText">{{isset($child->name) ? $child->name : 'No child selected'}}</b>
                                                     </li>                 
                                                   </ul>
+
                                                
                                                 <br/>
                                                 

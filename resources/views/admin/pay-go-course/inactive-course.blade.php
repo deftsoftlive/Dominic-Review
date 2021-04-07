@@ -185,7 +185,7 @@ $(document).ready(function(){
     $("select#people").change(function(){
         var selectedCat = $(this).children("option:selected").val();
         $.ajax({
-            url:"http://49.249.236.30:8654/dominic-new/admin/selectedCat/",
+            url:"<?php echo route('selectedCat') ?>",
             method:'GET',
             data:{selectedCat:selectedCat},
             dataType:'json',

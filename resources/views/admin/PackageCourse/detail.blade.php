@@ -65,7 +65,7 @@
                                             <b>Day/Time</b> : {{$course->day_time}}<br/>
                                           </p>  
                                         </td>
-                                        <td>&pound;{{$co->price}}</td>                                
+                                        <td>&pound;{{custom_format($co->price, 2) }}</td>                                
                                     </tr> 
                                   @endforeach
 

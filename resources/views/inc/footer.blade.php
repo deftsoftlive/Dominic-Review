@@ -8,6 +8,7 @@
                 <div class="footer-header">
                   <a class="footer-brand" href="{{url('/')}}">
                     <img src="{{ URL::asset('uploads')}}/{{ getAllValueWithMeta('website_logo', 'general-setting') }}">
+                    
                   </a>
                 </div>
                 <p class="ftr-text">{{ getAllValueWithMeta('footer_section1', 'general-setting') }}</p>
@@ -83,6 +84,7 @@
           </div>
         </div>
       </div>
+      <input type="hidden" name="base_url" id="base_url" value="{{ url('/') }}">
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -412,7 +414,7 @@ $(document).ready(function(){
   });
 }); 
 
-$("#money_amount").change(function(){
+/*$("#money_amount").change(function(){
 
   var amt = $('#money_amount').val();
   var base_url=$('#base_url').val();
@@ -427,7 +429,8 @@ $("#money_amount").change(function(){
         $('.add_stripe_btn').html(data.output);
       },      
   });
-});
+});*/
+
 
 // $(document).ready(function($){
 
@@ -469,7 +472,7 @@ $(document).ready(function($){
         var report_type = $('#report_type').val();
 
         $.ajax({
-            url:"http://49.249.236.30:8654/dominic-new/user/report_popup",
+            url:"<?php echo route( 'report_popup' ); ?>",
             method:'GET',
             data:{exist_player_id:exist_player_id,player_id:player_id,report_type:report_type},
             dataType:'json',
@@ -558,7 +561,7 @@ $('.upload-image').on('click', function (ev) {
       type: "POST",
       data: {"image":img,"user_id":profile_user,"icon":icon},
       success: function (data) {
-          setTimeout(function(){ window.location = "http://49.249.236.30:8654/dominic-new/user/badges"; }, 800);
+          setTimeout(function(){ window.location = "<?php echo route('badges') ?>"; }, 800);
       }
     });
   });
@@ -573,7 +576,7 @@ $('.upload-image').on('click', function (ev) {
     });
 
     $(window).on("load",function(){
-          $(".design-loader").fadeOut("slow");
+      $(".design-loader").fadeOut("slow");
     });
 
     // $(document).ready(function(){
@@ -723,31 +726,31 @@ $('.upload-image').on('click', function (ev) {
            // console.log(response);
             $('#append-modal').html(response);
             $("#myModal1").addClass("show");
-	        $("#myModal1").css('display','block');
-	        $(".modal-backdrop").addClass('show');
+          $("#myModal1").css('display','block');
+          $(".modal-backdrop").addClass('show');
 
-	        (function($){
-		        $(".cust_scroll").mCustomScrollbar();
-		    })(jQuery);
+          (function($){
+            $(".cust_scroll").mCustomScrollbar();
+        })(jQuery);
             
-	        // The slider being synced must be initialized first
-	        $('#carousel').flexslider({
-	          animation: "slide",
-	          controlNav: false,
-	          animationLoop: true,
-	          slideshow: true,
-	          itemWidth: 93,
-	          itemMargin: 5,
-	          asNavFor: '#slider'
-	        });
-	       
-	        $('#slider').flexslider({
-	          animation: "slide",
-	          controlNav: false,
-	          animationLoop: false,
-	          slideshow: false,
-	          sync: "#carousel"
-	        });
+          // The slider being synced must be initialized first
+          $('#carousel').flexslider({
+            animation: "slide",
+            controlNav: false,
+            animationLoop: true,
+            slideshow: true,
+            itemWidth: 93,
+            itemMargin: 5,
+            asNavFor: '#slider'
+          });
+         
+          $('#slider').flexslider({
+            animation: "slide",
+            controlNav: false,
+            animationLoop: false,
+            slideshow: false,
+            sync: "#carousel"
+          });
 
           },
           error: function(jqXHR, textStatus, errorThrown) {
@@ -1335,7 +1338,7 @@ $('.search-icon').click(function(){
     autoplayTimeout: 5000,  
         dots:false,
         responsiveClass:true,
-        navText: ["<img src='http://49.249.236.30:8654/dominic-new/public/images/slider-prev-img.png'>","<img src='http://49.249.236.30:8654/dominic-new/public/images/slider-next-img.png'>"],
+        navText: ["<img src='<?php echo url('/') ?>/public/images/slider-prev-img.png'>","<img src='<?php echo url('/') ?>/public/images/slider-next-img.png'>"],
         responsive:{
             0:{
                 items:1,
@@ -1480,6 +1483,21 @@ $(".checkbox-style").click(function(){
       total_val = num.toFixed(2); 
     }
   });
+
+
+  if ($("input.checkbox-style:checked").length > 0)
+  {
+      // any one is checked
+  }
+  else
+  {
+    total = 0; 
+    encode_total = window.btoa(total);
+
+    // Round Off upto 2 decimals
+    var num = total;
+    total_val = num.toFixed(2);
+  }
   
   $("#total-form").text(total_val);
   $("#updated_price").val(encode_total);
@@ -1763,6 +1781,23 @@ function score13(el){
     });  
 };
 score13('#Score-13');
+
+
+$('.price_add').click(function(){
+  var priceArray = [];
+  sum = 0;
+  $(".price_add:checked").each(function () {
+      var price = $(this).attr("price");
+      priceArray.push(price);
+  });
+  $.each(priceArray,function(){sum+=parseFloat(this) || 0;});
+  sum = sum.toFixed(2);
+  $('#final_paygo_price').val(sum);
+});
+
+
+
+
 </script>
   </body>
 </html>

@@ -12,6 +12,7 @@
 
                 <div style="text-align: right;" class="cst-admin-filter d-print-none">
                     <a href="{{ route('admin.revenue.courses') }}" class="btn btn-primary">Courses Revenue</a>
+                    <a href="{{ route('admin.revenue.paygo.courses') }}" class="btn btn-primary">Pay-Go Courses Revenue</a>
                     <a href="{{ route('admin.revenue.camps') }}" class="btn btn-primary">Camps Revenue</a>
                     <a href="{{ route('admin.revenue.products') }}" class="btn btn-primary">Products Revenue</a>
                 </div>

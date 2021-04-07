@@ -18,7 +18,7 @@ class CreatePaygocourseDatesTable extends Migration
             $table->integer('course_id');
             $table->string('course_date');
             $table->string('seats');
-            $table->string('display_course');
+            $table->string('display_course');            
             $table->timestamps();
         });
     }

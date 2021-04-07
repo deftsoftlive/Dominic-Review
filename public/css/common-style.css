@@ -3273,3 +3273,6 @@ span.cst_active, span.cst_in-active {
 textarea {
 	resize: none;
 }
+#venueFormPaygoCreate .error {
+    position: relative!important;
+}

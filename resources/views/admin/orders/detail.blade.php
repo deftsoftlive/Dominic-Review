@@ -74,6 +74,11 @@
                               $course = \DB::table('camps')->where('id',$shop_data->product_id)->first();
                               $account_id = $course->account_id;
                             }
+                            elseif($shop_data->shop_type == 'paygo-course')
+                            {
+                              $course = \DB::table('pay_go_courses')->where('id',$shop_data->product_id)->first();
+                              $account_id = $course->account_id;
+                            }
                             elseif($shop_data->shop_type == 'product')
                             {
                               $course = \DB::table('products')->where('id',$shop_data->product_id)->first();
@@ -168,6 +173,43 @@
                                         <br/>
                                         @if(!empty($cart->discount_code))
                                         	&pound;{{$cart->discount_price}} off on {{$course->title}}
+                                        @endif
+                                        </td>                                
+                                        <td>&pound;{{number_format($cart->price,2)}}
+                                          </td>                                
+                                    </tr> 
+                                  @elseif($cart->shop_type == 'paygo-course')
+                                  @php 
+                                    $bookedDatesArray = [];
+                                    $bookedDates = \App\PayGoCourseBookedDate::where( 'cart_id', $cart->id )->get();
+
+                                    if( !empty( $bookedDates ) ){
+                                      foreach( $bookedDates as $bookedDa ) {
+                                          array_push( $bookedDatesArray, date('d-m-Y', strtotime( $bookedDa->date ) ) );
+                                      }
+                                    }
+                                    if( !empty( $bookedDatesArray ) ){
+
+                                      $bookedDatesArr = implode( ', ', $bookedDatesArray );
+                                    }else{
+                                      $bookedDatesArr = '';
+                                    }
+                                    $course_id = $cart->product_id;
+                                    $course = DB::table('pay_go_courses')->where('id',$course_id)->first();  
+                                    $child = DB::table('users')->where('id',$cart->child_id)->first();
+                                  @endphp
+                                    <tr>           
+                                        <td>Course</td>                               
+                                        <td>
+                                          <h5>{{$course->title}}</h5>
+                                          <p>@php echo getSeasonname($course->season); @endphp | {{$course->day_time}}</p>
+                                          <p><b>{{ !empty( $bookedDatesArray ) ? 'Booked Dates' : '' }}</b> : {{ !empty( $bookedDatesArray ) ? $bookedDatesArr : '' }}</p>
+                                          <p><b>{{isset($child->type) ? $child->type : 'Account Holder'}}</b> :{{isset($child->name) ? $child->name : ''}}</p>
+                                        </td>                               
+                                        <td>{{isset($cart->discount_code) ? $cart->discount_code : '-'}}
+                                        <br/>
+                                        @if(!empty($cart->discount_code))
+                                          &pound;{{$cart->discount_price}} off on {{$course->title}}
                                         @endif
                                         </td>                                
                                         <td>&pound;{{number_format($cart->price,2)}}

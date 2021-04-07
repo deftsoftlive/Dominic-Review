@@ -20,7 +20,8 @@ footer.site-footerss {
 
 @php $base_url = \URL::to('/'); @endphp
 <!-- banner section starts here here -->
-<section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/1609147916checkout_banner.png);">
+<!-- <section class="football-course-sec" style="background: url({{$base_url}}/public/uploads/1609147916checkout_banner.png);"> -->
+  <section class="football-course-sec d-print-none" style="background: url({{$base_url}}/public/uploads/{{ getAllValueWithMeta('cart_banner', 'banners') }});">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -54,7 +55,7 @@ footer.site-footerss {
                     <table class="cart__table cart-table">
                         <thead class="cart-table__head">
                             <tr class="cart-table__row">
-                                <th class="cart-table__column cart-table__column--image">Image</th>
+                                <th class="cart-table__column cart-table__column--image">Type</th>
                                 <th class="cart-table__column cart-table__column--product">Product</th>
                                 <th class="cart-table__column cart-table__column--price">Price</th>
                                 <th class="cart-table__column cart-table__column--quantity">Quantity</th>

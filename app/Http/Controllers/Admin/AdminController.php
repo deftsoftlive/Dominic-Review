@@ -399,6 +399,38 @@ public function changeProfileImage(Request $request) {
       return view('admin.revenue.view-camp-report',compact('purchased_camp','id'));
     }
 
+
+    /**********************************************************************************/
+    /* ---------------------------New paygo revenue by SB--------------------------- */
+
+    /**********************************************************************************/
+
+    public function paygo_course_revenue()
+    {
+      $course_name = request()->get('course_name'); 
+
+      if(!empty($course_name)){
+          $purchased_courses = \DB::table('shop_cart_items')
+                            ->join('pay_go_courses', 'shop_cart_items.product_id', '=', 'pay_go_courses.id')
+                            ->select('shop_cart_items.*','pay_go_courses.title')  
+                            ->where('shop_type','paygo-course')->where('shop_cart_items.type','order')    
+                            ->where( 'pay_go_courses.title', 'LIKE', '%' . $course_name . '%' ) 
+                            ->groupBy('product_id')        
+                            ->paginate(20);
+      }else{
+          $purchased_courses = \DB::table('shop_cart_items')->where('shop_type','paygo-course')->where('type','order')->groupBy('product_id')->paginate(20);
+      }
+
+      // dd($purchased_courses);
+      return view('admin.revenue.paygo-course-revenue',compact('purchased_courses'));
+    }
+
+    public function paygo_course_revenue_detail($id)
+    {
+      $purchased_courses = \DB::table('shop_cart_items')->where('shop_type','paygo-course')->where('product_id',$id)->where('type','order')->paginate(20);
+      return view('admin.revenue.view-paygo-course-report',compact('purchased_courses','id'));
+    }
+
     public function product_revenue()
     {
       $product_cat = request()->get('product_cat');
@@ -456,6 +488,26 @@ public function changeProfileImage(Request $request) {
       return view('admin.revenue.generate-report.course-report',compact('purchased_courses'));
     }
 
+     /**********************************************************************************/
+    /* ------------------------New paygo report generate by SB----------------------- */
+
+    /**********************************************************************************/
+
+    public function generate_paygo_course_report(Request $request)
+    {
+      $link_reports = $request->link;
+      $purchased_courses = [];
+
+      if(!empty($link_reports))
+      {
+        foreach($link_reports as $rep)
+        {
+          $purchased_courses[] = \DB::table('shop_cart_items')->where('id',$rep)->first();
+        }
+      }
+      
+      return view('admin.revenue.generate-report.paygo-course-report',compact('purchased_courses'));
+    }
 
     /*****************************
     | Link Camp Reports
@@ -512,7 +564,7 @@ public function changeProfileImage(Request $request) {
       }
       else
       {
-        $goals = SetGoal::groupBy(['player_id', 'goal_type', 'finalize'])->paginate(10);         
+        $goals = SetGoal::groupBy(['player_id', 'goal_type', 'finalize'])->orderBy('id', 'desc')->paginate(50);         
       }
       return view('admin.goals.goal-listing',compact('goals'));
     }
@@ -545,7 +597,7 @@ public function changeProfileImage(Request $request) {
     {
       $notifications = \DB::table('notifications')->where('id',$id)->delete();
 
-      return \Redirect::back()->with('sucsess', "Notification successfully marked as read.");
+      return \Redirect::back()->with('flash_message', "Notification successfully marked as read.");
     }
 
 
@@ -635,4 +687,25 @@ public function changeProfileImage(Request $request) {
 
         return \Redirect::back()->with('success','Coach account is freezed successfully.');
     }
+
+
+
+
+    public function markAllAsRead( $role_id )
+    {
+      $notifications = \DB::table('notifications')->orderBy('created_at','desc')->get();
+          echo "<pre>";
+      foreach ($notifications as $key => $value) {
+        $not = json_decode( $value->data ,true);
+        if ( !empty( $not ) ) {        
+          if ( $not["send_to"] == '1' ) {
+            $output = \DB::table('notifications')->where( 'id',$value->id )->delete();
+          }
+        }
+      }
+      return \Redirect::back()->with('flash_message', "All Notifications successfully marked as read.");
+    }
+
+
+
 }

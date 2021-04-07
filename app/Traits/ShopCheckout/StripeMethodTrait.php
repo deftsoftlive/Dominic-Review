@@ -27,7 +27,7 @@ use EmailNotificationTrait;
 
 public function postPaymentStripe(Request $request)
 {
-  //dd($request->all());
+  
   Session::put('booking_no',$request->booking_no);
       
   if($request->type == 'wallet&stripe')
@@ -153,46 +153,39 @@ public function postPaymentStripe(Request $request)
       else:
                  
           # create customer to stripe while payment
-          try {
+          try { 
 
-                     $AccountWithPayment= $this->CommissionFeeServiceAccordingVendor('STRIPE',1);
+            //dd( $request->all() );
+             $AccountWithPayment= $this->CommissionFeeServiceAccordingVendor('STRIPE',1);
 
-                     $OrderID = '#DRHSHOP'.strtotime(date('y-m-d h:i:s'));
-                     $token = $request->stripeToken;
-                     $application_fee = $this->getCommissionFee();
+             $OrderID = '#DRHSHOP'.strtotime(date('y-m-d h:i:s'));
+             $token = $request->stripeToken;
+             $application_fee = $this->getCommissionFee();
 
-                     if($this->getGrandTotal()<0)
-                     {
-                        $total = ceil($this->getGrandTotal());
-                     }else{
-                        $total = $this->getGrandTotal(); 
-                     }
+             if($this->getGrandTotal()<0)
+             {
+                $total = ceil($this->getGrandTotal());
+             }else{
+                $total = $this->getGrandTotal(); 
+             }
 
-                     $description = 'Payment from customer name - ' .\Auth::user()->name. ' & order ID - '. $OrderID. '& user email - '. \Auth::user()->email ;
-                     $total = round($total,2);
+             $description = 'Payment from customer name - ' .\Auth::user()->name. ' & order ID - '. $OrderID. '& user email - '. \Auth::user()->email ;
+             $total = round($total,2);                 
 
-/*dd($total,[
-                        "amount" => ($total * 100),
-                        "currency" => "gbp",
-                        "source" => $request->stripeToken,
-                        //"shipping" => $shipping,
-                        "description" => $description,
-                        //"application_fee" => $application_fee,
-                        ]);
-*/                     $charge = \Stripe\Charge::create([
-                        "amount" => ($total * 100),
-                        "currency" => "gbp",
-                        "source" => $request->stripeToken,
-                        //"shipping" => $shipping,
-                        "description" => $description,
-                        //"application_fee" => $application_fee,
-                        ],$AccountWithPayment);
+            $charge = \Stripe\Charge::create([
+            "amount" => ($total * 100),
+            "currency" => "gbp",
+            "source" => $request->stripeToken,
+            //"shipping" => $shipping,
+            "description" => $description,
+            //"application_fee" => $application_fee,
+            ],$AccountWithPayment);
 
-                        if($charge){
-                              return $this->saveDataInShopOrder($charge,'STRIPE',$OrderID);
-                        }else{
-                                $error .= '<li><b>Payment Failed</b> Something Wrong going on!</li>';
-                        } 
+            if($charge){
+                  return $this->saveDataInShopOrder($charge,'STRIPE',$OrderID);
+            }else{
+                    $error .= '<li><b>Payment Failed</b> Something Wrong going on!</li>';
+            } 
 
            } catch (Exception $e) {
                         $error .='Caught exception: '.  $e->getMessage();
@@ -243,6 +236,7 @@ public function CreateOrder($charge,$OrderID,$type)
     {
       foreach($get_packages as $pack)
       {
+        //dd($get_packages);
         $get_course = Course::where('id',$pack->course_id)->first();
 
         $sci = new ShopCartItems;
@@ -261,7 +255,6 @@ public function CreateOrder($charge,$OrderID,$type)
         $sci->save();
       }
     }
-
         $o = new ShopOrder;
         $o->orderID=$OrderID;
         $o->user_id = !empty(Auth::user()->id) ? Auth::user()->id : $user_id;
@@ -272,6 +265,7 @@ public function CreateOrder($charge,$OrderID,$type)
         $o->amount=$this->getGrandTotal();
         $o->payment_by=$type;
         $o->status=1;
+        //dd($o);
         
         if($o->save()){
 

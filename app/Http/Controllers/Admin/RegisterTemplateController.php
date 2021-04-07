@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use App\CourseRegisterDate;
 use App\Course;
 use App\Camp;
+use App\PayGoCourse;
+use App\PaygocourseDate;
+use App\PayGoCourseBookedDate;
 
 class RegisterTemplateController extends Controller
 {
@@ -83,4 +86,36 @@ class RegisterTemplateController extends Controller
 
         return \Redirect::back()->with('success','Course date updated successfully.');
     }
+
+    public function paygo_register( $id, Request $request )
+        {
+            if(isset($request->date))
+            {
+                $date = $request->date; 
+            }
+            
+            $course = PayGoCourse::where('id',$id)->first();
+            $shop = \DB::table('shop_cart_items')
+                    ->leftjoin('pay_go_course_booked_dates', 'shop_cart_items.id', '=', 'pay_go_course_booked_dates.cart_id')
+                    ->where('shop_type','paygo-course')
+                    ->where('product_id',$id)
+                    ->where('type','order')
+                    ->where('orderID','!=',NULL)
+                    ->where('booked_date_id',$date)
+                    ->get();
+
+            $shop1 = \DB::table('shop_cart_items')
+                    ->leftjoin('pay_go_course_booked_dates', 'shop_cart_items.id', '=', 'pay_go_course_booked_dates.cart_id')
+                    ->where('shop_type','paygo-course')
+                    ->where('product_id',$id)
+                    ->where('type','order')
+                    ->where('orderID','!=',NULL)
+                    ->where('booked_date_id',$date)
+                    ->groupBy('shop_cart_items.child_id')
+                    ->get();
+                    //dd($shop1);
+            return view('admin.register-template.paygo-course-template',compact('course','shop', 'shop1', 'date'));
+        }
+
+    
 }

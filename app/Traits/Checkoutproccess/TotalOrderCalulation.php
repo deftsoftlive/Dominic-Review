@@ -93,7 +93,7 @@ public function CommissionFeeServiceAccordingVendor($type="STRIPE",$account_stat
 
 	 	//array_push($arr[$value->vendor_id], $arr1);
 	 }
-
+	 dd($account_status == 0 ? $arr : $account);
 	 return $account_status == 0 ? $arr : $account;
  
 }

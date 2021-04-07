@@ -51,7 +51,7 @@ class UserController extends Controller
                      ->where('role','!=','admin')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id','type'])
                      ->orderBy('id','desc')
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_first_name')) && !empty(request()->get('search_last_name')))
         {
@@ -61,7 +61,7 @@ class UserController extends Controller
                      ->where('role','!=','admin')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id','type'])
                      ->orderBy('id','desc')
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_first_name')) && !empty(request()->get('search_email')))
         {
@@ -71,7 +71,7 @@ class UserController extends Controller
                      ->where('role','!=','admin')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id','type'])
                      ->orderBy('id','desc')
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_last_name')) && !empty(request()->get('search_email')))
         {
@@ -81,7 +81,7 @@ class UserController extends Controller
                      ->where('role','!=','admin')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id','type'])
                      ->orderBy('id','desc')
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_first_name')))
         {
@@ -90,7 +90,7 @@ class UserController extends Controller
                      ->where('role','!=','admin')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id','type'])
                      ->orderBy('id','desc')
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_last_name')))
         {
@@ -99,7 +99,7 @@ class UserController extends Controller
                      ->where('role','!=','admin')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id','type'])
                      ->orderBy('id','desc')
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_email')))
         {
@@ -108,9 +108,9 @@ class UserController extends Controller
                      ->where('role','!=','admin')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id','type'])
                      ->orderBy('id','desc')
-                     ->paginate(10);
+                     ->paginate(50);
         }else{
-            $users = User::select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id','type'])->where('role','!=','admin')->orderBy('id','desc')->paginate(10);
+            $users = User::select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id','type'])->where('role','!=','admin')->orderBy('id','desc')->paginate(50);
         }
 
         // dd($users);
@@ -245,7 +245,7 @@ class UserController extends Controller
                      ->where('email', '=', $search_email)
                      ->where('role_id','2')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_first_name')) && !empty(request()->get('search_last_name')))
         {
@@ -254,7 +254,7 @@ class UserController extends Controller
                      ->where('last_name', '=', $search_last_name)
                      ->where('role_id','2')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_first_name')) && !empty(request()->get('search_email')))
         {
@@ -263,7 +263,7 @@ class UserController extends Controller
                      ->where('email', '=', $search_email)
                      ->where('role_id','2')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_last_name')) && !empty(request()->get('search_email')))
         {
@@ -272,7 +272,7 @@ class UserController extends Controller
                      ->where('email', '=', $search_email)
                      ->where('role_id','2')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_first_name')))
         {
@@ -280,7 +280,7 @@ class UserController extends Controller
                      ->where('first_name', '=', $search_first_name)
                      ->where('role_id','2')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_last_name')))
         {
@@ -288,7 +288,7 @@ class UserController extends Controller
                      ->where('last_name', '=', $search_last_name)
                      ->where('role_id','2')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_email')))
         {
@@ -296,9 +296,9 @@ class UserController extends Controller
                      ->where('email', '=', $search_email)
                      ->where('role_id','2')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
         }else{
-            $users = User::select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','type'])->where('role_id','2')->paginate(10);
+            $users = User::select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','type'])->where('role_id','2')->paginate(50);
         }
         return view('admin.user-vendor.users.parent-index',compact('users')); 
     }
@@ -319,7 +319,7 @@ class UserController extends Controller
                      ->where('email', '=', $search_email)
                      ->where('role_id','3')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','enable_inovice','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_first_name')) && !empty(request()->get('search_last_name')))
         {
@@ -328,7 +328,7 @@ class UserController extends Controller
                      ->where('last_name', '=', $search_last_name)
                      ->where('role_id','3')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','enable_inovice','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_first_name')) && !empty(request()->get('search_email')))
         {
@@ -337,7 +337,7 @@ class UserController extends Controller
                      ->where('email', '=', $search_email)
                      ->where('role_id','3')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','enable_inovice','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_last_name')) && !empty(request()->get('search_email')))
         {
@@ -346,7 +346,7 @@ class UserController extends Controller
                      ->where('email', '=', $search_email)
                      ->where('role_id','3')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','enable_inovice','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_first_name')))
         {
@@ -354,7 +354,7 @@ class UserController extends Controller
                      ->where('first_name', '=', $search_first_name)
                      ->where('role_id','3')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','enable_inovice','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_last_name')))
         {
@@ -362,7 +362,7 @@ class UserController extends Controller
                      ->where('last_name', '=', $search_last_name)
                      ->where('role_id','3')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','enable_inovice','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_email')))
         {
@@ -370,9 +370,9 @@ class UserController extends Controller
                      ->where('email', '=', $search_email)
                      ->where('role_id','3')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','enable_inovice','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
         }else{
-            $users = User::select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','enable_inovice','country'])->where('role_id','3')->paginate(10);
+            $users = User::select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','enable_inovice','country'])->where('role_id','3')->paginate(50);
         }
         return view('admin.user-vendor.users.coach-index',compact('users')); 
     }
@@ -393,7 +393,7 @@ class UserController extends Controller
                      ->where('email', '=', $search_email)
                      ->where('role_id','4')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_first_name')) && !empty(request()->get('search_last_name')))
         {
@@ -402,7 +402,7 @@ class UserController extends Controller
                      ->where('last_name', '=', $search_last_name)
                      ->where('role_id','4')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_first_name')) && !empty(request()->get('search_email')))
         {
@@ -411,7 +411,7 @@ class UserController extends Controller
                      ->where('email', '=', $search_email)
                      ->where('role_id','4')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_last_name')) && !empty(request()->get('search_email')))
         {
@@ -420,7 +420,7 @@ class UserController extends Controller
                      ->where('email', '=', $search_email)
                      ->where('role_id','4')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_first_name')))
         {
@@ -428,7 +428,7 @@ class UserController extends Controller
                      ->where('first_name', '=', $search_first_name)
                      ->where('role_id','4')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_last_name')))
         {
@@ -436,7 +436,7 @@ class UserController extends Controller
                      ->where('last_name', '=', $search_last_name)
                      ->where('role_id','4')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
 
         }else if(!empty(request()->get('search_email')))
         {
@@ -444,9 +444,9 @@ class UserController extends Controller
                      ->where('email', '=', $search_email)
                      ->where('role_id','4')
                      ->select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','role_id','parent_id'])
-                     ->paginate(10);
+                     ->paginate(50);
         }else{
-            $users = User::select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','parent_id'])->where('role_id','4')->paginate(10);
+            $users = User::select(['id','role', 'email','name','date_of_birth','phone_number','gender','address','town','postcode','country','parent_id'])->where('role_id','4')->paginate(50);
         }
         return view('admin.user-vendor.users.children-index',compact('users')); 
     }
@@ -468,7 +468,7 @@ class UserController extends Controller
     |*********************************/
     public function linked_coaches()
     {
-        $parentCoachReq = ParentCoachReq::orderBy('id','desc')->paginate(10);
+        $parentCoachReq = ParentCoachReq::orderBy('id','desc')->paginate(50);
         return view('admin.user-vendor.users.linked-coach',compact('parentCoachReq')); 
     }
 
@@ -477,13 +477,13 @@ class UserController extends Controller
     |*********************************/
     public function subscribed_users()
     {
-        $subscribed_users = NewsletterSubscription::orderBy('id','desc')->paginate(10);
+        $subscribed_users = NewsletterSubscription::orderBy('id','desc')->paginate(50);
         return view('admin.user-vendor.subscribed-users.newsletter',compact('subscribed_users')); 
     }
 
     public function active_subscribed_users()
     {
-        $subscribed_users = NewsletterSubscription::orderBy('id','desc')->where('unsubscribed_by',NULL)->paginate(10);
+        $subscribed_users = NewsletterSubscription::orderBy('id','desc')->where('unsubscribed_by',NULL)->paginate(50);
         return view('admin.user-vendor.subscribed-users.subscribers',compact('subscribed_users')); 
     }
 
@@ -522,12 +522,20 @@ class UserController extends Controller
     |********************************/
     public function save_course_for_player(Request $request)
     {
-       // dd($request->all());
+        //dd($request->all());
 
-        if(!empty($request->parent) && !empty($request->course) && !empty($request->cost_type))    
+        if(!empty($request->parent) && !empty($request->course) && !empty($request->cost_type))
         {
-            $course = Course::where('id',$request->course)->first();
-
+            /*if ( $request->course_type == 'paygo' ) {
+                $course = \App\PayGoCourse::where('id',$request->course)->first();
+                $check_shop = ShopCartItems::where('product_id',$request->course)->where('user_id',$request->parent)->where('child_id',$request->player)->where('shop_type','paygo-course')->where('type','order')->first();
+                $shop_type = 'paygo-course';
+            }else{
+                
+                $course = Course::where('id',$request->course)->first();
+                $check_shop = ShopCartItems::where('product_id',$request->course)->where('user_id',$request->parent)->where('child_id',$request->player)->where('shop_type','course')->where('type','order')->first();
+                $shop_type = 'course';
+            }*/
             if($request->cost_type == 'No Cost')
             {
                 $price = 0;
@@ -539,14 +547,16 @@ class UserController extends Controller
                 $total = $course->price;
                 $payment_method = $request->payment_method;
             }
-
-
+            $course = Course::where('id',$request->course)->first();
             $check_shop = ShopCartItems::where('product_id',$request->course)->where('user_id',$request->parent)->where('child_id',$request->player)->where('shop_type','course')->where('type','order')->first();
+            $shop_type = 'course';
+            //dd($payment_method);
+            /*$check_shop = ShopCartItems::where('product_id',$request->course)->where('user_id',$request->parent)->where('child_id',$request->player)->where('shop_type','course')->where('type','order')->first();*/
 
             if(!empty($check_shop))
             {
-                $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('orderID','!=',NULL)->where('type','order')->paginate(10);
-                return \Redirect::back()->with('error',$course->title.' cousrse is already assigned to this child.'); 
+                $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('orderID','!=',NULL)->where('type','order')->paginate(50);
+                return \Redirect::back()->with('error',$course->title.' course is already assigned to this child.'); 
             }else{
 
                 if(!empty($request->player))
@@ -557,7 +567,7 @@ class UserController extends Controller
                 }
 
                 $shop                =  new ShopCartItems;
-                $shop->shop_type     =  'course';
+                $shop->shop_type     =  $shop_type;
                 $shop->product_id    =  $request->course;
                 $shop->child_id      =  $player;
                 $shop->user_id       =  $player;
@@ -623,6 +633,7 @@ class UserController extends Controller
     |********************************/
     public function change_course_list()
     {
+
         $type = request()->get('player_name');
 
         if(!empty($type))
@@ -631,21 +642,29 @@ class UserController extends Controller
                             ->join('users', 'shop_cart_items.child_id', '=', 'users.id')
                             ->select('shop_cart_items.*','users.name')  
                             ->where('shop_cart_items.shop_type','course')
+                            /*->where(function($q) { 
+                                $q->where('shop_cart_items.shop_type', 'course') 
+                                ->orWhere('shop_cart_items.shop_type', 'paygo-course'); 
+                                })*/
                             ->where('shop_cart_items.orderID','!=',NULL)
                             ->where('shop_cart_items.type','order')   
                             ->where('users.name', 'LIKE', '%' . $type . '%') 
                             ->orderBy('users.name','asc')
-                            ->paginate(10);
+                            ->paginate(50);
 
         }else{
             $purchase_course = \DB::table('shop_cart_items')
                             ->join('users', 'shop_cart_items.child_id', '=', 'users.id')
                             ->select('shop_cart_items.*','users.name')  
                             ->where('shop_cart_items.shop_type','course')
+                            /*->where(function($q) { 
+                                $q->where('shop_cart_items.shop_type', 'course') 
+                                ->orWhere('shop_cart_items.shop_type', 'paygo-course'); 
+                                })*/
                             ->where('shop_cart_items.orderID','!=',NULL)
                             ->where('shop_cart_items.type','order')   
                             ->orderBy('users.name','asc')
-                            ->paginate(10);
+                            ->paginate(50);
         }
         // dd($purchase_course);
         
@@ -677,7 +696,7 @@ class UserController extends Controller
                             ->where('shop_cart_items.orderID','!=',NULL)
                             ->where('shop_cart_items.type','order')   
                             ->orderBy('users.name','asc')
-                            ->paginate(10);
+                            ->paginate(50);
 
         return redirect('/admin/purchased-course')->with('purchase_course',$purchase_course)->with("success",'Player removed successfully.'); 
     }
@@ -733,7 +752,7 @@ class UserController extends Controller
             $player_name = getUsername($request->player_id);
             $course_name = getCourseName($shop->product_id);
 
-            $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('orderID','!=',NULL)->where('type','order')->paginate(10);
+            $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('orderID','!=',NULL)->where('type','order')->paginate(50);
 
             return redirect('/admin/shop/'.$shop->id.'/change-course')->with('success','Course has been changed successfully. Now, '.$course_name.' is assigned to '.$player_name);
         }
@@ -1349,7 +1368,7 @@ class UserController extends Controller
                             ->where('shop_cart_items.type','order')   
                             ->where('users.name', 'LIKE', '%' . $type . '%') 
                             ->orderBy('users.name','desc')
-                            ->paginate(10);
+                            ->paginate(50);
 
         }else{
             $purchase_course = \DB::table('shop_cart_items')
@@ -1359,7 +1378,7 @@ class UserController extends Controller
                             ->where('shop_cart_items.orderID','!=',NULL)
                             ->where('shop_cart_items.type','order')   
                             ->orderBy('users.name','desc')
-                            ->paginate(10);
+                            ->paginate(50);
         }
         // dd($purchase_course);
         
@@ -1391,7 +1410,7 @@ class UserController extends Controller
                             ->where('shop_cart_items.orderID','!=',NULL)
                             ->where('shop_cart_items.type','order')   
                             ->orderBy('users.name','asc')
-                            ->paginate(10);
+                            ->paginate(50);
 
         return redirect('/admin/purchased-camp')->with('purchase_course',$purchase_course)->with("success",'Player removed successfully.'); 
     }
@@ -1545,7 +1564,7 @@ class UserController extends Controller
                             ->where('shop_cart_items.orderID','!=',NULL)
                             ->where('shop_cart_items.type','order')   
                             ->orderBy('users.name','desc')
-                            ->paginate(10);
+                            ->paginate(50);
 
             return redirect('/admin/purchased-camp')->with('purchase_course',$purchase_course)->with('success','Camp has been changed successfully.');
         }

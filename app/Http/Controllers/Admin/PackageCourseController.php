@@ -9,9 +9,11 @@ use App\User;
 use App\Course;
 use Carbon\Carbon;
 use App\Models\Shop\ShopCartItems;
+use App\Traits\EmailTraits\EmailNotificationTrait;
 
 class PackageCourseController extends Controller
 {
+    use EmailNotificationTrait;
     /*----------------------------------------
     |
     |   Package Course MANAGEMENT
@@ -223,7 +225,8 @@ class PackageCourseController extends Controller
     |----------------------------------------*/ 
     public function package_course_create(Request $request) {
 
-    	// dd($request->all());
+
+    	//dd($request->all());
 
     	// $validatedData = $request->validate([
          //   'parent_id' => ['required'],
@@ -232,7 +235,7 @@ class PackageCourseController extends Controller
 
         $date = Carbon::now();  
         $current_date = date('d-m-Y h:i',strtotime($date));
-
+        $parentId = $request['parent_id'];
         $parent_email = getUseremail($request['parent_id']);
 
         if(isset($request->course) && !empty($request->price))
@@ -266,15 +269,16 @@ class PackageCourseController extends Controller
 
         }
 
+
         if(!empty($package))
         {
             // Link generated email
-            \Mail::send('emails.packagecourse', ['parent_email' => $parent_email,'booking_no' => $package->booking_no] , 
+            /*\Mail::send('emails.packagecourse', ['parent_email' => $parent_email,'booking_no' => $package->booking_no] , 
                 function($message) use($parent_email){
                     $message->to($parent_email);
                      $message->subject('Subject : '.'Your Tennis Coaching Courses');
-                   });
-            
+                   });*/
+            $this->SendInfoPackageCourses($parentId, $package->booking_no);
             return redirect()->route('admin.packageCourse.list')->with('flash_message', 'Package Course has been created successfully!');
         }else{
             return \Redirect::back()->with('error', 'No package course has been added by you!');

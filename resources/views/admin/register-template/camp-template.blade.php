@@ -16,24 +16,24 @@
             <br/>
             
             <br/>
+            @php
+                $camp_price = DB::table('camp_prices')->where('camp_id',$camp->id)->first();
+                $admin_selected = json_decode($camp_price->week); 
+
+                $week_key = isset($week_value) ? ltrim($week_value, 'W') : '0'; 
+                $week_key_value = $week_key - 1;  
+
+                $day_filter = Request::get('day'); 
+                $newWeekKeys = [];
+            @endphp
             
-            <p>Week 1 of 6</p>
+            <p>Week {{ $week_key }} of {{ count($admin_selected) }}</p>
             <table class="table table-bordered camp_reg_table">
                 <thead>
                     <tr>
                         <th scope="col"></th>
                         <th scope="col"></th>
 
-                        @php
-                            $camp_price = DB::table('camp_prices')->where('camp_id',$camp->id)->first();
-                            $admin_selected = json_decode($camp_price->week); 
-
-                            $week_key = isset($week_value) ? ltrim($week_value, 'W') : '0'; 
-                            $week_key_value = $week_key - 1;  
-
-                            $day_filter = Request::get('day'); 
-                            $newWeekKeys = [];
-                        @endphp
 
                         @php 
                             $session_data = json_decode($camp_price->selected_session); 
@@ -519,7 +519,6 @@
             <table class="week-dtl d-print-none">
                 <tbody>
                     <tr>
-
                     @if(!empty($day_filter))
                         @foreach($admin_selected as $key=>$we)
 
@@ -548,12 +547,16 @@
 
                             <a class="d-print-none" target="_blank" href="{{ url('/admin/register-template/camp')}}/{{$camp->id}}/daily-signin?&week={{$week_value}}&day={{$day_filter}}">Daily Sign in / Sign out register</a>
                     @else
-                      <td><a class="d-print-none" href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W1">Display Camp Week 1</a></td>
-                      <td><a class="d-print-none" href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W2">Display Camp Week 2</a></td>
-                      <td><a class="d-print-none" href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W3">Display Camp Week 3</a></td>
-                      <td><a class="d-print-none" href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W4">Display Camp Week 4</a></td>
-                      <td><a class="d-print-none" href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W5">Display Camp Week 5</a></td>
-                      <td><a class="d-print-none" href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W6">Display Camp Week 6</a></td>
+                        @foreach($admin_selected as $key=>$we)
+                            @if($we->StartDate)
+                                <td><a class="d-print-none" href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W{{$key+1}}">Display Camp Week {{$key+1}}</a></td>
+                            @endif
+                        @endforeach
+                          <!-- <td><a class="d-print-none" href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W2">Display Camp Week 2</a></td>
+                          <td><a class="d-print-none" href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W3">Display Camp Week 3</a></td>
+                          <td><a class="d-print-none" href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W4">Display Camp Week 4</a></td>
+                          <td><a class="d-print-none" href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W5">Display Camp Week 5</a></td>
+                          <td><a class="d-print-none" href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?week=W6">Display Camp Week 6</a></td> -->
                     @endif  
 
                     </tr>

@@ -55,12 +55,16 @@
                         $shop_cart = DB::table('shop_cart_items')->where('user_id',$user_id)->where('type','cart')->first();
                         $account_id = ToGetAccountID($shop_cart->id,$user_id);
                         $account_details = DB::table('stripe_accounts')->where('id',$account_id)->first();
-                        //dd($account_details->public_key);
+                        if( !empty( $account_details) ){
+                            $stripe['pk'] = $account_details->public_key ;
+                            $stripe['sk'] = $account_details->secret_key ;
+                            $stripe['client_id'] = $account_details->client_key ;
+                        }
                     @endphp
   
                     <form role="form" action="{{url(route('shop.checkout.stripe.payment'))}}" method="post" class="require-validation"
                                 data-cc-on-file="false"
-                                data-stripe-publishable-key="{{isset($account_details->public_key) ? $account_details->public_key : $stripe['pk']}}"
+                                data-stripe-publishable-key="{{isset($stripe['pk']) ? $stripe['pk'] : ''}}"
                                 id="payment-form" autocomplete="off">
                         @csrf
 
@@ -118,8 +122,9 @@
                         <div class="form-row row">
                             <div class="col-xs-12">
                                 <div class="panel-btn-wrap">
-                                <button class="cstm-btn main_button" type="submit">Pay Now (&pound;
+                                <button class="cstm-btn main_button" type="submit">Pay Now (&pound; 
                                     @php 
+                                    //dd($obj);
                                         $base_url = \URL::current();  
                                         $explodedText = explode('/purchase-package-course/', $base_url);    
                                     @endphp
@@ -136,7 +141,12 @@
                                                 @php $price[] = $package->price ; @endphp
                                             @endforeach
 
-                                            @php $total_price = array_sum($price); @endphp
+                                            @php 
+
+                                                $total_price = array_sum($price);
+                                                dd($total_price);
+
+                                            @endphp
                                         @endif
                                     @endif
 

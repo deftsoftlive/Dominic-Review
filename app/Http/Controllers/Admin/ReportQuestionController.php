@@ -24,7 +24,7 @@ class ReportQuestionController extends Controller
     |   Listing of ReportQuestion
     |----------------------------------------*/ 
     public function reportquestion_index() {
-        $reportquestion = ReportQuestion::select(['id','title','slug'])->orderBy('id','desc')->paginate(10);
+        $reportquestion = ReportQuestion::select(['id','title','slug'])->orderBy('id','desc')->paginate(20);
     	return view('admin.reportquestion.index',compact('reportquestion'))
     	->with(['title' => 'Report Question Management', 'addLink' => 'admin.reportquestion.showCreate']);
     }
@@ -38,7 +38,7 @@ class ReportQuestionController extends Controller
     |----------------------------------------*/ 
     public function reportquestion_create(Request $request) {
     	$validatedData = $request->validate([
-            'title' => ['required', 'string', 'max:20']
+            'title' => ['required', 'string', 'max:40']
         ]);
 
     	ReportQuestion::create([
@@ -62,7 +62,7 @@ class ReportQuestionController extends Controller
     |----------------------------------------*/ 
     public function reportquestion_update(Request $request, $slug) {	
     	$validatedData = $request->validate([
-            'title' => ['required', 'string', 'max:20']
+            'title' => ['required', 'string', 'max:40']
         ]);
 
     	$venue = ReportQuestion::FindBySlugOrFail($slug);
@@ -111,7 +111,7 @@ class ReportQuestionController extends Controller
     |   Listing of ReportQuestion
     |----------------------------------------*/ 
     public function reportquestionopt_index() {
-        $reportquestionopt = ReportQuestionOption::orderBy('id','desc')->paginate(10);
+        $reportquestionopt = ReportQuestionOption::orderBy('id','desc')->paginate(50);
     	return view('admin.reportquestionopt.index',compact('reportquestionopt'))
     	->with(['title' => 'Report Question Management', 'addLink' => 'admin.reportquestionopt.showCreate']);
     }

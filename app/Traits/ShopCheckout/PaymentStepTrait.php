@@ -68,6 +68,7 @@ public function getTotalOrder()
 
     if(!empty(Auth::user())) 
     {
+    	//dd(Auth::user()->ShopProductCartItems->sum('price'));
     	return Auth::user()->ShopProductCartItems->sum('total'); 
     }
     elseif(!empty($value))

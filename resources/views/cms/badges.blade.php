@@ -59,7 +59,7 @@ label.confirm_msg.form-check-label {
                                         <a class="nav-link cstm-btn active" data-toggle="tab" href="#beginner" role="tab" aria-controls="beginner" aria-selected="true">beginner</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link cstm-btn" data-toggle="tab" href="#advance" role="tab" aria-controls="advance" aria-selected="false">Advance</a>
+                                        <a class="nav-link cstm-btn" data-toggle="tab" href="#advance" role="tab" aria-controls="advance" aria-selected="false">Advanced</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link cstm-btn" data-toggle="tab" href="#all-goals" role="tab" aria-controls="all-goals" aria-selected="false">All Goals</a>

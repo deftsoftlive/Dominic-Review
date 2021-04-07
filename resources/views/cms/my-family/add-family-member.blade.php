@@ -697,7 +697,7 @@ input#agree {
 
                                                             @if(empty($contacts))
                                                             <div class="cst_text_wrap">
-                                                                <p><b>You must add atleast 1 additional contact.</b></p>
+                                                                <p><b>You must add at least 1 additional contact.</b></p>
                                                             </div>
                                                             @endif
 
@@ -918,7 +918,7 @@ input#agree {
 
                                                             @if(empty($contacts))
                                                             <div class="cst_text_wrap">
-                                                                <p><b>You must add atleast 1 additional contact.</b></p>
+                                                                <p><b>You must add at least 1 additional contact.</b></p>
                                                             </div>
                                                             @endif
 
@@ -1134,7 +1134,7 @@ input#agree {
 
                                                             @if(empty($contacts))
                                                             <div class="cst_text_wrap">
-                                                                <p><b>You must add atleast 1 additional contact.</b></p>
+                                                                <p><b>You must add at least 1 additional contact.</b></p>
                                                             </div>
                                                             @endif
 
@@ -1295,7 +1295,7 @@ input#agree {
 
                                                                     @if(empty($contacts))
                                                                     <div class="cst_text_wrap">
-                                                                        <p><b>You must add atleast 1 additional contact.</b></p>
+                                                                        <p><b>You must add at least 1 additional contact.</b></p>
                                                                     </div>
                                                                     @endif
 
@@ -1460,7 +1460,7 @@ input#agree {
                                                                     </div>
                                                                     @if(empty($contacts))
                                                                     <div class="cst_text_wrap">
-                                                                        <p><b>You must add atleast 1 additional contact.</b></p>
+                                                                        <p><b>You must add at least 1 additional contact.</b></p>
                                                                     </div>
                                                                     @endif
                                                                     <div class="form-group row f-g-full ">
@@ -1611,7 +1611,7 @@ input#agree {
                                                                     </div>
                                                                     @if(empty($contacts))
                                                                     <div class="cst_text_wrap">
-                                                                        <p><b>You must add atleast 1 additional contact.</b></p>
+                                                                        <p><b>You must add at least 1 additional contact.</b></p>
                                                                     </div>
                                                                     @endif
                                                                     <div class="form-group row f-g-full ">
@@ -2544,7 +2544,7 @@ input#agree {
                                                 <div class="form-group row ">
                                                     <div class="radio-wrap conform_wrap">
                                                         <div class="cstm-radio">
-                                                            <input type="radio" name="agree" id="agree" value="yes" @if(!empty($children_details)) @if($children_details->agree == 'yes') checked @endif @endif>
+                                                            <input type="checkbox" name="agree" id="agree" value="yes" @if(!empty($children_details)) @if($children_details->agree == 'yes') checked @endif @endif>
                                                             <label for="agree"></label>
                                                         </div>
                                                     </div>

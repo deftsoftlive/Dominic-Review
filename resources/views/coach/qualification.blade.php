@@ -44,6 +44,11 @@
                <div class="upload-section">
 
                 @foreach($uploaded_documents as $doc)
+                @php
+                //$final = date("Y-m-d", strtotime("+1 month", strtotime($doc->expiry_date)));
+                //dd($final);
+
+                @endphp
                   <div id="upload_doc">
                     <div class="row">
                       <div class="col-lg-2 col-md-3 col-sm-3">
@@ -58,11 +63,12 @@
                        </div>
                       <div class="col-lg-2 col-md-3 col-sm-3">
                         <label><strong>Expiry Date</strong> - </label>
-                        {{!empty($doc->expiry_date) ? $doc->created_at->format('d-m-Y') : 'No expiry date'}}
+                        <!-- {{!empty($doc->expiry_date) ? $doc->created_at->format('d-m-Y') : 'No expiry date'}} -->
+                        {{!empty($doc->expiry_date) ? date('d-m-Y', strtotime($doc->expiry_date)) : 'No expiry date'}}
                       </div>
                       <div class="col-lg-2 col-md-3 col-sm-3">
                         <label><strong>Notification</strong> - </label>
-                        @if($doc->notification == 'No Reminder')
+                        <!-- @if($doc->notification == 'No Reminder')
                           @php $date = 'No Reminder'; @endphp
                         @elseif($doc->notification == '1 Month')
                           @php  $date = $doc->created_at->addMonths(1)->format('d-m-Y'); @endphp
@@ -70,7 +76,17 @@
                           @php  $date = $doc->created_at->addMonths(3)->format('d-m-Y'); @endphp
                         @elseif($doc->notification == '6 Months')
                           @php  $date = $doc->created_at->addMonths(6)->format('d-m-Y'); @endphp
+                        @endif -->
+                       @if($doc->notification == 'No Reminder')
+                          @php $date = 'No Reminder'; @endphp
+                        @elseif($doc->notification == '1 Month')
+                          @php  $date = date("d-m-Y", strtotime("+1 month", strtotime($doc->expiry_date))); @endphp
+                        @elseif($doc->notification == '3 Months')
+                          @php  $date = date("d-m-Y", strtotime("+1 month", strtotime($doc->expiry_date))); @endphp
+                        @elseif($doc->notification == '6 Months')
+                          @php  $date = date("d-m-Y", strtotime("+1 month", strtotime($doc->expiry_date))); @endphp
                         @endif
+
                         {{isset($date) ? $date : ''}}
                       </div>
                       <div class="col-lg-3 col-md-3 col-sm-3 ">

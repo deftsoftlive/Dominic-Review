@@ -18,6 +18,7 @@
                                     <ul class="slides">
                                     @php 
                                         $product_variation = DB::table('product_assigned_variations')->where('product_id',$product->id)->first();
+                                        //dd($product->ProductImages);
                                     @endphp
                                     @foreach($product->ProductImages as $img)
                                     <li>
@@ -43,7 +44,8 @@
                               <div class="price-rating-wrap">
                                  <h4 class="price">
                                     <span>
-                                      <div class="product-price">£{{$product->final_price}}</div>
+                                      @php //dd($product);  @endphp
+                                      <div class="product-price">£{{($product->final_price)? custom_format($product->final_price, 2) : custom_format($product_variation->final_price, 2)}}</div>
 
                                     <!--   @if(!empty($product->sale_price))
                                       <div class="product-price">
@@ -70,8 +72,15 @@
                                     @include('e-shop.includes.products.addToCartForm')
                                 </div> -->
                                 
-                                 <div class="action btn-wrap mt-3"> 
+                                 <!-- <div class="action btn-wrap mt-3"> 
                                     <button class="cstm-btn solid-btn cartButton main_button" type="submit">add to cart</button>  
+                                 </div> -->
+                                 <div class="action btn-wrap mt-3"> 
+                                  @if( $product->product_type == 1 )
+                                  <a href="{{url('/shop/product')}}/{{ $product->slug }}-1" class="cstm-btn solid-btn cartButton main_button">add to cart</a>
+                                  @else
+                                    <button class="cstm-btn solid-btn cartButton main_button" type="submit">add to cart</button>  
+                                  @endif
                                  </div>
                               </form>
                            </div>

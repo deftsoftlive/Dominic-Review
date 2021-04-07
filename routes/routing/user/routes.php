@@ -138,9 +138,11 @@
           Route::get('/inviting-user', 'Users\VendorsController@add2')->name('users.invite.newUser'); 
           Route::post('/inviting-user', 'Users\VendorsController@store2')->name('users.invite.newUser'); 
 
+          /******************************************************************/
+          /*------------- New Wallet Stripe Payment Route  By SB------------*/
+          /******************************************************************/
 
-
-
+          Route::any('stripe-wallet-payment', 'HomeController@stripe_wallet_payemnt')->name('stripe.wallet.payment');
 
      
 

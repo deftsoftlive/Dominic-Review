@@ -21,7 +21,7 @@ class VochureController extends Controller
     public function vochure_index() {
         $vochure = Vouchure::orderBy('id','desc')->paginate(10);
     	return view('admin.vochure.index',compact('vochure'))
-    	->with(['title' => 'Vochure Management', 'addLink' => 'admin.vochure.showCreate']);
+    	->with(['title' => 'Voucher Management', 'addLink' => 'admin.vochure.showCreate']);
     }
 
     /*----------------------------------------
@@ -30,7 +30,7 @@ class VochureController extends Controller
     public function vochure_active() {
         $vochure = Vouchure::where('status',1)->orderBy('id','desc')->paginate(10);
     	return view('admin.vochure.active',compact('vochure'))
-    	->with(['title' => 'Vochure Management', 'addLink' => 'admin.vochure.showCreate']);
+    	->with(['title' => 'Voucher Management', 'addLink' => 'admin.vochure.showCreate']);
     }
 
     /*----------------------------------------
@@ -39,7 +39,7 @@ class VochureController extends Controller
     public function vochure_inactive() {
         $vochure = Vouchure::where('status',0)->orderBy('id','desc')->paginate(10);
     	return view('admin.vochure.inactive',compact('vochure'))
-    	->with(['title' => 'Vochure Management', 'addLink' => 'admin.vochure.showCreate']);
+    	->with(['title' => 'Voucher Management', 'addLink' => 'admin.vochure.showCreate']);
     }
 
     public function vochure_showCreate() {

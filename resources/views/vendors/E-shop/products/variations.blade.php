@@ -10,8 +10,14 @@
 	  		<div class="row">
           <div class="col-md-6">
 	  			      <select name="variation_type" id="variationType" class="v-cstm-select form-control">
-	          	       <option value="0" {{$product->product_type == 0 ? 'selected' : ''}}>Simple Product</option>
-	          	       <option value="1" {{$product->product_type == 1 ? 'selected' : ''}}>Variable Product</option>
+                  @if($product->name != null && $product->product_type == 0)
+          	       <option value="0" {{$product->product_type == 0 ? 'selected' : ''}}>Simple Product</option>
+                   @elseif($product->name != null && $product->product_type == 1)
+          	       <option value="1" {{$product->product_type == 1 ? 'selected' : ''}}>Variable Product</option>
+                   @else
+                   <option value="0" {{$product->product_type == 0 ? 'selected' : ''}}>Simple Product</option>
+                    <option value="1" {{$product->product_type == 1 ? 'selected' : ''}}>Variable Product</option>
+                  @endif
 	               </select>
                </div>
              </div>

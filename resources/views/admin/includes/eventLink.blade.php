@@ -46,6 +46,7 @@
                     <li class="<?= ActiveMenu(['admin.revenue.courses'],'active') ?>"><a href="{{ route('admin.revenue.courses') }}" class="">Courses Revenue</a></li>
                     <li class="<?= ActiveMenu(['admin.revenue.camps'],'active') ?>"><a href="{{ route('admin.revenue.camps') }}" class="">Camps Revenue</a></li>
                     <li class="<?= ActiveMenu(['admin.revenue.products'],'active') ?>"><a href="{{ route('admin.revenue.products') }}" class="">Products Revenue</a></li>
+                    <li class="<?= ActiveMenu(['admin.revenue.products'],'active') ?>"><a href="{{ route('admin.revenue.paygo.courses') }}" class="">PAYG Course Revenue</a></li>
                 </ul>
                 </li>
 

@@ -13,7 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\cronEmail'
+        'App\Console\Commands\cronEmail',
+        'App\Console\Commands\DocumentAboutToExpire'
+
     ];
 
     /**
@@ -29,6 +31,9 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('qualification:expire')
                  ->daily('06:31');
+        $schedule->command('about_to:expire')
+                 ->daily();
+                 
     }
 
     /**

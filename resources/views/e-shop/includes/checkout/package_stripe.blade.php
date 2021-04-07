@@ -45,12 +45,15 @@
                     @endif
 
                     @php
-                        $stripe = SripeAccount();
+                        //$stripe = SripeAccount();
+                        $account_id = $pack->account_id;
+                        $stripe = \DB::table('stripe_accounts')->where('id',$account_id)->first();
+                        
                     @endphp
   
                     <form role="form" action="{{url('/save-package-courses')}}/{{$pack->booking_no}}" method="post" class="require-validation"
                                 data-cc-on-file="false"
-                                data-stripe-publishable-key="{{isset($stripe['pk']) ? $stripe['pk'] : ''}}"
+                                data-stripe-publishable-key="{{isset($stripe->public_key) ? $stripe->public_key : ''}}"
                                 id="payment-form" autocomplete="off">
                         @csrf
 
@@ -60,12 +63,13 @@
                         @endphp
 
                         @if(!empty($explodedText[1]))
-                            @php $url_id = $explodedText[1]; @endphp
+                            @php $url_id = $explodedText[1];
+                            @endphp
                         @endif
 
                         <input type="hidden" name="booking_no" value="{{!empty($explodedText[1]) ? $explodedText[1] : ''}}">
 
-                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                        <input type="hidden" name="user_id" value="{{$pack->parent_id}}">
   
                         <div class='form-row row'>
                             <div class='col-lg-12 form-group required'>

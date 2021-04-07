@@ -64,16 +64,16 @@
 <!-- </head> -->
 
 <body data-redirect="{{\Request::fullUrl()}}">
-<div class="messagePOPUP"> </div>
- <div class="pre-loader custom-loading">
-       <div class="pre-loader-inner">
+<!-- <div class="messagePOPUP"> </div> -->
+ <!-- <div class="pre-loader custom-loading">
+    <div class="pre-loader-inner">
       <div class="predot white"></div>
       <div class="predot"></div>
       <div class="predot"></div>
-       <div class="predot"></div>
-       <div class="predot"></div>
-   </div>
-</div>
+      <div class="predot"></div>
+      <div class="predot"></div>
+    </div>
+</div> -->
  
   <!--   <header class="Eshop-header">
       <nav class="navbar navbar-expand-lg d-f">
