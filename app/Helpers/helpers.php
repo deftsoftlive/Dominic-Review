@@ -3,8 +3,14 @@
 /*----------------------------------
 | Get shop type using orderID
 |----------------------------------*/
-function getShopType($orderID){
+
+// if type 1 return shop list else types
+function getShopType($orderID,$type=0){
   $shop = \DB::table('shop_cart_items')->where('orderID',$orderID)->get(); 
+  if($type == 1){
+    return $shop;
+  }
+
   $shop_ty = [];
 
   foreach($shop as $sh)
@@ -13,6 +19,42 @@ function getShopType($orderID){
   }
   $orderType = implode(', ',$shop_ty);
   return $orderType;
+}
+
+/*-------------------------------------
+| Return Course,Camp,Paygo-course or Product Name according to their type
+|-------------------------------------*/
+function GetCourseCampName($type,$id){
+  switch ($type) {
+    case 'camp':
+      $campData = App\Camp::where('id',$id)->first();
+      if(!empty($campData)){
+        return $campData->title;
+      }
+      break;
+    case 'course':
+      $course = App\Course::where('id',$id)->first();
+      if(!empty($course)){
+        return $course->title;
+      }
+      break;
+    case 'product':
+      $product = App\Models\Products\Product::where('id',$id)->first();
+      if(!empty($product)){
+        return $product->name;
+      }
+      break;
+    case 'paygo-course':
+      $paygocourse = App\PayGoCourse::where('id',$id)->first();
+      if(!empty($paygocourse)){
+        return $paygocourse->title;
+      }
+      break;
+
+    default:
+      return '';
+      break;
+  }
 }
 
 /*-------------------------------------

@@ -184,7 +184,7 @@ header.Eshop-header {
                                                 Conform Order
                                             </button> -->
 
-                                            <form id="save_wallet" action="{{route('save_wallet')}}" method="POST">
+                                            <form id="save_wallet_payment" action="{{route('save_wallet')}}" method="POST">
                                                 @csrf
                                                 <button class="wallet_confirm_order cstm-btn main_button" >Confirm Order</button>
                                             </form>

@@ -616,7 +616,7 @@ public function about()
 
 public function contact()
 {
-    return view('home.cms.contact_us');
+   // return view('home.cms.contact_us');
 }
 
 
@@ -1058,6 +1058,9 @@ public function tennis_pro()
 /* Course Booking */
 public function course_booking(Request $request)
 {
+  // Get Membership status 
+  $membership_status_val = !empty($request->membership_status) ? $request->membership_status : 0;
+
   $check_cart = ShopCartItems::where('user_id',Auth::user()->id)->where('type','cart')->first(); //dd($check_cart);
 
   if(!empty($check_cart))
@@ -1114,22 +1117,27 @@ public function course_booking(Request $request)
                 $add_course->product_id = $course_id;
                 $add_course->user_id    = \Auth::user()->id;
                 $add_course->course_season = $course_season;
-                $add_course->membership_status = 0;
+                $add_course->membership_status = $membership_status_val;
 
               if($currntD >= $endDate)
               {   
                   $add_course->price  = $course->price;
-                  $add_course->total  = $course->price;
+                  $add_course->total  = $membership_status_val == 1 ? $course->membership_price : $course->price;
+                  $add_course->membership_price  = $course->membership_price;
               }else{
                 if($early_bird_enable == '1'){
                   $cour_price = $course->price;
+                  $membership_price = !empty($course->membership_price) ? $course->membership_price : 0;
                   $dis_price = $cour_price - (($cour_price) * ($percentage/100));
+                  $membership_dis_price = $membership_price - (($membership_price) * ($percentage/100));
 
                   $add_course->price  = $dis_price;
-                  $add_course->total  = $dis_price;
+                  $add_course->total  = $membership_status_val == 1 ? $membership_dis_price : $dis_price;
+                  $add_course->membership_price  = $membership_dis_price;
                 }else{
                   $add_course->price  = $course->price;
-                  $add_course->total  = $course->price;
+                  $add_course->total  = $membership_status_val == 1 ? $course->membership_price : $course->price;
+                  $add_course->membership_price  = $course->membership_price;
                 }
               }
 
@@ -1149,22 +1157,23 @@ public function course_booking(Request $request)
 
                   // return redirect('shop/cart');
 
-                if($course->membership_popup == 1)
+                if($course->membership_popup == 1 && $course->membership_price <= 0)
                 {
                   return \Redirect::back()->withInput(array('shop_id' => $add_course->id))->with('popup',' ');
                 }else{
                   return redirect('shop/cart');
                 }
+                // return redirect('shop/cart');
           }
           else{
-            return \Redirect::back()->with('error','This person is already booked on this course.');
+            return \Redirect::back()->with('error','This person is already booked on this course.')->with('membership_status',$membership_status_val == 1 ? 'Yes' : 'No');
           }
 
       // }else{
       //   return \Redirect::back()->with('error','User details are required in order to proceed.');
       // }
       }else{
-        return \Redirect::back()->with('error','Courses / camps held at Letchworth Sports & Tennis Club cannot be purchased at the same time as courses / camps held at other venues or some shop items. You will need to purchase LSTC courses / camps seperately - Thank you!');
+        return \Redirect::back()->with('error','Courses / camps held at Letchworth Sports & Tennis Club cannot be purchased at the same time as courses / camps held at other venues or some shop items. You will need to purchase LSTC courses / camps seperately - Thank you!')->with('membership_status',$membership_status_val == 1 ? 'Yes' : 'No');
       }
   }else{
       $course = Course::where('id',$request->course_id)->first();
@@ -1208,22 +1217,27 @@ public function course_booking(Request $request)
               $add_course->product_id = $course_id;
               $add_course->user_id    = \Auth::user()->id;
               $add_course->course_season = $course_season;
-              $add_course->membership_status = 0;
+              $add_course->membership_status = $membership_status_val;
 
             if($currntD >= $endDate)
             {   
                 $add_course->price  = $course->price;
-                $add_course->total  = $course->price;
+                $add_course->total  = $membership_status_val == 1 ? $course->membership_price : $course->price;
+                $add_course->membership_price  = $course->membership_price;
             }else{
               if($early_bird_enable == '1'){
                 $cour_price = $course->price;
+                $membership_price = !empty($course->membership_price) ? $course->membership_price : 0;
                 $dis_price = $cour_price - (($cour_price) * ($percentage/100));
+                $membership_dis_price = $membership_price - (($membership_price) * ($percentage/100));
 
                 $add_course->price  = $dis_price;
-                $add_course->total  = $dis_price;
+                $add_course->total  = $membership_status_val == 1 ? $membership_dis_price : $dis_price;
+                $add_course->membership_price  = $membership_dis_price;
               }else{
                 $add_course->price  = $course->price;
-                $add_course->total  = $course->price;
+                $add_course->total  = $membership_status_val == 1 ? $course->membership_price : $course->price;
+                $add_course->membership_price  = $course->membership_price;
               }
             }
 
@@ -1235,25 +1249,34 @@ public function course_booking(Request $request)
                 $output = 0;
               }
 
-              if($course->membership_popup == 1)
+              if($course->membership_popup == 1 && $course->membership_price <= 0)
               {
                 return \Redirect::back()->withInput(array('shop_id' => $add_course->id))->with('popup',' ');
               }else{
                 return redirect('shop/cart');
               }
+          // return redirect('shop/cart');
         }
         else{
-          return \Redirect::back()->with('error','This person is already booked on this course.');
+          return \Redirect::back()->with('error','This person is already booked on this course.')->with('membership_status',$membership_status_val == 1 ? 'Yes' : 'No');
         }
   }
   
 } 
 
   /*----------------------------------------
-  |   Membership Status
+  |   Membership popup status
   |----------------------------------------*/
   public function membership_status(Request $request) 
   {
+    //dd($request->all());
+    // \Session::put('membership_status' ,$request->membership_status);
+    // ShopCartItems::where('id',$request->shop_id)->update(array('membership_status' => $request->membership_status));
+    return \Redirect::back()->with('membership_status',$request->membership_status);
+  }
+
+  // Change Status of membership after booking
+  public function membership_status_after_booking(Request $request){
     ShopCartItems::where('id',$request->shop_id)->update(array('membership_status' => $request->membership_status));
     return redirect('shop/cart');
   }
@@ -1521,7 +1544,7 @@ public function submit_book_a_camp(Request $request)
 
     }
   }else{
-    return \Redirect::back()->with('error','Courses / camps held at Letchworth Sports & Tennis Club cannot be purchased at the same time as courses / camps held at other venues or some shop items. You will need to purchase LSTC courses / camps seperately - Thank you!Courses / camps held at Letchworth Sports & Tennis Club cannot be purchased at the same time as courses / camps held at other venues or some shop items. You will need to purchase LSTC courses / camps seperately - Thank you!');
+    return \Redirect::back()->with('error','Courses / camps held at Letchworth Sports & Tennis Club cannot be purchased at the same time as courses / camps held at other venues or some shop items. You will need to purchase LSTC courses / camps seperately - Thank you!');
   }
 
   }else{
@@ -4484,16 +4507,27 @@ public function contact_us()
 
 /* Save contact form details */
 public function save_contact_us(Request $request)
-{
+{ //dd($_SERVER['REMOTE_ADDR']);
+  if($request->type == 'contact')
+  {
     $this->validate($request,[
-                   'participant_name' => 'required',
-                   'parent_email' => 'required',
-                   'parent_telephone' => 'required',
-                   'message' => 'required',
-                   'g-recaptcha-response' => 'required',
-                   
+     'participant_name' => 'required',
+     'parent_email' => 'required',
+     'parent_telephone' => 'required',
+      'captcha' => 'required',
+    ]);
+  }else{
+    $this->validate($request,[
+     'participant_name' => 'required',
+     'parent_email' => 'required',
+     'parent_telephone' => 'required',
+     // 'message' => 'required',
+     // 'g-recaptcha-response' => 'required',                   
      ]);
+  }    
     $contact = ContactDetail::create($request->all()); 
+    // dd($contact);
+    ContactDetail::where('id',$contact->id)->update(array('ip_address' => $_SERVER['REMOTE_ADDR']));
 
     if($contact->type == 'course')
     {
@@ -4544,7 +4578,10 @@ public function save_contact_us(Request $request)
     $output = '';
     if($request->ajax())
     {
-      if($check_coupon == '' && $shop_voucher == '')
+      if($check_coupon->status == 0){
+        $output = '<div class="alert alert-danger" role="alert">Coupon is inactive.</div>'; 
+      }
+      elseif($check_coupon == '' && $shop_voucher == '')
       {
         $output = '<div class="alert alert-danger" role="alert">Coupon not found.</div>';
       }
@@ -6209,12 +6246,15 @@ public function videosListing() {
   /* Course Booking */
   public function payGoCourseBooking(Request $request)
   {
+    // dd($request->all());
+    // Get Membership status 
+    $membership_status_val = !empty($request->membership_status) ? $request->membership_status : 0;
 
     $this->validate($request,[
                    'selected_date_ids' => 'required',
                    
      ],[
-          'selected_date_ids.required' => 'Please Select at least one date for booking.'
+          'selected_date_ids.required' => 'Please select at least one date for booking.'
      ]);
 
     $selected_date_ids = $request->selected_date_ids;
@@ -6245,7 +6285,7 @@ public function videosListing() {
     }
     if ( $checkAlreadyBookedDates == 1 ) {
       $c = implode(', ', $check_course);
-              return \Redirect::back()->with('error','This person is already booked for '.$c.' on this course or the course is already in the cart for these dates. Please select different date!');
+              return \Redirect::back()->with('error','This person is already booked for '.$c.' on this course or the course is already in the cart for these dates. Please select different date!')->with('membership_status',$membership_status_val == 1 ? 'Yes' : 'No');
     }
 
     $allDatesTotalPrice = $request->final_paygo_price;
@@ -6311,13 +6351,14 @@ public function videosListing() {
             $add_course->product_id = $course_id;
             $add_course->user_id    = \Auth::user()->id;
             $add_course->course_season = $course_season;
-            $add_course->membership_status = 0;
+            $add_course->membership_status = $membership_status_val;
 
           if($currntD >= $endDate)
           {   
               $add_course->price  = $course->price;
               $add_course->total  = $allDatesTotalPrice;
               $add_course->paygo_course_price = $allDatesTotalPrice;
+              $add_course->membership_price  = $course->membership_price;
           }else{
             if($early_bird_enable == '1'){
               $cour_price = $course->price;
@@ -6329,10 +6370,15 @@ public function videosListing() {
 
               $add_course->total  = $dis_price;
               $add_course->paygo_course_price = $dis_price;
+
+              $member_price = $course->membership_price;
+              $membership_dis_price = $member_price - (($member_price) * ($percentage/100));
+              $add_course->membership_price  = $membership_dis_price;
             }else{
               $add_course->price  = $course->price;
               $add_course->total  = $allDatesTotalPrice;
               $add_course->paygo_course_price = $allDatesTotalPrice;
+              $add_course->membership_price  = $course->membership_price;
             }
           }
 
@@ -6362,18 +6408,20 @@ public function videosListing() {
 
               // return redirect('shop/cart');
 
-            if($course->membership_popup == 1)
+            if($course->membership_popup == 1 && $course->membership_price <= 0)
             {
               return \Redirect::back()->withInput(array('shop_id' => $add_course->id))->with('popup',' ');
             }else{
               return redirect('shop/cart');
             }     
 
+            // return redirect('shop/cart');
+
         // }else{
         //   return \Redirect::back()->with('error','User details are required in order to proceed.');
         // }
         }else{
-          return \Redirect::back()->with('error','Courses / camps held at Letchworth Sports & Tennis Club cannot be purchased at the same time as courses / camps held at other venues or some shop items. You will need to purchase LSTC courses / camps seperately - Thank you!');
+          return \Redirect::back()->with('error','Courses / camps held at Letchworth Sports & Tennis Club cannot be purchased at the same time as courses / camps held at other venues or some shop items. You will need to purchase LSTC courses / camps seperately - Thank you!')->with('membership_status',$membership_status_val == 1 ? 'Yes' : 'No');
         }
     }else{
         $course = PayGoCourse::where('id',$request->course_id)->first();
@@ -6415,7 +6463,7 @@ public function videosListing() {
         $add_course->product_id = $course_id;
         $add_course->user_id    = \Auth::user()->id;
         $add_course->course_season = $course_season;
-        $add_course->membership_status = 0;
+        $add_course->membership_status = $membership_status_val;
 
       /*if($currntD >= $endDate)
       {   
@@ -6438,6 +6486,7 @@ public function videosListing() {
             $add_course->price  = $course->price;
             $add_course->total  = $allDatesTotalPrice;
             $add_course->paygo_course_price = $allDatesTotalPrice;
+            $add_course->membership_price  = $course->membership_price;
         }else{
           if($early_bird_enable == '1'){
             $cour_price = $course->price;
@@ -6449,10 +6498,15 @@ public function videosListing() {
 
             $add_course->total  = $dis_price;
             $add_course->paygo_course_price = $dis_price;
+
+            $member_price = $course->membership_price;
+            $membership_dis_price = $member_price - (($member_price) * ($percentage/100));
+            $add_course->membership_price  = $membership_dis_price;
           }else{
             $add_course->price  = $course->price;
             $add_course->total  = $allDatesTotalPrice;
             $add_course->paygo_course_price = $allDatesTotalPrice;
+            $add_course->membership_price  = $course->membership_price;
           }
         }
 
@@ -6474,13 +6528,12 @@ public function videosListing() {
           $output = 0;
         }
 
-        if($course->membership_popup == 1)
+        if($course->membership_popup == 1 && $course->membership_price <= 0)
         {
           return \Redirect::back()->withInput(array('shop_id' => $add_course->id))->with('popup',' ');
         }else{
           return redirect('shop/cart');
-        }
-          
+        }          
     }
     
   }

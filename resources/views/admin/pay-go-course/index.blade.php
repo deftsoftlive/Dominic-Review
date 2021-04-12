@@ -88,6 +88,7 @@
                                     <th>Name</th>
                                     <th>Season</th>
                                     <th>Price</th>
+                                    <th>Member Price</th>
                                     <th>Bookings</th>
                                     <th width="150px">Action</th>
                                 </tr>
@@ -115,8 +116,8 @@
                                         {{$test->title}}
                                     </td>
                                     <td>@php echo getSeasonname($test->season); @endphp</td>
-                                    <td>£ <input type="text" id="update_pay_go_course_price" data-id="{{$test->id}}" value="{{number_format((float)$test->price, 2, '.', '')}}" style="width:
-                                    50px"></td>
+                                    <td>£ <input type="text" id="update_pay_go_course_price" data-id="{{$test->id}}" value="{{number_format((float)$test->price, 2, '.', '')}}" style="width: 50px"></td>
+                                    <td>£ <input type="text" id="update_pay_go_course_membership_price" data-id="{{$test->id}}" value="{{number_format((float)$test->membership_price, 2, '.', '')}}" style="width: 50px"></td>
                                     <td>
                                         <!-- <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Check slots</a> -->
                                         @php 

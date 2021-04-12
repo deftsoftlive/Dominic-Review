@@ -280,12 +280,30 @@ input#agree {
                                                             <p style="font-weight: 500;margin-right: 15px;text-transform: capitalize;font-size: 18px;margin-bottom: 8px;color: #00000;">Please note</p>
                                                         </div>
                                                         <br>
-                                                        <div class="col-sm-12">
+                                                        <ul class="block-points">                                                           
+
+                                                            <li class="col-sm-12">
+                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">The section is where you will enter contact information that will go on our course/camp registers.</p>                                                                
+                                                            </li>
+
+                                                            <li class="col-sm-12">
+                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">If the participant is a child then please enter contact details for the parent/guardian you wish us to communicate with.</p>
+                                                            </li>
+                                                             
+                                                            <li class="col-sm-12">
+                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">If the participant is an adult then please enter the participant's details here as we will communicate with them directly. In some cases this may be a duplicate of the information the account holder entered when registering.</p>
+                                                            </li>
+                                                             
+                                                            <li class="col-sm-12">
+                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">If you add multiple contacts then these will be the people we may try to contact in case of an emergency. For children, we advise adding at least 2 contacts per child.</p>
+                                                            </li>
+                                                        </ul>
+                                                        <!-- <div class="col-sm-12">
                                                             <p style="font-weight: 400; margin-right: 15px; color: #858686;">If you are an adult seperate to the account holder and are wishing to book yourself onto a course, then you can add your own contact details in this section.</p>
                                                         </div>
                                                         <div class="col-sm-12">
                                                             <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notices about upcoming events and notifications from linked sports coaches will be sent to the account holder email address.</p>
-                                                        </div>
+                                                        </div> -->
                                                         <!-- <div class="col-sm-12">
                                                                         <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notices about upcoming events and notifications from linked sports coaches will be sent to the account holder email address.</p>
                                                                     </div> -->
@@ -300,9 +318,9 @@ input#agree {
                                                                 <div class="col-sm-12">
                                                                     <p style="font-weight: 500; margin-right: 15px;margin-bottom: 0;color: #000;">Contact {{$i}}</p>
                                                                 </div>
-                                                                <div class="col-sm-12">
+                                                                <!-- <div class="col-sm-12">
                                                                     <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;">This is the person that would be contacted in case of any emergency</p>
-                                                                </div>
+                                                                </div> -->
                                                                 <div class="form-group row">
                                                                     <label class="col-md-12 col-form-label text-md-right">contact {{$i}} - first name:</label>
                                                                     <div class="col-md-12">
@@ -412,7 +430,7 @@ input#agree {
                                                         </div>
                                                         <div class="form-group row f-g-full">
                                                             <div class="col-sm-12" style="margin-top: 15px;">
-                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addcontact1();" class="additional_contact1 cstm-btn main_button">Add an additional contact <i class="fas fa-plus"></i></a>
+                                                                <a href="javascript:void(0);" style="margin:0;" onclick="addcontact1();" class="additional_contact1 cstm-btn main_button">Add a contact <i class="fas fa-plus"></i></a>
                                                                 <!--  <button onclick="addcontact();" class="cstm-btn" style="margin:0;">add an additional contact <i class="fas fa-plus"></i></button> -->
                                                             </div>
                                                         </div>

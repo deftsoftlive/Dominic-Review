@@ -1,5 +1,3 @@
-@extends('emails.layout')
-@section('content')
 @php
     $get_package = \DB::table('package_courses')->where('booking_no',$booking_no)->first(); 
     $get_all_packages = \DB::table('package_courses')->where('booking_no',$booking_no)->orderBy('id','desc')->get();
@@ -168,5 +166,3 @@
     @endif
 
 </p>
-
-@endsection

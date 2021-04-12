@@ -174,8 +174,16 @@
         <!-- Membership Popup -->
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title"><u>Membership Popup Text</u></h5>
+            <h5 class="card-title"><u>Before Membership Popup Text</u></h5>
             {{textarea($errors,'Membership Popup Text','membership_popup_text',$membership_popup_text)}}
+          </div>
+        </div>
+
+        <!-- After Membership Popup -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><u>After Membership Popup Text</u></h5>
+            {{textarea($errors,'After Membership Popup Text','after_membership_popup_text', $after_membership_popup_text)}}
           </div>
         </div>
 
@@ -209,5 +217,6 @@
 <script type="text/javascript">
   CKEDITOR.replace('thanku_page_text', options);
   CKEDITOR.replace('membership_popup_text', options);
+  CKEDITOR.replace('after_membership_popup_text', options);
 </script>
 @endsection

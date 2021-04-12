@@ -141,17 +141,17 @@ public function saveParticipantInfo(Request $request)
 								// 	return \Redirect::back()->with('error', 'Please confirm that the participant details are correct');
 								// }
 							}else{
-								return \Redirect::back()->with('error', 'Please ensure each participant has complete details and you click confirm in order to proceed.');
+								return \Redirect::back()->with('error', 'cust_error_msg');
 							}
 						}
 					}
 				}
 			}
 		}else{
-			return \Redirect::back()->with('error', 'Please ensure each participant has complete details and you click confirm in order to proceed.');
+			return \Redirect::back()->with('error', 'cust_error_msg');
 		}
 	}else{
-		return \Redirect::back()->with('error', 'Please ensure each participant has complete details and you click confirm in order to proceed.');
+		return \Redirect::back()->with('error', 'cust_error_msg');
 	}
 	
 

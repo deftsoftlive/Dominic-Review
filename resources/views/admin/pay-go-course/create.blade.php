@@ -127,7 +127,7 @@
 
                   {{textarea($errors,'Information Email Content<span class="cst-upper-star">*</span>','info_email_content')}}
 
-                  {{textbox($errors,'Price<span class="cst-upper-star">*</span>','price')}}
+                  {{textnumber($errors,'Price<span class="cst-upper-star">*</span>','price')}}
                   {{textarea($errors,'Bottom Section<span class="cst-upper-star">*</span>','bottom_section')}}
                   <!-- {{textbox($errors,'Early Birth Price*','early_birth_price')}} -->
 
@@ -173,6 +173,8 @@
                       <option value="0">Disable</option>
                     </select>
                   </div><br/>
+
+                  {{textnumber($errors,'Membership Price<span class="cst-upper-star">*</span>','membership_price')}}
 
                    <div class="form-group">
                     <label class="label-file control-label">Advance days booking</label>

@@ -36,7 +36,16 @@
                                 @endif
                             </div>
                             <img src="" id="logo_src" style="width: 100px; height: 100px; display: none" />
-                            <br /><br />
+                            <br />
+                            <div class="form-group">
+                                <label class="control-label">Camp Banner Image(1350*430)</label>
+                                <input type="file" required accept="image/*" onchange="ValidateSingleInput(this, 'BannerImage')" name="banner_image" id="Banner_image">
+                                @if ($errors->has('banner_image'))
+                                <div class="error">{{ $errors->first('banner_image') }}</div>
+                                @endif
+                            </div>
+                            <br />
+                            <img src="" id="BannerImage" style="width: 100px; height: 100px; display: none" />
                             {{textbox($errors,'Camp Title<span class="cst-upper-star">*</span>','title')}}
                             {{textbox($errors,'Location<span class="cst-upper-star">*</span>','location')}}
                             {{textbox($errors,'Season<span class="cst-upper-star">*</span>','term')}}
@@ -548,8 +557,8 @@
 </div>
 @endsection
 @section('scripts')
-<script src="{{url('/admin-assets/js/validations/valueValidation.js')}}"></script>
-<script src="{{url('/js/validations/imageShow.js')}}"></script>
+<script src="{{asset('/admin-assets/js/validations/valueValidation.js')}}"></script>
+<script src="{{asset('/js/validations/imageShow.js')}}"></script>
 <script src="{{ asset('js/cke_config.js') }}"></script>
 <script type="text/javascript">
 CKEDITOR.replace('description', options);

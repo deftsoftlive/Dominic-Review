@@ -350,9 +350,9 @@ $(document).ready(function (){
     },
 
       submitHandler: function(form) {        
-        //$("#disable_contact_us_btnn").attr("disabled", true);
+        $(".disable_contact_us_btnn").attr("disabled", true);
         var check = checkRecaptcha();
-        alert( check );
+        // alert( check );
         if ( check == true ) {
 
           form.submit();
@@ -936,7 +936,7 @@ $(document).ready(function (){
   });
 
     /*validations on childcare voucher*/
-  $('#save_wallet').validate({
+  $('#save_wallet,#save_wallet_payment').validate({
            rules: {
         },
         messages:{
@@ -952,15 +952,36 @@ $(document).ready(function (){
   });
 
 
+
+
   /*validations on course booking - player selection*/
   $('#course-booking').validate({
            rules: {
             child: {
-                required: true
+                required: true,
+            },
+            'selected_date_ids[]':{
+              required : true,
             }
         },
         messages:{
-            child:{required:"This field is required"}
+            child:{required:"This field is required"},
+            'selected_date_ids[]':{required:"Please select at least one date for booking."},
+        },
+
+      errorElement : 'div',
+      errorPlacement: function(error, element) {
+       // $(element).next().remove();
+          var placement = $(element).data('error');
+          var placement1 = element.attr('name');
+
+          if (placement) {
+            $(placement).append(error)
+          }else if(placement1=="selected_date_ids[]"){
+              error.insertAfter("#checkboxMsgError");
+          }else {
+            error.insertAfter(element);
+          }
         },
 
     highlight: function (element, errorClass, validClass) {
@@ -990,6 +1011,38 @@ $(document).ready(function (){
     }
   });
 
+  /*validations on course booking - player selection*/
+  $('#membershipPopup').validate({
+    rules: {
+      membership_status: {
+        required: true
+      }
+    },
+
+    messages:{
+        membership_status:{required:"Select membership status."},
+    },
+
+    errorElement : 'div',
+      errorPlacement: function(error, element) {
+       // $(element).next().remove();
+          var placement = $(element).data('error');
+          var placement1 = element.attr('name');
+
+          if (placement) {
+            $(placement).append(error)
+          }else if(placement1=="membership_status"){
+              error.insertAfter("#radio_membership");
+          }else {
+            error.insertAfter(element);
+          }
+        },
+       
+    submitHandler: function(form) {
+      $("#membershipPopupBtn").attr("disabled", true);
+      form.submit();
+    }
+  });
 
   /*validations on complex report*/
   $('#complex_report').validate({
@@ -1169,7 +1222,7 @@ $(document).ready(function (){
           maxlength:25,
           
       },
-      gender: {
+      gender1: {
           required: true,      
       },
       date_of_birth: {
@@ -1258,7 +1311,7 @@ $(document).ready(function (){
 
           if (placement) {
             $(placement).append(error)
-          }else if(placement1=="gender"){
+          }else if(placement1=="gender1"){
               error.insertAfter("#select_gender");
           }else {
             error.insertAfter(element);

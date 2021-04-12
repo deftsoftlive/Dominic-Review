@@ -106,14 +106,13 @@
               </ul>
           </td>
           <td class="cart-table__column cart-table__column--price" data-title="Price">
-             £{{custom_format($item->price,2)}}    
+             £{{ ($item->membership_status == 1 && $item->membership_price > 0) ? custom_format($item->membership_price,2) : custom_format($item->price,2) }}     
           </td>
           <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
               1
           </td>
           <td class="cart-table__column cart-table__column--total" data-title="Total">
-
-                  £{{custom_format(($item->price * $item->quantity),2)}} 
+            £{{ ($item->membership_status == 1 && $item->membership_price > 0) ? custom_format(($item->membership_price * $item->quantity),2) : custom_format(($item->price * $item->quantity),2) }}
           </td>
           <td class="cart-table__column cart-table__column--remove">
               <a href="javascript" class="btn btn-light btn-sm btn-svg-icon cartItemQty"

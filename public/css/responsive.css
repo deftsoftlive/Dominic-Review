@@ -95,6 +95,18 @@
     ul.cart-table__options.paygo-dates li {
        width: 33%!important;
     }
+    .login-content-custt p {    
+        padding: 10px 40px;  
+    }
+    p.cst-fees {
+    font-size: 22px!important;   
+    }
+    .outer-slt {    
+    min-width: 440px;
+    }
+    p.cst-fees.real-price-cust span::after {    
+    left: -3px;
+    }
 
     .contact-gender label {
 
@@ -1647,7 +1659,7 @@
 
 
 
-        min-width: 320px;
+        min-width:245px;
 
     }
 
@@ -3026,12 +3038,62 @@
 
 
 @media(max-width: 767px) {
+    .t-p-text.desktop-cstm-cont h2 {
+    display: none;
+}
+.date_cstm_wrap {  
+    max-width: 100%;    
+}
+.image-up .image-up-cust {
+    flex-direction: column-reverse;
+}
+.t-p-text.resp-cstm-cont h2 {
+    display: block!important;
+}
+div#membership .date_cstm_wrap ul.days_list li {
+    width: 24%;   
+}
 
     ul.cart-table__options.paygo-dates li {
        width: 22%;
+    }.camp-logo-section a.inner-logo {
+    max-width: 275px;
+    margin: 20px 0;
+    padding: 0 20px;
+    }.camp_list_title.camp-logo-section {
+        margin-top: 0;
+    }.camp_list_title.camp-logo-section h2 span:last-child {
+        font-size: 17px!important;
+        
+    }.img-manage-cust h2.inner-banner-heading {
+    font-size: 40px;
+}
+    div#nav-goals .activitiy-info-content span, div#nav-goals .activitiy-info-content span strong ,
+div#nav-badges .activitiy-info-content p span:first-child,
+div#nav-reports .activitiy-info-content p strong span {
+    font-size: 27px!important; line-height: 30px;
+}
+div#nav-badges .activitiy-info-content p span,
+div#nav-reports .activitiy-info-content p  span{
+    font-size: 17px!important;
+    line-height: 24px;
+}
+  .camp-down-sec {
+    padding: 0 0 40px;
+ 
+}
+
+    /*.activitiy-info-content strong span,
+    .activitiy-info-content p span {
+        font-size: 27px!important;
+        line-height: 30px;
     }
+    .activitiy-info-content span,
+    .activitiy-info-content span strong {
+        font-size: 17px!important;
+        line-height: 20px;
 
-
+    }*/
     .about-us-sec>.container>.row>div.col-md-6:nth-of-type(odd) {
 
         order: 1;
@@ -3056,7 +3118,7 @@
 
     }
     .date_cstm_wrap ul.days_list {
-        max-width: 64%;
+        max-width: 100%;
         justify-content: space-between;
     }
 
@@ -3097,7 +3159,7 @@
 
     .camp_list_title.camp-logo-section h2 span:first-child {
 
-        font-size: 56px !important;
+        font-size: 27px !important;
 
     }
 
@@ -3605,7 +3667,7 @@
 
 
 
-        top: 30px !important;
+        top: 45px !important;
 
 
 
@@ -5091,7 +5153,10 @@
 
     }
 
-
+.image-fit-cust img {
+    min-height: unset;
+    height: auto;
+}
 
 }
 
@@ -5309,7 +5374,11 @@
         justify-content: center;
 
     }
-
+    /*membership popup css*/
+    #course-booking .modal-cust-des .modal-header {
+        padding: 2em 1em;
+    }
+    /*membership popup css end*/
 
 
 
@@ -5323,7 +5392,13 @@
     ul.cart-table__options.paygo-dates li {
        width: 33%!important;
     }
-
+    div#membership .date_cstm_wrap ul.days_list li {
+    width: 37%;   
+    }
+    div#membership .modal-header button.close {
+    top: 16px;
+    right: 22px;
+}
 
     .cst-vedio-sec .Vedio-wrap {
         height: 155px;
@@ -6569,7 +6644,9 @@
 
 
 
-    .football-course-sec {
+    .football-course-sec,
+    .img-manage-cust,
+    .inner-banner {
 
         padding: 180px 0 110px;
 
@@ -7027,7 +7104,7 @@
 
     }
 .date_cstm_wrap ul.days_list {
-        max-width: 94%;        
+        max-width: 100%;        
     }
 
 

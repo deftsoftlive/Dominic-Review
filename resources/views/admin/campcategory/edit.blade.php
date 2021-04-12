@@ -35,9 +35,9 @@
                    @csrf
                   
                    {{textbox($errors,'Title<span class="cst-upper-star">*</span>','title', $venue->title)}}
-                   {{textarea($errors,'Description<span class="cst-upper-star">*</span>','description', $venue->description)}}
-
-                   <!-- {{textarea($errors,'Description - More Text<span class="cst-upper-star">*</span>','description_more', $venue->description_more)}} -->
+                   {{textarea($errors,'Description for Listing Page<span class="cst-upper-star">*</span>','description', $venue->description)}}
+                   
+                   {{textarea($errors,'Description for Details Page<span class="cst-upper-star">*</span>','description_more', $venue->description_more)}}
 
                     <div class="form-group">
                       <label class="control-label">Image</label>
@@ -137,12 +137,13 @@
 @endsection
 
 @section('scripts')
-<script src="{{url('/admin-assets/js/validations/valueValidation.js')}}"></script>
-<script src="{{url('/js/validations/imageShow.js')}}"></script>
+<script src="{{asset('/admin-assets/js/validations/valueValidation.js')}}"></script>
+<script src="{{asset('/js/validations/imageShow.js')}}"></script>
 
 <script src="{{ asset('js/cke_config.js') }}"></script>
 <script type="text/javascript">
    CKEDITOR.replace('description', options);
+   CKEDITOR.replace('description_more', options);
    CKEDITOR.replace('venue_info', options);
    CKEDITOR.replace('camp_go', options);
    CKEDITOR.replace('day_camp_info', options);

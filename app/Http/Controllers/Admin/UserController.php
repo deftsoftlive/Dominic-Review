@@ -536,6 +536,11 @@ class UserController extends Controller
                 $check_shop = ShopCartItems::where('product_id',$request->course)->where('user_id',$request->parent)->where('child_id',$request->player)->where('shop_type','course')->where('type','order')->first();
                 $shop_type = 'course';
             }*/
+            
+            $course = Course::where('id',$request->course)->first();
+            $check_shop = ShopCartItems::where('product_id',$request->course)->where('user_id',$request->parent)->where('child_id',$request->player)->where('shop_type','course')->where('type','order')->first();
+            $shop_type = 'course';
+
             if($request->cost_type == 'No Cost')
             {
                 $price = 0;
@@ -547,9 +552,6 @@ class UserController extends Controller
                 $total = $course->price;
                 $payment_method = $request->payment_method;
             }
-            $course = Course::where('id',$request->course)->first();
-            $check_shop = ShopCartItems::where('product_id',$request->course)->where('user_id',$request->parent)->where('child_id',$request->player)->where('shop_type','course')->where('type','order')->first();
-            $shop_type = 'course';
             //dd($payment_method);
             /*$check_shop = ShopCartItems::where('product_id',$request->course)->where('user_id',$request->parent)->where('child_id',$request->player)->where('shop_type','course')->where('type','order')->first();*/
 
@@ -843,6 +845,7 @@ class UserController extends Controller
     // dd($first_name,$book_person,$language,$primary_language);
 
     $check_child = User::where('id',$request->user_id)->first();
+    // dd($check_child,$request->all());
 
     if(!empty($check_child))
     {
@@ -858,7 +861,7 @@ class UserController extends Controller
       $add_family->postcode     =    $postcode;
       $add_family->county       =    $county;
       $add_family->country      =    $country;
-      $add_family->parent_id    =    \Auth::user()->id; 
+      $add_family->parent_id    =    $check_child->parent_id; 
       $add_family->relation     =    $relation;
       // $add_family->type         =    $request->type;
       $add_family->book_person  =    $book_person;
@@ -884,7 +887,7 @@ class UserController extends Controller
       $add_family->postcode     =    $postcode;
       $add_family->county       =    $county;
       $add_family->country      =    $country;
-      $add_family->parent_id    =    \Auth::user()->id; 
+      // $add_family->parent_id    =    \Auth::user()->id; 
       $add_family->relation     =    $relation;
       $add_family->type         =    $request->type;
       $add_family->book_person  =    $book_person;

@@ -48,17 +48,28 @@
       </div>
       @endif
 
-      @if($course->membership_popup == 1)
-      @if(!empty(Session::get('popup')))
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-            <script>
-              $(function(){
-                $('#membership').modal('show');
-              });
-            </script>
+      <!-- Show membership popup according to below condition after booking and before booking -->
+      @if($course->membership_popup == 1 && $course->membership_price > 0 && $course->booking_slot > $booked_courses)
+        @if(empty(Session::get('membership_status')))
+          <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+              <script>
+                $(function(){
+                  $('#membership').modal('show');
+                });
+              </script>
+        @endif
+      @elseif($course->membership_popup == 1 && $course->membership_price <= 0)
+        @if(!empty(Session::get('popup')))
+          <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+          <script>
+            $(function(){
+              $('#membershipPopupAfterBooking').modal('show');
+            });
+          </script>
+        @endif
       @endif
-    @endif
 
 		  <div class="row">
 
@@ -154,6 +165,7 @@
                           <div class="event-card-form">
                             <form id="course-booking" action="{{route('course_booking')}}" method="POST">
                               @csrf
+                              <input type="hidden" name="membership_status" value="{{ Session::get('membership_status') == 'Yes' ? 1 : 0 }}">
                               <div class="form-group">
                                   <p for="inputPlayer-3">Select Player</p>
                                   @php 
@@ -308,21 +320,44 @@
                               
                                   <input type="hidden" name="course_id" id="course_id" value="{{$course->id}}">
                                   <!-- <input type="hidden" name="child_id" id="child_id" value=""> -->
+
+                                  @if(Session::get('membership_status') == 'Yes')
+                                    <!-- <p class="cst-fees real-price-cust"><span>£ {{number_format((float)$course->price, 2, '.', '')}}</span></p> -->
+                                  @endif
                                   <p class="cst-fees"><span>£
 
                                     @if($currntD >= $endDate)
-                                      {{number_format((float)$course->price, 2, '.', '')}}
+                                      <!-- Check membership status and show membership price -->
+                                      @if(Session::get('membership_status') == 'Yes')
+                                        {{number_format((float)$course->membership_price, 2, '.', '')}}
+                                      @else
+                                        {{number_format((float)$course->price, 2, '.', '')}}
+                                      @endif
                                     @else
                                       @if($early_bird_enable == '1')
                                         @php 
                                           $cour_price = $course->price;
                                           $dis_price = $cour_price - (($cour_price) * ($percentage/100));
+
+                                          $mem_cour_price = $course->membership_price;
+                                          $mem_dis_price = $mem_cour_price - (($mem_cour_price) * ($percentage/100));
                                         @endphp
-                                        {{$dis_price}}
+                                          <!-- Check membership status and show membership discount price -->  
+                                          @if(Session::get('membership_status') == 'Yes')
+                                            {{$mem_dis_price}}
+                                          @else
+                                            {{$dis_price}}
+                                          @endif
                                       @else
-                                       {{number_format((float)$course->price, 2, '.', '')}}
+                                        <!-- Check membership status and show membership price -->
+                                        @if(Session::get('membership_status') == 'Yes')
+                                          {{number_format((float)$course->membership_price, 2, '.', '')}}
+                                        @else
+                                          {{number_format((float)$course->price, 2, '.', '')}}
+                                        @endif
                                       @endif
                                     @endif
+                                  </span>
                                   </p>
 
                                   @endif
@@ -401,53 +436,113 @@
 
 <!-- Modal -->
 <div class="modal fade" id="membership" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-           <h5 class="modal-title" id="exampleModalLongTitle">Is this participant a member of the tennis club?</h5>
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-           </button>
-        </div>
-        <div class="modal-body">
-           <div class="tect-wrap">
-            <p>{!! getAllValueWithMeta('membership_popup_text', 'general-setting') !!}</p>
-          </div>
-              <div class="inner-warp">
-                 
-                 <form action="{{route('membership_status')}}" method="POST" novalidate="novalidate">
-                  @csrf
-
-                  <input type="hidden" name="shop_id" value="@if(old('shop_id')) {{ old('shop_id') }} @endif">
-
-                  <div class="from-wrap">
-                      <p>Yes,this participant is a member of the tennis club</p>
-                    <input type="radio" id="memb" name="membership_status" value="1">
-                    <label for="memb" class="rad-checked"></label>
-                    
-                  </div>
-                  <hr class="from-line">
-                  <div class="from-wrap">
-                      <p>Not yet. They will become a member before classes commence </p>
-                    <input type="radio" id="memb1" name="membership_status" value="0">
-                   <label for="memb1" class="rad-checked"></label>
-                  </div>
-
-                   <button class="wallet_confirm_order cstm-btn main_button">Book Now</button>
-                 </form>
-              </div>
-              <!-- <button type="button" class="btn btn-primary cstm-btn main_button">
-                 Conform Order
-                 </button> -->
-             <!--  <form id="member_wallet" action="http://demo.drhsports.co.uk/user/save_wallet" method="POST" novalidate="novalidate">
-                 <input type="hidden" name="_token" value="lX2NPKsMMFMsCPRixr2fU1jV8yQcZTmiW752Dfa5">  
-                 <button class="wallet_confirm_order cstm-btn main_button">Book Now</button>
-              </form> -->
-           </div>
-        </div>
-
-        </div>
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLongTitle">Is the person booking this course a current member of the tennis club?</h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
       </div>
-</div>
+      <div class="modal-body">
+         <div class="tect-wrap">
+          {!! getAllValueWithMeta('membership_popup_text', 'general-setting') !!}
+        </div>
+            <div class="inner-warp">
+               
+               <form action="{{route('membership_status')}}" method="POST" id="membershipPopup" novalidate="novalidate">
+                @csrf
+                <!-- <div class="from-wrap">
+                    <p>Yes,this participant is a member of the tennis club</p>
+                  <input type="radio" id="memb" name="membership_status" value="Yes">
+                  <label for="memb" class="rad-checked"></label>                    
+                </div>
+
+                <hr class="from-line">
+
+                <div class="from-wrap" id="radio_membership">
+                    <p>Not yet. They will become a member before classes commence </p>
+                  <input type="radio" id="memb1" name="membership_status" value="No">
+                  <label for="memb1" class="rad-checked"></label>
+                </div> -->
+                <div class="date_cstm_wrap">
+                  <ul class="days_list" id="radio_membership"> 
+                    <li>
+                      <label class="main-wrap">
+                        <input class="day_none price_add" type="radio" value="Yes" name="membership_status">
+                        <span class="checkmark ">
+                          <div class="inner-wrap ">
+                            <p>Yes</p>
+                            <span>They are a current member of the tennis club</span>
+                          </div>
+                        </span>
+                      </label>                                      
+                    </li>
+                    <li>
+                      <label class="main-wrap">
+                        <input class="day_none price_add" type="radio" value="No" name="membership_status">
+                        <span class="checkmark ">
+                          <div class="inner-wrap ">
+                            <p>No</p>
+                            <span>They are not a current member of the tennis club</span>
+                          </div>
+                        </span>
+                      </label>                                      
+                    </li>                                                                      
+                  </ul>
+                </div>
+                <div class="btn-wrap">
+                  <button class="wallet_confirm_order cstm-btn main_button" id="membershipPopupBtn">Confirm</button>
+                </div>
+               </form>
+            </div>
+         </div>
+      </div>
+
+      </div>
+    </div>
+
+    <!-- Modal After Booking -->
+    <div class="modal fade modal-cust-des" id="membershipPopupAfterBooking" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLongTitle">Is this participant a member of the tennis club?</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <div class="tect-wrap">                
+                {!! getAllValueWithMeta('after_membership_popup_text', 'general-setting') !!}
+              </div>
+                  <div class="inner-warp">
+                     
+                     <form action="{{route('membership_status_after_booking')}}" method="POST" novalidate="novalidate">
+                      @csrf
+
+                      <input type="hidden" name="shop_id" value="@if(old('shop_id')) {{ old('shop_id') }} @endif">
+
+                      <div class="from-wrap">
+                          <p>Yes,this participant is a member of the tennis club</p>
+                        <input type="radio" id="memb" name="membership_status" value="1">
+                        <label for="memb" class="rad-checked"></label>
+                        
+                      </div>
+                      <hr class="from-line">
+                      <div class="from-wrap">
+                          <p>Not yet. They will become a member before classes commence </p>
+                        <input type="radio" id="memb1" name="membership_status" value="0" checked>
+                       <label for="memb1" class="rad-checked"></label>
+                      </div>
+
+                       <button class="wallet_confirm_order cstm-btn main_button">Book Now</button>
+                     </form>
+                  </div>
+               </div>
+            </div>
+
+            </div>
+          </div>
 
 @endsection

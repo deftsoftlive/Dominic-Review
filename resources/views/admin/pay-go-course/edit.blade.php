@@ -137,7 +137,7 @@
                   {!! textarea($errors,'More Info<span class="cst-upper-star">*</span>','more_info', $venue->more_info) !!}
                   {!! textarea($errors,'Information Email Content<span class="cst-upper-star">*</span>','info_email_content', $venue->info_email_content) !!}
 
-                  {{textbox($errors,'Price<span class="cst-upper-star">*</span>','price', $venue->price)}}
+                  {{textnumber($errors,'Price<span class="cst-upper-star">*</span>','price', $venue->price)}}
                   {!! textarea($errors,'Bottom Section<span class="cst-upper-star">*</span>','bottom_section', $venue->bottom_section) !!}
 
                   <!-- <label>Linked Coach</label> -->
@@ -193,6 +193,8 @@
                       <option value="0" {{$venue->membership_popup == '0' ? 'selected' : ''}}>Disable</option>
                     </select>
                   </div><br/>
+
+                  {{textnumber($errors,'Membership Price<span class="cst-upper-star">*</span>','membership_price', $venue->membership_price)}}
 
             <!--       {{textbox($errors,'Coach Cost<span class="cst-upper-star">*</span>','coach_cost', $venue->coach_cost)}}
                   

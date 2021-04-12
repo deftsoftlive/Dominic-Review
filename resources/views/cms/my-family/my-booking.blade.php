@@ -84,7 +84,7 @@
 
                               @php echo getShopType($orderId); @endphp
                             </p></td>
-                            <td><p>&pound;{{$sho->amount}}</p></td>
+                            <td><p>&pound;{{ custom_format( $sho->amount, 2) }}</p></td>
                             <td><p>{{$sho->payment_by}}</p></td>
                             <td><p><a href="{{url('user/booking/detail')}}/@php echo base64_encode($sho->id); @endphp">View Booking Detail</a></p></td> 
                           </tr>

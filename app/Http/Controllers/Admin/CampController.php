@@ -113,6 +113,14 @@ class CampController extends Controller
             $logo->move($logo_destinationPath, $logo_filename);
         }
 
+        // For Camp Banner image
+        if ($request->hasFile('banner_image')) {
+            $banner_image = $request->file('banner_image');
+            $banner_image_filename = time().'.'.$banner_image->getClientOriginalExtension();
+            $destinationPath = public_path('/uploads/camp-banner');
+            $banner_image->move($destinationPath, $banner_image_filename);
+        }
+
         // All selected camps
         $product_data = $request->products;
         if(!empty($product_data)){
@@ -123,6 +131,7 @@ class CampController extends Controller
 
     	$camp = Camp::create([
             'logo' => $logo_filename,
+            'banner_image' => $banner_image_filename,
     		'title' => $request['title'],
             'location' => $request['location'],
             'term' => $request['term'],
@@ -257,6 +266,15 @@ class CampController extends Controller
             $logo->move($logo_destinationPath, $logo_filename);
         }
 
+        // For Camp Banner image
+        $banner_image_filename = $venue->banner_image;
+        if ($request->hasFile('banner_image')) {
+            $banner_image = $request->file('banner_image');
+            $banner_image_filename = time().'.'.$banner_image->getClientOriginalExtension();
+            $destinationPath = public_path('/uploads/camp-banner');
+            $banner_image->move($destinationPath, $banner_image_filename);
+        }
+
         $camp_id = $request->camp_id;
 
         // All selected camps
@@ -269,6 +287,7 @@ class CampController extends Controller
 
     	$camp = $venue->update([
             'logo' => $logo_filename,
+            'banner_image' => $banner_image_filename,
     		'title' => $request['title'],
             'location' => $request['location'],
             'term' => $request['term'],

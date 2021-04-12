@@ -6344,6 +6344,7 @@ form input[type=date] {
     margin-bottom: 0;
 
     padding: 26px 20px;
+    position: relative;
 
 }
 
@@ -8270,8 +8271,8 @@ div#nav-badges .activitiy-info-content p {
 
 
 .c-d-accordion #accordion strong {
-
-    font-size: 18px;
+/*
+    font-size: 18px;*/
 
     font-weight: 500;
 
@@ -19970,14 +19971,14 @@ div#sec_all {
 
 
 
-input#onemale,
+/*input#onemale,
 
 input#onefemale {
 
     display: none;
 
 }
-
+*/
 
 
 form#newsletter .error {
@@ -22216,7 +22217,7 @@ div#wallet_payment {
 
 
 div#wallet_payment .modal-header,
-
+div#membershipPopupAfterBooking .modal-header, 
 div#membership .modal-header {
 
     background: #001642;
@@ -22247,9 +22248,9 @@ div#membership .modal-header button.close {
 
     position: absolute;
 
-    top: 25px;
+    top: 17px;
 
-    right: 30px;
+    right: 24px;
 
     padding: 0;
 
@@ -22261,6 +22262,7 @@ div#membership .modal-header button.close {
 
 div#wallet_payment .modal-header button.close span,
 
+div#membershipPopupAfterBooking .modal-header button.close span,
 div#membership .modal-header button.close span {
 
     color: #fff;
@@ -22289,7 +22291,8 @@ div#wallet_payment .modal-body p {
 
 }
 
-div#membership .modal-body p {
+div#membership .modal-body p,
+div#membershipPopupAfterBooking .modal-body p {
 
     font-weight: 500;
 
@@ -22361,7 +22364,8 @@ div#membership form#save_wallet {
 
 }
 
-div#membership .from-wrap {
+div#membership .from-wrap,
+div#membershipPopupAfterBooking .from-wrap{
 
     display: flex;
 
@@ -22434,6 +22438,7 @@ div#membership .modal-body button:focus {
 
 
 div#wallet_payment .modal-dialog,
+div#membershipPopupAfterBooking .modal-dialog,
 
 div#membership .modal-dialog {
 
@@ -23607,33 +23612,37 @@ form#payment-form .error {
 
 }
 
-div#membership h5#exampleModalLongTitle {
+div#membership h5#exampleModalLongTitle, div#membership .modal-header h5
+ {
 
     font-size: 22px;
 
 }
 
-div#membership .inner-warp {
+div#membership .inner-warp,
+div#membershipPopupAfterBooking .inner-warp {
 
-    padding: 15px;
-
+    padding: 10px 15px;
 }
 
-div#membership .modal-body {
+div#membership .modal-body,
+div#membershipPopupAfterBooking  .modal-body {
 
     padding: 0;
 
 }
 
-div#membership .tect-wrap {
+div#membership .tect-wrap,
+div#membershipPopupAfterBooking .tect-wrap {
 
     border-bottom: 4px solid #001642;
 
 }
 
-div#membership .tect-wrap p {
+div#membership .tect-wrap p,
+div#membershipPopupAfterBooking .tect-wrap p  {
 
-    padding: 15px;
+    padding: 5px 15px;
 
     margin: 0;
 
@@ -23641,7 +23650,8 @@ div#membership .tect-wrap p {
 
 }
 
-div#membership hr.from-line {
+div#membership hr.from-line,
+div#membershipPopupAfterBooking hr.from-line {
 
     border-top: 1px solid #a0a8b5;
 
@@ -23651,7 +23661,8 @@ div#membership hr.from-line {
 
 }
 
-div#membership .from-wrap p {
+div#membership .from-wrap p ,
+div#membershipPopupAfterBooking .from-wrap p {
 
     font-weight: 600;
 
@@ -23900,7 +23911,7 @@ table.cstm_invoice_wrap p {
 /*290121*/
 .date_cstm_wrap .main-wrap {
   display: block;
-  position: relative;
+  position: static;
   padding-left: 35px;
   margin-bottom: 12px;
   cursor: pointer;
@@ -23964,9 +23975,9 @@ table.cstm_invoice_wrap p {
     list-style-type: none;
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
+   /* width: 100%;
     max-width: 80%;
-    margin: 0 auto;
+    margin: 0 auto;*/
 }
 
 .date_cstm_wrap ul.days_list li:nth-child(6), 
@@ -24079,4 +24090,265 @@ ul.cart-table__options.paygo-dates.cart-review li {
 }
 .cstm-book-camp {
     padding-top: 90px;
+}
+.t-p-text.resp-cstm-cont h2 {
+    display: none;
+}
+
+.login-content-custt p {
+    text-align: center;
+    padding: 10px 80px;
+    color: #000;
+    font-weight: 400;
+}
+.login-content-custt p b {
+    display: block;
+    font-weight:700;
+}
+.image-fit-cust img {
+    min-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+/*membership popup css*/
+#course-booking .modal-cust-des .inner-warp {
+    display: block;
+}
+/*membership popup css end*/
+
+form#membershipPopup {
+    position: relative;
+}
+form#membershipPopup .error {
+    top: unset;
+    bottom: 25px;
+    width: 100%;
+    padding: 0;
+    text-align: right;
+    left: unset;
+    right: 0;
+}
+.days_list .error {
+    position: absolute;
+    /* top: 0; */
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1;
+    color: #2b2fbc;
+    width: 100%;
+    white-space: nowrap;
+    color: #dc3545 !important;
+    left: 10px;
+    bottom: -45px;
+}
+.days_list input {
+    position: relative!important;;
+     opacity: 1!important; 
+     cursor: pointer!important;; 
+     height:100%!important;; 
+     width: 100%!important;; 
+}
+/*.date_cstm_wrap {
+    position: relative;
+}
+.date_cstm_wrap {
+    position: relative;
+    width: 100%;
+    max-width: 80%;
+    margin: 0 auto;
+}
+*/
+/*.date_cstm_wrap {
+    position: relative;
+      width: 100%;
+    max-width: 80%;
+        margin: 0 auto;
+}
+.date_cstm_wrap .error {
+    position: absolute;
+    left: 15px;
+    line-height: 18px;
+    padding-right: 30px;
+    top: unset;
+    bottom: -14px;
+    left: 0;
+    font-size: 14px;
+}*/
+
+div#membership .date_cstm_wrap ul.days_list li {
+    width: 30%;
+    height: 130px;
+    margin-bottom: 15px;
+    padding: 0;
+    margin-right: 40px;
+    position: relative;
+}
+div#membership form#membershipPopup,
+div#membership .date_cstm_wrap,
+div#membership .date_cstm_wrap ul
+{
+    width: 100%;
+}
+div#membership .date_cstm_wrap ul p {
+    color: #fff;
+    text-transform: uppercase;
+    margin: 0 auto;
+}
+div#membership .date_cstm_wrap ul span {
+    color: #fff;
+    font-size: 13px;
+    padding: 6px;
+    text-align: center;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+div#membership .date_cstm_wrap .checkmark {
+ 
+   
+    width: 150px;
+    height: auto;
+    
+}
+div#membership  .date_cstm_wrap ul.days_list {   
+    justify-content: center;
+}
+div#membership .btn-wrap {
+    text-align: center;
+}
+div#membership .btn-wrap button {
+    min-width: 180px;
+    font-size: 15px;
+}
+form#membershipPopup .error {
+    top: unset;
+    bottom:8px;
+    width: 100%;
+    padding: 0;
+    text-align: right;
+    left: unset;    
+    text-align: center;
+    font-size: 12px;
+}
+.date_cstm_wrap {
+    position: relative;
+    width: 100%;
+    max-width: 80%;
+    margin: 0 auto;
+}
+.date_cstm_wrap .error {
+    position: absolute;
+    left: 0;
+    line-height: 18px;
+    padding-right: 30px;
+    top: unset;
+    bottom: -15px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+.event-booking.cstm-member-booking {
+    padding: 0 20px 26px;
+    position: absolute;
+    bottom: -9px;
+    width: 100%;
+}
+.event-booking.cstm-member-booking span
+{
+        font-size: 14px!important;
+    font-weight: 500;
+    display: inline-block;
+}
+.event-booking.cstm-member-booking .product-price {
+    font-size: 14px;
+    
+}
+.event-booking.cstm-member-booking h1 {
+    line-height: 0;
+}
+
+div#membershipPopupAfterBooking h5 {
+    color: #fff;
+    font-size: 22px;
+    text-align: center;
+    display: block;
+    width: 100%;
+}
+p.cst-fees.real-price-cust span::after {
+    position: absolute;
+    content: '';
+    width: calc(100% + 10%);
+    height: 1px;
+    background: #999;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+p.cst-fees.real-price-cust span{
+    position: relative;   
+}
+p.cst-fees.real-price-cust {
+    color: #ccc!important;
+}
+
+
+.form-group.row.gender-opt.signup-gender-op {
+    position: relative;
+}
+.form-group.row.gender-opt.signup-gender-op .error {
+    top: unset !important;
+    bottom: -5px;
+}
+.form-group.row.gender-opt.signup-gender-op div#select_gender {
+    position: relative;
+    top: -12px;
+}
+input.day_none.price_add.error {
+    display: none;
+}
+
+.block-points{
+    padding-left: 50px;
+}
+.block-points li {
+    list-style: disc;
+    padding: 0px !important;
+}
+
+
+
+
+.copy_address p.cstm_copy_text {
+    color: #007bff;
+    font-weight: 500;
+    font-size: 15px;
+    display: inline-block;
+    line-height: normal;
+    margin-right: 15px;
+}
+.copy_address {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    text-align: left;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+.copy_address input {
+    width: auto!important;
+}
+.copy_address .cstm-radio label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -24px;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #001642;
+}
+.copy_address .cstm-radio label::after {   
+    left: 7px;
+    top: -21px;
+}
+.copy_address .cstm-radio
+{
+    margin-right: 0;
 }

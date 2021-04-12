@@ -174,9 +174,8 @@
                                         @if(!empty($cart->discount_code))
                                         	&pound;{{$cart->discount_price}} off on {{$course->title}}
                                         @endif
-                                        </td>                                
-                                        <td>&pound;{{number_format($cart->price,2)}}
-                                          </td>                                
+                                        </td>                                  
+                                        <td>&pound;{{ ($cart->membership_status == 1 && $cart->membership_price > 0) ? number_format($cart->membership_price,2) : number_format($cart->price,2) }}   </td>
                                     </tr> 
                                   @elseif($cart->shop_type == 'paygo-course')
                                   @php 

@@ -289,20 +289,26 @@ class User extends Authenticatable
                           if($dis_type == '0')
                           {
                             $price =($course['price']) - ($dis_price);
+                            $membership_price =($course['membership_price']) - ($dis_price);
                           }else{
                             $price = $course['price'] - (($course['price']) * ($dis_price / 100));
+                            $membership_price = $course['membership_price'] - (($course['membership_price']) * ($dis_price / 100));
                           }
                         }else{
                           $price =($course['price'] - $dis_price);
+                          $membership_price =($course['membership_price']) - ($dis_price);
                         }
 
                       }else{
                         if($early_bird_enable == '1')
                         {
                           $cour_price = $course['price'];
+                          $membership_cour_price =$course['membership_price'];
                           $earlybird_dis_price = $cour_price - (($cour_price) * ($early_bird_dis/100));
+                          $earlybird_dis_membership_price = $membership_cour_price - (($membership_cour_price) * ($early_bird_dis/100));
                         }else{
                           $earlybird_dis_price = $course['price'];
+                          $earlybird_dis_membership_price = $course['membership_price'];
                         }
                         
 
@@ -310,12 +316,15 @@ class User extends Authenticatable
                         {
                           if($dis_type == '0')
                           {
-                            $price =($earlybird_dis_price) - ($dis_price);
+                            $price =($earlybird_dis_price - $dis_price);
+                            $membership_price =($earlybird_dis_membership_price - $dis_price);
                           }else{
                             $price = $earlybird_dis_price - (($earlybird_dis_price) * ($dis_price / 100));
+                            $membership_price = $earlybird_dis_membership_price - (($earlybird_dis_membership_price) * ($dis_price / 100));
                           }
                         }else{
                           $price =($earlybird_dis_price - $dis_price);
+                          $membership_price =($earlybird_dis_membership_price - $dis_price);
                         }
 
                       }
@@ -363,10 +372,19 @@ class User extends Authenticatable
 
                      // $im->vendor_id = $product->user_id;
                      // $im->shop_id = $product->shop_id;
-                     $im->price = $price;
-                     $im->total = ($price * $im->quantity);
 
-                     $im->save();
+                    // If shop type is course and membership is active for current user at the time of purchase course
+                    if($im->shop_type == 'course' && $im->membership_status == 1 && $im->membership_price > 0){
+                      $im->price = $price;
+                      $im->membership_price = $membership_price;
+                      $im->total = ($membership_price * $im->quantity);
+                    }else{
+                      $im->price = $price;
+                      $im->total = ($price * $im->quantity);                      
+                    }
+
+                    // Update Cart
+                    $im->save();
             
             
           }

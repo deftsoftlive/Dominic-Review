@@ -753,6 +753,9 @@ trait GeneralSettingTrait {
 
                        // Membership Popup Text
                        'membership_popup_text' => getAllValueWithMeta('membership_popup_text', $slug),
+
+                       // After Membership Popup Text
+                       'after_membership_popup_text' => getAllValueWithMeta('after_membership_popup_text', $slug),
           ];
 		 	case 'global-settings': 
           return [

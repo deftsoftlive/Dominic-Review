@@ -25,7 +25,7 @@
       <div class="container">
 
         @if(Session::has('success'))
-        <div class="alert_msg alert alert-danger">
+        <div class="alert_msg alert alert-success">
             <p>{{ Session::get('success') }} </p>
         </div>
         @endif
@@ -35,7 +35,8 @@
            <div class="col-lg-9 col-md-12">
                   <div class="demo-form">   
                     <h1 class="demo-form-heading">Send Us An Email</h1>
-                    <form action="{{route('save-contact-us')}}" id="contact_form" method="POST" class="cstm-cont-page">
+                    
+                    <form action="{{ route('save-contact-us') }}" id="contact_form" method="POST" class="cstm-cont-page">
                       @csrf
                       <input type="hidden" name="type" value="contact">
                       <div class="form-group upper-input-row">
@@ -85,7 +86,8 @@
                         <textarea class="form-control demo-textarea" name="message" rows="3" placeholder="Class you’d like to try "></textarea>
                       </div> -->
                       <div class="g-recaptcha" data-sitekey="6Len3mIaAAAAAFDNJoUvCb1KEty7ul3vnlCQM41K"></div>
-                      <button type="submit" id="disable_contact_us_btnn" class="cstm-btn main_button">Send Message</button>
+                      <input type="hidden" id="captchaValue" name="captcha" value="">
+                      <button id="disable_contact_us_btnn" class="cstm-btn main_button disable_contact_us_btnn">Send Message</button>
                     </form>
                   </div>
                 </div>
@@ -199,9 +201,11 @@
     if(response.length == 0) 
     { 
       //reCaptcha not verified
-      alert("please verify you are humann!"); 
+      alert("please verify you are Human!"); 
+      $("#captchaValue").val("");
       return false;
     }else{
+      $("#captchaValue").val("Yes");
       return true;
     }
     //captcha verified

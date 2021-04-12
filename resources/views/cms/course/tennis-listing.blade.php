@@ -150,7 +150,7 @@
                       <div class="form-group cont-feedback">
                         <textarea class="form-control demo-textarea" name="class" rows="3" placeholder="Class you’d like to try "></textarea>
                       </div>
-                      <button type="submit" id="disable_contact_us_btnn" class="cstm-btn main_button">Request Taster Class</button>
+                      <button type="submit" id="disable_contact_us_btnn" class="cstm-btn main_button disable_contact_us_btnn">Request Taster Class</button>
                     </form>
             </div>
           </div>
@@ -413,7 +413,17 @@
                     @else
                       <a href="{{route('user.paygo.course.details', base64_encode($cour->id)) }} " class="cstm-btn main_button">More Info</a>
                     @endif
-                  </div>
+                  </div>                
+
+                  @if($cour->membership_popup == 1 && $cour->membership_price > 0)
+                    <div class="event-booking cstm-member-booking">
+                      <h1 class="event-booking-price">
+                        <span>Member Price : 
+                          <div class="product-price">£{{number_format((float)$cour->membership_price, 2, '.', '')}}</div>
+                        </span>
+                      </h1>
+                    </div>
+                  @endif
                   </div>
                 </li>
               </ul>

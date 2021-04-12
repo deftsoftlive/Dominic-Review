@@ -321,7 +321,7 @@ class PackageCourseController extends Controller
         PackageCourse::where('booking_no',$booking_no)->update(array('link_generated' => $current_date));
 
         // Resend same link again to user 
-        \Mail::send('emails.packagecourse', ['parent_email' => $parent_email,'booking_no' => $package->booking_no] , 
+        \Mail::send('emails.packagecourse_resend_link', ['parent_email' => $parent_email,'booking_no' => $package->booking_no] , 
             function($message) use($parent_email){
                 $message->to($parent_email);
                  $message->subject('Subject : '.'packagecourse');

@@ -41,7 +41,7 @@ $(document).ready(function() {
 
 
 /*****************************
-| Course Quick Price Update
+| Pay as you go Course Quick Price Update
 |*****************************/
     function fetch_paygo_course_price_data(price = '', course_id = '')
     {
@@ -64,6 +64,55 @@ $(document).ready(function() {
         fetch_paygo_course_price_data(price,course_id);
     });
 
+
+/****************************************
+| Course Quick Membership Price Update
+|****************************************/
+    function fetch_course_membership_price_data(price = '', course_id = '')
+    {
+        $.ajax({
+            url:$base_url+"/admin/update_course_membership_price/"+price+"/"+course_id,
+            method:'GET',
+            data:{price:price, course_id:course_id},
+            dataType:'json',
+            success:function(data)
+            {   
+                // console.log(data);
+            },      
+        })
+    }
+
+    $(document).on('keyup', '#update_course_membership_price',function(){
+        var price = $(this).val(); 
+        var course_id = $(this).attr("data-id");
+
+        fetch_course_membership_price_data(price,course_id);
+    });
+
+
+/**********************************************************
+| Pay as you go Course Quick Membership Price Update
+|**********************************************************/
+    function fetch_paygo_course_membership_price_data(price = '', course_id = '')
+    {
+        $.ajax({
+            url:$base_url+"/admin/update_pay_go_course_membership_price/"+price+"/"+course_id,
+            method:'GET',
+            data:{price:price, course_id:course_id},
+            dataType:'json',
+            success:function(data)
+            {   
+                // console.log(data);
+            },      
+        })
+    }
+
+    $(document).on('keyup', '#update_pay_go_course_membership_price',function(){
+        var price = $(this).val(); 
+        var course_id = $(this).attr("data-id");
+
+        fetch_paygo_course_membership_price_data(price,course_id);
+    });
 
 
 /*****************************

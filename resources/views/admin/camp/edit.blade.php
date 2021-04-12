@@ -44,6 +44,16 @@
 
                   <img id="logo_src" style="width: 100px; height: 100px;" src="{{ URL::asset('/uploads').'/'.$venue->logo }}" />
 
+                  <div class="form-group">
+                      <label class="control-label">Camp Banner Image(1350*430)</label>
+                      <input type="file" accept="image/*" onchange="ValidateSingleInput(this, 'BannerImage')" name="banner_image" id="Banner_image">
+                      @if ($errors->has('banner_image'))
+                      <div class="error">{{ $errors->first('banner_image') }}</div>
+                      @endif
+                  </div>
+
+                  <img src="{{ URL::asset('/uploads/camp-banner').'/'.$venue->banner_image }}" id="BannerImage" style="width: 100px; height: 100px;" />
+
                    {{textbox($errors,'Camp Title<span class="cst-upper-star">*</span>','title', $venue->title)}}
 
                    {{textbox($errors,'Location<span class="cst-upper-star">*</span>','location', $venue->location)}}
@@ -662,8 +672,8 @@
 @endsection
 
 @section('scripts')
-<script src="{{url('/admin-assets/js/validations/valueValidation.js')}}"></script>
-<script src="{{url('/js/validations/imageShow.js')}}"></script>
+<script src="{{asset('/admin-assets/js/validations/valueValidation.js')}}"></script>
+<script src="{{asset('/js/validations/imageShow.js')}}"></script>
 
 <script src="{{ asset('js/cke_config.js') }}"></script>
 <script type="text/javascript">

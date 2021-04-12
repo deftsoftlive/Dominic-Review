@@ -35,6 +35,7 @@ class CampCategoryController extends Controller
     	$validatedData = $request->validate([
             'title' => ['required', 'string', 'max:50'],
             'description' => ['required', 'string'],
+            'description_more' => ['required', 'string'],
             'image' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048']
         ]);
 
@@ -81,7 +82,7 @@ class CampCategoryController extends Controller
     	CampCategory::create([
     		'title' => $request['title'],
     		'description' => $request['description'],
-            // 'description_more' => $request['description_more'],
+            'description_more' => $request['description_more'],
     		'image' => $filename,
             'slider_image1' => $slider1_filename,
             'slider_image2' => $slider2_filename,
@@ -107,6 +108,7 @@ class CampCategoryController extends Controller
     	$validatedData = $request->validate([
             'title' => ['required', 'string', 'max:50'],
             'description' => ['required', 'string'],
+            'description_more' => ['required', 'string'],
             'image' => ['image','mimes:jpeg,png,jpg,gif,svg','max:2048']
         ]);
         
@@ -184,7 +186,7 @@ class CampCategoryController extends Controller
     	$venue->update([
     		'title' => $request['title'],
     		'description' => $request['description'],
-            // 'description_more' => $request['description_more'],
+            'description_more' => $request['description_more'],
     		'image' => $filename,
             'slider_image1' => $slider1_filename,
             'slider_image2' => $slider2_filename,

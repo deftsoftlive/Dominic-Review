@@ -146,6 +146,7 @@ use GeneralSettingTrait;
          $file_path = public_path().'/uploads/'.$chk->keyValue;
 			 } else {
   			 	$chk = new PageMetaTag;
+          $chk->key = $key;
           $file_path = $type;
 			 }
 

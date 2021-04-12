@@ -18,7 +18,7 @@
 </style>
 camp_detail_banner_image
 <!-- <section class="inner-banner i-b-camp-detail" style="background: url({{$base_url}}/public/uploads/{{$camp_category->image}});"> -->
-<section class="inner-banner b-camp-detail" style="background: url({{$base_url}}/public/uploads/{{ getAllValueWithMeta('camp_detail_banner_image', 'camp-detail') }});">
+<section class="inner-banner b-camp-detail img-manage-cust" style="background: url({{$base_url}}/public/uploads/{{ !empty($camp_category->image) ? $camp_category->image : getAllValueWithMeta('camp_detail_banner_image', 'camp-detail') }});">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -46,11 +46,11 @@ camp_detail_banner_image
 		</div>
 	  </div>
 	</div>
-	<div class="c-d-img-text upper_text_wrap">
-    <div class="row">
+	<div class="c-d-img-text upper_text_wrap image-up">
+    <div class="row image-up-cust">
   <div class="col-lg-7 col-md-12 col-sm-12 left_text-wrap ">
     <div class="c-d-description">
-      {!! $camp_category->description !!}
+      {!! $camp_category->description_more !!}
     </div>
   </div>
     <div class="col-lg-5 col-md-12 col-sm-12 right_text-wrap">
@@ -80,7 +80,7 @@ camp_detail_banner_image
   <div id="accordion">
 
     @foreach($accordian as $acc)
-        <div class="card @if($acc->color == '#be298d')pink @elseif($acc->color == '#00afef')blue @elseif($acc->color == '#bea029')yellow @endif">
+        <div class="card @if($acc->color == '#001642')blue @elseif($acc->color == '#00afef')sky-blue @elseif($acc->color == '#bea029')yellow @endif">
           <div class="card-header" id="headingOne">
             <h5 class="mb-0">
               <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{$acc->id}}" aria-expanded="false" aria-controls="collapse{{$acc->id}}">

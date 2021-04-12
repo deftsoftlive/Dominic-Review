@@ -227,7 +227,7 @@
 												@endif
 		                                      </td>
 											  <!-- <td>1</td> -->
-											  <td>&pound; {{$cart->price}}</td>
+											  <td>&pound;{{ ($cart->membership_status == 1 && $cart->membership_price > 0) ? number_format($cart->membership_price,2) : number_format($cart->price,2) }}   </td>
 											</tr>
 											@elseif($cart->shop_type == 'paygo-course')
 											@php 

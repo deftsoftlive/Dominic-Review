@@ -3273,6 +3273,15 @@ span.cst_active, span.cst_in-active {
 textarea {
 	resize: none;
 }
-#venueFormPaygoCreate .error {
+#venueFormPaygoCreate .error,
+#venueForm .error {
     position: relative!important;
+}
+
+.block-points{
+    padding-left: 50px;
+}
+.block-points li {
+    list-style: disc;
+    padding: 0px !important;
 }

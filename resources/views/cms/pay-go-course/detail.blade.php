@@ -52,17 +52,6 @@
       </div>
       @endif
 
-      @if($course->membership_popup == 1)
-      @if(!empty(Session::get('popup')))
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-            <script>
-              $(function(){
-                $('#membership').modal('show');
-              });
-            </script>
-      @endif
-    @endif
 
       <div class="row">
 
@@ -86,6 +75,28 @@
               </div>
             @endif
 
+          <!-- Show membership popup according to below condition after booking and before booking -->
+          @if($course->membership_popup == 1 && $course->membership_price > 0 && $remainingSeats > 0)
+            @if(empty(Session::get('membership_status')))
+              <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+                  <script>
+                    $(function(){
+                      $('#membership').modal('show');
+                    });
+                  </script>
+            @endif
+          @elseif($course->membership_popup == 1 && $course->membership_price <= 0)
+            @if(!empty(Session::get('popup')))
+              <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+              <script>
+                $(function(){
+                  $('#membershipPopupAfterBooking').modal('show');
+                });
+              </script>
+            @endif
+          @endif
             <!-- @if($booked_courses >= $course->booking_slot)
               <div class="alert_msg alert alert-danger">
                  <p><b>"{{$course->title}}"</b> - course is fully booked. </p>
@@ -124,6 +135,7 @@
                             @if( $remainingSeats > 0 )
                             <form id="course-booking" action="{{route('paygo.course.booking')}}" method="POST">
                               @csrf
+                              <input type="hidden" name="membership_status" value="{{ Session::get('membership_status') == 'Yes' ? 1 : 0 }}">
                               <div class="days-list">
 <!--  
                                   <div class="owl-carousel owl-carousel2 owl-theme">
@@ -144,7 +156,7 @@
                                 </div> -->
 
                                 <div class="date_cstm_wrap">
-                                  <ul class="days_list">
+                                  <ul class="days_list" id="checkboxMsgError">
 
                                   @php 
                                     $course_cat = $course->type; 
@@ -180,28 +192,45 @@
                                   @php 
 
                                   if($currntD >= $endDate){
-                                    $courseCost = number_format((float)$course->price, 2, '.', '');
+                                    //Check membership status and show membership price
+                                    if(Session::get('membership_status') == 'Yes'){
+                                      $courseCost = number_format((float)$course->membership_price, 2, '.', '');
+                                    }else{
+                                      $courseCost = number_format((float)$course->price, 2, '.', '');
+                                    }
 
                                   }else{
                                     if($early_bird_enable == '1'){
-                                      $cour_price = $course->price;
-                                      $courseCost = $cour_price - (($cour_price) * ($percentage/100));
+                                      //Check membership status and show membership discount price  
+                                      if(Session::get('membership_status') == 'Yes'){
+                                        $mem_cour_price = $course->membership_price;
+                                        $courseCost = $mem_cour_price - (($mem_cour_price) * ($percentage/100));
+                                      }else{
+                                        $cour_price = $course->price;
+                                        $courseCost = $cour_price - (($cour_price) * ($percentage/100));
+                                      }
                                     }else{
-                                      $courseCost = number_format((float)$course->price, 2, '.', '');
+                                      //Check membership status and show membership price
+                                      if(Session::get('membership_status') == 'Yes'){
+                                        $courseCost = number_format((float)$course->membership_price, 2, '.', '');
+                                      }else{
+                                        $courseCost = number_format((float)$course->price, 2, '.', '');
+                                      }
                                     }
                                   }
                                   @endphp 
 
                                   @foreach($course_dates as $date)
                                   @php
+                                  $remainingSeats_single_course = 0;
                                   if( strtotime( $date->course_date ) >= strtotime( date( 'Y-m-d' ) ) ){
                                   $advanceDays = (int)$course->advance_weeks;
                                   $bookedDateCount = \App\PayGoCourseBookedDate::where('booked_date_id', $date->id)->count();
                                   $dateNow = date("Y-m-d");
                                   $mod_date = strtotime($date->course_date."- $advanceDays days");
                                   //echo $dateNow .'>'. date( "Y-m-d", $mod_date );
-                                  $remainingSeats = (int)$date->seats - (int)$bookedDateCount; 
-                                  if( $remainingSeats == 0 ||  strtotime( $dateNow ) < $mod_date ){
+                                  $remainingSeats_single_course = (int)$date->seats - (int)$bookedDateCount; 
+                                  if( $remainingSeats_single_course == 0 ||  strtotime( $dateNow ) < $mod_date ){
                                   $disabled = 'disabled';
 
                                   }else{
@@ -219,14 +248,14 @@
                                                 <span>{{ date('d/m/Y', strtotime($date->course_date)) }}</span>                                     
                                                 <!-- <p>{{ $date->seats }}</p> -->
                                                 
-                                                @if( $remainingSeats > 0 )                                      
-                                                <p>{{ $remainingSeats }}</p>
-                                                  @if( $remainingSeats == 1 )
+                                                @if( $remainingSeats_single_course > 0 )                                      
+                                                <p>{{ $remainingSeats_single_course }}</p>
+                                                  @if( $remainingSeats_single_course == 1 )
                                                   <span>Space left</span>
-                                                  @elseif( $remainingSeats >1 )
+                                                  @elseif( $remainingSeats_single_course >1 )
                                                   <span>Spaces left</span>
                                                   @endif
-                                                @elseif( $remainingSeats == 0 )
+                                                @elseif( $remainingSeats_single_course == 0 )
                                                 <span class="cst-full-booked">Fully Booked</span>
                                                 @endif
                                                 <p>£ {{ $courseCost }}</p>
@@ -253,7 +282,7 @@
                               <div class="card">
                                 <div class="card-header" id="headingTwo">
                                   <h2 class="mb-0">
-                                    <button class="d-flex align-items-center justify-content-between btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <button class="d-flex align-items-center justify-content-between btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" type="button">
                                     More Information
                                      <span ><i class="fas fa-plus plus-dp"></i></span>
                                     </button>
@@ -453,49 +482,122 @@
 </section>
     
 
-<!-- Modal -->
-<div class="modal fade" id="membership" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- Modal -->
+  <div class="modal fade" id="membership" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+      <div class="modal-content">
         <div class="modal-header">
-           <h5 class="modal-title" id="exampleModalLongTitle">Is this participant a member of the tennis club?</h5>
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-           </button>
+          <h5 class="modal-title" id="exampleModalLongTitle">Is the person booking this course a current member of the tennis club?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
         <div class="modal-body">
-           <div class="tect-wrap">
-            <p>{!! getAllValueWithMeta('membership_popup_text', 'general-setting') !!}</p>
+          <div class="tect-wrap">
+            {!! getAllValueWithMeta('membership_popup_text', 'general-setting') !!}
           </div>
-              <div class="inner-warp">
-                 
-                 <form action="{{route('membership_status')}}" method="POST" novalidate="novalidate">
-                  @csrf
-
-                  <input type="hidden" name="shop_id" value="@if(old('shop_id')) {{ old('shop_id') }} @endif">
-
-                  <div class="from-wrap">
-                      <p>Yes,this participant is a member of the tennis club</p>
-                    <input type="radio" id="memb" name="membership_status" value="1">
-                    <label for="memb" class="rad-checked"></label>
-                    
-                  </div>
-                  <hr class="from-line">
-                  <div class="from-wrap">
-                      <p>Not yet. They will become a member before classes commence </p>
-                    <input type="radio" id="memb1" name="membership_status" value="0">
-                   <label for="memb1" class="rad-checked"></label>
-                  </div>
-
-                   <button class="wallet_confirm_order cstm-btn main_button">Book Now</button>
-                 </form>
+          <div class="inner-warp">                 
+            <form action="{{route('membership_status')}}" method="POST" id="membershipPopup" novalidate="novalidate">
+              @csrf
+              <!-- <div class="from-wrap">
+                <p>Yes,this participant is a member of the tennis club</p>
+                <input type="radio" id="memb" name="membership_status" value="Yes">
+                <label for="memb" class="rad-checked"></label>                    
               </div>
-           </div>
-        </div>
-
+              
+              <hr class="from-line">
+              <div class="from-wrap" id="radio_membership">
+                <p>Not yet. They will become a member before classes commence </p>
+                <input type="radio" id="memb1" name="membership_status" value="No">
+                <label for="memb1" class="rad-checked"></label>
+              </div> -->
+              <div class="date_cstm_wrap">
+                <ul class="days_list" id="radio_membership"> 
+                  <li>
+                    <label class="main-wrap">
+                      <input class="day_none price_add" type="radio" value="Yes" name="membership_status">
+                      <span class="checkmark ">
+                        <div class="inner-wrap ">
+                          <p>Yes</p>
+                          <span>They are a current member of the tennis club</span>
+                        </div>
+                      </span>
+                    </label>                                      
+                  </li>
+                  <li>
+                    <label class="main-wrap">
+                      <input class="day_none price_add" type="radio" value="No" name="membership_status">
+                      <span class="checkmark ">
+                        <div class="inner-wrap ">
+                          <p>No</p>
+                          <span>They are not a current member of the tennis club</span>
+                        </div>
+                      </span>
+                    </label>                                      
+                  </li>                                                                      
+                </ul>
+              </div>
+              <div class="btn-wrap">
+                <button class="wallet_confirm_order cstm-btn main_button" id="membershipPopupBtn">Confirm</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-</div>
+    </div>
+  </div>
+
+  <!-- Modal After Booking -->
+  <div class="modal fade modal-cust-des" id="membershipPopupAfterBooking" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="exampleModalLongTitle">Is this participant a member of the tennis club?</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <div class="tect-wrap">
+              {!! getAllValueWithMeta('after_membership_popup_text', 'general-setting') !!}
+            </div>
+                <div class="inner-warp">
+                   
+                   <form action="{{route('membership_status_after_booking')}}" method="POST" novalidate="novalidate">
+                    @csrf
+
+                    <input type="hidden" name="shop_id" value="@if(old('shop_id')) {{ old('shop_id') }} @endif">
+
+                    <div class="from-wrap">
+                        <p>Yes,this participant is a member of the tennis club</p>
+                      <input type="radio" id="memb" name="membership_status" value="1">
+                      <label for="memb" class="rad-checked"></label>
+                      
+                    </div>
+                    <hr class="from-line">
+                    <div class="from-wrap">
+                        <p>Not yet. They will become a member before classes commence </p>
+                      <input type="radio" id="memb1" name="membership_status" value="0" checked>
+                     <label for="memb1" class="rad-checked"></label>
+                    </div>
+
+                     <button class="wallet_confirm_order cstm-btn main_button">Book Now</button>
+                   </form>
+                </div>
+             </div>
+          </div>
+
+          </div>
+        </div>
 
 <script src="{{ URL::asset('js/paygo-courses.js') }}"></script>
+<script type="text/javascript">
+  function validateCheckbox() {
+    var checkbox= document.querySelector('input[name="selected_date_ids[]"]:checked');
+    if(!checkbox) {
+      alert('Please Select at least one date for booking.');
+      return false;
+    }      
+  }
+</script>
 @endsection

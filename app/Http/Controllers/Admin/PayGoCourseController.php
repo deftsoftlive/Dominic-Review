@@ -221,6 +221,7 @@ class PayGoCourseController extends Controller
             'linked_coach' => ['required'],
             // 'image' => ['required'],
             // 'membership_popup' => ['required'],
+            'membership_price' => ['required', 'numeric'],
         ]);
 
         if ($request->hasFile('image')) {
@@ -260,6 +261,7 @@ class PayGoCourseController extends Controller
             'end_date' => $request['end_date'],
             'image' => isset($filename) ? $filename : '',
             'membership_popup' => $request['membership_popup'],
+            'membership_price' => $request['membership_price'],
     	]);
 
         if(isset($data['course_date'])){  
@@ -312,9 +314,7 @@ class PayGoCourseController extends Controller
         $data = $request->all(); 
         //dd( $data['display_course'] );   
         $course = PayGoCourse::where('slug',$slug)->first();
-        $course_id = $course['id']; 
-
-        PaygocourseDate::where('course_id',$course_id)->delete();
+        $course_id = $course['id'];         
 
         if(!empty($request->subtype))
         {
@@ -340,6 +340,7 @@ class PayGoCourseController extends Controller
             'tax_cost' => ['required', 'numeric'],
             'end_date' => ['required'],
             'linked_coach' => ['required'],
+            'membership_price' => ['required', 'numeric'],
         ]);
 
         $venue = PayGoCourse::FindBySlugOrFail($slug);
@@ -387,9 +388,13 @@ class PayGoCourseController extends Controller
             'image' => isset($filename) ? $filename : '',
             'membership_popup' => isset($request['membership_popup']) ? $request['membership_popup'] : '',
             // 'membership_popup' => $request['membership_popup'],
+            'membership_price' => $request['membership_price'],
     	]);
 
         if(isset($data['course_date'])){  
+            
+            // Delete course dates and then add new dates
+            PaygocourseDate::where('course_id',$course_id)->delete();
 
             foreach ($data['course_date'] as $number => $value) {    
 
@@ -446,7 +451,7 @@ class PayGoCourseController extends Controller
     }
 
     /*----------------------------------------
-    |   Quick course price update
+    |   Quick pay as you go course price update
     |-----------------------------------------*/
     public function update_pay_go_course_price($price,$course_id) 
     {    
@@ -456,6 +461,22 @@ class PayGoCourseController extends Controller
 
         $data = array(
             'price'   => $course,
+        );
+
+        echo json_encode($data);
+    }
+
+    /*----------------------------------------
+    |   Quick pay as you go course membership price update
+    |-----------------------------------------*/
+    public function update_pay_go_course_membership_price($membership_price,$course_id) 
+    {    
+        $course = PayGoCourse::find($course_id);
+        $course->membership_price = number_format((float)$membership_price, 2, '.', '');
+        $course->save();
+
+        $data = array(
+            'membership_price'   => $course,
         );
 
         echo json_encode($data);
@@ -490,7 +511,7 @@ class PayGoCourseController extends Controller
         if(count($sub_cat) > 0)
             {
                 /*$output = '<option value="">All</option>';*/
-
+                $output = '';
                 foreach($sub_cat as $row)
                 {
                     $output .= '<option value="'.$row->id.'">'.$row->label.'</option>';

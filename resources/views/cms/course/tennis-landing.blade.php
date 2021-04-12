@@ -136,13 +136,16 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                             <div class="tab-points-container">
                                                 <div class="row">
                                                     <div class="col-sm-7">
-                                                        <div class="t-p-text">
+                                                        <div class="t-p-text desktop-cstm-cont ">
                                                             <h2>{{$box->title}}</h2>
                                                             <p>{!! $box->description !!}</p>
                                                             <a class="more-about-camp read-more-less" id="{{$box->id}}" href="javascript:void(0);">Read more</a>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-5">
+                                                        <div class="t-p-text resp-cstm-cont">
+                                                            <h2>{{$box->title}}</h2>                                                           
+                                                        </div>
                                                         <div class="t-p-img">
                                                             <img src="{{url('/public/uploads')}}/{{$box->image}}" alt="" />
                                                         </div>

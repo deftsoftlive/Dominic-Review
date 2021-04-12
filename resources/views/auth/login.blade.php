@@ -31,7 +31,8 @@
 <section class="login-sec">
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-lg-5 col-md-7">
+        <div class="col-lg-5 col-md-7 login-content-custt">
+            <p><b>This website is new!</b>You'll need to register for a new account if you haven't booked with us since December 2020</p>
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 

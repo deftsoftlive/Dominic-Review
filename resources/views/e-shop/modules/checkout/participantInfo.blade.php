@@ -78,7 +78,11 @@
 
                         @if(Session::has('error'))
                         <div class="alert_msg alert alert-danger">
-                           <p>{{ Session::get('error') }} </p>
+                           @if(Session::get('error') == "cust_error_msg")
+                              <p>Please click <b>UPDATE</b> and complete the following sections for each player: <b>Participant Details - Contacts - Medical and Behavioural - Consents.</b> Then refresh this page and click <b>Save and Continue</b> - Thank you</p>
+                           @else
+                              <p>{{ Session::get('error') }} </p>
+                           @endif
                         </div>
                         @endif
 
@@ -154,7 +158,7 @@
             </div>
             <a href="{{$backward}}" type="submit" class="cstm-btn main_button solid-btn">back</a>
             <a href="{{url('/shop/checkout/billing-address')}}" class="cstm-btn main_button">Save &amp; Continue</a>
-         @elseif(in_array('course', $data, TRUE) && in_array('product', $data, TRUE))
+         @elseif(in_array('course', $data, TRUE) && in_array('product', $data, TRUE) || in_array('camp', $data, TRUE) && in_array('product', $data, TRUE))
             <a href="{{$backward}}" type="submit" class="cstm-btn main_button solid-btn">back</a>
             <button id="save_participant" class="cstm-btn main_button" type="submit">Save &amp; Continue</button>
             <!-- <a href="{{$backward}}" type="submit" class="cstm-btn main_button solid-btn">back</a> -->

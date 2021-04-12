@@ -153,13 +153,17 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                             <div class="tab-points-container">
                                                 <div class="row">
                                                     <div class="col-sm-7">
-                                                        <div class="t-p-text">
-                                                            <h2>Camp GO {{$cat->title}}</h2>
+                                                        <div class="t-p-text desktop-cstm-cont">
+                                                            <h2>{{$cat->title}}</h2>
                                                             {!! $cat->description !!}
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-5">
-                                                        <div class="t-p-img">
+                                                         <div class="t-p-text resp-cstm-cont">
+                                                            <h2>{{$cat->title}}</h2>
+                                                          
+                                                        </div>
+                                                        <div class="t-p-img image-fit-cust">
                                                             <img src="{{URL::asset('/uploads')}}/{{$cat->image}}" alt="" />
                                                         </div>
                                                     </div>
@@ -189,7 +193,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('act1_title', 'camp-listing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('act1_description', 'camp-listing') }}</p>
+                                                    {!! getAllValueWithMeta('act1_description', 'camp-listing') !!}
                                                 </li>
                                             </ul>
                                         </div>
@@ -200,7 +204,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('act2_title', 'camp-listing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('act2_description', 'camp-listing') }}</p>
+                                                    {!! getAllValueWithMeta('act2_description', 'camp-listing') !!}
                                                 </li>
                                             </ul>
                                         </div>
@@ -211,7 +215,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('act3_title', 'camp-listing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('act3_description', 'camp-listing') }}</p>
+                                                    {!! getAllValueWithMeta('act3_description', 'camp-listing') !!}
                                                 </li>
                                             </ul>
                                         </div>
@@ -222,7 +226,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('act4_title', 'camp-listing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('act4_description', 'camp-listing') }}</p>
+                                                    {!! getAllValueWithMeta('act4_description', 'camp-listing') !!}
                                                 </li>
                                             </ul>
                                         </div>
@@ -233,7 +237,7 @@ $custom_box = DB::table('custom_boxes')->where('status',1)->orderBy('sort','asc'
                                                     <h4>{{ getAllValueWithMeta('act5_title', 'camp-listing') }}</h4>
                                                 </li>
                                                 <li>
-                                                    <p>{{ getAllValueWithMeta('act5_description', 'camp-listing') }}</p>
+                                                    {!! getAllValueWithMeta('act5_description', 'camp-listing') !!}
                                                 </li>
                                             </ul>
                                         </div>

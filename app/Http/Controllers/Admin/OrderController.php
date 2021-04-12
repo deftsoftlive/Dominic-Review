@@ -234,6 +234,7 @@ class OrderController extends Controller
                     ->where('users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('users.email', 'LIKE', '%' . $user_email . '%' )
                     ->orderBy('shop_orders.id','desc')
+                    ->groupBy('orderID')
                     ->get(); 
 
         }
@@ -247,6 +248,7 @@ class OrderController extends Controller
                     ->where('users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
                     ->orderBy('shop_orders.id','desc')
+                    ->groupBy('orderID')
                     ->get(); 
         }
         elseif(empty($user_name) && empty($user_email) && !empty($start_date) && empty($end_date))
@@ -257,6 +259,7 @@ class OrderController extends Controller
                     ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where('shop_orders.created_at','>',$start_date)
                     ->orderBy('shop_orders.id','desc')
+                    ->groupBy('orderID')
                     ->get(); 
         }
         elseif(empty($user_name) && empty($user_email) && empty($start_date) && !empty($end_date))
@@ -267,6 +270,7 @@ class OrderController extends Controller
                     ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where('shop_orders.created_at','<',$end_date)
                     ->orderBy('shop_orders.id','desc')
+                    ->groupBy('orderID')
                     ->get(); 
         }
         elseif(!empty($user_name) && !empty($user_email) && empty($start_date) && !empty($end_date))
@@ -279,6 +283,7 @@ class OrderController extends Controller
                     ->where('users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','<',$end_date)
                     ->orderBy('shop_orders.id','desc')
+                    ->groupBy('orderID')
                     ->get(); 
         }
         elseif(!empty($user_name) && !empty($user_email) && !empty($start_date) && !empty($end_date))
@@ -292,6 +297,7 @@ class OrderController extends Controller
                     ->where('shop_orders.created_at','>',$start_date)
                     ->where('shop_orders.created_at','<',$end_date)
                     ->orderBy('shop_orders.id','desc')
+                    ->groupBy('orderID')
                     ->get(); 
         }
         elseif(!empty($user_name) && empty($user_email) && empty($start_date) && empty($end_date))
@@ -302,6 +308,7 @@ class OrderController extends Controller
                     ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
                     ->orderBy('shop_orders.id','desc')
+                    ->groupBy('orderID')
                     ->get(); 
         }
         elseif(!empty($user_name) && empty($user_email) && !empty($start_date) && empty($end_date))
@@ -313,6 +320,7 @@ class OrderController extends Controller
                     ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
                     ->orderBy('shop_orders.id','desc')
+                    ->groupBy('orderID')
                     ->get(); 
         }
         elseif(!empty($user_name) && empty($user_email) && empty($start_date) && !empty($end_date))
@@ -324,6 +332,7 @@ class OrderController extends Controller
                     ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('shop_orders.created_at','<',$end_date)
                     ->orderBy('shop_orders.id','desc')
+                    ->groupBy('orderID')
                     ->get(); 
         }
         elseif(!empty($user_name) && empty($user_email) && !empty($start_date) && !empty($end_date))
@@ -336,6 +345,7 @@ class OrderController extends Controller
                     ->where('shop_orders.created_at','>',$start_date)
                     ->where('shop_orders.created_at','<',$end_date)
                     ->orderBy('shop_orders.id','desc')
+                    ->groupBy('orderID')
                     ->get(); 
         }
         elseif(empty($user_name) && empty($user_email) && !empty($start_date) && !empty($end_date))
@@ -347,6 +357,7 @@ class OrderController extends Controller
                     ->where('shop_orders.created_at','>',$start_date)
                     ->where('shop_orders.created_at','<',$end_date)
                     ->orderBy('shop_orders.id','desc')
+                    ->groupBy('orderID')
                     ->get(); 
         }
         elseif(empty($user_name) && !empty($user_email) && empty($start_date) && empty($end_date))
@@ -357,6 +368,7 @@ class OrderController extends Controller
                     ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
                     ->orderBy('shop_orders.id','desc')
+                    ->groupBy('orderID')
                     ->get(); 
         }
         elseif(empty($user_name) && !empty($user_email) && !empty($start_date) && empty($end_date))
@@ -368,6 +380,7 @@ class OrderController extends Controller
                     ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
                     ->orderBy('shop_orders.id','desc')
+                    ->groupBy('orderID')
                     ->get(); 
         }
         elseif(empty($user_name) && !empty($user_email) && empty($start_date) && !empty($end_date))
@@ -379,6 +392,7 @@ class OrderController extends Controller
                     ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','<',$end_date)
                     ->orderBy('shop_orders.id','desc')
+                    ->groupBy('orderID')
                     ->get(); 
         }
         elseif(empty($user_name) && !empty($user_email) && !empty($start_date) && !empty($end_date))
@@ -391,6 +405,7 @@ class OrderController extends Controller
                     ->where('shop_orders.created_at','>',$start_date)
                     ->where('shop_orders.created_at','<',$end_date)
                     ->orderBy('shop_orders.id','desc')
+                    ->groupBy('orderID')
                     ->get(); 
         }
         elseif(empty($user_name) && empty($user_email) && empty($start_date) && empty($end_date))
@@ -400,10 +415,44 @@ class OrderController extends Controller
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
                     ->select('shop_orders.*', 'users.name', 'users.email','shop_cart_items.shop_type','shop_cart_items.product_id', 'shop_cart_items.course_season','shop_cart_items.user_id', 'shop_cart_items.id as shop_id')
                     ->orderBy('shop_orders.id','desc')
+                    ->groupBy('orderID')
                     ->get();
         }
 
+            // Taking new array to keep record according to order id
+            $new_tasks = array();
+            foreach ($tasks as $task) {
+                $shop_types = getShopType($task->orderID,1);
+                if(!empty($shop_types)){                
+                    foreach ($shop_types as $key => $shop) {
+                        $new_tasks_val['created_at'] =  $task->created_at;
+                        $new_tasks_val['orderID'] =  $task->orderID;                         
+                        $new_tasks_val['id'] =  $task->id;               
+                        $new_tasks_val['orderType'] =  $shop->shop_type; 
+                        $new_tasks_val['ItemName'] =  GetCourseCampName($shop->shop_type,$shop->product_id);               
+                        $new_tasks_val['user_id'] =  $task->user_id;               
+                        $new_tasks_val['shipping_address'] =  $task->shipping_address;               
+                        $new_tasks_val['billing_address'] =  $task->billing_address;               
+                        $new_tasks_val['payment_detail'] =  $task->payment_detail;               
+                        $new_tasks_val['balance_transaction'] =  $task->balance_transaction;               
+                        $new_tasks_val['amount'] =  custom_format($shop->price,2);               
+                        $new_tasks_val['payment_by'] =  $task->payment_by;               
+                        // $new_tasks_val['transaction_details'] =  $task->transaction_details;               
+                        $new_tasks_val['provider_id'] =  $task->provider_id;               
+                        $new_tasks_val['status'] =  $task->status;               
+                        $new_tasks_val['manual'] =  $task->manual;                                              
+                        $new_tasks_val['updated_at'] =  $task->updated_at;               
+                        $new_tasks_val['name'] =  $task->name;               
+                        $new_tasks_val['email'] =  $task->email;               
+                        $new_tasks_val['shop_type '] =  $task->shop_type ;               
+                        $new_tasks_val['product_id'] =  $task->product_id;               
+                        $new_tasks_val['course_season'] =  $task->course_season;               
+                        $new_tasks_val['shop_id'] =  $task->shop_id; 
 
+                        $new_tasks[] = $new_tasks_val;
+                    }
+                }
+            }
 
             $headers = array(
                 "Content-type"        => "text/csv",
@@ -412,7 +461,7 @@ class OrderController extends Controller
                 "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
                 "Expires"             => "0"
             );
-            $columns = array('Date', 'Order ID', 'Order Type', 'Season', 'Account' ,'User Name', 'User Email', 'Amount', 'Payment By', 'Transaction Details', 'Provider ID');
+            $columns = array('Date', 'Order ID', 'Order Type', 'Item Name', 'Season', 'Account' ,'User Name', 'User Email', 'Amount', 'Payment By', 'Provider ID');
 
                 /*foreach ($tasks as $task) {
                     dd($tasks);
@@ -432,19 +481,19 @@ class OrderController extends Controller
                     }
                 }*/
             
-            $callback = function() use($tasks, $columns) {
+            $callback = function() use($new_tasks, $columns) {
                 $file = fopen('php://output', 'w');
                 fputcsv($file, $columns);
 
-                foreach ($tasks as $task) {
+                foreach ($new_tasks as $task) {
 
-                    if(!empty($task->provider_id)){
-                        $provider = \DB::table('childcare_vouchers')->where('id',$task->provider_id)->first();
+                    if(!empty($task['provider_id'])){
+                        $provider = \DB::table('childcare_vouchers')->where('id',$task['provider_id'])->first();
                     }
-                    $season = isset($task->course_season) ? (getSeasonname($task->course_season)) : '';
+                    $season = isset($task['course_season']) ? (getSeasonname($task['course_season'])) : '';
 
 
-                    $accountId = isset($task->id) ? ToGetAccountIDForTypeOrder($task->shop_id, $task->user_id) : '';
+                    $accountId = isset($task['id']) ? ToGetAccountIDForTypeOrder($task['shop_id'], $task['user_id']) : '';
                     if (isset($accountId)) {
                         $accountData = StripeAccount::where('id', $accountId)->first();
                         $accountName = isset($accountData->account_name) ? $accountData->account_name: 'DRH Default Account';
@@ -460,19 +509,20 @@ class OrderController extends Controller
                     // }
 
 
-                    $row['Date']       = $task->created_at;
-                    $row['Order ID']   = $task->orderID;
-                    $row['Order Type'] = getShopType($task->orderID);
-                    $row['User Name']  = $task->name;
-                    $row['User Email'] = $task->email;
-                    $row['Amount']     = $task->amount;
-                    $row['Payment By'] = $task->payment_by;
+                    $row['Date']       = $task['created_at'];
+                    $row['Order ID']   = $task['orderID'];
+                    $row['Order Type'] = $task['orderType'];
+                    $row['Item Name']  = $task['ItemName'];
+                    $row['User Name']  = $task['name'];
+                    $row['User Email'] = $task['email'];
+                    $row['Amount']     = $task['amount'];
+                    $row['Payment By'] = $task['payment_by'];
                     $row['Season']     = $season;
                     $row['Account']    = $accountName;
-                    $row['Transaction Details']  = isset($task->transaction_details) ? $task->transaction_details : '-';
-                    $row['Provider ID']  = isset($task->provider_id) ? $provider->provider_name : '-';
+                    // $row['Transaction Details']  = isset($task['transaction_details']) ? $task['transaction_details'] : '-';
+                    $row['Provider ID']  = isset($task['provider_id']) ? $provider->provider_name : '-';
 
-                    fputcsv($file, array($row['Date'], $row['Order ID'], $row['Order Type'], $row['Season'], $row['Account'],$row['User Name'], $row['User Email'], $row['Amount'], $row['Payment By'], $row['Transaction Details'], $row['Provider ID']));
+                    fputcsv($file, array($row['Date'], $row['Order ID'], $row['Order Type'], $row['Item Name'], $row['Season'], $row['Account'],$row['User Name'], $row['User Email'], $row['Amount'], $row['Payment By'], $row['Provider ID']));
                 }
 
                 fclose($file);

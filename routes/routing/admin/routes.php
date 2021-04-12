@@ -486,6 +486,7 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::post('/course/{slug}','Admin\CourseController@course_update')->name('admin.course.update');
 		Route::get('/course/status/{slug}','Admin\CourseController@course_Status')->name('admin.course.status');
 		Route::any('/update_course_price/{price}/{course_id}','Admin\CourseController@update_course_price')->name('update.price');
+		Route::any('/update_course_membership_price/{price}/{course_id}','Admin\CourseController@update_course_membership_price')->name('update.price');
 		Route::any('/update_course_sort/{sort_no}/{course_id}','Admin\CourseController@update_course_sort')->name('update.sort');
 		Route::any('/course/delete/{id}','Admin\CourseController@delete_course')->name('delete_course');
 		Route::any('/course/duplicate/{id}','Admin\CourseController@duplicate_course')->name('duplicate_course');
@@ -504,6 +505,7 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::get('/pay-go-course/status/{slug}','Admin\PayGoCourseController@pay_go_course_Status')->name('admin.pay.go.course.status');
 
 		Route::any('/update_pay_go_course_price/{price}/{course_id}','Admin\PayGoCourseController@update_pay_go_course_price')->name('pay.go.update.price');
+		Route::any('/update_pay_go_course_membership_price/{price}/{course_id}','Admin\PayGoCourseController@update_pay_go_course_membership_price')->name('pay.go.update.price');
 		Route::any('/update_pay_go_course_sort/{sort_no}/{course_id}','Admin\PayGoCourseController@update_pay_go_course_sort')->name('pay.go.update.sort');
 		Route::any('/pay-go-course/delete/{id}','Admin\PayGoCourseController@delete_pay_go_course')->name('delete_pay_go_course');
 		Route::any('/pay-go-course/duplicate/{id}','Admin\PayGoCourseController@duplicate_pay_go_course')->name('duplicate_pay_go_course');

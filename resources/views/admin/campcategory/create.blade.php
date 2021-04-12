@@ -35,8 +35,8 @@
                    @csrf
                   
                    {{textbox($errors,'Title*','title')}}
-                   {{textarea($errors,'Description*','description')}}
-                   <!-- {{textarea($errors,'Description - More Text*','description_more')}} -->
+                   {{textarea($errors,'Description for Listing Page<span class="cst-upper-star">*</span>','description')}}
+                   {{textarea($errors,'Description for Details Page<span class="cst-upper-star">*</span>','description_more')}}
 
                   <div class="form-group">
                     <label class="control-label">Image</label>
@@ -50,7 +50,7 @@
                   <!-- Slider-Images - Start Here-->
                   <div class="form-group">
                     <label class="control-label">Slider Image - 1</label>
-                    <input type="file" required accept="image/*" onchange="ValidateSingleInput(this, 'slider_image1_src')" name="slider_image1" id="selImage">
+                    <input type="file" required accept="image/*" onchange="ValidateSingleInput(this, 'slider_image1_src')" name="slider_image1" id="selImage1">
                     @if ($errors->has('slider_image1'))
                         <div class="error">{{ $errors->first('slider_image1') }}</div>
                     @endif
@@ -59,7 +59,7 @@
 
                   <div class="form-group">
                     <label class="control-label">Slider Image - 2</label>
-                    <input type="file" required accept="image/*" onchange="ValidateSingleInput(this, 'slider_image2_src')" name="slider_image2" id="selImage">
+                    <input type="file" required accept="image/*" onchange="ValidateSingleInput(this, 'slider_image2_src')" name="slider_image2" id="selImage2">
                     @if ($errors->has('slider_image2'))
                         <div class="error">{{ $errors->first('slider_image2') }}</div>
                     @endif
@@ -68,7 +68,7 @@
 
                   <div class="form-group">
                     <label class="control-label">Slider Image - 3</label>
-                    <input type="file" required accept="image/*" onchange="ValidateSingleInput(this, 'slider_image3_src')" name="slider_image3" id="selImage">
+                    <input type="file" required accept="image/*" onchange="ValidateSingleInput(this, 'slider_image3_src')" name="slider_image3" id="selImage3">
                     @if ($errors->has('slider_image3'))
                         <div class="error">{{ $errors->first('slider_image3') }}</div>
                     @endif
@@ -77,7 +77,7 @@
 
                   <div class="form-group">
                     <label class="control-label">Slider Image - 4</label>
-                    <input type="file" required accept="image/*" onchange="ValidateSingleInput(this, 'slider_image4_src')" name="slider_image4" id="selImage">
+                    <input type="file" required accept="image/*" onchange="ValidateSingleInput(this, 'slider_image4_src')" name="slider_image4" id="selImage4">
                     @if ($errors->has('slider_image4'))
                         <div class="error">{{ $errors->first('slider_image4') }}</div>
                     @endif
@@ -109,12 +109,13 @@
 @endsection
 
 @section('scripts')
-<script src="{{url('/admin-assets/js/validations/valueValidation.js')}}"></script>
-<script src="{{url('/js/validations/imageShow.js')}}"></script>
+<script src="{{asset('/admin-assets/js/validations/valueValidation.js')}}"></script>
+<script src="{{asset('/js/validations/imageShow.js')}}"></script>
 
 <script src="{{ asset('js/cke_config.js') }}"></script>
 <script type="text/javascript">
    CKEDITOR.replace('description', options);
+   CKEDITOR.replace('description_more', options);
    CKEDITOR.replace('venue_info', options);
    CKEDITOR.replace('camp_go', options);
    CKEDITOR.replace('day_camp_info', options);

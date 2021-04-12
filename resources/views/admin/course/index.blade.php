@@ -93,6 +93,7 @@
                                 <th>Name</th>
                                 <th>Season</th>
                                 <th>Price</th>
+                                <th>Member Price</th>
                                 <th>Bookings</th>
                                 <th width="150px">Action</th>
 
@@ -123,8 +124,9 @@
 
                                     
                                     <td>@php echo getSeasonname($test->season); @endphp</td>
-                                    <td>£ <input type="text" id="update_course_price" data-id="{{$test->id}}" value="{{number_format((float)$test->price, 2, '.', '')}}" style="width:
-                                    50px"></td> 
+                                    <td>£ <input type="text" id="update_course_price" data-id="{{$test->id}}" value="{{number_format((float)$test->price, 2, '.', '')}}" style="width: 50px"></td> 
+
+                                    <td>£ <input type="text" id="update_course_membership_price" data-id="{{$test->id}}" value="{{number_format((float)$test->membership_price, 2, '.', '')}}" style="width: 50px"></td> 
                                     
                                     <td>{{$booked_courses}}/{{$test->booking_slot}}</td>
                                     <td>

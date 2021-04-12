@@ -499,20 +499,28 @@ input#agree {
                                                     <div class="child-selection-content" style="display: block;">
                                                         <div class="form-group-wrap">
                                                             <p style="display: inline-block; font-weight: 500; margin:0 15px;" class="main_head">Contacts and desiginated adults for activity pick up/drop off </p>
+
                                                             <div class="col-sm-12">
                                                                 <p style="font-weight: 500;margin-right: 15px;text-transform: capitalize;font-size: 18px;margin-bottom: 8px;color: #00000;">Please note</p>
                                                             </div>
-                                                            <br/>
-                                                            <div class="col-sm-12">
-                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">All information including payment and booking information, notices about upcoming events and notifications from linked sports coaches will be sent to the account holder email address.</p>
-                                                            </div>
-                                                            
-                                                            <div class="col-sm-12">
-                                                                <p style="font-weight: 500; margin-right: 15px; margin-bottom: 0;color: #858686;">If this participant is enrolling on a DRH Sports activity:</p>
-                                                            </div>
-                                                            <div class="col-sm-12">
-                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">This section is to state particular individuals you would wish us to contact in the event of an emergency. Along with the individuals that could be dropping off or picking up from the DRH Sports activity (if child).</p>
-                                                            </div>
+                                                            <ul class="block-points">                                                           
+
+                                                            <li class="col-sm-12">
+                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">The section is where you will enter contact information that will go on our course/camp registers.</p>                                                                
+                                                            </li>
+
+                                                            <li class="col-sm-12">
+                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">If the participant is a child then please enter contact details for the parent/guardian you wish us to communicate with.</p>
+                                                            </li>
+                                                             
+                                                            <li class="col-sm-12">
+                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">If the participant is an adult then please enter the participant's details here as we will communicate with them directly. In some cases this may be a duplicate of the information the account holder entered when registering.</p>
+                                                            </li>
+                                                             
+                                                            <li class="col-sm-12">
+                                                                <p style="font-weight: 400; margin-right: 15px; color: #858686;">If you add multiple contacts then these will be the people we may try to contact in case of an emergency. For children, we advise adding at least 2 contacts per child.</p>
+                                                            </li>
+                                                            </ul>
                                                             <div class="contact_wrap">
 
                                                             <div class="child-contact-container" id="sec_contact">
@@ -527,11 +535,11 @@ input#agree {
                                                                     <p style="font-weight: 500; margin-right: 15px;margin-bottom: 0;color: #000;">Contact {{$i}} - </p>
                                                                 </div>
                                                                 @if($i == 1)
-                                                                <div class="col-sm-12">
+                                                                <!-- <div class="col-sm-12">
                                                                     <p style="font-weight: 400; margin-right: 15px;color: #858686;margin-bottom: 0;"><b>PLEASE NOTE</b> : This contact's details will be added to our registers for any classes that are booked for this participant. This is also the adult we expect to be the main person picking up and dropping off the participant.</p>
-                                                                </div>
+                                                                </div> -->
                                                                 @elseif($i == 2)
-                                                                    <br/><label class="col-md-12 col-form-label"><p>We will contact this individual if we cannot contact the main contact above. It is also an individual that may also pick up and drop off the participant from the activity.<p><label>
+                                                                    <!-- <br/><label class="col-md-12 col-form-label"><p>We will contact this individual if we cannot contact the main contact above. It is also an individual that may also pick up and drop off the participant from the activity.<p><label> -->
                                                                 @endif
                                                                 <div class="contact_wrap contact_section[{{$i}}]">
                                                                     <div class="form-group row">
@@ -696,7 +704,7 @@ input#agree {
                                                             </div>
                                                             <div class="form-group row f-g-full">
                                                                 <div class="col-sm-12" style="margin-top: 15px;">
-                                                                    <a href="javascript:void(0);" style="margin:0;" onclick="addcontact();" class="additional_contact cstm-btn main_button">Add an additional contact <i class="fas fa-plus"></i></a>
+                                                                    <a href="javascript:void(0);" style="margin:0;" onclick="addcontact();" class="additional_contact cstm-btn main_button">Add a contact <i class="fas fa-plus"></i></a>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row f-g-full ">

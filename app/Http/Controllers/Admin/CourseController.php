@@ -217,7 +217,7 @@ class CourseController extends Controller
             'tax_cost' => ['required', 'numeric'],
             'end_date' => ['required'],
             // 'image' => ['required'],
-            // 'membership_popup' => ['required'],
+            'membership_price' => ['required', 'numeric'],
         ]);
 
         if ($request->hasFile('image')) {
@@ -256,6 +256,7 @@ class CourseController extends Controller
             'end_date' => $request['end_date'],
             'image' => isset($filename) ? $filename : '',
             'membership_popup' => $request['membership_popup'],
+            'membership_price' => $request['membership_price'],
     	]);
 
         if(isset($data['course_date'])){  
@@ -267,7 +268,8 @@ class CourseController extends Controller
                 $cour                   =  new CourseDate;
                 $cour->course_id        =  $course_id;  
                 $cour['course_date']    =  isset($data['course_date'][$number]) ? $data['course_date'][$number] : '' ; 
-                $cour['display_course'] =  isset($data['display_course'][$number]) ? $data['display_course'][$number] : ''; 
+                // $cour['display_course'] =  isset($data['display_course'][$number]) ? $data['display_course'][$number] : ''; 
+                $cour['display_course'] =  isset($data['display_course'][$number]) ? 1 : 0; 
                 $cour->save(); 
 
             }
@@ -305,12 +307,10 @@ class CourseController extends Controller
     public function course_update(Request $request, $slug) {
 
         $data = $request->all();    //dd($data['membership_popup']);
-        
+        // dd($data['course_date'],$data['display_course']);
         // get course id using slug
         $course = Course::where('slug',$slug)->first();
         $course_id = $course['id']; 
-
-        CourseDate::where('course_id',$course_id)->delete();
 
         if(!empty($request->subtype))
         {
@@ -337,6 +337,7 @@ class CourseController extends Controller
             'other_cost' => ['required', 'numeric'],
             'tax_cost' => ['required', 'numeric'],
             'end_date' => ['required'],
+            'membership_price' => ['required', 'numeric'],
         ]);
 
     	$venue = Course::FindBySlugOrFail($slug);
@@ -382,10 +383,15 @@ class CourseController extends Controller
             'end_date' => $request['end_date'],
             'image' => isset($filename) ? $filename : '',
             'membership_popup' => isset($data['membership_popup']) ? $data['membership_popup'] : '',
-            // 'membership_popup' => $request['membership_popup'],
+            'membership_price' => $request['membership_price'],
     	]);
 
+        // dd($venue);
+
         if(isset($data['course_date'])){  
+
+            // Delete course dates and then add new dates
+            CourseDate::where('course_id',$course_id)->delete();
 
             foreach ($data['course_date'] as $number => $value) {    
 
@@ -393,7 +399,8 @@ class CourseController extends Controller
                 $cour                   =  new CourseDate;
                 $cour->course_id        =  $course_id;
                 $cour['course_date']    =  isset($data['course_date'][$number]) ? $data['course_date'][$number] : '' ; 
-                $cour['display_course'] =  isset($data['display_course'][$number]) ? $data['display_course'][$number] : ''; 
+                // $cour['display_course'] =  isset($data['display_course'][$number]) ? $data['display_course'][$number] : ''; 
+                $cour['display_course'] =  isset($data['display_course'][$number]) ? 1 : 0; 
                 $cour->save(); 
 
             }
@@ -451,6 +458,22 @@ class CourseController extends Controller
 
         $data = array(
             'price'   => $course,
+        );
+
+        echo json_encode($data);
+    }
+
+    /*----------------------------------------
+    |   Quick course membership price update
+    |-----------------------------------------*/
+    public function update_course_membership_price($membership_price,$course_id) 
+    {    
+        $course = Course::find($course_id);
+        $course->membership_price = number_format((float)$membership_price, 2, '.', '');
+        $course->save();
+
+        $data = array(
+            'membership_price'   => $course,
         );
 
         echo json_encode($data);

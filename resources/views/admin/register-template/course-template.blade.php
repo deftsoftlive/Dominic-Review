@@ -137,8 +137,8 @@ td.checkbox_course {
                             <td>@if(isset($player->date_of_birth)) @php echo date('d/m/Y',strtotime($player->date_of_birth)); @endphp @endif</td>
                             <td style="text-align:center;">@if(!empty($child_details->media) && ($child_details->media == 'yes')) Y @else N @endif</td>
                             <td>@if($sh->membership_status == 1) Y @else N @endif</td>
-                            <td>{{isset($parent->name) ? $parent->name : ''}}</td>                      
-                            <td>{{isset($parent->phone_number) ? $parent->phone_number : ''}}</td>     
+                            <td>{{isset($parent->name) ? $parent->name : $player->name}}</td>                      
+                            <td>{{isset($parent->phone_number) ? $parent->phone_number : $player->phone_number}}</td>     
 
                             @if(!empty($player))                   
                             @php 
@@ -172,7 +172,7 @@ td.checkbox_course {
                             @endif
                             @php $i++; @endphp
                             @endforeach
-                            <td>{{isset($parent->email) ? $parent->email : ''}}</td>                        
+                            <td>{{isset($parent->email) ? $parent->email : $player->email}}</td>                        
                         </tr>
                         @endif
                     @endforeach

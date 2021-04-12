@@ -397,7 +397,7 @@ $(document).ready(function(){
     });
 
 
-    $('#venueFormPaygoCreate').validate({
+    $('#venueFormPaygoCreate,#venueForm').validate({
     onfocusout: function (valueToBeTested) {
       $(valueToBeTested).valid();
     },
@@ -440,6 +440,9 @@ $(document).ready(function(){
       "price": { 
           required: true,
       },
+      "booking_slot": { 
+          required: true,
+      },
       "coach_cost": { 
           required: true,
       },
@@ -461,7 +464,9 @@ $(document).ready(function(){
       "linked_coach": { 
           required: true,
       },
-
+      "membership_price": { 
+          required: true,
+      },
     },
     });   
   
@@ -517,6 +522,9 @@ $(document).ready(function(){
       "price": { 
           required: true,
       },
+      "booking_slot": { 
+          required: true,
+      },
       "coach_cost": { 
           required: true,
       },
@@ -536,6 +544,9 @@ $(document).ready(function(){
           required: true,
       },
       "linked_coach": { 
+          required: true,
+      },
+      "membership_price": { 
           required: true,
       },
 

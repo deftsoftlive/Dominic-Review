@@ -1358,6 +1358,7 @@ $('.search-icon').click(function(){
         dots:true,
         nav:false,
         responsiveClass:true,
+        autoplay:true,
         responsive:{
             0:{
                 items:1

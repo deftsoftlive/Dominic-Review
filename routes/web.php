@@ -91,6 +91,9 @@ Route::group(['middleware' => ['UserAuth'],'prefix' => 'user'], function()
     // Membership Status
     Route::any('membership-status','HomeController@membership_status')->name('membership_status'); 
 
+    // Change membership status after booking in some cases
+    Route::any('membership-status-after-booking','HomeController@membership_status_after_booking')->name('membership_status_after_booking'); 
+
     // Dismiss notifications
     Route::any('/parent-req/dismiss','HomeController@coach_dismiss_notifi')->name('dismiss-requests');
 
@@ -337,5 +340,10 @@ Route::any('pay-go-courses','HomeController@payGoCourseListing')->name('user.pay
 Route::any('pay-go-course-detail/{id}','HomeController@payGoCourseDetails')->name('user.paygo.course.details');
 
 Route::any('paygo-course-booking','HomeController@payGoCourseBooking')->name('paygo.course.booking');
+
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+})
 
 ?>

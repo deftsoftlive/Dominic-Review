@@ -137,7 +137,7 @@
                   {!! textarea($errors,'More Info<span class="cst-upper-star">*</span>','more_info', $venue->more_info) !!}
                   {!! textarea($errors,'Information Email Content<span class="cst-upper-star">*</span>','info_email_content', $venue->info_email_content) !!}
 
-                  <!-- {{textbox($errors,'Price<span class="cst-upper-star">*</span>','price', $venue->price)}} -->
+                  <!-- {{textnumber($errors,'Price<span class="cst-upper-star">*</span>','price', $venue->price)}} -->
                   {!! textarea($errors,'Bottom Section<span class="cst-upper-star">*</span>','bottom_section', $venue->bottom_section) !!}
 
                   <!-- <label>Linked Coach</label> -->
@@ -194,6 +194,8 @@
                     </select>
                   </div><br/>
 
+                  {{textnumber($errors,'Membership Price<span class="cst-upper-star">*</span>','membership_price', $venue->membership_price)}}
+                  
             <!--       {{textbox($errors,'Coach Cost<span class="cst-upper-star">*</span>','coach_cost', $venue->coach_cost)}}
                   
                   {{textbox($errors,'Court/Venue Cost<span class="cst-upper-star">*</span>','venue_cost', $venue->venue_cost)}}
@@ -229,7 +231,7 @@
                             @foreach($course_dates_data as $time => $number)
                             <tr class="timeslots slots{{$time+1}}" value={{$time+1}}>
                               <td><input type="date" name="course_date[{{$time+1}}]" class="form-control"  value="{{$number->course_date}}" required></td>
-                              <td><input class="course_content_center" type="checkbox" name="display_course[{{$time+1}}]" value="@php if(isset($number->display_course)){ @endphp {{$number->display_course}} @php }else{ @endphp 1 @php } @endphp" @if($number->display_course) checked @endif ></td>
+                              <td><input class="course_content_center" type="checkbox" name="display_course[{{$time+1}}]" value="@php if( $number->display_course == 1){ @endphp {{ 1 }} @php }else{ @endphp 0 @php } @endphp" @if($number->display_course) checked @endif ></td>
                               <td><a onclick="removeSection({{$time+1}});" href="javascript:void(0);"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></td>                                  
                             </tr>
                             @endforeach  
