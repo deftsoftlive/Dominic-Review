@@ -69,33 +69,59 @@
                     <option value="No Cost">No Cost</option>
                   </select>
 
-                  <!-- <label class="control-label">Select Course Type<span class="cst-upper-star">*</span></label>
+                  <label class="control-label">Select Course Type<span class="cst-upper-star">*</span></label>
                   <select class="form-control" name="course_type" id="course_type">
                     <option disabled selected="" value="">Select Course Type</option>
                     <option value="normal">Standard Course</option>
                     <option value="paygo">Pay As You Go</option>
-                  </select> -->
-
-                  <label class="control-label">Change Course<span class="cst-upper-star">*</span></label>
-                  @php $courses = DB::table('courses')->where('status',1)->orderby('id','desc')->get(); @endphp
-                  <select class="form-control" id="change_course" name="course">
-                    <option disabled selected="" value="">Select Course</option>
-                    @foreach($courses as $co)
-                      <option value="{{$co->id}}">{{$co->title}}</option>
-                    @endforeach
                   </select>
 
-                  <!-- <label class="control-label">Change Pay As You Go Course<span class="cst-upper-star">*</span></label>       
-                  @php $courses = \App\PayGoCourse::where('status',1)->orderby('id','desc')->get(); @endphp
-                  <select class="form-control" id="change_paygo_course" name="course" disabled="true">
-                    <option disabled selected="" value="">Select Course</option>
-                    @foreach($courses as $co)
-                      <option value="{{$co->id}}">{{$co->title}}</option>
-                    @endforeach
-                  </select> -->
+                  <div id="StandardCoursesDispaly">
+                    <label class="control-label">Change Course<span class="cst-upper-star">*</span></label>
+                    @php $courses = DB::table('courses')->where('status',1)->orderby('id','desc')->get(); @endphp
+                    <select class="form-control" id="change_course" name="course">
+                      <option disabled selected="" value="">Select Course</option>
+                      @foreach($courses as $co)
+                        <option value="{{$co->id}}">{{$co->title}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+
+                  <div id="PayAsYouCoursesDispaly" style="display: none;">
+                    <label class="control-label">Change Pay As You Go Course<span class="cst-upper-star">*</span></label>       
+                    @php $courses = \App\PayGoCourse::where(['status' => 1, 'type' => 156])->orderby('id','desc')->get(); @endphp
+                    <select class="form-control" id="change_paygo_course" name="course">
+                      <option disabled selected="" value="">Select Course</option>
+                      @foreach($courses as $co)
+                        @php 
+                          $remainingSeats = 0;
+                          $course_dates = \DB::table('paygocourse_dates')->where('course_id',$co->id)->where('display_course',1)->get();
+                        @endphp
+                        @foreach($course_dates as $date)
+                          @if( strtotime( $date->course_date ) >= strtotime( date( 'Y-m-d' ) ) )
+                            @php
+                              $bookedDateCount = \App\PayGoCourseBookedDate::where(['course_id' => $co->id, 'date'=> $date->course_date])->count();
+                              
+                              $remainingSeats += (int)$date->seats - (int)$bookedDateCount;
+                            @endphp
+                          @endif
+                        @endforeach
+                        @if( $remainingSeats <= 0 )
+                          <option value="{{$co->id}}" disabled>{{$co->title}}(Fully Booked)</option>
+                        @else
+                          <option value="{{$co->id}}">{{$co->title}}</option>
+                        @endif
+                      @endforeach
+                    </select>
+                  </div>
+
+                  <!-- Pay go courses booking slots -->
+                  <div id="paygo_course_slots" class="paygo-course-slots">
+                          
+                  </div>                     
                   
                   <div id="pay_meth">
-                    <label class="control-label">Payment Method</label>
+                    <label class="control-label">Payment Method<span class="cst-upper-star">*</span></label>
                     <select class="form-control" name="payment_method">
                       <option disabled selected="" value="">Select Payment Method</option>
                       <option value="STRIPE">Stripe</option>
@@ -145,19 +171,32 @@ $("#cost_type").change(function()
 
 
 
-/*$('#course_type').on('change', function(){
+$('#course_type').on('change', function(){
   var val = $(this).val();
   console.log( val );
   if ( val == 'normal' ) {
-    $('#change_course').attr('disabled', false);
-    $('#change_paygo_course').attr('disabled', true);
-    $('#change_paygo_course').val('');
+    $('#StandardCoursesDispaly').show();
+    $('#PayAsYouCoursesDispaly').hide();
+    $('#paygo_course_slots').html('');
   }else if( val == 'paygo' ){
-    $('#change_paygo_course').attr('disabled', false);    
-    $('#change_course').attr('disabled', true);
-    $('#change_course').val('');
+    $('#StandardCoursesDispaly').hide();
+    $('#PayAsYouCoursesDispaly').show();
   }
 
-});*/
+});
+
+
+// On click price add for pay as you go course
+$(document).on("click",".price_add",function() {
+  var priceArray = [];
+  sum = 0;
+  $(".price_add:checked").each(function () {
+      var price = $(this).attr("price");
+      priceArray.push(price);
+  });
+  $.each(priceArray,function(){sum+=parseFloat(this) || 0;});
+  sum = sum.toFixed(2);
+  $('#final_paygo_price').val(sum);
+});
 </script>
 @endsection

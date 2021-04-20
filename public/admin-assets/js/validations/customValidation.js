@@ -205,6 +205,20 @@ $.validator.addMethod("minAge", function(value, element, min) {
      return flag; 
     }, "");
 
+// Add method to check strong password
+  $.validator.addMethod("checkstrongpassword",function(value, element) {    
+    var strength = 1;
+    var arr = [/.{5,}/, /[a-z]+/, /[0-9]+/, /[A-Z]+/];
+    jQuery.map(arr, function(regexp) {
+      if(value.match(regexp))
+       strength++;
+    });
+    if(strength>=5){
+      return true;
+    }
+    return false;
+  },'Password must contain 1 Capital letter,1 Small letter,1 Special Character & 1 Numeric Character.'); 
+
 /*validation for booking table*/
 $(document).ready(function (){
   $('#reject_request').validate({

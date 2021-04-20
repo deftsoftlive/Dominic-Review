@@ -41,7 +41,7 @@ $count = 1;
 @endphp
 @if(isset($user_data->date_of_birth))
 @php 
-$dobNew = date('d-m-Y', strtotime($user_data->date_of_birth));
+$dobNew = date('Y-m-d', strtotime($user_data->date_of_birth));
 $user_data->date_of_birth = $dobNew;
 @endphp
 @endif
@@ -155,7 +155,7 @@ input#agree {
                                                 <div class="form-group row">
                                                     <label for="date_of_birth" class="col-md-12 col-form-label text-md-right">Date Of Birth</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" readonly="" value="{{isset($user_data->date_of_birth) ? $user_data->date_of_birth : ''}}" class="form-control">
+                                                        <input type="date" name="date_of_birth1" value="{{isset($user_data->date_of_birth) ? $user_data->date_of_birth : ''}}" class="form-control">
                                                         <!-- <input id="date_of_birth" type="date" class="form-control" name="date_of_birth1" value="{{isset($user_data->date_of_birth) ? $user_data->date_of_birth : ''}}" required="" max="2020-07-07"> -->
                                                     </div>
                                                 </div>
@@ -347,7 +347,7 @@ input#agree {
                                                     <div class="form-group row">
                                                         <label for="date_of_birth" class="col-md-12 col-form-label text-md-right">Date Of Birth</label>
                                                         <div class="col-md-12">
-                                                            <input type="text" readonly="" value="{{isset($user_data->date_of_birth) ? $user_data->date_of_birth : ''}}" class="form-control">
+                                                            <input type="date" value="{{isset($user_data->date_of_birth) ? $user_data->date_of_birth : ''}}" class="form-control">
                                                             <!-- <input id="date_of_birth" type="date" class="form-control" name="date_of_birth" required="" max="2020-07-07"> -->
                                                         </div>
                                                     </div>

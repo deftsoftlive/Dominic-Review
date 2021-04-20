@@ -350,11 +350,10 @@ $(document).ready(function (){
     },
 
       submitHandler: function(form) {        
-        $(".disable_contact_us_btnn").attr("disabled", true);
         var check = checkRecaptcha();
         // alert( check );
         if ( check == true ) {
-
+        $(".disable_contact_us_btnn").attr("disabled", true);
           form.submit();
 
         }

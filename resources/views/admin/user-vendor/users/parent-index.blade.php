@@ -113,6 +113,7 @@
                                     <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
                                     <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;">
                                         <a href="{{url('/admin/family-member/overview')}}/{{$user->id}}" class="dropdown-item">View</a>
+                                        <!-- <a href="{{ route('ChangePassword',json_encode($user->id)) }}" class="dropdown-item">Change Password</a> -->
                                     </div>
                                  </div>
                               </td>

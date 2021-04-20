@@ -567,3 +567,29 @@ $(document).ready(function(){
 
 }); 
 
+
+
+
+
+
+/**********************************************
+| Pay go courses slots append js
+|**********************************************/
+$(document).ready(function(){
+    $("select#change_paygo_course").change(function(){ 
+        var course_id = $(this).children("option:selected").val(); 
+
+        $.ajax({
+            url:$base_url+"/admin/pay-go-course-slot/",
+            method:'GET',
+            data:{course_id:course_id},
+            dataType:'json',
+            success:function(data)
+            {   
+                $('#paygo_course_slots').html(data.option);
+            },      
+        })
+
+        
+    });
+  });

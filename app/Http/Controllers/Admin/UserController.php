@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\CoachDocument;
 use App\ParentCoachReq;
@@ -19,6 +20,8 @@ use App\Models\Shop\ShopCartItems;
 use App\Models\Shop\ShopOrder;
 use App\NewsletterSubscription;
 use App\Models\Admin\EmailTemplate;
+use App\PaygocourseDate;
+use App\PayGoCourseBookedDate;
 use App\Traits\EmailTraits\EmailNotificationTrait;
 
 class UserController extends Controller
@@ -522,51 +525,96 @@ class UserController extends Controller
     |********************************/
     public function save_course_for_player(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
 
-        if(!empty($request->parent) && !empty($request->course) && !empty($request->cost_type))
+        if(!empty($request->parent) && !empty($request->course_type) && !empty($request->course) && !empty($request->cost_type))
         {
-            /*if ( $request->course_type == 'paygo' ) {
-                $course = \App\PayGoCourse::where('id',$request->course)->first();
-                $check_shop = ShopCartItems::where('product_id',$request->course)->where('user_id',$request->parent)->where('child_id',$request->player)->where('shop_type','paygo-course')->where('type','order')->first();
-                $shop_type = 'paygo-course';
+            if(!empty($request->player))
+            {
+                $player = $request->player;
             }else{
-                
+                $player = $request->parent;
+            }
+
+            if($request->cost_type == 'Cost' && empty($request->payment_method)){
+                return \Redirect::back()->with('error','Please fill the required fields.'); 
+            }
+            if ( $request->course_type == 'paygo' ) {
+                if(!empty($request->selected_date_ids)){
+
+                    $selected_date_ids = $request->selected_date_ids;
+                    $courDates = [];
+                    foreach ($selected_date_ids as $k => $v) {
+                      $getDateData = PaygocourseDate::where( 'id', $v )->first();
+                      array_push( $courDates, strtotime( $getDateData->course_date ) );
+                    }
+                    $checkIfExists1 = [];
+                    $check_course = [];
+                    $check_course1 = \DB::table('shop_cart_items')
+                                      ->leftjoin('pay_go_course_booked_dates', 'shop_cart_items.id', '=', 'pay_go_course_booked_dates.cart_id')
+                                      ->where('shop_cart_items.child_id',$request->player)
+                                      ->where('shop_cart_items.shop_type','paygo-course')
+                                      ->where('shop_cart_items.product_id',$request->course)
+                                      ->where(function($q) { 
+                                      $q->where('shop_cart_items.type', 'cart') 
+                                      ->orWhere('shop_cart_items.type', 'order'); })
+                                      /*->where('shop_cart_items.type','cart')*/
+                                      ->select('shop_cart_items.*', 'pay_go_course_booked_dates.*')->get();
+                                      // dd($check_course1);
+                    $checkAlreadyBookedDates = 0;
+                    foreach( $check_course1 as $checkDate ){
+                      $datebooked = strtotime( $checkDate->date );
+                      if (in_array( $datebooked, $courDates)) {
+                        array_push( $check_course, date('d-m-Y', $datebooked ) );
+                        $checkAlreadyBookedDates = 1;
+                      }
+                    }
+
+                    $course = \App\PayGoCourse::where('id',$request->course)->first();
+                    $check_shop = $checkAlreadyBookedDates;
+                    $shop_type = 'paygo-course';
+                }else{
+                    return \Redirect::back()->with('error','Please select the date.');        
+                }
+            }else{                
                 $course = Course::where('id',$request->course)->first();
                 $check_shop = ShopCartItems::where('product_id',$request->course)->where('user_id',$request->parent)->where('child_id',$request->player)->where('shop_type','course')->where('type','order')->first();
                 $shop_type = 'course';
-            }*/
+            }
             
-            $course = Course::where('id',$request->course)->first();
-            $check_shop = ShopCartItems::where('product_id',$request->course)->where('user_id',$request->parent)->where('child_id',$request->player)->where('shop_type','course')->where('type','order')->first();
-            $shop_type = 'course';
+            // $course = Course::where('id',$request->course)->first();
+            // $check_shop = ShopCartItems::where('product_id',$request->course)->where('user_id',$request->parent)->where('child_id',$request->player)->where('shop_type','course')->where('type','order')->first();
+            // $shop_type = 'course';
 
             if($request->cost_type == 'No Cost')
             {
                 $price = 0;
                 $total = 0;
+                $paygo_course_price = 0;
                 $payment_method = '-';
             }
-            else{
+            elseif($request->course_type == 'paygo'){
+                $price = $course->price;
+                $total = $course->final_paygo_price;
+                $paygo_course_price = $course->final_paygo_price;
+                $payment_method = $request->payment_method;
+            }else{
                 $price = $course->price;
                 $total = $course->price;
+                $paygo_course_price = 0;
                 $payment_method = $request->payment_method;
             }
             //dd($payment_method);
             /*$check_shop = ShopCartItems::where('product_id',$request->course)->where('user_id',$request->parent)->where('child_id',$request->player)->where('shop_type','course')->where('type','order')->first();*/
 
-            if(!empty($check_shop))
+            if(!empty($check_shop) && $shop_type == 'course')
             {
                 $purchase_course = \DB::table('shop_cart_items')->where('shop_type','course')->where('orderID','!=',NULL)->where('type','order')->paginate(50);
                 return \Redirect::back()->with('error',$course->title.' course is already assigned to this child.'); 
+            }elseif($check_shop == 1 && $shop_type == 'paygo-course'){
+                $c = implode(', ', $check_course);
+              return \Redirect::back()->with('error','This person is already booked for '.$c.' on this course or the course is already in the cart for these dates. Please select different date!');
             }else{
-
-                if(!empty($request->player))
-                {
-                    $player = $request->player;
-                }else{
-                    $player = $request->parent;
-                }
 
                 $shop                =  new ShopCartItems;
                 $shop->shop_type     =  $shop_type;
@@ -576,6 +624,7 @@ class UserController extends Controller
                 $shop->quantity      =  1;
                 $shop->price         =  $price;
                 $shop->total         =  $price;
+                $shop->paygo_course_price   =  $paygo_course_price;
                 $shop->course_season =  $course->season;
                 $shop->vendor_id     =  1;
                 $shop->orderID       =  '#DRHSHOP'.strtotime(date('y-m-d h:i:s'));
@@ -591,6 +640,18 @@ class UserController extends Controller
                 $order->status       =  1;
                 $order->manual       =  1;
                 $order->save();
+
+                if($shop->save() && $request->course_type == 'paygo'){
+                    $bookedPayGoDatesData['cart_id'] = $shop['id'];
+                    $bookedPayGoDatesData['course_id'] = $request->course;
+                    $bookedPayGoDatesData['child_id'] = $request->player;
+                    for ($i=0; $i <count($request->selected_date_ids) ; $i++) { 
+                        $bookedPayGoDatesData['booked_date_id'] = $request->selected_date_ids[$i];
+                        $date = PaygocourseDate::where('id', $request->selected_date_ids[$i] )->first();
+                        $bookedPayGoDatesData['date'] = $date->course_date;
+                        PayGoCourseBookedDate:: Create($bookedPayGoDatesData);
+                    }
+                }
 
                 ShopCartItems::where('orderID',$order->orderID)->update(array('order_id' => $order->id));
                 return \Redirect::back()->with('success','Course has been assigned to player successfully.'); 
@@ -630,6 +691,74 @@ class UserController extends Controller
         echo json_encode($data);
         }
 
+
+    /*********************************
+    |   pay go courses slots check
+    |*********************************/
+    public function paygo_course_slot(Request $request)
+    {
+        $course_id = $request->course_id; 
+
+
+        $course_dates = \DB::table('paygocourse_dates')->where('course_id',$course_id)->where('display_course',1)->get();
+        $course = \App\PayGoCourse::where(['status' => 1, 'type' => 156, 'id' => $course_id])->first();
+
+            $output = '<label class="control-label">Course Dates<span class="cst-upper-star">*</span></label>';        
+            $output .= '<ul class="days_list" id="checkboxMsgError">';        
+            if(!empty($course_dates) && !empty($course))
+            {
+                foreach($course_dates as $date){
+                    $remainingSeats_single_course = 0;
+                    if( strtotime( $date->course_date ) >= strtotime( date( 'Y-m-d' ) ) ){
+                      $advanceDays = (int)$course->advance_weeks;
+                      $bookedDateCount = \App\PayGoCourseBookedDate::where('booked_date_id', $date->id)->count();
+                      $dateNow = date("Y-m-d");
+                      $mod_date = strtotime($date->course_date."- $advanceDays days");
+                      $remainingSeats_single_course = (int)$date->seats - (int)$bookedDateCount; 
+                      if( $remainingSeats_single_course == 0 ||  strtotime( $dateNow ) < $mod_date ){
+                        $disabled = 'disabled';
+                      }else{
+                        $disabled = '';
+                      }
+
+                        $output .= '<li>';
+                        $output .= '<label class="main-wrap">';
+                        $output .= '<input class="day_none price_add" type="checkbox" value="'.$date->id.'" name="selected_date_ids[]" id="checkbox-'.$date->id.'" slots ="'.$date->seats.'" price = "'.number_format((float)$course->price, 2, '.', '').'" '.$disabled.'>';
+                        $output .= '<span class="checkmark '.$disabled.'">';
+                        $output .= '<div class="inner-wrap ">';
+                        $output .= '<span>'.date('d/m/Y', strtotime($date->course_date)).'</span>';                              
+                            if( $remainingSeats_single_course > 0 ){                                    
+                                $output .= '<p>'.$remainingSeats_single_course.'</p>';
+                                if( $remainingSeats_single_course == 1 ){
+                                    $output .= '<span>Space left</span>';
+                                }elseif( $remainingSeats_single_course >1 ){
+                                    $output .= '<span>Spaces left</span>';                                
+                                }
+                            }elseif( $remainingSeats_single_course == 0 ){
+                                $output .= '<span class="cst-full-booked">Fully Booked</span>';
+                            }
+                            
+                            $output .= '<p>£ '.number_format((float)$course->price, 2, '.', '').'</p>';
+                            $output .= '</div>';
+                            $output .= '</span>';
+                          $output .= '</label>';                                      
+                      $output .= '</li>';
+                    }
+                }
+                $output .= '</ul>';  
+
+                $output .= '<p class="cst-fees">Total Price : <span>£<input type="text" name="final_paygo_price" id="final_paygo_price" value="0" readonly="" class="valid input--success" aria-invalid="false">   </span></p>';  
+
+            }else{
+                $output .= '';
+            }
+        $data = array(
+            'option'   => $output,
+        );
+
+        echo json_encode($data);
+    }
+
     /********************************
     |   Purchased Courses List
     |********************************/
@@ -643,11 +772,11 @@ class UserController extends Controller
             $purchase_course = \DB::table('shop_cart_items')
                             ->join('users', 'shop_cart_items.child_id', '=', 'users.id')
                             ->select('shop_cart_items.*','users.name')  
-                            ->where('shop_cart_items.shop_type','course')
-                            /*->where(function($q) { 
+                            // ->where('shop_cart_items.shop_type','course')
+                            ->where(function($q) { 
                                 $q->where('shop_cart_items.shop_type', 'course') 
                                 ->orWhere('shop_cart_items.shop_type', 'paygo-course'); 
-                                })*/
+                                })
                             ->where('shop_cart_items.orderID','!=',NULL)
                             ->where('shop_cart_items.type','order')   
                             ->where('users.name', 'LIKE', '%' . $type . '%') 
@@ -658,11 +787,11 @@ class UserController extends Controller
             $purchase_course = \DB::table('shop_cart_items')
                             ->join('users', 'shop_cart_items.child_id', '=', 'users.id')
                             ->select('shop_cart_items.*','users.name')  
-                            ->where('shop_cart_items.shop_type','course')
-                            /*->where(function($q) { 
+                            // ->where('shop_cart_items.shop_type','course')
+                            ->where(function($q) { 
                                 $q->where('shop_cart_items.shop_type', 'course') 
                                 ->orWhere('shop_cart_items.shop_type', 'paygo-course'); 
-                                })*/
+                                })
                             ->where('shop_cart_items.orderID','!=',NULL)
                             ->where('shop_cart_items.type','order')   
                             ->orderBy('users.name','asc')
@@ -688,6 +817,11 @@ class UserController extends Controller
     public function delete_course($id)
     {
         $shop = \DB::table('shop_cart_items')->where('id',$id)->first();
+
+        if($shop->shop_type == "paygo-course"){
+           \DB::table('pay_go_course_booked_dates')->where(['cart_id' => $shop->id, 'course_id' => $shop->product_id, 'child_id' => $shop->child_id])->delete(); 
+        }
+
         \DB::table('shop_cart_items')->where('id',$id)->delete();
         \DB::table('shop_orders')->where('orderID',$shop->orderID)->delete();
 
@@ -720,10 +854,57 @@ class UserController extends Controller
         else
         {
             $shop = \DB::table('shop_cart_items')->where('id',$request->shop_id)->first();
+
+            if($shop->shop_type == "paygo-course"){
+               \DB::table('pay_go_course_booked_dates')->where(['cart_id' => $request->shop_id, 'course_id' => $request->old_course_id, 'child_id' => $request->player_id])->delete(); 
+            }
+
             \DB::table('shop_cart_items')->where('id',$request->shop_id)->delete();
             \DB::table('shop_orders')->where('orderID',$shop->orderID)->delete();
 
-            $course = Course::where('id',$request->course)->first();
+
+            if ( $shop->shop_type == 'paygo-course' ) {
+                if(!empty($request->selected_date_ids)){
+
+                    $selected_date_ids = $request->selected_date_ids;
+                    $courDates = [];
+                    foreach ($selected_date_ids as $k => $v) {
+                      $getDateData = PaygocourseDate::where( 'id', $v )->first();
+                      array_push( $courDates, strtotime( $getDateData->course_date ) );
+                    }
+                    $checkIfExists1 = [];
+                    $check_course = [];
+                    $check_course1 = \DB::table('shop_cart_items')
+                                      ->leftjoin('pay_go_course_booked_dates', 'shop_cart_items.id', '=', 'pay_go_course_booked_dates.cart_id')
+                                      ->where('shop_cart_items.child_id',$request->player)
+                                      ->where('shop_cart_items.shop_type','paygo-course')
+                                      ->where('shop_cart_items.product_id',$request->course)
+                                      ->where(function($q) { 
+                                      $q->where('shop_cart_items.type', 'cart') 
+                                      ->orWhere('shop_cart_items.type', 'order'); })
+                                      /*->where('shop_cart_items.type','cart')*/
+                                      ->select('shop_cart_items.*', 'pay_go_course_booked_dates.*')->get();
+                                      // dd($check_course1);
+                    $checkAlreadyBookedDates = 0;
+                    foreach( $check_course1 as $checkDate ){
+                      $datebooked = strtotime( $checkDate->date );
+                      if (in_array( $datebooked, $courDates)) {
+                        array_push( $check_course, date('d-m-Y', $datebooked ) );
+                        $checkAlreadyBookedDates = 1;
+                      }
+                    }
+
+                    $course = \App\PayGoCourse::where('id',$request->course)->first();
+                    $check_shop = $checkAlreadyBookedDates;
+                    $shop_type = 'paygo-course';
+                }else{
+                    return \Redirect::back()->with('error','Please select the date.');        
+                }
+            }else{                
+                $course = Course::where('id',$request->course)->first();
+                $check_shop = ShopCartItems::where('product_id',$request->course)->where('user_id',$request->parent)->where('child_id',$request->player)->where('shop_type','course')->where('type','order')->first();
+                $shop_type = 'course';
+            }
             
             $shop                =  new ShopCartItems;
             $shop->shop_type     =  'course';
@@ -732,7 +913,15 @@ class UserController extends Controller
             $shop->user_id       =  $request->parent_id;
             $shop->quantity      =  1;
             $shop->price         =  $course->price;
-            $shop->total         =  $course->price;
+
+            if($shop->shop_type == 'paygo-course'){
+                $shop->total         =  $request->final_paygo_price;
+                $shop->paygo_course_price   =  $request->final_paygo_price;                
+            }else{
+                $shop->total         =  $course->price;
+                $shop->paygo_course_price   =  0;
+            }
+
             $shop->course_season =  $course->season;
             $shop->vendor_id     =  1;
             $shop->orderID       =  '#DRHSHOP'.strtotime(date('y-m-d h:i:s'));
@@ -748,6 +937,18 @@ class UserController extends Controller
             $order->status       =  1;
             $order->manual       =  1;
             $order->save();
+
+            if($shop->save() && $shop->shop_type == 'paygo-course'){
+                $bookedPayGoDatesData['cart_id'] = $shop['id'];
+                $bookedPayGoDatesData['course_id'] = $request->course;
+                $bookedPayGoDatesData['child_id'] = $request->player;
+                for ($i=0; $i <count($request->selected_date_ids) ; $i++) { 
+                    $bookedPayGoDatesData['booked_date_id'] = $request->selected_date_ids[$i];
+                    $date = PaygocourseDate::where('id', $request->selected_date_ids[$i] )->first();
+                    $bookedPayGoDatesData['date'] = $date->course_date;
+                    PayGoCourseBookedDate:: Create($bookedPayGoDatesData);
+                }
+            }
 
             ShopCartItems::where('orderID',$order->orderID)->update(array('order_id' => $order->id));
 
@@ -855,7 +1056,7 @@ class UserController extends Controller
       $add_family->first_name   =    $first_name;
       $add_family->last_name    =    $last_name;
       $add_family->gender       =    $gender;
-      // $add_family->date_of_birth=    $date_of_birth;
+      $add_family->date_of_birth=    $date_of_birth;
       $add_family->address      =    $address;
       $add_family->town         =    $town;
       $add_family->postcode     =    $postcode;
@@ -1571,7 +1772,37 @@ class UserController extends Controller
 
             return redirect('/admin/purchased-camp')->with('purchase_course',$purchase_course)->with('success','Camp has been changed successfully.');
         }
-    } 
+    }
 
+
+
+    // Change password for parent
+    public function ChangePassword($id){
+        $user_id = decrypt($id);
+
+        $users = \DB::table('users')
+            ->where('id', '=', $user_id)
+            ->where('role_id','2')
+            ->first();
+
+        return view('admin.user-vendor.users.change-password',compact('users'));  
+    }
+
+    // Update the Password function
+    public function UpdateParentPassword(Request $request){
+        $validatedData = $request->validate([
+            'password' => ['required'],
+            'conf_password' => ['required'],
+        ]);
+
+        $user = User::find($request->user_id);
+        if(!empty($user)){
+            $user->password = Hash::make($request->password);
+            $user->update();
+            return \Redirect::back()->with('success','Password changed successfully.'); 
+        }else{
+            return \Redirect::back()->with('error','User not exists.'); 
+        }
+    }
 
 }

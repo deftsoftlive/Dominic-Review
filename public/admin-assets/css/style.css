@@ -24921,9 +24921,132 @@ table.add_on_services th a
     width: 10%;
 }
 
+.paygo-course-slots ul.days_list {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.paygo-course-slots ul.days_list li {
+    width: 15%;
+    height: 130px;
+    margin-bottom: 25px;
+    padding: 0;
+    position: relative;
+    margin-right: 35px;
+}
+.paygo-course-slots .main-wrap {
+    display: block;
+    position: static;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.days_list input {
+    position: relative!important;
+    opacity: 1!important;
+    cursor: pointer!important;
+    height: 100%!important;
+    width: 100%!important;
+}
+.paygo-course-slots .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 5px solid #fff;
+    height: 140px;
+    width: 130px;
+    background-color: #001642;
+    border-radius: 20px;
+    padding: 5px 0;
+    box-shadow: 6px 6px 25px -4px rgb(0 0 0 / 40%);
+}
+.paygo-course-slots span {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 5px;
+}
 
+.paygo-course-slots p {
+    margin-bottom: 0;
+    font-weight: 700;
+    font-size: 24px;
+    color: #fff;
+    line-height: 24px;
+}
+.paygo-course-slots ul.days_list .inner-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 8px 0px;
+}
+.main-wrap input:checked ~ .checkmark {
+    background-color: #00afef;
+    color: #fff;
+}
+.paygo-course-slots .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 5px solid #fff;
+    height: 140px;
+    width: 130px;
+    background-color: #001642;
+    border-radius: 20px;
+    padding: 5px 0;
+    box-shadow: 6px 6px 25px -4px rgb(0 0 0 / 40%);
+}
+.paygo-course-slots
+{
+      position: relative;
+    width: 100%;
+    /*max-width: 80%;*/
+    margin: 0 auto;
+}
+.paygo-course-slots span.cst-upper-star
+{color: red;
 
+}
+.paygo-course-slots .checkmark.disabled {
+    background: #ccc;
+}
+p.cst-fees {
+    color: #001642;
+    text-align: center;
 
+}
+p.cst-fees  span
+{
+  color: #001642;
+  font-size: 24px;
+  font-weight: 700;
+
+}
+p.cst-fees input {
+    border: none;
+    min-width: 150px;
+    max-width: 150px;
+    border: none;
+    margin-left: 0; 
+    color: #001642;
+    font-size: 24px;
+}
+p.cst-fees input:focus 
+{ border: none;
+
+}
+
+input.error {
+  position: static;
+  color: #000;
+}
 
 
 @media print{

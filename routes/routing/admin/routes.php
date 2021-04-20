@@ -206,6 +206,8 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::any('/purchased-course/save','Admin\UserController@save_course_for_player')->name('save_course_for_player');
 		Route::any('/parent-player-linking','Admin\UserController@parent_player_linking')->name('parent_player_linking');
 
+		Route::any('/pay-go-course-slot','Admin\UserController@paygo_course_slot')->name('paygo_course_slot');
+
 		#----------------------------------------------------------------
 		#  Change Camp of Player
 		#----------------------------------------------------------------
@@ -223,6 +225,9 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::get('/users/parent','Admin\UserController@parent_list')->name('parent_users');
 		Route::get('/users/children','Admin\UserController@children_list')->name('children_users');
 		Route::get('/users/coach','Admin\UserController@coach_list')->name('coach_users');
+
+		Route::get('/users/parent/change-password/{id}','Admin\UserController@ChangePassword')->name('ChangePassword');
+		Route::post('/users/parent/update-password','Admin\UserController@UpdateParentPassword')->name('UpdateParentPassword');
 
 		#----------------------------------------------------------------
 		#  Testimonial Management

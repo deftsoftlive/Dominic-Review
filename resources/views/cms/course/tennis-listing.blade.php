@@ -362,7 +362,7 @@
                         @if( strtotime( $date->course_date ) >= strtotime( date( 'Y-m-d' ) ) )
                           @php
                             //dd( $date );
-                            $bookedDateCount = \App\PayGoCourseBookedDate::where('date', $date->course_date)->count();
+                            $bookedDateCount = \App\PayGoCourseBookedDate::where(['course_id' => $cour->id, 'date'=> $date->course_date])->count();
                             
                             $remainingSeats += (int)$date->seats - (int)$bookedDateCount;
                           @endphp

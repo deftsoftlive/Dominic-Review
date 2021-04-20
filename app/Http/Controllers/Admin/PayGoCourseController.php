@@ -8,6 +8,7 @@ use App\PayGoCourse;
 use App\Models\Products\ProductCategory;
 use App\PaygocourseDate;
 use App\PayGoCourseBookedDate;
+use App\Models\Shop\ShopCartItems;
 
 class PayGoCourseController extends Controller
 {
@@ -394,17 +395,30 @@ class PayGoCourseController extends Controller
         if(isset($data['course_date'])){  
             
             // Delete course dates and then add new dates
-            PaygocourseDate::where('course_id',$course_id)->delete();
-
+            $existing_dates = PaygocourseDate::where('course_id',$course_id)->pluck('course_date')->toArray();
+            $request_dates = $data['course_date'];
+            $result = array_diff($existing_dates, $request_dates);
+            PaygocourseDate::where('course_id',$course_id)->whereIn('course_date',$result)->delete();
+            
             foreach ($data['course_date'] as $number => $value) {    
 
-                /* Add dates of courses */ 
-                $cour                   =  new PaygocourseDate;
-                $cour->course_id        =  $course_id;
-                $cour['course_date']    =  isset($data['course_date'][$number]) ? $data['course_date'][$number] : '' ; 
-                $cour['seats']          =  isset($data['seats'][$number]) ? $data['seats'][$number] : '' ; 
-                $cour['display_course'] =  isset($data['display_course'][$number]) ? 1 : 0; 
-                $cour->save(); 
+                $check_date = PaygocourseDate::where(['course_id' => $course_id, 'course_date' => $data['course_date'][$number]])->first();
+                if(!empty($check_date)){
+                    /* Update dates of courses */ 
+                    PaygocourseDate::where(['course_id' => $course_id, 'course_date' => $data['course_date'][$number]])->update([
+                        'course_date' => isset($data['course_date'][$number]) ? $data['course_date'][$number] : '',
+                        'seats' => isset($data['seats'][$number]) ? $data['seats'][$number] : '',
+                        'display_course' => isset($data['display_course'][$number]) ? 1 : 0,
+                    ]);
+                }else{                    
+                    /* Add dates of courses */ 
+                    $cour                   =  new PaygocourseDate;
+                    $cour->course_id        =  $course_id;
+                    $cour['course_date']    =  isset($data['course_date'][$number]) ? $data['course_date'][$number] : '' ; 
+                    $cour['seats']          =  isset($data['seats'][$number]) ? $data['seats'][$number] : '' ; 
+                    $cour['display_course'] =  isset($data['display_course'][$number]) ? 1 : 0; 
+                    $cour->save(); 
+                }
 
             }
         }
@@ -547,7 +561,17 @@ class PayGoCourseController extends Controller
 
         foreach ($dates as $key => $date) {
             $output .= '<tr><td>'.date( 'd-m-Y', strtotime( $date->course_date ) ).'</td>';
-            $bookedSeats = PayGoCourseBookedDate::where( 'booked_date_id',  $date->id )->count();
+            $bookedSeats_cart = PayGoCourseBookedDate::where( 'booked_date_id',  $date->id )->get();
+            
+            // Check booked seat is still in cart or placed order if placed then count seat else leave
+            $bookedSeats = 0;
+            foreach ($bookedSeats_cart as $bookedSeats_check_order) {
+                $bookedSeats_cstatus = ShopCartItems::where('id',$bookedSeats_check_order->cart_id)->where('orderID','!=',NULL)->first();
+                if(!empty($bookedSeats_cstatus)){
+                    $bookedSeats = ($bookedSeats+1);                    
+                }
+            }
+
             $output .= '<td><p>'.$bookedSeats.'/'.$date->seats.'</p></td>
                             </tr>';
             

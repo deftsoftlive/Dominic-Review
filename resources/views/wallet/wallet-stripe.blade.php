@@ -107,9 +107,9 @@ $wallet_amt = DB::table('wallets')->where('user_id',Auth::user()->id)->first();
                                 @php
                                     $stripe = SripeAccount();
                                     //dd($stripe);
-                                    $shop_cart = DB::table('shop_cart_items')->where('user_id',$user_id)->where('type','cart')->first();
-                                    $account_id = ToGetAccountID($shop_cart->id,$user_id);
-                                    $account_details = DB::table('stripe_accounts')->where('id',$account_id)->first();
+                                   // $shop_cart = DB::table('shop_cart_items')->where('user_id',$user_id)->where('type','cart')->first();
+                                   // $account_id = ToGetAccountID($shop_cart->id,$user_id);
+                                   // $account_details = DB::table('stripe_accounts')->where('id',$account_id)->first();
                                     //dd($account_details->public_key);
                                 @endphp
               

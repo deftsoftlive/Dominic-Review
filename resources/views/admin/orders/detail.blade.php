@@ -198,7 +198,7 @@
                                     $child = DB::table('users')->where('id',$cart->child_id)->first();
                                   @endphp
                                     <tr>           
-                                        <td>Course</td>                               
+                                        <td>Paygo Course</td>                               
                                         <td>
                                           <h5>{{$course->title}}</h5>
                                           <p>@php echo getSeasonname($course->season); @endphp | {{$course->day_time}}</p>

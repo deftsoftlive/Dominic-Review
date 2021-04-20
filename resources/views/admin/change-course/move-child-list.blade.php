@@ -78,6 +78,7 @@
                                 <th>Player Name</th>
                                 <th>Parent Name</th>
                                 <th>Purchased Course</th>
+                                <th>Type</th>
                                 <th>Season</th> 
                                 <th>Action</th>
                             </tr>
@@ -97,6 +98,7 @@
                                     <td>@php echo getUsername($bd->child_id); @endphp</td>
                                     <td>@php echo getUsername($bd->user_id); @endphp</td>
                                     <td>@php echo getCourseName($bd->product_id); @endphp</td>
+                                    <td>{{$bd->shop_type}}</td>
                                     <td>@php echo getSeasonname($bd->course_season); @endphp</td>
                                     <td>
                                         <div class="btn-group">
