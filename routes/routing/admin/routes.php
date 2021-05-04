@@ -225,7 +225,8 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::get('/users/parent','Admin\UserController@parent_list')->name('parent_users');
 		Route::get('/users/children','Admin\UserController@children_list')->name('children_users');
 		Route::get('/users/coach','Admin\UserController@coach_list')->name('coach_users');
-
+		
+		// Change password route for users
 		Route::get('/users/parent/change-password/{id}','Admin\UserController@ChangePassword')->name('ChangePassword');
 		Route::post('/users/parent/update-password','Admin\UserController@UpdateParentPassword')->name('UpdateParentPassword');
 
@@ -397,6 +398,9 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::any('/book-a-camp/{slug}','Admin\CampController@admin_book_a_camp')->name('admin-book-a-camp');
 		Route::any('submit-book-a-camp','Admin\CampController@submit_book_a_camp')->name('admin-submit-book-a-camp');
 
+		// Camp duplicate route
+		Route::get('/camp-duplicate/{id}','Admin\CampController@camp_duplicate')->name('admin.camp.duplicate');
+
 		#----------------------------------------------------------------
 		#  Test Category Management
 		#----------------------------------------------------------------
@@ -439,6 +443,9 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		Route::post('/reportquestion/{slug}','Admin\ReportQuestionController@reportquestion_update')->name('admin.reportquestion.update');
 		Route::get('/reportquestion/status/{id}','Admin\ReportQuestionController@reportquestion_Status')->name('admin.reportquestion.status');
 		Route::any('/reportquestion/delete/{id}','Admin\ReportQuestionController@delete_reportquestion')->name('delete_reportquestion');
+
+		// Report Question sortinng route
+		Route::any('/reportquestion/{sort_no}/{course_id}','Admin\ReportQuestionController@ReportQuestionSort')->name('reportquestion_sort');
 
 		Route::get('/report-question-option','Admin\ReportQuestionController@reportquestionopt_index')->name('admin.reportquestionopt.list');
 		Route::get('/report-question-option/create','Admin\ReportQuestionController@reportquestionopt_showCreate')->name('admin.reportquestionopt.showCreate');
@@ -659,6 +666,9 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
         Route::any('/credit-in-wallet','Admin\WalletController@credit_amt_by_admin')->name('admin.credit.wallet');
         Route::any('/debit-from-wallet','Admin\WalletController@debit_amt_by_admin')->name('admin.debit.wallet');
         Route::get('/wallet-details/view/{user_id}','Admin\WalletController@wallet_detail')->name('admin.wallet.detail');
+        
+
+        Route::get('/add-money/wallet','Admin\WalletController@AddMoneyWallet')->name('add_money_to_wallet_admin');
 
 
        #--------------------------------------------------------------------------------------------------------------

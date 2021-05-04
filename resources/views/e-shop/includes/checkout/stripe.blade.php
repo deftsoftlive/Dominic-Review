@@ -122,7 +122,7 @@
                         <div class="form-row row">
                             <div class="col-xs-12">
                                 <div class="panel-btn-wrap">
-                                <button class="cstm-btn main_button" type="submit">Pay Now (&pound; 
+                                <button class="cstm-btn main_button" id="PaymentSubBtnCon" type="submit">Pay Now (&pound; 
                                     @php 
                                     //dd($obj);
                                         $base_url = \URL::current();  
@@ -188,6 +188,7 @@
 $(function() {
     var $form         = $(".require-validation");
   $('form.require-validation').bind('submit', function(e) {
+    $("#PaymentSubBtnCon").attr("disabled", true);
     var $form         = $(".require-validation"),
         inputSelector = ['input[type=email]', 'input[type=password]',
                          'input[type=text]', 'input[type=file]',
@@ -223,11 +224,13 @@ $(function() {
   
   function stripeResponseHandler(status, response) {
         if (response.error) {
+            $("#PaymentSubBtnCon").attr("disabled", false);
             $('.error')
                 .removeClass('hide')
                 .find('.alert')
                 .text(response.error.message);
         } else {
+            $("#PaymentSubBtnCon").attr("disabled", true);
             // token contains id, last4, and card type
             var token = response['id'];
             // insert the token into the form so it gets submitted to the server

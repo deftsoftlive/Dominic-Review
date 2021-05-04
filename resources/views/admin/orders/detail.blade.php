@@ -168,6 +168,15 @@
                                           <h5>{{$course->title}}</h5>
                                           <p>@php echo getSeasonname($course->season); @endphp | {{$course->day_time}}</p>
                                           <p><b>{{isset($child->type) ? $child->type : 'Account Holder'}}</b> :{{isset($child->name) ? $child->name : ''}}</p>
+
+                                          @if($cart->membership_status == 1 && $cart->membership_price > 0)
+                                            <p><b>Member Price</b> : Yes </p>
+                                          @elseif($cart->membership_status == 1 && $cart->membership_price == null)
+                                            <p><b>Member</b> : Yes </p>
+                                          @else
+                                            <p><b>Member Price/Member</b> : No </p>
+                                          @endif
+
                                         </td>                               
                                         <td>{{isset($cart->discount_code) ? $cart->discount_code : '-'}}
                                         <br/>
@@ -204,6 +213,15 @@
                                           <p>@php echo getSeasonname($course->season); @endphp | {{$course->day_time}}</p>
                                           <p><b>{{ !empty( $bookedDatesArray ) ? 'Booked Dates' : '' }}</b> : {{ !empty( $bookedDatesArray ) ? $bookedDatesArr : '' }}</p>
                                           <p><b>{{isset($child->type) ? $child->type : 'Account Holder'}}</b> :{{isset($child->name) ? $child->name : ''}}</p>
+
+                                          @if($cart->membership_status == 1 && $cart->membership_price > 0)
+                                            <p><b>Mem Price</b> : Yes </p>
+                                          @elseif($cart->membership_status == 1 && $cart->membership_price == null)
+                                            <p><b>Member</b> : Yes </p>
+                                          @else
+                                            <p><b>Mem Price/Member</b> : No </p>
+                                          @endif
+
                                         </td>                               
                                         <td>{{isset($cart->discount_code) ? $cart->discount_code : '-'}}
                                         <br/>

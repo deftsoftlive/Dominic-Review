@@ -1773,7 +1773,7 @@ public function parent_coach(Request $request)
       {
         $msg = 'Your player is already linked with "<b>'.$linked_coach.'</b>" coach.';
       }else{
-        $msg = 'Your player is already requested to "<b>'.$linked_coach.'</b>" coach.';
+        $msg = 'A player link request has already been sent to coach : "<b>'.$linked_coach.'</b>". Please await their reply';
       }
        
     }else{
@@ -3290,6 +3290,7 @@ public function reject_request(Request $request)
   $id = $request->request_id;
   $req = ParentCoachReq::find($id);
   $req->status = 2;
+  $req->dismiss_by_coach = 0;
   $req->reason_of_rejection = $request->reason_of_rejection;
 
   if($req->save())
@@ -3300,6 +3301,17 @@ public function reject_request(Request $request)
 
   return \Redirect::back()->with('success','Parent request has been rejected successfully!');
 } 
+
+/* Dismiss notification request by parent */
+public function ResetRequestParent(Request $request) 
+{
+    $req = ParentCoachReq::find($request->id); 
+    // Get Child Details
+    $child = User::where('id',$req->child_id)->first();
+    $req->delete();
+
+    return \Redirect::back()->with('success','Parent can request again for child '.$child->name.'.');
+}
 
 /* Undo rejection status */
 public function undo_reject_request(Request $request){
@@ -4527,7 +4539,7 @@ public function save_contact_us(Request $request)
   }    
     $contact = ContactDetail::create($request->all()); 
     // dd($contact);
-    ContactDetail::where('id',$contact->id)->update(array('ip_address' => $_SERVER['REMOTE_ADDR']));
+    ContactDetail::where('id',$contact->id)->update(array('ip_address' => $_SERVER['REMOTE_ADDR'], 'venue_name' => !empty($request->venue_name) ? $request->venue_name : ""));
 
     if($contact->type == 'course')
     {

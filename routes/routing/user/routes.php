@@ -43,6 +43,9 @@
          Route::any('dismiss-request/coach', 'HomeController@dismiss_req_by_coach')->name('dismiss-request-coach');
          Route::any('dismiss-request/parent', 'HomeController@dismiss_req_by_parent')->name('dismiss-request-parent');
 
+         // Enable parent to send request again
+         Route::any('reset-request/parent', 'HomeController@ResetRequestParent')->name('reset_request_parent');
+
          Route::any('request-by-parent', 'HomeController@request_by_parent')->name('request_by_parent');
          Route::any('my-coaches', 'HomeController@linked_coaches')->name('linked_coaches');
          Route::any('reject_request', 'HomeController@reject_request')->name('reject_request');

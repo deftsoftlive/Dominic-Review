@@ -567,6 +567,7 @@ public function BookATasterClassStatusHtml($data,$contact,$template)
 { 
     $text2 = $template->body;
     $text = str_replace("{user_name}",$contact['participant_name'],$text2);  
+    $text = str_replace("{venue_name}",$contact['venue_name'],$text);  
     $text = str_replace("{dob}",$contact['participant_dob'],$text);
     $text = str_replace("{gender}",$contact['participant_gender'],$text);
     $text = str_replace("{parent_name}",$contact['parent_name'],$text);
@@ -681,7 +682,6 @@ public function NewsletterSendEmail( $emailId, $template_id ){
 
     $ar= ['data' => $data];
 
-    // dd($ar,$arr);
 
   return $this->sendNotification($view,$ar,$arr);
 }

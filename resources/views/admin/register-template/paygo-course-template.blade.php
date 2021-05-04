@@ -99,9 +99,10 @@ td.checkbox_course {
                         <th>Player Name</th>
                         <th>Player DOB</th>
                         <th>Media</th>
-                        <th>Mem</th>
-                        <th>Contact Name</th>
-                        <th>Contact Tel</th>
+                        <th>Mem Price</th>
+                        <th>Member</th>
+                        <!-- <th>Contact Name</th> -->
+                        <!-- <th>Contact Tel</th> -->
 
                         @php 
                             $course_dates = \App\PaygocourseDate::where('course_id',$course->id)->get();
@@ -111,7 +112,12 @@ td.checkbox_course {
                             <th class="camp-date">@php echo date('d/m',strtotime($date->course_date)); @endphp</th>
                         @endforeach -->
 
-                        <th>Contact Email</th>
+                        <!-- <th>Contact Email</th> -->
+
+                        <th>Contact 1 Name</th>
+                        <th>Contact 1 Tel</th>
+                        <th>Contact 1 Email</th>
+                        <th>Relation</th>
 
                     </tr>
                 </thead>
@@ -142,15 +148,39 @@ td.checkbox_course {
                             <td class="@if(!empty($player)) @if($player->gender == 'male') odd-name-row @elseif($player->gender == 'female') even-name-row @endif @endif"> {{isset($player->name) ? $player->name : ''}}</td>
                             <td>@if(isset($player->date_of_birth)) @php echo date('d/m/Y',strtotime($player->date_of_birth)); @endphp @endif</td>
                             <td style="text-align:center;">@if(!empty($child_details->media) && ($child_details->media == 'yes')) Y @else N @endif</td>
-                            <td>@if($sh->membership_status == 1) Y @else N @endif</td>
-                            <td>{{isset($parent->name) ? $parent->name : $player->name}}</td>                      
-                            <td>{{isset($parent->phone_number) ? $parent->phone_number : $player->phone_number}}</td>     
+                            
+                                @if($sh->membership_status == 1 && $sh->membership_price > 0)
+                                    <td> Yes </td>                                
+                                @elseif($sh->membership_status == 0 && $sh->membership_price > 0)
+                                    <td> No </td>
+                                @else
+                                    <td> N/A </td>
+                                @endif
+
+                                @if($sh->membership_status == 1 && $sh->membership_price == null)
+                                    <td> Yes </td>
+                                @elseif($sh->membership_status == 0 && $sh->membership_price == null)
+                                    <td> No </td>
+                                @else
+                                    <td> N/A </td>                                
+                                @endif
+
+                            <!-- <td>{{isset($parent->name) ? $parent->name : $player->name}}</td>                       -->
+                            <!-- <td>{{isset($parent->phone_number) ? $parent->phone_number : $player->phone_number}}</td>      -->
 
                             
 
 
 
-                            <td>{{isset($parent->email) ? $parent->email : $player->email}}</td>                        
+                            <!-- <td>{{isset($parent->email) ? $parent->email : $player->email}}</td>  -->
+
+                            @php
+                                $contact1_details = \App\ChildContact::where('child_id',$sh->child_id)->first();
+                            @endphp                      
+                            <td>{{ !empty($contact1_details->first_name) ? $contact1_details->first_name : "N/A" }} {{ !empty($contact1_details->surname) ? $contact1_details->surname : "" }}</td>                        
+                            <td>{{ !empty($contact1_details->phone) ? $contact1_details->phone : "N/A" }}</td>                        
+                            <td>{{ !empty($contact1_details->email) ? $contact1_details->email : "N/A" }}</td>                        
+                            <td>{{ !empty($contact1_details->relationship) ? $contact1_details->relationship : "N/A" }}</td>                      
                         </tr>
                         
                     @endforeach

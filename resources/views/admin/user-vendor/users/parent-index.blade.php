@@ -29,7 +29,7 @@
                       <a href="{{ route('add_user') }}" class="btn btn-primary">Add</a>
                       <a href="{{ route('list_users') }}" class="btn btn-primary">All Users</a>
                       <a href="{{ route('children_users') }}" class="btn btn-primary">Children</a>
-                      <a href="{{ route('parent_users') }}" class="btn btn-primary">Parents / Adults</a>
+                      <a href="{{ route('parent_users') }}" class="active btn btn-primary">Parents / Adults</a>
                       <a href="{{ route('coach_users') }}" class="btn btn-primary">Coaches</a>
                   </div>
                   <!-- <span class="d-block m-t-5">use class <code>table-hover</code> inside table element</span> -->
@@ -113,7 +113,7 @@
                                     <button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
                                     <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;">
                                         <a href="{{url('/admin/family-member/overview')}}/{{$user->id}}" class="dropdown-item">View</a>
-                                        <!-- <a href="{{ route('ChangePassword',json_encode($user->id)) }}" class="dropdown-item">Change Password</a> -->
+                                        <a href="{{ route('ChangePassword',encrypt($user->id)) }}" class="dropdown-item">Change Password</a>
                                     </div>
                                  </div>
                               </td>

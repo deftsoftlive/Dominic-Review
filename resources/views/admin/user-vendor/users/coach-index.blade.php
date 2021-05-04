@@ -182,6 +182,7 @@ input:checked + .slider:before {
                                                 <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;">
                                                     <a href="{{url('admin/users/edit')}}/{{$user->id}}" class="dropdown-item">Edit</a>
                                                     <a href="{{url('admin/freeze/coach-account')}}/{{$user->id}}" class="dropdown-item">Manage Account</a>
+                                                    <a href="{{ route('ChangePassword',encrypt($user->id)) }}" class="dropdown-item">Change Password</a>
                                                     <!-- <a href="{{route('admin.user.status',$user->id)}}" class="dropdown-item">
                                                         @if($user->updated_status == '1')
                                                             In-active

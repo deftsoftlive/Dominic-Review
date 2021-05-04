@@ -1121,7 +1121,62 @@ section.book-camp.section-padding .b-c-table-container .accordion .card-body tab
 
 }
 
+.form-group .chosen-container-single .chosen-single {
+    background: #fff;
+    height: 42px;
+    border-color: #c9c9c9;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 300;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    padding-left: 20px;
+    box-shadow: none;
+    color: #495057;
+    font-weight: 400;
+    text-shadow: none;
+}
+.form-group .chosen-container-single .chosen-single span {
+    display: block;
+    overflow: hidden;
+    margin-right: 26px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.form-group .chosen-container-single .chosen-single div {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 18px;
+    height: 100%;
+}
+.form-group .chosen-container-single .chosen-single div b {
+    background: url(chosen-sprite.png) no-repeat 0 11px;
+}
 
+.form-group .chosen-container-single .chosen-search input[type=text] {
+    color: #495057;
+    font-size: 14px;
+}
+
+.form-group .chosen-container-single .chosen-single:hover {
+    color: #495057;
+}
+
+.label-floating i {
+    position: absolute;
+    top: 75%;
+    right: 20px;
+    transform: translateY(-75%);
+    font-size: 20px;
+}
+
+.table-cust-layout table.table.table-hover{
+  table-layout: auto;
+}
 
 table.add_on_services
 
@@ -25199,4 +25254,3 @@ div#exampleModal .table.table-hover {
    
 
 }
-

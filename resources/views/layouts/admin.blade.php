@@ -38,6 +38,7 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
 
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.7.0/chosen.min.css">
 
 <script src="{{URL::asset('/AdminFILE/plugins/jquery/jquery.min.js')}}"></script>
  
@@ -92,6 +93,8 @@
 <script src="{{URL::asset('/admin-assets/js/validations/customValidation.js')}}"></script>
 <script src="{{URL::asset('/admin-assets/js/admin_custom.js')}}" type="text/javascript"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.7.0/chosen.jquery.min.js"></script>
 
 <!-- delete data js -->
 <script src="{{ asset('js/deleteData.js') }}"></script>

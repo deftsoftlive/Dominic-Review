@@ -593,3 +593,29 @@ $(document).ready(function(){
         
     });
   });
+
+
+/******************************************
+| Report Question Sort Number Update
+|******************************************/
+    function fetch_course_sort_data(sort_no = '', course_id = '')
+    {
+
+        $.ajax({
+            url:$base_url+"/admin/reportquestion/"+sort_no+"/"+course_id,
+            method:'GET',
+            data:{sort_no:sort_no, course_id:course_id},
+            dataType:'json',
+            success:function(data)
+            {   
+                
+            },      
+        })
+    }
+
+    $(document).on('keyup', '#update_reportQuestion_sort',function(){
+        var sort_no = $(this).val(); 
+        var course_id = $(this).attr("data-id");
+
+        fetch_course_sort_data(sort_no,course_id);
+    });

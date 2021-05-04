@@ -1782,7 +1782,9 @@ class UserController extends Controller
 
         $users = \DB::table('users')
             ->where('id', '=', $user_id)
-            ->where('role_id','2')
+            ->where(function($q) { 
+              $q->where('role_id', 2) 
+                ->orWhere('role_id', 3); })
             ->first();
 
         return view('admin.user-vendor.users.change-password',compact('users'));  

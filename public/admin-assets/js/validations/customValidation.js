@@ -269,9 +269,9 @@ $(document).ready(function (){
            rules: {
            money_amount: {
                 required: true,
-                digits: true,
-                minlength: 1,
-                maxlength: 5,
+                // digits: true,
+                // minlength: 1,
+                // maxlength: 5,
             }
         },
         messages:{
@@ -314,9 +314,9 @@ $(document).ready(function (){
            rules: {
            money_amount: {
                 required: true,
-                digits: true,
-                minlength: 1,
-                maxlength: 5,
+                // digits: true,
+                // minlength: 1,
+                // maxlength: 5,
             }
         },
         messages:{
@@ -491,6 +491,18 @@ $(document).ready(function(){
       {
         $('#btnVanue').prop('disabled', true);
         $('#venueFormPaygoCreate').submit();
+      } else {
+        return false;
+      }
+    });
+
+    // Add Department Submitting Form 
+    $('#btnVanueCourse').click(function()
+    {
+      if($('#venueForm').valid())
+      {
+        $('#btnVanueCourse').prop('disabled', true);
+        $('#venueForm').submit();
       } else {
         return false;
       }

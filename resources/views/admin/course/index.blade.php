@@ -37,43 +37,89 @@
                     </div>
 
             <br/>
+
+            @php 
+                $sel_type = !empty(request()->get('type')) ? request()->get('type') : "";
+                $sel_subtype = !empty(request()->get('subtype')) ? request()->get('subtype') : "";
+                $sel_level = !empty(request()->get('level')) ? request()->get('level') : "";
+                $sel_course_name = !empty(request()->get('course_name')) ? request()->get('course_name') : "";
+                $sel_venue = !empty(request()->get('venue')) ? request()->get('venue') : "";
+            @endphp
+
             <!-- Filter Section - Start -->
-            <form action="{{route('admin.course.list')}}" method="POST" class="cst-selection">
-            @csrf
+            <form action="{{route('admin.course.list')}}" class="cst-selection">
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
+                            <div class="form-group">
                               <select id="people" name="type" class="form-control">
                             
                               <option value="" disabled="" selected="">Select Course Category</option>
                               @foreach($course_cat as $cour)
-                                <option value="{{$cour->id}}">{{$cour->label}}</option>
+                                <option value="{{$cour->id}}" {{ $sel_type == $cour->id ? "selected" : "" }}>{{$cour->label}}</option>
                               @endforeach
                             </select>
                         </div>
-                            
-                        <div class="col-sm-3">
+                        </div>
+                            @php 
+                                if(!empty($sel_type)){
+                                    $sub_cat = \App\Models\Products\ProductCategory::where('parent',$sel_type)->where('subparent','0')->orderBy('label','desc')->get();
+                                }
+                            @endphp
+                        <div class="col-sm-4">
+                            <div class="form-group">
                               <select id="inputAge" name="subtype" class="form-control event-dropdown">
-                                <option value="1" selected="" disabled="">Select Age Group</option>
+                                <option selected="" disabled="">Select Age Group</option>
+                                @if(!empty($sub_cat))
+                                    @foreach($sub_cat as $cat)
+                                        <option value="{{ $cat->id }}" {{ $cat->id == $sel_subtype ? "selected" : "" }}>{{ $cat->label }}</option>
+                                    @endforeach
+                                @endif
                               </select>
+                          </div>
                         </div>
 
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
+                            <div class="form-group">
                             <select name="level" class="form-control">
-                              <option value="" selected="" disabled="">Select Level</option>
-                              <option value="All">All</option>
-                              <option value="Beginner">Beginner</option>
-                              <option value="Intermediate">Intermediate</option>
-                              <option value="Advanced">Advanced</option>
+                              <option selected="" disabled="">Select Level</option>
+                              <option value="All" {{ $sel_level == "All" ? "selected" : "" }}>All</option>
+                              <option value="Beginner" {{ $sel_level == "Beginner" ? "selected" : "" }}>Beginner</option>
+                              <option value="Intermediate" {{ $sel_level == "Intermediate" ? "selected" : "" }}>Intermediate</option>
+                              <option value="Advanced" {{ $sel_level == "Advanced" ? "selected" : "" }}>Advanced</option>
                             </select>
                         </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                            <select id="SelectCourse" name="course_name" class="form-control event-dropdown">
+                                <option selected="" disabled="">Select Course</option>
+                                @foreach($course_filter as $cour_filter)
+                                    <option value="{{$cour_filter->id}}" {{ $sel_course_name == $cour_filter->id ? "selected" : "" }}>{{$cour_filter->title}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                            <select id="SelectVenue" name="venue" class="form-control event-dropdown">
+                                <option selected="" disabled="">Select Course Category (Venue)</option>
+                                @foreach($venue_category as $venue)
+                                    <option value="{{$venue->id}}" {{ $sel_venue == $venue->id ? "selected" : "" }}>{{$venue->title}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        </div>
+
                         
                         <div class="col-sm-1" style="margin-right:10px;">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
 
                         <div class="col-sm-1" style="margin-left:10px">
-                            <a href="" onclick="myFunction();" class="btn btn-primary">Reset</a>
+                            <a href="{{ route('admin.course.list') }}" class="btn btn-primary">Reset</a>
                         </div>
                     </div><br/>
                 </div>
@@ -183,7 +229,7 @@
                             </tbody>
                         </table>
                     </div>
-                    {{ $course->render() }}
+                    {{ $course->appends(['type' => $sel_type, 'subtype' => $sel_subtype, 'level' => $sel_level, 'course_name' => $sel_course_name, 'venue' => $sel_venue])->links() }}
                 </div>
                 </div>
             </div>
@@ -216,6 +262,8 @@ $(document).ready(function(){
         })
     });
     });
+
+$("#SelectCourse").chosen({no_results_text: "Oops, nothing found!"}); 
 
 </script>
 @endsection

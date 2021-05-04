@@ -43,6 +43,7 @@
                                             <table class="table table-hover">
                                                 <thead>
                                                 <tr> 
+                                                    <th>Sort</th>
                                                     <th>Title</th>
                                                     <th>Slug</th>
                                                     <!-- <th>Image</th>  -->
@@ -53,6 +54,7 @@
                                                 <tbody>
                                                 @foreach($reportquestion as $test)
                                                     <tr>
+                                                        <td><input type="text" id="update_reportQuestion_sort" data-id="{{$test->id}}" value="{{$test->sort}}" style="width: 50px"></td>
                                                         <td>{{$test->title}}</td>
                                                         <td>{{$test->slug}}</td>
                                                        <!--  <td><img width="50px;" height="50px;" src="{{URL::asset('/uploads')}}/{{$test->image}}"></td> -->

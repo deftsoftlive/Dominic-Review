@@ -68,7 +68,7 @@
                             <th>Name Of Coach</th>
                             <th>Status</th>
                             <th>Further Details</th>
-                            <!-- <th>Action</th> -->
+                            <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -96,13 +96,13 @@
                               @endif
                             </p></td>
                             <td><p>{{isset($re->reason_of_rejection) ? $re->reason_of_rejection : '-'}}</p></td> 
-                            <!-- <td>
-                              <form action="{{route('dismiss-request-parent')}}" method="POST">
+                            <td>
+                              <form action="{{route('reset_request_parent')}}" method="POST">
                                   @csrf
                                   <input type="hidden" name="id" value="{{$re->id}}">
-                                  <button type="submit" class="cstm-btn main_button">Dismiss</button>
+                                  <button type="submit" class="cstm-btn main_button">Reset</button>
                               </form>
-                            </td> -->
+                            </td>
                           </tr>
                           @endforeach
                           @endif

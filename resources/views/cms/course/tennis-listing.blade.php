@@ -107,6 +107,7 @@
                  <form action="{{route('save-contact-us')}}" id="contact_form" method="POST" class="cstm-cont-page cst_course_form taster_form">
                       @csrf
                       <input type="hidden" name="type" value="course">
+                      <input type="hidden" name="venue_name" value="{{!empty($course_cat->title) ? $course_cat->title : ''}}">
                       <div class="form-group">
                           <input type="text" class="form-control" name="participant_name" placeholder="Enter Participant Name">
                       </div>

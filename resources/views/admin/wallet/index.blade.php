@@ -27,6 +27,9 @@
               <div class="card">
                 <div class="card-header">
                   <h5>Wallet Management</h5>    
+                  <div class="cst-admin-filter">
+                    <a href="{{ route('add_money_to_wallet_admin') }}" class="btn btn-primary">Add Money New User</a>
+                  </div>
                 </div>
                 <br/>
 
@@ -51,13 +54,14 @@
                 </form>
                 <!-- Filter Section - End -->
 
-                <div class="card-block table-border-style">
+                <div class="card-block table-border-style table-cust-layout">
                     <div class="table-responsive">
                       @include('admin.error_message')
                         <table class="table table-hover">
                             <thead>
                             <tr> 
                                 <th>User Name</th> 
+                                <th>User Email</th> 
                                 <th>Wallet Amount</th>
                                 <th>Action</th>
                             </tr>
@@ -67,6 +71,7 @@
                             @foreach($wallet as $wa)
                                 <tr>
                                     <td>@php echo getUsername($wa->user_id); @endphp</td>
+                                    <td>@php echo getUseremail($wa->user_id); @endphp</td>
                                     <td>
                                     @php 
                                         $creditWalletHistory = DB::table('wallet_histories')->where('type','credit')->where('user_id',$wa->user_id)->get();

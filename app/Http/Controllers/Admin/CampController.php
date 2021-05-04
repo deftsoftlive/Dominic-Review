@@ -355,6 +355,25 @@ class CampController extends Controller
      return redirect()->back()->with('flash_message', 'Something Went Woring!');
     }
 
+    /*----------------------------------------
+    |   Change Duplicate function
+    |----------------------------------------*/ 
+    public function camp_duplicate($id) {
+        $tasks = Camp::find($id);
+        $newTask = $tasks->replicate();
+        $newTask->title = $tasks->title.'(copy)';
+        $newTask->status = '0';
+        $newTask->save();
+
+        // Save blank data in camp price table
+        $camp_price = new CampPrice;
+        $camp_price->camp_id = $newTask->id;
+        $camp_price->save();
+
+        $latest_slug = $newTask->slug;
+        return redirect('admin/camp/'.$latest_slug)->with('flash_message',' Camp details has been replicated successfully!');
+    }
+
     /*---------------------------------------
     |   Camp - View Register (Who book camp)
     |---------------------------------------*/

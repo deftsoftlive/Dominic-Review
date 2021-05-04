@@ -206,7 +206,7 @@ public function changeProfileImage(Request $request) {
     |
     |******************************************/
     public function uploaded_invoice(){
-      $req = CoachUploadPdf::orderBy('id','desc')->paginate(10);
+      $req = CoachUploadPdf::orderBy('updated_at','desc')->paginate(10);
       return view('admin.upload-invoice.index',compact('req'));
     }
 

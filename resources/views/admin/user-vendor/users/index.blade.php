@@ -145,6 +145,10 @@
                                                     @else
                                                       	<a href="{{url('admin/account-holder/overview')}}/{{$user->id}}" class="dropdown-item">View</a>
                                                     @endif
+
+                                                    @if($user->role_id == 2 || $user->role_id == 3)
+                                                      <a href="{{ route('ChangePassword',encrypt($user->id)) }}" class="dropdown-item">Change Password</a>
+                                                    @endif
                                                     <a onclick="return confirm('Are you sure you want to delete this user?')" href="{{url('admin/user/delete')}}/{{$user->id}}" class="dropdown-item">Delete</a>
                                                 </div>
                                             </div>

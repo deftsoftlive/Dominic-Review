@@ -6,11 +6,15 @@
       <div class="row align-items-center">
          <div class="col-md-12">
             <div class="page-header-title">
-               <h5 class="m-b-10">Parent User</h5>
+               <h5 class="m-b-10">Change Password User</h5>
             </div>
             <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="{{url(route('admin_dashboard'))}}"><i class="feather icon-home"></i></a></li>
-               <li class="breadcrumb-item"><a href="{{route('parent_users')}}">Parent List</a></li>
+                <li class="breadcrumb-item"><a href="{{url(route('admin_dashboard'))}}"><i class="feather icon-home"></i></a></li>
+              @if($users->role_id == 2)
+                <li class="breadcrumb-item"><a href="{{route('parent_users')}}">Parent List</a></li>
+              @elseif($users->role_id == 3)
+                <li class="breadcrumb-item"><a href="{{route('coach_users')}}">Coach List</a></li>
+              @endif
                <li class="breadcrumb-item"><a href="javascript:void(0);">Change Password</a></li>
             </ul>
          </div>
@@ -50,13 +54,15 @@
                         <span class="cst-upper-star">*</span>
                      </label>
                      <input type="password" class="form-control" name="password" value="" id="password">
+                     <i class="far fa-eye" id="togglePassword"></i>
                   </div>
 
                   <div class="form-group label-floating is-empty">
                      <label class="control-label">Confirm Password
                         <span class="cst-upper-star">*</span>
                      </label>
-                     <input type="password" class="form-control" name="conf_password" value="">
+                     <input type="password" class="form-control" name="conf_password" value="" id="password1">
+                     <i class="far fa-eye" id="togglePassword1"></i>
                   </div>
 
                   <input type="hidden" name="user_id" value="{{ $users->id }}">
@@ -110,6 +116,30 @@
         form.submit();
       }
 
+  });
+
+// Change password eye js for password
+  const togglePassword = document.querySelector('#togglePassword');
+  const password = document.querySelector('#password');
+
+  togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+  });
+
+// Change password eye js for confirm password
+  const togglePassword1 = document.querySelector('#togglePassword1');
+  const password1 = document.querySelector('#password1');
+
+  togglePassword1.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password1.getAttribute('type') === 'password' ? 'text' : 'password';
+    password1.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
   });
 </script>
 

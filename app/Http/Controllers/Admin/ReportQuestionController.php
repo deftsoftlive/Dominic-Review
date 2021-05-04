@@ -24,7 +24,7 @@ class ReportQuestionController extends Controller
     |   Listing of ReportQuestion
     |----------------------------------------*/ 
     public function reportquestion_index() {
-        $reportquestion = ReportQuestion::select(['id','title','slug'])->orderBy('id','desc')->paginate(20);
+        $reportquestion = ReportQuestion::select(['id','title','slug','sort'])->orderBy('sort','asc')->paginate(20);
     	return view('admin.reportquestion.index',compact('reportquestion'))
     	->with(['title' => 'Report Question Management', 'addLink' => 'admin.reportquestion.showCreate']);
     }
@@ -97,6 +97,23 @@ class ReportQuestionController extends Controller
        return redirect(route('admin.reportquestion.list'))->with('flash_message', $msg);
      }
      return redirect()->back()->with('flash_message', 'Something Went Woring!');
+    }
+
+
+    /*----------------------------------------
+    |   Update ReportQuestion sorting number 
+    |-----------------------------------------*/
+    public function ReportQuestionSort($sort_no,$course_id) 
+    {   
+        $report = ReportQuestion::find($course_id);
+        $report->sort = $sort_no;
+        $report->save();
+
+        $data = array(
+            'sort_no'   => $report,
+        );
+
+        echo json_encode($data);
     }
 
 

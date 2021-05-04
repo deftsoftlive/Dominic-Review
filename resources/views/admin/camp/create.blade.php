@@ -540,7 +540,7 @@
                   |
                   |*************************************************** -->
                                     <div class="card-footer pl-0">
-                                        <button type="submit" id="btnVanue" class="btn btn-primary">Submit</button>
+                                        <button type="submit" id="btnVanueCourse" class="btn btn-primary">Submit</button>
                                     </div>
                         </form>
                     </div>

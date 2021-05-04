@@ -70,7 +70,7 @@
                                 @foreach($req as $re)
                                     <tr>
                                     @php $user = DB::table('users')->where('id',$re->coach_id)->first();  @endphp
-                                        <td>@if(!empty($user->updated_at)) @php echo date('d/m/Y',strtotime($user->updated_at)); @endphp @endif</td>
+                                        <td>@if(!empty($re->updated_at)) @php echo date('d/m/Y',strtotime($re->updated_at)); @endphp @endif</td>
                                         <td>{{isset($user->name) ? $user->name : ''}}</td>
                                         <td>{{isset($re->invoice_name) ? $re->invoice_name : ''}}</td>
                                         <td>{{isset($re->invoice_document) ? $re->invoice_document : ''}}</td>

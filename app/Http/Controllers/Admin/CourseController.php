@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Course;
 use App\CourseDate;
 use App\Models\Products\ProductCategory;
+use App\LinkCourseAndCategory;
 
 class CourseController extends Controller
 {
@@ -35,60 +36,203 @@ class CourseController extends Controller
         $type = request()->get('type');    
         $subtype = request()->get('subtype');
         $level = request()->get('level');
+        $course_id = request()->get('course_name');
+        $venue_id = request()->get('venue');
 
         // dd($type,$subtype,$level);
 
-        if(!empty(request()->get('type')) && !empty(request()->get('subtype')) && !empty(request()->get('level')))
+        if(!empty(request()->get('type')) && !empty(request()->get('subtype')) && !empty(request()->get('level')) && !empty(request()->get('course_name')) && !empty(request()->get('venue')))
         {
             if(request()->get('level') == 'All')
             {
                 $course = \DB::table('courses')
-                     ->where('type', '=', $type)
-                     ->where('subtype', '=', $subtype)
-                     ->orderBy('sort','asc')->paginate(20);
+                    ->where('type', '=', $type)
+                    ->where('subtype', '=', $subtype)
+                    ->where('id', '=', $course_id)
+                    ->where('course_category', '=', $venue_id)
+                    ->orderBy('sort','asc')->paginate(20);
 
             }else{
                 $course = \DB::table('courses')
-                     ->where('type', '=', $type)
-                     ->where('subtype', '=', $subtype)
-                     ->where('level', '=', $level)
-                     ->orderBy('sort','asc')->paginate(20);
+                    ->where('type', '=', $type)
+                    ->where('subtype', '=', $subtype)
+                    ->where('level', '=', $level)
+                    ->where('id', '=', $course_id)
+                    ->where('course_category', '=', $venue_id)
+                    ->orderBy('sort','asc')->paginate(20);
             }
 
-        }else if(!empty(request()->get('type')) && empty(request()->get('subtype')) && empty(request()->get('level')))
+        }else if(!empty(request()->get('type')) && !empty(request()->get('subtype')) && !empty(request()->get('level')) && !empty(request()->get('course_name')) && empty(request()->get('venue')))
+        {
+            if(request()->get('level') == 'All')
+            {
+                $course = \DB::table('courses')
+                    ->where('type', '=', $type)
+                    ->where('subtype', '=', $subtype)
+                    ->where('id', '=', $course_id)
+                    ->orderBy('sort','asc')->paginate(20);
+
+            }else{
+                $course = \DB::table('courses')
+                    ->where('type', '=', $type)
+                    ->where('subtype', '=', $subtype)
+                    ->where('level', '=', $level)
+                    ->where('id', '=', $course_id)
+                    ->orderBy('sort','asc')->paginate(20);
+            }
+
+        }else if(!empty(request()->get('type')) && !empty(request()->get('subtype')) && !empty(request()->get('level')) && empty(request()->get('course_name')) && empty(request()->get('venue')))
+        {
+            if(request()->get('level') == 'All')
+            {
+                $course = \DB::table('courses')
+                    ->where('type', '=', $type)
+                    ->where('subtype', '=', $subtype)
+                    ->orderBy('sort','asc')->paginate(20);
+
+            }else{
+                $course = \DB::table('courses')
+                    ->where('type', '=', $type)
+                    ->where('subtype', '=', $subtype)
+                    ->where('level', '=', $level)
+                    ->orderBy('sort','asc')->paginate(20);
+            }
+
+        }else if(!empty(request()->get('type')) && !empty(request()->get('subtype')) && empty(request()->get('level')) && empty(request()->get('course_name')) && empty(request()->get('venue')))
         {
             $course = \DB::table('courses')
-                     ->where('type', '=', $type)
-                     ->orderBy('sort','asc')->paginate(20);
+                ->where('type', '=', $type)
+                ->where('subtype', '=', $subtype)
+                ->orderBy('sort','asc')->paginate(20);
 
-        }else if(!empty(request()->get('type')) && empty(request()->get('subtype')) && !empty(request()->get('level'))){
+        }else if(!empty(request()->get('type')) && empty(request()->get('subtype')) && empty(request()->get('level')) && empty(request()->get('course_name')) && empty(request()->get('venue')))
+        {
+            $course = \DB::table('courses')
+                ->where('type', '=', $type)
+                ->orderBy('sort','asc')->paginate(20);
+
+        }else if(!empty(request()->get('type')) && empty(request()->get('subtype')) && !empty(request()->get('level')) && !empty(request()->get('course_name')) && !empty(request()->get('venue')))
+        {
+            if(request()->get('level') == 'All')
+            {
+                $course = \DB::table('courses')
+                    ->where('type', '=', $type)
+                    ->where('id', '=', $course_id)
+                    ->where('course_category', '=', $venue_id)
+                    ->orderBy('sort','asc')->paginate(20);
+
+            }else{
+                $course = \DB::table('courses')
+                    ->where('type', '=', $type)
+                    ->where('level', '=', $level)
+                    ->where('id', '=', $course_id)
+                    ->where('course_category', '=', $venue_id)
+                    ->orderBy('sort','asc')->paginate(20);
+            }
+
+        }else if(!empty(request()->get('type')) && empty(request()->get('subtype')) && !empty(request()->get('level'))  && empty(request()->get('course_name')) && empty(request()->get('venue'))){
 
             if(request()->get('level') == 'All'){
                 $course = \DB::table('courses')
-                     ->where('type', '=', $type)
-                     ->orderBy('sort','asc')->paginate(20);
+                    ->where('type', '=', $type)
+                    ->orderBy('sort','asc')->paginate(20);
             }else{
                 $course = \DB::table('courses')
-                     ->where('type', '=', $type)
-                     ->where('level', '=', $level)
-                     ->orderBy('sort','asc')->paginate(20);
+                    ->where('type', '=', $type)
+                    ->where('level', '=', $level)
+                    ->orderBy('sort','asc')->paginate(20);
             }
 
-        }else if(!empty(request()->get('type')) && !empty(request()->get('subtype')) && empty(request()->get('level'))){
+        }else if(empty(request()->get('type')) && empty(request()->get('subtype')) && !empty(request()->get('level'))  && empty(request()->get('course_name')) && empty(request()->get('venue'))){
+
+            if(request()->get('level') == 'All'){
+                $course = \DB::table('courses')
+                    ->orderBy('sort','asc')->paginate(20);
+            }else{
+                $course = \DB::table('courses')
+                    ->where('level', '=', $level)
+                    ->orderBy('sort','asc')->paginate(20);
+            }
+
+        }else if(!empty(request()->get('type')) && !empty(request()->get('subtype')) && empty(request()->get('level'))  && empty(request()->get('course_name')) && empty(request()->get('venue'))){
             $course = \DB::table('courses')
-                     ->where('type', '=', $type)
-                     ->where('subtype', '=', $subtype)
-                     ->orderBy('sort','asc')->paginate(20);
+                ->where('type', '=', $type)
+                ->where('subtype', '=', $subtype)
+                ->orderBy('sort','asc')->paginate(20);
+
+        }else if(empty(request()->get('type')) && empty(request()->get('subtype')) && empty(request()->get('level')) && !empty(request()->get('course_name')) && empty(request()->get('venue'))){
+            $course = \DB::table('courses')
+                ->where('id', '=', $course_id)
+                ->orderBy('sort','asc')->paginate(20);
+
+        }else if(empty(request()->get('type')) && empty(request()->get('subtype')) && empty(request()->get('level')) && empty(request()->get('course_name')) && !empty(request()->get('venue'))){
+            $course = \DB::table('courses')
+                ->where('course_category', '=', $venue_id)
+                ->orderBy('sort','asc')->paginate(20);
+
+        }else if(empty(request()->get('type')) && empty(request()->get('subtype')) && empty(request()->get('level')) && !empty(request()->get('course_name')) && !empty(request()->get('venue'))){
+            $course = \DB::table('courses')
+                ->where('id', '=', $course_id)
+                ->where('course_category', '=', $venue_id)
+                ->orderBy('sort','asc')->paginate(20);
+
+        }else if(!empty(request()->get('type')) && !empty(request()->get('subtype')) && !empty(request()->get('level')) && empty(request()->get('course_name')) && !empty(request()->get('venue'))){
+            if(request()->get('level') == 'All')
+            {
+                $course = \DB::table('courses')
+                    ->where('type', '=', $type)
+                    ->where('subtype', '=', $subtype)
+                    ->where('course_category', '=', $venue_id)
+                    ->orderBy('sort','asc')->paginate(20);
+
+            }else{
+                $course = \DB::table('courses')
+                    ->where('type', '=', $type)
+                    ->where('subtype', '=', $subtype)
+                    ->where('level', '=', $level)
+                    ->where('course_category', '=', $venue_id)
+                    ->orderBy('sort','asc')->paginate(20);
+            }
+
+        }else if(empty(request()->get('type')) && empty(request()->get('subtype')) && !empty(request()->get('level')) && empty(request()->get('course_name')) && !empty(request()->get('venue'))){
+            if(request()->get('level') == 'All')
+            {
+                $course = \DB::table('courses')
+                    ->where('course_category', '=', $venue_id)
+                    ->orderBy('sort','asc')->paginate(20);
+
+            }else{
+                $course = \DB::table('courses')
+                    ->where('level', '=', $level)
+                    ->where('course_category', '=', $venue_id)
+                    ->orderBy('sort','asc')->paginate(20);
+            }
+
+        }else if(!empty(request()->get('type')) && !empty(request()->get('subtype')) && empty(request()->get('level')) && empty(request()->get('course_name')) && !empty(request()->get('venue'))){            
+            $course = \DB::table('courses')
+                ->where('type', '=', $type)
+                ->where('subtype', '=', $subtype)
+                ->where('course_category', '=', $venue_id)
+                ->orderBy('sort','asc')->paginate(20);
+
+        }else if(!empty(request()->get('type')) && empty(request()->get('subtype')) && empty(request()->get('level')) && empty(request()->get('course_name')) && !empty(request()->get('venue'))){            
+            $course = \DB::table('courses')
+                ->where('type', '=', $type)
+                ->where('course_category', '=', $venue_id)
+                ->orderBy('sort','asc')->paginate(20);
 
         }else{
           $course = Course::orderBy('sort','asc')->paginate(20);
         }
 
-        //dd($course);
+        // dd($course);
+
+        $course_filter = Course::orderBy('sort','asc')->get();
+        $venue_category = LinkCourseAndCategory::where('status',1)->get();
     
         $course_cat = ProductCategory::where('parent','0')->where('subparent','0')->where('type','Course')->get();
         $subtype = ProductCategory::where('parent', 156)->where('subparent',0)->get();
-    	return view('admin.course.index',compact('course','subtype','course_cat'))
+    	return view('admin.course.index',compact('course','subtype','course_cat','course_filter','venue_category'))
     	->with(['title' => 'Course Management', 'addLink' => 'admin.course.showCreate']);
     }
 
@@ -503,11 +647,11 @@ class CourseController extends Controller
         //dd($request->all()); 
         
         $cat_id = $request->selectedCat;
-        $sub_cat = ProductCategory::where('parent',$cat_id)->where('subparent','0')->get();
+        $sub_cat = ProductCategory::where('parent',$cat_id)->where('subparent','0')->orderBy('label','desc')->get();
 
         if(count($sub_cat) > 0)
             {
-                $output = '<option value="">All</option>';
+                $output = '<option selected disabled>Select Age Group</option>';
 
                 foreach($sub_cat as $row)
                 {
@@ -515,7 +659,7 @@ class CourseController extends Controller
                 }
 
             }else{
-                $output = '';
+                $output = '<option selected disabled>Select Age Group</option>';
             }
 
             $data = array(

@@ -146,7 +146,7 @@ div#report_detail_cont {
                     @if($report->type == 'simple')
                     <div class="row">
                             @php
-                                $report_questions = DB::table('report_questions')->get();
+                                $report_questions = DB::table('report_questions')->orderBy('sort','asc')->get();
                                 @endphp
                                 @foreach($report_questions as $ques)
                                 @php
