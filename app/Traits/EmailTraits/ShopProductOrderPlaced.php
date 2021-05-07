@@ -580,6 +580,46 @@ public function BookATasterClassStatusHtml($data,$contact,$template)
     return $text;
 }
 
+#---------------------------------------------------------------------------------------------------
+#  SGoal comment by coach - User(Parent)
+#---------------------------------------------------------------------------------------------------
+
+public function GoalCommentEmailUser($parent_id,$player_id)
+{
+  $template_id = $this->emailTemplate['GoalCommentEmailUsersend'];
+
+  return $this->GoalCommentUserSendEmail($parent_id,$player_id,$template_id);
+}
+
+public function GoalCommentUserSendEmail($parent_id,$player_id,$template_id)
+{
+    $parent = User::where('id',$parent_id)->first(); 
+    $player = User::where('id',$player_id)->first(); 
+    $template = EmailTemplate::find($template_id); 
+// dd($parent,$player,$template);
+    $view= 'emails.customEmail';
+    $arr = [
+           'title' => $template->title,
+           'subject' => $template->subject,
+           'name' => $player->name,
+           'email' => $parent->email
+    ];
+    $data = $this->GoalEmailUserHtml($arr,$template); 
+
+    $ar= ['data' => $data];
+
+    // dd($ar,$arr);
+
+  return $this->sendNotification($view,$ar,$arr);
+}
+
+public function GoalEmailUserHtml($data,$template)
+{ 
+    $text2 = $template->body;
+    $text = str_replace("{user_name}",$data['name'],$text2);  
+    return $text;
+}
+
 
 #---------------------------------------------------------------------------------------------------
 #  Book a taster class - User

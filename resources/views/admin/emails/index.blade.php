@@ -50,6 +50,9 @@
 
                  @foreach($emails as $email)
 
+                      @if($email->id == 43)  
+
+                      @else
                        <tr>
                          <td>{{$email->id}}</td>
                          <td>{{$email->title}}</td>
@@ -57,6 +60,7 @@
                            <a href="{{url(route('admin.emails.update',$email->id))}}" class="btn btn-danger">Edit</a>
                          </td>
                        </tr>
+                      @endif
 
                  @endforeach
             </table>

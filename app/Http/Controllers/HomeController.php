@@ -4351,9 +4351,18 @@ public function save_comment_by_coach(Request $request)
     { 
       if($goalValue != null)
       {
-        SetGoal::where('parent_id',$request->parent_id)->where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->where('goal_id',$key)->update(array('coach_comment' => $goalValue)); 
+        $goaldta = SetGoal::where('parent_id',$request->parent_id)->where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->where('goal_id',$key)->update(array('coach_comment' => $goalValue)); 
       }
     }
+
+    // Get latest goal
+    $goaldata = SetGoal::where('parent_id',$request->parent_id)->where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->first();
+
+    // Send email
+    // $this->GoalCommentEmailUser($request->parent_id,$request->goal_player_name);     // Email to Parent
+    // Send notification to parent
+    // $goaldata->notify(new \App\Notifications\User\GoalCommentNotification());
+
     return \Redirect::back()->with('success','Comments added successfully.');
 }
 

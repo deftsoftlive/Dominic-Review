@@ -92,7 +92,8 @@ protected $emailTemplate = [
 
       // Contact Us - Admin
       'AdminContactUs' => 41,
-      'OrderPlacedInformationPackageCourses' => 42
+      'OrderPlacedInformationPackageCourses' => 42,
+      'GoalCommentEmailUsersend' => 43
 ];
 
 
