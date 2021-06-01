@@ -631,7 +631,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                             </form>
                         </div>
                     </div>
-                    <div class="outer-wrap">
+                    <div class="outer-wrap" style="display: none;">
                         <div class="match-form-wrap">
                             <p class="sub-head">Create The First Match</p>
                             <form action="{{route('add_match')}}" method="POST" enctype="multipart/form-data">

@@ -73,7 +73,7 @@
                                             <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(82px, -64px, 0px); top: 0px; left: 0px; will-change: transform;">
                                                 <a href="{{url('admin/camp')}}/{{$test->slug}}" class="dropdown-item">Edit</a>
 
-                                                <!-- <a href="{{ route('admin.camp.duplicate',$test->id) }}" class="dropdown-item">Duplicate</a> -->
+                                                <a href="{{ route('admin.camp.duplicate',$test->id) }}" class="dropdown-item">Duplicate</a>
 
                                                 <a href="{{route('admin.camp.status',$test->slug)}}" class="dropdown-item">
                                                     @if($test->status == '1')

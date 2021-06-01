@@ -4359,9 +4359,9 @@ public function save_comment_by_coach(Request $request)
     $goaldata = SetGoal::where('parent_id',$request->parent_id)->where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->first();
 
     // Send email
-    // $this->GoalCommentEmailUser($request->parent_id,$request->goal_player_name);     // Email to Parent
+    $this->GoalCommentEmailUser($request->parent_id,$request->goal_player_name);     // Email to Parent
     // Send notification to parent
-    // $goaldata->notify(new \App\Notifications\User\GoalCommentNotification());
+    $goaldata->notify(new \App\Notifications\User\GoalCommentNotification());
 
     return \Redirect::back()->with('success','Comments added successfully.');
 }
@@ -5237,9 +5237,9 @@ public function comp_data($id)
 {
 
     //dd($comp);
-    if (condition) {
-      # code...
-    }
+    // if (condition) {
+    //   # code...
+    // }
     $comp = Competition::where('id',$id)->first();
     return view('coach.match-report')->with('comp',$comp)->with('success',' Competition added successfully!');
 }
