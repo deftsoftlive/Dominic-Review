@@ -65,7 +65,7 @@ p.vou_prod_type {
                                         <div class="table-responsive">
 
                                           <p>User Name : <b>@php echo getUsername($user_id); @endphp</b></p>
-                                          <p>Wallet Amount : <b>&pound;{{$wallet->money_amount}}</b></p>
+                                          <p>Wallet Amount : <b>&pound;{{ number_format($wallet->money_amount, 2) }}</b></p>
 
                                           @include('admin.error_message')
 
@@ -91,7 +91,7 @@ p.vou_prod_type {
                                                         @endif
                                                       </td>
                                                       <td>@if($wa->payment_by == 1) Admin @else User @endif</td>
-                                                      <td>&pound;{{$wa->money_amount}}</td>
+                                                      <td>&pound;{{ number_format($wa->money_amount, 2) }}</td>
                                                     </tr>
                                                 @endforeach
 

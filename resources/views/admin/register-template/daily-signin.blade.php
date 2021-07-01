@@ -419,13 +419,6 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                             
-                       <!--  <td>{{isset($player->date_of_birth) ? date('d/m/Y',strtotime($player->date_of_birth)) : ''}}</td>
-                        <td>{{!empty($parent) ? $parent->name : ''}}</td>
-                        <td>{{!empty($parent) ? $parent->phone_number : ''}}</td>
-                        <td>@if($child_details['med_cond'] == 'confirm_accurate_no') N @else Y @endif</td>
-                        <td>@if(!empty($player->profile_image)) Y @else N @endif</td>
-                        <td>{{!empty($parent) ? $parent->email : ''}}</td> -->
                     </tr>
 
                     @endforeach

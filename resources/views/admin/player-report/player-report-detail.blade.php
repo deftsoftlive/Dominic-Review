@@ -54,16 +54,58 @@
                                 </table>
 
                             @elseif($report->type == 'complex')
+                                @php $player_name = getUsername($report->player_id); @endphp 
+                                <table class="table table-bordered all_rps cst-reports amin-tbl-comp">
+                                    <tbody>
+                                        <tr>
+                                            <th>
+                                                <p><b>Date</b></p>
+                                            </th>
+                                            <td>@php echo date("d/m/Y", strtotime($report->date)); @endphp</td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <p><b>Player Name</b></p>
+                                            </th>
+                                            <td>{{isset($player_name) ? $player_name : 'User not exist'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <p><b>Report Type</b></p>
+                                            </th>
+                                            <td>@if($report->type == 'simple') End of term report @elseif($report->type == 'complex') Player report @endif</td>
+                                        </tr>
 
-                                <p><label class="control-label">Date</label> - @php echo date("d/m/Y", strtotime($report->date)); @endphp</p>
-                                <p><label class="control-label">Player Name</label> - {{isset($player_name) ? $player_name : 'User not exist'}}</p>
-                                <p><label class="control-label">Report Type</label> - @if($report->type == 'simple') End of term report @elseif($report->type == 'complex') Player report @endif</p>
-                                <p><label class="control-label">Coach Name</label> - @php echo getUsername($report->coach_id); @endphp</p>
-                                @if($report->type == 'simple')
-                                    <p><label class="control-label">Season</label> - @php echo getSeasonname($report->season_id); @endphp</p>
-                                    <p><label class="control-label">Course</label> - @php echo getCourseName($report->course_id); @endphp</p>
-                                @endif
-                                <p><label class="control-label">Coach Feedback</label> - {{$report->feedback}}</p>
+                                        <tr>
+                                            <th>
+                                                <p><b>Coach Name</b></p>
+                                            </th>
+                                            <td>@php echo getUsername($report->coach_id); @endphp</td>
+                                        </tr>
+                                        @if($report->type == 'simple')
+                                            <tr>
+                                                <th>
+                                                    <p><b>Season</b></p>
+                                                </th>
+                                                <td><p>@php echo getSeasonname($report->season_id); @endphp</p></td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <p><b>Course</b></p>
+                                                </th>
+                                                <td><p>@php echo getCourseName($report->course_id); @endphp</p></td>
+                                            </tr>
+                                        @endif
+                                        <tr>
+                                            <th>
+                                                <p><b>Coach Feedback</b></p>
+                                            </th>
+                                            <td><p class="pre_line">{{$report->feedback}}</p></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                
                             @endif
 
                         </div>

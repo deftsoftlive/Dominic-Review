@@ -30,8 +30,7 @@ public function sendNotification($emailTeplate,$data,$arr)
         
     \Mail::send($emailTeplate,$data, function($message) use($arr) {
                $message->to($arr['email'], $arr['name'])
-               ->subject($arr['subject'])
-               ->$message->from(env('MAIL_USERNAME'),env('MAIL_FROM_NAME'));
+               ->subject($arr['subject']);
                
     });
     return 1;
@@ -45,8 +44,7 @@ public function sendNotificationInfo($emailTeplate,$data,$arr)
   {
     \Mail::send($emailTeplate,$data, function($message) use($arr) {
                $message->to($arr['email'], $arr['user_id'])
-               ->subject($arr['subject'])
-               ->$message->from(env('MAIL_USERNAME'),env('MAIL_FROM_NAME'));
+               ->subject($arr['subject']);
                
     });
     return 1;
@@ -62,8 +60,7 @@ public function send_subscribers_email($emailTeplate,$data,$arr)
       {
         \Mail::send($emailTeplate,$data, function($message) use($arr) {
                $message->to($arr['email'], '')
-               ->subject($arr['subject'])
-               ->$message->from(env('MAIL_USERNAME'),env('MAIL_FROM_NAME'));
+               ->subject($arr['subject']);
                
         });
       } 

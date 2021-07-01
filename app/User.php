@@ -248,42 +248,100 @@ class User extends Authenticatable
 
                     if($im->shop_type == 'course')
                     {
+                      $early_bird_enable = 0;
+
                       $course_id = $im->product_id;
                       $course = Course::where('id',$course_id)->first();
 
                       if($course->type == '156')
                       {
-                        $early_bird_enable = getAllValueWithMeta('check_tennis_percentage', 'early-bird');
-                        $early_bird_dis = getAllValueWithMeta('tennis_percentage', 'early-bird');
+                        $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$im->earlybird_linked_cat_Id)->first();
+                        if(!empty($earlybird_data)){
+                          $early_bird_enable = $earlybird_data->early_bird_option;
+                          $early_bird_date = $earlybird_data->early_bird_date;
+                          $early_bird_time = $earlybird_data->early_bird_time;
+                          $early_bird_utc_uk_diff = $earlybird_data->utc_uk_diff;
+                          $early_bird_dis = $earlybird_data->discount_percentage;
+                          
+                          $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+                          $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+                        }
                       }
                       elseif($course->type == '191')
                       {
-                        $early_bird_enable = getAllValueWithMeta('check_school_percentage', 'early-bird');
-                        $early_bird_dis = getAllValueWithMeta('school_percentage', 'early-bird');
+                        $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$im->earlybird_linked_cat_Id)->first();
+                        if(!empty($earlybird_data)){
+                          $early_bird_enable = $earlybird_data->early_bird_option;
+                          $early_bird_date = $earlybird_data->early_bird_date;
+                          $early_bird_time = $earlybird_data->early_bird_time;
+                          $early_bird_dis = $earlybird_data->discount_percentage;
+                          $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+                          $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+                        }
                       }
                       elseif($course->type == '157')
                       {
-                        $early_bird_enable = getAllValueWithMeta('check_football_percentage', 'early-bird');
-                        $early_bird_dis = getAllValueWithMeta('football_percentage', 'early-bird');
+                        $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$im->earlybird_linked_cat_Id)->first();
+                        if(!empty($earlybird_data)){
+                          $early_bird_enable = $earlybird_data->early_bird_option;
+                          $early_bird_date = $earlybird_data->early_bird_date;
+                          $early_bird_time = $earlybird_data->early_bird_time;
+                          $early_bird_dis = $earlybird_data->discount_percentage;
+                          $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+                          $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+                        }
                       }
 
-                      $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
-                      $early_bird_time = getAllValueWithMeta('early_bird_time', 'early-bird');
+                      // $diff = $endDate - $currntD;
 
-                      $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).' 23:59:00');
-                      $currntD = strtotime(date('Y-m-d H:i:s'));
-                      $diff = $endDate - $currntD;
+                      // $years = floor($diff / (365*60*60*24));  
+                      // $months = floor(($diff - $years * 365*60*60*24) 
+                      //                    / (30*60*60*24));  
+                      // $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24)); 
+                      // $hours = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24) / (60*60)); 
+                      // $minutes = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60)/ 60);
+                      // $seconds = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60 - $minutes*60)); 
 
-                      $years = floor($diff / (365*60*60*24));  
-                      $months = floor(($diff - $years * 365*60*60*24) 
-                                         / (30*60*60*24));  
-                      $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24)); 
-                      $hours = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24) / (60*60)); 
-                      $minutes = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60)/ 60);
-                      $seconds = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60 - $minutes*60)); 
+                      if($early_bird_enable == 1){                                      
+                        if($currntD >= $endDate)
+                        {
+                          if(!empty($dis_type))
+                          {
+                            if($dis_type == '0')
+                            {
+                              $price =($course['price']) - ($dis_price);
+                              $membership_price =($course['membership_price']) - ($dis_price);
+                            }else{
+                              $price = $course['price'] - (($course['price']) * ($dis_price / 100));
+                              $membership_price = $course['membership_price'] - (($course['membership_price']) * ($dis_price / 100));
+                            }
+                          }else{
+                            $price =($course['price'] - $dis_price);
+                            $membership_price =($course['membership_price']) - ($dis_price);
+                          }
 
-                      if($currntD >= $endDate)
-                      {
+                        }else{
+                          $cour_price = $course['price'];
+                          $membership_cour_price =$course['membership_price'];
+                          $earlybird_dis_price = $cour_price - (($cour_price) * ($early_bird_dis/100));
+                          $earlybird_dis_membership_price = $membership_cour_price - (($membership_cour_price) * ($early_bird_dis/100));
+
+                          if(!empty($dis_type))
+                          {
+                            if($dis_type == '0')
+                            {
+                              $price =($earlybird_dis_price - $dis_price);
+                              $membership_price =($earlybird_dis_membership_price - $dis_price);
+                            }else{
+                              $price = $earlybird_dis_price - (($earlybird_dis_price) * ($dis_price / 100));
+                              $membership_price = $earlybird_dis_membership_price - (($earlybird_dis_membership_price) * ($dis_price / 100));
+                            }
+                          }else{
+                            $price =($earlybird_dis_price - $dis_price);
+                            $membership_price =($earlybird_dis_membership_price - $dis_price);
+                          }
+                        }
+                      }else{
                         if(!empty($dis_type))
                         {
                           if($dis_type == '0')
@@ -298,39 +356,10 @@ class User extends Authenticatable
                           $price =($course['price'] - $dis_price);
                           $membership_price =($course['membership_price']) - ($dis_price);
                         }
-
-                      }else{
-                        if($early_bird_enable == '1')
-                        {
-                          $cour_price = $course['price'];
-                          $membership_cour_price =$course['membership_price'];
-                          $earlybird_dis_price = $cour_price - (($cour_price) * ($early_bird_dis/100));
-                          $earlybird_dis_membership_price = $membership_cour_price - (($membership_cour_price) * ($early_bird_dis/100));
-                        }else{
-                          $earlybird_dis_price = $course['price'];
-                          $earlybird_dis_membership_price = $course['membership_price'];
-                        }
-                        
-
-                        if(!empty($dis_type))
-                        {
-                          if($dis_type == '0')
-                          {
-                            $price =($earlybird_dis_price - $dis_price);
-                            $membership_price =($earlybird_dis_membership_price - $dis_price);
-                          }else{
-                            $price = $earlybird_dis_price - (($earlybird_dis_price) * ($dis_price / 100));
-                            $membership_price = $earlybird_dis_membership_price - (($earlybird_dis_membership_price) * ($dis_price / 100));
-                          }
-                        }else{
-                          $price =($earlybird_dis_price - $dis_price);
-                          $membership_price =($earlybird_dis_membership_price - $dis_price);
-                        }
-
                       }
                         
 
-                      }elseif($im->shop_type == 'camp')
+                    }elseif($im->shop_type == 'camp')
                       {
                         $camp_price = $im->camp_price;  
 

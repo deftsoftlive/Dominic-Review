@@ -31,6 +31,7 @@
 
                         <h5>{{$title}}</h5>
                         <div class="cst-admin-filter">
+                            <a href="{{ url(route('export_camp_register_for_all')) }}" class="btn btn-primary">Export All Registers</a>
                             <a href="{{ url(route($addLink)) }}" class="btn btn-primary">Add</a>
                         </div>
                        

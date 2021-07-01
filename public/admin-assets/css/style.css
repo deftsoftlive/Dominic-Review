@@ -548,6 +548,13 @@ tr.child-row.expanded {
 
 }
 
+table.table.table-bordered.cst-reports.amin-tbl-comp th{
+  width: 10%
+}
+
+p.pre_line{
+  white-space: pre-line;
+}
 
 
 

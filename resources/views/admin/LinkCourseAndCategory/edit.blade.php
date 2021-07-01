@@ -41,7 +41,8 @@
                     <label class="label-file control-label">Linked Course</label>
                     <select name="linked_course_cat" class="select-player">
                       <option value="156" {{$venue->linked_course_cat == '156' ? 'selected' : ''}}>Tennis</option>
-                      <option value="158" {{$venue->linked_course_cat == '158' ? 'selected' : ''}}>School</option>
+                      <option value="157" {{$venue->linked_course_cat == '157' ? 'selected' : ''}}>Football</option>
+                      <option value="191" {{$venue->linked_course_cat == '191' ? 'selected' : ''}}>School</option>
                     </select>
                   </div>
 

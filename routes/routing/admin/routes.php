@@ -619,6 +619,24 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
 		// Save register template dates
 		Route::any('/save-course-reg-dates','Admin\RegisterTemplateController@save_course_reg_dates')->name('save_course_reg_dates');
 
+		// Export Course register template route
+		Route::get('/export-course-register/{id}','Admin\RegisterTemplateController@ExportExcelCourseRegister')->name('export_course_register');
+
+		// Export Course register template for all route
+		Route::get('/export-course-register-for-all','Admin\RegisterTemplateController@ExportExcelCourseRegisterForAll')->name('export_course_register_for_all');
+
+		// Export Pay Go Course register template route
+		Route::get('/export-pay-go-course-register/{id}','Admin\RegisterTemplateController@ExportExcelPayGoCourseRegister')->name('export_pay_go_course_register');
+
+		// Export Pay Go Course register template for all route
+		Route::get('/export-pay-go-course-register-for-all','Admin\RegisterTemplateController@ExportExcelPayGoCourseRegisterForAll')->name('export_pay_go_course_register_for_all');
+
+		// Export Camp register template route
+		Route::get('/export-camp-register/{id}','Admin\RegisterTemplateController@ExportExcelCampRegister')->name('export_camp_register');
+
+		// Export Camp register template for all route
+		Route::get('/export-camp-register-for-all','Admin\RegisterTemplateController@ExportExcelCampRegisterForAll')->name('export_camp_register_for_all');
+
 
         #------------------------------------------------------------------------------------
         #  Faq
@@ -745,5 +763,16 @@ Route::group(['middleware' => ['AdminAuth'], 'prefix' => 'admin'], function() {
         Route::any('/generate-paygo-course-report', 'Admin\AdminController@generate_paygo_course_report')->name('admin.generate.paygo.course.report');
         Route::any('/mark-all-as-read/{role_id}', 'Admin\AdminController@markAllAsRead')->name('admin.notifications.all.read');
 		
-       
+
+		/********************************************************************************************/
+		/*------------------------------New Early Bird Management Route-------------------------*/
+		/********************************************************************************************/
+
+		Route::get('/early_bird/index','Admin\EarlyBirdController@index')->name('admin.early_bird.list');
+		Route::get('/early_bird/create','Admin\EarlyBirdController@create')->name('admin.create.early_bird');
+		Route::any('/early_bird/save','Admin\EarlyBirdController@store')->name('admin.store.early_bird');
+		Route::get('/early_bird/{id}/edit','Admin\EarlyBirdController@edit')->name('admin.edit.early_bird');
+		Route::post('/early_bird/{id}/update','Admin\EarlyBirdController@update')->name('admin.update.early_bird');
+		Route::get('/early_bird/{id}/status','Admin\EarlyBirdController@status')->name('admin.status.early_bird');
+		// Route::any('/early_bird/remove/{id}','Admin\EarlyBirdController@destroy')->name('admin.remove.early_bird');       
 });

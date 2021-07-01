@@ -59,11 +59,17 @@ class NewGoalNotification extends Notification
         $player = \DB::table('users')->where('id',$notifiable->player_id)->first();
         $coach_id = isset($notifiable->coach_id) ? $notifiable->coach_id: '';
 
+        if($notifiable->created_at != $notifiable->updated_at){
+            $msg = 'has updated his goal.';
+        }else{
+            $msg = 'has uploaded new goal.';
+        }
+
         if(!empty($coach_id))
         {
             return [
                 'send_to' => $coach_id,
-                'data' => 'Linked Player - '.$player->name.' - has uploaded new goal'
+                'data' => 'Linked Player - '.$player->name.' - '.$msg
             ];
         }
         else

@@ -511,6 +511,10 @@ p {
     border-radius: 0;
 
 }
+.event-card .cstm-btn{
+  font-size: 12px;
+  padding: 8px 12px;
+}
 
 
 
@@ -2447,13 +2451,13 @@ div#accordion-2 .card h2.mb-0 button {
 
 .event-card .event-booking .event-booking-price {
 
-    font-size: 33px;
+    font-size: 20px;
 
     font-weight: 600;
 
     color: #001642;
 
-    margin-right: 16px;
+    margin-right: 10px;
 
 }
 
@@ -2461,7 +2465,7 @@ div#accordion-2 .card h2.mb-0 button {
 
 .event-card .event-booking .event-booking-price span {
 
-    font-size: 25px;
+    font-size: 22px;
 
     font-weight: 500;
 
@@ -6345,6 +6349,7 @@ form input[type=date] {
 
     padding: 26px 20px;
     position: relative;
+    flex-wrap: wrap;
 
 }
 
@@ -10942,7 +10947,7 @@ table th {
 
 .product-price {
 
-    font-size: 22px;
+    font-size: 20px;
 
     color: #001642;
 
@@ -17873,7 +17878,14 @@ div#submit_rep a a:focus {
 
 }
 
+.d-f{
+    display: flex;
+    flex-wrap: wrap;
+}
 
+.player-report-table.tbl_shadow.records_wrap.cstm-scroll {
+    overflow: auto;
+}
 
 .player_rp_detail .inner-form-box .form-check {
 
@@ -20600,6 +20612,7 @@ button#course_book,
     border: 2px solid #001642;
 
     color: #fff !important;
+    white-space: nowrap;
 
 }
 

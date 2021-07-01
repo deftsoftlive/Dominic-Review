@@ -37,6 +37,7 @@ td.checkbox_course {
                         <h5>Course : {{$course->title}}</h5>
 
                         <button id="print_course" class="btn btn-primary d-print-none">Print</button>
+                        <a href="{{ route('export_course_register',$course->id) }}" class="btn btn-primary d-print-none">Export Register</a>
                        
                     </div>
                     
@@ -96,8 +97,6 @@ td.checkbox_course {
                         <th>Media</th>
                         <th>Mem Price</th>
                         <th>Member</th>
-                        <!-- <th>Parent Name</th> -->
-                        <!-- <th>Parent Tel</th> -->
 
                         @php 
                             $course_dates = DB::table('course_dates')->where('course_id',$course->id)->get();
@@ -106,8 +105,6 @@ td.checkbox_course {
                         @foreach($course_dates as $date)
                             <th class="camp-date">@php echo date('d/m',strtotime($date->course_date)); @endphp</th>
                         @endforeach
-
-                        <!-- <th>Parent Email</th> -->
 
                         <th>Contact 1 Name</th>
                         <th>Contact 1 Tel</th>
@@ -130,9 +127,9 @@ td.checkbox_course {
                         $child_details = DB::table('children_details')->where('child_id',$sh->child_id)->first();
                     @endphp
 
-                    @if(!empty($player))
+                    @if(empty($player))
                     @php 
-                        $parent = DB::table('users')->where('id',$player->parent_id)->first();
+                        $player = DB::table('users')->where('id',$sh->user_id)->first();
                     @endphp
                     @endif
                     
@@ -151,16 +148,13 @@ td.checkbox_course {
                                     <td> N/A </td>
                                 @endif
 
-                                @if($sh->membership_status == 1 && $sh->membership_price == null)
+                                @if($sh->membership_status == 1 && $sh->membership_price == null || $sh->membership_price == 0)
                                     <td> Yes </td>
-                                @elseif($sh->membership_status == 0 && $sh->membership_price == null)
+                                @elseif($sh->membership_status == 0 && $sh->membership_price == null || $sh->membership_price == 0)
                                     <td> No </td>
                                 @else
                                     <td> N/A </td>                                
                                 @endif
-
-                            <!-- <td>{{isset($parent->name) ? $parent->name : $player->name}}</td>                       -->
-                            <!-- <td>{{isset($parent->phone_number) ? $parent->phone_number : $player->phone_number}}</td>      -->
 
                             @if(!empty($player))                   
                             @php 
@@ -194,15 +188,17 @@ td.checkbox_course {
                             @endif
                             @php $i++; @endphp
                             @endforeach
-                            <!-- <td>{{isset($parent->email) ? $parent->email : $player->email}}</td>   -->
 
                             @php
                                 $contact1_details = \App\ChildContact::where('child_id',$sh->child_id)->first();
+                                if(empty($contact1_details)){
+                                    //$contact1_details = \App\ChildContact::where('child_id',$sh->user_id)->first();
+                                }
                             @endphp                      
                             <td>{{ !empty($contact1_details->first_name) ? $contact1_details->first_name : "N/A" }} {{ !empty($contact1_details->surname) ? $contact1_details->surname : "" }}</td>                        
                             <td>{{ !empty($contact1_details->phone) ? $contact1_details->phone : "N/A" }}</td>                        
                             <td>{{ !empty($contact1_details->email) ? $contact1_details->email : "N/A" }}</td>                        
-                            <td>{{ !empty($contact1_details->relationship) ? $contact1_details->relationship : "N/A" }}</td>
+                            <td>{{ !empty($contact1_details->relationship) ? $contact1_details->relationship : "N/A" }}</td>                        
                         </tr>
                         @endif
                     @endforeach
@@ -233,26 +229,26 @@ td.checkbox_course {
                         @php 
                             $player = DB::table('users')->where('id',$sh->child_id)->first();   
                             $child_details = DB::table('children_details')->where('child_id',$sh->child_id)->first();
-                            $medicals = DB::table('child_medicals')->where('child_id',$sh->child_id)->get();	
+                            $medicals = DB::table('child_medicals')->where('child_id',$sh->child_id)->get();    
                             $med_cond = [];
                         @endphp
 
-	                    <tr>
-	                    	@if(!empty($child_details->med_cond) && $child_details->med_cond == 'yes')
-		                        @if(count($medicals)>0)
-			                        @foreach($medicals as $med)
-			                        	@php $med_cond[] = $med->medical; @endphp
-			                        @endforeach
+                        <tr>
+                            @if(!empty($child_details->med_cond) && $child_details->med_cond == 'yes')
+                                @if(count($medicals)>0)
+                                    @foreach($medicals as $med)
+                                        @php $med_cond[] = $med->medical; @endphp
+                                    @endforeach
 
-			                        @php $medical_conditions = implode(', ',$med_cond); @endphp
+                                    @php $medical_conditions = implode(', ',$med_cond); @endphp
 
-			                        <td>{{isset($player->name) ? $player->name : ''}}</td>
-			                        <td>{{isset($medical_conditions) ? $medical_conditions : ''}}</td>
-			                    @else
-			                    	
-			                    @endif 
-			                @endif   
-		                </tr>
+                                    <td>{{isset($player->name) ? $player->name : ''}}</td>
+                                    <td>{{isset($medical_conditions) ? $medical_conditions : ''}}</td>
+                                @else
+                                    
+                                @endif 
+                            @endif   
+                        </tr>
 
 
 

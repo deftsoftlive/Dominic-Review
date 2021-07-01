@@ -65,7 +65,7 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
                             <th>Invoice Name</th>
                             <th>Uploaded Invoice</th>
                             <th>Status</th>
-                            <th>View PDF</th>
+                            <th>View Invoice</th>
                             <th>Comment</th>
                           </tr>
                         </thead>

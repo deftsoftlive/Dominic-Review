@@ -93,7 +93,7 @@
                                         $wallet_amt = $total_credit_amt - $total_debit_amt;
                                     @endphp
 
-                                    &pound;{{$wa->money_amount}}
+                                    &pound;{{ number_format($wa->money_amount, 2) }}
                                     </td>
 
                                     <td>

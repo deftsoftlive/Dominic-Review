@@ -294,31 +294,53 @@
 
                                   @php
                                     $cat = DB::table('product_categories')->where('id',$course_cat)->first();
-                                    $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
-                                    $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).' 23:59:00'); 
-                                    $currntD = strtotime(date('Y-m-d H:i:s'));  
+                                    $early_bird_enable = 0;
                                   @endphp
 
                                   @if($cat->slug == 'tennis')
                                     @php 
-                                      $early_bird_enable = getAllValueWithMeta('check_tennis_percentage', 'early-bird');
-                                      $percentage = getAllValueWithMeta('tennis_percentage', 'early-bird');
+                                      $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$linked_cat_id)->first();
+                                      if(!empty($earlybird_data)){
+                                        $early_bird_enable = $earlybird_data->early_bird_option;
+                                        $early_bird_date = $earlybird_data->early_bird_date;
+                                        $early_bird_time = $earlybird_data->early_bird_time;
+                                        $early_bird_utc_uk_diff = $earlybird_data->utc_uk_diff;
+                                        $early_bird_dis_percentage = $earlybird_data->discount_percentage;
+                                        
+                                        $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+                                        $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+                                      }
                                     @endphp
                                   @elseif($cat->slug == 'football')
-                                    @php
-                                      $early_bird_enable = getAllValueWithMeta('check_football_percentage', 'early-bird');
-                                      $percentage = getAllValueWithMeta('football_percentage', 'early-bird');
+                                    @php 
+                                      $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$linked_cat_id)->first();
+                                      if(!empty($earlybird_data)){
+                                        $early_bird_enable = $earlybird_data->early_bird_option;
+                                        $early_bird_date = $earlybird_data->early_bird_date;
+                                        $early_bird_time = $earlybird_data->early_bird_time;
+                                        $early_bird_dis_percentage = $earlybird_data->discount_percentage;
+                                        $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+                                        $currntD = strtotime(date('Y-m-d H:i:s'));  
+                                      }
                                     @endphp
                                   @elseif($cat->slug == 'schools')
-                                    @php
-                                      $early_bird_enable = getAllValueWithMeta('check_school_percentage', 'early-bird');
-                                      $percentage = getAllValueWithMeta('school_percentage', 'early-bird');
+                                    @php 
+                                      $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$linked_cat_id)->first();
+                                      if(!empty($earlybird_data)){
+                                        $early_bird_enable = $earlybird_data->early_bird_option;
+                                        $early_bird_date = $earlybird_data->early_bird_date;
+                                        $early_bird_time = $earlybird_data->early_bird_time;
+                                        $early_bird_dis_percentage = $earlybird_data->discount_percentage;
+                                        $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+                                        $currntD = strtotime(date('Y-m-d H:i:s'));  
+                                      }
                                     @endphp
                                   @endif
 
 
                               
                                   <input type="hidden" name="course_id" id="course_id" value="{{$course->id}}">
+                                  <input type="hidden" name="linked_cat_id" value="{{$linked_cat_id}}">
                                   <!-- <input type="hidden" name="child_id" id="child_id" value=""> -->
 
                                   @if(Session::get('membership_status') == 'Yes')
@@ -326,35 +348,35 @@
                                   @endif
                                   <p class="cst-fees"><span>£
 
-                                    @if($currntD >= $endDate)
-                                      <!-- Check membership status and show membership price -->
-                                      @if(Session::get('membership_status') == 'Yes')
-                                        {{number_format((float)$course->membership_price, 2, '.', '')}}
-                                      @else
-                                        {{number_format((float)$course->price, 2, '.', '')}}
-                                      @endif
-                                    @else
-                                      @if($early_bird_enable == '1')
-                                        @php 
-                                          $cour_price = $course->price;
-                                          $dis_price = $cour_price - (($cour_price) * ($percentage/100));
-
-                                          $mem_cour_price = $course->membership_price;
-                                          $mem_dis_price = $mem_cour_price - (($mem_cour_price) * ($percentage/100));
-                                        @endphp
-                                          <!-- Check membership status and show membership discount price -->  
-                                          @if(Session::get('membership_status') == 'Yes')
-                                            {{$mem_dis_price}}
-                                          @else
-                                            {{$dis_price}}
-                                          @endif
-                                      @else
+                                    @if($early_bird_enable == 1)                                      
+                                      @if($currntD >= $endDate)
                                         <!-- Check membership status and show membership price -->
                                         @if(Session::get('membership_status') == 'Yes')
                                           {{number_format((float)$course->membership_price, 2, '.', '')}}
                                         @else
                                           {{number_format((float)$course->price, 2, '.', '')}}
                                         @endif
+                                      @else
+                                        @php 
+                                          $cour_price = $course->price;
+                                          $dis_price = $cour_price - (($cour_price) * ($early_bird_dis_percentage/100));
+
+                                          $mem_cour_price = $course->membership_price;
+                                          $mem_dis_price = $mem_cour_price - (($mem_cour_price) * ($early_bird_dis_percentage/100));
+                                        @endphp
+                                          <!-- Check membership status and show membership discount price -->  
+                                          @if(Session::get('membership_status') == 'Yes')
+                                            {{number_format((float)$mem_dis_price, 2, '.', '')}}
+                                          @else
+                                            {{number_format((float)$dis_price, 2, '.', '')}}
+                                          @endif
+                                      @endif
+                                    @else
+                                      <!-- Check membership status and show membership price -->
+                                      @if(Session::get('membership_status') == 'Yes')
+                                        {{number_format((float)$course->membership_price, 2, '.', '')}}
+                                      @else
+                                        {{number_format((float)$course->price, 2, '.', '')}}
                                       @endif
                                     @endif
                                   </span>
@@ -518,25 +540,25 @@
               </div>
                   <div class="inner-warp">
                      
-                     <form action="{{route('membership_status_after_booking')}}" method="POST" novalidate="novalidate">
+                     <form action="{{route('membership_status_after_booking')}}" method="POST">
                       @csrf
 
                       <input type="hidden" name="shop_id" value="@if(old('shop_id')) {{ old('shop_id') }} @endif">
 
                       <div class="from-wrap">
-                          <p>Yes,this participant is a member of the tennis club</p>
-                        <input type="radio" id="memb" name="membership_status" value="1">
+                          <p>Yes, this participant is a member of the tennis club</p>
+                        <input type="radio" id="memb" name="membership_status" value="1" required>
                         <label for="memb" class="rad-checked"></label>
                         
                       </div>
                       <hr class="from-line">
                       <div class="from-wrap">
                           <p>Not yet. They will become a member before classes commence </p>
-                        <input type="radio" id="memb1" name="membership_status" value="0" checked>
+                        <input type="radio" id="memb1" name="membership_status" value="0" required>
                        <label for="memb1" class="rad-checked"></label>
                       </div>
 
-                       <button class="wallet_confirm_order cstm-btn main_button">Book Now</button>
+                       <button type="submit" class="wallet_confirm_order cstm-btn main_button">Book Now</button>
                      </form>
                   </div>
                </div>

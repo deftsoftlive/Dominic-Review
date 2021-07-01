@@ -44,7 +44,7 @@ $user1 = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->f
             <div class="col-lg-8 col-md-10 outer_wrap_row">
                 <!-- <div class="card coach_profile"> -->
                     <div class="card-header">Match Stats</div>
-                    <p>{!! getAllValueWithMeta('match_stats_text', 'general-setting') !!}</p>
+                    {!! getAllValueWithMeta('match_stats_text', 'general-setting') !!}
                     <br/>
                  <!-- </div> -->
                     <div class="card-body matches-card-body">

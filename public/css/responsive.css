@@ -1699,16 +1699,6 @@
 
 
 
-
-
-    .report-tab-one .inner-form-box {
-
-        height: 174px;
-
-    }
-
-
-
     .player-report-row {
 
         padding: 0 0 0 15px;
@@ -3040,6 +3030,9 @@
 @media(max-width: 767px) {
     .t-p-text.desktop-cstm-cont h2 {
     display: none;
+}
+.report-tab-sec p.top-heading{
+    font-size: 18px;
 }
 .date_cstm_wrap {  
     max-width: 100%;    

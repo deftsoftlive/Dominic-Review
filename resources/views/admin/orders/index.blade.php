@@ -38,8 +38,7 @@
                     </div>
                     <br/>
                     <!-- Filter Section - Start -->
-                    <form action="{{route('admin.orders')}}" method="POST" class="cst-selection">
-                    @csrf
+                    <form action="{{route('admin.orders')}}" class="cst-selection">
                         <div class="container">
                             <div class="row">
                                 <div class="col-sm-3">
@@ -69,7 +68,7 @@
                                 </div>
 
                                 <div class="col-sm-1" style="margin-left:10px">
-                                    <a href="" onclick="myFunction();" class="btn btn-primary">Reset</a>
+                                    <a href="{{ route('admin.orders') }}" class="btn btn-primary">Reset</a>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +176,7 @@
                                 </tbody>
                             </table>
                             @if(count($orders)>0)
-                                {{ $orders->render() }}
+                                {{ $orders->appends(['u_name' => $user_name, 'u_email' => $user_email, 'start_date' => $start_date_filter, 'end_date' => $end_date_filter])->links() }}
                             @endif
                         </div>
                     </div>

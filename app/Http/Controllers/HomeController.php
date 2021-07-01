@@ -878,7 +878,10 @@ public function tennis_listing(Request $request)
                    ->where('pay_go_courses.status',1)
                    ->where('seasons.status',1)
                    ->where('type','156')
-                   ->select('pay_go_courses.*');
+                   ->select('pay_go_courses.*')
+                   ->orderBy('sort','asc')
+                   ->get()
+                   ->toArray();
                     
     }
 
@@ -897,17 +900,22 @@ public function tennis_listing(Request $request)
                    ->where("{$table}.status",1)
                    ->where('seasons.status',1)
                    ->where('type','156')
-                   ->select("{$table}.*");
-    
-    if(!empty($payGo)){
-      $course= $course->union($payGo);
+                   ->select("{$table}.*")
+                   ->orderBy('sort','asc')
+                   ->get()
+                   ->toArray();
 
-    }else{
-       $course= $course->orderBy('sort','asc');
-    }
+    $course = array_merge($course,$payGo);
+    // dd($payGo,$course,$course);
+    // if(!empty($payGo)){
+    //   $course= $course->union($payGo);
+
+    // }else{
+    //    $course= $course->orderBy('sort','asc');
+    // }
 
       
-    $course =$course->get();  
+    // $course =$course->get();  
     $accordian = Accordian::where('page_title',$slug)->where('status','1')->orderBy('sort','asc')->get();  
 
     // Get subtype for tennis courses
@@ -1007,12 +1015,13 @@ public function school_listing(Request $request)
 }
 
 /* Course Detail Page */
-public function course_detail($id)
+public function course_detail($id,$linked_cat)
 {
     $decode_id = base64_decode($id);
+    $linked_cat_id = base64_decode($linked_cat);
     $course = Course::where('id','=',$decode_id)->first();
     $course_dates = CourseDate::where('course_id','=',$decode_id)->get();
-    return view('cms.course.course-listing-detail',compact('course','course_dates'));
+    return view('cms.course.course-listing-detail',compact('course','course_dates','linked_cat_id'));
 }
 
 /* Tennis Landing Page */
@@ -1058,6 +1067,8 @@ public function tennis_pro()
 /* Course Booking */
 public function course_booking(Request $request)
 {
+  $linked_cat_id = $request->linked_cat_id;
+  $early_bird_enable = 0;
   // Get Membership status 
   $membership_status_val = !empty($request->membership_status) ? $request->membership_status : 0;
 
@@ -1092,23 +1103,47 @@ public function course_booking(Request $request)
 
                 $course_cat = $course->type; 
                 $course_season = $course->season;
-                $cat = \DB::table('product_categories')->where('id',$course_cat)->first(); 
+                $cat = \DB::table('product_categories')->where('id',$course_cat)->first();                 
 
                 if($cat->slug == 'tennis'){
-                    $early_bird_enable = getAllValueWithMeta('check_tennis_percentage', 'early-bird');
-                    $percentage = getAllValueWithMeta('tennis_percentage', 'early-bird');
+                  $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$linked_cat_id)->first();
+                  if(!empty($earlybird_data)){
+                    $early_bird_enable = $earlybird_data->early_bird_option;
+                    $early_bird_date = $earlybird_data->early_bird_date;
+                    $early_bird_time = $earlybird_data->early_bird_time;
+                    $early_bird_utc_uk_diff = $earlybird_data->utc_uk_diff;
+                    $percentage = $earlybird_data->discount_percentage;
+                    $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+                    $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+                  }
                 }elseif($cat->slug == 'football'){
-                    $early_bird_enable = getAllValueWithMeta('check_football_percentage', 'early-bird');
-                    $percentage = getAllValueWithMeta('football_percentage', 'early-bird');
+                  $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$linked_cat_id)->first();
+                  if(!empty($earlybird_data)){
+                    $early_bird_enable = $earlybird_data->early_bird_option;
+                    $early_bird_date = $earlybird_data->early_bird_date;
+                    $early_bird_time = $earlybird_data->early_bird_time;
+                    $early_bird_utc_uk_diff = $earlybird_data->utc_uk_diff;
+                    $percentage = $earlybird_data->discount_percentage;
+                    $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+                    $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+                  }
                 }elseif($cat->slug == 'schools'){
-                    $early_bird_enable = getAllValueWithMeta('check_school_percentage', 'early-bird');
-                    $percentage = getAllValueWithMeta('school_percentage', 'early-bird');
+                  $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$linked_cat_id)->first();
+                  if(!empty($earlybird_data)){
+                    $early_bird_enable = $earlybird_data->early_bird_option;
+                    $early_bird_date = $earlybird_data->early_bird_date;
+                    $early_bird_time = $earlybird_data->early_bird_time;
+                    $early_bird_utc_uk_diff = $earlybird_data->utc_uk_diff;
+                    $percentage = $earlybird_data->discount_percentage;
+                    $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+                    $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+                  }
                 }
 
-                  $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
-                  $early_bird_time = getAllValueWithMeta('early_bird_time', 'early-bird');
-                  $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).' 23:59:00');
-                  $currntD = strtotime(date('Y-m-d H:i:s'));
+                  // $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
+                  // $early_bird_time = getAllValueWithMeta('early_bird_time', 'early-bird');
+                  // $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time);
+                  // $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);
 
                 $add_course = new ShopCartItems;
                 $add_course->shop_type  = 'course';
@@ -1118,14 +1153,15 @@ public function course_booking(Request $request)
                 $add_course->user_id    = \Auth::user()->id;
                 $add_course->course_season = $course_season;
                 $add_course->membership_status = $membership_status_val;
+                $add_course->earlybird_linked_cat_Id = $linked_cat_id;
 
-              if($currntD >= $endDate)
-              {   
-                  $add_course->price  = $course->price;
-                  $add_course->total  = $membership_status_val == 1 ? $course->membership_price : $course->price;
-                  $add_course->membership_price  = $course->membership_price;
-              }else{
-                if($early_bird_enable == '1'){
+              if($early_bird_enable == 1){                
+                if($currntD >= $endDate)
+                {   
+                    $add_course->price  = $course->price;
+                    $add_course->total  = $membership_status_val == 1 ? $course->membership_price : $course->price;
+                    $add_course->membership_price  = $course->membership_price;
+                }else{
                   $cour_price = $course->price;
                   $membership_price = !empty($course->membership_price) ? $course->membership_price : 0;
                   $dis_price = $cour_price - (($cour_price) * ($percentage/100));
@@ -1134,11 +1170,12 @@ public function course_booking(Request $request)
                   $add_course->price  = $dis_price;
                   $add_course->total  = $membership_status_val == 1 ? $membership_dis_price : $dis_price;
                   $add_course->membership_price  = $membership_dis_price;
-                }else{
-                  $add_course->price  = $course->price;
-                  $add_course->total  = $membership_status_val == 1 ? $course->membership_price : $course->price;
-                  $add_course->membership_price  = $course->membership_price;
+                  $add_course->earlybird_option  = 1;
                 }
+              }else{
+                $add_course->price  = $course->price;
+                $add_course->total  = $membership_status_val == 1 ? $course->membership_price : $course->price;
+                $add_course->membership_price  = $course->membership_price;
               }
 
                 $add_course->child_id = $child_id;
@@ -1195,20 +1232,44 @@ public function course_booking(Request $request)
               $cat = \DB::table('product_categories')->where('id',$course_cat)->first(); 
 
               if($cat->slug == 'tennis'){
-                  $early_bird_enable = getAllValueWithMeta('check_tennis_percentage', 'early-bird');
-                  $percentage = getAllValueWithMeta('tennis_percentage', 'early-bird');
+                $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$linked_cat_id)->first();
+                if(!empty($earlybird_data)){
+                  $early_bird_enable = $earlybird_data->early_bird_option;
+                  $early_bird_date = $earlybird_data->early_bird_date;
+                  $early_bird_time = $earlybird_data->early_bird_time;
+                  $early_bird_utc_uk_diff = $earlybird_data->utc_uk_diff;
+                  $percentage = $earlybird_data->discount_percentage;
+                  $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+                  $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+                }
               }elseif($cat->slug == 'football'){
-                  $early_bird_enable = getAllValueWithMeta('check_football_percentage', 'early-bird');
-                  $percentage = getAllValueWithMeta('football_percentage', 'early-bird');
+                $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$linked_cat_id)->first();
+                if(!empty($earlybird_data)){
+                  $early_bird_enable = $earlybird_data->early_bird_option;
+                  $early_bird_date = $earlybird_data->early_bird_date;
+                  $early_bird_time = $earlybird_data->early_bird_time;
+                  $early_bird_utc_uk_diff = $earlybird_data->utc_uk_diff;
+                  $percentage = $earlybird_data->discount_percentage;
+                  $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+                  $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+                }
               }elseif($cat->slug == 'schools'){
-                  $early_bird_enable = getAllValueWithMeta('check_school_percentage', 'early-bird');
-                  $percentage = getAllValueWithMeta('school_percentage', 'early-bird');
+                $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$linked_cat_id)->first();
+                if(!empty($earlybird_data)){
+                  $early_bird_enable = $earlybird_data->early_bird_option;
+                  $early_bird_date = $earlybird_data->early_bird_date;
+                  $early_bird_time = $earlybird_data->early_bird_time;
+                  $early_bird_utc_uk_diff = $earlybird_data->utc_uk_diff;
+                  $percentage = $earlybird_data->discount_percentage;
+                  $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+                  $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+                }
               }
 
-                $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
-                $early_bird_time = getAllValueWithMeta('early_bird_time', 'early-bird');
-                $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).' 23:59:00');
-                $currntD = strtotime(date('Y-m-d H:i:s'));
+                // $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
+                // $early_bird_time = getAllValueWithMeta('early_bird_time', 'early-bird');
+                // $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time);
+                // $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);
 
               $add_course = new ShopCartItems;
               $add_course->shop_type  = 'course';
@@ -1218,14 +1279,15 @@ public function course_booking(Request $request)
               $add_course->user_id    = \Auth::user()->id;
               $add_course->course_season = $course_season;
               $add_course->membership_status = $membership_status_val;
+              $add_course->earlybird_linked_cat_Id = $linked_cat_id;
 
-            if($currntD >= $endDate)
-            {   
-                $add_course->price  = $course->price;
-                $add_course->total  = $membership_status_val == 1 ? $course->membership_price : $course->price;
-                $add_course->membership_price  = $course->membership_price;
-            }else{
-              if($early_bird_enable == '1'){
+            if($early_bird_enable == 1){
+              if($currntD >= $endDate)
+              {   
+                  $add_course->price  = $course->price;
+                  $add_course->total  = $membership_status_val == 1 ? $course->membership_price : $course->price;
+                  $add_course->membership_price  = $course->membership_price;
+              }else{
                 $cour_price = $course->price;
                 $membership_price = !empty($course->membership_price) ? $course->membership_price : 0;
                 $dis_price = $cour_price - (($cour_price) * ($percentage/100));
@@ -1234,11 +1296,12 @@ public function course_booking(Request $request)
                 $add_course->price  = $dis_price;
                 $add_course->total  = $membership_status_val == 1 ? $membership_dis_price : $dis_price;
                 $add_course->membership_price  = $membership_dis_price;
-              }else{
-                $add_course->price  = $course->price;
-                $add_course->total  = $membership_status_val == 1 ? $course->membership_price : $course->price;
-                $add_course->membership_price  = $course->membership_price;
+                $add_course->earlybird_option  = 1;
               }
+            }else{
+              $add_course->price  = $course->price;
+              $add_course->total  = $membership_status_val == 1 ? $course->membership_price : $course->price;
+              $add_course->membership_price  = $course->membership_price;
             }
 
               $add_course->child_id = $child_id;
@@ -2459,7 +2522,8 @@ public function upload_inv_save(Request $request)
 {
   $this->validate($request,[
       'invoice_name' => 'required|max:255',
-      'invoice_document' => "required|mimetypes:application/pdf"
+      // 'invoice_document' => "required|mimetypes:application/pdf"
+      'invoice_document' => "required|mimes:jpeg,png,jpg,doc,docx,pdf,xls"
   ]);
 
   if(!empty($request->invoice_document))
@@ -4278,12 +4342,23 @@ public function save_goal(Request $request)
 
             if($value != null)
             {
-              /*SetGoal::where('parent_id',$request->parent_id)->where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->where('goal_id',$goaldata)->update(array('parent_comment' => $value, 'coach_id' => $coach_id));*/
-              SetGoal::where('parent_id',$request->parent_id)->where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->where('goal_id',$goaldata+1)->update(array('parent_comment' => $value[$goaldata+1], 'coach_id' => $coach_id));
+              SetGoal::where('parent_id',$request->parent_id)->where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->where('goal_id',$goaldata)->update(array('parent_comment' => $value, 'coach_id' => $coach_id));
+              /*SetGoal::where('parent_id',$request->parent_id)->where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->where('goal_id',$goaldata+1)->update(array('parent_comment' => $value[$goaldata+1], 'coach_id' => $coach_id));*/
             }
           // }
           
         }
+
+      // Get latest goal
+      $goaldata = SetGoal::where('parent_id',$request->parent_id)->where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->first();
+
+      if(!empty($goaldata)){
+        // Send mail to coach when user update their goal
+        $this->LinkedPlayerUploadGoalSuccess($goaldata->id); 
+        // Send notification to Coach when user update their goal
+        $goaldata->notify(new \App\Notifications\Coach\NewGoalNotification());
+      }
+      
         return \Redirect::back()->with('success','Goal data updated successfully.');
       }
 
@@ -4359,7 +4434,7 @@ public function save_comment_by_coach(Request $request)
     $goaldata = SetGoal::where('parent_id',$request->parent_id)->where('player_id',$request->goal_player_name)->where('goal_type',$request->pl_goal_type)->first();
 
     // Send email
-    $this->GoalCommentEmailUser($request->parent_id,$request->goal_player_name);     // Email to Parent
+    $this->GoalCommentEmailUser($request->parent_id,$request->goal_player_name,$goaldata->coach_id);     // Email to Parent
     // Send notification to parent
     $goaldata->notify(new \App\Notifications\User\GoalCommentNotification());
 
@@ -4599,7 +4674,7 @@ public function save_contact_us(Request $request)
     $output = '';
     if($request->ajax())
     {
-      if($check_coupon->status == 0){
+      if(!empty($check_coupon) && $check_coupon->status == 0){
         $output = '<div class="alert alert-danger" role="alert">Coupon is inactive.</div>'; 
       }
       elseif($check_coupon == '' && $shop_voucher == '')
@@ -4768,7 +4843,7 @@ public function save_contact_us(Request $request)
 
                 }elseif(in_array($cart->product_id,$selected_courses)){
 
-                  $prod = ShopCartItems::where('user_id',$user_id)->where('orderID', '=', NULL)->where('product_id',$cart->product_id)->first();
+                  $prod = ShopCartItems::where('user_id',$user_id)->where('orderID', '=', NULL)->where(['product_id' => $cart->product_id, 'child_id' => $cart->child_id])->first();
 
                   if($prod->discount_code != $coupon_code)
                   { 
@@ -4776,6 +4851,7 @@ public function save_contact_us(Request $request)
                     $pr->discount_code = $request->coupon_code;
                     $pr->discount_price = number_format($check_coupon->flat_discount,2);
                     $pr->save();
+                    $result = '<div class="alert alert-success" role="alert">Coupon applied successfully.</div>';
 
                   }else if($prod->discount_code == $coupon_code){
                     $result = '<div class="alert alert-success" role="alert">Coupon applied successfully.</div>';
@@ -4784,7 +4860,7 @@ public function save_contact_us(Request $request)
                   }
                 }elseif(in_array($cart->product_id,$selected_camps)){
 
-                  $prod = ShopCartItems::where('user_id',$user_id)->where('orderID', '=', NULL)->where('product_id',$cart->product_id)->first();
+                  $prod = ShopCartItems::where('user_id',$user_id)->where('orderID', '=', NULL)->where(['product_id' => $cart->product_id, 'child_id' => $cart->child_id])->first();
 
                   if($prod->discount_code != $coupon_code)
                   { 
@@ -4792,6 +4868,7 @@ public function save_contact_us(Request $request)
                     $pr->discount_code = $request->coupon_code;
                     $pr->discount_price = number_format($check_coupon->flat_discount,2);
                     $pr->save();
+                    $result = '<div class="alert alert-success" role="alert">Coupon applied successfully.</div>';
 
                   }else if($prod->discount_code == $coupon_code){
                     $result = '<div class="alert alert-success" role="alert">Coupon applied successfully.</div>';
@@ -5125,11 +5202,14 @@ public function newsletter_integration(Request $request)
         
         $this->NewsletterSuccess( $user_email );
       // Mail to user
-      /*\Mail::send('emails.newsletter.subscribe', ['user_email' => $user_email,'id' => $newsletter->id] , 
-           function($message) use($user_email){
-               $message->to($user_email);
-               $message->subject('Subject : '.'Subscribe By Admin');
-             });*/
+
+      // Mail::send('emails.newsletter.subscribe', ['user_email' => $user_email,'id' =>$newsletter->id] , 
+      //      function($message) use($user_email){
+      //          $message->to($user_email);
+      //         // $message->to('test1@yopmail.com');
+      //          $message->subject('Subject : '.'Subscribe By Admin');
+      //          $message->from(env('MAIL_USERNAME'),env('MAIL_FROM_NAME'));
+      //        });
 
 
       return view('newsletter_success',compact('entered_email'))->with('success',$entered_email. ' email is subscribed successfully.');
@@ -6256,18 +6336,23 @@ public function videosListing() {
       return view('cms.pay-go-course.listing',compact('testimonial','course','course_name','age_group','level','accordian','subtype'));
   }
 
-  public function payGoCourseDetails($id)
+  public function payGoCourseDetails($id,$linked_cat_id)
   {
       $decode_id = base64_decode($id);
+      $linked_cat_id = base64_decode($linked_cat_id);
       $course = PayGoCourse::where('id','=',$decode_id)->first();
       $course_dates = PaygocourseDate::where('course_id','=',$decode_id)->get();
-      return view('cms.pay-go-course.detail',compact('course','course_dates'));
+      return view('cms.pay-go-course.detail',compact('course','course_dates','linked_cat_id'));
   }
 
   /* Course Booking */
   public function payGoCourseBooking(Request $request)
   {
     // dd($request->all());
+    $linked_cat_id = $request->linked_cat_id;
+    $early_bird_enable = 0;
+    $early_bird_option_enable = 0;
+
     // Get Membership status 
     $membership_status_val = !empty($request->membership_status) ? $request->membership_status : 0;
 
@@ -6350,20 +6435,47 @@ public function videosListing() {
             //dd($cat);
 
             if($cat->slug == 'tennis'){
-                $early_bird_enable = getAllValueWithMeta('check_tennis_percentage', 'early-bird');
-                $percentage = getAllValueWithMeta('tennis_percentage', 'early-bird');
+              $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$linked_cat_id)->first();
+              if(!empty($earlybird_data)){
+                $early_bird_enable = $earlybird_data->early_bird_option;
+                $early_bird_option_enable = $earlybird_data->tennis_discount_percentage_option;
+                $early_bird_date = $earlybird_data->early_bird_date;
+                $early_bird_time = $earlybird_data->early_bird_time;
+                $early_bird_utc_uk_diff = $earlybird_data->utc_uk_diff;
+                $percentage = $earlybird_data->tennis_discount_percentage;
+                $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+                $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+              }
             }elseif($cat->slug == 'football'){
-                $early_bird_enable = getAllValueWithMeta('check_football_percentage', 'early-bird');
-                $percentage = getAllValueWithMeta('football_percentage', 'early-bird');
+              $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$linked_cat_id)->first();
+              if(!empty($earlybird_data)){
+                $early_bird_enable = $earlybird_data->early_bird_option;
+                $early_bird_option_enable = $earlybird_data->football_discount_percentage_option;
+                $early_bird_date = $earlybird_data->early_bird_date;
+                $early_bird_time = $earlybird_data->early_bird_time;
+                $early_bird_utc_uk_diff = $earlybird_data->utc_uk_diff;
+                $percentage = $earlybird_data->football_discount_percentage;
+                $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+                $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+              }
             }elseif($cat->slug == 'schools'){
-                $early_bird_enable = getAllValueWithMeta('check_school_percentage', 'early-bird');
-                $percentage = getAllValueWithMeta('school_percentage', 'early-bird');
+              $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$linked_cat_id)->first();
+              if(!empty($earlybird_data)){
+                $early_bird_enable = $earlybird_data->early_bird_option;
+                $early_bird_option_enable = $earlybird_data->school_discount_percentage_option;
+                $early_bird_date = $earlybird_data->early_bird_date;
+                $early_bird_time = $earlybird_data->early_bird_time;
+                $early_bird_utc_uk_diff = $earlybird_data->utc_uk_diff;
+                $percentage = $earlybird_data->school_discount_percentage;
+                $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+                $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+              }
             }
 
-              $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
-              $early_bird_time = getAllValueWithMeta('early_bird_time', 'early-bird');
-              $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).' 23:59:00');
-              $currntD = strtotime(date('Y-m-d H:i:s'));
+              // $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
+              // $early_bird_time = getAllValueWithMeta('early_bird_time', 'early-bird');
+              // $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time);
+              // $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);
 
             $add_course = new ShopCartItems;
             $add_course->shop_type  = 'paygo-course';
@@ -6373,34 +6485,34 @@ public function videosListing() {
             $add_course->user_id    = \Auth::user()->id;
             $add_course->course_season = $course_season;
             $add_course->membership_status = $membership_status_val;
+            $add_course->paygo_course_count = count($request->selected_date_ids);
+            $add_course->earlybird_linked_cat_Id = $linked_cat_id;
 
-          if($currntD >= $endDate)
-          {   
+          if($early_bird_enable == 1 && $early_bird_option_enable == 1){                
+            if($currntD >= $endDate)
+            {   
               $add_course->price  = $course->price;
               $add_course->total  = $allDatesTotalPrice;
               $add_course->paygo_course_price = $allDatesTotalPrice;
               $add_course->membership_price  = $course->membership_price;
-          }else{
-            if($early_bird_enable == '1'){
+            }else{
               $cour_price = $course->price;
               $dis_price = $cour_price - (($cour_price) * ($percentage/100));
               $add_course->price  = $dis_price;
 
-              $cour_price = $allDatesTotalPrice;
-              $dis_price = $cour_price - (($cour_price) * ($percentage/100));
-
-              $add_course->total  = $dis_price;
-              $add_course->paygo_course_price = $dis_price;
+              $add_course->total  = $allDatesTotalPrice;
+              $add_course->paygo_course_price = $allDatesTotalPrice;
 
               $member_price = $course->membership_price;
               $membership_dis_price = $member_price - (($member_price) * ($percentage/100));
               $add_course->membership_price  = $membership_dis_price;
-            }else{
-              $add_course->price  = $course->price;
-              $add_course->total  = $allDatesTotalPrice;
-              $add_course->paygo_course_price = $allDatesTotalPrice;
-              $add_course->membership_price  = $course->membership_price;
+              $add_course->earlybird_option  = 1;
             }
+          }else{
+            $add_course->price  = $course->price;
+            $add_course->total  = $allDatesTotalPrice;
+            $add_course->paygo_course_price = $allDatesTotalPrice;
+            $add_course->membership_price  = $course->membership_price;
           }
 
             $add_course->child_id = $child_id;
@@ -6462,20 +6574,47 @@ public function videosListing() {
         $cat = \DB::table('product_categories')->where('id',$course_cat)->first(); 
 
         if($cat->slug == 'tennis'){
-            $early_bird_enable = getAllValueWithMeta('check_tennis_percentage', 'early-bird');
-            $percentage = getAllValueWithMeta('tennis_percentage', 'early-bird');
+          $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$linked_cat_id)->first();
+          if(!empty($earlybird_data)){
+            $early_bird_enable = $earlybird_data->early_bird_option;
+            $early_bird_option_enable = $earlybird_data->tennis_discount_percentage_option;
+            $early_bird_date = $earlybird_data->early_bird_date;
+            $early_bird_time = $earlybird_data->early_bird_time;
+            $early_bird_utc_uk_diff = $earlybird_data->utc_uk_diff;
+            $percentage = $earlybird_data->tennis_discount_percentage;
+            $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+            $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+          }
         }elseif($cat->slug == 'football'){
-            $early_bird_enable = getAllValueWithMeta('check_football_percentage', 'early-bird');
-            $percentage = getAllValueWithMeta('football_percentage', 'early-bird');
+          $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$linked_cat_id)->first();
+          if(!empty($earlybird_data)){
+            $early_bird_enable = $earlybird_data->early_bird_option;
+            $early_bird_option_enable = $earlybird_data->football_discount_percentage_option;
+            $early_bird_date = $earlybird_data->early_bird_date;
+            $early_bird_time = $earlybird_data->early_bird_time;
+            $early_bird_utc_uk_diff = $earlybird_data->utc_uk_diff;
+            $percentage = $earlybird_data->football_discount_percentage;
+            $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+            $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+          }
         }elseif($cat->slug == 'schools'){
-            $early_bird_enable = getAllValueWithMeta('check_school_percentage', 'early-bird');
-            $percentage = getAllValueWithMeta('school_percentage', 'early-bird');
+          $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$linked_cat_id)->first();
+          if(!empty($earlybird_data)){
+            $early_bird_enable = $earlybird_data->early_bird_option;
+            $early_bird_option_enable = $earlybird_data->school_discount_percentage_option;
+            $early_bird_date = $earlybird_data->early_bird_date;
+            $early_bird_time = $earlybird_data->early_bird_time;
+            $early_bird_utc_uk_diff = $earlybird_data->utc_uk_diff;
+            $percentage = $earlybird_data->school_discount_percentage;
+            $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+            $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+          }
         }
 
-          $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
-          $early_bird_time = getAllValueWithMeta('early_bird_time', 'early-bird');
-          $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).' 23:59:00');
-          $currntD = strtotime(date('Y-m-d H:i:s'));
+          // $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
+          // $early_bird_time = getAllValueWithMeta('early_bird_time', 'early-bird');
+          // $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time);
+          // $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);
 
         $add_course = new ShopCartItems;
         $add_course->shop_type  = 'paygo-course';
@@ -6485,6 +6624,8 @@ public function videosListing() {
         $add_course->user_id    = \Auth::user()->id;
         $add_course->course_season = $course_season;
         $add_course->membership_status = $membership_status_val;
+        $add_course->paygo_course_count = count($request->selected_date_ids);
+        $add_course->earlybird_linked_cat_Id = $linked_cat_id;
 
       /*if($currntD >= $endDate)
       {   
@@ -6502,33 +6643,31 @@ public function videosListing() {
           $add_course->total  = $course->price;
         }
       }*/
-      if($currntD >= $endDate)
-        {   
-            $add_course->price  = $course->price;
-            $add_course->total  = $allDatesTotalPrice;
-            $add_course->paygo_course_price = $allDatesTotalPrice;
-            $add_course->membership_price  = $course->membership_price;
-        }else{
-          if($early_bird_enable == '1'){
+      if($early_bird_enable == 1 && $early_bird_option_enable == 1){
+        if($currntD >= $endDate)
+          {   
+              $add_course->price  = $course->price;
+              $add_course->total  = $allDatesTotalPrice;
+              $add_course->paygo_course_price = $allDatesTotalPrice;
+              $add_course->membership_price  = $course->membership_price;
+          }else{
             $cour_price = $course->price;
             $dis_price = $cour_price - (($cour_price) * ($percentage/100));
             $add_course->price  = $dis_price;
-            
-            $cour_price = $allDatesTotalPrice;
-            $dis_price = $cour_price - (($cour_price) * ($percentage/100));
 
-            $add_course->total  = $dis_price;
-            $add_course->paygo_course_price = $dis_price;
+            $add_course->total  = $allDatesTotalPrice;
+            $add_course->paygo_course_price = $allDatesTotalPrice;
 
             $member_price = $course->membership_price;
             $membership_dis_price = $member_price - (($member_price) * ($percentage/100));
             $add_course->membership_price  = $membership_dis_price;
-          }else{
-            $add_course->price  = $course->price;
-            $add_course->total  = $allDatesTotalPrice;
-            $add_course->paygo_course_price = $allDatesTotalPrice;
-            $add_course->membership_price  = $course->membership_price;
+            $add_course->earlybird_option  = 1;
           }
+        }else{
+          $add_course->price  = $course->price;
+          $add_course->total  = $allDatesTotalPrice;
+          $add_course->paygo_course_price = $allDatesTotalPrice;
+          $add_course->membership_price  = $course->membership_price;
         }
 
         $add_course->child_id = $child_id;

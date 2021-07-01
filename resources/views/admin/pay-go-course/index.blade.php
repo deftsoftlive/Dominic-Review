@@ -26,6 +26,7 @@
                     <div class="card-header">
                         <h5>{{$title}}</h5>
                         <div class="cst-admin-filter">
+                            <a href="{{ url(route('export_pay_go_course_register_for_all')) }}" class="btn btn-primary">Export All Registers</a>
                             <a href="{{ url(route($addLink)) }}" class="btn btn-primary">Add</a>
                             <a href="{{ route('admin.pay.go.course.list') }}" id="all_course_listing" class="btn btn-primary">All Courses</a>
                             <a href="{{ route('admin.pay.go.course.in-active') }}" class="btn btn-primary">In-active Courses</a>

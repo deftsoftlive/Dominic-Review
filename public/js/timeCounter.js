@@ -36,7 +36,9 @@ function initializeClock(id, endtime) {
   
   function updateClock() {
     var t = getTimeRemaining(endtime);
-    
+    if(t.days == 0 && t.hours == 0 && t.minutes == 0 && t.seconds == 0){
+      location.reload();
+    }
    
     daysSpan.innerHTML = t.days;
     hoursSpan.innerHTML = ('0' + t.hours).slice(-2);

@@ -97,7 +97,7 @@
               <b>Course </b>
           </td>
           <td class="cart-table__column cart-table__column--product">
-              <a href="{{url('/course-detail')}}/@php echo base64_encode($course->id); @endphp" class="cart-table__product-name">{{$course->title}}</a>
+              <a href="{{url('course-detail',base64_encode($course->id))}}/@php echo base64_encode($item->earlybird_linked_cat_Id) @endphp" class="cart-table__product-name">{{$course->title}}</a>
 
               <ul class="cart-table__options">
                 <li>@if($item->child_id == $login_user) Account Holder @else {{$child->type}} : @endif  
@@ -146,7 +146,7 @@
               <b>Course </b>
           </td>
           <td class="cart-table__column cart-table__column--product">
-              <a href="{{ route( 'user.paygo.course.details', $idPayGo ) }}" class="cart-table__product-name">{{$course->title}}</a>
+              <a href="{{url('pay-go-course-detail', $idPayGo) }}/@php echo base64_encode($item->earlybird_linked_cat_Id) @endphp" class="cart-table__product-name">{{$course->title}}</a>
 
               <ul class="cart-table__options">
                 <li>@if($item->child_id == $login_user) Account Holder:  @else {{$child->type}} : @endif  

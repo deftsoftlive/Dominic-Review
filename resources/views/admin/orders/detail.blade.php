@@ -171,7 +171,7 @@
 
                                           @if($cart->membership_status == 1 && $cart->membership_price > 0)
                                             <p><b>Member Price</b> : Yes </p>
-                                          @elseif($cart->membership_status == 1 && $cart->membership_price == null)
+                                          @elseif($cart->membership_status == 1 && $cart->membership_price == null || $cart->membership_price == 0)
                                             <p><b>Member</b> : Yes </p>
                                           @else
                                             <p><b>Member Price/Member</b> : No </p>

@@ -167,57 +167,79 @@
 
                                   @php
                                     $cat = DB::table('product_categories')->where('id',$course_cat)->first();
-                                    $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
-                                    $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).' 23:59:00'); 
-                                    $currntD = strtotime(date('Y-m-d H:i:s'));  
+                                    $early_bird_enable = 0;
                                   @endphp
 
                                   @if($cat->slug == 'tennis')
                                     @php 
-                                      $early_bird_enable = getAllValueWithMeta('check_tennis_percentage', 'early-bird');
-                                      $percentage = getAllValueWithMeta('tennis_percentage', 'early-bird');
+                                      $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$linked_cat_id)->first();
+                                      if(!empty($earlybird_data)){
+                                        $early_bird_enable = $earlybird_data->early_bird_option;
+                                        $early_bird_date = $earlybird_data->early_bird_date;
+                                        $early_bird_time = $earlybird_data->early_bird_time;
+                                        $early_bird_utc_uk_diff = $earlybird_data->utc_uk_diff;
+                                        $percentage = $earlybird_data->discount_percentage;
+
+                                        $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+                                        $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+                                      }
                                     @endphp
                                   @elseif($cat->slug == 'football')
-                                    @php
-                                      $early_bird_enable = getAllValueWithMeta('check_football_percentage', 'early-bird');
-                                      $percentage = getAllValueWithMeta('football_percentage', 'early-bird');
+                                    @php 
+                                      $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$linked_cat_id)->first();
+                                      if(!empty($earlybird_data)){
+                                        $early_bird_enable = $earlybird_data->early_bird_option;
+                                        $early_bird_date = $earlybird_data->early_bird_date;
+                                        $early_bird_time = $earlybird_data->early_bird_time;
+                                        $early_bird_utc_uk_diff = $earlybird_data->utc_uk_diff;
+                                        $percentage = $earlybird_data->discount_percentage;
+                                        $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+                                        $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+                                      }
                                     @endphp
                                   @elseif($cat->slug == 'schools')
-                                    @php
-                                      $early_bird_enable = getAllValueWithMeta('check_school_percentage', 'early-bird');
-                                      $percentage = getAllValueWithMeta('school_percentage', 'early-bird');
+                                    @php 
+                                      $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$linked_cat_id)->first();
+                                      if(!empty($earlybird_data)){
+                                        $early_bird_enable = $earlybird_data->early_bird_option;
+                                        $early_bird_date = $earlybird_data->early_bird_date;
+                                        $early_bird_time = $earlybird_data->early_bird_time;
+                                        $early_bird_utc_uk_diff = $earlybird_data->utc_uk_diff;
+                                        $percentage = $earlybird_data->discount_percentage;
+                                        $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time); 
+                                        $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);  
+                                      }
                                     @endphp
                                   @endif
 
                                   @php 
+                                    if($early_bird_enable == 1){                                
+                                      if($currntD >= $endDate){
+                                        //Check membership status and show membership price
+                                        if(Session::get('membership_status') == 'Yes'){
+                                          $courseCost = number_format((float)$course->membership_price, 2, '.', '');
+                                        }else{
+                                          $courseCost = number_format((float)$course->price, 2, '.', '');
+                                        }
 
-                                  if($currntD >= $endDate){
-                                    //Check membership status and show membership price
-                                    if(Session::get('membership_status') == 'Yes'){
-                                      $courseCost = number_format((float)$course->membership_price, 2, '.', '');
-                                    }else{
-                                      $courseCost = number_format((float)$course->price, 2, '.', '');
-                                    }
-
-                                  }else{
-                                    if($early_bird_enable == '1'){
-                                      //Check membership status and show membership discount price  
-                                      if(Session::get('membership_status') == 'Yes'){
-                                        $mem_cour_price = $course->membership_price;
-                                        $courseCost = $mem_cour_price - (($mem_cour_price) * ($percentage/100));
                                       }else{
-                                        $cour_price = $course->price;
-                                        $courseCost = $cour_price - (($cour_price) * ($percentage/100));
+                                        //Check membership status and show membership discount price  
+                                        if(Session::get('membership_status') == 'Yes'){
+                                          $mem_cour_price = $course->membership_price;
+                                          $courseCost = $mem_cour_price - (($mem_cour_price) * ($percentage/100));
+                                        }else{
+                                          $cour_price = $course->price;
+                                          $courseCost = $cour_price - (($cour_price) * ($percentage/100));
+                                        }
                                       }
                                     }else{
                                       //Check membership status and show membership price
-                                      if(Session::get('membership_status') == 'Yes'){
-                                        $courseCost = number_format((float)$course->membership_price, 2, '.', '');
-                                      }else{
-                                        $courseCost = number_format((float)$course->price, 2, '.', '');
-                                      }
+                                        if(Session::get('membership_status') == 'Yes'){
+                                          $courseCost = number_format((float)$course->membership_price, 2, '.', '');
+                                        }else{
+                                          $courseCost = number_format((float)$course->price, 2, '.', '');
+                                        }
                                     }
-                                  }
                                   @endphp 
 
                                   @foreach($course_dates as $date)
@@ -415,6 +437,7 @@
                                   
                               
                                   <input type="hidden" name="course_id" id="course_id" value="{{$course->id}}">
+                                  <input type="hidden" name="linked_cat_id" value="{{$linked_cat_id}}">
                                   <p class="cst-fees"><span>£<input type="text" name="final_paygo_price" id = "final_paygo_price" value="{{ 0 }}" readonly>   </p>
 
                                   @endif

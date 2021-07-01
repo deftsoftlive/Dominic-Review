@@ -28,7 +28,7 @@
                 <div class="col-xl-12">
                     <div class="card">
                         <div class="card-header">
-                        <h5>Invoice PDF</h5>
+                        <h5>Invoice</h5>
                         <div class="cst-admin-filter">
                             <a href="{{ route('uploaded_invoice') }}" id="all_users" class="btn btn-primary">All Invoices</a>
                             <a href="{{ route('new_uploaded_invoice') }}" class="btn btn-primary">New Invoices</a>
@@ -62,7 +62,7 @@
                                     <!-- <th>Description</th> -->
                                     <th>Uploaded Invoice</th> 
                                     <th>Status</th>
-                                    <th>View PDF</th>
+                                    <th>View Invoice</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -169,7 +169,7 @@ jQuery(document).ready(function() {
     function fetch_coach_data(query = '')
     {
       $.ajax({
-        url:"http://demo.drhsports.co.uk/admin/coach_search/",
+        url:"{{ route('coach_search') }}",
         method:'GET',
         data:{query:query},
         dataType:'json',

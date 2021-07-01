@@ -139,7 +139,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                             <input type="hidden" id="player_id" name="player_id" value="{{isset($user_id) ? $user_id : ''}}">
                             <input type="hidden" id="rp_type" name="rp_type" value="simple">
 
-                            <div class="row">
+                            <div class="row cstm-row">
                                 @php
                                     $report_questions = DB::table('report_questions')->get(); 
                                 @endphp
@@ -166,7 +166,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                                 @endforeach
                                 @endif
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 d-f">
                                     <div class="inner-form-box">
                                         <p class="top-heading">{{$ques->title}}</p>
                                         <div class="form-wrap">
@@ -200,7 +200,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
 
                                 @else
                                     
-                                <div class="col-md-6">
+                                <div class="col-md-6 d-f">
                                     <div class="inner-form-box">
                                         <p class="top-heading">{{$ques->title}}</p>
                                         <div class="form-wrap">
@@ -443,7 +443,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
                             <div class="m-b-table">
                                 <br/>
 
-                                <div class="player-report-table tbl_shadow records_wrap">
+                                <div class="player-report-table tbl_shadow records_wrap cstm-scroll">
                                     <div class="report-table-wrap">
                              
                                     <div class="m-b-table">
@@ -568,7 +568,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
 
                                     <option disabled="" selected="">Select Player</option>
                                     @php 
-                                        $players = DB::table('parent_coach_reqs')->where('status',1)->orderBy('id','asc')->get();
+                                        $players = DB::table('parent_coach_reqs')->where(['coach_id' => Auth::user()->id,'status' => 1])->orderBy('id','asc')->get();
                                     @endphp
                                     @foreach($players as $bd)
                                         @php $user = DB::table('users')->where('id',$bd->child_id)->first(); @endphp

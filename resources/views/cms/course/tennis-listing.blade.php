@@ -278,57 +278,63 @@
           </div>
 
           @php 
-            $early_bird_enable = getAllValueWithMeta('check_tennis_percentage', 'early-bird');
-            $early_bird_tennis_dis = getAllValueWithMeta('tennis_percentage', 'early-bird');
-            $early_bird_date = getAllValueWithMeta('early_bird_date', 'early-bird'); 
-            $early_bird_time = getAllValueWithMeta('early_bird_time', 'early-bird');
+            $early_bird_enable = 0;
 
-            $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).' 23:59:00');
-            $currntD = strtotime(date('Y-m-d H:i:s'));
-            $diff = $endDate - $currntD;
+            $earlybird_data = \App\EarlyBirdManagementCourse::where('course_category_id',$cat)->first();
 
-            $years = floor($diff / (365*60*60*24));  
-            $months = floor(($diff - $years * 365*60*60*24) 
-                               / (30*60*60*24));  
-            $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24)); 
-            $hours = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24) / (60*60)); 
-            $minutes = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60)/ 60);
-            $seconds = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60 - $minutes*60)); 
+
+            if(!empty($earlybird_data)){
+              $early_bird_enable = $earlybird_data->early_bird_option;
+              $early_bird_dis = $earlybird_data->discount_percentage;
+              $early_bird_date = $earlybird_data->early_bird_date;
+              $early_bird_time = $earlybird_data->early_bird_time;
+              $early_bird_utc_uk_diff = $earlybird_data->utc_uk_diff;
+
+              $endDate = strtotime(date('Y-m-d',strtotime($early_bird_date)).$early_bird_time);
+              $currntD = strtotime(date('Y-m-d H:i:s')) + ($early_bird_utc_uk_diff*60*60);
+              $diff = $endDate - $currntD;
+
+              $years = floor($diff / (365*60*60*24));  
+              $months = floor(($diff - $years * 365*60*60*24) 
+                                 / (30*60*60*24));  
+              $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24)); 
+              $hours = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24) / (60*60)); 
+              $minutes = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60)/ 60);
+              $seconds = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60 - $minutes*60)); 
+            }
           @endphp
 
 
-        @if($currntD >= $endDate)
+          @if($early_bird_enable == 1)
+            @if($currntD >= $endDate)
 
-        @else
-          @if($early_bird_enable == '1')
-            <div class="col-md-12">
-              <div class="event-sec-heading">
-                <h1>Early Bird Discount</h1>
+            @else
+              <div class="col-md-12">
+                <div class="event-sec-heading">
+                  <h1>{{ !empty($earlybird_data) ? $earlybird_data->early_bird_text1 : "Early Bird Discount" }}</h1>
+                </div>
               </div>
-            </div>
-            <div class="col-md-8 offset-md-2">
-              <div class="Countdown-timer-content">
-                  <h2 class="Countdown-heading">Prices Go Up When The Timer Hits Zero!</h2>
+              <div class="col-md-8 offset-md-2">
+                <div class="Countdown-timer-content">
+                  <h2 class="Countdown-heading">{{ !empty($earlybird_data) ? $earlybird_data->early_bird_text2 : "Prices Go Up When The Timer Hits Zero!" }}</h2>
                   <div class="Countdown-timer-wrap">
                     <div id="clockDiv_{{$early_bird_enable}}" class="Countdown-timer">
-
-                          <span class="Cdays "> &nbsp;{{$days}} </span>&nbsp; Days : &nbsp;
-                          <span class="Chr "> &nbsp;{{$hours}} </span>&nbsp; Hours : &nbsp;
-                          <span class="Cmin "> &nbsp;{{$minutes}} </span>&nbsp; Mins : &nbsp;
-                          <span class="Csec seconds_time " > &nbsp;{{$seconds}} </span>&nbsp; Secs
-
+                      <span class="Cdays "> &nbsp;{{$days}} </span>&nbsp; Days : &nbsp;
+                      <span class="Chr "> &nbsp;{{$hours}} </span>&nbsp; Hours : &nbsp;
+                      <span class="Cmin "> &nbsp;{{$minutes}} </span>&nbsp; Mins : &nbsp;
+                      <span class="Csec seconds_time " > &nbsp;{{$seconds}} </span>&nbsp; Secs
                       @php     
                         echo'<script>
                             var deadline = new Date(Date.parse(new Date()) +('. $diff.'* 1000)); 
                             initializeClock("clockDiv_'.$early_bird_enable.'", deadline);
                           </script>';
                       @endphp
-                      </div>
                     </div>
+                  </div>
                 </div>
-          </div>
-          @endif   
-        @endif    
+              </div>
+            @endif   
+          @endif    
 
           <!-- ********************************
           |     Courses Management - End Here
@@ -393,26 +399,26 @@
                     </div>
                     <div class="event-booking">
                     <h1 class="event-booking-price"><span>Price : </span>
-
-                    @if($currntD >= $endDate)
-                      <div class="product-price">£{{number_format((float)$cour->price, 2, '.', '')}}</div>
-                    @else
-                      @if($early_bird_enable == '1')
-                        @php 
-                          $cour_price = $cour->price;
-                          $dis_price = $cour_price - (($cour_price) * ($early_bird_tennis_dis/100));
-                        @endphp
-                        <div class="product-price"><small>£{{$cour->price}}</small>£{{$dis_price}}</div>
+                      @if($early_bird_enable == 1)
+                        @if($currntD >= $endDate)
+                          <div class="product-price">£{{number_format((float)$cour->price, 2, '.', '')}}</div>
+                        @else
+                          @php 
+                            $cour_price = $cour->price;
+                            $dis_price = $cour_price - (($cour_price) * ($early_bird_dis/100));
+                          @endphp
+                          <div class="product-price"><small>£{{number_format((float)$cour->price, 2, '.', '')}}</small>£{{number_format((float)$dis_price, 2, '.', '')}}</div>
+                        @endif
                       @else
-                        <div class="product-price">£{{$dis_price}}</div>
+                        <div class="product-price">£{{number_format((float)$cour->price, 2, '.', '')}}</div>
                       @endif
-                    @endif
                     </h1>
+
                     @php //dd($cour->set_course_type_default); @endphp
                     @if( isset( $cour->set_course_type_default ) &&  $cour->set_course_type_default == 1 )
-                      <a href="{{url('course-detail')}}/@php echo base64_encode($cour->id); @endphp" class="cstm-btn main_button">More Info</a>
+                      <a href="{{url('course-detail',base64_encode($cour->id))}}/@php echo base64_encode($cat); @endphp" class="cstm-btn main_button">More Info</a>
                     @else
-                      <a href="{{route('user.paygo.course.details', base64_encode($cour->id)) }} " class="cstm-btn main_button">More Info</a>
+                      <a href="{{url('pay-go-course-detail', base64_encode($cour->id)) }}/@php echo base64_encode($cat); @endphp" class="cstm-btn main_button">More Info</a>
                     @endif
                   </div>                
 
@@ -420,7 +426,18 @@
                     <div class="event-booking cstm-member-booking">
                       <h1 class="event-booking-price">
                         <span>Member Price : 
-                          <div class="product-price">£{{number_format((float)$cour->membership_price, 2, '.', '')}}</div>
+                          @if($early_bird_enable == 1)
+                            @if($currntD >= $endDate)
+                              <div class="product-price">£{{number_format((float)$cour->membership_price, 2, '.', '')}}</div>
+                            @else
+                              @php 
+                                $dis_mem_price = $cour->membership_price - (($cour->membership_price) * ($early_bird_dis/100));
+                              @endphp                              
+                              <div class="product-price"><small>£{{number_format((float)$cour->membership_price, 2, '.', '')}}</small>£{{$dis_mem_price}}</div>
+                            @endif
+                          @else
+                            <div class="product-price">£{{number_format((float)$cour->membership_price, 2, '.', '')}}</div>
+                          @endif
                         </span>
                       </h1>
                     </div>

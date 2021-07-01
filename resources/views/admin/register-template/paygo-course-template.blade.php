@@ -37,6 +37,7 @@ td.checkbox_course {
                         <h5>Course : {{$course->title}}</h5>
 
                         <button id="print_course" class="btn btn-primary d-print-none">Print</button>
+                        <a href="{{ route('export_pay_go_course_register',$course->id) }}" class="btn btn-primary d-print-none">Export Register</a>
                        
                     </div>
                     

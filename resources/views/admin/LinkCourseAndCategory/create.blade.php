@@ -41,7 +41,8 @@
                     <label class="label-file control-label">Linked Course</label>
                     <select name="linked_course_cat" class="select-player">
                       <option value="156">Tennis</option>
-                      <option value="158">School</option>
+                      <option value="157">Football</option>
+                      <option value="191">School</option>
                     </select>
                   </div>
 

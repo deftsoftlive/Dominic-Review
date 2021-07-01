@@ -29,6 +29,7 @@
                     <div class="card-header">
                         <h5>{{$title}}</h5>
                         <div class="cst-admin-filter">
+                            <a href="{{ url(route('export_course_register_for_all')) }}" class="btn btn-primary">Export All Registers</a>
                             <a href="{{ url(route($addLink)) }}" class="btn btn-primary">Add</a>
                             <a href="{{ url('admin/course') }}" id="all_course_listing" class="btn btn-primary">All Courses</a>
                             <a href="{{ route('admin.course.in-active') }}" class="btn btn-primary">In-active Courses</a>
@@ -150,7 +151,7 @@
 
                             @php 
                                 $cour_id = $test->id; 
-                                $purchased_courses = DB::table('shop_cart_items')->where('shop_type','course')->where('product_id',$cour_id)->where('type','order')->count();
+                                $purchased_courses = DB::table('shop_cart_items')->where('shop_type','course')->where('product_id',$cour_id)->where('type','order')->where('orderID','!=',NULL)->count();
                                 $booked_courses = !empty($purchased_courses) ? $purchased_courses : '0';
                             @endphp
                                 <tr>

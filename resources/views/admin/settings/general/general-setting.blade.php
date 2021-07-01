@@ -216,6 +216,7 @@
 <script src="{{ asset('js/cke_config.js') }}"></script>
 <script type="text/javascript">
   CKEDITOR.replace('thanku_page_text', options);
+  CKEDITOR.replace('match_stats_text', options);
   CKEDITOR.replace('membership_popup_text', options);
   CKEDITOR.replace('after_membership_popup_text', options);
 </script>

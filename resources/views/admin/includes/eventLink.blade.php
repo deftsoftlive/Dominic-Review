@@ -141,11 +141,11 @@
                 |       COURSES MANAGEMENT
                 |
                 |********************************* -->
-                <li class="nav-item pcoded-hasmenu <?= ActiveMenu(['admin.course.list','admin.course.showCreate','admin.seasons.list','admin.seasons.showCreate'], 'pcoded-trigger') ?> {{ request()->is('admin/settings/general/edit/early-bird') ? 'active' : '' || \Request::route()->getName() === 'admin.course.list' ? 'active' : '' || \Request::route()->getName() === 'admin.seasons.list' ? 'active' : '' }} {{ request()->is('admin/course/create') ? 'active' : '' || request()->is('admin/course/*') ? 'active' : '' || request()->is('admin/seasons/create') ? 'active' : '' || request()->is('admin/seasons/*') ? 'active' : ''  ? 'active' : '' || request()->is('admin/course-category/create') ? 'active' : '' || request()->is('admin/course-category/*') ? 'active' : ''  ? 'active' : '' || \Request::route()->getName() === 'admin.LinkCourseAndCategory.list' ? 'active' : ''}} " >
+                <li class="nav-item pcoded-hasmenu <?= ActiveMenu(['admin.course.list','admin.course.showCreate','admin.seasons.list','admin.seasons.showCreate'], 'pcoded-trigger') ?> {{ request()->is('admin/settings/general/edit/early-bird') ? 'active' : '' || \Request::route()->getName() === 'admin.course.list' ? 'active' : '' || \Request::route()->getName() === 'admin.seasons.list' ? 'active' : '' }} {{ request()->is('admin/course/create') ? 'active' : '' || request()->is('admin/course/*') ? 'active' : '' || request()->is('admin/seasons/create') ? 'active' : '' || request()->is('admin/seasons/*') ? 'active' : ''  ? 'active' : '' || request()->is('admin/course-category/create') ? 'active' : '' || request()->is('admin/course-category/*') ? 'active' : ''  ? 'active' : '' || \Request::route()->getName() === 'admin.LinkCourseAndCategory.list' ? 'active' : ''}} {{ request()->is('admin/early_bird/*') ? 'active' : '' }}" >
 
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon">
                     <i class="fas fa-cubes"></i></span><span class="pcoded-mtext">Courses Management</span></a>
-                    <ul class="pcoded-submenu" style="display: <?= request()->is('admin/settings/general/edit/early-bird') ? 'block' : '' || request()->is('admin/course') ? 'block' : '' || request()->is('admin/course/create') ? 'block' : '' || request()->is('admin/course/*') ? 'block' : ''  ? 'block' : '' || \Request::route()->getName() === 'admin.LinkCourseAndCategory.list' ? 'block' : '' ?>;">
+                    <ul class="pcoded-submenu" style="display: <?= request()->is('admin/settings/general/edit/early-bird') ? 'block' : '' || request()->is('admin/course') ? 'block' : '' || request()->is('admin/course/create') ? 'block' : '' || request()->is('admin/course/*') ? 'block' : ''  ? 'block' : '' || \Request::route()->getName() === 'admin.LinkCourseAndCategory.list' ? 'block' : '' || request()->is('admin/early_bird/*') ? 'block' : '' ?>;">
 
                         <li class="{{ \Request::route()->getName() === 'admin.course.list' ? 'active' : '' || request()->is('admin/course/create') ? 'active' : '' || request()->is('admin/course/*') ? 'active' : '' }}"><a href="{{url(route('admin.course.list'))}}" class="">Courses</a></li>
 
@@ -153,7 +153,9 @@
 
                         <li class="{{ \Request::route()->getName() === 'admin.seasons.list' ? 'active' : '' || request()->is('admin/seasons/create') ? 'active' : '' || request()->is('admin/seasons/*') ? 'active' : '' }}"><a href="{{url(route('admin.seasons.list'))}}" class="">Seasons</a></li>
 
-                        <li class="{{ request()->is('admin/settings/general/edit/early-bird') ? 'active' : ''}} "><a href="{{url('admin/settings/general/edit/early-bird')}}" class="">Early Bird Management</a></li>
+                        <!-- <li class="{{ request()->is('admin/settings/general/edit/early-bird') ? 'active' : ''}} "><a href="{{url('admin/settings/general/edit/early-bird')}}" class="">Early Bird Management</a></li> -->
+
+                        <li class="{{ request()->is('admin/early_bird/*') ? 'active' : ''}} "><a href="{{ route('admin.early_bird.list') }}" class="">Early Bird Management</a></li>
 
                         <li class="{{ request()->is('admin/pay-go-course') ? 'active' : ''}} "><a href="{{url('admin/pay-go-course')}}" class="">Pay-as-you-go-course</a></li>
                     </ul>

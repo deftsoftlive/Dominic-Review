@@ -4,6 +4,7 @@
 <section class="course-detail-table">
     <div class="container">
         <button class="btn btn-primary d-print-none" onClick="window.print()">Print</button>
+        <a href="{{ route('export_camp_register',['id' => $camp->id, 'week' => 'W1']) }}" class="btn btn-primary d-print-none">Export Register</a>
         <a href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?&week={{ app('request')->input('week') }}" style="float:right;" class="btn btn-primary d-print-none">Go back to full week view</a>
         <a href="{{url('/admin/register-template/camp')}}/{{$camp->id}}?&week=W1" style="float:right;" class="btn btn-primary d-print-none">Back</a>
         <div class="inner-cont">
@@ -34,7 +35,7 @@
                         @php 
                             $session_data = json_decode($camp_price->selected_session); 
                             $i=1; 
-                            unset($session_data->fullday);
+                            //unset($session_data->fullday);
                             //unset($session_data['fullday']);
                             //echo "<pre>";
                             //print_r($session_data);
@@ -66,31 +67,31 @@
                         @else
                             @foreach($admin_selected as $key=>$we)                                
                                 @if($key == $week_key_value)
-                                    @if(!empty($we->Monday) || !empty($we->Fullweek))
+                                    @if(!empty($we->Monday))
                                         <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Monday">Monday</a></th>
                                         @php
                                             array_push($newWeekKeys, 'Monday');
                                         @endphp
                                     @endif
-                                    @if(!empty($we->Tuesday) || !empty($we->Fullweek))
+                                    @if(!empty($we->Tuesday))
                                         <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Tuesday">Tuesday</a></th>
                                         @php
                                             array_push($newWeekKeys, 'Tuesday');
                                         @endphp
                                     @endif
-                                    @if(!empty($we->Wednesday) || !empty($we->Fullweek))
+                                    @if(!empty($we->Wednesday))
                                         <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Wednesday">Wednesday</a></th>
                                         @php
                                             array_push($newWeekKeys, 'Wednesday');
                                         @endphp
                                     @endif
-                                    @if(!empty($we->Thursday) || !empty($we->Fullweek))
+                                    @if(!empty($we->Thursday))
                                         <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Thursday">Thursday</a></th>
                                         @php
                                             array_push($newWeekKeys, 'Thursday');
                                         @endphp
                                     @endif
-                                    @if(!empty($we->Friday) || !empty($we->Fullweek))                               
+                                    @if(!empty($we->Friday))                               
                                         <th colspan="{{$col_count}}"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Friday">Friday</a></th>
                                         @php
                                             array_push($newWeekKeys, 'Friday');
@@ -140,7 +141,7 @@
                                         $weekValue = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
                                     @endphp
                                     @foreach($weekValue as $weekDays)
-                                        @if(!empty($we->$weekDays) || !empty($we->Fullweek))
+                                        @if(!empty($we->$weekDays))
                                             @php 
                                                 $headerValue[$weekDays]=1;  
                                             @endphp
@@ -259,8 +260,8 @@
                                     @endif  
                                 @endforeach
                                     @php 
-                                        unset($newDat['Fullweek']);
-                                        unset($userSelectedDataByWeek[$keyId][$keyh]['Fullweek']);
+                                        //unset($newDat['Fullweek']);
+                                        //unset($userSelectedDataByWeek[$keyId][$keyh]['Fullweek']);
                                         //print_r($userSelectedDataByWeek);
                                     @endphp
                                 @foreach( $newDat as $keyold => $newDa)                                 
@@ -273,8 +274,8 @@
                                             @endphp                                             
                                         @endif                                              
                                         @php 
-                                            unset($newDa['full']);
-                                            unset($userSelectedDataByWeek[$keyId][$keyh][$keyold]["full"]);
+                                            //unset($newDa['full']);
+                                            //unset($userSelectedDataByWeek[$keyId][$keyh][$keyold]["full"]);
                                             //print_r($userSelectedDataByWeek);
                                         @endphp                                     
                                     @endforeach 
@@ -307,7 +308,12 @@
                                     $user_diff = abs($current_date1 - $user_age);
                                     $years1 = floor($user_diff / (365*60*60*24));   
                                 @endphp
-                            @endif                                       
+                            @endif         
+                            @if(empty($parent))
+                                @php
+                                    $parent = DB::table('users')->where('id',$sh->child_id)->first();
+                                @endphp
+                            @endif                              
                             <tr>
                                 <td class="@if(!empty($player) && $player->gender == 'male') odd-name-row @elseif(!empty($player) && $player->gender == 'female') even-name-row @endif">{{isset($player->name) ? $player->name : '-'}}</td>
                                 <td>{{isset($years1) ? $years1 : ''}}</td>
@@ -382,8 +388,8 @@
                                 <td>{{isset($player->date_of_birth) ? date('d/m/Y',strtotime($player->date_of_birth)) : ''}}</td>
                                 <td>{{!empty($parent) ? $parent->name : ''}}</td>
                                 <td>{{!empty($parent) ? $parent->phone_number : ''}}</td>
-                                <td>@if(isset($ch_details)) @if($ch_details->med_cond == 'no') N @else Y @endif @endif</td>
-                                <td>@if(isset($ch_details)) @if($ch_details->media == 'yes') Y @else N @endif @endif</td>
+                                <td>{{ !empty($ch_details->med_cond) && ($ch_details->med_cond == 'yes') ? 'Y' : 'N' }}</td>
+                                <td>{{ !empty($ch_details->media) && ($ch_details->media == 'yes') ? 'Y' : 'N' }}</td>
                                 <td>{{!empty($parent) ? $parent->email : ''}}</td>
                             </tr>
                         @endif
@@ -445,19 +451,19 @@
                         @foreach($admin_selected as $key=>$we)
 
                                 @if($key == $week_key_value)
-                                    @if(!empty($we->Monday) || !empty($we->Fullweek))
+                                    @if(!empty($we->Monday))
                                         <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Monday">Monday</a></th>
                                     @endif
-                                    @if(!empty($we->Tuesday) || !empty($we->Fullweek))
+                                    @if(!empty($we->Tuesday))
                                         <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Tuesday">Tuesday &nbsp;&nbsp;&nbsp;</a></th>
                                     @endif
-                                    @if(!empty($we->Wednesday) || !empty($we->Fullweek))
+                                    @if(!empty($we->Wednesday))
                                         <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Wednesday">Wednesday &nbsp;&nbsp;&nbsp;</a></th>
                                     @endif
-                                    @if(!empty($we->Thursday) || !empty($we->Fullweek))
+                                    @if(!empty($we->Thursday))
                                         <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Thursday">Thursday &nbsp;&nbsp;&nbsp;</a></th>
                                     @endif
-                                    @if(!empty($we->Friday) || !empty($we->Fullweek))                               
+                                    @if(!empty($we->Friday))                               
                                         <th colspan="6"><a href="{{url('admin/register-template/camp')}}/{{$camp->id}}?&week={{$week_value}}&day=Friday">Friday &nbsp;&nbsp;&nbsp;</a></th>
                                     @endif
                                     <!-- @if(!empty($we->Fullweek))

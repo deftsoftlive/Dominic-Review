@@ -44,7 +44,7 @@ Route::any('course-listing','HomeController@listing')->name('listing');
 Route::any('course-listing/football','HomeController@football_listing')->name('football-listing');
 Route::any('course-listing/tennis','HomeController@tennis_listing')->name('tennis-listing');
 Route::any('course-listing/school','HomeController@school_listing')->name('school-listing');
-Route::any('course-detail/{id}','HomeController@course_detail')->name('course_detail');
+Route::any('course-detail/{id}/{linked_cat}','HomeController@course_detail')->name('course_detail');
 
 Route::any('tennis-landing','HomeController@tennis_landing')->name('tennis_landing');
 Route::any('school-landing','HomeController@school_landing')->name('school_landing');
@@ -337,7 +337,7 @@ Route::post('drh-videos/','HomeController@videosFilter')->name('home.videos.filt
 
 
 Route::any('pay-go-courses','HomeController@payGoCourseListing')->name('user.paygo.courses');
-Route::any('pay-go-course-detail/{id}','HomeController@payGoCourseDetails')->name('user.paygo.course.details');
+Route::any('pay-go-course-detail/{id}/{linked_cat}','HomeController@payGoCourseDetails')->name('user.paygo.course.details');
 
 Route::any('paygo-course-booking','HomeController@payGoCourseBooking')->name('paygo.course.booking');
 

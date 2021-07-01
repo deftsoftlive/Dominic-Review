@@ -584,25 +584,27 @@ public function BookATasterClassStatusHtml($data,$contact,$template)
 #  SGoal comment by coach - User(Parent)
 #---------------------------------------------------------------------------------------------------
 
-public function GoalCommentEmailUser($parent_id,$player_id)
+public function GoalCommentEmailUser($parent_id,$player_id,$coach_id)
 {
   $template_id = $this->emailTemplate['GoalCommentEmailUsersend'];
 
-  return $this->GoalCommentUserSendEmail($parent_id,$player_id,$template_id);
+  return $this->GoalCommentUserSendEmail($parent_id,$player_id,$template_id,$coach_id);
 }
 
-public function GoalCommentUserSendEmail($parent_id,$player_id,$template_id)
+public function GoalCommentUserSendEmail($parent_id,$player_id,$template_id,$coach_id)
 {
     $parent = User::where('id',$parent_id)->first(); 
     $player = User::where('id',$player_id)->first(); 
+    $coach = User::where('id',$coach_id)->first(); 
     $template = EmailTemplate::find($template_id); 
-// dd($parent,$player,$template);
+// dd($parent,$player,$template,$coach->name);
     $view= 'emails.customEmail';
     $arr = [
            'title' => $template->title,
            'subject' => $template->subject,
            'name' => $player->name,
-           'email' => $parent->email
+           'email' => $parent->email,
+           'coach_name' => $coach->name
     ];
     $data = $this->GoalEmailUserHtml($arr,$template); 
 
@@ -617,6 +619,7 @@ public function GoalEmailUserHtml($data,$template)
 { 
     $text2 = $template->body;
     $text = str_replace("{user_name}",$data['name'],$text2);  
+    $text = str_replace("{coach_name}",$data['coach_name'],$text);  
     return $text;
 }
 

@@ -31,17 +31,21 @@ class OrderController extends Controller
         if(request()->get('start_date')) 
         {   
             $start_date = request()->get('start_date').' 00:00:00'; 
+            $start_date_filter = request()->get('start_date'); 
         }
         else{
             $start_date = '';
+            $start_date_filter = ''; 
         }
 
         if(request()->get('end_date')) 
         {
             $end_date = request()->get('end_date').' 00:00:00';
+            $end_date_filter = request()->get('end_date');
         }
         else{
             $end_date = '';
+            $end_date_filter = '';
         }     
 
         // dd($user_name,$user_email,$start_date,$end_date);
@@ -200,7 +204,7 @@ class OrderController extends Controller
            $orders = Shoporder::orderBy('id','desc')->groupBy('orderID')->paginate(10); 
         }
         
-    	return view('admin.orders.index',compact('orders','user_name','user_email','start_date','end_date'));
+    	return view('admin.orders.index',compact('orders','user_name','user_email','start_date','end_date','start_date_filter','end_date_filter'));
     }
 
     /*-----------------------------------------------
