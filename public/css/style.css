@@ -24365,3 +24365,9 @@ input.day_none.price_add.error {
 {
     margin-right: 0;
 }
+input#selImage {
+    border: 1px solid #d1d1d1;
+    padding: 6px 15px;
+    display: inline-block;
+    width: auto;
+}

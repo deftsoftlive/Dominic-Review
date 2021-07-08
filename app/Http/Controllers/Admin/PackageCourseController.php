@@ -174,7 +174,7 @@ class PackageCourseController extends Controller
                     }
 
                     $cour_id = $sh->id; 
-                    $purchased_courses = \DB::table('shop_cart_items')->where('shop_type','course')->where('product_id',$cour_id)->count();  
+                    $purchased_courses = \DB::table('shop_cart_items')->where('shop_type','course')->where('product_id',$cour_id)->where('type','order')->where('orderID','!=',NULL)->count();  
                     $booked_courses = !empty($purchased_courses) ? $purchased_courses : '0';
 
                    // dd($purchased_courses,$booked_courses);

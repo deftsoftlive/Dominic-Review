@@ -141,7 +141,7 @@ input#pl_dob, input#pl_name, input#pla_dob, input#pla_name {
 
                             <div class="row cstm-row">
                                 @php
-                                    $report_questions = DB::table('report_questions')->get(); 
+                                    $report_questions = DB::table('report_questions')->orderBy('sort','asc')->get(); 
                                 @endphp
 
                                 @foreach($report_questions as $ques)

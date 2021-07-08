@@ -206,23 +206,23 @@ public function changeProfileImage(Request $request) {
     |
     |******************************************/
     public function uploaded_invoice(){
-      $req = CoachUploadPdf::orderBy('updated_at','desc')->paginate(10);
+      $req = CoachUploadPdf::orderBy('updated_at','desc')->paginate(30);
       return view('admin.upload-invoice.index',compact('req'));
     }
 
     public function new_uploaded_invoice(){
-      $req = CoachUploadPdf::orderBy('id','desc')->where('status',2)->paginate(10);
+      $req = CoachUploadPdf::orderBy('id','desc')->where('status',2)->paginate(30);
       $req_count = count($req);
       return view('admin.upload-invoice.new-invoice',compact('req','req_count'));
     }
 
     public function accept_uploaded_invoice(){
-      $req = CoachUploadPdf::where('status',1)->orderBy('id','desc')->paginate(10);
+      $req = CoachUploadPdf::where('status',1)->orderBy('id','desc')->paginate(30);
       return view('admin.upload-invoice.accept',compact('req'));
     }
 
     public function reject_uploaded_invoice(){
-      $req = CoachUploadPdf::where('status',0)->orderBy('id','desc')->paginate(10); 
+      $req = CoachUploadPdf::where('status',0)->orderBy('id','desc')->paginate(30); 
       return view('admin.upload-invoice.reject',compact('req'));
     }
 

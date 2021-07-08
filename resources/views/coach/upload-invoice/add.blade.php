@@ -81,8 +81,8 @@ $user = DB::table('users')->where('role_id',3)->where('id',Auth::user()->id)->fi
                         <!-- Profile Picture -->
                         <div class="form-group" style="width: 100%">
                            <div class="col-sm-12">
-                              <label>Upload invoice in JPEG,PNG,JPG,DOC,DOCX,PDF or XLS format</label>
-                              <input type="file" name="invoice_document" id="selImage" accept="application/pdf" onchange="ValidateSingleInput(this, 'invoice_document_src')">
+                              <label>Upload invoice in JPEG,PNG,JPG,DOC,DOCX,PDF,XLS or XLSX format</label>
+                              <input type="file" name="invoice_document" id="selImage" onchange="ValidateSingleInput(this, 'invoice_document_src')">
                               @if ($errors->has('invoice_document'))
                               <div class="error">{{ $errors->first('invoice_document') }}</div>
                               @endif

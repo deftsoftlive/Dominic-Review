@@ -645,7 +645,7 @@
                       @if(isset($selected_session->morning))
                         @if($selected_session->morning == '1')
                         <td class="warning">
-                          <div class="cstm-check" id="chk-span-{{$arrKey+1}}{{$weekDaysValue}}mor"><input id="checkbox-{{$arrKey+1}}{{$weekDaysValue}}mor" class="checkbox-style  col-2-W{{$arrKey+1}} {{$full_weekClass}}" week="{{$arrKey+1}}" day="{{$weekDaysValue}}" sel_type="morning" name="week[W{{$arrKey+1}}][camp][{{$weekDays}}]" type="checkbox" value="{{$arrKey+1}}-{{$weekDaysValue}}-mor" {{ $disabledM }} @php if( $weekDaysValue == 'fullweek' ) echo $weekDisableM;@endphp>
+                          <div class="cstm-check" id="chk-span-{{$arrKey+1}}{{$weekDaysValue}}mor"><input id="checkbox-{{$arrKey+1}}{{$weekDaysValue}}mor" class="checkbox-style  col-2-W{{$arrKey+1}} {{$full_weekClass}}" week="{{$arrKey+1}}" day="{{$weekDaysValue}}" sel_type="morning" name="week[W{{$arrKey+1}}][camp][{{$weekDays}}]" type="radio" value="{{$arrKey+1}}-{{$weekDaysValue}}-mor" {{ $disabledM }} @php if( $weekDaysValue == 'fullweek' ) echo $weekDisableM;@endphp>
                             <label for="checkbox-{{$arrKey+1}}{{$weekDaysValue}}mor" class="checkbox-style-3-label"></label>
                             <input type="hidden" id="pricing-{{$arrKey+1}}-{{$weekDaysValue}}-mor" value="{{$fullweekAMPrice}}">
                           </div>
@@ -669,7 +669,7 @@
                       @if(isset($selected_session->afernoon))
                         @if($selected_session->afernoon == '1')
                         <td class="warning">
-                          <div class="cstm-check" id="chk-span-{{$arrKey+1}}{{$weekDaysValue}}noon"><input id="checkbox-{{$arrKey+1}}{{$weekDaysValue}}noon" class="checkbox-style col-4-W{{$arrKey+1}}  {{$full_weekClass}}" week="{{$arrKey+1}}" day="{{$weekDaysValue}}" sel_type="afternoon" name="week[W{{$arrKey+1}}][camp][{{$weekDays}}]" type="checkbox" value="{{$arrKey+1}}-{{$weekDaysValue}}-noon" {{ $disabledA }} @php if( $weekDaysValue == 'fullweek' ) echo $weekDisableA;@endphp>
+                          <div class="cstm-check" id="chk-span-{{$arrKey+1}}{{$weekDaysValue}}noon"><input id="checkbox-{{$arrKey+1}}{{$weekDaysValue}}noon" class="checkbox-style col-4-W{{$arrKey+1}}  {{$full_weekClass}}" week="{{$arrKey+1}}" day="{{$weekDaysValue}}" sel_type="afternoon" name="week[W{{$arrKey+1}}][camp][{{$weekDays}}]" type="radio" value="{{$arrKey+1}}-{{$weekDaysValue}}-noon" {{ $disabledA }} @php if( $weekDaysValue == 'fullweek' ) echo $weekDisableA;@endphp>
                             <label for="checkbox-{{$arrKey+1}}{{$weekDaysValue}}noon" class="checkbox-style-3-label"></label>
                             <input type="hidden" id="pricing-{{$arrKey+1}}-{{$weekDaysValue}}-noon" value="{{$fullweekPMPrice}}">
                           </div>
@@ -682,7 +682,7 @@
                       @if(isset($selected_session->fullday))
                         @if($selected_session->fullday == '1')
                         <td class="warning">
-                          <div class="cstm-check" id="chk-span-{{$arrKey+1}}{{$weekDaysValue}}full"><input id="checkbox-{{$arrKey+1}}{{$weekDaysValue}}full" class="checkbox-style col-5-W{{$arrKey+1}} full_day {{$full_weekClass}}" week="{{$arrKey+1}}" day="{{$weekDaysValue}}" sel_type="fullday" name="week[W{{$arrKey+1}}][camp][{{$weekDays}}]" type="checkbox" value="{{$arrKey+1}}-{{$weekDaysValue}}-full" {{ $fullDisabled }} @php if( $weekDaysValue == 'fullweek' ) echo $fullWDisabled;@endphp>
+                          <div class="cstm-check" id="chk-span-{{$arrKey+1}}{{$weekDaysValue}}full"><input id="checkbox-{{$arrKey+1}}{{$weekDaysValue}}full" class="checkbox-style col-5-W{{$arrKey+1}} full_day {{$full_weekClass}}" week="{{$arrKey+1}}" day="{{$weekDaysValue}}" sel_type="fullday" name="week[W{{$arrKey+1}}][camp][{{$weekDays}}]" type="radio" value="{{$arrKey+1}}-{{$weekDaysValue}}-full" {{ $fullDisabled }} @php if( $weekDaysValue == 'fullweek' ) echo $fullWDisabled;@endphp>
                             <label for="checkbox-{{$arrKey+1}}{{$weekDaysValue}}full" class="checkbox-style-3-label"></label>
 
                             @if($full_weekClass == 'full_week')
@@ -817,7 +817,7 @@
               </figure>
             </li>
             <li>
-              <a href="{{URL::asset('/uploads')}}/{{ getAllValueWithMeta('book_camp_button_url', 'book-a-camp') }}" class="cstm-btn main_button">{{ getAllValueWithMeta('book_camp_button_title', 'book-a-camp') }}</a>
+              <a href="{{ getAllValueWithMeta('book_camp_button_url', 'book-a-camp') }}" target="_blank" class="cstm-btn main_button">{{ getAllValueWithMeta('book_camp_button_title', 'book-a-camp') }}</a>
             </li>
             <li>
               <figure>

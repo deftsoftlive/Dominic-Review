@@ -149,7 +149,7 @@
                           <input type="text" class="form-control" name="parent_telephone" placeholder="Enter Telephone">
                       </div>
                       <div class="form-group cont-feedback">
-                        <textarea class="form-control demo-textarea" name="class" rows="3" placeholder="Class you’d like to try "></textarea>
+                        <textarea class="form-control demo-textarea" name="class" rows="3" placeholder="Please state the participant's tennis experience/level"></textarea>
                       </div>
                       <button type="submit" id="disable_contact_us_btnn" class="cstm-btn main_button disable_contact_us_btnn">Request Taster Class</button>
                     </form>

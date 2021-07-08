@@ -2523,7 +2523,7 @@ public function upload_inv_save(Request $request)
   $this->validate($request,[
       'invoice_name' => 'required|max:255',
       // 'invoice_document' => "required|mimetypes:application/pdf"
-      'invoice_document' => "required|mimes:jpeg,png,jpg,doc,docx,pdf,xls"
+      'invoice_document' => "required|mimes:jpeg,png,jpg,doc,docx,pdf,xls,xlsx"
   ]);
 
   if(!empty($request->invoice_document))
@@ -2554,7 +2554,7 @@ public function upload_inv_save(Request $request)
       $acc->notify(new \App\Notifications\NewInvoiceNotification());
     }
 
-  return redirect('user/upload-invoice')->with('success','Invoice PDF uploaded successfully.');
+  return redirect('user/upload-invoice')->with('success','Invoice uploaded successfully.');
 }
 
 
@@ -3998,7 +3998,7 @@ public function badges()
             ->leftjoin('seasons', 'seasons.id', '=', 'user_badges.season_id')
             ->select('seasons.status', 'user_badges.*')
             ->where('season_id',$term)
-            ->where('seasons.status',1)
+            ->where('seasons.status',1)            
             ->orderBy('badges_points','desc')
             ->paginate(20);
     }
@@ -4010,7 +4010,7 @@ public function badges()
             ->select('seasons.status', 'user_badges.*')
             ->where('user_badges.season_id',$term)
             ->where('user_badges.stage_id',$stage)
-            ->where('seasons.status',1)
+            ->where('seasons.status',1)            
             ->orderBy('badges_points','desc')
             ->paginate(20);
 
@@ -4025,7 +4025,7 @@ public function badges()
             ->select('seasons.status', 'user_badges.*')
             ->where('user_badges.season_id',$term)
             ->where('user_badges.user_id',$player_id)
-            ->where('seasons.status',1)
+            ->where('seasons.status',1)            
             ->orderBy('badges_points','desc')
             ->paginate(20);
 
@@ -4037,7 +4037,7 @@ public function badges()
             ->leftjoin('seasons', 'seasons.id', '=', 'user_badges.season_id')
             ->select('seasons.status', 'user_badges.*')
             ->where('user_badges.user_id',$player_id)
-            ->where('seasons.status',1)
+            ->where('seasons.status',1)            
             ->orderBy('badges_points','desc')
             ->paginate(20);
 
@@ -4050,7 +4050,7 @@ public function badges()
             ->select('seasons.status', 'user_badges.*')
             ->where('user_badges.stage_id',$stage)
             ->where('user_badges.user_id',$player_id)
-            ->where('seasons.status',1)
+            ->where('seasons.status',1)            
             ->orderBy('badges_points','desc')
             ->paginate(20);
 
@@ -4064,7 +4064,7 @@ public function badges()
             ->leftjoin('seasons', 'seasons.id', '=', 'user_badges.season_id')
             ->select('seasons.status', 'user_badges.*')
             ->where('user_badges.stage_id',$stage)
-            ->where('seasons.status',1)
+            ->where('seasons.status',1)            
             ->orderBy('badges_points','desc')
             ->paginate(20);
 
@@ -4080,7 +4080,7 @@ public function badges()
             ->where('user_badges.season_id',$term)
             ->where('user_badges.stage_id',$stage)
             ->where('user_badges.user_id',$player_id)
-            ->where('seasons.status',1)
+            ->where('seasons.status',1)            
             ->orderBy('badges_points','desc')
             ->paginate(20);
 
@@ -4121,7 +4121,7 @@ public function badges()
         $user_badge1 = \DB::table('user_badges')
             ->leftjoin('seasons', 'seasons.id', '=', 'user_badges.season_id')
             ->select('seasons.status', 'user_badges.*')
-            ->where('seasons.status',1)
+            ->where('seasons.status',1)            
             ->orderBy('badges_points','desc')
             ->paginate(20);
     }

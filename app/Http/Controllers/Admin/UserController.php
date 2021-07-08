@@ -644,7 +644,7 @@ class UserController extends Controller
                 if($shop->save() && $request->course_type == 'paygo'){
                     $bookedPayGoDatesData['cart_id'] = $shop['id'];
                     $bookedPayGoDatesData['course_id'] = $request->course;
-                    $bookedPayGoDatesData['child_id'] = $request->player;
+                    $bookedPayGoDatesData['child_id'] = $player;
                     for ($i=0; $i <count($request->selected_date_ids) ; $i++) { 
                         $bookedPayGoDatesData['booked_date_id'] = $request->selected_date_ids[$i];
                         $date = PaygocourseDate::where('id', $request->selected_date_ids[$i] )->first();

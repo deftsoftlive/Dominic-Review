@@ -56,6 +56,7 @@ class OrderController extends Controller
                     ->select('shop_orders.*', 'users.name', 'users.email')
                     ->where('users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->orderBy('id','desc')
                     ->groupBy('shop_orders.orderID')
                     ->paginate(10); 
 
@@ -68,6 +69,7 @@ class OrderController extends Controller
                     ->where('users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
+                    ->orderBy('id','desc')
                     ->groupBy('shop_orders.orderID')
                     ->paginate(10); 
         }
@@ -77,6 +79,7 @@ class OrderController extends Controller
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
                     ->select('shop_orders.*', 'users.name', 'users.email')
                     ->where('shop_orders.created_at','>',$start_date)
+                    ->orderBy('id','desc')
                     ->groupBy('shop_orders.orderID')
                     ->paginate(10); 
         }
@@ -96,6 +99,7 @@ class OrderController extends Controller
                     ->where('users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','<',$end_date)
+                    ->orderBy('id','desc')
                     ->groupBy('shop_orders.orderID')
                     ->paginate(10); 
         }
@@ -108,6 +112,7 @@ class OrderController extends Controller
                     ->where('users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
                     ->where('shop_orders.created_at','<',$end_date)
+                    ->orderBy('id','desc')
                     ->groupBy('shop_orders.orderID')
                     ->paginate(10); 
         }
@@ -117,6 +122,7 @@ class OrderController extends Controller
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
                     ->select('shop_orders.*', 'users.name')
                     ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
+                    ->orderBy('id','desc')
                     ->groupBy('shop_orders.orderID')
                     ->paginate(10); 
         }
@@ -127,6 +133,7 @@ class OrderController extends Controller
                     ->select('shop_orders.*', 'users.name')
                     ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
+                    ->orderBy('id','desc')
                     ->groupBy('shop_orders.orderID')
                     ->paginate(10); 
         }
@@ -137,6 +144,7 @@ class OrderController extends Controller
                     ->select('shop_orders.*', 'users.name')
                     ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('shop_orders.created_at','<',$end_date)
+                    ->orderBy('id','desc')
                     ->groupBy('shop_orders.orderID')
                     ->paginate(10); 
         }
@@ -148,6 +156,7 @@ class OrderController extends Controller
                     ->where( 'users.name', 'LIKE', '%' . $user_name . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
                     ->where('shop_orders.created_at','<',$end_date)
+                    ->orderBy('id','desc')
                     ->groupBy('shop_orders.orderID')
                     ->paginate(10); 
         }
@@ -158,6 +167,7 @@ class OrderController extends Controller
                     ->select('shop_orders.*', 'users.name')
                     ->where('shop_orders.created_at','>',$start_date)
                     ->where('shop_orders.created_at','<',$end_date)
+                    ->orderBy('id','desc')
                     ->groupBy('shop_orders.orderID')
                     ->paginate(10); 
         }
@@ -167,6 +177,7 @@ class OrderController extends Controller
                     ->leftjoin('users', 'shop_orders.user_id', '=', 'users.id')
                     ->select('shop_orders.*', 'users.email')
                     ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
+                    ->orderBy('id','desc')
                     ->groupBy('shop_orders.orderID')
                     ->paginate(10); 
         }
@@ -177,6 +188,7 @@ class OrderController extends Controller
                     ->select('shop_orders.*', 'users.email')
                     ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
+                    ->orderBy('id','desc')
                     ->groupBy('shop_orders.orderID')
                     ->paginate(10); 
         }
@@ -187,6 +199,7 @@ class OrderController extends Controller
                     ->select('shop_orders.*', 'users.email')
                     ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','<',$end_date)
+                    ->orderBy('id','desc')
                     ->groupBy('shop_orders.orderID')
                     ->paginate(10); 
         }
@@ -198,6 +211,7 @@ class OrderController extends Controller
                     ->where( 'users.email', 'LIKE', '%' . $user_email . '%' )
                     ->where('shop_orders.created_at','>',$start_date)
                     ->where('shop_orders.created_at','<',$end_date)
+                    ->orderBy('id','desc')
                     ->groupBy('shop_orders.orderID')
                     ->paginate(10); 
         }elseif(empty($user_name) && empty($user_email) && empty($start_date) && empty($end_date)){
